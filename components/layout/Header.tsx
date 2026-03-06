@@ -1,35 +1,42 @@
-import Link from 'next/link';
+import Link from "next/link";
+import { Search, ShoppingCart, User } from "lucide-react";
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur-sm">
-      <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 group">
-          <span className="text-3xl font-medium tracking-tight text-[#334B63] transition-colors font-serif">
+    <header className="w-full bg-transparent">
+      <div className="container mx-auto px-4 py-8 flex items-center justify-between">
+        {/* Left: Brand logo area */}
+        <Link href="/" className="flex items-center gap-2">
+          <span className="text-3xl font-bold tracking-tight text-[#334756]">
             OopsCupid
           </span>
         </Link>
-        <nav className="hidden lg:flex items-center gap-8">
-          <Link href="/relationship-red-flags" className="text-sm font-semibold text-foreground/80 hover:text-primary-base transition-colors">Red Flags</Link>
-          <Link href="/dating-texting-analysis" className="text-sm font-semibold text-foreground/80 hover:text-primary-base transition-colors">Text Analysis</Link>
-          <Link href="/toxic-friendships" className="text-sm font-semibold text-foreground/80 hover:text-primary-base transition-colors">Friendships</Link>
-          <Link href="/attraction-patterns" className="text-sm font-semibold text-foreground/80 hover:text-primary-base transition-colors">Patterns</Link>
-          <Link href="/blog" className="text-sm font-semibold text-foreground/80 hover:text-primary-base transition-colors">Blog</Link>
+
+        {/* Center: 4 inline navigation links */}
+        <nav className="hidden md:flex items-center gap-10">
+          <Link href="/relationship-red-flags" className="text-sm font-medium text-[#5E6E79] hover:text-[#334756] transition-colors">Red Flags</Link>
+          <Link href="/dating-texting-analysis" className="text-sm font-medium text-[#5E6E79] hover:text-[#334756] transition-colors">Texting</Link>
+          <Link href="/toxic-friendships" className="text-sm font-medium text-[#5E6E79] hover:text-[#334756] transition-colors">Friendships</Link>
+          <Link href="/attraction-patterns" className="text-sm font-medium text-[#5E6E79] hover:text-[#334756] transition-colors">Patterns</Link>
         </nav>
+
+        {/* Right: My Account, Search, Cart */}
         <div className="flex items-center gap-6">
-            <Link href="/chat-analyzer" className="hidden sm:inline-flex text-sm font-bold uppercase tracking-widest text-[#334B63] hover:text-[#E58F7A] transition-colors transition-smooth">
-                Account
+            <Link 
+              href="/account" 
+              className="px-6 py-2 border border-[#334756] rounded-full text-sm font-medium text-[#334756] hover:bg-[#334756] hover:text-white transition-all"
+            >
+                My Account
             </Link>
-            <Link href="/chat-analyzer" className="hidden sm:inline-flex text-sm font-bold uppercase tracking-widest text-[#E58F7A] hover:text-[#DB7D66] transition-colors transition-smooth">
-                Try a Tool
-            </Link>
-            <div className="lg:hidden">
-                <button className="p-2 text-foreground/70 hover:text-foreground transition-colors" aria-label="Menu">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                    </svg>
-                </button>
-            </div>
+            <button className="text-[#334756] hover:opacity-70 transition-opacity">
+                <Search size={22} />
+            </button>
+            <button className="relative text-[#334756] hover:opacity-70 transition-opacity">
+                <ShoppingCart size={22} />
+                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
+                  3
+                </span>
+            </button>
         </div>
       </div>
     </header>

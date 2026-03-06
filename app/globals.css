@@ -17,40 +17,48 @@
   --color-secondary-base: var(--secondary-base);
   --color-secondary-hover: var(--secondary-hover);
 
-  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), monospace;
-  --font-serif: var(--font-playfair), serif;
-  
-  --radius-xl: 1rem;
-  --radius-2xl: 1.5rem;
-}
-
 :root {
-  /* Gottman-Inspired Editorial Palette */
-  --background: #F7F3EE;
+  /* New Refined Palette */
+  --background: #F8F7F3;
   --background-secondary: #F1EBE4;
   
-  /* Text - Slate Blues */
-  --foreground: #334B63;
+  /* Text - Dark Slate Blue/Grey */
+  --foreground: #334756;
   --foreground-secondary: #5E6E79;
   --foreground-muted: #7C878D;
   
   /* Container Surfaces */
-  --surface: #FFFDFC;
+  --surface: #FFFFFF;
   --surface-elevated: #F1EBE4;
-  --border: rgba(51, 75, 99, 0.12);
+  --border: rgba(51, 71, 86, 0.1);
 
-  /* Primary Accent: Muted Coral (Action) */
-  --primary-base: #E58F7A;
-  --primary-hover: #DB7D66;
+  /* Primary Accent: Salmon/Peach */
+  --primary-base: #FFB8A1;
+  --primary-hover: #E58F7A;
   
-  /* Secondary Accent: Slate Blue (Trust) */
-  --secondary-base: #48627A;
+  /* Secondary Accent: Slate Blue */
+  --secondary-base: #405466;
   --secondary-hover: #334B63;
 
-  /* Helper Accents */
-  --accent-sage: #A7C9C1;
-  --accent-sand: #E8D7A4;
+  /* Card Colors */
+  --card-1: #FFB8A1;
+  --card-2: #A8D8CD;
+  --card-3: #FDE6A5;
+  --card-4: #405466;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
+  --color-foreground: var(--foreground);
+  --color-foreground-secondary: var(--foreground-secondary);
+  --color-foreground-muted: var(--foreground-muted);
+  
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+
+  --font-sans: var(--font-nunito), system-ui, sans-serif;
+  --font-serif: var(--font-playfair), serif;
 }
 
 body {
@@ -59,6 +67,20 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  pointer-events: none;
+  z-index: 9999;
 }
 
 /* Base utility classes for smooth animations */

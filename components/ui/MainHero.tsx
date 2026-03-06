@@ -2,47 +2,50 @@ import React from "react";
 import type { ReactNode } from "react";
 
 export interface MainHeroProps {
+  topSubheading: string;
   headline: string;
-  subheadline: string;
+  question: string;
   children?: ReactNode;
 }
 
 export default function MainHero(props: MainHeroProps) {
-  const { headline, subheadline, children } = props;
+  const { topSubheading, headline, question, children } = props;
   
   return (
-    <section className="relative overflow-hidden bg-background pt-32 pb-60 md:pt-40 md:pb-80">
-      {/* Grainy Texture Layer */}
-      <div className="absolute inset-0 bg-grainy border-b border-border pointer-events-none opacity-[0.03]" />
-      
+    <section className="relative overflow-hidden bg-[#F8F7F3] pt-20 pb-40 md:pt-32 md:pb-64">
       <div className="container relative mx-auto px-4 text-center">
-        <div className="relative z-30">
-          <h1 className="mx-auto max-w-4xl text-foreground font-medium mb-8">
-            <span className="block text-4xl md:text-5xl lg:text-5xl mb-4 text-[#5E6E79]">Welcome to</span>
-            <span className="block text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight text-[#334B63] font-serif">
-              OopsCupid
-            </span>
+        <div className="relative z-30 flex flex-col items-center">
+          {/* Element 1: Medium-sized, regular weight subheading */}
+          <span className="text-xl md:text-2xl font-normal text-[#5E6E79] mb-6">
+            {topSubheading}
+          </span>
+
+          {/* Element 2: Massive, bold primary headline */}
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-tight text-[#334756] mb-8 leading-[1.1]">
+            {headline}
           </h1>
-          <p className="mx-auto max-w-3xl text-xl text-[#5E6E79] lg:text-3xl font-medium tracking-tight mb-20 leading-tight">
-            {subheadline}
+
+          {/* Element 3: Slightly larger, regular weight sub-headline asking a question */}
+          <p className="text-2xl md:text-3xl font-normal text-[#5E6E79] max-w-3xl leading-relaxed">
+            {question}
           </p>
         </div>
 
         {children && (
-          <div className="relative z-40">
+          <div className="relative z-40 mt-16">
             {children}
           </div>
         )}
       </div>
 
-      {/* Decorative Wave Transition (Inspired by Gottman) */}
+      {/* Decorative Organic Wave (Inspired by user request) */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] transform translate-y-[1px] z-10">
         <svg 
           viewBox="0 0 1200 120" 
           preserveAspectRatio="none" 
-          className="relative block w-full h-[150px] md:h-[300px] fill-background-secondary"
+          className="relative block w-full h-[100px] md:h-[180px] fill-[#F1EBE4]"
         >
-          <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C58.47,105.14,213.6,110.14,321.39,56.44Z" />
+          <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5,73.84-4.36,147.54,16.88,218.2,35.26,69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" transform="scale(1, -1) translate(0, -120)"></path>
         </svg>
       </div>
     </section>
