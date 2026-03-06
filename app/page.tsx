@@ -14,156 +14,211 @@ export default function Home() {
   return (
     <>
       <Hero
-        badge="New: Chat Analyzer Tool"
-        headline="Stop Gaslighting Yourself."
-        subheadline="We analyze the texts, spot the red flags, and decode the patterns so you don't have to."
+        headline="Clarity for the relationships confusing you."
+        subheadline="Use our validated quizzes, AI analyzers, and expert guides to decode red flags, mixed signals, and recurring attraction patterns."
       >
         <CTA text="Try Chat Analyzer" href="/chat-analyzer" variant="primary" />
-        <CTA text="Take a Quiz" href="#hubs" variant="outline" />
+        <CTA text="Take a Quiz" href="#categories" variant="secondary" />
       </Hero>
 
-      <div className="container mx-auto px-4 py-20" id="hubs">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
-            What's on your mind?
-          </h2>
-          <p className="mt-4 text-lg text-foreground/70">
-            Choose a topic to dive into our deep-dive articles and psychological tools.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-          
-          {/* Hub 1: Relationship Red Flags */}
-          <div className="group relative bg-surface backdrop-blur-xl rounded-3xl p-8 lg:p-10 border border-border hover:border-[var(--primary-base)]/30 shadow-sm hover:shadow-xl transition-all duration-300">
-            <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[var(--primary-base)]/5 to-transparent rounded-t-3xl pointer-events-none" />
-            
-            <div className="relative">
-              <div className="w-14 h-14 bg-[var(--primary-base)]/10 text-[var(--primary-base)] rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-[var(--primary-base)]/20">
-                <FlagTriangleRight className="w-7 h-7" />
-              </div>
-              <h3 className="text-2xl font-bold text-foreground mb-3">
-                <Link href="/relationship-red-flags" className="before:absolute before:inset-0">
-                  Relationship Red Flags
-                </Link>
-              </h3>
-              <p className="text-foreground-secondary mb-8 leading-relaxed">
-                Are you just overthinking, or is something actually wrong? Learn to spot the signs early before you invest too much time.
-              </p>
-              
-              <ul className="space-y-4 relative z-10">
-                <li><Link href="/is-he-cheating" className="flex items-center text-foreground hover:text-[var(--primary-hover)] font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-[var(--primary-base)] mr-3"></span> Is He Cheating? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-[var(--primary-base)]" /></Link></li>
-                <li><Link href="/red-flags-in-a-relationship" className="flex items-center text-foreground hover:text-[var(--primary-hover)] font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-[var(--primary-base)] mr-3"></span> Red Flags in a Relationship <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-[var(--primary-base)]" /></Link></li>
-                <li><Link href="/is-he-gaslighting-me" className="flex items-center text-foreground hover:text-[var(--primary-hover)] font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-[var(--primary-base)] mr-3"></span> Is He Gaslighting Me? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-[var(--primary-base)]" /></Link></li>
-              </ul>
+      {/* Trust Stats / Credibility (Inspired by Gottman Image 1) */}
+      <div className="bg-background-secondary py-12 border-b border-border">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white p-8 rounded-lg shadow-sm border border-border text-center">
+              <span className="block text-4xl font-bold text-primary-base mb-2 italic font-serif">10k+</span>
+              <span className="block text-xl font-bold text-foreground mb-1">Conversations analyzed</span>
+              <p className="text-sm text-foreground-muted">Empowered by our Chat Analyzer AI</p>
+            </div>
+            <div className="bg-white p-8 rounded-lg shadow-sm border border-border text-center">
+              <span className="block text-4xl font-bold text-foreground mb-2 italic font-serif">#1</span>
+              <span className="block text-xl font-bold text-foreground mb-1">Red Flag Detection</span>
+              <p className="text-sm text-foreground-muted">Recognized for psychological clarity</p>
+            </div>
+            <div className="bg-white p-8 rounded-lg shadow-sm border border-border text-center">
+              <span className="block text-4xl font-bold text-primary-base mb-2 italic font-serif">50k+</span>
+              <span className="block text-xl font-bold text-foreground mb-1">Quizzes Taken</span>
+              <p className="text-sm text-foreground-muted">Helping users find their breakthrough</p>
             </div>
           </div>
-
-          {/* Hub 2: Dating & Texting Analysis */}
-          <div className="group relative bg-surface backdrop-blur-xl rounded-3xl p-8 lg:p-10 border border-border hover:border-[var(--secondary-base)]/30 shadow-sm hover:shadow-xl transition-all duration-300">
-            <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[var(--secondary-base)]/5 to-transparent rounded-t-3xl pointer-events-none" />
-            
-            <div className="relative">
-              <div className="w-14 h-14 bg-[var(--secondary-base)]/10 text-[var(--secondary-base)] rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-[var(--secondary-base)]/20">
-                <MessageSquareText className="w-7 h-7" />
-              </div>
-              <h3 className="text-2xl font-bold text-foreground mb-3">
-                <Link href="/dating-texting-analysis" className="before:absolute before:inset-0">
-                  Dating & Texting Analysis
-                </Link>
-              </h3>
-              <p className="text-foreground-secondary mb-8 leading-relaxed">
-                Decode the mixed signals. Let's figure out what they actually mean when they text you that, or why they left you on read.
-              </p>
-              
-              <ul className="space-y-4 relative z-10">
-                <li><Link href="/chat-analyzer" className="flex items-center text-foreground hover:text-[var(--secondary-hover)] font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-[var(--secondary-base)] mr-3"></span> Chat Analyzer <span className="ml-2 text-[10px] uppercase font-bold tracking-wider text-[var(--secondary-base)] bg-[var(--secondary-base)]/10 px-2 py-0.5 rounded border border-[var(--secondary-base)]/20">Tool</span> <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-[var(--secondary-base)]" /></Link></li>
-                <li><Link href="/dating-profile-analyzer" className="flex items-center text-foreground hover:text-[var(--secondary-hover)] font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-[var(--secondary-base)] mr-3"></span> Profile Analyzer <span className="ml-2 text-[10px] uppercase font-bold tracking-wider text-[var(--secondary-base)] bg-[var(--secondary-base)]/10 px-2 py-0.5 rounded border border-[var(--secondary-base)]/20">Tool</span> <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-[var(--secondary-base)]" /></Link></li>
-                <li><Link href="/dating-texting-analysis#why-disappear" className="flex items-center text-foreground hover:text-[var(--secondary-hover)] font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-[var(--secondary-base)] mr-3"></span> Why Do They Disappear? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-[var(--secondary-base)]" /></Link></li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Hub 3: Toxic Friendships */}
-          <div className="group relative bg-surface backdrop-blur-xl rounded-3xl p-8 lg:p-10 border border-border hover:border-foreground-muted/30 shadow-sm hover:shadow-xl transition-all duration-300">
-            <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-surface-elevated/50 to-transparent rounded-t-3xl pointer-events-none" />
-            
-            <div className="relative">
-              <div className="w-14 h-14 bg-surface-elevated text-foreground rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-border">
-                <Ghost className="w-7 h-7" />
-              </div>
-              <h3 className="text-2xl font-bold text-foreground mb-3">
-                <Link href="/toxic-friendships" className="before:absolute before:inset-0">
-                  Toxic Friendships
-                </Link>
-              </h3>
-              <p className="text-foreground-secondary mb-8 leading-relaxed">
-                Because sometimes the heartbreak isn't from a partner. Identify one-sided, jealous, and draining friends.
-              </p>
-              
-              <ul className="space-y-4 relative z-10">
-                <li><Link href="/toxic-friend-test" className="flex items-center text-foreground hover:text-foreground font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-foreground-muted mr-3"></span> Toxic Friend Test <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-foreground-muted" /></Link></li>
-                <li><Link href="/is-my-best-friend-toxic" className="flex items-center text-foreground hover:text-foreground font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-foreground-muted mr-3"></span> Is My Best Friend Toxic? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-foreground-muted" /></Link></li>
-                <li><Link href="/are-my-friends-bad-for-me" className="flex items-center text-foreground hover:text-foreground font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-foreground-muted mr-3"></span> Are My Friends Bad For Me? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-foreground-muted" /></Link></li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Hub 4: Attraction Patterns */}
-          <div className="group relative bg-surface backdrop-blur-xl rounded-3xl p-8 lg:p-10 border border-border hover:border-foreground-muted/30 shadow-sm hover:shadow-xl transition-all duration-300">
-            <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-surface-elevated/50 to-transparent rounded-t-3xl pointer-events-none" />
-            
-            <div className="relative">
-              <div className="w-14 h-14 bg-surface-elevated text-foreground rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-border">
-                <Magnet className="w-7 h-7" />
-              </div>
-              <h3 className="text-2xl font-bold text-foreground mb-3">
-                <Link href="/attraction-patterns" className="before:absolute before:inset-0">
-                  Attraction Patterns
-                </Link>
-              </h3>
-              <p className="text-foreground-secondary mb-8 leading-relaxed">
-                Why does history keep repeating itself? Uncover your subconscious dating choices and break the loop.
-              </p>
-              
-              <ul className="space-y-4 relative z-10">
-                <li><Link href="/what-kind-of-person-do-i-attract" className="flex items-center text-foreground hover:text-foreground font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-foreground-muted mr-3"></span> What Kind of Person Do I Attract? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-foreground-muted" /></Link></li>
-                <li><Link href="/why-do-i-attract-toxic-people" className="flex items-center text-foreground hover:text-foreground font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-foreground-muted mr-3"></span> Why Do I Attract Toxic People? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-foreground-muted" /></Link></li>
-                <li><Link href="/why-do-i-sabotage-relationships" className="flex items-center text-foreground hover:text-foreground font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-foreground-muted mr-3"></span> Why Do I Sabotage Everything? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-foreground-muted" /></Link></li>
-              </ul>
-            </div>
-          </div>
-
         </div>
       </div>
 
-      <section className="bg-surface py-24 border-t border-border mt-12 bg-gradient-to-b from-surface to-background relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none mix-blend-overlay"></div>
-        <div className="container mx-auto px-4 relative">
-          <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12 lg:gap-20">
-            <div className="flex-1">
-              <span className="text-primary-600 font-bold uppercase tracking-wider text-sm mb-2 block">The Philosophy</span>
-              <h2 className="text-3xl font-bold tracking-tight text-foreground mb-6 sm:text-4xl">
-                How OopsCupid Works
-              </h2>
-              <p className="text-lg text-foreground/70 mb-8 leading-relaxed">
-                We blend cheeky humor with real psychological frameworks. Instead of overthinking your relationships in isolation, use our tools and quizzes to get objective clarity. Stop writing paragraphs to your group chat—let our analysis tools do the heavy lifting.
-              </p>
-              <CTA text="Start Analyzing" href="/chat-analyzer" variant="secondary" />
+      {/* Main Category Grid (Inspired by Gottman Image 3) */}
+      <section className="py-24 bg-background" id="categories">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-2xl font-semibold text-foreground-secondary mb-2">How can we help you find clarity?</h2>
+            <h3 className="text-5xl font-bold text-foreground font-serif italic">Explore Our Hubs</h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Category 1: Red Flags */}
+            <div className="flex flex-col bg-white rounded-lg overflow-hidden border border-border group cursor-pointer transition-smooth hover:shadow-lg">
+              <div className="h-48 bg-[#F8E9E4] flex items-center justify-center p-8 transition-smooth group-hover:bg-[#F2D7D0]">
+                <FlagTriangleRight className="w-16 h-16 text-primary-base opacity-40" />
+              </div>
+              <div className="p-8 pb-10 flex-grow border-t-8 border-[#E58F7A] bg-[#F8E9E4]/20">
+                <h4 className="text-3xl font-bold text-foreground mb-4">Red Flags</h4>
+                <p className="text-foreground-secondary mb-6 text-sm font-semibold leading-relaxed">
+                  Are you overthinking, or is something actually wrong? Spot warning signs early.
+                </p>
+                <ul className="space-y-3 mb-8">
+                  <li><Link href="/is-he-cheating" className="text-sm font-bold text-foreground/70 hover:text-primary-base flex items-center gap-2 group/link">Is He Cheating? <ArrowRight className="w-3 h-3 transition-transform group-hover/link:translate-x-1" /></Link></li>
+                  <li><Link href="/red-flags-in-a-relationship" className="text-sm font-bold text-foreground/70 hover:text-primary-base flex items-center gap-2 group/link">General Red Flags <ArrowRight className="w-3 h-3 transition-transform group-hover/link:translate-x-1" /></Link></li>
+                  <li><Link href="/is-he-gaslighting-me" className="text-sm font-bold text-foreground/70 hover:text-primary-base flex items-center gap-2 group/link">Gaslighting Test <ArrowRight className="w-3 h-3 transition-transform group-hover/link:translate-x-1" /></Link></li>
+                </ul>
+              </div>
             </div>
-            <div className="flex-1 grid grid-cols-1 gap-6 w-full">
-               <Card 
-                  title="Chat Analyzer AI" 
-                  description="Paste those confusing mixed-signal texts and let our AI decode what they actually mean." 
-                  href="/chat-analyzer"
-                  category="AI Tool"
+
+            {/* Category 2: Text Analysis */}
+            <div className="flex flex-col bg-white rounded-lg overflow-hidden border border-border group cursor-pointer transition-smooth hover:shadow-lg">
+              <div className="h-48 bg-[#E6EBEE] flex items-center justify-center p-8 transition-smooth group-hover:bg-[#D9E1E6]">
+                <MessageSquareText className="w-16 h-16 text-secondary-base opacity-40" />
+              </div>
+              <div className="p-8 pb-10 flex-grow border-t-8 border-[#48627A] bg-[#E6EBEE]/20">
+                <h4 className="text-3xl font-bold text-foreground mb-4">Text Analysis</h4>
+                <p className="text-foreground-secondary mb-6 text-sm font-semibold leading-relaxed">
+                  Decode the mixed signals and figure out what their messages actually mean.
+                </p>
+                <ul className="space-y-3 mb-8">
+                  <li><Link href="/chat-analyzer" className="text-sm font-bold text-foreground/70 hover:text-secondary-base flex items-center gap-2 group/link">Chat Analyzer Tool <ArrowRight className="w-3 h-3 transition-transform group-hover/link:translate-x-1" /></Link></li>
+                  <li><Link href="/dating-profile-analyzer" className="text-sm font-bold text-foreground/70 hover:text-secondary-base flex items-center gap-2 group/link">Profile Analyzer <ArrowRight className="w-3 h-3 transition-transform group-hover/link:translate-x-1" /></Link></li>
+                  <li><Link href="/dating-texting-analysis#why-disappear" className="text-sm font-bold text-foreground/70 hover:text-secondary-base flex items-center gap-2 group/link">Why They Disappear <ArrowRight className="w-3 h-3 transition-transform group-hover/link:translate-x-1" /></Link></li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Category 3: Friendships */}
+            <div className="flex flex-col bg-white rounded-lg overflow-hidden border border-border group cursor-pointer transition-smooth hover:shadow-lg">
+              <div className="h-48 bg-[#EDF3F1] flex items-center justify-center p-8 transition-smooth group-hover:bg-[#E1ECE8]">
+                <Ghost className="w-16 h-16 text-[#A7C9C1] opacity-40" />
+              </div>
+              <div className="p-8 pb-10 flex-grow border-t-8 border-[#A7C9C1] bg-[#EDF3F1]/20">
+                <h4 className="text-3xl font-bold text-foreground mb-4">Friendships</h4>
+                <p className="text-foreground-secondary mb-6 text-sm font-semibold leading-relaxed">
+                   Identify one-sided, jealous, and draining friends before they drain your energy.
+                </p>
+                <ul className="space-y-3 mb-8">
+                  <li><Link href="/toxic-friend-test" className="text-sm font-bold text-foreground/70 hover:text-secondary-base flex items-center gap-2 group/link">Toxic Friend Test <ArrowRight className="w-3 h-3 transition-transform group-hover/link:translate-x-1" /></Link></li>
+                  <li><Link href="/is-my-best-friend-toxic" className="text-sm font-bold text-foreground/70 hover:text-secondary-base flex items-center gap-2 group/link">Is She Toxic? <ArrowRight className="w-3 h-3 transition-transform group-hover/link:translate-x-1" /></Link></li>
+                  <li><Link href="/are-my-friends-bad-for-me" className="text-sm font-bold text-foreground/70 hover:text-secondary-base flex items-center gap-2 group/link">Friend Audit <ArrowRight className="w-3 h-3 transition-transform group-hover/link:translate-x-1" /></Link></li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Category 4: Patterns */}
+            <div className="flex flex-col bg-white rounded-lg overflow-hidden border border-border group cursor-pointer transition-smooth hover:shadow-lg">
+              <div className="h-48 bg-[#F5F2EC] flex items-center justify-center p-8 transition-smooth group-hover:bg-[#EDE8E0]">
+                <Magnet className="w-16 h-16 text-[#E8D7A4] opacity-40" />
+              </div>
+              <div className="p-8 pb-10 flex-grow border-t-8 border-[#E8D7A4] bg-[#F5F2EC]/20">
+                <h4 className="text-3xl font-bold text-foreground mb-4">Patterns</h4>
+                <p className="text-foreground-secondary mb-6 text-sm font-semibold leading-relaxed">
+                   Uncover your subconscious dating choices and break the cycle once and for all.
+                </p>
+                <ul className="space-y-3 mb-8">
+                  <li><Link href="/why-do-i-attract-toxic-people" className="text-sm font-bold text-foreground/70 hover:text-secondary-base flex items-center gap-2 group/link">Why My Type? <ArrowRight className="w-3 h-3 transition-transform group-hover/link:translate-x-1" /></Link></li>
+                  <li><Link href="/why-do-i-sabotage-relationships" className="text-sm font-bold text-foreground/70 hover:text-secondary-base flex items-center gap-2 group/link">Sabotage Audit <ArrowRight className="w-3 h-3 transition-transform group-hover/link:translate-x-1" /></Link></li>
+                  <li><Link href="/what-kind-of-person-do-i-attract" className="text-sm font-bold text-foreground/70 hover:text-secondary-base flex items-center gap-2 group/link">Attraction Pattern <ArrowRight className="w-3 h-3 transition-transform group-hover/link:translate-x-1" /></Link></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Tools (Inspired by Gottman Image 2) */}
+      <section className="py-24 bg-surface border-y border-border">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col lg:flex-row gap-16 items-center">
+            <div className="lg:w-1/2">
+                <div className="aspect-video bg-background-secondary rounded-lg border border-border flex items-center justify-center relative group overflow-hidden shadow-inner">
+                    <div className="absolute inset-0 bg-secondary-base/5 animate-pulse"></div>
+                    <div className="bg-white rounded-full p-6 shadow-xl relative z-10 transition-smooth group-hover:scale-110">
+                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-12 h-12 text-secondary-base">
+                            <path fillRule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clipRule="evenodd" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div className="lg:w-1/2">
+              <h2 className="text-5xl font-bold text-foreground font-serif italic mb-6">We KNOW Relationships</h2>
+              <h3 className="text-2xl font-bold text-foreground-secondary mb-6 leading-tight">Proven Methods to build stronger, lasting connections</h3>
+              <p className="text-lg text-foreground-secondary mb-10 leading-relaxed">
+                OopsCupid transforms your relationship confusion into clarity with science-backed analyzers. Whether you're decoding mixed signals in a new match or auditing long-term patterns, we guide you every step of the way with objective insight.
+              </p>
+              <CTA text="Try Chat Analyzer" href="/chat-analyzer" variant="primary" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Blog Preview (Inspired by Gottman Image 5) */}
+      <section className="py-24 bg-background">
+        <div className="container mx-auto px-4">
+           <div className="text-center mb-16">
+            <h3 className="text-5xl font-bold text-foreground font-serif italic mb-4">Best of the Blog</h3>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div className="flex flex-col">
+              <div className="aspect-[4/3] bg-background-secondary rounded-lg border border-border mb-8 overflow-hidden">
+                <div className="w-full h-full bg-secondary-base/5 flex items-center justify-center italic text-foreground-muted">Featured Image Placeholder</div>
+              </div>
+              <h4 className="text-3xl font-bold text-foreground font-serif mb-4 hover:text-primary-base transition-colors cursor-pointer leading-tight">
+                The Four Falsehoods: Why We Lie to Ourselves About Red Flags
+              </h4>
+              <p className="text-lg text-foreground-secondary mb-6 leading-relaxed">
+                Breaking down the psychological barriers that keep us anchored to people who aren't good for us. Understanding 'Cognitive Dissonance' in dating.
+              </p>
+              <Link href="/gaslighting-signs" className="text-primary-base font-bold underline underline-offset-4 decoration-2 hover:text-primary-hover">Read More</Link>
+            </div>
+
+            <div className="space-y-12">
+              <div className="border-b border-border pb-8 last:border-0 hover:translate-x-1 transition-smooth cursor-pointer group">
+                <h5 className="text-2xl font-bold text-foreground font-serif mb-2 group-hover:text-primary-base">10 Ways to Recognize Breadcrumbing Instantly</h5>
+                <p className="text-foreground-secondary mb-4 italic">Spotting the crumbs before you get hungry for interaction.</p>
+                <span className="text-sm font-bold text-primary-base/60 uppercase tracking-widest">Read More</span>
+              </div>
+              <div className="border-b border-border pb-8 last:border-0 hover:translate-x-1 transition-smooth cursor-pointer group">
+                <h5 className="text-2xl font-bold text-foreground font-serif mb-2 group-hover:text-primary-base">How to Listen Without Getting Defensive</h5>
+                <p className="text-foreground-secondary mb-4 italic">A guide to productive conflict in early dating phases.</p>
+                <span className="text-sm font-bold text-primary-base/60 uppercase tracking-widest">Read More</span>
+              </div>
+              <div className="border-b border-border pb-8 last:border-0 hover:translate-x-1 transition-smooth cursor-pointer group">
+                <h5 className="text-2xl font-bold text-foreground font-serif mb-2 group-hover:text-primary-base">Why I Stopped Trying to Control My Partner</h5>
+                <p className="text-foreground-secondary mb-4 italic">Taking responsibility for your own emotional security.</p>
+                <span className="text-sm font-bold text-primary-base/60 uppercase tracking-widest">Read More</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter Band (Inspired by Gottman Image 4) */}
+      <section className="bg-secondary-base py-20 text-white relative overflow-hidden">
+         <div className="absolute inset-0 bg-[#334B63]/20 mix-blend-multiply italic font-serif flex items-center justify-center text-[20vw] opacity-10 select-none pointer-events-none">Oops</div>
+         <div className="container mx-auto px-4 relative z-10">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+            <div className="lg:w-3/5">
+              <h2 className="text-5xl font-bold mb-6 italic font-serif leading-tight">
+                Improve your Relationship Skills <br />
+                with our <span className="text-primary-base">Free Newsletters</span>
+              </h2>
+            </div>
+            <div className="lg:w-2/5 w-full max-w-md">
+              <div className="flex flex-col gap-4">
+                <label htmlFor="email" className="text-sm font-bold uppercase tracking-widest text-white/80">Email <span className="text-primary-base">*</span></label>
+                <input 
+                  type="email" 
+                  id="email"
+                  className="bg-white text-foreground px-4 py-4 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-base" 
                 />
-                <Card 
-                  title="Profile Analyzer" 
-                  description="Optimize your hinge or tinder profile to attract who you actually want, not who you usually get." 
-                  href="/dating-profile-analyzer"
-                  category="AI Tool"
-                />
+                <button className="bg-primary-base text-white px-8 py-4 rounded-md font-bold text-xl hover:bg-primary-hover transition-smooth shadow-lg">
+                  Next
+                </button>
+              </div>
             </div>
           </div>
         </div>

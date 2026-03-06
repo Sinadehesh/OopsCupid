@@ -12,28 +12,28 @@ export default function Card({ title, description, href, category }: CardProps) 
   return (
     <Link
       href={href}
-      className="group block overflow-hidden rounded-2xl bg-surface border border-border p-6 shadow-sm hover:shadow-md transition-smooth hover:border-[var(--primary-base)]/30 hover:bg-surface-elevated"
+      className="group block overflow-hidden rounded-lg bg-surface border border-border p-8 shadow-sm hover:shadow-md transition-smooth hover:border-primary-base/30"
     >
       {category && (
-        <span className="mb-3 block text-xs font-semibold uppercase tracking-wider text-[var(--secondary-base)]">
+        <span className="mb-4 block text-xs font-bold uppercase tracking-widest text-secondary-base/60">
           {category}
         </span>
       )}
-      <h3 className="mb-2 text-xl font-bold text-foreground group-hover:text-[var(--primary-hover)] transition-colors">
+      <h3 className="mb-3 text-2xl font-bold text-foreground font-serif group-hover:text-primary-base transition-colors leading-tight">
         {title}
       </h3>
       {description && (
-        <p className="text-sm text-foreground-secondary leading-relaxed">
+        <p className="text-base text-foreground-secondary leading-relaxed mb-6">
           {description}
         </p>
       )}
-      <div className="mt-4 flex items-center text-sm font-medium text-[var(--primary-base)]">
+      <div className="flex items-center text-sm font-bold text-primary-base uppercase tracking-wider">
         Read more
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           fill="currentColor"
-          className="ml-1 h-4 w-4 transform transition-transform group-hover:translate-x-1"
+          className="ml-2 h-4 w-4 transform transition-transform group-hover:translate-x-1"
         >
           <path
             fillRule="evenodd"

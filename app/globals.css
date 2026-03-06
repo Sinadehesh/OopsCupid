@@ -25,27 +25,31 @@
 }
 
 :root {
-  /* Dark Premium Base */
-  --background: #0E0B0C;
-  --background-secondary: #151113;
+  /* Gottman-Inspired Editorial Palette */
+  --background: #F7F3EE;
+  --background-secondary: #F1EBE4;
   
-  /* Text */
-  --foreground: #F6F1EC;
-  --foreground-secondary: #CFC4BC;
-  --foreground-muted: #9E918B;
+  /* Text - Slate Blues */
+  --foreground: #334B63;
+  --foreground-secondary: #5E6E79;
+  --foreground-muted: #7C878D;
   
   /* Container Surfaces */
-  --surface: #1C171A;
-  --surface-elevated: #241D21;
-  --border: rgba(255, 255, 255, 0.08);
+  --surface: #FFFDFC;
+  --surface-elevated: #F1EBE4;
+  --border: rgba(51, 75, 99, 0.12);
 
-  /* Warm Action Color (Primary CTAs) */
-  --primary-base: #E4576B;
-  --primary-hover: #F06578;
+  /* Primary Accent: Muted Coral (Action) */
+  --primary-base: #E58F7A;
+  --primary-hover: #DB7D66;
   
-  /* Cool Trust Color (AI/Tools) */
-  --secondary-base: #6E7BFF;
-  --secondary-hover: #8190FF;
+  /* Secondary Accent: Slate Blue (Trust) */
+  --secondary-base: #48627A;
+  --secondary-hover: #334B63;
+
+  /* Helper Accents */
+  --accent-sage: #A7C9C1;
+  --accent-sand: #E8D7A4;
 }
 
 body {
