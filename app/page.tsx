@@ -16,45 +16,8 @@ export default function Home() {
       <MainHero
         topSubheading="Psychological Clarity & Tools"
         headline="Clarity for your relationships."
-        question="How can we help you find the tools or insight you need?"
+        question="How can we help you understand the people, patterns, and red flags confusing you?"
       />
-
-      <section className="container mx-auto px-4 -mt-32 mb-32 relative z-30">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[25px]">
-            <Card 
-              title="Red Flags" 
-              description="Are you overthinking, or is something actually wrong?" 
-              href="/relationship-red-flags"
-              accentColor="bg-[#FFB8A1]"
-              textColor="text-black"
-              imageUrl="https://images.unsplash.com/photo-1544027993-37dbfe43562a?q=80&w=600&auto=format&fit=crop"
-            />
-            <Card 
-              title="Mixed Signals" 
-              description="Decode the hidden meanings behind the silence." 
-              href="/dating-texting-analysis"
-              accentColor="bg-[#A8D8CD]"
-              textColor="text-black"
-              imageUrl="https://images.unsplash.com/photo-1516724562728-afc824a36e84?q=80&w=600&auto=format&fit=crop"
-            />
-            <Card 
-              title="Friendships" 
-              description="Identify one-sided and draining connections today." 
-              href="/toxic-friendships"
-              accentColor="bg-[#FDE6A5]"
-              textColor="text-black"
-              imageUrl="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=600&auto=format&fit=crop"
-            />
-            <Card 
-              title="Patterns" 
-              description="Uncover your subconscious dating choices." 
-              href="/attraction-patterns"
-              accentColor="bg-[#405466]"
-              textColor="text-white"
-              imageUrl="https://images.unsplash.com/photo-1511988617509-a57c8a288659?q=80&w=600&auto=format&fit=crop"
-            />
-        </div>
-      </section>
 
       {/* Other sections can go here, but focusing on the requested hero and feature section */}
       
