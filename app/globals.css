@@ -1,22 +1,5 @@
 @import "tailwindcss";
 
-@theme inline {
-  --color-background: var(--background);
-  --color-background-secondary: var(--background-secondary);
-  --color-foreground: var(--foreground);
-  --color-foreground-secondary: var(--foreground-secondary);
-  --color-foreground-muted: var(--foreground-muted);
-  
-  --color-surface: var(--surface);
-  --color-surface-elevated: var(--surface-elevated);
-  --color-border: var(--border);
-
-  --color-primary-base: var(--primary-base);
-  --color-primary-hover: var(--primary-hover);
-  
-  --color-secondary-base: var(--secondary-base);
-  --color-secondary-hover: var(--secondary-hover);
-
 :root {
   /* New Refined Palette */
   --background: #F8F7F3;
@@ -45,6 +28,10 @@
   --card-2: #A8D8CD;
   --card-3: #FDE6A5;
   --card-4: #405466;
+
+  /* Font Variables */
+  --font-sans: var(--font-nunito), system-ui, sans-serif;
+  --font-serif: var(--font-playfair), serif;
 }
 
 @theme inline {
@@ -55,10 +42,17 @@
   --color-foreground-muted: var(--foreground-muted);
   
   --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
   --color-border: var(--border);
 
-  --font-sans: var(--font-nunito), system-ui, sans-serif;
-  --font-serif: var(--font-playfair), serif;
+  --color-primary-base: var(--primary-base);
+  --color-primary-hover: var(--primary-hover);
+  
+  --color-secondary-base: var(--secondary-base);
+  --color-secondary-hover: var(--secondary-hover);
+
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
 }
 
 body {
