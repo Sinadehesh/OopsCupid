@@ -1,6 +1,7 @@
 import Hero from "@/components/ui/Hero";
 import Card from "@/components/ui/Card";
 import CTA from "@/components/ui/CTA";
+import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -19,6 +20,17 @@ export default function DatingTextingHub() {
       </Hero>
 
       <div className="container mx-auto px-4 py-16 max-w-5xl">
+
+        <div className="prose prose-slate dark:prose-invert max-w-none mb-16">
+          <h2 className="text-3xl font-bold text-foreground">Why Mixed Signals Actually Mean "No"</h2>
+          <p className="text-lg leading-relaxed text-foreground/80">
+            One of the hardest pills to swallow in modern dating is that confusion is an answer. When someone likes you, you know it. When they don't, you are confused. If you find yourself constantly analyzing their texts, trying to figure out if they are <Link href="/dating-texting-analysis#breadcrumbing" className="text-primary-600 font-medium hover:underline">breadcrumbing</Link> you, it might be time to take a step back and <Link href="/are-my-friends-bad-for-me" className="text-primary-600 font-medium hover:underline">check in with your friends</Link>. 
+          </p>
+          <p className="text-lg leading-relaxed text-foreground/80">
+            Use our AI tools below to get an objective third-party perspective on your conversations. If you consistently find yourself chasing people who send mixed signals, we recommend exploring our <Link href="/attraction-patterns" className="text-primary-600 font-medium hover:underline">Attraction Patterns</Link> hub to see if you are caught in a cycle of toxic attraction.
+          </p>
+        </div>
+
         <h2 className="text-3xl font-bold tracking-tight text-foreground mb-8">AI Analysis Tools</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
           <Card href="/chat-analyzer" title="Chat Analyzer" description="Paste a confusing conversation and let AI read between the lines." category="AI Tool" />
@@ -35,3 +47,4 @@ export default function DatingTextingHub() {
     </>
   );
 }
+

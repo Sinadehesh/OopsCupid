@@ -1,5 +1,6 @@
 import Hero from "@/components/ui/Hero";
 import Card from "@/components/ui/Card";
+import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,6 +17,14 @@ export default function ToxicFriendshipsHub() {
       />
 
       <div className="container mx-auto px-4 py-16 max-w-5xl">
+
+        <div className="prose prose-slate dark:prose-invert max-w-none mb-16">
+          <h2 className="text-3xl font-bold text-foreground">The Hidden Toll of a Toxic Friendship</h2>
+          <p className="text-lg leading-relaxed text-foreground/80">
+            We spend so much time analyzing our <Link href="/dating-texting-analysis" className="text-primary-600 font-medium hover:underline">dating lives</Link> and looking for <Link href="/relationship-red-flags" className="text-primary-600 font-medium hover:underline">red flags in partners</Link>, but we often ignore the toxic dynamics lurking in our own friend groups. A toxic friend can drain your energy, sabotage your confidence, and subtly compete with you under the guise of "just joking." If you constantly feel exhausted after hanging out with someone, it's time to take a closer look at the relationship.
+          </p>
+        </div>
+
         <h2 className="text-3xl font-bold tracking-tight text-foreground mb-8">Tests & Quizzes</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           <Card href="/toxic-friend-test" title="Toxic Friend Test" description="Take the assessment to see if your friendship is actually healthy." category="Quiz" />
