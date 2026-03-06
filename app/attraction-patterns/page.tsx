@@ -1,4 +1,4 @@
-import Hero from "@/components/ui/Hero";
+import MainHero from "@/components/ui/MainHero";
 import Card from "@/components/ui/Card";
 import Link from "next/link";
 import { Metadata } from "next";
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function AttractionPatternsHub() {
   return (
     <>
-      <Hero
+      <MainHero
         headline="Attraction Patterns"
         subheadline="Let's find out why you keep dating the 'same exact person in a different font'."
       />

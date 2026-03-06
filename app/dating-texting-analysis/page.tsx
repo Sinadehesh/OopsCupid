@@ -1,4 +1,4 @@
-import Hero from "@/components/ui/Hero";
+import MainHero from "@/components/ui/MainHero";
 import Card from "@/components/ui/Card";
 import CTA from "@/components/ui/CTA";
 import Link from "next/link";
@@ -12,12 +12,12 @@ export const metadata: Metadata = {
 export default function DatingTextingHub() {
   return (
     <>
-      <Hero
+      <MainHero
         headline="Dating & Texting Analysis"
         subheadline="Stop asking your group chat what 'maybe later' means. Let's decode the mixed signals objectively."
       >
         <CTA text="Try Chat Analyzer" href="/chat-analyzer" variant="primary" />
-      </Hero>
+      </MainHero>
 
       <div className="container mx-auto px-4 py-16 max-w-5xl">
 

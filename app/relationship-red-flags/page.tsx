@@ -1,4 +1,4 @@
-import Hero from "@/components/ui/Hero";
+import MainHero from "@/components/ui/MainHero";
 import Card from "@/components/ui/Card";
 import Link from "next/link";
 import { Metadata } from "next";
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function RedFlagsHub() {
   return (
     <>
-      <Hero
+      <MainHero
         headline="Relationship Red Flags"
         subheadline="Because ignoring them won't make them go away. Let's analyze what's actually happening."
       />

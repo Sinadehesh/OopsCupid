@@ -1,4 +1,4 @@
-import Hero from "@/components/ui/Hero";
+import MainHero from "@/components/ui/MainHero";
 import Card from "@/components/ui/Card";
 import Link from "next/link";
 import { Metadata } from "next";
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function ToxicFriendshipsHub() {
   return (
     <>
-      <Hero
+      <MainHero
         headline="Toxic Friendships"
         subheadline="Because romantic relationships aren't the only ones that can break your heart or drain your energy."
       />

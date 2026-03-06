@@ -1,46 +1,59 @@
 import Link from "next/link";
 import React from "react";
+import { ArrowRight } from "lucide-react";
+
 
 interface CardProps {
   title: string;
   description?: string;
   href: string;
   category?: string;
+  imageUrl?: string;
+  accentColor?: string; // e.g., 'bg-[#F8E9E4]'
+  icon?: React.ReactNode;
 }
 
-export default function Card({ title, description, href, category }: CardProps) {
+export default function Card({ 
+  title, 
+  description, 
+  href, 
+  imageUrl, 
+  accentColor = "bg-white",
+  icon 
+}: CardProps) {
   return (
     <Link
       href={href}
-      className="group block overflow-hidden rounded-lg bg-surface border border-border p-8 shadow-sm hover:shadow-md transition-smooth hover:border-primary-base/30"
+      className="group block overflow-hidden rounded-xl bg-white shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-border"
     >
-      {category && (
-        <span className="mb-4 block text-xs font-bold uppercase tracking-widest text-secondary-base/60">
-          {category}
-        </span>
-      )}
-      <h3 className="mb-3 text-2xl font-bold text-foreground font-serif group-hover:text-primary-base transition-colors leading-tight">
-        {title}
-      </h3>
-      {description && (
-        <p className="text-base text-foreground-secondary leading-relaxed mb-6">
-          {description}
-        </p>
-      )}
-      <div className="flex items-center text-sm font-bold text-primary-base uppercase tracking-wider">
-        Read more
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className="ml-2 h-4 w-4 transform transition-transform group-hover:translate-x-1"
-        >
-          <path
-            fillRule="evenodd"
-            d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
-            clipRule="evenodd"
+      {/* Top Image Area */}
+      <div className="aspect-[4/3] relative overflow-hidden bg-background-secondary">
+        {imageUrl ? (
+          <img 
+            src={imageUrl} 
+            alt={title} 
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
           />
-        </svg>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center opacity-20">
+            {icon ? React.cloneElement(icon as React.ReactElement, { className: "w-20 h-20" }) : null}
+          </div>
+        )}
+      </div>
+
+      {/* Content Block with Specific Tint */}
+      <div className={`${accentColor} p-10 flex flex-col h-full min-h-[220px]`}>
+        <h3 className="mb-4 text-4xl font-bold text-[#0E0B0C] tracking-tight">
+          {title}
+        </h3>
+        {description && (
+          <p className="text-xl text-[#334B63] font-medium leading-tight mb-8">
+            {description}
+          </p>
+        )}
+        <div className="mt-auto flex items-center gap-3">
+          <ArrowRight className="w-8 h-8 text-[#0E0B0C] transition-transform group-hover:translate-x-2" />
+        </div>
       </div>
     </Link>
   );
