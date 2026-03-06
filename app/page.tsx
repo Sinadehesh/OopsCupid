@@ -14,15 +14,12 @@ export default function Home() {
   return (
     <>
       <Hero
-        headline="Clarity for the relationships confusing you."
-        subheadline="Use our validated quizzes, AI analyzers, and expert guides to decode red flags, mixed signals, and recurring attraction patterns."
-      >
-        <CTA text="Try Chat Analyzer" href="/chat-analyzer" variant="primary" />
-        <CTA text="Take a Quiz" href="#categories" variant="secondary" />
-      </Hero>
+        headline="Clarity for your relationships."
+        subheadline="How can we help you find the clarity, tools, or insight you need?"
+      />
 
       {/* Trust Stats / Credibility (Inspired by Gottman Image 1) */}
-      <div className="bg-background-secondary py-12 border-b border-border">
+      <div className="bg-background-secondary py-12 relative z-10">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-lg shadow-sm border border-border text-center">
