@@ -125,7 +125,7 @@ export default function MainHero(props: MainHeroProps) {
   const displayQuestion = question || subheadline;
 
   return (
-    <section className="relative overflow-hidden bg-[#F9F4F4] pt-8 md:pt-10 lg:pt-12 pb-20 md:pb-24 lg:pb-28">
+    <section className="relative overflow-hidden bg-[#F9F4F4] pt-3 md:pt-4 lg:pt-5 pb-14 md:pb-18 lg:pb-22">
       {/* subtle texture */}
       <div
         aria-hidden="true"
@@ -138,43 +138,41 @@ export default function MainHero(props: MainHeroProps) {
         }}
       />
 
-      {/* light feminine gradients */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
         style={{
-          background:
-            `
+          background: `
             radial-gradient(circle at 18% 14%, rgba(255, 182, 213, 0.18), transparent 26%),
             radial-gradient(circle at 82% 12%, rgba(255, 210, 225, 0.16), transparent 24%),
             linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 100%)
-            `,
+          `,
         }}
       />
 
       <div className="relative z-10 mx-auto max-w-[1500px] px-6 md:px-10 lg:px-14">
         <div className="mx-auto max-w-[980px] text-center">
           {topSubheading && (
-            <p className="mb-2 text-[28px] font-normal leading-[1.08] tracking-[-0.03em] text-[#8A6D85] md:text-[42px] lg:text-[52px]">
+            <p className="mb-1 text-[28px] font-normal leading-[1.05] tracking-[-0.03em] text-[#8A6D85] md:text-[40px] lg:text-[48px]">
               {topSubheading}
             </p>
           )}
 
-          <h1 className="text-[64px] font-semibold leading-[0.94] tracking-[-0.055em] text-[#5A7492] md:text-[100px] lg:text-[124px]">
+          <h1 className="text-[60px] font-semibold leading-[0.92] tracking-[-0.055em] text-[#5A7492] md:text-[92px] lg:text-[112px]">
             {headline}
           </h1>
 
           {displayQuestion && (
-            <p className="mx-auto mt-6 max-w-[980px] text-[18px] font-normal leading-[1.35] tracking-[-0.02em] text-[#667E99] md:mt-8 md:text-[30px] lg:text-[38px]">
+            <p className="mx-auto mt-4 max-w-[920px] text-[18px] font-normal leading-[1.32] tracking-[-0.02em] text-[#667E99] md:mt-5 md:text-[28px] lg:text-[34px]">
               {displayQuestion}
             </p>
           )}
         </div>
 
         {children ? (
-          <div className="relative z-20 mt-10 md:mt-12 lg:mt-14">{children}</div>
+          <div className="relative z-20 mt-8 md:mt-9 lg:mt-10">{children}</div>
         ) : (
-          <div className="relative z-20 mt-10 md:mt-12 lg:mt-14">
+          <div className="relative z-20 mt-8 md:mt-9 lg:mt-10">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
               {cards.map((card) => (
                 <HeroCard
