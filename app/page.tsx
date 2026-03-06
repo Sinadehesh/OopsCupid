@@ -35,11 +35,11 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
           
           {/* Hub 1: Relationship Red Flags */}
-          <div className="group relative bg-surface/50 backdrop-blur-md rounded-3xl p-8 lg:p-10 border border-border hover:border-primary-500/30 shadow-sm hover:shadow-xl transition-all duration-300">
-            <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-rose-50 to-transparent dark:from-rose-900/10 rounded-t-3xl pointer-events-none" />
+          <div className="group relative bg-surface backdrop-blur-xl rounded-3xl p-8 lg:p-10 border border-border hover:border-[var(--primary-base)]/30 shadow-sm hover:shadow-xl transition-all duration-300">
+            <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[var(--primary-base)]/5 to-transparent rounded-t-3xl pointer-events-none" />
             
             <div className="relative">
-              <div className="w-14 h-14 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-rose-200">
+              <div className="w-14 h-14 bg-[var(--primary-base)]/10 text-[var(--primary-base)] rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-[var(--primary-base)]/20">
                 <FlagTriangleRight className="w-7 h-7" />
               </div>
               <h3 className="text-2xl font-bold text-foreground mb-3">
@@ -47,24 +47,24 @@ export default function Home() {
                   Relationship Red Flags
                 </Link>
               </h3>
-              <p className="text-foreground/70 mb-8 leading-relaxed">
+              <p className="text-foreground-secondary mb-8 leading-relaxed">
                 Are you just overthinking, or is something actually wrong? Learn to spot the signs early before you invest too much time.
               </p>
               
               <ul className="space-y-4 relative z-10">
-                <li><Link href="/is-he-cheating" className="flex items-center text-foreground hover:text-rose-600 font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-rose-400 mr-3"></span> Is He Cheating? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-rose-500" /></Link></li>
-                <li><Link href="/red-flags-in-a-relationship" className="flex items-center text-foreground hover:text-rose-600 font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-rose-400 mr-3"></span> Red Flags in a Relationship <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-rose-500" /></Link></li>
-                <li><Link href="/is-he-gaslighting-me" className="flex items-center text-foreground hover:text-rose-600 font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-rose-400 mr-3"></span> Is He Gaslighting Me? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-rose-500" /></Link></li>
+                <li><Link href="/is-he-cheating" className="flex items-center text-foreground hover:text-[var(--primary-hover)] font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-[var(--primary-base)] mr-3"></span> Is He Cheating? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-[var(--primary-base)]" /></Link></li>
+                <li><Link href="/red-flags-in-a-relationship" className="flex items-center text-foreground hover:text-[var(--primary-hover)] font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-[var(--primary-base)] mr-3"></span> Red Flags in a Relationship <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-[var(--primary-base)]" /></Link></li>
+                <li><Link href="/is-he-gaslighting-me" className="flex items-center text-foreground hover:text-[var(--primary-hover)] font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-[var(--primary-base)] mr-3"></span> Is He Gaslighting Me? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-[var(--primary-base)]" /></Link></li>
               </ul>
             </div>
           </div>
 
           {/* Hub 2: Dating & Texting Analysis */}
-          <div className="group relative bg-surface/50 backdrop-blur-md rounded-3xl p-8 lg:p-10 border border-border hover:border-primary-500/30 shadow-sm hover:shadow-xl transition-all duration-300">
-            <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-indigo-50 to-transparent dark:from-indigo-900/10 rounded-t-3xl pointer-events-none" />
+          <div className="group relative bg-surface backdrop-blur-xl rounded-3xl p-8 lg:p-10 border border-border hover:border-[var(--secondary-base)]/30 shadow-sm hover:shadow-xl transition-all duration-300">
+            <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[var(--secondary-base)]/5 to-transparent rounded-t-3xl pointer-events-none" />
             
             <div className="relative">
-              <div className="w-14 h-14 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-indigo-200">
+              <div className="w-14 h-14 bg-[var(--secondary-base)]/10 text-[var(--secondary-base)] rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-[var(--secondary-base)]/20">
                 <MessageSquareText className="w-7 h-7" />
               </div>
               <h3 className="text-2xl font-bold text-foreground mb-3">
@@ -72,24 +72,24 @@ export default function Home() {
                   Dating & Texting Analysis
                 </Link>
               </h3>
-              <p className="text-foreground/70 mb-8 leading-relaxed">
+              <p className="text-foreground-secondary mb-8 leading-relaxed">
                 Decode the mixed signals. Let's figure out what they actually mean when they text you that, or why they left you on read.
               </p>
               
               <ul className="space-y-4 relative z-10">
-                <li><Link href="/chat-analyzer" className="flex items-center text-foreground hover:text-indigo-600 font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-indigo-400 mr-3"></span> Chat Analyzer <span className="ml-2 text-[10px] uppercase font-bold tracking-wider text-indigo-600 bg-indigo-100 px-2 py-0.5 rounded border border-indigo-200">Tool</span> <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-indigo-500" /></Link></li>
-                <li><Link href="/dating-profile-analyzer" className="flex items-center text-foreground hover:text-indigo-600 font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-indigo-400 mr-3"></span> Profile Analyzer <span className="ml-2 text-[10px] uppercase font-bold tracking-wider text-indigo-600 bg-indigo-100 px-2 py-0.5 rounded border border-indigo-200">Tool</span> <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-indigo-500" /></Link></li>
-                <li><Link href="/dating-texting-analysis#why-disappear" className="flex items-center text-foreground hover:text-indigo-600 font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-indigo-400 mr-3"></span> Why Do They Disappear? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-indigo-500" /></Link></li>
+                <li><Link href="/chat-analyzer" className="flex items-center text-foreground hover:text-[var(--secondary-hover)] font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-[var(--secondary-base)] mr-3"></span> Chat Analyzer <span className="ml-2 text-[10px] uppercase font-bold tracking-wider text-[var(--secondary-base)] bg-[var(--secondary-base)]/10 px-2 py-0.5 rounded border border-[var(--secondary-base)]/20">Tool</span> <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-[var(--secondary-base)]" /></Link></li>
+                <li><Link href="/dating-profile-analyzer" className="flex items-center text-foreground hover:text-[var(--secondary-hover)] font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-[var(--secondary-base)] mr-3"></span> Profile Analyzer <span className="ml-2 text-[10px] uppercase font-bold tracking-wider text-[var(--secondary-base)] bg-[var(--secondary-base)]/10 px-2 py-0.5 rounded border border-[var(--secondary-base)]/20">Tool</span> <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-[var(--secondary-base)]" /></Link></li>
+                <li><Link href="/dating-texting-analysis#why-disappear" className="flex items-center text-foreground hover:text-[var(--secondary-hover)] font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-[var(--secondary-base)] mr-3"></span> Why Do They Disappear? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-[var(--secondary-base)]" /></Link></li>
               </ul>
             </div>
           </div>
 
           {/* Hub 3: Toxic Friendships */}
-          <div className="group relative bg-surface/50 backdrop-blur-md rounded-3xl p-8 lg:p-10 border border-border hover:border-primary-500/30 shadow-sm hover:shadow-xl transition-all duration-300">
-            <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-stone-100 to-transparent dark:from-stone-800/30 rounded-t-3xl pointer-events-none" />
+          <div className="group relative bg-surface backdrop-blur-xl rounded-3xl p-8 lg:p-10 border border-border hover:border-foreground-muted/30 shadow-sm hover:shadow-xl transition-all duration-300">
+            <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-surface-elevated/50 to-transparent rounded-t-3xl pointer-events-none" />
             
             <div className="relative">
-              <div className="w-14 h-14 bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-300 rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-stone-300 dark:border-stone-700">
+              <div className="w-14 h-14 bg-surface-elevated text-foreground rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-border">
                 <Ghost className="w-7 h-7" />
               </div>
               <h3 className="text-2xl font-bold text-foreground mb-3">
@@ -97,24 +97,24 @@ export default function Home() {
                   Toxic Friendships
                 </Link>
               </h3>
-              <p className="text-foreground/70 mb-8 leading-relaxed">
+              <p className="text-foreground-secondary mb-8 leading-relaxed">
                 Because sometimes the heartbreak isn't from a partner. Identify one-sided, jealous, and draining friends.
               </p>
               
               <ul className="space-y-4 relative z-10">
-                <li><Link href="/toxic-friend-test" className="flex items-center text-foreground hover:text-stone-900 dark:hover:text-stone-100 font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-stone-400 mr-3"></span> Toxic Friend Test <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-stone-600 dark:text-stone-400" /></Link></li>
-                <li><Link href="/is-my-best-friend-toxic" className="flex items-center text-foreground hover:text-stone-900 dark:hover:text-stone-100 font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-stone-400 mr-3"></span> Is My Best Friend Toxic? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-stone-600 dark:text-stone-400" /></Link></li>
-                <li><Link href="/are-my-friends-bad-for-me" className="flex items-center text-foreground hover:text-stone-900 dark:hover:text-stone-100 font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-stone-400 mr-3"></span> Are My Friends Bad For Me? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-stone-600 dark:text-stone-400" /></Link></li>
+                <li><Link href="/toxic-friend-test" className="flex items-center text-foreground hover:text-foreground font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-foreground-muted mr-3"></span> Toxic Friend Test <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-foreground-muted" /></Link></li>
+                <li><Link href="/is-my-best-friend-toxic" className="flex items-center text-foreground hover:text-foreground font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-foreground-muted mr-3"></span> Is My Best Friend Toxic? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-foreground-muted" /></Link></li>
+                <li><Link href="/are-my-friends-bad-for-me" className="flex items-center text-foreground hover:text-foreground font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-foreground-muted mr-3"></span> Are My Friends Bad For Me? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-foreground-muted" /></Link></li>
               </ul>
             </div>
           </div>
 
           {/* Hub 4: Attraction Patterns */}
-          <div className="group relative bg-surface/50 backdrop-blur-md rounded-3xl p-8 lg:p-10 border border-border hover:border-primary-500/30 shadow-sm hover:shadow-xl transition-all duration-300">
-            <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-purple-50 to-transparent dark:from-purple-900/10 rounded-t-3xl pointer-events-none" />
+          <div className="group relative bg-surface backdrop-blur-xl rounded-3xl p-8 lg:p-10 border border-border hover:border-foreground-muted/30 shadow-sm hover:shadow-xl transition-all duration-300">
+            <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-surface-elevated/50 to-transparent rounded-t-3xl pointer-events-none" />
             
             <div className="relative">
-              <div className="w-14 h-14 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-purple-200">
+              <div className="w-14 h-14 bg-surface-elevated text-foreground rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-border">
                 <Magnet className="w-7 h-7" />
               </div>
               <h3 className="text-2xl font-bold text-foreground mb-3">
@@ -122,14 +122,14 @@ export default function Home() {
                   Attraction Patterns
                 </Link>
               </h3>
-              <p className="text-foreground/70 mb-8 leading-relaxed">
+              <p className="text-foreground-secondary mb-8 leading-relaxed">
                 Why does history keep repeating itself? Uncover your subconscious dating choices and break the loop.
               </p>
               
               <ul className="space-y-4 relative z-10">
-                <li><Link href="/what-kind-of-person-do-i-attract" className="flex items-center text-foreground hover:text-purple-600 font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-purple-400 mr-3"></span> What Kind of Person Do I Attract? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-purple-500" /></Link></li>
-                <li><Link href="/why-do-i-attract-toxic-people" className="flex items-center text-foreground hover:text-purple-600 font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-purple-400 mr-3"></span> Why Do I Attract Toxic People? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-purple-500" /></Link></li>
-                <li><Link href="/why-do-i-sabotage-relationships" className="flex items-center text-foreground hover:text-purple-600 font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-purple-400 mr-3"></span> Why Do I Sabotage Everything? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-purple-500" /></Link></li>
+                <li><Link href="/what-kind-of-person-do-i-attract" className="flex items-center text-foreground hover:text-foreground font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-foreground-muted mr-3"></span> What Kind of Person Do I Attract? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-foreground-muted" /></Link></li>
+                <li><Link href="/why-do-i-attract-toxic-people" className="flex items-center text-foreground hover:text-foreground font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-foreground-muted mr-3"></span> Why Do I Attract Toxic People? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-foreground-muted" /></Link></li>
+                <li><Link href="/why-do-i-sabotage-relationships" className="flex items-center text-foreground hover:text-foreground font-medium transition-colors group/link"><span className="w-1.5 h-1.5 rounded-full bg-foreground-muted mr-3"></span> Why Do I Sabotage Everything? <ArrowRight className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all text-foreground-muted" /></Link></li>
               </ul>
             </div>
           </div>

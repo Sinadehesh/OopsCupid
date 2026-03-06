@@ -20,10 +20,10 @@ export default function RedFlagsHub() {
         <div className="prose prose-slate dark:prose-invert max-w-none mb-16">
           <h2 className="text-3xl font-bold text-foreground">Are You Overthinking, Or Are These Genuine Red Flags?</h2>
           <p className="text-lg leading-relaxed text-foreground/80">
-            It is incredibly easy to confuse relationship anxiety with genuine intuition. When you are deeply invested in someone, your brain often tries to rationalize their bad behavior. The goal of this hub is to help you step back, look at the objective facts, and determine if you are dealing with common relationship hurdles or massive warning signs like <Link href="/is-he-gaslighting-me" className="text-primary-600 font-medium hover:underline">gaslighting</Link> and <Link href="/is-he-manipulative" className="text-primary-600 font-medium hover:underline">manipulation</Link>. 
+            It is incredibly easy to confuse relationship anxiety with genuine intuition. When you are deeply invested in someone, your brain often tries to rationalize their bad behavior. The goal of this hub is to help you step back, look at the objective facts, and determine if you are dealing with common relationship hurdles or massive warning signs like <Link href="/is-he-gaslighting-me" className="text-[var(--primary-base)] font-medium hover:underline">gaslighting</Link> and <Link href="/is-he-manipulative" className="text-[var(--primary-base)] font-medium hover:underline">manipulation</Link>. 
           </p>
           <p className="text-lg leading-relaxed text-foreground/80">
-            If you are constantly trying to decode their texts to figure out where you stand, you might also want to check out our <Link href="/dating-texting-analysis" className="text-primary-600 font-medium hover:underline">Dating & Texting Analysis</Link> section to understand the psychology behind mixed signals.
+            If you are constantly trying to decode their texts to figure out where you stand, you might also want to check out our <Link href="/dating-texting-analysis" className="text-[var(--primary-base)] font-medium hover:underline">Dating & Texting Analysis</Link> section to understand the psychology behind mixed signals.
           </p>
         </div>
 
@@ -38,7 +38,7 @@ export default function RedFlagsHub() {
         <div className="prose prose-slate dark:prose-invert max-w-none mb-16 border-t border-border pt-12">
           <h2 className="text-3xl font-bold text-foreground">Why We Ignore Relationship Red Flags</h2>
           <p className="text-lg leading-relaxed text-foreground/80">
-            Psychologically, we often ignore red flags because acknowledging them means we have to make a difficult decision. This is deeply tied to our <Link href="/attraction-patterns" className="text-primary-600 font-medium hover:underline">Attraction Patterns</Link>. If you grew up around chaotic relationships, a peaceful, healthy dynamic might feel "boring," causing you to unconsciously seek out partners who display the very red flags that end up hurting you.
+            Psychologically, we often ignore red flags because acknowledging them means we have to make a difficult decision. This is deeply tied to our <Link href="/attraction-patterns" className="text-[var(--primary-base)] font-medium hover:underline">Attraction Patterns</Link>. If you grew up around chaotic relationships, a peaceful, healthy dynamic might feel "boring," causing you to unconsciously seek out partners who display the very red flags that end up hurting you.
           </p>
         </div>
 

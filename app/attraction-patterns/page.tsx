@@ -21,10 +21,10 @@ export default function AttractionPatternsHub() {
         <div className="prose prose-slate dark:prose-invert max-w-none mb-16">
           <h2 className="text-3xl font-bold text-foreground">Why You Keep Dating Your "Type"</h2>
           <p className="text-lg leading-relaxed text-foreground/80">
-            Have you ever noticed that you keep ending up in the exact same arguments with completely different people? That is your attraction pattern at work. Often, we are subconsciously drawn to what feels familiar, even if what feels familiar is actually painful. Recognizing these patterns is the first step to breaking the cycle and avoiding <Link href="/relationship-red-flags" className="text-primary-600 font-medium hover:underline">relationship red flags</Link> in the future.
+            Have you ever noticed that you keep ending up in the exact same arguments with completely different people? That is your attraction pattern at work. Often, we are subconsciously drawn to what feels familiar, even if what feels familiar is actually painful. Recognizing these patterns is the first step to breaking the cycle and avoiding <Link href="/relationship-red-flags" className="text-[var(--primary-base)] font-medium hover:underline">relationship red flags</Link> in the future.
           </p>
           <p className="text-lg leading-relaxed text-foreground/80">
-            If you are actively dating right now, we recommend running your matches through the <Link href="/chat-analyzer" className="text-primary-600 font-medium hover:underline">Chat Analyzer</Link> tool to make sure you aren't falling for the same <Link href="/love-bombing-signs" className="text-primary-600 font-medium hover:underline">love-bombing tactics</Link> you've experienced before.
+            If you are actively dating right now, we recommend running your matches through the <Link href="/chat-analyzer" className="text-[var(--primary-base)] font-medium hover:underline">Chat Analyzer</Link> tool to make sure you aren't falling for the same <Link href="/love-bombing-signs" className="text-[var(--primary-base)] font-medium hover:underline">love-bombing tactics</Link> you've experienced before.
           </p>
         </div>
 

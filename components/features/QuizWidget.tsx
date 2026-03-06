@@ -46,10 +46,10 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
   if (showResult && resultData) {
     return (
-      <div className="rounded-2xl bg-primary-50 p-8 border border-primary-100 text-center max-w-2xl mx-auto shadow-sm">
-        <span className="text-xs font-bold uppercase tracking-widest text-primary-600 mb-2 block">Your Result</span>
+      <div className="rounded-2xl bg-[var(--secondary-base)]/5 p-8 border border-[var(--secondary-base)]/20 text-center max-w-2xl mx-auto shadow-sm">
+        <span className="text-xs font-bold uppercase tracking-widest text-[var(--secondary-base)] mb-2 block">Your Result</span>
         <h3 className="text-3xl font-extrabold text-foreground mb-4">{resultData.title}</h3>
-        <p className="text-foreground/80 text-lg leading-relaxed mb-8">{resultData.description}</p>
+        <p className="text-foreground-secondary text-lg leading-relaxed mb-8">{resultData.description}</p>
         <CTA text="Take Another Quiz" variant="outline" onClick={() => {
           setCurrentQuestion(0);
           setAnswers([]);
@@ -64,7 +64,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
   return (
     <div className="rounded-2xl bg-surface border border-border p-6 md:p-8 max-w-2xl mx-auto shadow-sm">
-      <div className="mb-6 flex justify-between text-sm font-medium text-foreground/50 border-b border-border pb-4">
+      <div className="mb-6 flex justify-between text-sm font-medium text-foreground-muted border-b border-border pb-4">
         <span>Question {currentQuestion + 1} of {mockQuestions.length}</span>
         <span>{Math.round(((currentQuestion) / mockQuestions.length) * 100)}% Completed</span>
       </div>
@@ -78,7 +78,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
           <button
             key={idx}
             onClick={() => handleOptionClick(option)}
-            className="w-full text-left p-4 rounded-xl border border-border hover:border-primary-500 hover:bg-primary-50/50 transition-colors text-foreground font-medium focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+            className="w-full text-left p-4 rounded-xl border border-border hover:border-[var(--secondary-base)] hover:bg-surface-elevated transition-colors text-foreground font-medium focus:outline-none focus:ring-2 focus:ring-[var(--secondary-base)] focus:ring-offset-2 focus:ring-offset-background"
           >
             {option}
           </button>

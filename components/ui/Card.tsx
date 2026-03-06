@@ -12,22 +12,22 @@ export default function Card({ title, description, href, category }: CardProps) 
   return (
     <Link
       href={href}
-      className="group block overflow-hidden rounded-2xl bg-surface border border-border p-6 shadow-sm hover:shadow-md transition-smooth hover:border-primary-500/30 hover:bg-surface-hover"
+      className="group block overflow-hidden rounded-2xl bg-surface border border-border p-6 shadow-sm hover:shadow-md transition-smooth hover:border-[var(--primary-base)]/30 hover:bg-surface-elevated"
     >
       {category && (
-        <span className="mb-3 block text-xs font-semibold uppercase tracking-wider text-accent-500">
+        <span className="mb-3 block text-xs font-semibold uppercase tracking-wider text-[var(--secondary-base)]">
           {category}
         </span>
       )}
-      <h3 className="mb-2 text-xl font-bold text-foreground group-hover:text-primary-600 transition-colors">
+      <h3 className="mb-2 text-xl font-bold text-foreground group-hover:text-[var(--primary-hover)] transition-colors">
         {title}
       </h3>
       {description && (
-        <p className="text-sm text-foreground/70 leading-relaxed">
+        <p className="text-sm text-foreground-secondary leading-relaxed">
           {description}
         </p>
       )}
-      <div className="mt-4 flex items-center text-sm font-medium text-primary-600">
+      <div className="mt-4 flex items-center text-sm font-medium text-[var(--primary-base)]">
         Read more
         <svg
           xmlns="http://www.w3.org/2000/svg"

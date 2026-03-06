@@ -12,12 +12,12 @@ interface CTAProps {
 }
 
 export default function CTA({ text, href, onClick, variant = "primary", className = "", type = "button", disabled = false }: CTAProps) {
-  const baseStyles = "inline-flex items-center justify-center rounded-xl px-6 py-3 text-base font-semibold shadow-sm transition-smooth focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
+  const baseStyles = "inline-flex items-center justify-center rounded-xl px-6 py-3 text-base font-bold shadow-sm transition-smooth focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
   
   const variants = {
-    primary: "bg-primary-600 text-white hover:bg-primary-500 focus-visible:outline-primary-600",
-    secondary: "bg-accent-500 text-white hover:bg-accent-600 focus-visible:outline-accent-500",
-    outline: "bg-transparent text-foreground border border-border hover:bg-surface-hover focus-visible:outline-foreground",
+    primary: "bg-[var(--primary-base)] text-white hover:bg-[var(--primary-hover)] focus-visible:outline-[var(--primary-base)] border border-transparent shadow-[0_0_20px_rgba(228,87,107,0.2)]",
+    secondary: "bg-[var(--secondary-base)] text-white hover:bg-[var(--secondary-hover)] focus-visible:outline-[var(--secondary-base)] border border-transparent shadow-[0_0_20px_rgba(110,123,255,0.2)]",
+    outline: "bg-surface text-foreground border border-border hover:bg-surface-elevated focus-visible:outline-foreground hover:border-[var(--foreground-muted)]",
   };
 
   const currentStyles = `${baseStyles} ${variants[variant]} ${className}`;

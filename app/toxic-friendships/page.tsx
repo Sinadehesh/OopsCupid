@@ -21,7 +21,7 @@ export default function ToxicFriendshipsHub() {
         <div className="prose prose-slate dark:prose-invert max-w-none mb-16">
           <h2 className="text-3xl font-bold text-foreground">The Hidden Toll of a Toxic Friendship</h2>
           <p className="text-lg leading-relaxed text-foreground/80">
-            We spend so much time analyzing our <Link href="/dating-texting-analysis" className="text-primary-600 font-medium hover:underline">dating lives</Link> and looking for <Link href="/relationship-red-flags" className="text-primary-600 font-medium hover:underline">red flags in partners</Link>, but we often ignore the toxic dynamics lurking in our own friend groups. A toxic friend can drain your energy, sabotage your confidence, and subtly compete with you under the guise of "just joking." If you constantly feel exhausted after hanging out with someone, it's time to take a closer look at the relationship.
+            We spend so much time analyzing our <Link href="/dating-texting-analysis" className="text-[var(--primary-base)] font-medium hover:underline">dating lives</Link> and looking for <Link href="/relationship-red-flags" className="text-[var(--primary-base)] font-medium hover:underline">red flags in partners</Link>, but we often ignore the toxic dynamics lurking in our own friend groups. A toxic friend can drain your energy, sabotage your confidence, and subtly compete with you under the guise of "just joking." If you constantly feel exhausted after hanging out with someone, it's time to take a closer look at the relationship.
           </p>
         </div>
 
