@@ -24,42 +24,42 @@ const defaultCards: MainHeroCard[] = [
   {
     imageSrc:
       "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=80",
-    imageAlt: "Woman reflecting on her relationship",
-    title: "Me",
-    description: "Understand your patterns, doubts, and dating blind spots",
+    imageAlt: "Couple sitting together",
+    title: "Couples",
+    description: "Build a foundation for a lifetime of love",
     bgColor: "#F1A08B",
     textColor: "#111111",
-    href: "/me",
-  },
-  {
-    imageSrc:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=900&q=80",
-    imageAlt: "Person checking messages on a phone",
-    title: "Him",
-    description: "Figure out mixed signals, texting behavior, and red flags",
-    bgColor: "#9ED0CB",
-    textColor: "#111111",
-    href: "/him",
+    href: "#",
   },
   {
     imageSrc:
       "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=900&q=80",
-    imageAlt: "Group of friends together",
-    title: "My Friends",
-    description: "Spot toxic friendship patterns and emotional drama early",
+    imageAlt: "Parents hugging children",
+    title: "Parents",
+    description: "Raise emotionally intelligent children",
+    bgColor: "#9ED0CB",
+    textColor: "#111111",
+    href: "#",
+  },
+  {
+    imageSrc:
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=900&q=80",
+    imageAlt: "Single woman smiling at phone",
+    title: "Singles",
+    description: "Build lasting and stable relationships",
     bgColor: "#EAD882",
     textColor: "#111111",
-    href: "/friends",
+    href: "#",
   },
   {
     imageSrc:
       "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80",
-    imageAlt: "Woman speaking confidently",
-    title: "Tools",
-    description: "Use quizzes and analyzers to get clarity fast",
+    imageAlt: "Professional speaking",
+    title: "Professionals",
+    description: "Become a Gottman Method expert",
     bgColor: "#425E76",
     textColor: "#FFFFFF",
-    href: "/tools",
+    href: "#",
   },
 ];
 
@@ -114,55 +114,67 @@ function HeroCard({ card }: { card: MainHeroCard }) {
 
 export default function MainHero(props: MainHeroProps) {
   const {
-    topSubheading = "Welcome to",
-    headline = "OopsCupid",
+    topSubheading,
+    headline,
     question,
     subheadline,
     children,
     cards = defaultCards,
   } = props;
 
-  const displayQuestion =
-    question ||
-    subheadline ||
-    "How can we help you understand the people, patterns, and red flags confusing you?";
+  const displayQuestion = question || subheadline;
 
   return (
-    <section className="relative overflow-hidden bg-[#F6F3EE] pt-10 md:pt-12 lg:pt-14">
+    <section className="relative overflow-hidden bg-[#F9F4F4] pt-8 md:pt-10 lg:pt-12 pb-20 md:pb-24 lg:pb-28">
+      {/* subtle texture */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.16]"
+        className="pointer-events-none absolute inset-0 opacity-[0.10]"
         style={{
           backgroundImage:
-            "radial-gradient(rgba(81, 92, 102, 0.16) 0.7px, transparent 0.7px)",
+            "radial-gradient(rgba(108, 96, 116, 0.18) 0.7px, transparent 0.7px)",
           backgroundSize: "18px 18px",
           backgroundPosition: "0 0, 9px 9px",
         }}
       />
 
+      {/* light feminine gradients */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            `
+            radial-gradient(circle at 18% 14%, rgba(255, 182, 213, 0.18), transparent 26%),
+            radial-gradient(circle at 82% 12%, rgba(255, 210, 225, 0.16), transparent 24%),
+            linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 100%)
+            `,
+        }}
+      />
+
       <div className="relative z-10 mx-auto max-w-[1500px] px-6 md:px-10 lg:px-14">
-        <div className="mx-auto max-w-[1100px] text-center">
+        <div className="mx-auto max-w-[980px] text-center">
           {topSubheading && (
-            <p className="mb-2 text-[42px] font-normal leading-[1.08] tracking-[-0.035em] text-[#48627A] md:text-[58px] lg:text-[68px]">
+            <p className="mb-2 text-[28px] font-normal leading-[1.08] tracking-[-0.03em] text-[#8A6D85] md:text-[42px] lg:text-[52px]">
               {topSubheading}
             </p>
           )}
 
-          <h1 className="text-[88px] font-semibold leading-[0.9] tracking-[-0.06em] text-[#48627A] md:text-[138px] lg:text-[166px]">
+          <h1 className="text-[64px] font-semibold leading-[0.94] tracking-[-0.055em] text-[#5A7492] md:text-[100px] lg:text-[124px]">
             {headline}
           </h1>
 
           {displayQuestion && (
-            <p className="mx-auto mt-8 max-w-[1260px] text-[24px] font-normal leading-[1.32] tracking-[-0.028em] text-[#48627A] md:mt-10 md:text-[40px] lg:text-[54px]">
+            <p className="mx-auto mt-6 max-w-[980px] text-[18px] font-normal leading-[1.35] tracking-[-0.02em] text-[#667E99] md:mt-8 md:text-[30px] lg:text-[38px]">
               {displayQuestion}
             </p>
           )}
         </div>
 
         {children ? (
-          <div className="relative z-20 mt-12 md:mt-14 lg:mt-16">{children}</div>
+          <div className="relative z-20 mt-10 md:mt-12 lg:mt-14">{children}</div>
         ) : (
-          <div className="relative z-20 mt-12 md:mt-14 lg:mt-16">
+          <div className="relative z-20 mt-10 md:mt-12 lg:mt-14">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
               {cards.map((card) => (
                 <HeroCard
@@ -175,7 +187,7 @@ export default function MainHero(props: MainHeroProps) {
         )}
       </div>
 
-      <div className="relative z-0 -mt-10 h-[120px] md:h-[150px] lg:h-[190px]">
+      <div className="relative z-0 -mt-8 h-[110px] md:h-[135px] lg:h-[165px]">
         <svg
           viewBox="0 0 1440 220"
           preserveAspectRatio="none"
@@ -183,13 +195,12 @@ export default function MainHero(props: MainHeroProps) {
           aria-hidden="true"
         >
           <path
-            fill="#EFEAE2"
-            d="M0,42
-               C75,24 150,16 240,26
-               C360,39 460,78 585,86
-               C705,95 810,63 920,45
-               C1035,26 1140,23 1245,36
-               C1325,46 1385,59 1440,48
+            fill="#F3ECEB"
+            d="M0,48
+               C95,26 185,18 280,28
+               C405,42 515,79 650,86
+               C800,94 920,58 1045,40
+               C1160,24 1280,24 1440,48
                L1440,220
                L0,220
                Z"
