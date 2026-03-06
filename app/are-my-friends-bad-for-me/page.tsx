@@ -1,4 +1,4 @@
-import Hero from "@/components/ui/MainHero";
+import MainHero from "@/components/ui/MainHero";
 import QuizWidget from "@/components/features/QuizWidget";
 import Link from "next/link";
 import { Metadata } from "next";

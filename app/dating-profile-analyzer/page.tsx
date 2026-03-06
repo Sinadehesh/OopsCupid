@@ -1,4 +1,4 @@
-import Hero from "@/components/ui/MainHero";
+import MainHero from "@/components/ui/MainHero";
 import ToolForm from "@/components/features/ToolForm";
 import { Metadata } from "next";
 

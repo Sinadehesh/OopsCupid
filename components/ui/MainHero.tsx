@@ -2,23 +2,28 @@ import React from "react";
 import type { ReactNode } from "react";
 
 export interface MainHeroProps {
-  topSubheading: string;
+  topSubheading?: string;
   headline: string;
-  question: string;
+  question?: string;
+  subheadline?: string; // Backward compatibility
   children?: ReactNode;
 }
 
 export default function MainHero(props: MainHeroProps) {
-  const { topSubheading, headline, question, children } = props;
+  const { topSubheading, headline, question, subheadline, children } = props;
+  
+  const displayQuestion = question || subheadline;
   
   return (
     <section className="relative overflow-hidden bg-[#F8F7F3] pt-20 pb-40 md:pt-32 md:pb-64">
       <div className="container relative mx-auto px-4 text-center">
         <div className="relative z-30 flex flex-col items-center">
           {/* Element 1: Medium-sized, regular weight subheading */}
-          <span className="text-xl md:text-2xl font-normal text-[#5E6E79] mb-6">
-            {topSubheading}
-          </span>
+          {topSubheading && (
+            <span className="text-xl md:text-2xl font-normal text-[#5E6E79] mb-6">
+              {topSubheading}
+            </span>
+          )}
 
           {/* Element 2: Massive, bold primary headline */}
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-tight text-[#334756] mb-8 leading-[1.1]">
@@ -26,9 +31,11 @@ export default function MainHero(props: MainHeroProps) {
           </h1>
 
           {/* Element 3: Slightly larger, regular weight sub-headline asking a question */}
-          <p className="text-2xl md:text-3xl font-normal text-[#5E6E79] max-w-3xl leading-relaxed">
-            {question}
-          </p>
+          {displayQuestion && (
+            <p className="text-2xl md:text-3xl font-normal text-[#5E6E79] max-w-3xl leading-relaxed">
+              {displayQuestion}
+            </p>
+          )}
         </div>
 
         {children && (

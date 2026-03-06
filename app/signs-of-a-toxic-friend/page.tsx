@@ -1,4 +1,4 @@
-import Hero from "@/components/ui/MainHero";
+import MainHero from "@/components/ui/MainHero";
 import Link from "next/link";
 import { Metadata } from "next";
 

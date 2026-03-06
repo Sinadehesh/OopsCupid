@@ -9,6 +9,8 @@ interface CardProps {
   imageUrl?: string;
   accentColor?: string; // e.g., 'bg-[#FFB8A1]'
   textColor?: "text-black" | "text-white";
+  category?: string; // Backward compatibility
+  icon?: React.ReactNode; // Backward compatibility
 }
 
 export default function Card({ 
