@@ -1,9 +1,10 @@
 interface HeroProps {
   headline: string;
   subheadline: string;
+  children?: React.ReactNode;
 }
 
-export default function Hero({ headline, subheadline }: HeroProps) {
+export default function Hero({ headline, subheadline, children }: HeroProps) {
   return (
     <section className="relative overflow-hidden bg-background pt-32 pb-48 md:pt-40 md:pb-60">
       {/* Grainy Texture Layer */}
@@ -19,6 +20,12 @@ export default function Hero({ headline, subheadline }: HeroProps) {
         <p className="mx-auto mt-12 max-w-3xl text-xl text-[#5E6E79] lg:text-2xl font-medium tracking-tight">
           {subheadline}
         </p>
+        
+        {children && (
+          <div className="mt-12 flex flex-col sm:flex-row justify-center gap-4 relative z-10">
+            {children}
+          </div>
+        )}
       </div>
 
       {/* Decorative Wave Transition (Inspired by Gottman) */}
