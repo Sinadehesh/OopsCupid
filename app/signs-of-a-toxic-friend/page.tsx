@@ -1,4 +1,4 @@
-import Hero from "@/components/ui/Hero";
+import Hero from "@/components/ui/MainHero";
 import Link from "next/link";
 import { Metadata } from "next";
 
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function ArticlePage() {
   return (
     <>
-      <Hero
+      <MainHero
         headline="Subtle Signs of a Toxic Friend"
         subheadline="Because ignoring the problem won't make it go away."
       />

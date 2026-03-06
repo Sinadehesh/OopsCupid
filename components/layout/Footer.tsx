@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-12 mb-16">
           <div className="col-span-2 lg:col-span-2">
             <Link href="/" className="inline-block mb-6">
-              <span className="text-2xl font-bold tracking-tight text-foreground font-serif italic">
+              <span className="text-3xl font-medium tracking-tight text-[#334B63] transition-colors font-serif">
                 OopsCupid
               </span>
             </Link>

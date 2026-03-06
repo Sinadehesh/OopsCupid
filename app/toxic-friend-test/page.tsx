@@ -1,4 +1,4 @@
-import Hero from "@/components/ui/Hero";
+import Hero from "@/components/ui/MainHero";
 import QuizWidget from "@/components/features/QuizWidget";
 import Link from "next/link";
 import { Metadata } from "next";
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function QuizPage() {
   return (
     <>
-      <Hero
+      <MainHero
         headline="Toxic Friend Test"
         subheadline="Take this quick quiz to gain some objective clarity."
       />

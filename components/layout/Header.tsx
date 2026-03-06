@@ -5,7 +5,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur-sm">
       <div className="container mx-auto px-4 h-20 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
-          <span className="text-2xl font-bold tracking-tight text-foreground transition-colors italic font-serif">
+          <span className="text-3xl font-medium tracking-tight text-[#334B63] transition-colors font-serif">
             OopsCupid
           </span>
         </Link>
@@ -16,8 +16,11 @@ export default function Header() {
           <Link href="/attraction-patterns" className="text-sm font-semibold text-foreground/80 hover:text-primary-base transition-colors">Patterns</Link>
           <Link href="/blog" className="text-sm font-semibold text-foreground/80 hover:text-primary-base transition-colors">Blog</Link>
         </nav>
-        <div className="flex items-center gap-4">
-            <Link href="/chat-analyzer" className="hidden sm:inline-flex text-sm font-bold text-secondary-base hover:text-primary-base transition-colors border-b-2 border-transparent hover:border-primary-base">
+        <div className="flex items-center gap-6">
+            <Link href="/chat-analyzer" className="hidden sm:inline-flex text-sm font-bold uppercase tracking-widest text-[#334B63] hover:text-[#E58F7A] transition-colors transition-smooth">
+                Account
+            </Link>
+            <Link href="/chat-analyzer" className="hidden sm:inline-flex text-sm font-bold uppercase tracking-widest text-[#E58F7A] hover:text-[#DB7D66] transition-colors transition-smooth">
                 Try a Tool
             </Link>
             <div className="lg:hidden">

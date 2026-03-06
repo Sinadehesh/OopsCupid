@@ -1,4 +1,4 @@
-import Hero from "@/components/ui/Hero";
+import Hero from "@/components/ui/MainHero";
 import ToolForm from "@/components/features/ToolForm";
 import { Metadata } from "next";
 
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function ToolPage() {
   return (
     <>
-      <Hero
+      <MainHero
         headline="Chat Analyzer"
         subheadline="Paste the details below and let AI provide the harsh (but helpful) truth."
       />

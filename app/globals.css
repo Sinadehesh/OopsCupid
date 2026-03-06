@@ -19,6 +19,7 @@
 
   --font-sans: var(--font-geist-sans), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), monospace;
+  --font-serif: var(--font-playfair), serif;
   
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;

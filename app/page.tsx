@@ -18,33 +18,33 @@ export default function Home() {
         subheadline="How can we help you find the clarity, tools, or insight you need?"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 -mb-64">
-           <Card 
+            <Card 
               title="Red Flags" 
               description="Are you overthinking, or is something actually wrong?" 
               href="/relationship-red-flags"
               accentColor="bg-[#F8E9E4]"
-              icon={<FlagTriangleRight />}
+              imageUrl="/images/hubs/red-flags.png"
             />
             <Card 
               title="Texting" 
               description="Decode the mixed signals and hidden meanings." 
               href="/dating-texting-analysis"
               accentColor="bg-[#E6EBEE]"
-              icon={<MessageSquareText />}
+              imageUrl="/images/hubs/texting.png"
             />
             <Card 
               title="Friendships" 
               description="Identify one-sided and draining connections." 
               href="/toxic-friendships"
               accentColor="bg-[#EDF3F1]"
-              icon={<Ghost />}
+              imageUrl="/images/hubs/friendships.png"
             />
             <Card 
               title="Patterns" 
               description="Uncover your subconscious dating choices." 
               href="/attraction-patterns"
               accentColor="bg-[#F5F2EC]"
-              icon={<Magnet />}
+              imageUrl="/images/hubs/patterns.png"
             />
         </div>
       </MainHero>
