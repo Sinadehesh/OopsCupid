@@ -16,7 +16,11 @@ interface ToolResult {
   verdict?: string;
 }
 
-export default function ToolForm({ endpoint, placeholderText }: ToolFormProps) {
+export default function ToolForm({
+  toolName,
+  endpoint,
+  placeholderText,
+}: ToolFormProps) {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<ToolResult | null>(null);
@@ -25,13 +29,10 @@ export default function ToolForm({ endpoint, placeholderText }: ToolFormProps) {
     if (!input.trim()) return;
     setLoading(true);
     setResult(null);
-
-    // Fake delay
-    await new Promise((r) => setTimeout(r, 1500));
-
     try {
       const res = await fetch(endpoint, {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: input }),
       });
       const data = await res.json();
@@ -45,65 +46,103 @@ export default function ToolForm({ endpoint, placeholderText }: ToolFormProps) {
   };
 
   return (
-    <div className="max-w-3xl mx-auto">
-      <div className="bg-surface rounded-2xl shadow-sm border border-border p-6 md:p-8">
-        <label htmlFor="toolInput" className="block text-lg font-semibold text-foreground mb-4">
-          Paste the text here
-        </label>
-        <textarea
-          id="toolInput"
-          rows={6}
-          className="block w-full rounded-xl border border-border bg-background p-4 text-foreground focus:border-[var(--secondary-base)] focus:ring-[var(--secondary-base)] outline-none shadow-sm resize-none transition-colors"
-          placeholder={placeholderText}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-        />
-        <div className="mt-6 flex justify-end">
-          <CTA
-            text={loading ? "Analyzing..." : "Analyze Now"}
-            onClick={analyze}
-            disabled={loading || !input.trim()}
-          />
-        </div>
-      </div>
+    <div className="w-full max-w-2xl mx-auto">
 
-      {loading && (
-        <div className="mt-8 p-8 text-center animate-pulse rounded-2xl bg-surface border border-border">
-          <div className="w-12 h-12 border-4 border-border border-t-[var(--secondary-base)] rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-foreground-secondary font-medium">Our AI is reading between the lines...</p>
+      {/* Input area */}
+      {!result && !loading && (
+        <div className="flex flex-col gap-4">
+          <label
+            htmlFor="tool-input"
+            className="text-[#334B63] font-semibold text-base"
+          >
+            Paste the text below — we'll do the reading between the lines.
+          </label>
+          <textarea
+            id="tool-input"
+            rows={6}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder={placeholderText}
+            className="w-full rounded-2xl border border-[rgba(51,75,99,0.15)] bg-[#FFFDFC] px-5 py-4 text-[#334B63] text-base leading-relaxed placeholder:text-[#8A6D85]/60 focus:outline-none focus:ring-2 focus:ring-[#FFB8A1] focus:border-transparent resize-none transition-smooth"
+          />
+          <CTA
+            text={`Analyze with ${toolName}`}
+            onClick={analyze}
+            variant="primary"
+            showArrow
+            disabled={!input.trim()}
+            className="self-start"
+          />
         </div>
       )}
 
-      {result && !loading && (
-        <div className="mt-8">
-          <div className="rounded-2xl bg-[var(--secondary-base)]/10 border border-[var(--secondary-base)]/20 p-8 shadow-sm">
-            <h3 className="text-2xl font-bold text-foreground mb-4">Analysis Result</h3>
-            {result.error ? (
-              <p className="text-red-500">{result.error}</p>
-            ) : (
-              <div className="prose prose-slate dark:prose-invert max-w-none">
-                <p className="text-lg leading-relaxed text-foreground-secondary mb-6">{result.summary}</p>
-                
-                <h4 className="font-semibold text-foreground mb-2">Key Themes Detected:</h4>
-                <ul className="mb-6 space-y-2">
-                  {result.themes?.map((theme: string, i: number) => (
-                    <li key={i} className="flex items-center gap-2 text-foreground-secondary">
-                      <span className="w-2 h-2 rounded-full bg-[var(--secondary-base)]" />
-                      {theme}
-                    </li>
-                  ))}
-                </ul>
+      {/* Loading state */}
+      {loading && (
+        <div className="flex flex-col items-center gap-4 py-12 text-center">
+          <div className="h-8 w-8 rounded-full border-2 border-[#FFB8A1] border-t-transparent animate-spin" />
+          <p className="text-[#5E6E79] text-base font-normal">
+            Reading between the lines…
+          </p>
+        </div>
+      )}
 
-                <h4 className="font-semibold text-foreground mb-2">Verdict:</h4>
-                <div className="bg-background/50 p-4 rounded-xl border border-border">
-                  <p className="font-medium text-foreground">{result.verdict}</p>
+      {/* Result state */}
+      {result && !loading && (
+        <div className="flex flex-col gap-6 rounded-2xl border border-[rgba(51,75,99,0.10)] bg-[#FFFDFC] px-8 py-8">
+          <h3 className="text-[#334B63] text-2xl font-semibold tracking-tight">
+            {toolName} Result
+          </h3>
+
+          {result.error ? (
+            <p className="text-red-500 text-sm">{result.error}</p>
+          ) : (
+            <>
+              {result.summary && (
+                <p className="text-[#5E6E79] text-base leading-relaxed">
+                  {result.summary}
+                </p>
+              )}
+
+              {result.themes && result.themes.length > 0 && (
+                <div className="flex flex-col gap-2">
+                  <p className="text-[#334B63] text-sm font-semibold uppercase tracking-widest">
+                    Key Themes Detected
+                  </p>
+                  <ul className="flex flex-wrap gap-2">
+                    {result.themes.map((theme, i) => (
+                      <li
+                        key={i}
+                        className="rounded-full bg-[#F3ECEB] px-4 py-1.5 text-sm text-[#334B63] font-medium"
+                      >
+                        {theme}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </div>
-            )}
-            <div className="mt-8 flex justify-center">
-              <CTA text="Analyze Another" variant="outline" onClick={() => { setResult(null); setInput(""); }} />
-            </div>
-          </div>
+              )}
+
+              {result.verdict && (
+                <div className="rounded-xl bg-[#F9F4F4] px-6 py-4 border border-[rgba(51,75,99,0.08)]">
+                  <p className="text-[#334B63] text-sm font-semibold uppercase tracking-widest mb-1">
+                    Verdict
+                  </p>
+                  <p className="text-[#334B63] text-base font-semibold">
+                    {result.verdict}
+                  </p>
+                </div>
+              )}
+            </>
+          )}
+
+          <CTA
+            text="Analyze another"
+            variant="secondary"
+            onClick={() => {
+              setResult(null);
+              setInput("");
+            }}
+            className="self-start"
+          />
         </div>
       )}
     </div>
