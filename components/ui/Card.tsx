@@ -5,12 +5,15 @@ import { ArrowRight } from "lucide-react";
 interface CardProps {
   title: string;
   description?: string;
-  href: string;
+  href?: string;
   imageUrl?: string;
   accentColor?: string;
-  textColor?: "text-black" | "text-white";
+  textColor?: string;
   category?: string;
   icon?: React.ReactNode;
+  tag?: string;
+  buttonText?: string;
+  variant?: "default" | "tool" | "quiz" | "proof" | "article";
 }
 
 export default function Card({
@@ -19,12 +22,86 @@ export default function Card({
   href,
   imageUrl,
   accentColor = "bg-white",
-  textColor = "text-black",
+  textColor = "text-[#334B63]",
+  tag,
+  buttonText,
+  variant = "default",
 }: CardProps) {
+  if (variant === "tool") {
+    return (
+      <div className="flex flex-col rounded-[18px] bg-white p-8 md:p-10 shadow-sm border border-[rgba(51,75,99,0.05)] h-full">
+        <h3 className="text-[24px] font-semibold leading-tight text-[#334B63] mb-4">
+          {title}
+        </h3>
+        <p className="text-[17px] text-[#5E6E79] font-normal leading-relaxed mb-8 flex-grow">
+          {description}
+        </p>
+        {href && buttonText && (
+          <Link
+            href={href}
+            className="inline-block w-fit bg-[#FFB8A1] text-black rounded-full px-8 py-3 font-semibold hover:bg-[#F0A090] transition-colors duration-200"
+          >
+            {buttonText}
+          </Link>
+        )}
+      </div>
+    );
+  }
+
+  if (variant === "quiz") {
+    return (
+      <Link
+        href={href ?? "#"}
+        className={`group flex flex-col justify-center rounded-[16px] ${accentColor} p-8 md:p-10 transition-transform duration-200 hover:-translate-y-1 h-full border border-[rgba(51,75,99,0.05)]`}
+      >
+        <h3 className="text-[22px] font-semibold leading-[1.3] text-[#334B63]">
+          {title}
+        </h3>
+        <span className="mt-4 flex items-center text-[15px] font-semibold text-[#5A7492]">
+          Take Quiz <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+        </span>
+      </Link>
+    );
+  }
+
+  if (variant === "proof") {
+    return (
+      <div className="flex flex-col rounded-[16px] bg-[#FFFDFC] p-8 border border-[rgba(51,75,99,0.10)] h-full">
+        <h3 className="text-[20px] font-semibold leading-snug text-[#334B63] mb-4">
+          {title}
+        </h3>
+        <p className="text-[16px] text-[#5E6E79] font-normal leading-relaxed">
+          {description}
+        </p>
+      </div>
+    );
+  }
+
+  if (variant === "article") {
+    return (
+      <article className="h-full">
+        <Link
+          href={href ?? "#"}
+          className="group flex flex-col rounded-[16px] bg-white p-6 md:p-8 shadow-sm border border-[rgba(51,75,99,0.05)] transition-shadow hover:shadow-md h-full"
+        >
+          {tag && (
+            <span className="mb-4 inline-block text-[13px] font-semibold tracking-wide uppercase text-[#8A6D85]">
+              {tag}
+            </span>
+          )}
+          <h3 className="text-[20px] font-semibold leading-[1.4] text-[#334B63] group-hover:text-[#5A7492] transition-colors">
+            {title}
+          </h3>
+        </Link>
+      </article>
+    );
+  }
+
+  // Default fallback (previous Card implementation logic)
   return (
     <Link
-      href={href}
-      className="group block overflow-hidden rounded-[18px] bg-white/70 shadow-[0_6px_24px_rgba(120,95,120,0.08)] ring-1 ring-black/5 backdrop-blur-[2px] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_38_8px_rgba(120,95,120,0.12)]"
+      href={href ?? "#"}
+      className="group block overflow-hidden rounded-[18px] bg-white/70 shadow-[0_6px_24px_rgba(120,95,120,0.08)] ring-1 ring-black/5 backdrop-blur-[2px] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_38px_rgba(120,95,120,0.12)]"
     >
       <div className="relative aspect-[0.95/1] overflow-hidden bg-[#F3ECEF]">
         {imageUrl ? (

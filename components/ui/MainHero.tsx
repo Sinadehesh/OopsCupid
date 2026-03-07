@@ -1,5 +1,6 @@
 import React from "react";
 import type { ReactNode } from "react";
+import Link from "next/link";
 
 export interface MainHeroCard {
   imageSrc: string;
@@ -13,7 +14,7 @@ export interface MainHeroCard {
 
 export interface MainHeroProps {
   topSubheading?: string;
-  headline: string;
+  headline?: string;
   question?: string;
   subheadline?: string;
   children?: ReactNode;
@@ -24,42 +25,42 @@ const defaultCards: MainHeroCard[] = [
   {
     imageSrc:
       "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=80",
-    imageAlt: "Couple sitting together",
-    title: "Couples",
-    description: "Build a foundation for a lifetime of love",
+    imageAlt: "woman reflecting on her relationship patterns",
+    title: "Me",
+    description: "Understand your dating patterns and blind spots",
     bgColor: "#F1A08B",
     textColor: "#111111",
-    href: "#",
-  },
-  {
-    imageSrc:
-      "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=900&q=80",
-    imageAlt: "Parents hugging children",
-    title: "Parents",
-    description: "Raise emotionally intelligent children",
-    bgColor: "#9ED0CB",
-    textColor: "#111111",
-    href: "#",
+    href: "/me",
   },
   {
     imageSrc:
       "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=900&q=80",
-    imageAlt: "Single woman smiling at phone",
-    title: "Singles",
-    description: "Build lasting and stable relationships",
+    imageAlt: "woman reading confusing text messages on her phone",
+    title: "Him",
+    description: "Decode mixed signals, texts, and red flag behavior",
+    bgColor: "#9ED0CB",
+    textColor: "#111111",
+    href: "/him",
+  },
+  {
+    imageSrc:
+      "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=900&q=80",
+    imageAlt: "friends together but one looks uncomfortable",
+    title: "My Friends",
+    description: "Identify toxic friendships and one-sided connections",
     bgColor: "#EAD882",
     textColor: "#111111",
-    href: "#",
+    href: "/friends",
   },
   {
     imageSrc:
       "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80",
-    imageAlt: "Professional speaking",
-    title: "Professionals",
-    description: "Become a Gottman Method expert",
+    imageAlt: "woman confidently using relationship clarity tool",
+    title: "Free Tools",
+    description: "Chat analyzer, quizzes, and profile readers",
     bgColor: "#425E76",
     textColor: "#FFFFFF",
-    href: "#",
+    href: "/tools",
   },
 ];
 
@@ -68,7 +69,7 @@ function ArrowIcon() {
     <svg
       aria-hidden="true"
       viewBox="0 0 24 24"
-      className="ml-2 inline-block h-6 w-6 align-[-3px]"
+      className="ml-2 inline-block h-5 w-5 align-[-3px]"
       fill="none"
       stroke="currentColor"
       strokeWidth="2.5"
@@ -84,45 +85,60 @@ function ArrowIcon() {
 function HeroCard({ card }: { card: MainHeroCard }) {
   const textColor = card.textColor ?? "#111111";
 
-  return (
-    <a
-      href={card.href ?? "#"}
-      className="group block overflow-hidden rounded-[18px] shadow-none transition-transform duration-200 hover:-translate-y-1"
-      style={{ backgroundColor: card.bgColor, color: textColor }}
-    >
+  // Use Link if href exists
+  const CardContent = (
+    <div className="h-full w-full">
       <div className="h-[225px] w-full overflow-hidden">
         <img
           src={card.imageSrc}
           alt={card.imageAlt}
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>
 
-      <div className="flex min-h-[275px] flex-col px-8 pt-8 pb-10 text-center">
-        <h3 className="text-[42px] font-semibold leading-[1.02] tracking-[-0.03em]">
+      <div className="flex min-h-[250px] flex-col justify-center px-8 pt-6 pb-10 text-center md:px-6 md:min-h-[280px] lg:px-8">
+        <h3 className="text-[32px] md:text-[36px] font-semibold leading-[1.1] tracking-[-0.02em]">
           {card.title}
         </h3>
 
-        <p className="mx-auto mt-8 max-w-[280px] text-[22px] leading-[1.55] tracking-[-0.01em]">
+        <p className="mx-auto mt-6 max-w-[280px] text-[18px] md:text-[20px] font-normal leading-[1.5] tracking-tight">
           {card.description}
           <ArrowIcon />
         </p>
       </div>
+    </div>
+  );
+
+  const wrapperClass = "group block h-full overflow-hidden rounded-[18px] shadow-sm transition-transform duration-200 hover:-translate-y-1";
+  
+  if (card.href) {
+    return (
+      <Link href={card.href} className={wrapperClass} style={{ backgroundColor: card.bgColor, color: textColor }}>
+        {CardContent}
+      </Link>
+    );
+  }
+
+  return (
+    <a href="#" className={wrapperClass} style={{ backgroundColor: card.bgColor, color: textColor }}>
+      {CardContent}
     </a>
   );
 }
 
 export default function MainHero(props: MainHeroProps) {
   const {
-    topSubheading,
-    headline,
+    topSubheading = "Welcome to OopsCupid",
+    headline = "Relationship Red Flags, Mixed Signals & Dating Pattern Quizzes for Women",
     question,
     subheadline,
     children,
     cards = defaultCards,
   } = props;
 
-  const displayQuestion = question || subheadline;
+  const displayQuestion =
+    question || subheadline || 
+    "Not sure if he likes you or just likes the attention? OopsCupid helps you spot red flags, decode his texts, and understand why you keep ending up in the same situation.";
 
   return (
     <section className="relative overflow-hidden bg-[#F9F4F4] pt-3 md:pt-4 lg:pt-5 pb-14 md:pb-18 lg:pb-22">
@@ -138,6 +154,7 @@ export default function MainHero(props: MainHeroProps) {
         }}
       />
 
+      {/* light feminine gradients */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
@@ -150,30 +167,30 @@ export default function MainHero(props: MainHeroProps) {
         }}
       />
 
-      <div className="relative z-10 mx-auto max-w-[1500px] px-6 md:px-10 lg:px-14">
-        <div className="mx-auto max-w-[980px] text-center">
+      <div className="relative z-10 mx-auto max-w-[1500px] px-4 sm:px-6 md:px-10 lg:px-14">
+        <div className="mx-auto max-w-[1000px] text-center">
           {topSubheading && (
-            <p className="mb-1 text-[28px] font-normal leading-[1.05] tracking-[-0.03em] text-[#8A6D85] md:text-[40px] lg:text-[48px]">
+            <p className="mb-2 text-[20px] md:text-[22px] font-normal leading-[1.2] text-[#8A6D85]">
               {topSubheading}
             </p>
           )}
 
-          <h1 className="text-[60px] font-semibold leading-[0.92] tracking-[-0.055em] text-[#5A7492] md:text-[92px] lg:text-[112px]">
+          <h1 className="text-[40px] leading-[1.05] tracking-tight font-semibold text-[#334B63] sm:text-[46px] md:text-[60px] lg:text-[76px]">
             {headline}
           </h1>
 
           {displayQuestion && (
-            <p className="mx-auto mt-4 max-w-[920px] text-[18px] font-normal leading-[1.32] tracking-[-0.02em] text-[#667E99] md:mt-5 md:text-[28px] lg:text-[34px]">
+            <p className="mx-auto mt-6 max-w-[880px] text-[18px] md:text-[22px] lg:text-[24px] font-normal leading-[1.5] text-[#5E6E79]">
               {displayQuestion}
             </p>
           )}
         </div>
 
         {children ? (
-          <div className="relative z-20 mt-8 md:mt-9 lg:mt-10">{children}</div>
+          <div className="relative z-20 mt-10 md:mt-12 lg:mt-14">{children}</div>
         ) : (
-          <div className="relative z-20 mt-8 md:mt-9 lg:mt-10">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <div className="relative z-20 mt-10 md:mt-14 lg:mt-16">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {cards.map((card) => (
                 <HeroCard
                   key={`${card.title}-${card.description}`}
@@ -185,7 +202,7 @@ export default function MainHero(props: MainHeroProps) {
         )}
       </div>
 
-      <div className="relative z-0 -mt-8 h-[110px] md:h-[135px] lg:h-[165px]">
+      <div className="relative z-0 -mt-8 h-[70px] sm:h-[110px] md:h-[135px] lg:h-[165px]">
         <svg
           viewBox="0 0 1440 220"
           preserveAspectRatio="none"
@@ -193,7 +210,7 @@ export default function MainHero(props: MainHeroProps) {
           aria-hidden="true"
         >
           <path
-            fill="#F3ECEB"
+            fill="#FFFDFC"
             d="M0,48
                C95,26 185,18 280,28
                C405,42 515,79 650,86
