@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import CTA from "../ui/CTA";
+import Link from "next/link";
 
 const questionsBank: Record<string, { id: number, text: string, options: string[] }[]> = {
   "attachment-style": [
@@ -13,11 +14,11 @@ const questionsBank: Record<string, { id: number, text: string, options: string[
     { id: 6, text: "What is your biggest relationship fear?", options: ["I don't have major relationship fears.", "Being abandoned or not loved enough.", "Losing my freedom or being controlled.", "Being betrayed or trapped."] },
     { id: 7, text: "How quickly do you open up to new partners?", options: ["At a normal, steady pace.", "Very quickly, I overshare to build a bond.", "Very slowly, if at all.", "I open up but then deeply regret it and pull back."] },
     { id: 8, text: "How do you handle your partner being highly emotional or needy?", options: ["I support them comfortably.", "I try to fix it frantically so they don't leave me.", "I feel overwhelmed and want to distance myself.", "I get overwhelmed and react defensively."] },
+    // NEW QUESTION FOR CONDITIONAL ROUTING
+    { id: 9, text: "Lastly, what is your current relationship status?", options: ["Single and navigating the dating world", "Currently in a relationship or actively dating someone"] },
   ],
   "default": [
     { id: 1, text: "How often do they text you first?", options: ["Every day", "Usually, but sometimes I do", "Rarely, I always initiate", "They leave me on read"] },
-    { id: 2, text: "Do they remember small details you've shared?", options: ["Always", "Sometimes", "Only the big things", "Never"] },
-    { id: 3, text: "How do you feel after spending time with them?", options: ["Energized and happy", "Normal", "Drained or anxious", "Confused"] },
   ]
 };
 
@@ -29,6 +30,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const [loading, setLoading] = useState(false);
 
   const activeQuestions = questionsBank[quizName] || questionsBank["default"];
+  const isFinished = answers.length === activeQuestions.length;
 
   const handleOptionClick = (option: string) => {
     const newAnswers = [...answers, option];
@@ -42,95 +44,164 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const handleSubmit = () => {
     setLoading(true);
     
-    // Simulate API delay for a clinical feeling
     setTimeout(() => {
       let title = "";
       let description = "";
-      let percentile = null;
+      let behaviors = "";
+      let chances = "";
+      let healthScore = 0;
+      let isSingle = true;
 
       if (quizName === "attachment-style") {
         let secure = 0, anxious = 0, avoidant = 0, fearful = 0;
         
-        answers.forEach((ans) => {
+        answers.slice(0, 8).forEach((ans) => {
           if (ans.includes("Comfortable.") || ans.includes("naturally") || ans.includes("busy") || ans.includes("communicate openly") || ans.includes("Very comfortable") || ans.includes("major relationship fears") || ans.includes("steady pace") || ans.includes("support them comfortably")) secure++;
           else if (ans.includes("Anxious.") || ans.includes("crave it intensely") || ans.includes("losing interest") || ans.includes("desperate for reassurance") || ans.includes("depend on them completely") || ans.includes("Being abandoned") || ans.includes("Very quickly") || ans.includes("fix it so they don't leave")) anxious++;
           else if (ans.includes("Relieved.") || ans.includes("prefer self-reliance") || ans.includes("don't really notice") || ans.includes("shut down") || ans.includes("hate depending") || ans.includes("Losing my freedom") || ans.includes("Very slowly") || ans.includes("distance myself")) avoidant++;
           else fearful++;
         });
 
+        isSingle = answers[8]?.includes("Single");
+
         const scores: Record<string, number> = { "Secure": secure, "Anxious Preoccupied": anxious, "Dismissive Avoidant": avoidant, "Fearful Avoidant (Disorganized)": fearful };
         const primaryStyle = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
         
-        const basePercentile = (secure / 8) * 100;
-        const curve = Math.floor(Math.random() * 8) - 3; 
-        percentile = Math.min(99, Math.max(5, Math.round(basePercentile + curve)));
-        
+        healthScore = Math.min(99, Math.max(1, Math.round((secure / 8) * 100) + (Math.floor(Math.random() * 8) - 3)));
         title = `Your Attachment Style: ${primaryStyle}`;
 
         if (primaryStyle === "Secure") {
-          description = `You scored highest in Secure Attachment!\n\nYou have a remarkably healthy approach to relationships. You are comfortable with intimacy but don't lose your sense of self. You communicate effectively, trust your partners, and don't play psychological games. When disagreements happen, you seek resolution rather than revenge.\n\nRelative to the general population, your relationship patterns are healthier than ${percentile}% of people. Keep setting the standard!`;
+          description = "You have a remarkably healthy approach to relationships. You are comfortable with intimacy but don't lose your sense of self.";
+          behaviors = "• You communicate your needs clearly without blame.\n• You don't panic when your partner asks for space.\n• You give your partner the benefit of the doubt during arguments.";
+          chances = "Extremely High. You naturally gravitate towards other secure people and build stable, long-lasting foundations.";
         } else if (primaryStyle === "Anxious Preoccupied") {
-          percentile = Math.max(12, Math.round((secure/8)*100)); 
-          description = `You scored highest in Anxious Preoccupied Attachment.\n\nYou have a beautiful capacity for deep love, but your fear of abandonment often hijacks your peace of mind. You likely overanalyze texts, need constant reassurance, and quietly fear your partner will leave you. Your nervous system is constantly scanning for threats of rejection.\n\nYour healthy secure score is higher than ${percentile}% of people. The good news? You can heal this. Your next step is learning to self-soothe and build internal validation so you don't rely completely on a partner for emotional safety.`;
+          description = "You have a beautiful capacity for deep love, but your fear of abandonment often hijacks your peace of mind. Your nervous system is constantly scanning for threats of rejection.";
+          behaviors = "• Double or triple texting when left on read.\n• Seeking constant verbal reassurance that you are loved.\n• Threatening to leave or starting fights just to see if your partner will 'fight for you'.";
+          chances = "Moderate to Low (until healed). You tend to attract Avoidant partners, creating a toxic, exhausting trap. Finding a Secure partner—and learning to self-soothe—is crucial for your happiness.";
         } else if (primaryStyle === "Dismissive Avoidant") {
-          percentile = Math.max(15, Math.round((secure/8)*100));
-          description = `You scored highest in Dismissive Avoidant Attachment.\n\nYou value your independence above almost everything else. When partners get "too close" or emotional, your instinct is to pull away, protect your space, and put up walls. You often mistake deep intimacy for a loss of freedom.\n\nYour healthy secure score is higher than ${percentile}% of people. To grow, you need to recognize that keeping everyone at arm's length is actually a defense mechanism, not just a personality trait. Practice letting your guard down in safe environments.`;
+          description = "You value your independence above almost everything else. When partners get 'too close' or emotional, your instinct is to pull away and protect your space.";
+          behaviors = "• Stonewalling or shutting down completely during emotional arguments.\n• Hyper-focusing on your partner's small flaws to justify pulling away.\n• Feeling 'suffocated' by normal relationship expectations.";
+          chances = "Low (until you tolerate intimacy). You often end up alone or in surface-level relationships because you eject when things get 'too real' or vulnerable.";
         } else {
-          percentile = Math.max(8, Math.round((secure/8)*100));
-          description = `You scored highest in Fearful Avoidant (Disorganized) Attachment.\n\nYou experience a confusing push-pull dynamic. You deeply desire love and intimacy, but your nervous system is also terrified of it. When someone gets close, you might unconsciously sabotage it or panic, expecting to be hurt or betrayed.\n\nYour healthy secure score is higher than ${percentile}% of people. This style usually stems from chaotic early life experiences. Healing involves rewiring your brain to realize that consistency, safety, and trust are actually possible.`;
+          description = "You experience a confusing push-pull dynamic. You deeply desire love and intimacy, but your nervous system is simultaneously terrified of it.";
+          behaviors = "• Intense 'come here, now go away' energy.\n• Ghosting out of a sudden, overwhelming fear of rejection.\n• Unconsciously sabotaging the relationship when things feel 'too peaceful' because chaos feels safer.";
+          chances = "Very Low (unless you break the cycle). Because deep intimacy feels threatening, you will naturally sabotage safe relationships until you rewire your brain to trust consistency.";
         }
-      } else {
-        const isPositive = Math.random() > 0.5;
-        title = isPositive ? "You're Validated" : "We Need to Talk";
-        description = isPositive ? "Based on your answers, your instincts are spot on. Keep setting those boundaries!" : "Your answers indicate some major repeating patterns. It might be time to step back and re-evaluate this dynamic.";
       }
 
-      setResultData({ title, description, percentile });
+      setResultData({ title, description, behaviors, chances, healthScore, isSingle });
       setShowResult(true);
       setLoading(false);
     }, 1200);
   };
 
+  const progress = Math.round((answers.length / activeQuestions.length) * 100);
+
+  // --- RENDER RESULTS SCREEN ---
   if (showResult && resultData) {
+    const isBadScore = resultData.healthScore < 50;
+    
     return (
-      <div className="rounded-2xl bg-white text-center w-full mx-auto">
-        <span className="text-sm font-bold uppercase tracking-widest text-[#A020F0] mb-3 block">Your Clinical Result</span>
-        <h3 className="text-[28px] md:text-[34px] font-extrabold text-gray-900 mb-6 leading-tight">
+      <div className="rounded-2xl bg-white text-left w-full mx-auto animate-in fade-in duration-500">
+        <span className="text-sm font-bold uppercase tracking-widest text-[#8e9aaf] mb-3 block text-center">Your Clinical Result</span>
+        <h3 className="text-[28px] md:text-[34px] font-extrabold text-[#334B63] mb-6 leading-tight text-center">
           {resultData.title}
         </h3>
         
-        {resultData.percentile && (
-          <div className="bg-gradient-to-r from-purple-100 to-pink-50 border border-purple-200 text-purple-900 p-4 rounded-xl font-bold text-lg mb-8 inline-block shadow-sm">
-            Healthy Attachment Score: Top {100 - resultData.percentile}%
+        {/* Dynamic Alarming / Positive Percentile Badge */}
+        <div className="flex justify-center mb-10">
+          <div className={`px-6 py-3 rounded-xl border-2 font-bold text-lg text-center shadow-sm ${isBadScore ? 'bg-red-50 text-red-700 border-red-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200'}`}>
+            {isBadScore 
+              ? `⚠️ Warning: You scored in the bottom ${resultData.healthScore}% for healthy attachment.`
+              : `✨ Great News: You scored in the top ${100 - resultData.healthScore}% for healthy attachment.`
+            }
           </div>
-        )}
+        </div>
 
-        <div className="text-gray-600 text-[18px] leading-relaxed mb-10 text-left whitespace-pre-wrap px-2 md:px-6">
-          {resultData.description}
+        <div className="space-y-8 px-2 md:px-6">
+          <div>
+            <h4 className="text-xl font-bold text-[#334B63] mb-2">The Psychology</h4>
+            <p className="text-[#5E6E79] text-lg leading-relaxed">{resultData.description}</p>
+          </div>
+
+          <div className="bg-[#feeafa] p-6 rounded-2xl border border-[#efd3d7]">
+            <h4 className="text-xl font-bold text-[#334B63] mb-3">Explicit Behaviors You Show:</h4>
+            <p className="text-[#5E6E79] text-lg leading-relaxed whitespace-pre-wrap">{resultData.behaviors}</p>
+          </div>
+
+          <div>
+            <h4 className="text-xl font-bold text-[#334B63] mb-2">Chances of a Safe, Good Relationship:</h4>
+            <p className="text-[#5E6E79] text-lg leading-relaxed font-medium">{resultData.chances}</p>
+          </div>
         </div>
         
-        <CTA text="Take Another Quiz" variant="secondary" onClick={() => {
-          setCurrentQuestion(0);
-          setAnswers([]);
-          setShowResult(false);
-          setResultData(null);
-        }} />
+        {/* CONDITIONAL CTAs BASED ON RELATIONSHIP STATUS */}
+        <div className="mt-12 pt-8 border-t border-gray-100 flex flex-col gap-4 px-2 md:px-6">
+          <h4 className="text-center font-bold text-[#334B63] text-lg mb-2">Your Recommended Next Steps:</h4>
+          
+          {resultData.isSingle ? (
+            <>
+              <Link href="/attraction-patterns" className="w-full text-center bg-[#8e9aaf] text-white font-bold py-4 rounded-xl hover:bg-[#7a869a] transition-colors shadow-md">
+                Take Quiz: What Kind of Person Do I Attract? →
+              </Link>
+              <Link href="/understanding-attachment-styles" className="w-full text-center bg-[#efd3d7] text-[#334B63] font-bold py-4 rounded-xl hover:bg-[#e0c4c8] transition-colors">
+                Read: How to Fix My Attachment Style
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link href="/partners-attachment-style" className="w-full text-center bg-[#cbc0d3] text-[#334B63] font-bold py-4 rounded-xl hover:bg-[#b8adc0] transition-colors shadow-md">
+                Take Quiz: What is My Partner's Attachment Style? →
+              </Link>
+              <Link href="/understanding-attachment-styles" className="w-full text-center bg-[#dee2ff] text-[#334B63] font-bold py-4 rounded-xl hover:bg-[#cdd1f0] transition-colors">
+                Read: How to Fix My Attachment Style
+              </Link>
+            </>
+          )}
+        </div>
       </div>
     );
   }
 
+  // --- RENDER 'ANALYZE' BUTTON SCREEN (HIDES QUESTIONS) ---
+  if (isFinished) {
+    return (
+      <div className="w-full mx-auto text-center py-10 animate-in fade-in zoom-in duration-300">
+        <div className="w-20 h-20 mx-auto bg-[#dee2ff] rounded-full flex items-center justify-center mb-6 shadow-inner">
+          <span className="text-3xl">🧠</span>
+        </div>
+        <h3 className="text-3xl font-extrabold text-[#334B63] mb-4">Assessment Complete</h3>
+        <p className="text-[#5E6E79] text-lg mb-10 max-w-md mx-auto">
+          We have analyzed your psychological responses. Click below to generate your personalized clinical report.
+        </p>
+        <CTA 
+          text={loading ? "Analyzing Profile..." : "Analyze My Attachment Style"} 
+          onClick={handleSubmit} 
+          disabled={loading}
+          variant="primary"
+        />
+      </div>
+    );
+  }
+
+  // --- RENDER ACTIVE QUESTIONS ---
   const q = activeQuestions[currentQuestion];
 
   return (
-    <div className="w-full mx-auto">
-      <div className="mb-8 flex justify-between items-center text-sm font-semibold text-purple-400 uppercase tracking-wider border-b border-gray-100 pb-4">
-        <span>Question {currentQuestion + 1} of {activeQuestions.length}</span>
-        <span className="bg-purple-50 text-[#A020F0] py-1 px-3 rounded-full">
-          {Math.round(((currentQuestion) / activeQuestions.length) * 100)}% Completed
-        </span>
+    <div className="w-full mx-auto animate-in slide-in-from-right-4 duration-300">
+      
+      {/* Visual Progress Bar */}
+      <div className="mb-8">
+        <div className="flex justify-between items-center text-sm font-semibold text-[#8e9aaf] uppercase tracking-wider mb-3">
+          <span>Question {currentQuestion + 1} of {activeQuestions.length}</span>
+          <span>{progress}% Completed</span>
+        </div>
+        <div className="w-full bg-[#feeafa] rounded-full h-2.5 border border-[#efd3d7]">
+          <div className="bg-[#8e9aaf] h-2.5 rounded-full transition-all duration-500 ease-out" style={{ width: `${progress}%` }}></div>
+        </div>
       </div>
 
-      <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 leading-snug text-center">
+      <h3 className="text-2xl md:text-3xl font-bold text-[#334B63] mb-8 leading-snug text-center min-h-[80px] flex items-center justify-center">
         {q.text}
       </h3>
 
@@ -139,23 +210,12 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
           <button
             key={idx}
             onClick={() => handleOptionClick(option)}
-            className="w-full text-left p-5 rounded-2xl border-2 border-gray-100 hover:border-[#A020F0] hover:bg-purple-50/30 transition-all duration-200 text-gray-700 font-medium text-lg hover:shadow-md focus:outline-none"
+            className="w-full text-left p-5 rounded-2xl border-2 border-[#dee2ff] hover:border-[#8e9aaf] hover:bg-[#feeafa]/50 transition-all duration-200 text-[#5E6E79] font-medium text-lg hover:shadow-sm focus:outline-none"
           >
             {option}
           </button>
         ))}
       </div>
-
-      {currentQuestion === activeQuestions.length - 1 && answers.length === activeQuestions.length && !showResult && (
-        <div className="mt-10 text-center pt-8 border-t border-gray-100">
-          <CTA 
-            text={loading ? "Analyzing Profile..." : "Calculate My Attachment Style"} 
-            onClick={handleSubmit} 
-            disabled={loading}
-            variant="primary"
-          />
-        </div>
-      )}
     </div>
   );
 }
