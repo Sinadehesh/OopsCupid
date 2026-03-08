@@ -81,7 +81,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 5 — QUIZZES */}
+{/* SECTION 5 — QUIZZES */}
       <section className="bg-[#F9F4F4] py-20 md:py-32">
         <div className="container mx-auto px-6 md:px-10 lg:px-14">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -94,23 +94,24 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            {/* FIXED LINKS TO MATCH YOUR FOLDERS */}
             <Card 
               variant="quiz"
-              title="Is He a Red Flag? Take the Quiz"
-              href="/quizzes/is-he-a-red-flag"
-              accentColor="bg-[#FFB8A1]/30"
+              title="What Is My Attachment Style? Free Test"
+              href="/attachment-style-quiz"
+              accentColor="bg-[#EAD882]/30"
             />
             <Card 
               variant="quiz"
               title="Is My Friend Toxic? Free Friendship Quiz"
-              href="/quizzes/toxic-friend-test"
+              href="/toxic-friend-test"
               accentColor="bg-[#9ED0CB]/30"
             />
             <Card 
               variant="quiz"
               title="Why Do I Keep Attracting the Same Type?"
-              href="/quizzes/attraction-patterns"
-              accentColor="bg-[#EAD882]/30"
+              href="/attraction-patterns"
+              accentColor="bg-[#FFB8A1]/30"
             />
           </div>
           
@@ -151,7 +152,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 7 — ARTICLES / SEO SUPPORT */}
+     {/* SECTION 7 — ARTICLES / SEO SUPPORT */}
       <section className="bg-[#F3ECEB] py-20 md:py-32">
         <div className="container mx-auto px-6 md:px-10 lg:px-14">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -164,23 +165,24 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            {/* FIXED LINKS TO MATCH YOUR FOLDERS */}
             <Card 
               variant="article"
               tag="Red Flags"
               title="Is He Gaslighting Me? 9 Signs You're Not Imagining It"
-              href="/relationship-red-flags/is-he-gaslighting-me"
+              href="/is-he-gaslighting-me"
             />
             <Card 
               variant="article"
-              tag="Mixed Signals"
-              title="Why Does He Text Then Go Cold? A Psychology Breakdown"
-              href="/dating-texting-analysis/why-does-he-go-cold"
+              tag="Attachment Styles"
+              title="The 4 Adult Attachment Styles Explained"
+              href="/understanding-attachment-styles"
             />
             <Card 
               variant="article"
               tag="Toxic Friendships"
               title="Signs Your Best Friend Is Secretly Jealous of You"
-              href="/toxic-friendships/jealous-best-friend"
+              href="/signs-of-a-toxic-friend"
             />
           </div>
 
