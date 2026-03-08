@@ -1,10 +1,19 @@
 import type { NextConfig } from "next";
 
+// This checks if we are building for production (GitHub Pages) or running locally
+const isProd = process.env.NODE_ENV === 'production';
+
 const nextConfig: NextConfig = {
-  output: "export",
-  basePath: "/OopsCupid",
+  // Required for GitHub Pages static hosting
+  output: "export", 
+  
+  // Adds /OopsCupid to CSS and JS paths ONLY when live
+  basePath: isProd ? '/OopsCupid' : '',
+  assetPrefix: isProd ? '/OopsCupid' : '',
+  
   images: {
-    unoptimized: true,
+    // GitHub Pages doesn't have a server to optimize images, so this is required
+    unoptimized: true, 
   },
 };
 
