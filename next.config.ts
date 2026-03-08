@@ -12,9 +12,6 @@ const nextConfig: NextConfig = {
     // GitHub Pages doesn't have a server to optimize images
     unoptimized: true, 
   },
-  
-  // Notice we removed basePath and assetPrefix entirely!
-  // Your .github/workflows/nextjs.yml will handle them automatically.
 };
 
 export default nextConfig;
