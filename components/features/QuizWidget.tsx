@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import CTA from "../ui/CTA";
 import Link from "next/link";
 import ResultGauge from "../ui/ResultGauge";
+import RelativeStatus from "../ui/RelativeStatus";
 
 const questionsBank: Record<string, { id: number, text: string, options: string[] }[]> = {
   "attachment-style": [
@@ -86,7 +87,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       let isSingle = true;
       let primaryStyle = "";
       
-      // Variables specifically for the Gauge
       let gaugeScore = 0;
       let gaugeLabel = "THREAT LEVEL";
 
@@ -98,7 +98,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         });
 
         healthScore = Math.max(5, 99 - (toxicityPoints * 6)); 
-        gaugeScore = Math.min(100, (toxicityPoints / 16) * 100 + (Math.floor(Math.random() * 8))); // High = Red
+        gaugeScore = Math.min(100, (toxicityPoints / 16) * 100 + (Math.floor(Math.random() * 8))); 
         gaugeLabel = "MANIPULATION THREAT";
 
         primaryStyle = toxicityPoints >= 9 ? "Highly Manipulative" : toxicityPoints >= 4 ? "Toxic Patterns" : "Healthy";
@@ -131,7 +131,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         primaryStyle = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
         healthScore = Math.min(99, Math.max(1, Math.round((secure / 8) * 100) + (Math.floor(Math.random() * 8) - 3)));
         
-        gaugeScore = 100 - healthScore; // If health is low, insecurity threat is high (Red)
+        gaugeScore = 100 - healthScore; 
         gaugeLabel = "INSECURITY THREAT";
 
         title = `Your Attachment Style: ${primaryStyle}`;
@@ -169,7 +169,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         
         healthScore = Math.min(99, Math.max(1, Math.round((secure / 12) * 100) + (Math.floor(Math.random() * 8) - 3)));
         
-        gaugeScore = 100 - healthScore; // If his health is low, instability threat is high (Red)
+        gaugeScore = 100 - healthScore; 
         gaugeLabel = "INSTABILITY THREAT";
 
         title = scores[secondaryStyle] >= 3 
@@ -204,8 +204,8 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const progress = Math.round((answers.length / activeQuestions.length) * 100);
 
   if (showResult && resultData) {
-    const isBadScore = resultData.healthScore < 50;
     const isSecure = resultData.primaryStyle === "Secure" || resultData.primaryStyle === "Healthy";
+    const dashboardSubject = isDarkTheme && quizName !== "attachment-style" ? "He" : "You";
     
     let ctaHook = "";
     if (quizName === "is-he-manipulative") {
@@ -237,12 +237,15 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         <span className={`text-sm font-bold uppercase tracking-widest ${isDarkTheme ? 'text-[#b10f2e]' : 'text-[#8e9aaf]'} mb-3 block text-center`}>
           Clinical Result
         </span>
-        <h3 className={`text-[28px] md:text-[34px] font-extrabold ${tH3} mb-6 leading-tight text-center`}>
+        <h3 className={`text-[28px] md:text-[34px] font-extrabold ${tH3} mb-10 leading-tight text-center`}>
           {resultData.title}
         </h3>
         
-        {/* NEW DARK NEON GAUGE INJECTED HERE */}
-        <ResultGauge score={resultData.gaugeScore} label={resultData.gaugeLabel} />
+        {/* NEW DASHBOARD GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-12 w-full">
+          <ResultGauge score={resultData.gaugeScore} label={resultData.gaugeLabel} />
+          <RelativeStatus healthScore={resultData.healthScore} subject={dashboardSubject} />
+        </div>
 
         <div className={`space-y-8 px-2 md:px-6 ${tP}`}>
           <div>
