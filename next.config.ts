@@ -3,9 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: "export", 
   
-  // Hardcoded paths so CSS and routing always work on GitHub Pages
+  // basePath natively handles routing AND CSS/asset paths in Next.js 14+
   basePath: "/OopsCupid",
-  assetPrefix: "/OopsCupid",
   
   trailingSlash: true, 
   
