@@ -46,7 +46,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const isFinished = answers.length === activeQuestions.length;
   const isPartnerTest = quizName === "partners-attachment-style";
 
-  // Dynamic Visual Theming (Pink for /me vs Crimson for /him)
   const tBg = isPartnerTest ? "bg-[#fdffff]" : "bg-white";
   const tH3 = isPartnerTest ? "text-[#280000]" : "text-[#334B63]";
   const tP = isPartnerTest ? "text-[#570000]" : "text-[#5E6E79]";
@@ -124,7 +123,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         
         healthScore = Math.min(99, Math.max(1, Math.round((secure / 12) * 100) + (Math.floor(Math.random() * 8) - 3)));
         
-        // Handle "Leaning" logic
         title = scores[secondaryStyle] >= 3 
           ? `His Style: ${primaryStyle} (leaning ${secondaryStyle})` 
           : `His Style: ${primaryStyle}`;
@@ -160,11 +158,11 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     const isBadScore = resultData.healthScore < 50;
     const isSecure = resultData.primaryStyle === "Secure";
     
-    // URGENT HOOK COPY BASED ON TEST TYPE
+    // THE NEW PSYCHOLOGICAL PIVOT
     let ctaHook = "";
     if (isPartnerTest) {
       if (isSecure) {
-        ctaHook = "He is displaying healthy patterns, but are his words aligning with his psychological blueprint? Drop his recent texts into our Chat Analyzer to verify his true intentions and make sure you aren't missing any subtle red flags.";
+        ctaHook = "He scored as 'Secure', but if you are taking this test, your gut is likely telling you something feels off. Covert manipulators and narcissists often perfectly mimic healthy behaviors to gain trust while quietly tearing you down. Let's run a psychological check for hidden manipulation to be absolutely sure.";
       } else {
         ctaHook = `His ${resultData.primaryStyle} attachment style is quietly dictating every argument and text message you exchange. Don't guess what he means anymore. Paste his confusing texts into our AI Analyzer to decode exactly what he is thinking.`;
       }
@@ -229,13 +227,19 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
             <div className="space-y-4 relative z-10">
               {isPartnerTest ? (
                 <>
-                  <Link href="/chat-analyzer" className="block w-full text-center bg-red-600 text-white font-extrabold py-5 rounded-xl shadow-[0_0_15px_rgba(220,38,38,0.4)] hover:shadow-[0_0_25px_rgba(220,38,38,0.7)] transform hover:-translate-y-1 hover:bg-red-700 transition-all duration-300 border-b-4 border-red-800 active:border-b-0 active:translate-y-1">
-                    Decode His Mixed Signals: AI Chat Analyzer →
-                  </Link>
-                  {!isSecure && (
-                    <Link href="/relationship-red-flags" className="block w-full text-center bg-[#280000] text-[#fdffff] font-extrabold py-5 rounded-xl hover:-translate-y-1 hover:bg-[#150000] transition-all duration-300 border border-[#b10f2e]">
-                      📖 Read: Dealing with an Insecure Partner
+                  {isSecure ? (
+                    <Link href="/is-he-manipulative" className="block w-full text-center bg-red-600 text-white font-extrabold py-5 rounded-xl shadow-[0_0_15px_rgba(220,38,38,0.4)] hover:shadow-[0_0_25px_rgba(220,38,38,0.7)] transform hover:-translate-y-1 hover:bg-red-700 transition-all duration-300 border-b-4 border-red-800 active:border-b-0 active:translate-y-1">
+                      Take Quiz: Is He Manipulating Me? →
                     </Link>
+                  ) : (
+                    <>
+                      <Link href="/chat-analyzer" className="block w-full text-center bg-red-600 text-white font-extrabold py-5 rounded-xl shadow-[0_0_15px_rgba(220,38,38,0.4)] hover:shadow-[0_0_25px_rgba(220,38,38,0.7)] transform hover:-translate-y-1 hover:bg-red-700 transition-all duration-300 border-b-4 border-red-800 active:border-b-0 active:translate-y-1">
+                        Decode His Mixed Signals: AI Chat Analyzer →
+                      </Link>
+                      <Link href="/relationship-red-flags" className="block w-full text-center bg-[#280000] text-[#fdffff] font-extrabold py-5 rounded-xl hover:-translate-y-1 hover:bg-[#150000] transition-all duration-300 border border-[#b10f2e]">
+                        📖 Read: Dealing with an Insecure Partner
+                      </Link>
+                    </>
                   )}
                 </>
               ) : (
