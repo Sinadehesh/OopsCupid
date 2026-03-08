@@ -42,6 +42,32 @@ const questionsBank: Record<string, { id: number, text: string, options: string[
     { id: 7, text: "Has he ever called you crazy, overly sensitive, or irrational?", options: ["No, we communicate respectfully", "Once or twice in a heated argument", "Yes, he frequently calls me crazy or 'too sensitive'", "He tells me my memory is broken/wrong"] },
     { id: 8, text: "How do you feel most of the time in this relationship?", options: ["Safe, relaxed, and loved", "Confused, like I am walking on eggshells", "Exhausted, I feel like everything is my fault", "Terrified to set him off"] },
   ],
+  "attraction-patterns": [
+    { id: 1, text: "I secretly believe I am more special or capable than most people.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 2, text: "Even when good things happen, I wait for the other shoe to drop.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 3, text: "I worry my partner will leave me even when things are going well.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 4, text: "I feel trapped or overwhelmed when someone wants too much closeness.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 5, text: "My feelings for partners can switch from intense love to hate very quickly.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 6, text: "I am comfortable both depending on others and having them depend on me.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 7, text: "I need a lot of admiration, praise, and attention to feel truly good about myself.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 8, text: "I expect the worst to happen in relationships, so I'm rarely surprised when they fail.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 9, text: "When my partner is quiet, I immediately think they are losing interest or upset with me.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 10, text: "I hate feeling like I need anyone; my independence is my highest priority.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 11, text: "My emotions change so fast that people say I’m unpredictable or intense.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 12, text: "I feel calm and safe when my partner asks for space.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 13, text: "I get excited when someone seems 'hard to get' or challenges my ego.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 14, text: "I feel most loved when I can help my partner through their sadness or darkness.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 15, text: "Small rejections or delayed text messages feel like proof I’m unlovable.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 16, text: "I am drawn to people who are mysterious and don’t share everything right away.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 17, text: "The idea of a calm, low-drama partner sounds boring to me.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 18, text: "I trust easily and communicate my needs directly without playing games.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 19, text: "I love when someone makes me feel like the most important person in the room.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 20, text: "I often feel empty inside, even when people tell me they like me.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 21, text: "'Do you still love me?' is a question that runs on a loop in my head.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 22, text: "I often show love by fixing practical problems rather than saying 'I love you'.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 23, text: "I feel terrified of being abandoned, and I react explosively if I suspect it.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 24, text: "I believe I am worthy of love and that people are generally safe and good.", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] }
+  ],
   "default": [
     { id: 1, text: "How often do they text you first?", options: ["Every day", "Usually, but sometimes I do", "Rarely, I always initiate", "They leave me on read"] },
   ]
@@ -90,7 +116,56 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       let gaugeScore = 0;
       let gaugeLabel = "THREAT LEVEL";
 
-      if (quizName === "is-he-manipulative") {
+      if (quizName === "attraction-patterns") {
+        let narc = 0, depr = 0, anx = 0, avo = 0, bor = 0, sec = 0;
+        const likert: Record<string, number> = { "Strongly Disagree": 1, "Disagree": 2, "Neutral": 3, "Agree": 4, "Strongly Agree": 5 };
+        
+        answers.forEach((ans, idx) => {
+          const score = likert[ans] || 3;
+          if (idx % 6 === 0) narc += score;
+          else if (idx % 6 === 1) depr += score;
+          else if (idx % 6 === 2) anx += score;
+          else if (idx % 6 === 3) avo += score;
+          else if (idx % 6 === 4) bor += score;
+          else if (idx % 6 === 5) sec += score;
+        });
+
+        const scores: Record<string, number> = { "Narcissistic": narc, "Depressive": depr, "Anxious-Preoccupied": anx, "Avoidant": avo, "Borderline": bor, "Secure": sec };
+        primaryStyle = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+
+        healthScore = Math.min(99, Math.max(1, Math.round((sec / 20) * 100)));
+        const totalInsecure = narc + depr + anx + avo + bor;
+        gaugeScore = Math.min(100, Math.max(10, Math.round((totalInsecure / 100) * 100))); 
+        gaugeLabel = "TOXIC ATTRACTION RISK";
+
+        title = `Dominant Pattern: ${primaryStyle}`;
+
+        if (primaryStyle === "Narcissistic") {
+          description = "You need to feel special, admired, and in control. Underneath is often a scared inner child who learned 'I’m only lovable if I’m the best.'\n\nChildhood Roots: Parents who either over-praised or withheld love unless you performed. Your brain learned: 'My worth = how much you admire me.'";
+          behaviors = "THE HIDDEN CHARM YOU BRING:\nAt the beginning it is pure fireworks. You make partners feel like the most interesting person alive (love-bombing). You are ambitious and charismatic — your partners get to ride that wave and learn bold self-promotion by osmosis. The hidden benefit: you force partners to develop stronger boundaries and self-love.";
+          chances = "WHO YOU ARE DRAWN TO (Attraction Probability):\n• Depressive: 35%\n• Anxious: 28%\n• Borderline: 18%\n• Avoidant: 12%\n• Secure: 7%\n\nYou get attached to Empaths, codependents, anxious types, or 'rescuers' who will supply endless praise.";
+        } else if (primaryStyle === "Depressive") {
+          description = "You see the glass half-empty, expect the worst, and carry a quiet sadness. You live in a lower emotional gear to protect yourself from disappointment.\n\nChildhood Roots: Caregivers who were unpredictable, critical, or emotionally unavailable. You learned 'If I expect the worst, I won’t be disappointed.'";
+          behaviors = "THE HIDDEN CHARM YOU BRING:\nProfound emotional depth. You listen like no one else. You appreciate the smallest kindnesses because you expect so little. Once you trust someone, your loyalty is almost unbreakable. The hidden benefit: you teach partners emotional presence and gratitude; they learn to slow down and value real connection.";
+          chances = "WHO YOU ARE DRAWN TO (Attraction Probability):\n• Narcissistic: 32%\n• Secure: 25%\n• Anxious: 20%\n• Avoidant: 15%\n• Borderline: 8%\n\nYou often bond deeply with energetic narcissists who pull you out of the fog, or anxious types where shared insecurity creates instant intimacy.";
+        } else if (primaryStyle === "Anxious-Preoccupied") {
+          description = "'Do you still love me?' runs on a loop in your head. You text back instantly, remember every anniversary, and panic when a partner is quiet.\n\nChildhood Roots: Inconsistent caregiving — sometimes warm, sometimes distant. Your brain wired: 'If I don’t hold on tight, they will disappear.'";
+          behaviors = "THE HIDDEN CHARM YOU BRING:\nA partner will never feel more wanted in their life. You remember their coffee order, send good-morning texts, and make them feel like the center of the universe. Your passion is intense and loyalty is fierce. The hidden benefit: you push partners to communicate feelings openly and to show up consistently.";
+          chances = "WHO YOU ARE DRAWN TO (Attraction Probability):\n• Avoidant: 42%\n• Narcissistic: 25%\n• Secure: 18%\n• Depressive: 10%\n• Borderline: 5%\n\nYou are heavily drawn to Avoidant types (the classic anxious-avoidant trap) or narcissists who give intermittent reinforcement like a slot machine.";
+        } else if (primaryStyle === "Avoidant") {
+          description = "You need space like oxygen. Emotions feel like quicksand. You can love deeply but show it by fixing a car instead of saying 'I love you.'\n\nChildhood Roots: Caregivers who punished emotional needs or modeled independence above all else. Lesson learned: 'Needing people = danger.'";
+          behaviors = "THE HIDDEN CHARM YOU BRING:\nCalm, reliable, low-drama energy. You give partners total freedom and never guilt-trip them for having their own life. Sex is often mind-blowing because it’s physical rather than emotional pressure. The hidden benefit: you teach your partners self-soothing and independence, forcing them to regulate their own emotions.";
+          chances = "WHO YOU ARE DRAWN TO (Attraction Probability):\n• Anxious: 45%\n• Secure: 22%\n• Narcissistic: 15%\n• Depressive: 10%\n• Borderline: 8%\n\nYou are magnetically drawn to Anxious types (the push-pull chemistry is addictive), or narcissists who also fear real vulnerability.";
+        } else if (primaryStyle === "Borderline") {
+          description = "Emotions go from 0 to 100 in seconds. One moment they are your soulmate, the next the enemy. Intense, passionate, and terrified of being left.\n\nChildhood Roots: Often trauma, neglect, or invalidation. The brain never learned how to regulate emotions — every feeling feels life-or-death.";
+          behaviors = "THE HIDDEN CHARM YOU BRING:\nThe most passionate love a partner will ever experience. You see their soul in the first week. Sex is electric. When you love, you love with your entire being. The hidden benefit: you force partners to become emotionally mature extremely fast, learning radical acceptance and hyper-communication.";
+          chances = "WHO YOU ARE DRAWN TO (Attraction Probability):\n• Narcissistic: 38%\n• Anxious: 25%\n• Secure: 20%\n• Avoidant: 12%\n• Depressive: 5%\n\nYou are highly attracted to Narcissists (creating a mutual idealization/devaluation cycle), or 'rescuers' who want to save you.";
+        } else {
+          description = "You trust easily, communicate directly, and can handle both closeness and independence. You are the 'healthy baseline' that everyone secretly wants.\n\nChildhood Roots: Consistent, responsive caregiving. Lesson: 'People are safe and I am worthy.'";
+          behaviors = "THE HIDDEN CHARM YOU BRING:\nPeace. Partners don’t have to walk on eggshells. Arguments get resolved instead of exploding. They feel safe to be their real self. The hidden benefit: being with you literally rewires your partner's nervous system toward security. Research shows even one secure relationship can change attachment styles permanently.";
+          chances = "WHO YOU ARE DRAWN TO (Attraction Probability):\n• Secure: 55%\n• Anxious: 9%\n• Avoidant: 9%\n• Narcissistic: 9%\n• Depressive: 9%\n• Borderline: 9%\n\nYou naturally gravitate towards other secure people and build stable foundations, but you balance out insecure types equally if you choose them.";
+        }
+      } else if (quizName === "is-he-manipulative") {
         let toxicityPoints = 0;
         answers.forEach((ans) => {
           if (["Denies it ever happened", "Complains about them constantly", "He pouts and makes me feel guilty", "Rarely, he usually makes excuses", "He gives unsolicited, critical advice", "Once or twice in a heated argument", "Confused, like I am walking on eggshells"].includes(ans)) toxicityPoints += 1;
@@ -205,10 +280,16 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
   if (showResult && resultData) {
     const isSecure = resultData.primaryStyle === "Secure" || resultData.primaryStyle === "Healthy";
-    const dashboardSubject = isDarkTheme && quizName !== "attachment-style" ? "He" : "You";
+    const dashboardSubject = isDarkTheme && quizName !== "attachment-style" && quizName !== "attraction-patterns" ? "He" : "You";
     
     let ctaHook = "";
-    if (quizName === "is-he-manipulative") {
+    if (quizName === "attraction-patterns") {
+      if (isSecure) {
+        ctaHook = "You naturally attract healthy partners. But if you have an anxious friend constantly dating toxic people, send them this test so they can see their blind spots. To learn more about how your security helps heal others, read our guide.";
+      } else {
+        ctaHook = `Your ${resultData.primaryStyle} pattern is driving your toxic attraction. The 'charm' of the people you fall for feels like a drug to your nervous system. You must decode these red flags before you repeat the cycle. Use our AI to analyze the texts of the person you are currently talking to.`;
+      }
+    } else if (quizName === "is-he-manipulative") {
       if (resultData.primaryStyle === "Highly Manipulative" || resultData.primaryStyle === "Toxic Patterns") {
          ctaHook = "Manipulators use confusion as a weapon. Stop doubting yourself. Copy his most confusing, guilt-tripping text messages and paste them into our AI Chat Analyzer right now. We will decode his exact tactics in plain English.";
       } else {
@@ -241,7 +322,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
           {resultData.title}
         </h3>
         
-        {/* NEW DASHBOARD GRID */}
+        {/* DASHBOARD GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-12 w-full">
           <ResultGauge score={resultData.gaugeScore} label={resultData.gaugeLabel} />
           <RelativeStatus healthScore={resultData.healthScore} subject={dashboardSubject} />
@@ -254,13 +335,13 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
           </div>
 
           <div className={`${tAccentLight} p-6 rounded-2xl border ${tBorder}`}>
-            <h4 className={`text-xl font-bold ${tH3} mb-3`}>Explicit Patterns Noticed:</h4>
+            <h4 className={`text-xl font-bold ${tH3} mb-3`}>{quizName === "attraction-patterns" ? "Your Psychological Charm:" : "Explicit Patterns Noticed:"}</h4>
             <p className="text-lg leading-relaxed whitespace-pre-wrap">{resultData.behaviors}</p>
           </div>
 
           <div>
-            <h4 className={`text-xl font-bold ${tH3} mb-2`}>Prognosis:</h4>
-            <p className="text-lg leading-relaxed font-medium">{resultData.chances}</p>
+            <h4 className={`text-xl font-bold ${tH3} mb-2`}>{quizName === "attraction-patterns" ? "Who You Will Get Attached To:" : "Prognosis:"}</h4>
+            <p className="text-lg leading-relaxed font-medium whitespace-pre-wrap">{resultData.chances}</p>
           </div>
         </div>
         
@@ -276,7 +357,22 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
             </p>
             
             <div className="space-y-4 relative z-10">
-              {quizName === "is-he-manipulative" ? (
+              {quizName === "attraction-patterns" ? (
+                 isSecure ? (
+                   <Link href="/understanding-attachment-styles" className="block w-full text-center bg-[#8e9aaf] text-white font-extrabold py-5 rounded-xl shadow-[0_0_15px_rgba(142,154,175,0.4)] hover:-translate-y-1 hover:bg-[#7a869a] transition-all duration-300">
+                     Read: Understanding Attachment Styles →
+                   </Link>
+                 ) : (
+                   <>
+                     <Link href="/chat-analyzer" className="block w-full text-center bg-red-600 text-white font-extrabold py-5 rounded-xl shadow-[0_0_15px_rgba(220,38,38,0.4)] hover:-translate-y-1 hover:bg-red-700 transition-all duration-300 border-b-4 border-red-800 active:border-b-0 active:translate-y-1">
+                       Decode Their Texts: AI Chat Analyzer →
+                     </Link>
+                     <Link href="/understanding-attachment-styles" className="block w-full text-center bg-emerald-500 text-white font-extrabold py-5 rounded-xl shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:-translate-y-1 hover:bg-emerald-400 transition-all duration-300 border-b-4 border-emerald-700 active:border-b-0 active:translate-y-1 mt-4">
+                       ✨ Start Healing: Fix My Attachment Style
+                     </Link>
+                   </>
+                 )
+              ) : quizName === "is-he-manipulative" ? (
                  resultData.primaryStyle === "Healthy" ? (
                    <Link href="/attachment-style-quiz" className="block w-full text-center bg-emerald-500 text-white font-extrabold py-5 rounded-xl shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:-translate-y-1 hover:bg-emerald-400 transition-all duration-300 border-b-4 border-emerald-700 active:border-b-0 active:translate-y-1">
                      Take Quiz: What is My Attachment Style? →
