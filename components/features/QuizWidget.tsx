@@ -7,7 +7,41 @@ import ResultGauge from "../ui/ResultGauge";
 import RelativeStatus from "../ui/RelativeStatus";
 
 const questionsBank: Record<string, { id: number, text: string, options: string[] }[]> = {
-  // ... (Keeping your other existing tests here to avoid erasing them)
+  "attachment-style": [
+    { id: 1, text: "When a partner asks for space, how do you honestly feel?", options: ["Comfortable. We both need independence.", "Anxious. I worry they are pulling away from me.", "Relieved. I usually feel suffocated anyway.", "Conflicted. I want them close but push them away."] },
+    { id: 2, text: "How do you view emotional intimacy?", options: ["It comes naturally and feels safe.", "I crave it intensely, sometimes more than my partner.", "It makes me uncomfortable; I prefer self-reliance.", "I want it desperately but am terrified of getting hurt."] },
+    { id: 3, text: "If they don't text back for 4 hours, what's your first thought?", options: ["They are probably just busy.", "They are losing interest or upset with me.", "I don't really notice or care.", "I feel ignored and might ignore them back."] },
+    { id: 4, text: "What happens when you have a disagreement?", options: ["We communicate openly and resolve it.", "I get desperate for reassurance and won't let it go.", "I shut down, withdraw, and need to leave.", "I lash out emotionally but fear they will leave."] },
+    { id: 5, text: "How comfortable are you depending on romantic partners?", options: ["Very comfortable, and I let them depend on me.", "I want to depend on them completely.", "I hate depending on anyone.", "I want to, but I don't trust them enough."] },
+    { id: 6, text: "What is your biggest relationship fear?", options: ["I don't have major relationship fears.", "Being abandoned or not loved enough.", "Losing my freedom or being controlled.", "Being betrayed or trapped."] },
+    { id: 7, text: "How quickly do you open up to new partners?", options: ["At a normal, steady pace.", "Very quickly, I overshare to build a bond.", "Very slowly, if at all.", "I open up but then deeply regret it and pull back."] },
+    { id: 8, text: "How do you handle your partner being highly emotional or needy?", options: ["I support them comfortably.", "I try to fix it frantically so they don't leave me.", "I feel overwhelmed and want to distance myself.", "I get overwhelmed and react defensively."] },
+    { id: 9, text: "Lastly, what is your current relationship status?", options: ["Single and navigating the dating world", "Currently in a relationship or actively dating someone"] },
+  ],
+  "partners-attachment-style": [
+    { id: 1, text: "When stressed, your partner:", options: ["Talks openly to connect", "Seeks lots of reassurance", "Withdraws/needs space alone", "Panics then shuts down"] },
+    { id: 2, text: "During arguments:", options: ["Stays engaged calmly", "Worries you'll leave/gets clingy", "Shuts down or leaves", "Yells then apologizes intensely"] },
+    { id: 3, text: "About intimacy/emotions:", options: ["Comfortable sharing deeply", "Craves more closeness", "Keeps things surface-level", "Wants it but fears getting hurt"] },
+    { id: 4, text: "When you need support:", options: ["Listens and helps reliably", "Over-apologizes or fixes frantically", "Feels smothered/gives advice only", "Wants to help but pulls away"] },
+    { id: 5, text: "Plans/commitments:", options: ["Reliable and flexible", "Anxious if uncertain", "Avoids labeling things", "Hot/cold depending on mood"] },
+    { id: 6, text: "Physical affection:", options: ["Natural and consistent", "Wants more always", "On their terms only", "Intense but inconsistent"] },
+    { id: 7, text: "Past relationships:", options: ["Mostly healthy ones", "Often felt abandoned", "Prefers casual/short-term", "Turbulent breakups"] },
+    { id: 8, text: "Your independence:", options: ["Supports happily", "Feels insecure", "Relieved/encouraged", "Alternates jealousy and distance"] },
+    { id: 9, text: "Conflict resolution:", options: ["Works through together", "Fears breakup talks", "Stonewalls or deflects", "Explosive then regretful"] },
+    { id: 10, text: "Long-term future:", options: ["Excited to build", "Anxiously needs reassurance", "Hesitant about merging lives", "Dreams big but doubts self"] },
+    { id: 11, text: "Trust level:", options: ["Generally trusts easily", "Tests loyalty often", "Guards emotions tightly", "Trusts then distrusts suddenly"] },
+    { id: 12, text: "Space needs:", options: ["Balanced", "Fears too much space", "Needs lots of independence", "Craves connection but overwhelms"] }
+  ],
+  "is-he-manipulative": [
+    { id: 1, text: "When you bring up something he did wrong, how does he react?", options: ["Apologizes and tries to fix it", "Denies it ever happened", "Blames you for making him act that way", "Changes the subject entirely"] },
+    { id: 2, text: "How does he act around your friends or family?", options: ["Supportive and friendly", "Complains about them constantly", "Refuses to spend time with them", "Convinces you they don't care about you"] },
+    { id: 3, text: "When you want to do something without him (like a girls' night):", options: ["He encourages me to have fun", "He pouts and makes me feel guilty", "He starts a massive fight right before I leave", "He texts/calls me incessantly while I'm out"] },
+    { id: 4, text: "How has his affection changed since the beginning?", options: ["It has remained steady and loving", "He was intense at first, now he is cold", "He is only loving when I do what he wants", "He acts like a totally different person now"] },
+    { id: 5, text: "Does he ever genuinely apologize without adding a 'but'?", options: ["Yes, he takes accountability", "Rarely, he usually makes excuses", "Never. It is always my fault", "Only if he wants something from me"] },
+    { id: 6, text: "How does he handle your decisions, money, or appearance?", options: ["He respects my choices", "He gives unsolicited, critical advice", "He gets angry if I don't consult him first", "He actively controls my money or decisions"] },
+    { id: 7, text: "Has he ever called you crazy, overly sensitive, or irrational?", options: ["No, we communicate respectfully", "Once or twice in a heated argument", "Yes, he frequently calls me crazy or 'too sensitive'", "He tells me my memory is broken/wrong"] },
+    { id: 8, text: "How do you feel most of the time in this relationship?", options: ["Safe, relaxed, and loved", "Confused, like I am walking on eggshells", "Exhausted, I feel like everything is my fault", "Terrified to set him off"] },
+  ],
   "attraction-patterns": [
     { id: 1, text: "You meet someone at a party who makes the whole room laugh and calls you 'the most fascinating person here' within 10 minutes. How excited are you?", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
     { id: 2, text: "You swipe on someone whose bio says 'I overthink everything and expect the worst — but I’ll adore you forever if you stay.' Feeling the spark?", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
@@ -35,56 +69,29 @@ const questionsBank: Record<string, { id: number, text: string, options: string[
     { id: 24, text: "I am most attracted to people who communicate directly and trust easily without playing games.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] }
   ],
   "who-finds-me-attractive": [
-    // Narcissist Magnet
     { id: 1, text: "People at parties tell me I light up the room and make them feel special right away.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-    // Depressive Magnet
     { id: 2, text: "Friends say I’m 'deep' and they can talk to me for hours about real stuff.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-    // Anxious Magnet
     { id: 3, text: "I get a lot of 'I can’t stop thinking about you' texts from people I just met.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-    // Avoidant Magnet
     { id: 4, text: "People chase me when I give them space — the more I pull back, the more they pursue.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-    // Borderline Magnet
     { id: 5, text: "My emotions are intense and people either love it or get hooked on the drama.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-    // Secure Magnet
     { id: 6, text: "Friends say I’m the most chill, drama-free person they know and they feel safe with me.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-
-    // Narcissist Magnet
     { id: 7, text: "Imagine someone saying 'You make me feel like I’m the most important person alive' — does that sound like something an ex has told you?", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-    // Depressive Magnet
     { id: 8, text: "People often want to 'rescue' or take care of me when I’m down.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-    // Anxious Magnet
     { id: 9, text: "I notice others get nervous and double-text a lot when I take time to reply.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-    // Avoidant Magnet
     { id: 10, text: "Someone tells me 'Your independence is so hot' — does that happen?", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-    // Borderline Magnet
     { id: 11, text: "Exes say the passion with me was unlike anything they’ve ever felt.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-    // Secure Magnet
     { id: 12, text: "People often tell me that I helped them heal or become a better person.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-
-    // Narcissist Magnet
     { id: 13, text: "I naturally take charge of conversations and love being the center of attention.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-    // Depressive Magnet
     { id: 14, text: "People often confide their darkest secrets to me because I don't judge them.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-    // Anxious Magnet
     { id: 15, text: "I show affection very intensely and quickly, which makes partners feel deeply desired.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-    // Avoidant Magnet
     { id: 16, text: "I get told I’m 'mysterious' or 'hard to read' fairly often.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-    // Borderline Magnet
     { id: 17, text: "I have been told that being with me is a rollercoaster of extreme highs and lows.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-    // Secure Magnet
     { id: 18, text: "I rarely get jealous, and that steady confidence makes partners trust me easily.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-
-    // Narcissist Magnet
     { id: 19, text: "People are often intimidated by my confidence before they get to know me.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-    // Depressive Magnet
     { id: 20, text: "I tend to attract 'fixers' who want to make me smile or pull me out of my shell.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-    // Anxious Magnet
     { id: 21, text: "I need a lot of closeness, and people who date me either love it or feel smothered.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-    // Avoidant Magnet
     { id: 22, text: "I am perfectly fine doing things alone, and that self-reliance draws people to me.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-    // Borderline Magnet
     { id: 23, text: "People either fall completely obsessed with me instantly or we clash immediately.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] },
-    // Secure Magnet
     { id: 24, text: "I communicate clearly when I'm upset instead of playing games or giving the silent treatment.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] }
   ],
   "default": [
@@ -133,9 +140,11 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       let primaryStyle = "";
       let gaugeScore = 0;
       let gaugeLabel = "THREAT LEVEL";
+      
       let percentagesData: Record<string, number> = {};
+      let dialData: Record<string, number> = {};
 
-      if (quizName === "who-finds-me-attractive") {
+      if (quizName === "who-finds-me-attractive" || quizName === "attraction-patterns") {
         let narc = 0, depr = 0, anx = 0, avo = 0, bor = 0, sec = 0;
         const likert: Record<string, number> = { "Not at all me": 1, "Slightly me": 2, "Neutral": 3, "Very me": 4, "OMG this is so me": 5 };
         
@@ -151,6 +160,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
         const totalPoints = narc + depr + anx + avo + bor + sec;
         
+        // This powers the text label (Sums to 100%)
         percentagesData = {
           "Narcissistic": Math.round((narc / totalPoints) * 100),
           "Depressive": Math.round((depr / totalPoints) * 100),
@@ -160,55 +170,128 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
           "Secure": Math.round((sec / totalPoints) * 100),
         };
 
+        // THE FIX: This normalizes the 4 questions (min 4, max 20) to a true 0-100 scale for the NEEDLE
+        const normalize = (val: number) => Math.max(0, Math.min(100, ((val - 4) / 16) * 100));
+
+        dialData = {
+          "Narcissistic": normalize(narc),
+          "Depressive": normalize(depr),
+          "Anxious": normalize(anx),
+          "Avoidant": normalize(avo),
+          "Borderline": normalize(bor),
+          "Secure": normalize(sec),
+        };
+
         const scores: Record<string, number> = { "Narcissistic": narc, "Depressive": depr, "Anxious-Preoccupied": anx, "Avoidant": avo, "Borderline": bor, "Secure": sec };
         primaryStyle = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
-        
-        title = `You are a ${primaryStyle} Magnet`;
 
-        if (primaryStyle === "Narcissistic") {
-          description = "You radiate confidence, charisma, and specialness. People feel elevated just being near you. You make others feel seen, hyped, and important.\n\nWHO GETS OBSESSED WITH YOU:\nDepressive types (35%), Anxious types (28%), and low-self-worth people. Their hidden issues (feeling invisible) make your validation feel like a drug.";
-          behaviors = "THE CHARM & BENEFIT THEY GET FROM YOU:\nYour energy gives them the biggest dopamine hit of their life. They finally feel special, chosen, and worthy. They borrow your confidence and suddenly feel sexy and alive. The hidden benefit for them: The rollercoaster forces them to build real self-love and boundaries.";
-        } else if (primaryStyle === "Depressive") {
-          description = "You project a quiet depth, gentle melancholy, and profound listening. People feel truly seen and never judged around you. You notice small kindnesses.\n\nWHO GETS OBSESSED WITH YOU:\nRescuers and caretakers (32%), optimistic anxious types (20%), and narcissists who want an easy, loyal target to control.";
-          behaviors = "THE CHARM & BENEFIT THEY GET FROM YOU:\nThey get to feel like a hero every single day. Your quiet sadness makes their love feel meaningful and deeply needed. The hidden benefit for them: You train their gratitude and emotional presence. They stop chasing shallow highs and learn real intimacy.";
-        } else if (primaryStyle === "Anxious-Preoccupied") {
-          description = "You offer intense affection, quick replies, and remember every detail. People feel adored, pursued, and like the absolute center of your universe.\n\nWHO GETS OBSESSED WITH YOU:\nAvoidant types (45% — the classic chase), narcissists who love worship (25%), and depressives who feel safe because you’ll never leave first.";
-          behaviors = "THE CHARM & BENEFIT THEY GET FROM YOU:\nThey feel more wanted than ever before. Your passion soothes their fear of abandonment and gives them constant ego boosts. The hidden benefit for them: You push them to communicate and show up, turning emotionally distant people into better partners.";
-        } else if (primaryStyle === "Avoidant") {
-          description = "You project calm independence, low drama, and tons of space. You show love through actions, not constant words. People feel free yet still wanted.\n\nWHO GETS OBSESSED WITH YOU:\nAnxious types (42% — the ultimate chase), secure people who enjoy the balance (22%), and depressives who hate smothering.";
-          behaviors = "THE CHARM & BENEFIT THEY GET FROM YOU:\nPure peaceful freedom with zero pressure. They get independence while still having a partner—the dream combo. The hidden benefit for them: You teach self-soothing and emotional regulation. Anxious people who date you often become more secure.";
-        } else if (primaryStyle === "Borderline") {
-          description = "You broadcast wild passion, deep soul connection, and intense emotional energy. When you love, you love with your entire being—unforgettable.\n\nWHO GETS OBSESSED WITH YOU:\nNarcissists (38% — mutual intensity), anxious types (25%), and rescuers who want to “save” you from your emotional storms.";
-          behaviors = "THE CHARM & BENEFIT THEY GET FROM YOU:\nThe most electric passion they’ll ever experience. They feel like a god during your idealization phase. Sex and connection are mind-blowing. The hidden benefit for them: You accelerate their emotional maturity faster than therapy. They learn radical acceptance.";
+        if (quizName === "who-finds-me-attractive") {
+          title = `You are a ${primaryStyle} Magnet`;
+
+          if (primaryStyle === "Narcissistic") {
+            description = "You radiate confidence, charisma, and specialness. People feel elevated just being near you. You make others feel seen, hyped, and important.\n\nWHO GETS OBSESSED WITH YOU:\nDepressive types, Anxious types, and low-self-worth people. Their hidden issues (feeling invisible) make your validation feel like a drug.";
+            behaviors = "THE CHARM & BENEFIT THEY GET FROM YOU:\nYour energy gives them the biggest dopamine hit of their life. They finally feel special, chosen, and worthy. They borrow your confidence and suddenly feel sexy and alive. The hidden benefit for them: The rollercoaster forces them to build real self-love and boundaries.";
+          } else if (primaryStyle === "Depressive") {
+            description = "You project a quiet depth, gentle melancholy, and profound listening. People feel truly seen and never judged around you. You notice small kindnesses.\n\nWHO GETS OBSESSED WITH YOU:\nRescuers and caretakers, optimistic anxious types, and narcissists who want an easy, loyal target to control.";
+            behaviors = "THE CHARM & BENEFIT THEY GET FROM YOU:\nThey get to feel like a hero every single day. Your quiet sadness makes their love feel meaningful and deeply needed. The hidden benefit for them: You train their gratitude and emotional presence. They stop chasing shallow highs and learn real intimacy.";
+          } else if (primaryStyle === "Anxious-Preoccupied") {
+            description = "You offer intense affection, quick replies, and remember every detail. People feel adored, pursued, and like the absolute center of your universe.\n\nWHO GETS OBSESSED WITH YOU:\nAvoidant types (the classic chase), narcissists who love worship, and depressives who feel safe because you’ll never leave first.";
+            behaviors = "THE CHARM & BENEFIT THEY GET FROM YOU:\nThey feel more wanted than ever before. Your passion soothes their fear of abandonment and gives them constant ego boosts. The hidden benefit for them: You push them to communicate and show up, turning emotionally distant people into better partners.";
+          } else if (primaryStyle === "Avoidant") {
+            description = "You project calm independence, low drama, and tons of space. You show love through actions, not constant words. People feel free yet still wanted.\n\nWHO GETS OBSESSED WITH YOU:\nAnxious types (the ultimate chase), secure people who enjoy the balance, and depressives who hate smothering.";
+            behaviors = "THE CHARM & BENEFIT THEY GET FROM YOU:\nPure peaceful freedom with zero pressure. They get independence while still having a partner—the dream combo. The hidden benefit for them: You teach self-soothing and emotional regulation. Anxious people who date you often become more secure.";
+          } else if (primaryStyle === "Borderline") {
+            description = "You broadcast wild passion, deep soul connection, and intense emotional energy. When you love, you love with your entire being—unforgettable.\n\nWHO GETS OBSESSED WITH YOU:\nNarcissists (mutual intensity), anxious types, and rescuers who want to “save” you from your emotional storms.";
+            behaviors = "THE CHARM & BENEFIT THEY GET FROM YOU:\nThe most electric passion they’ll ever experience. They feel like a god during your idealization phase. Sex and connection are mind-blowing. The hidden benefit for them: You accelerate their emotional maturity faster than therapy. They learn radical acceptance.";
+          } else {
+            description = "You offer steady trust, clear communication, and are comfortable with closeness and space. No games, no drama—just healthy, peaceful love.\n\nWHO GETS OBSESSED WITH YOU:\nLiterally everyone, but especially anxious, avoidant, and depressive types who are desperate for a safe harbor.";
+            behaviors = "THE CHARM & BENEFIT THEY GET FROM YOU:\nInstant nervous-system peace. They can finally relax and be themselves without walking on eggshells. The hidden benefit for them: Science proves one relationship with a secure magnet can permanently rewire their attachment style. You literally heal them.";
+          }
         } else {
-          description = "You offer steady trust, clear communication, and are comfortable with closeness and space. No games, no drama—just healthy, peaceful love.\n\nWHO GETS OBSESSED WITH YOU:\nLiterally everyone, but especially anxious (25%), avoidant (22%), and depressive (20%) types who are desperate for a safe harbor.";
-          behaviors = "THE CHARM & BENEFIT THEY GET FROM YOU:\nInstant nervous-system peace. They can finally relax and be themselves without walking on eggshells. The hidden benefit for them: Science proves one relationship with a secure magnet can permanently rewire their attachment style. You literally heal them.";
-        }
-      } else if (quizName === "attraction-patterns") {
-          // ... (Keeping exact same attraction-patterns logic from previous turn)
-          let narc = 0, depr = 0, anx = 0, avo = 0, bor = 0, sec = 0;
-          const likert: Record<string, number> = { "Not at all me": 1, "Slightly me": 2, "Neutral": 3, "Very me": 4, "OMG this is so me": 5 };
-          answers.forEach((ans, idx) => {
-            const score = likert[ans] || 3;
-            if (idx % 6 === 0) narc += score;
-            else if (idx % 6 === 1) depr += score;
-            else if (idx % 6 === 2) anx += score;
-            else if (idx % 6 === 3) avo += score;
-            else if (idx % 6 === 4) bor += score;
-            else if (idx % 6 === 5) sec += score;
-          });
-          const totalPoints = narc + depr + anx + avo + bor + sec;
-          percentagesData = { "Narcissistic": Math.round((narc / totalPoints) * 100), "Depressive": Math.round((depr / totalPoints) * 100), "Anxious": Math.round((anx / totalPoints) * 100), "Avoidant": Math.round((avo / totalPoints) * 100), "Borderline": Math.round((bor / totalPoints) * 100), "Secure": Math.round((sec / totalPoints) * 100) };
-          const scores: Record<string, number> = { "Narcissistic": narc, "Depressive": depr, "Anxious-Preoccupied": anx, "Avoidant": avo, "Borderline": bor, "Secure": sec };
-          primaryStyle = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
           title = `Your Magnetic Pull: The ${primaryStyle} Target`;
-          description = "You are drawn to this type based on childhood wiring.";
-          behaviors = "The hidden charm is dopamine.";
+
+          if (primaryStyle === "Narcissistic") {
+            description = "You are drawn to larger-than-life confidence, magnetic charm, and people who are always the center of attention. They love-bomb you with compliments and make you feel like a celebrity.\n\nWHY YOU GET ATTACHED (Your Hidden Issues):\nIf you grew up feeling invisible, criticized, or 'never enough,' your brain craves their validation like oxygen. Your low self-worth lights up when they choose you.";
+            behaviors = "THE CHARM & HIDDEN BENEFIT:\nPure rocket-fuel dopamine and status elevation. In the honeymoon phase, they make you feel brilliant and sexy. You borrow their confidence. The hidden long-term benefit? The eventual crash forces you to develop unbreakable self-love and boundaries.";
+          } else if (primaryStyle === "Depressive") {
+            description = "You are drawn to quiet, thoughtful people who see the world in shades of gray and carry a gentle melancholy. They don't do fake positivity.\n\nWHY YOU GET ATTACHED (Your Hidden Issues):\nIf you are a natural rescuer or grew up with emotionally unavailable parents, their sadness feels familiar and safe. You feel: 'I can finally be the hero who fixes someone.'";
+            behaviors = "THE CHARM & HIDDEN BENEFIT:\nProfound emotional depth and iron-clad loyalty that hits your soul. They listen like no one else on earth. The hidden benefit: They train your gratitude muscle and emotional presence. You stop chasing highs and learn to cherish quiet, real connection.";
+          } else if (primaryStyle === "Anxious-Preoccupied") {
+            description = "You are drawn to people who text back in 30 seconds, shower you with affection, and make you feel like the center of the universe. Their love feels all-consuming.\n\nWHY YOU GET ATTACHED (Your Hidden Issues):\nIf you have avoidant tendencies (secretly fear too much closeness) or low self-worth, their pursuit is the perfect chase. Finally, someone who won't let you disappear.";
+            behaviors = "THE CHARM & HIDDEN BENEFIT:\nYou will never feel more wanted or desired in your life. Their passion is electric. The hidden benefit: They force you to communicate feelings openly and show up consistently—skills that upgrade every future relationship you will ever have.";
+          } else if (primaryStyle === "Avoidant") {
+            description = "You are drawn to calm, independent, low-drama people who give you tons of space. They show love through actions, but emotions feel like quicksand to them.\n\nWHY YOU GET ATTACHED (Your Hidden Issues):\nIf you have an anxious attachment (fear of abandonment), their distance triggers the ultimate dopamine chase. Your own clingy tendencies make the push-pull feel exciting.";
+            behaviors = "THE CHARM & HIDDEN BENEFIT:\nPeaceful freedom and zero guilt-tripping. You get total independence while still having a partner. Sex is often incredibly hot because it’s pressure-free. The hidden benefit: They teach you self-soothing and emotional regulation.";
+          } else if (primaryStyle === "Borderline") {
+            description = "You are drawn to intense people whose emotions go from 0 to 100 in seconds. One moment you're their everything, next you're the enemy—but it's wildly passionate.\n\nWHY YOU GET ATTACHED (Your Hidden Issues):\nIf you crave drama or grew up with chaotic caregiving, their intensity feels like 'home.' Your own unresolved trauma matches their fear of abandonment perfectly.";
+            behaviors = "THE CHARM & HIDDEN BENEFIT:\nThe most electric, can’t-eat-can’t-sleep passion you will ever experience. When they idealize you, you feel like a god. The hidden benefit: They accelerate your emotional growth. You learn radical communication and self-awareness faster than years of therapy.";
+          } else {
+            description = "You are drawn to people who trust easily, communicate directly, and are comfortable with both closeness and space. No games, no drama.\n\nWHY YOU GET ATTACHED (Your Hidden Issues):\nYou are tired of the chaos. If you used to date anxious or avoidant partners, your nervous system is finally ready to relax. You are healing.";
+            behaviors = "THE CHARM & HIDDEN BENEFIT:\nPeace. Real peace. Arguments get solved instead of exploding. You can be 100% yourself without walking on eggshells. The hidden benefit: Being with a secure person literally rewires your attachment style permanently toward security.";
+          }
+        }
+
+      } else if (quizName === "is-he-manipulative") {
+        let toxicityPoints = 0;
+        answers.forEach((ans) => {
+          if (["Denies it ever happened", "Complains about them constantly", "He pouts and makes me feel guilty", "Rarely, he usually makes excuses", "He gives unsolicited, critical advice", "Once or twice in a heated argument", "Confused, like I am walking on eggshells"].includes(ans)) toxicityPoints += 1;
+          else if (["Blames you for making him act that way", "Changes the subject entirely", "Refuses to spend time with them", "Convinces you they don't care about you", "He starts a massive fight right before I leave", "He texts/calls me incessantly while I'm out", "He was intense at first, now he is cold", "He is only loving when I do what he wants", "He acts like a totally different person now", "Never. It is always my fault", "Only if he wants something from me", "He gets angry if I don't consult him first", "He actively controls my money or decisions", "Yes, he frequently calls me crazy or 'too sensitive'", "He tells me my memory is broken/wrong", "Exhausted, I feel like everything is my fault", "Terrified to set him off"].includes(ans)) toxicityPoints += 2;
+        });
+        healthScore = Math.max(5, 99 - (toxicityPoints * 6)); 
+        gaugeScore = Math.min(100, (toxicityPoints / 16) * 100 + (Math.floor(Math.random() * 8))); 
+        gaugeLabel = "MANIPULATION THREAT";
+        primaryStyle = toxicityPoints >= 9 ? "Highly Manipulative" : toxicityPoints >= 4 ? "Toxic Patterns" : "Healthy";
+        title = `Assessment: ${primaryStyle}`;
+        if (primaryStyle === "Highly Manipulative") {
+          description = "Your answers indicate severe emotional manipulation, control, and classic signs of gaslighting. He is actively distorting your reality to keep you compliant.";
+          behaviors = "• Denying events happened to make you doubt your memory (Gaslighting).\n• Isolating you from friends and family.\n• Shifting blame so that his bad behavior is somehow 'your fault'.";
+          chances = "Critical Danger. This is not a communication issue; it is emotional abuse. You cannot fix or therapy him out of this. You need an exit plan.";
+        } else if (primaryStyle === "Toxic Patterns") {
+          description = "Your answers reveal significant unhealthy communication patterns. He may not be a calculated mastermind, but his behavior is immature, selfish, and emotionally draining.";
+          behaviors = "• Guilt-tripping you when you try to establish independence.\n• Making excuses instead of taking true accountability.\n• Using the silent treatment or starting fights to regain control.";
+          chances = "Warning Zone. This dynamic is slowly destroying your self-esteem. He needs strict boundaries immediately to see if he is capable of change.";
+        } else {
+          description = "Based on your answers, his behavior falls within the realm of normal, healthy conflict resolution. He takes accountability and respects your boundaries.";
+          behaviors = "• Apologizing genuinely when he makes a mistake.\n• Supporting your independence and friendships.\n• Communicating without resorting to name-calling or reality distortion.";
+          chances = "Safe. If you still feel constant anxiety in this relationship, the trigger might actually be stemming from your own past trauma rather than his current actions.";
+        }
       } else {
-         let secure = 0; healthScore = 50; gaugeScore = 50; title = "Result"; description = ""; behaviors = ""; chances = ""; primaryStyle = "Secure";
+        // Fallback for older attachment quizzes
+        let secure = 0, anxious = 0, avoidant = 0, fearful = 0;
+        answers.slice(0, 8).forEach((ans) => {
+          if (ans.includes("Comfortable.") || ans.includes("naturally") || ans.includes("busy") || ans.includes("communicate openly") || ans.includes("Very comfortable") || ans.includes("major relationship fears") || ans.includes("steady pace") || ans.includes("support them comfortably")) secure++;
+          else if (ans.includes("Anxious.") || ans.includes("crave it intensely") || ans.includes("losing interest") || ans.includes("desperate for reassurance") || ans.includes("depend on them completely") || ans.includes("Being abandoned") || ans.includes("Very quickly") || ans.includes("fix it so they don't leave")) anxious++;
+          else if (ans.includes("Relieved.") || ans.includes("prefer self-reliance") || ans.includes("don't really notice") || ans.includes("shut down") || ans.includes("hate depending") || ans.includes("Losing my freedom") || ans.includes("Very slowly") || ans.includes("distance myself")) avoidant++;
+          else fearful++;
+        });
+        isSingle = answers[8]?.includes("Single");
+        const scores: Record<string, number> = { "Secure": secure, "Anxious Preoccupied": anxious, "Dismissive Avoidant": avoidant, "Fearful Avoidant (Disorganized)": fearful };
+        primaryStyle = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+        healthScore = Math.min(99, Math.max(1, Math.round((secure / 8) * 100) + (Math.floor(Math.random() * 8) - 3)));
+        
+        gaugeScore = 100 - healthScore; 
+        gaugeLabel = "INSECURITY THREAT";
+        title = `Your Attachment Style: ${primaryStyle}`;
+        if (primaryStyle === "Secure") {
+          description = "You have a remarkably healthy approach to relationships. You are comfortable with intimacy but don't lose your sense of self.";
+          behaviors = "• You communicate your needs clearly without blame.\n• You don't panic when your partner asks for space.\n• You give your partner the benefit of the doubt during arguments.";
+          chances = "Extremely High. You naturally gravitate towards other secure people and build stable, long-lasting foundations.";
+        } else if (primaryStyle === "Anxious Preoccupied") {
+          description = "You have a beautiful capacity for deep love, but your fear of abandonment often hijacks your peace of mind. Your nervous system is constantly scanning for threats of rejection.";
+          behaviors = "• Double or triple texting when left on read.\n• Seeking constant verbal reassurance that you are loved.\n• Threatening to leave or starting fights just to see if your partner will 'fight for you'.";
+          chances = "Moderate to Low (until healed). You tend to attract Avoidant partners, creating a toxic, exhausting trap. Finding a Secure partner—and learning to self-soothe—is crucial for your happiness.";
+        } else if (primaryStyle === "Dismissive Avoidant") {
+          description = "You value your independence above almost everything else. When partners get 'too close' or emotional, your instinct is to pull away and protect your space.";
+          behaviors = "• Stonewalling or shutting down completely during emotional arguments.\n• Hyper-focusing on your partner's small flaws to justify pulling away.\n• Feeling 'suffocated' by normal relationship expectations.";
+          chances = "Low (until you tolerate intimacy). You often end up alone or in surface-level relationships because you eject when things get 'too real' or vulnerable.";
+        } else {
+          description = "You experience a confusing push-pull dynamic. You deeply desire love and intimacy, but your nervous system is simultaneously terrified of it.";
+          behaviors = "• Intense 'come here, now go away' energy.\n• Ghosting out of a sudden, overwhelming fear of rejection.\n• Unconsciously sabotaging the relationship when things feel 'too peaceful' because chaos feels safer.";
+          chances = "Very Low (unless you break the cycle). Because deep intimacy feels threatening, you will naturally sabotage safe relationships until you rewire your brain to trust consistency.";
+        }
       }
 
-      setResultData({ title, description, behaviors, chances, healthScore, isSingle, primaryStyle, gaugeScore, gaugeLabel, percentagesData });
+      setResultData({ title, description, behaviors, chances, healthScore, isSingle, primaryStyle, gaugeScore, gaugeLabel, percentagesData, dialData });
       setShowResult(true);
       setLoading(false);
     }, 1200);
@@ -228,10 +311,16 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         ctaHook = `Because you are a ${resultData.primaryStyle} magnet, toxic people will naturally hunt your energy. You need to verify the intentions of the people messaging you right now. Drop their texts into the AI Analyzer to spot manipulators instantly.`;
       }
     } else if (quizName === "attraction-patterns") {
-      ctaHook = `Your ${resultData.primaryStyle} magnet is driving your toxic attraction. You must decode these red flags before you repeat the cycle. Use our AI to analyze the texts of the person you are currently talking to.`;
+      if (isSecure) {
+        ctaHook = "You naturally attract healthy partners. But if you have an anxious friend constantly dating toxic people, send them this test so they can see their blind spots.";
+      } else {
+        ctaHook = `Your ${resultData.primaryStyle} magnet is driving your toxic attraction. You must decode these red flags before you repeat the cycle. Use our AI to analyze the texts of the person you are currently talking to.`;
+      }
     } else {
       ctaHook = "Manipulators use confusion as a weapon. Copy his most confusing text messages and paste them into our AI Chat Analyzer right now.";
     }
+
+    const subLabelStr = quizName === "who-finds-me-attractive" ? "Magnet" : "Pull";
 
     return (
       <div className={`rounded-2xl ${tBg} text-left w-full mx-auto animate-in fade-in duration-500`}>
@@ -249,12 +338,12 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
               {quizName === "who-finds-me-attractive" ? "Who is drawn to your energy" : "Your Complete Attraction Profile"}
             </h4>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              <ResultGauge score={resultData.percentagesData["Narcissistic"]} label="Narcissist" subLabel={`${resultData.percentagesData["Narcissistic"]}% Magnet`} size="small" />
-              <ResultGauge score={resultData.percentagesData["Avoidant"]} label="Avoidant" subLabel={`${resultData.percentagesData["Avoidant"]}% Magnet`} size="small" />
-              <ResultGauge score={resultData.percentagesData["Anxious"]} label="Anxious" subLabel={`${resultData.percentagesData["Anxious"]}% Magnet`} size="small" />
-              <ResultGauge score={resultData.percentagesData["Depressive"]} label="Depressive" subLabel={`${resultData.percentagesData["Depressive"]}% Magnet`} size="small" />
-              <ResultGauge score={resultData.percentagesData["Borderline"]} label="Borderline" subLabel={`${resultData.percentagesData["Borderline"]}% Magnet`} size="small" />
-              <ResultGauge score={resultData.percentagesData["Secure"]} label="Secure" subLabel={`${resultData.percentagesData["Secure"]}% Magnet`} size="small" />
+              <ResultGauge score={resultData.dialData["Narcissistic"]} label="Narcissist" subLabel={`${resultData.percentagesData["Narcissistic"]}% ${subLabelStr}`} size="small" />
+              <ResultGauge score={resultData.dialData["Avoidant"]} label="Avoidant" subLabel={`${resultData.percentagesData["Avoidant"]}% ${subLabelStr}`} size="small" />
+              <ResultGauge score={resultData.dialData["Anxious"]} label="Anxious" subLabel={`${resultData.percentagesData["Anxious"]}% ${subLabelStr}`} size="small" />
+              <ResultGauge score={resultData.dialData["Depressive"]} label="Depressive" subLabel={`${resultData.percentagesData["Depressive"]}% ${subLabelStr}`} size="small" />
+              <ResultGauge score={resultData.dialData["Borderline"]} label="Borderline" subLabel={`${resultData.percentagesData["Borderline"]}% ${subLabelStr}`} size="small" />
+              <ResultGauge score={resultData.dialData["Secure"]} label="Secure" subLabel={`${resultData.percentagesData["Secure"]}% ${subLabelStr}`} size="small" reverseColors={true} />
             </div>
           </div>
         ) : (
@@ -274,6 +363,13 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
             <h4 className={`text-xl font-bold ${tH3} mb-3`}>{quizName === "who-finds-me-attractive" ? "The Secret Drug You Provide:" : "Explicit Patterns Noticed:"}</h4>
             <p className="text-lg leading-relaxed whitespace-pre-wrap font-medium">{resultData.behaviors}</p>
           </div>
+          
+          {resultData.chances && (
+             <div>
+               <h4 className={`text-xl font-bold ${tH3} mb-2`}>Prognosis:</h4>
+               <p className="text-lg leading-relaxed font-medium">{resultData.chances}</p>
+             </div>
+          )}
         </div>
         
         {/* URGENT CTA BLOCK */}
