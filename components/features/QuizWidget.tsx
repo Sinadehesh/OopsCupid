@@ -55,7 +55,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const activeQuestions = questionsBank[quizName] || questionsBank["default"];
   const isFinished = answers.length === activeQuestions.length;
   
-  // Dynamic Theming: Apply deep crimson theme to ANY test about "Him"
   const isDarkTheme = ["partners-attachment-style", "is-he-manipulative"].includes(quizName);
 
   const tBg = isDarkTheme ? "bg-[#fdffff]" : "bg-white";
@@ -89,14 +88,12 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
       if (quizName === "is-he-manipulative") {
         let toxicityPoints = 0;
-        
         answers.forEach((ans) => {
-          // Add points based on severity of the selected string
           if (["Denies it ever happened", "Complains about them constantly", "He pouts and makes me feel guilty", "Rarely, he usually makes excuses", "He gives unsolicited, critical advice", "Once or twice in a heated argument", "Confused, like I am walking on eggshells"].includes(ans)) toxicityPoints += 1;
           else if (["Blames you for making him act that way", "Changes the subject entirely", "Refuses to spend time with them", "Convinces you they don't care about you", "He starts a massive fight right before I leave", "He texts/calls me incessantly while I'm out", "He was intense at first, now he is cold", "He is only loving when I do what he wants", "He acts like a totally different person now", "Never. It is always my fault", "Only if he wants something from me", "He gets angry if I don't consult him first", "He actively controls my money or decisions", "Yes, he frequently calls me crazy or 'too sensitive'", "He tells me my memory is broken/wrong", "Exhausted, I feel like everything is my fault", "Terrified to set him off"].includes(ans)) toxicityPoints += 2;
         });
 
-        healthScore = Math.max(5, 99 - (toxicityPoints * 6)); // Invert so high toxicity = low health score
+        healthScore = Math.max(5, 99 - (toxicityPoints * 6)); 
         primaryStyle = toxicityPoints >= 9 ? "Highly Manipulative" : toxicityPoints >= 4 ? "Toxic Patterns" : "Healthy";
         title = `Assessment: ${primaryStyle}`;
 
@@ -115,7 +112,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         }
 
       } else if (quizName === "attachment-style") {
-        // ... (Existing Attachment Style Logic stays exactly the same) ...
         let secure = 0, anxious = 0, avoidant = 0, fearful = 0;
         answers.slice(0, 8).forEach((ans) => {
           if (ans.includes("Comfortable.") || ans.includes("naturally") || ans.includes("busy") || ans.includes("communicate openly") || ans.includes("Very comfortable") || ans.includes("major relationship fears") || ans.includes("steady pace") || ans.includes("support them comfortably")) secure++;
@@ -128,11 +124,27 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         primaryStyle = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
         healthScore = Math.min(99, Math.max(1, Math.round((secure / 8) * 100) + (Math.floor(Math.random() * 8) - 3)));
         title = `Your Attachment Style: ${primaryStyle}`;
-        description = "Your attachment style dictates how you love.";
-        behaviors = "Behavior summary goes here.";
-        chances = "Chances depend on healing.";
+
+        // RESTORED FULL "ME" TEXT
+        if (primaryStyle === "Secure") {
+          description = "You have a remarkably healthy approach to relationships. You are comfortable with intimacy but don't lose your sense of self.";
+          behaviors = "• You communicate your needs clearly without blame.\n• You don't panic when your partner asks for space.\n• You give your partner the benefit of the doubt during arguments.";
+          chances = "Extremely High. You naturally gravitate towards other secure people and build stable, long-lasting foundations.";
+        } else if (primaryStyle === "Anxious Preoccupied") {
+          description = "You have a beautiful capacity for deep love, but your fear of abandonment often hijacks your peace of mind. Your nervous system is constantly scanning for threats of rejection.";
+          behaviors = "• Double or triple texting when left on read.\n• Seeking constant verbal reassurance that you are loved.\n• Threatening to leave or starting fights just to see if your partner will 'fight for you'.";
+          chances = "Moderate to Low (until healed). You tend to attract Avoidant partners, creating a toxic, exhausting trap. Finding a Secure partner—and learning to self-soothe—is crucial for your happiness.";
+        } else if (primaryStyle === "Dismissive Avoidant") {
+          description = "You value your independence above almost everything else. When partners get 'too close' or emotional, your instinct is to pull away and protect your space.";
+          behaviors = "• Stonewalling or shutting down completely during emotional arguments.\n• Hyper-focusing on your partner's small flaws to justify pulling away.\n• Feeling 'suffocated' by normal relationship expectations.";
+          chances = "Low (until you tolerate intimacy). You often end up alone or in surface-level relationships because you eject when things get 'too real' or vulnerable.";
+        } else {
+          description = "You experience a confusing push-pull dynamic. You deeply desire love and intimacy, but your nervous system is simultaneously terrified of it.";
+          behaviors = "• Intense 'come here, now go away' energy.\n• Ghosting out of a sudden, overwhelming fear of rejection.\n• Unconsciously sabotaging the relationship when things feel 'too peaceful' because chaos feels safer.";
+          chances = "Very Low (unless you break the cycle). Because deep intimacy feels threatening, you will naturally sabotage safe relationships until you rewire your brain to trust consistency.";
+        }
+
       } else if (quizName === "partners-attachment-style") {
-        // ... (Existing Partner Attachment Logic stays exactly the same) ...
         let secure = 0, anxious = 0, avoidant = 0, fearful = 0;
         answers.slice(0, 12).forEach((ans) => {
           if (["Talks openly to connect", "Stays engaged calmly", "Comfortable sharing deeply", "Listens and helps reliably", "Reliable and flexible", "Natural and consistent", "Mostly healthy ones", "Supports happily", "Works through together", "Excited to build", "Generally trusts easily", "Balanced"].includes(ans)) secure++;
@@ -143,11 +155,31 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         const scores: Record<string, number> = { "Secure": secure, "Anxious": anxious, "Avoidant": avoidant, "Fearful-Avoidant": fearful };
         const sortedStyles = Object.keys(scores).sort((a, b) => scores[b] - scores[a]);
         primaryStyle = sortedStyles[0];
+        const secondaryStyle = sortedStyles[1];
+        
         healthScore = Math.min(99, Math.max(1, Math.round((secure / 12) * 100) + (Math.floor(Math.random() * 8) - 3)));
-        title = `His Style: ${primaryStyle}`;
-        description = "This represents his core psychological blueprint.";
-        behaviors = "Behavior summary.";
-        chances = "Depends on the pairing.";
+        
+        title = scores[secondaryStyle] >= 3 
+          ? `His Style: ${primaryStyle} (leaning ${secondaryStyle})` 
+          : `His Style: ${primaryStyle}`;
+
+        if (primaryStyle === "Secure") {
+          description = "He has a predominantly healthy approach to relationships. He is comfortable with intimacy and handles conflict without resorting to manipulation or shutting down.";
+          behaviors = "• He communicates openly instead of playing games.\n• He gives you the benefit of the doubt during arguments.\n• He supports your independence without feeling threatened.";
+          chances = "Very High. If your style is also secure, this is a highly stable and safe pairing.";
+        } else if (primaryStyle === "Anxious") {
+          description = "He desires intense closeness but lives in fear that you will abandon him. His nervous system is constantly scanning your behavior for signs of rejection.";
+          behaviors = "• He needs excessive reassurance and rapid text replies.\n• He gets clingy or jealous when you request independence.\n• He might start small fights just to force you to 'prove' you care.";
+          chances = "Moderate. It requires him learning to self-soothe. If you lean Avoidant, this will create an exhausting 'chaser-runner' dynamic.";
+        } else if (primaryStyle === "Avoidant") {
+          description = "He equates intimacy with a loss of freedom. The closer you get, the more his nervous system tells him to pull away and protect his space.";
+          behaviors = "• He stonewalls or literally walks away during emotional conflict.\n• He keeps conversations surface-level and avoids labeling the future.\n• He hyper-focuses on your 'flaws' as an excuse to keep his distance.";
+          chances = "Low. Unless he recognizes his distancing as a defense mechanism, he will continually keep you at arm's length, leaving you emotionally starved.";
+        } else {
+          description = "He has a highly unpredictable 'push-pull' dynamic. He deeply craves connection, but is simultaneously terrified of being vulnerable or hurt.";
+          behaviors = "• He love-bombs you, then suddenly goes ice-cold.\n• He acts incredibly intensely but runs away when things get peaceful.\n• He might explode during conflict, then intensely regret it.";
+          chances = "Very Low. This dynamic is emotionally exhausting and highly volatile. He needs deep internal work to trust consistency and safety.";
+        }
       }
 
       setResultData({ title, description, behaviors, chances, healthScore, isSingle, primaryStyle });
@@ -160,8 +192,9 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
   if (showResult && resultData) {
     const isBadScore = resultData.healthScore < 50;
+    const isSecure = resultData.primaryStyle === "Secure" || resultData.primaryStyle === "Healthy";
     
-    // THE NEW PSYCHOLOGICAL PIVOT FOR MANIPULATION
+    // DYNAMIC CTA HOOKS RESTORED FOR ALL 3 TESTS
     let ctaHook = "";
     if (quizName === "is-he-manipulative") {
       if (resultData.primaryStyle === "Highly Manipulative" || resultData.primaryStyle === "Toxic Patterns") {
@@ -170,13 +203,21 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
          ctaHook = "His behavior looks healthy, which means your anxiety might be an internal trigger. When we are used to chaos, peace feels dangerous. Take the Attachment Style test to see if your nervous system is playing tricks on you.";
       }
     } else if (quizName === "partners-attachment-style") {
-      if (resultData.primaryStyle === "Secure") {
+      if (isSecure) {
         ctaHook = "He scored as 'Secure', but if you are taking this test, your gut is likely telling you something feels off. Covert manipulators perfect mimic healthy behaviors to gain trust while quietly tearing you down. Let's run a psychological check for hidden manipulation to be absolutely sure.";
       } else {
         ctaHook = `His ${resultData.primaryStyle} attachment style is quietly dictating every argument and text message. Paste his confusing texts into our AI Analyzer to decode exactly what he is thinking.`;
       }
-    } else {
-      ctaHook = "Your nervous system is lying to you. Until you break this pattern, you will keep subconsciously choosing partners who trigger your deepest fears.";
+    } else if (quizName === "attachment-style") {
+      if (isSecure && resultData.isSingle) {
+        ctaHook = "You're healthy, but your radar might be broken. Secure people often become magnets for chaotic, avoidant partners who drain their energy. Let's uncover your hidden blind spots before you fall for the wrong person again.";
+      } else if (isSecure && !resultData.isSingle) {
+        ctaHook = "You bring the stability, but what is your partner bringing? A relationship only survives if BOTH people are secure. If they aren't, your healthy habits might actually be pushing them away. Discover their true attachment style now.";
+      } else if (!isSecure && resultData.isSingle) {
+        ctaHook = "Your nervous system is lying to you. Until you break this pattern, you will keep subconsciously choosing partners who trigger your deepest fears. Let's decode your hidden attraction triggers so you can finally stop the cycle.";
+      } else {
+        ctaHook = "Your attachment style is quietly sabotaging your relationship right now. But to stop the cycle, you need to know exactly how your partner's style is reacting to yours. This is the missing puzzle piece.";
+      }
     }
 
     return (
@@ -237,7 +278,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
                    </Link>
                  )
               ) : quizName === "partners-attachment-style" ? (
-                 resultData.primaryStyle === "Secure" ? (
+                 isSecure ? (
                    <Link href="/is-he-manipulative" className="block w-full text-center bg-red-600 text-white font-extrabold py-5 rounded-xl shadow-[0_0_15px_rgba(220,38,38,0.4)] hover:-translate-y-1 hover:bg-red-700 transition-all duration-300 border-b-4 border-red-800 active:border-b-0 active:translate-y-1">
                      Take Quiz: Is He Manipulating Me? →
                    </Link>
@@ -247,9 +288,22 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
                    </Link>
                  )
               ) : (
-                <Link href="/attraction-patterns" className="block w-full text-center bg-red-600 text-white font-extrabold py-5 rounded-xl shadow-[0_0_15px_rgba(220,38,38,0.4)] hover:-translate-y-1 hover:bg-red-700 transition-all duration-300 border-b-4 border-red-800 active:border-b-0 active:translate-y-1">
-                  Take Quiz: What Kind of Person Do I Attract? →
-                </Link>
+                <>
+                  {resultData.isSingle ? (
+                    <Link href="/attraction-patterns" className="block w-full text-center bg-red-600 text-white font-extrabold py-5 rounded-xl shadow-[0_0_15px_rgba(220,38,38,0.4)] hover:-translate-y-1 hover:bg-red-700 transition-all duration-300 border-b-4 border-red-800 active:border-b-0 active:translate-y-1">
+                      Take Quiz: What Kind of Person Do I Attract? →
+                    </Link>
+                  ) : (
+                    <Link href="/partners-attachment-style" className="block w-full text-center bg-red-600 text-white font-extrabold py-5 rounded-xl shadow-[0_0_15px_rgba(220,38,38,0.4)] hover:-translate-y-1 hover:bg-red-700 transition-all duration-300 border-b-4 border-red-800 active:border-b-0 active:translate-y-1">
+                      Take Quiz: What is My Partner's Attachment Style? →
+                    </Link>
+                  )}
+                  {!isSecure && (
+                    <Link href="/understanding-attachment-styles" className="block w-full text-center bg-emerald-500 text-white font-extrabold py-5 rounded-xl shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:-translate-y-1 hover:bg-emerald-400 transition-all duration-300 border-b-4 border-emerald-700 active:border-b-0 active:translate-y-1">
+                      ✨ Start Healing: How to Fix My Attachment Style
+                    </Link>
+                  )}
+                </>
               )}
             </div>
           </div>
