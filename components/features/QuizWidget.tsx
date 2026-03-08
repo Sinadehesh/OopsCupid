@@ -50,7 +50,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         <span className="text-xs font-bold uppercase tracking-widest text-[var(--secondary-base)] mb-2 block">Your Result</span>
         <h3 className="text-3xl font-extrabold text-foreground mb-4">{resultData.title}</h3>
         <p className="text-foreground-secondary text-lg leading-relaxed mb-8">{resultData.description}</p>
-        <CTA text="Take Another Quiz" variant="outline" onClick={() => {
+        <CTA text="Take Another Quiz" variant="secondary" onClick={() => {
           setCurrentQuestion(0);
           setAnswers([]);
           setShowResult(false);
