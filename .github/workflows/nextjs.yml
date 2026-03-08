@@ -1,19 +1,15 @@
 name: Deploy Next.js site to Pages
-
 on:
   push:
     branches: ["main"]
   workflow_dispatch:
-
 permissions:
   contents: read
   pages: write
   id-token: write
-
 concurrency:
   group: "pages"
   cancel-in-progress: false
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,11 +17,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Detect package manager
-        id: detect-package-manager
         run: |
-          echo "manager=npm" >> $GITHUB_OUTPUT
-          echo "command=ci" >> $GITHUB_OUTPUT
-          echo "runner=npx --no-install" >> $GITHUB_OUTPUT
+          echo "manager=npm" >> $GITHUB_ENV
+          echo "command=ci" >> $GITHUB_ENV
+          echo "runner=npx --no-install" >> $GITHUB_ENV
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -37,8 +32,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .next/cache
-          # THE FIX: Changed the key to forcefully bust the corrupted CSS cache
-          key: ${{ runner.os }}-nextjs-force-refresh-v1-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          key: ${{ runner.os }}-nextjs-force-refresh-v3-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
       - name: Install dependencies
         run: npm ci
       - name: Build with Next.js
@@ -47,7 +41,6 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
-
   deploy:
     environment:
       name: github-pages
