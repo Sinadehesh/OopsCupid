@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import CTA from "../ui/CTA";
 import Link from "next/link";
+import ResultGauge from "../ui/ResultGauge";
 
 const questionsBank: Record<string, { id: number, text: string, options: string[] }[]> = {
   "attachment-style": [
@@ -54,7 +55,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
   const activeQuestions = questionsBank[quizName] || questionsBank["default"];
   const isFinished = answers.length === activeQuestions.length;
-  
   const isDarkTheme = ["partners-attachment-style", "is-he-manipulative"].includes(quizName);
 
   const tBg = isDarkTheme ? "bg-[#fdffff]" : "bg-white";
@@ -85,6 +85,10 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       let healthScore = 0;
       let isSingle = true;
       let primaryStyle = "";
+      
+      // Variables specifically for the Gauge
+      let gaugeScore = 0;
+      let gaugeLabel = "THREAT LEVEL";
 
       if (quizName === "is-he-manipulative") {
         let toxicityPoints = 0;
@@ -94,6 +98,9 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         });
 
         healthScore = Math.max(5, 99 - (toxicityPoints * 6)); 
+        gaugeScore = Math.min(100, (toxicityPoints / 16) * 100 + (Math.floor(Math.random() * 8))); // High = Red
+        gaugeLabel = "MANIPULATION THREAT";
+
         primaryStyle = toxicityPoints >= 9 ? "Highly Manipulative" : toxicityPoints >= 4 ? "Toxic Patterns" : "Healthy";
         title = `Assessment: ${primaryStyle}`;
 
@@ -123,9 +130,12 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         const scores: Record<string, number> = { "Secure": secure, "Anxious Preoccupied": anxious, "Dismissive Avoidant": avoidant, "Fearful Avoidant (Disorganized)": fearful };
         primaryStyle = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
         healthScore = Math.min(99, Math.max(1, Math.round((secure / 8) * 100) + (Math.floor(Math.random() * 8) - 3)));
+        
+        gaugeScore = 100 - healthScore; // If health is low, insecurity threat is high (Red)
+        gaugeLabel = "INSECURITY THREAT";
+
         title = `Your Attachment Style: ${primaryStyle}`;
 
-        // RESTORED FULL "ME" TEXT
         if (primaryStyle === "Secure") {
           description = "You have a remarkably healthy approach to relationships. You are comfortable with intimacy but don't lose your sense of self.";
           behaviors = "• You communicate your needs clearly without blame.\n• You don't panic when your partner asks for space.\n• You give your partner the benefit of the doubt during arguments.";
@@ -159,6 +169,9 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         
         healthScore = Math.min(99, Math.max(1, Math.round((secure / 12) * 100) + (Math.floor(Math.random() * 8) - 3)));
         
+        gaugeScore = 100 - healthScore; // If his health is low, instability threat is high (Red)
+        gaugeLabel = "INSTABILITY THREAT";
+
         title = scores[secondaryStyle] >= 3 
           ? `His Style: ${primaryStyle} (leaning ${secondaryStyle})` 
           : `His Style: ${primaryStyle}`;
@@ -182,7 +195,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         }
       }
 
-      setResultData({ title, description, behaviors, chances, healthScore, isSingle, primaryStyle });
+      setResultData({ title, description, behaviors, chances, healthScore, isSingle, primaryStyle, gaugeScore, gaugeLabel });
       setShowResult(true);
       setLoading(false);
     }, 1200);
@@ -194,7 +207,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     const isBadScore = resultData.healthScore < 50;
     const isSecure = resultData.primaryStyle === "Secure" || resultData.primaryStyle === "Healthy";
     
-    // DYNAMIC CTA HOOKS RESTORED FOR ALL 3 TESTS
     let ctaHook = "";
     if (quizName === "is-he-manipulative") {
       if (resultData.primaryStyle === "Highly Manipulative" || resultData.primaryStyle === "Toxic Patterns") {
@@ -229,14 +241,8 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
           {resultData.title}
         </h3>
         
-        <div className="flex justify-center mb-10">
-          <div className={`px-6 py-3 rounded-xl border-2 font-bold text-lg text-center shadow-sm ${isBadScore ? 'bg-red-50 text-red-700 border-red-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200'}`}>
-            {isBadScore 
-              ? `⚠️ Warning: ${isDarkTheme ? 'He scored' : 'You scored'} in the bottom ${resultData.healthScore}% for relationship safety.`
-              : `✨ Status: ${isDarkTheme ? 'He scored' : 'You scored'} in the top ${100 - resultData.healthScore}% for relationship safety.`
-            }
-          </div>
-        </div>
+        {/* NEW DARK NEON GAUGE INJECTED HERE */}
+        <ResultGauge score={resultData.gaugeScore} label={resultData.gaugeLabel} />
 
         <div className={`space-y-8 px-2 md:px-6 ${tP}`}>
           <div>
