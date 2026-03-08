@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Search, ShoppingCart, Menu, X } from "lucide-react";
 import { useState } from "react";
@@ -20,12 +21,19 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-[rgba(51,75,99,0.08)] bg-[#F9F4F4]/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-[1500px] items-center justify-between px-6 py-3 md:px-10 md:py-4 lg:px-14">
 
-        {/* Left — Wordmark */}
+        {/* Left — Logo & Wordmark */}
         <Link
           href="/"
           aria-label="OopsCupid — Free Relationship Quizzes and Red Flag Analysis"
-          className="flex items-baseline gap-[3px] group"
+          className="flex items-center gap-[4px] group"
         >
+          <Image 
+            src="/logo.png" 
+            alt="OopsCupid Logo" 
+            width={32} 
+            height={32} 
+            className="mr-1 rounded-sm object-contain transition-transform duration-200 group-hover:scale-105"
+          />
           <span
             className="text-[22px] font-semibold tracking-[-0.04em] text-[#334B63] transition-colors duration-200 group-hover:text-[#5A7492]"
             style={{ fontFamily: "var(--font-nunito), system-ui, sans-serif" }}
@@ -91,8 +99,9 @@ export default function Header() {
             </span>
           </button>
 
+          {/* I went ahead and linked this to your new /me dashboard! */}
           <Link
-            href="/account"
+            href="/me"
             className="rounded-full border border-[#5A7492] px-5 py-1.5 text-[14px] font-semibold text-[#5A7492] transition-all duration-200 hover:bg-[#5A7492] hover:text-white"
           >
             My Account
@@ -127,7 +136,7 @@ export default function Header() {
             </Link>
           ))}
           <Link
-            href="/account"
+            href="/me"
             className="mt-5 rounded-full border border-[#5A7492] px-5 py-2.5 text-center text-[15px] font-semibold text-[#5A7492]"
           >
             My Account
