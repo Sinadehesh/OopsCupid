@@ -14,7 +14,6 @@ const questionsBank: Record<string, { id: number, text: string, options: string[
     { id: 6, text: "What is your biggest relationship fear?", options: ["I don't have major relationship fears.", "Being abandoned or not loved enough.", "Losing my freedom or being controlled.", "Being betrayed or trapped."] },
     { id: 7, text: "How quickly do you open up to new partners?", options: ["At a normal, steady pace.", "Very quickly, I overshare to build a bond.", "Very slowly, if at all.", "I open up but then deeply regret it and pull back."] },
     { id: 8, text: "How do you handle your partner being highly emotional or needy?", options: ["I support them comfortably.", "I try to fix it frantically so they don't leave me.", "I feel overwhelmed and want to distance myself.", "I get overwhelmed and react defensively."] },
-    // NEW QUESTION FOR CONDITIONAL ROUTING
     { id: 9, text: "Lastly, what is your current relationship status?", options: ["Single and navigating the dating world", "Currently in a relationship or actively dating someone"] },
   ],
   "default": [
@@ -51,6 +50,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       let chances = "";
       let healthScore = 0;
       let isSingle = true;
+      let primaryStyle = "";
 
       if (quizName === "attachment-style") {
         let secure = 0, anxious = 0, avoidant = 0, fearful = 0;
@@ -65,7 +65,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         isSingle = answers[8]?.includes("Single");
 
         const scores: Record<string, number> = { "Secure": secure, "Anxious Preoccupied": anxious, "Dismissive Avoidant": avoidant, "Fearful Avoidant (Disorganized)": fearful };
-        const primaryStyle = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+        primaryStyle = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
         
         healthScore = Math.min(99, Math.max(1, Math.round((secure / 8) * 100) + (Math.floor(Math.random() * 8) - 3)));
         title = `Your Attachment Style: ${primaryStyle}`;
@@ -89,7 +89,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         }
       }
 
-      setResultData({ title, description, behaviors, chances, healthScore, isSingle });
+      setResultData({ title, description, behaviors, chances, healthScore, isSingle, primaryStyle });
       setShowResult(true);
       setLoading(false);
     }, 1200);
@@ -100,7 +100,21 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   // --- RENDER RESULTS SCREEN ---
   if (showResult && resultData) {
     const isBadScore = resultData.healthScore < 50;
+    const isSecure = resultData.primaryStyle === "Secure";
+    const isSingle = resultData.isSingle;
     
+    // Dynamic CTA Messaging designed to spark curiosity and urgency
+    let ctaHook = "";
+    if (isSecure && isSingle) {
+      ctaHook = "You're healthy, but are you safe? Secure people often unknowingly attract chaotic, insecure partners who drain their peace. Let's check your blind spots to make sure your radar is calibrated.";
+    } else if (isSecure && !isSingle) {
+      ctaHook = "You bring incredible stability to the table, but a relationship's survival depends on both people. If your partner is insecurely attached, your secure habits might actually be triggering them without you knowing.";
+    } else if (!isSecure && isSingle) {
+      ctaHook = "Until you heal these patterns, your nervous system will likely keep choosing the wrong people because chaos feels 'familiar'. Let's break the loop and find out exactly what you are subconsciously seeking.";
+    } else {
+      ctaHook = "Your attachment style is actively shaping every argument, text, and silent moment in your relationship. But how is your partner's style reacting to yours? This is the key to stopping the cycle.";
+    }
+
     return (
       <div className="rounded-2xl bg-white text-left w-full mx-auto animate-in fade-in duration-500">
         <span className="text-sm font-bold uppercase tracking-widest text-[#8e9aaf] mb-3 block text-center">Your Clinical Result</span>
@@ -108,7 +122,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
           {resultData.title}
         </h3>
         
-        {/* Dynamic Alarming / Positive Percentile Badge */}
         <div className="flex justify-center mb-10">
           <div className={`px-6 py-3 rounded-xl border-2 font-bold text-lg text-center shadow-sm ${isBadScore ? 'bg-red-50 text-red-700 border-red-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200'}`}>
             {isBadScore 
@@ -135,29 +148,35 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
           </div>
         </div>
         
-        {/* CONDITIONAL CTAs BASED ON RELATIONSHIP STATUS */}
-        <div className="mt-12 pt-8 border-t border-gray-100 flex flex-col gap-4 px-2 md:px-6">
-          <h4 className="text-center font-bold text-[#334B63] text-lg mb-2">Your Recommended Next Steps:</h4>
-          
-          {resultData.isSingle ? (
-            <>
-              <Link href="/attraction-patterns" className="w-full text-center bg-[#8e9aaf] text-white font-bold py-4 rounded-xl hover:bg-[#7a869a] transition-colors shadow-md">
-                Take Quiz: What Kind of Person Do I Attract? →
-              </Link>
-              <Link href="/understanding-attachment-styles" className="w-full text-center bg-[#efd3d7] text-[#334B63] font-bold py-4 rounded-xl hover:bg-[#e0c4c8] transition-colors">
-                Read: How to Fix My Attachment Style
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link href="/partners-attachment-style" className="w-full text-center bg-[#cbc0d3] text-[#334B63] font-bold py-4 rounded-xl hover:bg-[#b8adc0] transition-colors shadow-md">
-                Take Quiz: What is My Partner's Attachment Style? →
-              </Link>
-              <Link href="/understanding-attachment-styles" className="w-full text-center bg-[#dee2ff] text-[#334B63] font-bold py-4 rounded-xl hover:bg-[#cdd1f0] transition-colors">
-                Read: How to Fix My Attachment Style
-              </Link>
-            </>
-          )}
+        {/* INTERACTIVE DYNAMIC CTAs */}
+        <div className="mt-12 pt-10 border-t-2 border-dashed border-[#dee2ff] flex flex-col gap-6 px-2 md:px-6">
+          <div className="bg-[#f8f9fa] p-6 rounded-2xl border border-gray-100">
+            <h4 className="font-extrabold text-[#334B63] text-xl mb-3 flex items-center gap-2">
+              <span className="text-2xl">🚨</span> Your Critical Next Step
+            </h4>
+            <p className="text-[#5E6E79] text-lg leading-relaxed mb-6 font-medium">
+              {ctaHook}
+            </p>
+            
+            <div className="space-y-4">
+              {isSingle ? (
+                <Link href="/attraction-patterns" className="block w-full text-center bg-[#8e9aaf] text-white font-bold py-4 rounded-xl shadow-[0_0_15px_rgba(142,154,175,0.4)] hover:shadow-[0_0_25px_rgba(142,154,175,0.7)] transform hover:-translate-y-1 hover:bg-[#7a869a] transition-all duration-300">
+                  Take Quiz: What Kind of Person Do I Attract? →
+                </Link>
+              ) : (
+                <Link href="/partners-attachment-style" className="block w-full text-center bg-[#8e9aaf] text-white font-bold py-4 rounded-xl shadow-[0_0_15px_rgba(142,154,175,0.4)] hover:shadow-[0_0_25px_rgba(142,154,175,0.7)] transform hover:-translate-y-1 hover:bg-[#7a869a] transition-all duration-300">
+                  Take Quiz: What is My Partner's Attachment Style? →
+                </Link>
+              )}
+
+              {/* Only show the "Fix" button if they are insecurely attached! */}
+              {!isSecure && (
+                <Link href="/understanding-attachment-styles" className="block w-full text-center bg-emerald-500 text-white font-bold py-4 rounded-xl shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:shadow-[0_0_25px_rgba(16,185,129,0.6)] transform hover:-translate-y-1 hover:bg-emerald-400 transition-all duration-300 border border-emerald-400">
+                  ✨ Start Healing: How to Fix My Attachment Style
+                </Link>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -167,19 +186,20 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   if (isFinished) {
     return (
       <div className="w-full mx-auto text-center py-10 animate-in fade-in zoom-in duration-300">
-        <div className="w-20 h-20 mx-auto bg-[#dee2ff] rounded-full flex items-center justify-center mb-6 shadow-inner">
+        <div className="w-20 h-20 mx-auto bg-[#dee2ff] rounded-full flex items-center justify-center mb-6 shadow-inner border-2 border-white">
           <span className="text-3xl">🧠</span>
         </div>
         <h3 className="text-3xl font-extrabold text-[#334B63] mb-4">Assessment Complete</h3>
-        <p className="text-[#5E6E79] text-lg mb-10 max-w-md mx-auto">
-          We have analyzed your psychological responses. Click below to generate your personalized clinical report.
+        <p className="text-[#5E6E79] text-lg mb-10 max-w-md mx-auto font-medium">
+          We have fully analyzed your psychological responses and behavior patterns.
         </p>
-        <CTA 
-          text={loading ? "Analyzing Profile..." : "Analyze My Attachment Style"} 
+        <button 
           onClick={handleSubmit} 
           disabled={loading}
-          variant="primary"
-        />
+          className="w-full max-w-sm mx-auto block bg-[#8e9aaf] text-white font-bold py-4 rounded-xl shadow-[0_0_20px_rgba(142,154,175,0.5)] hover:shadow-[0_0_30px_rgba(142,154,175,0.8)] transform hover:-translate-y-1 hover:bg-[#7a869a] transition-all duration-300"
+        >
+          {loading ? "Analyzing Profile..." : "Analyze My Attachment Style"}
+        </button>
       </div>
     );
   }
@@ -196,8 +216,8 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
           <span>Question {currentQuestion + 1} of {activeQuestions.length}</span>
           <span>{progress}% Completed</span>
         </div>
-        <div className="w-full bg-[#feeafa] rounded-full h-2.5 border border-[#efd3d7]">
-          <div className="bg-[#8e9aaf] h-2.5 rounded-full transition-all duration-500 ease-out" style={{ width: `${progress}%` }}></div>
+        <div className="w-full bg-[#feeafa] rounded-full h-2.5 border border-[#efd3d7] overflow-hidden">
+          <div className="bg-[#8e9aaf] h-full rounded-full transition-all duration-500 ease-out shadow-sm" style={{ width: `${progress}%` }}></div>
         </div>
       </div>
 
@@ -210,7 +230,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
           <button
             key={idx}
             onClick={() => handleOptionClick(option)}
-            className="w-full text-left p-5 rounded-2xl border-2 border-[#dee2ff] hover:border-[#8e9aaf] hover:bg-[#feeafa]/50 transition-all duration-200 text-[#5E6E79] font-medium text-lg hover:shadow-sm focus:outline-none"
+            className="w-full text-left p-5 rounded-2xl border-2 border-[#dee2ff] hover:border-[#8e9aaf] hover:bg-[#feeafa]/50 transition-all duration-200 text-[#5E6E79] font-medium text-lg hover:shadow-md hover:-translate-y-0.5 focus:outline-none"
           >
             {option}
           </button>
