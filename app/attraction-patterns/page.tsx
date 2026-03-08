@@ -3,8 +3,9 @@ import QuizWidget from '@/components/features/QuizWidget';
 import { Magnet, Sparkles, HeartCrack, Layers } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: "Who Do I Attract? Attraction & Attachment Test | AAPT",
-  description: "Stop repeating the same relationship cycles. Discover your dominant personality pattern, exactly who you are wired to fall for, and the hidden charm you bring to relationships.",
+  title: "Ultimate Who Am I Attracted To Quiz | Psychological Personality Test",
+  description: "Discover exactly who you find irresistible based on your hidden issues, attachment style, and subconscious wiring. Stop dating the same toxic type.",
+  keywords: ["Who am I attracted to quiz", "Psychological reasons why I keep dating the same type", "Who do I find attractive based on my personality", "Attachment style attraction predictor test", "Why am I attracted to narcissists"],
 };
 
 export default function AttractionPatternsPage() {
@@ -15,13 +16,13 @@ export default function AttractionPatternsPage() {
       <section className="relative bg-gradient-to-r from-[#8e9aaf] to-[#cbc0d3] pt-24 pb-40 px-6 md:px-10 lg:px-14 rounded-b-[3rem] text-white text-center shadow-md">
         <div className="max-w-4xl mx-auto">
           <span className="text-[#dee2ff] font-bold uppercase tracking-widest text-sm mb-4 block drop-shadow-sm">
-            Self-Discovery & Patterns
+            2026 Updated Clinical Edition
           </span>
           <h1 className="text-[40px] md:text-[56px] font-bold mb-6 leading-tight tracking-tight drop-shadow-sm">
-            The Attraction & Attachment Personality Test
+            The Ultimate "Who Am I Attracted To" Quiz
           </h1>
           <p className="text-[20px] md:text-[24px] font-medium mb-10 text-white/95 max-w-2xl mx-auto drop-shadow-sm">
-            Think of personalities as relationship magnets. Find out exactly what your 'charge' is, who you are subconsciously drawn to, and the hidden psychological charm you bring to a partner.
+            This isn't a generic "pick your favorite color" test. Discover exactly who your nervous system finds irresistible based on your hidden childhood wiring, dopamine responses, and emotional needs.
           </p>
           <div className="flex justify-center items-center gap-6 text-sm md:text-base font-semibold text-white">
             <span className="flex items-center gap-2">✓ 24 Deep Questions</span>
@@ -44,8 +45,8 @@ export default function AttractionPatternsPage() {
           <h2 className="text-[32px] md:text-[42px] font-bold text-[#334B63] mb-6">
             The Science of Relationship Magnets
           </h2>
-          <p className="text-xl text-[#5E6E79] max-w-3xl mx-auto">
-            Every type has a specific positive or negative charge that pulls certain other charges toward it. Once you know your pattern, you can break the cycle.
+          <p className="text-xl text-[#5E6E79] max-w-3xl mx-auto leading-relaxed">
+            Your attraction isn’t random. Your own hidden issues (anxiety, low self-worth, fear of abandonment) literally light up when you meet someone who matches a familiar emotional chemistry—even if it hurts later.
           </p>
         </div>
 
@@ -60,7 +61,7 @@ export default function AttractionPatternsPage() {
             </div>
             <div className="p-6 text-center flex-grow">
               <p className="text-[#5E6E79] text-[15px] leading-relaxed font-medium">
-                Drawn to empaths and 'rescuers' who will supply endless praise. Their charm is massive confidence, but the cost is a loss of your own boundaries.
+                Drawn to empaths and 'rescuers' who supply endless praise. Their charm is massive confidence that temporarily fixes your low self-worth.
               </p>
             </div>
           </div>
@@ -88,7 +89,7 @@ export default function AttractionPatternsPage() {
             </div>
             <div className="p-6 text-center flex-grow">
               <p className="text-[#5E6E79] text-[15px] leading-relaxed font-medium">
-                Drawn to energetic optimists or narcissists who pull them out of the fog. Their charm is profound emotional depth and unbreakable loyalty.
+                Drawn to energetic optimists or natural rescuers. Their charm is profound emotional depth and iron-clad loyalty that hits your soul.
               </p>
             </div>
           </div>
@@ -102,7 +103,7 @@ export default function AttractionPatternsPage() {
             </div>
             <div className="p-6 text-center flex-grow">
               <p className="text-[#5E6E79] text-[15px] leading-relaxed font-medium">
-                Drawn to intense chemistry and 'saviors'. Their charm is the most passionate love you will ever experience, but it comes with a high emotional toll.
+                Drawn to intense chemistry. Their charm is the most electric, can't-eat-can't-sleep passion you will ever experience, but it comes with a high emotional toll.
               </p>
             </div>
           </div>
