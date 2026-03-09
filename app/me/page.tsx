@@ -3,70 +3,82 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "My Assessments | OopsCupid",
-  description: "Browse your collection of 7 free, psychology-backed relationship quizzes. Spot red flags, discover your attachment style, and decode mixed signals.",
+  description: "Browse your collection of free, psychology-backed relationship quizzes. Spot red flags, discover your attachment style, and decode mixed signals.",
 };
 
 export default function MeHubPage() {
   return (
-    <main className="bg-gradient-to-b from-[#f7ede2] to-white min-h-screen py-24 px-6 md:px-10 lg:px-14">
+    <main className="bg-gradient-to-b from-[#0496ff]/5 to-white min-h-screen py-24 px-6 md:px-10 lg:px-14">
       <div className="max-w-6xl mx-auto">
         
-        {/* Hub Header with new aesthetic */}
+        {/* Hub Header with new vibrant aesthetic */}
         <div className="text-center max-w-3xl mx-auto mb-20 relative">
-          <span className="text-[#84a59d] font-bold uppercase tracking-widest text-sm mb-4 block drop-shadow-sm">
+          <span className="text-[#8f2d56] font-bold uppercase tracking-widest text-sm mb-4 block drop-shadow-sm">
             Self-Discovery Hub
           </span>
-          <h1 className="text-[42px] md:text-[56px] font-extrabold text-[#334B63] mb-6 leading-tight">
-            Find Your <span className="text-[#f28482] font-serif italic">Answers</span>
+          <h1 className="text-[42px] md:text-[56px] font-extrabold text-[#006ba6] mb-6 leading-tight">
+            Find Your <span className="text-[#d81159] font-serif italic">Answers</span>
           </h1>
-          <p className="text-[20px] md:text-[24px] font-normal leading-relaxed text-[#5E6E79]">
+          <p className="text-[20px] md:text-[24px] font-medium leading-relaxed text-[#334B63]/80">
             Seven clinical-grade assessments to decode your patterns, spot the red flags, and understand why you love the way you do.
           </p>
         </div>
         
-        {/* Grid of 7 Quiz Cards */}
+        {/* Grid of Quiz Cards with Images */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           
           <Card 
             variant="quiz"
             title="What Is My Attachment Style? Clinical Test"
             href="/attachment-style-quiz"
-            accentColor="bg-[#f5cac3]/60"
+            imageUrl="https://images.unsplash.com/photo-1520694478166-daaaaec95b69?auto=format&fit=crop&w=800&q=80"
+            accentColor="bg-[#0496ff]/20"
+            textColor="text-[#006ba6]"
           />
           
           <Card 
             variant="quiz"
             title="Is He Manipulative? Spot the Hidden Signs"
             href="/is-he-manipulative"
-            accentColor="bg-[#84a59d]/20"
+            imageUrl="https://images.unsplash.com/photo-1541199249251-f713e6145474?auto=format&fit=crop&w=800&q=80"
+            accentColor="bg-[#d81159]/15"
+            textColor="text-[#8f2d56]"
           />
           
           <Card 
             variant="quiz"
             title="Is My Friend Toxic? Friendship Analysis"
             href="/toxic-friend-test"
-            accentColor="bg-[#f6bd60]/25"
+            imageUrl="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80"
+            accentColor="bg-[#ffbc42]/30"
+            textColor="text-[#006ba6]"
           />
           
           <Card 
             variant="quiz"
-            title="Why Do I Keep Attracting the Same Type?"
+            title="Who Am I Attracted To? Discover Your Magnet"
             href="/attraction-patterns"
-            accentColor="bg-[#f28482]/15"
+            imageUrl="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80"
+            accentColor="bg-[#8f2d56]/15"
+            textColor="text-[#8f2d56]"
           />
           
           <Card 
             variant="quiz"
-            title="Is He Gaslighting Me? 9 Warning Signs"
-            href="/is-he-gaslighting-me"
-            accentColor="bg-[#84a59d]/30"
+            title="Who Finds Me Attractive? The Psychology"
+            href="/who-is-attracted-to-me"
+            imageUrl="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80"
+            accentColor="bg-[#006ba6]/15"
+            textColor="text-[#006ba6]"
           />
           
           <Card 
             variant="quiz"
             title="Why Do I Sabotage My Relationships?"
             href="/why-do-i-sabotage-relationships"
-            accentColor="bg-[#f6bd60]/40"
+            imageUrl="https://images.unsplash.com/photo-1431576901776-e539bd916ba2?auto=format&fit=crop&w=800&q=80"
+            accentColor="bg-[#d81159]/10"
+            textColor="text-[#d81159]"
           />
 
           {/* Featured 7th Card - Centered and wider */}
@@ -75,7 +87,9 @@ export default function MeHubPage() {
                 variant="quiz"
                 title="Is He Cheating? The Micro-Cheating Test"
                 href="/is-he-cheating"
-                accentColor="bg-gradient-to-r from-[#f5cac3]/70 to-[#f28482]/25"
+                imageUrl="https://images.unsplash.com/photo-1596495578065-6e0763fa1178?auto=format&fit=crop&w=800&q=80"
+                accentColor="bg-gradient-to-r from-[#0496ff]/10 to-[#ffbc42]/20"
+                textColor="text-[#8f2d56]"
               />
           </div>
 

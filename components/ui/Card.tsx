@@ -52,14 +52,25 @@ export default function Card({
     return (
       <Link
         href={href ?? "#"}
-        className={`group flex flex-col justify-center rounded-[16px] ${accentColor} p-8 md:p-10 transition-transform duration-200 hover:-translate-y-1 h-full border border-[rgba(51,75,99,0.05)]`}
+        className={`group flex flex-col overflow-hidden rounded-[16px] ${accentColor} transition-transform duration-200 hover:-translate-y-1 h-full border border-[rgba(51,75,99,0.05)]`}
       >
-        <h3 className="text-[22px] font-semibold leading-[1.3] text-[#334B63]">
-          {title}
-        </h3>
-        <span className="mt-4 flex items-center text-[15px] font-semibold text-[#5A7492]">
-          Take Quiz <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-        </span>
+        {imageUrl && (
+          <div className="h-48 w-full overflow-hidden">
+            <img 
+              src={imageUrl} 
+              alt={title} 
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+            />
+          </div>
+        )}
+        <div className="p-8 md:p-10 flex flex-col flex-grow justify-between bg-white/40">
+          <h3 className={`text-[22px] font-bold leading-[1.3] ${textColor}`}>
+            {title}
+          </h3>
+          <span className="mt-4 flex items-center text-[15px] font-bold text-[#334B63]/80">
+            Take Quiz <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </span>
+        </div>
       </Link>
     );
   }
@@ -97,7 +108,6 @@ export default function Card({
     );
   }
 
-  // Default fallback (previous Card implementation logic)
   return (
     <Link
       href={href ?? "#"}
