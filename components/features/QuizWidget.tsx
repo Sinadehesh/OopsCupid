@@ -1,22 +1,16 @@
 "use client";
 
-import React, { useState, useMemo, useRef, useEffect } from "react";
+import React, { useState, useMemo, useRef } from "react";
 import Link from "next/link";
 import { generatePsychologicalProfile, computeLegacyResult } from "@/lib/psychometrics/classification";
 import MasterReport from "@/components/report/MasterReport";
 import { DashboardGrid, MultiGaugeGrid } from "@/components/report/ScoreBars";
-import ReportSection from "@/components/report/ReportSection";
 
-// ─── TYPES & BANKS ────────────────────────────────────────────────────────────
 type Question = {
   id: string; section: string; subscale?: string; text: string; options: string[]; reverseScore?: boolean;
 };
 
-// Simplified array imports for brevity. In your real file, this continues to hold the large questionsBank.
-// To ensure we don't break your existing arrays, I will inject the exact structures from the previous build.
-import { questionsBank, legacyBanks, PHASE_LABELS } from "./QuizBanks"; // (Assume this holds the arrays we generated previously to keep this file clean)
-
-// For the sake of this script running perfectly, I will inline the essential arrays:
+// ─── MASTER BATTERY ARRAYS ───
 const demoQ: Question[] = [
   { id: "demo_1", section: "demographics", text: "What is your current relationship status?", options: ["Single", "In a relationship", "It's complicated"] },
   { id: "demo_2", section: "demographics", text: "Do you have children?", options: ["Yes", "No"] },
@@ -99,6 +93,34 @@ const dersQ: Question[] = [
   { id:"ders_15", section:"ders", text:"I have difficulty making sense out of my feelings.", options:["1 - Almost Never","2","3","4","5 - Almost Always"] },
   { id:"ders_16", section:"ders", text:"I am confused about how I feel.", options:["1 - Almost Never","2","3","4","5 - Almost Always"] },
 ];
+const loveQ: Question[] = [
+  { id:"ls_eros_1", section:"lovestyle", text:"My partner and I have the right physical chemistry.", options:["1 - Strongly Disagree","2","3","4","5 - Strongly Agree"] },
+  { id:"ls_ludus_1", section:"lovestyle", text:"I believe that what my partner doesn't know won't hurt them.", options:["1 - Strongly Disagree","2","3","4","5 - Strongly Agree"] },
+  { id:"ls_storge_1", section:"lovestyle", text:"The best relationships grow out of a deep friendship.", options:["1 - Strongly Disagree","2","3","4","5 - Strongly Agree"] },
+  { id:"ls_pragma_1", section:"lovestyle", text:"I consider what a person will become before committing.", options:["1 - Strongly Disagree","2","3","4","5 - Strongly Agree"] },
+  { id:"ls_mania_1", section:"lovestyle", text:"When my partner ignores me, I feel sick all over.", options:["1 - Strongly Disagree","2","3","4","5 - Strongly Agree"] },
+  { id:"ls_agape_1", section:"lovestyle", text:"I would rather suffer myself than let my partner suffer.", options:["1 - Strongly Disagree","2","3","4","5 - Strongly Agree"] }
+];
+const yqsQ: Question[] = [
+  { id:"yqs_ab_1", section:"yqs", text:"I worry people will find someone else and leave me.", options:["1 - Completely Untrue","2","3","4","5","6 - Perfectly Describes Me"] },
+  { id:"yqs_mi_1", section:"yqs", text:"I feel I can't let my guard down, or they will hurt me.", options:["1 - Completely Untrue","2","3","4","5","6 - Perfectly Describes Me"] },
+  { id:"yqs_ed_1", section:"yqs", text:"I don't feel people really understand my emotional needs.", options:["1 - Completely Untrue","2","3","4","5","6 - Perfectly Describes Me"] },
+  { id:"yqs_de_1", section:"yqs", text:"No one could love me if they really knew me.", options:["1 - Completely Untrue","2","3","4","5","6 - Perfectly Describes Me"] },
+  { id:"yqs_fa_1", section:"yqs", text:"I feel I am less talented than most people around me.", options:["1 - Completely Untrue","2","3","4","5","6 - Perfectly Describes Me"] },
+  { id:"yqs_su_1", section:"yqs", text:"I feel I must give in to others' wishes or they'll reject me.", options:["1 - Completely Untrue","2","3","4","5","6 - Perfectly Describes Me"] }
+];
+const crqQ: Question[] = [
+  { id:"crq_1", section:"crq", text:"I want people close to me to deeply understand my feelings.", options:["1 - Strongly Disagree","2","3","4","5 - Strongly Agree"] },
+  { id:"crq_7", section:"crq", text:"When things get intense, I pull back to protect myself.", options:["1 - Strongly Disagree","2","3","4","5 - Strongly Agree"] }
+];
+const mdsQ: Question[] = [
+  { id:"mds_1", section:"mds", text:"I spend large amounts of time lost in fantasy.", options:["1 - Almost Never","2","3","4","5 - Very Often"] },
+];
+const parQ: Question[] = [
+  { id:"par_auth_1", section:"parenting", text:"I explain the reasons behind the rules I set.", options:["1 - Never","2","3","4","5 - Always"] },
+  { id:"par_arit_1", section:"parenting", text:"I expect obedience without needing an explanation.", options:["1 - Never","2","3","4","5 - Always"] },
+  { id:"par_perm_1", section:"parenting", text:"I give in when my child pushes back.", options:["1 - Never","2","3","4","5 - Always"] }
+];
 
 const legacyBanks: Record<string, any[]> = {
   "is-he-manipulative": [
@@ -111,6 +133,20 @@ const legacyBanks: Record<string, any[]> = {
     { id: "7", text: "Has he ever called you crazy, overly sensitive, or irrational?", options: ["No, we communicate respectfully", "Once or twice in a heated argument", "Yes, he frequently calls me crazy or 'too sensitive'", "He tells me my memory is broken/wrong"] },
     { id: "8", text: "How do you feel most of the time in this relationship?", options: ["Safe, relaxed, and loved", "Confused, like I am walking on eggshells", "Exhausted, I feel like everything is my fault", "Terrified to set him off"] },
   ],
+  "partners-attachment-style": [
+    { id: "1", text: "When stressed, your partner:", options: ["Talks openly to connect", "Seeks lots of reassurance", "Withdraws/needs space alone", "Panics then shuts down"] },
+    { id: "2", text: "During arguments:", options: ["Stays engaged calmly", "Worries you'll leave/gets clingy", "Shuts down or leaves", "Yells then apologizes intensely"] },
+    { id: "3", text: "About intimacy/emotions:", options: ["Comfortable sharing deeply", "Craves more closeness", "Keeps things surface-level", "Wants it but fears getting hurt"] },
+    { id: "4", text: "When you need support:", options: ["Listens and helps reliably", "Over-apologizes or fixes frantically", "Feels smothered/gives advice only", "Wants to help but pulls away"] },
+    { id: "5", text: "Plans/commitments:", options: ["Reliable and flexible", "Anxious if uncertain", "Avoids labeling things", "Hot/cold depending on mood"] },
+    { id: "6", text: "Physical affection:", options: ["Natural and consistent", "Wants more always", "On their terms only", "Intense but inconsistent"] },
+    { id: "7", text: "Past relationships:", options: ["Mostly healthy ones", "Often felt abandoned", "Prefers casual/short-term", "Turbulent breakups"] },
+    { id: "8", text: "Your independence:", options: ["Supports happily", "Feels insecure", "Relieved/encouraged", "Alternates jealousy and distance"] },
+    { id: "9", text: "Conflict resolution:", options: ["Works through together", "Fears breakup talks", "Stonewalls or deflects", "Explosive then regretful"] },
+    { id: "10", text: "Long-term future:", options: ["Excited to build", "Anxiously needs reassurance", "Hesitant about merging lives", "Dreams big but doubts self"] },
+    { id: "11", text: "Trust level:", options: ["Generally trusts easily", "Tests loyalty often", "Guards emotions tightly", "Trusts then distrusts suddenly"] },
+    { id: "12", text: "Space needs:", options: ["Balanced", "Fears too much space", "Needs lots of independence", "Craves connection but overwhelms"] }
+  ],
   "attraction-patterns": Array.from({length: 24}, (_, i) => ({ id: String(i + 1), text: "Rate this statement.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] })),
   "who-finds-me-attractive": Array.from({length: 24}, (_, i) => ({ id: String(i + 1), text: "Rate this statement.", options: ["Not at all me", "Slightly me", "Neutral", "Very me", "OMG this is so me"] })),
   "default": [
@@ -119,10 +155,10 @@ const legacyBanks: Record<string, any[]> = {
 };
 
 const PHASE_LABELS: Record<string, string> = {
-  demographics: "Profile Setup", ecr: "Attachment Style", rosenberg: "Self-Esteem", ders: "Emotion Regulation"
+  demographics: "Profile Setup", ecr: "Attachment Style", rosenberg: "Self-Esteem", ders: "Emotion Regulation",
+  lovestyle: "Love Styles", yqs: "Deep Patterns", crq: "Relationship Blueprint", mds: "Inner World", parenting: "Parenting Style",
 };
 
-// ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 export default function QuizWidget({ quizName }: { quizName: string }) {
   const [currentIndex, setCurrentIndex]   = useState(0);
   const [answers, setAnswers]             = useState<Record<string, string>>({});
@@ -135,10 +171,12 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
   const activeQuestions = useMemo(() => {
     if (quizName === "attachment-style") {
-      return [...demoQ, ...ecrQ, ...rsQ, ...dersQ]; // Keeping it focused for the demo, skipping schemas for brevity here but they compute fine
+      const hasKids = answers["demo_2"] === "Yes";
+      return [...demoQ, ...ecrQ, ...rsQ, ...dersQ, ...loveQ, ...yqsQ, ...crqQ, ...mdsQ, ...(hasKids ? parQ : [])];
     }
     return legacyBanks[quizName] || legacyBanks["default"];
-  }, [quizName]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [quizName, answers["demo_2"]]);
 
   const isFinished = currentIndex >= activeQuestions.length;
   const progress   = Math.round((currentIndex / activeQuestions.length) * 100);
@@ -156,7 +194,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     setAnswers(prev => ({ ...prev, [q.id]: option }));
     setCurrentIndex(prev => prev + 1);
     
-    // Auto-scroll to top smoothly when proceeding
     if (topRef.current) {
       topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -180,24 +217,21 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       if (topRef.current) {
         topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
       }
-    }, 2000); // 2 second loading delay to build anticipation
+    }, 2000);
   };
 
-  // ─── LOADING STATE ──────────────────────────────────────────────────────────
   if (loading) {
     return (
       <div ref={topRef} className={`w-full mx-auto text-center py-20 animate-in fade-in duration-300 ${tBg} rounded-2xl`}>
         <div className="flex flex-col items-center justify-center">
-          {/* Beautiful spinning loader */}
           <div className={`w-16 h-16 border-4 ${isDarkTheme ? "border-[#b10f2e]/20 border-t-[#b10f2e]" : "border-[#006ba6]/20 border-t-[#006ba6]"} rounded-full animate-spin mb-6`}></div>
           <h3 className={`text-2xl font-extrabold ${tH3} mb-2 animate-pulse`}>Computing Master Profile...</h3>
-          <p className="text-lg text-[#5E6E79] font-medium">Cross-referencing ECR-RS, Rosenberg, and DERS-16 metrics.</p>
+          <p className="text-lg text-[#5E6E79] font-medium">Cross-referencing metrics.</p>
         </div>
       </div>
     );
   }
 
-  // ─── RESULT RENDER ──────────────────────────────────────────────────────────
   if (showResult && resultData) {
     if (quizName === "attachment-style" && resultData.profile) {
       return (
@@ -216,13 +250,17 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     return (
       <div ref={topRef} className={`rounded-2xl ${tBg} text-left w-full mx-auto animate-in fade-in duration-500`}>
         <h3 className={`text-[28px] md:text-[34px] font-extrabold ${tH3} mb-10 leading-tight text-center`}>{resultData.title}</h3>
-        <DashboardGrid healthScore={resultData.healthScore} gaugeScore={resultData.gaugeScore} gaugeLabel={resultData.gaugeLabel} />
-        <p className={`${tP} p-6 border ${tBorder} rounded-xl font-medium text-lg`}>{resultData.description}</p>
+        {quizName === "who-finds-me-attractive" || quizName === "attraction-patterns" ? (
+          <MultiGaugeGrid dialData={resultData.dialData} percentagesData={resultData.percentagesData} title={resultData.title} subLabelStr="%" />
+        ) : (
+          <DashboardGrid healthScore={resultData.healthScore} gaugeScore={resultData.gaugeScore} gaugeLabel={resultData.gaugeLabel} />
+        )}
+        <p className={`${tP} p-6 border ${tBorder} rounded-xl font-medium text-lg whitespace-pre-wrap`}>{resultData.description}</p>
+        <p className={`${tP} p-6 mt-4 border ${tBorder} rounded-xl font-medium text-lg whitespace-pre-wrap`}>{resultData.behaviors}</p>
       </div>
     );
   }
 
-  // ─── COMPLETION SCREEN ────────────────────────────────────────────────────
   if (isFinished) {
     return (
       <div ref={topRef} className={`w-full mx-auto text-center py-10 animate-in fade-in zoom-in duration-300 ${tP}`}>
@@ -238,7 +276,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     );
   }
 
-  // ─── QUESTION SCREEN ─────────────────────────────────────────────────────
   const q = activeQuestions[currentIndex];
 
   return (

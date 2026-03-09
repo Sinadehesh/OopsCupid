@@ -9,7 +9,7 @@ export const ecrScales: Record<EcrDomain, ScaleDefinition> = ecrDomains.reduce((
     id: `ecr_${domain}`,
     items: Array.from({ length: 9 }, (_, i) => `ecr_${domain}_${i + 1}`),
     min: 1, max: 7,
-    reverse: [1, 2, 3, 4].map(i => `ecr_${domain}_${i}`), // Standard ECR-RS reverse scoring
+    reverse: [1, 2, 3, 4].map(i => `ecr_${domain}_${i}`),
     subscales: {
       avoidance: [1, 2, 3, 4, 5, 6].map(i => `ecr_${domain}_${i}`),
       anxiety: [7, 8, 9].map(i => `ecr_${domain}_${i}`)
@@ -30,7 +30,7 @@ export const rosenbergScale: ScaleDefinition = {
   }
 };
 
-// 3. DERS-16 (Emotion Regulation)
+// 3. DERS-16
 export const dersScale: ScaleDefinition = {
   id: "ders_16",
   items: Array.from({ length: 16 }, (_, i) => `ders_${i + 1}`),
@@ -44,16 +44,13 @@ export const dersScale: ScaleDefinition = {
   }
 };
 
-// 4. Love Styles (Hendrick)
+// 4. Love Styles
 export const loveStyleScale: ScaleDefinition = {
   id: "love_styles",
   items: [
-    "ls_eros_1", "ls_eros_2", "ls_eros_3",
-    "ls_ludus_1", "ls_ludus_2", "ls_ludus_3",
-    "ls_storge_1", "ls_storge_2", "ls_storge_3",
-    "ls_pragma_1", "ls_pragma_2", "ls_pragma_3",
-    "ls_mania_1", "ls_mania_2", "ls_mania_3",
-    "ls_agape_1", "ls_agape_2", "ls_agape_3"
+    "ls_eros_1", "ls_eros_2", "ls_eros_3", "ls_ludus_1", "ls_ludus_2", "ls_ludus_3",
+    "ls_storge_1", "ls_storge_2", "ls_storge_3", "ls_pragma_1", "ls_pragma_2", "ls_pragma_3",
+    "ls_mania_1", "ls_mania_2", "ls_mania_3", "ls_agape_1", "ls_agape_2", "ls_agape_3"
   ],
   min: 1, max: 5,
   subscales: {
@@ -66,7 +63,7 @@ export const loveStyleScale: ScaleDefinition = {
   }
 };
 
-// 5. CRQ (Central Relationship Patterns)
+// 5. CRQ
 export const crqScale: ScaleDefinition = {
   id: "crq",
   items: ["crq_1", "crq_2", "crq_3", "crq_4", "crq_5", "crq_6", "crq_7", "crq_8"],
@@ -79,16 +76,13 @@ export const crqScale: ScaleDefinition = {
   }
 };
 
-// 6. YSQ-L3 (Early Maladaptive Schemas)
+// 6. YSQ-L3
 export const ysqScale: ScaleDefinition = {
   id: "ysq",
   items: [
-    "yqs_ab_1", "yqs_ab_2", "yqs_ab_3",
-    "yqs_mi_1", "yqs_mi_2", "yqs_mi_3",
-    "yqs_ed_1", "yqs_ed_2", "yqs_ed_3",
-    "yqs_de_1", "yqs_de_2", "yqs_de_3",
-    "yqs_fa_1", "yqs_fa_2", "yqs_fa_3",
-    "yqs_su_1", "yqs_su_2", "yqs_su_3"
+    "yqs_ab_1", "yqs_ab_2", "yqs_ab_3", "yqs_mi_1", "yqs_mi_2", "yqs_mi_3",
+    "yqs_ed_1", "yqs_ed_2", "yqs_ed_3", "yqs_de_1", "yqs_de_2", "yqs_de_3",
+    "yqs_fa_1", "yqs_fa_2", "yqs_fa_3", "yqs_su_1", "yqs_su_2", "yqs_su_3"
   ],
   min: 1, max: 6,
   subscales: {
@@ -101,25 +95,45 @@ export const ysqScale: ScaleDefinition = {
   }
 };
 
-// 7. MDS (Maladaptive Daydreaming)
+// 7. MDS
 export const mdsScale: ScaleDefinition = {
   id: "mds",
   items: ["mds_1", "mds_2", "mds_3", "mds_4", "mds_5", "mds_6"],
   min: 1, max: 5
 };
 
-// 8. Parenting Style
+// 8. Parenting
 export const parentingScale: ScaleDefinition = {
   id: "parenting",
-  items: [
-    "par_auth_1", "par_auth_2", "par_auth_3",
-    "par_arit_1", "par_arit_2", "par_arit_3",
-    "par_perm_1", "par_perm_2", "par_perm_3"
-  ],
+  items: ["par_auth_1", "par_auth_2", "par_auth_3", "par_arit_1", "par_arit_2", "par_arit_3", "par_perm_1", "par_perm_2", "par_perm_3"],
   min: 1, max: 5,
   subscales: {
     authoritative: ["par_auth_1", "par_auth_2", "par_auth_3"],
     authoritarian: ["par_arit_1", "par_arit_2", "par_arit_3"],
     permissive: ["par_perm_1", "par_perm_2", "par_perm_3"]
+  }
+};
+
+// 9. Attraction Patterns Custom Scale
+export const attractionLikertMapping = {
+  "Not at all me": 1,
+  "Slightly me": 2,
+  "Neutral": 3,
+  "Very me": 4,
+  "OMG this is so me": 5
+};
+
+export const attractionScale: ScaleDefinition = {
+  id: "attraction",
+  items: Array.from({ length: 24 }, (_, i) => String(i + 1)),
+  min: 1, max: 5,
+  valueMapping: attractionLikertMapping,
+  subscales: {
+    Narcissistic: ["1", "7", "13", "19"],
+    Depressive: ["2", "8", "14", "20"],
+    Anxious: ["3", "9", "15", "21"],
+    Avoidant: ["4", "10", "16", "22"],
+    Borderline: ["5", "11", "17", "23"],
+    Secure: ["6", "12", "18", "24"]
   }
 };
