@@ -25,34 +25,46 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
 
   const tH3 = isDarkTheme ? "text-slate-100" : "text-slate-900";
   const tText = isDarkTheme ? "text-slate-300" : "text-slate-600";
-  const cardClass = isDarkTheme ? "bg-slate-800 border-slate-700" : "bg-white border-slate-200 shadow-sm";
+  const cardClass = isDarkTheme ? "bg-slate-800 border-slate-700 shadow-sm" : "bg-white border-slate-200 shadow-sm";
 
   return (
-    <div className={`w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] ${isDarkTheme ? 'bg-[#0f172a]' : 'bg-[#fcfcfc]'} py-12 md:py-20 mt-12 border-t ${isDarkTheme ? 'border-slate-800' : 'border-slate-200'}`}>
-      <div className="max-w-6xl mx-auto px-4 md:px-8 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
+    // BREAKOUT CONTAINER: 100vw width breaks out of the narrow QuizWidget parent
+    <div className={`w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] ${isDarkTheme ? 'bg-[#0f172a]' : 'bg-[#fafafa]'} py-12 border-t ${isDarkTheme ? 'border-slate-800' : 'border-slate-200'}`}>
+      
+      {/* Centered Max-Width Container for perfect readable line-lengths */}
+      <div className="max-w-5xl mx-auto px-4 md:px-8 py-10 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center mb-16 md:mb-24">
-          <div className="flex flex-col justify-center order-2 lg:order-1">
-            <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-extrabold tracking-wider uppercase mb-6 w-fit shadow-sm border ${isDarkTheme ? 'bg-blue-500/10 border-blue-500/20 text-blue-400' : 'bg-blue-50 border-blue-100 text-blue-700'}`}>
+        {/* 1. HERO SECTION & ATTACHMENT QUADRANT */}
+        {/* Stacks naturally on mobile (text first, then chart). Side-by-side on md/lg screens. */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-stretch mb-16 md:mb-24">
+          
+          {/* Left Text Intro (Now inside a beautiful card!) */}
+          <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full ${cardClass}`}>
+            <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-extrabold tracking-wider uppercase mb-6 w-fit border shadow-sm ${isDarkTheme ? 'bg-blue-500/10 border-blue-500/20 text-blue-400' : 'bg-blue-50 border-blue-100 text-blue-700'}`}>
               <ShieldCheck className="w-4 h-4" />
               Trusted by Millions Worldwide
             </div>
-            <h2 className={`text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6 leading-tight ${tH3}`}>
-              Your Complete Attachment Profile
+            
+            <h2 className={`text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6 leading-tight tracking-tight ${tH3}`}>
+              Your Complete<br />Attachment Profile
             </h2>
-            <p className={`text-lg font-medium leading-relaxed mb-8 ${tText}`}>
+            
+            <p className={`text-base md:text-lg font-medium leading-relaxed mb-8 ${tText}`}>
               Your attachment style affects how you experience close relationships with others. When we feel secure, we experience healthier relationships that support and protect our well-being. If we feel insecure, it can be more difficult for us to feel safe, seen, valued, or supported in relationships.
             </p>
-            <div>
+            
+            <div className="mt-auto">
               <button className={`inline-flex items-center gap-2 font-bold transition-all text-lg group ${isDarkTheme ? 'text-blue-400 hover:text-blue-300' : 'text-[#006ba6] hover:text-[#0496ff]'}`}>
                 Learn More <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
           </div>
-          <div className="order-1 lg:order-2 flex flex-col w-full">
-            <h3 className={`text-xl md:text-2xl font-extrabold text-center mb-6 ${tH3}`}>Your Attachment Map</h3>
+
+          {/* Right Quadrant (The component already renders its own white card) */}
+          <div className="flex flex-col w-full h-full justify-center">
             <AttachmentQuadrant domains={quadrantDomains} isDarkTheme={isDarkTheme} />
           </div>
+
         </div>
 
         <h3 className={`text-2xl md:text-3xl font-extrabold ${tH3} mt-16 mb-8 border-b ${isDarkTheme ? 'border-slate-800' : 'border-slate-200'} pb-3`}>
@@ -61,8 +73,9 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
         
         <div className="space-y-12 md:space-y-16">
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-            <div className={`rounded-3xl border p-8 flex flex-col h-full ${cardClass}`}>
+          {/* 2. GENERAL ATTACHMENT */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+            <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full ${cardClass}`}>
               <h4 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-2">General Attachment Style</h4>
               <h2 className="text-3xl md:text-4xl font-extrabold text-[#a855f7] mb-8">{profile.attachment.general.classification}</h2>
               <div className="space-y-5 mb-8 flex-grow">
@@ -81,8 +94,9 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
             />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-            <div className={`rounded-3xl border p-8 flex flex-col h-full ${cardClass}`}>
+          {/* 3. ROMANTIC ATTACHMENT */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+            <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full ${cardClass}`}>
               <h4 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-2">Your Romantic Attachment Style</h4>
               <h2 className="text-3xl md:text-4xl font-extrabold text-[#ef4444] mb-8">{profile.attachment.romantic.classification}</h2>
               <div className="space-y-5 mb-8 flex-grow">
@@ -101,9 +115,10 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
             />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch pt-8">
-            <div className="flex flex-col gap-8 h-full">
-              <div className={`rounded-3xl border p-8 flex-1 ${cardClass}`}>
+          {/* 4. CAREGIVERS */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-stretch pt-8">
+            <div className="flex flex-col gap-8 lg:gap-12 h-full">
+              <div className={`rounded-3xl border p-8 md:p-10 flex-1 ${cardClass}`}>
                 <h3 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-2">Maternal Figure</h3>
                 <h2 className="text-2xl md:text-3xl font-extrabold text-[#8b5cf6] mb-6">{profile.attachment.mother.classification}</h2>
                 <div className="space-y-4">
@@ -111,7 +126,7 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
                   <ScoreBar label="Anxiety" value={profile.attachment.mother.anxietyScore} color={isDarkTheme ? "bg-slate-500" : "bg-slate-800"} />
                 </div>
               </div>
-              <div className={`rounded-3xl border p-8 flex-1 ${cardClass}`}>
+              <div className={`rounded-3xl border p-8 md:p-10 flex-1 ${cardClass}`}>
                 <h3 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-2">Paternal Figure</h3>
                 <h2 className="text-2xl md:text-3xl font-extrabold text-[#fb923c] mb-6">{profile.attachment.father.classification}</h2>
                 <div className="space-y-4">
@@ -128,8 +143,9 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
             />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch pt-8">
-            <div className={`rounded-3xl border p-8 flex flex-col h-full ${cardClass}`}>
+          {/* 5. WORK ATTACHMENT */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-stretch pt-8">
+            <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full ${cardClass}`}>
               <h4 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-2">Your Attachment at Work</h4>
               <h2 className="text-3xl md:text-4xl font-extrabold text-[#f97316] mb-8">{profile.attachment.work.classification}</h2>
               <div className="space-y-5 mb-8 flex-grow">
@@ -148,13 +164,14 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
             />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch pt-12 border-t border-slate-200">
-            <div className="flex flex-col gap-8 h-full">
-              <div className={`rounded-3xl border p-8 flex-col ${cardClass}`}>
+          {/* 6. SELF ESTEEM & EMOTION REGULATION */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-stretch pt-12 border-t border-slate-200">
+            <div className="flex flex-col gap-8 lg:gap-12 h-full">
+              <div className={`rounded-3xl border p-8 md:p-10 flex-col ${cardClass}`}>
                 <h3 className={`text-xl font-bold mb-6 ${tH3}`}>Baseline Self-Esteem</h3>
                 <ScoreBar label="Total Self-Worth Index" value={profile.selfEsteem.score} color={profile.selfEsteem.score < 50 ? "bg-orange-400" : "bg-[#006ba6]"} />
               </div>
-              <div className={`rounded-3xl border p-8 flex-col ${cardClass}`}>
+              <div className={`rounded-3xl border p-8 md:p-10 flex-col ${cardClass}`}>
                 <h3 className={`text-xl font-bold mb-6 ${tH3}`}>Emotion Regulation</h3>
                 <ScoreBar label="Overall Dysregulation Risk" value={profile.emotionRegulation.score} color={profile.emotionRegulation.score > 60 ? "bg-red-500" : "bg-[#006ba6]"} />
                 <p className={`mt-6 text-base font-medium leading-relaxed ${tText}`}>
@@ -171,6 +188,7 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
           </div>
         </div>
 
+        {/* 7. UPSELL BANNER */}
         <UnlockBanner />
 
       </div>
