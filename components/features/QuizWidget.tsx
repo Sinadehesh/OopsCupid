@@ -6,8 +6,14 @@ import { generatePsychologicalProfile, computeLegacyResult } from "@/lib/psychom
 import MasterReport from "@/components/report/MasterReport";
 import { DashboardGrid, MultiGaugeGrid } from "@/components/report/ScoreBars";
 
+// ─── STRICT TYPES ───
 type Question = {
-  id: string; section: string; subscale?: string; text: string; options: string[]; reverseScore?: boolean;
+  id: string; 
+  section?: string; // Made optional for legacy quizzes
+  subscale?: string; 
+  text: string; 
+  options: string[]; 
+  reverseScore?: boolean;
 };
 
 // ─── MASTER BATTERY ARRAYS ───
@@ -122,7 +128,8 @@ const parQ: Question[] = [
   { id:"par_perm_1", section:"parenting", text:"I give in when my child pushes back.", options:["1 - Never","2","3","4","5 - Always"] }
 ];
 
-const legacyBanks: Record<string, any[]> = {
+// Strictly typed Legacy Banks
+const legacyBanks: Record<string, Question[]> = {
   "is-he-manipulative": [
     { id: "1", text: "When you bring up something he did wrong, how does he react?", options: ["Apologizes and tries to fix it", "Denies it ever happened", "Blames you for making him act that way", "Changes the subject entirely"] },
     { id: "2", text: "How does he act around your friends or family?", options: ["Supportive and friendly", "Complains about them constantly", "Refuses to spend time with them", "Convinces you they don't care about you"] },
@@ -169,7 +176,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
   const isDarkTheme = ["partners-attachment-style","is-he-manipulative"].includes(quizName);
 
-  const activeQuestions = useMemo(() => {
+  const activeQuestions = useMemo((): Question[] => {
     if (quizName === "attachment-style") {
       const hasKids = answers["demo_2"] === "Yes";
       return [...demoQ, ...ecrQ, ...rsQ, ...dersQ, ...loveQ, ...yqsQ, ...crqQ, ...mdsQ, ...(hasKids ? parQ : [])];
@@ -282,7 +289,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     <div ref={topRef} className="w-full mx-auto animate-in slide-in-from-right-4 duration-300">
       <div className="mb-8">
         <div className={`flex justify-between items-center text-sm font-bold uppercase tracking-wider mb-3 ${isDarkTheme ? "text-[#b10f2e]" : "text-[#006ba6]"}`}>
-          <span>{PHASE_LABELS[q.section] ?? q.section}</span>
+          <span>{PHASE_LABELS[q.section || "default"] ?? q.section ?? "Assessment"}</span>
           <span>{progress}%</span>
         </div>
         <div className={`w-full ${tAccentLight} rounded-full h-2.5 border ${tBorder} overflow-hidden`}>
@@ -293,7 +300,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       <h3 className={`text-2xl md:text-3xl font-extrabold ${tH3} mb-8 leading-snug text-center min-h-[100px] flex items-center justify-center`}>{q.text}</h3>
 
       <div className="space-y-4">
-        {q.options.map((option, idx) => (
+        {q.options.map((option: string, idx: number) => (
           <button key={idx} onClick={() => handleOptionClick(option)} className={`w-full text-center p-5 rounded-2xl border-2 ${tBorder} hover:border-[${isDarkTheme ? '#b10f2e' : '#006ba6'}] hover:bg-[${isDarkTheme ? '#b10f2e' : '#0496ff'}]/5 transition-all duration-200 ${tP} font-bold text-lg hover:shadow-md hover:-translate-y-0.5 focus:outline-none`}>
             {option}
           </button>
