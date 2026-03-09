@@ -24,14 +24,14 @@ export default function MeHubPage() {
           </p>
         </div>
         
-        {/* Grid of 7 Quiz Cards with Thematic Images */}
+        {/* Grid of 7 Quiz Cards with Expressive Human Portraits */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           
           <Card 
             variant="quiz"
             title="What Is My Attachment Style? Clinical Test"
             href="/attachment-style-quiz"
-            imageUrl="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80"
+            imageUrl="https://images.unsplash.com/photo-1516575334481-ba558110b9af?auto=format&fit=crop&w=800&q=80"
             accentColor="bg-[#0496ff]/20"
             textColor="text-[#006ba6]"
           />
@@ -40,7 +40,7 @@ export default function MeHubPage() {
             variant="quiz"
             title="Is He Manipulative? Spot the Hidden Signs"
             href="/is-he-manipulative"
-            imageUrl="https://images.unsplash.com/photo-1580541832626-2a7131ee809f?auto=format&fit=crop&w=800&q=80"
+            imageUrl="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80"
             accentColor="bg-[#d81159]/15"
             textColor="text-[#8f2d56]"
           />
@@ -49,7 +49,7 @@ export default function MeHubPage() {
             variant="quiz"
             title="Is My Friend Toxic? Friendship Analysis"
             href="/toxic-friend-test"
-            imageUrl="https://images.unsplash.com/photo-1502014822147-1aed4d0c0c34?auto=format&fit=crop&w=800&q=80"
+            imageUrl="https://images.unsplash.com/photo-1524508762098-fd966ffb6ef9?auto=format&fit=crop&w=800&q=80"
             accentColor="bg-[#ffbc42]/30"
             textColor="text-[#006ba6]"
           />
@@ -58,7 +58,7 @@ export default function MeHubPage() {
             variant="quiz"
             title="Who Am I Attracted To? Discover Your Magnet"
             href="/attraction-patterns"
-            imageUrl="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80"
+            imageUrl="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
             accentColor="bg-[#8f2d56]/15"
             textColor="text-[#8f2d56]"
           />
@@ -67,7 +67,7 @@ export default function MeHubPage() {
             variant="quiz"
             title="Who Finds Me Attractive? The Psychology"
             href="/who-is-attracted-to-me"
-            imageUrl="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?auto=format&fit=crop&w=800&q=80"
+            imageUrl="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80"
             accentColor="bg-[#006ba6]/15"
             textColor="text-[#006ba6]"
           />
@@ -76,7 +76,7 @@ export default function MeHubPage() {
             variant="quiz"
             title="Why Do I Sabotage My Relationships?"
             href="/why-do-i-sabotage-relationships"
-            imageUrl="https://images.unsplash.com/photo-1517594422361-5e18ceceb587?auto=format&fit=crop&w=800&q=80"
+            imageUrl="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=800&q=80"
             accentColor="bg-[#d81159]/10"
             textColor="text-[#d81159]"
           />
@@ -87,7 +87,7 @@ export default function MeHubPage() {
                 variant="quiz"
                 title="Is He Cheating? The Micro-Cheating Test"
                 href="/is-he-cheating"
-                imageUrl="https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=800&q=80"
+                imageUrl="https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?auto=format&fit=crop&w=800&q=80"
                 accentColor="bg-gradient-to-r from-[#0496ff]/10 to-[#ffbc42]/20"
                 textColor="text-[#8f2d56]"
               />
