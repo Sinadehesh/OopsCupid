@@ -270,7 +270,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
   if (isFinished) {
     return (
-      <div ref={topRef} className={`w-full mx-auto text-center py-10 animate-in fade-in zoom-in duration-300 ${tP}`}>
+      <div ref={topRef} className={`max-w-3xl mx-auto bg-white p-10 rounded-3xl shadow-xl border border-blue-100 text-center py-10 animate-in fade-in zoom-in duration-300 ${tP}`}>
         <div className={`w-20 h-20 mx-auto ${tAccentLight} rounded-full flex items-center justify-center mb-6 shadow-inner border-2 ${tBorder}`}>
           <span className="text-3xl">🧠</span>
         </div>
@@ -286,7 +286,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const q = activeQuestions[currentIndex];
 
   return (
-    <div ref={topRef} className="w-full mx-auto animate-in slide-in-from-right-4 duration-300">
+    <div ref={topRef} className="max-w-3xl mx-auto bg-white p-6 md:p-10 rounded-3xl shadow-xl border border-blue-100 animate-in slide-in-from-right-4 duration-300">
       <div className="mb-8">
         <div className={`flex justify-between items-center text-sm font-bold uppercase tracking-wider mb-3 ${isDarkTheme ? "text-[#b10f2e]" : "text-[#006ba6]"}`}>
           <span>{PHASE_LABELS[q.section || "default"] ?? q.section ?? "Assessment"}</span>
