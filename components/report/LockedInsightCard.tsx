@@ -4,35 +4,38 @@ import { Lock } from "lucide-react";
 interface LockedInsightCardProps {
   title: string;
   teaser: string;
-  isDarkTheme?: boolean;
+  blurredBody: string;
 }
 
-export default function LockedInsightCard({ title, teaser, isDarkTheme }: LockedInsightCardProps) {
+export default function LockedInsightCard({ title, teaser, blurredBody }: LockedInsightCardProps) {
   return (
-    <div className={`relative overflow-hidden rounded-2xl border flex flex-col items-center justify-center p-6 md:p-10 text-center group h-full w-full ${isDarkTheme ? 'bg-slate-800 border-slate-700 shadow-none' : 'bg-white border-slate-200 shadow-sm'}`}>
+    <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm flex flex-col h-full w-full group">
       
-      {/* Fake Blurred Text Pattern */}
-      <div className={`absolute inset-0 p-6 opacity-40 select-none pointer-events-none blur-[3px] ${isDarkTheme ? 'brightness-50' : ''}`}>
-        <div className="w-3/4 h-3 bg-slate-300 rounded mb-4"></div>
-        <div className="w-full h-3 bg-slate-300 rounded mb-4"></div>
-        <div className="w-5/6 h-3 bg-slate-300 rounded mb-4"></div>
-        <div className="w-full h-3 bg-slate-300 rounded mb-4"></div>
-        <div className="w-2/3 h-3 bg-slate-300 rounded mb-4"></div>
-        <div className="w-full h-3 bg-slate-300 rounded mb-4"></div>
-      </div>
-
-      <div className={`absolute inset-0 z-10 ${isDarkTheme ? 'bg-slate-800/80' : 'bg-white/70'}`}></div>
-
-      {/* Actual Content & CTA */}
-      <div className="relative z-20 flex flex-col items-center w-full mt-auto mb-auto">
-        <div className="bg-[#ffbc42]/20 p-3 rounded-full mb-4 shadow-sm group-hover:scale-110 transition-transform duration-300">
-          <Lock className="w-7 h-7 text-[#b08800]" />
+      {/* Visible Header */}
+      <div className="p-6 md:p-8 pb-0 z-20 relative bg-gradient-to-b from-white via-white to-transparent">
+        <div className="flex items-center gap-3 mb-3">
+          <div className="bg-[#ffbc42]/20 p-2 rounded-full">
+            <Lock className="w-5 h-5 text-[#b08800]" />
+          </div>
+          <h4 className="text-lg md:text-xl font-extrabold text-slate-800">{title}</h4>
         </div>
-        <h4 className={`text-lg md:text-xl font-bold mb-3 ${isDarkTheme ? 'text-white' : 'text-slate-800'}`}>{title}</h4>
-        <p className={`text-sm md:text-base font-medium mb-6 max-w-md mx-auto leading-relaxed ${isDarkTheme ? 'text-slate-300' : 'text-slate-600'}`}>
+        <p className="text-sm md:text-base font-bold text-slate-700 leading-relaxed mb-4">
           {teaser}
         </p>
-        <button className="w-full bg-[#ffbc42] text-black font-bold py-3.5 px-6 rounded-xl shadow-[0_4px_14px_rgba(255,188,66,0.4)] hover:bg-[#e5a93c] transition-all transform hover:-translate-y-0.5">
+      </div>
+
+      {/* Realistic Blurred Body */}
+      <div className="px-6 md:px-8 pb-8 relative z-0 flex-grow overflow-hidden">
+        <p className="text-slate-500 font-medium leading-relaxed blur-[4px] opacity-60 select-none pointer-events-none text-justify">
+          {blurredBody}
+        </p>
+        {/* Gradient Fade to hide the bottom */}
+        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent z-10"></div>
+      </div>
+
+      {/* CTA Button */}
+      <div className="absolute bottom-6 left-0 right-0 flex justify-center z-30 px-6">
+        <button className="w-full bg-[#ffbc42] text-slate-900 font-extrabold text-sm md:text-base py-3.5 px-6 rounded-xl shadow-[0_4px_14px_rgba(255,188,66,0.3)] hover:bg-[#e5a93c] transition-all transform hover:-translate-y-0.5">
           Unlock full results
         </button>
       </div>
