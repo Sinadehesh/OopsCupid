@@ -1,101 +1,111 @@
+import React from "react";
+import Link from "next/link";
 import Card from "@/components/ui/Card";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "My Assessments | OopsCupid",
-  description: "Browse your collection of free, psychology-backed relationship quizzes. Spot red flags, discover your attachment style, and decode mixed signals.",
+  title: "My Psychological Profile | OopsCupid",
+  description: "Understand your attachment style, relationship patterns, and dating blind spots.",
 };
 
-export default function MeHubPage() {
+export default function MeHub() {
   return (
-    <main className="bg-gradient-to-b from-[#0496ff]/5 to-white min-h-screen py-24 px-6 md:px-10 lg:px-14">
-      <div className="max-w-6xl mx-auto">
-        
-        {/* Hub Header with new vibrant aesthetic */}
-        <div className="text-center max-w-3xl mx-auto mb-20 relative">
-          <span className="text-[#8f2d56] font-bold uppercase tracking-widest text-sm mb-4 block drop-shadow-sm">
-            Self-Discovery Hub
-          </span>
-          <h1 className="text-[42px] md:text-[56px] font-extrabold text-[#006ba6] mb-6 leading-tight">
-            Find Your <span className="text-[#d81159] font-serif italic">Answers</span>
+    <main className="min-h-screen bg-[#FDF6EE] pb-24">
+      {/* Hero Section */}
+      <section className="bg-[#3B1F2B] py-20 px-6 text-center text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#A23B72 2px, transparent 2px)', backgroundSize: '30px 30px' }}></div>
+        <div className="max-w-4xl mx-auto relative z-10">
+          <p className="text-[#F18F01] font-black tracking-[0.2em] mb-4 uppercase text-sm">Self-Discovery Hub</p>
+          <h1 className="text-5xl md:text-6xl font-extrabold mb-6 tracking-tight">
+            Understand Your Blueprint
           </h1>
-          <p className="text-[20px] md:text-[24px] font-medium leading-relaxed text-[#334B63]/80">
-            Seven clinical-grade assessments to decode your patterns, spot the red flags, and understand why you love the way you do.
+          <p className="text-xl opacity-90 max-w-2xl mx-auto">
+            Discover the subconscious patterns driving your relationship choices, your attachment style, and your hidden blind spots.
           </p>
         </div>
-        
-        {/* Grid of 7 Quiz Cards with Expressive Human Portraits */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          
-          <Card 
-            variant="quiz"
-            title="What Is My Attachment Style? Clinical Test"
-            href="/attachment-style-quiz"
-            imageUrl="https://images.unsplash.com/photo-1516575334481-ba558110b9af?auto=format&fit=crop&w=800&q=80"
-            accentColor="bg-[#0496ff]/20"
-            textColor="text-[#006ba6]"
-          />
-          
-          <Card 
-            variant="quiz"
-            title="Is He Manipulative? Spot the Hidden Signs"
-            href="/is-he-manipulative"
-            imageUrl="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80"
-            accentColor="bg-[#d81159]/15"
-            textColor="text-[#8f2d56]"
-          />
-          
-          <Card 
-            variant="quiz"
-            title="Is My Friend Toxic? Friendship Analysis"
-            href="/toxic-friend-test"
-            imageUrl="https://images.unsplash.com/photo-1524508762098-fd966ffb6ef9?auto=format&fit=crop&w=800&q=80"
-            accentColor="bg-[#ffbc42]/30"
-            textColor="text-[#006ba6]"
-          />
-          
-          <Card 
-            variant="quiz"
-            title="Who Am I Attracted To? Discover Your Magnet"
-            href="/attraction-patterns"
-            imageUrl="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
-            accentColor="bg-[#8f2d56]/15"
-            textColor="text-[#8f2d56]"
-          />
-          
-          <Card 
-            variant="quiz"
-            title="Who Finds Me Attractive? The Psychology"
-            href="/who-is-attracted-to-me"
-            imageUrl="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80"
-            accentColor="bg-[#006ba6]/15"
-            textColor="text-[#006ba6]"
-          />
-          
-          <Card 
-            variant="quiz"
-            title="Why Do I Sabotage My Relationships?"
-            href="/why-do-i-sabotage-relationships"
-            imageUrl="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=800&q=80"
-            accentColor="bg-[#d81159]/10"
-            textColor="text-[#d81159]"
-          />
+      </section>
 
-          {/* Featured 7th Card - Centered and wider */}
-          <div className="md:col-span-1 md:col-start-1 md:col-end-3 lg:col-span-3 lg:w-2/3 mx-auto w-full mt-4">
-              <Card 
-                variant="quiz"
-                title="Is He Cheating? The Micro-Cheating Test"
-                href="/is-he-cheating"
-                imageUrl="https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?auto=format&fit=crop&w=800&q=80"
-                accentColor="bg-gradient-to-r from-[#0496ff]/10 to-[#ffbc42]/20"
-                textColor="text-[#8f2d56]"
-              />
+      <section className="py-16 px-6 -mt-10 relative z-20">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">
+            
+            {/* FEATURED IMAGE CARD: ATTACHMENT STYLE */}
+            <div className="group bg-white rounded-[40px] overflow-hidden shadow-2xl transition-all hover:-translate-y-2 flex flex-col border border-gray-100">
+              <div 
+                className="h-72 flex items-end p-8 relative overflow-hidden bg-cover bg-center"
+                style={{ backgroundImage: `url('https://cdn.psychologytoday.com/sites/default/files/styles/image-article_inline_full_caption/public/field_blog_entry_images/2019-01/how_to_improve_your_romantic_relationship_dr._konstantin_lukin.jpg?itok=G9wg0ST1')` }}
+              >
+                {/* Dark gradient for text readability over the image */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0f0606] via-[#0f0606]/50 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                <div className="relative z-10 w-full">
+                  <span className="bg-[#F18F01] text-[#3B1F2B] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-3 inline-block shadow-lg">
+                    Flagship Assessment
+                  </span>
+                  <h3 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">Attachment Style Quiz</h3>
+                </div>
+              </div>
+              
+              <div className="p-10 flex-grow flex flex-col">
+                <p className="text-gray-600 text-lg mb-8 flex-grow leading-relaxed">
+                  The foundational psychological blueprint. Find out if your nervous system is wired for Secure, Anxious, Avoidant, or Fearful attachment.
+                </p>
+                <Link href="/attachment-style-quiz" className="inline-block bg-[#2E86AB] text-white px-8 py-5 rounded-full font-bold text-center hover:bg-[#1f6685] transition-colors text-lg shadow-md">
+                  Take the Free Quiz →
+                </Link>
+              </div>
+            </div>
+
+            {/* TOXIC ATTRACTION CARD */}
+            <div className="group bg-[#3B1F2B] rounded-[40px] overflow-hidden shadow-2xl transition-all hover:-translate-y-2 flex flex-col border border-[#A23B72]/30">
+              <div className="h-72 bg-[#A23B72] flex items-end p-8 relative overflow-hidden">
+                <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#3B1F2B] to-transparent opacity-80"></div>
+                <div className="relative z-10">
+                  <span className="bg-white/20 text-white backdrop-blur-sm text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-3 inline-block border border-white/30">
+                    Deep Dive
+                  </span>
+                  <h3 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">Why Do I Attract Toxic People?</h3>
+                </div>
+              </div>
+              <div className="p-10 flex-grow flex flex-col text-white">
+                <p className="text-white/80 text-lg mb-8 flex-grow leading-relaxed">
+                  Break the cycle of emotionally unavailable, inconsistent, or chaotic partners by mapping your shadow triggers.
+                </p>
+                <Link href="/why-do-i-attract-toxic-people" className="inline-block bg-[#C73E1D] text-white px-8 py-5 rounded-full font-bold text-center hover:bg-[#A83519] transition-colors text-lg shadow-md">
+                  Analyze Your Pattern →
+                </Link>
+              </div>
+            </div>
+
           </div>
 
+          {/* ADDITIONAL SELF DISCOVERY MODULES */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card 
+              variant="tool" 
+              title="Sabotage Patterns" 
+              description="Discover why you pull away or create conflict right when things start getting good." 
+              href="/why-do-i-sabotage-relationships" 
+              buttonText="Read Pattern" 
+            />
+            <Card 
+              variant="tool" 
+              title="Attraction Profile" 
+              description="A clinical look at the exact kind of personality you subconsciously attract." 
+              href="/what-kind-of-person-do-i-attract" 
+              buttonText="Read Profile" 
+            />
+            <Card 
+              variant="tool" 
+              title="Dating the Same Type" 
+              description="Learn why your exes all share the same underlying traits." 
+              href="/why-do-i-keep-dating-the-same-type" 
+              buttonText="Read More" 
+            />
+          </div>
         </div>
-
-      </div>
+      </section>
     </main>
   );
 }
