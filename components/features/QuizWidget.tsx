@@ -237,6 +237,23 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     }, 400); 
   };
 
+  const handleGodMode = () => {
+    const fakeAnswers = { ...answers };
+    activeQuestions.forEach(q => {
+      if (!fakeAnswers[q.id]) {
+        fakeAnswers[q.id] = q.options[Math.floor(Math.random() * q.options.length)];
+      }
+    });
+    // Prevent crashes by ensuring demographic questions have valid specific answers
+    if (quizName === 'attachment-style') {
+      fakeAnswers['demo_1'] = 'Single';
+      fakeAnswers['demo_2'] = 'No';
+      fakeAnswers['demo_3'] = 'Woman';
+    }
+    setAnswers(fakeAnswers);
+    setCurrentIndex(activeQuestions.length);
+  };
+
   const handleBack = () => {
     if (currentIndex > 0 && !isAnimating) {
       setIsAnimating(true);
@@ -386,7 +403,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       </div>
 
       {/* FOOTER: Back Button */}
-      <div className="mt-10 flex justify-start">
+      <div className="mt-10 flex justify-between items-center">
         <button 
           onClick={handleBack} 
           disabled={currentIndex === 0 || isAnimating || selectedAnswer !== null}
@@ -395,7 +412,9 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
               ? 'opacity-0 pointer-events-none' 
               : colors.btnBack}`}
         >
-          <span>←</span> Back
+          <span>←</span> Back</button>
+        <button onClick={handleGodMode} type="button" title="Instantly jump to results" className="text-[10px] md:text-xs font-bold text-slate-400 hover:text-slate-600 transition-all border border-slate-200 hover:border-slate-300 rounded-lg px-3 py-1.5 ml-auto bg-white shadow-sm">
+          ⚡ God Mode
         </button>
       </div>
 
