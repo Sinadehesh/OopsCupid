@@ -25,24 +25,23 @@ export default function ManipulationQuizWidget() {
 
   const progress = Math.round((currentIndex / activeQuestions.length) * 100);
 
-  // STRICT CUSTOM RED PALETTE
+  // UPDATED PALETTE: High Readability + Red Action Indicators
   const colors = {
-    bgMain: "bg-[#0f0606]",
-    bgCard: "bg-[#200b0b]",
-    borderCard: "border-[#2f0000]",
-    textPrimary: "text-[#ffffff]",
-    textSecondary: "text-[#ffffff]/70",
-    progressTrack: "bg-[#2f0000]",
-    progressFill: "bg-[#650000]",
-    optionBorder: "border-[#2f0000]",
-    optionHover: "hover:border-[#490000] hover:bg-[#490000]/20 hover:-translate-y-0.5",
-    optionSelected: "border-[#650000] bg-[#650000]/30 shadow-inner",
-    btnPrimary: "bg-[#650000] text-white hover:bg-[#490000] shadow-lg",
-    btnBack: "border-[#2f0000] text-[#ffffff]/70 hover:bg-[#2f0000]/50 hover:text-white",
-    chipBg: "bg-[#490000]/40",
-    chipText: "text-[#ffffff]",
-    indicatorSelected: "border-[#650000] bg-[#650000]",
-    indicatorUnselected: "border-[#2f0000] bg-[#0f0606]"
+    bgCard: "bg-white",
+    borderCard: "border-[#ced2dc]",
+    textPrimary: "text-[#2a2522]",
+    textSecondary: "text-[#2a2522]/70",
+    progressTrack: "bg-[#ced2dc]",
+    progressFill: "bg-[#650000]", // Red Indicator
+    optionBorder: "border-[#ced2dc]",
+    optionHover: "hover:border-[#650000] hover:bg-[#650000]/5 hover:-translate-y-0.5",
+    optionSelected: "border-[#650000] bg-[#650000]/10 shadow-inner", // Red Indicator
+    btnPrimary: "bg-[#650000] text-white hover:bg-[#490000] shadow-lg", // Red Action
+    btnBack: "border-[#ced2dc] text-[#2a2522]/70 hover:bg-[#ced2dc]/30 hover:text-[#2a2522]",
+    chipBg: "bg-[#650000]/10", // Red Tag
+    chipText: "text-[#650000]", // Red Tag
+    indicatorSelected: "border-[#650000] bg-[#650000]", // Red Radio
+    indicatorUnselected: "border-[#ced2dc] bg-white"
   };
 
   const likertOptions = [
@@ -136,8 +135,8 @@ export default function ManipulationQuizWidget() {
 
   if (step === "intro") {
     return (
-      <div ref={topRef} className={`w-full max-w-3xl mx-auto ${colors.bgCard} rounded-[32px] shadow-2xl border ${colors.borderCard} p-8 md:p-12 text-center animate-in fade-in`}>
-        <div className="w-20 h-20 mx-auto bg-[#650000]/20 rounded-full flex items-center justify-center mb-6 border border-[#650000]/50">
+      <div ref={topRef} className={`w-full max-w-3xl mx-auto ${colors.bgCard} rounded-[32px] shadow-xl border ${colors.borderCard} p-8 md:p-12 text-center animate-in fade-in`}>
+        <div className="w-20 h-20 mx-auto bg-[#650000]/10 rounded-full flex items-center justify-center mb-6 border border-[#650000]/30">
           <span className="text-3xl">⚠️</span>
         </div>
         <h2 className={`text-3xl md:text-4xl font-extrabold ${colors.textPrimary} mb-6 leading-tight`}>Is He Manipulating You?</h2>
@@ -147,7 +146,7 @@ export default function ManipulationQuizWidget() {
         <button onClick={handleStart} className={`w-full md:w-auto px-10 py-5 rounded-full font-bold text-xl ${colors.btnPrimary} transition-all mb-6`}>
           Start Clinical Screening
         </button>
-        <button onClick={autoFillTest} className={`block mx-auto text-sm font-bold ${colors.textSecondary} hover:text-white transition-colors underline underline-offset-4`}>
+        <button onClick={autoFillTest} className={`block mx-auto text-sm font-bold ${colors.textSecondary} hover:${colors.textPrimary} transition-colors underline underline-offset-4`}>
           [DEV] Skip & Auto-Fill
         </button>
       </div>
@@ -156,13 +155,13 @@ export default function ManipulationQuizWidget() {
 
   if (step === "consent") {
     return (
-      <div ref={topRef} className={`w-full max-w-3xl mx-auto ${colors.bgCard} rounded-[32px] shadow-2xl border ${colors.borderCard} p-8 md:p-12 animate-in fade-in slide-in-from-bottom-4`}>
-        <h2 className={`text-3xl font-extrabold mb-6 text-[#ffffff]`}>Safety & Privacy Notice</h2>
+      <div ref={topRef} className={`w-full max-w-3xl mx-auto ${colors.bgCard} rounded-[32px] shadow-xl border ${colors.borderCard} p-8 md:p-12 animate-in fade-in slide-in-from-bottom-4`}>
+        <h2 className={`text-3xl font-extrabold mb-6 ${colors.textPrimary}`}>Safety & Privacy Notice</h2>
         <p className={`text-lg mb-6 leading-relaxed ${colors.textSecondary}`}>
           This assessment asks about sensitive relationship dynamics, including threats, control, and emotional pressure. Your answers are completely private and are not saved unless you choose to unlock your report.
         </p>
-        <div className={`bg-[#0f0606] p-6 rounded-2xl mb-10 border ${colors.borderCard}`}>
-          <p className="font-bold mb-2 text-white">Important Instructions:</p>
+        <div className={`bg-[#f2f5fa] p-6 rounded-2xl mb-10 border ${colors.borderCard}`}>
+          <p className={`font-bold mb-2 ${colors.textPrimary}`}>Important Instructions:</p>
           <p className={`${colors.textSecondary}`}>Answer based on his behavior toward you over the <strong>last 12 months</strong>. Trust your initial instinct.</p>
         </div>
         <button onClick={handleConsent} className={`w-full py-5 rounded-full font-bold text-xl ${colors.btnPrimary} transition-all`}>
@@ -174,7 +173,7 @@ export default function ManipulationQuizWidget() {
 
   if (step === "calculating") {
     return (
-      <div ref={topRef} className={`w-full max-w-2xl mx-auto text-center py-24 ${colors.bgCard} rounded-[32px] shadow-2xl border ${colors.borderCard} animate-in fade-in`}>
+      <div ref={topRef} className={`w-full max-w-2xl mx-auto text-center py-24 ${colors.bgCard} rounded-[32px] shadow-xl border ${colors.borderCard} animate-in fade-in`}>
         <div className={`w-16 h-16 border-4 border-t-transparent border-[#650000] rounded-full animate-spin mx-auto mb-8`}></div>
         <h3 className={`text-2xl font-extrabold ${colors.textPrimary} mb-3 animate-pulse`}>Generating Clinical Map...</h3>
         <p className={`${colors.textSecondary}`}>Correlating subscales and coercion patterns.</p>
@@ -183,7 +182,7 @@ export default function ManipulationQuizWidget() {
   }
 
   return (
-    <div ref={topRef} className={`w-full max-w-3xl mx-auto ${colors.bgCard} rounded-[32px] shadow-2xl border ${colors.borderCard} flex flex-col justify-center min-h-[450px] p-6 md:p-10`}>
+    <div ref={topRef} className={`w-full max-w-3xl mx-auto ${colors.bgCard} rounded-[32px] shadow-xl border ${colors.borderCard} flex flex-col justify-center min-h-[450px] p-6 md:p-10`}>
       
       {/* HEADER: Section Indicator & Progress */}
       <div className="mb-10">
@@ -224,11 +223,11 @@ export default function ManipulationQuizWidget() {
                 onClick={() => handleOptionClick(opt.val)} 
                 disabled={isDisabled}
                 className={`
-                  w-full text-left p-4 md:p-[20px] rounded-[16px] border-[2px] font-bold text-base md:text-lg transition-all duration-200 flex items-center
+                  w-full text-left p-4 md:p-[20px] rounded-[16px] border-[2px] font-bold text-base md:text-lg transition-all duration-200 flex items-center bg-white
                   ${isSelected ? colors.optionSelected : colors.optionBorder}
                   ${!isDisabled && !isSelected ? colors.optionHover : ''}
                   ${isDisabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}
-                  ${colors.textPrimary} bg-[#0f0606]
+                  ${colors.textPrimary}
                 `}
               >
                 <div className={`shrink-0 w-[22px] h-[22px] rounded-full border-[2px] mr-4 flex items-center justify-center transition-all duration-200 ${isSelected ? colors.indicatorSelected : colors.indicatorUnselected}`}>
@@ -246,7 +245,7 @@ export default function ManipulationQuizWidget() {
         <button 
           onClick={handleBack} 
           disabled={currentIndex === 0 || isAnimating || selectedAnswer !== null}
-          className={`text-sm font-extrabold flex items-center gap-2 px-5 py-2.5 rounded-[12px] border-[2px] transition-all 
+          className={`text-sm font-extrabold flex items-center gap-2 px-5 py-2.5 rounded-[12px] border-[2px] transition-all bg-white
             ${currentIndex === 0 || isAnimating || selectedAnswer !== null
               ? 'opacity-0 pointer-events-none' 
               : colors.btnBack}`}

@@ -12,23 +12,21 @@ interface Props {
 export default function ManipulationMasterReport({ result }: Props) {
   const { par, coercive_control, power_tactics, gaslighting, impact } = result.modules;
 
-  const isPremium = result.premiumUnlocked; // Use this to toggle blur vs unblur
+  const isPremium = result.premiumUnlocked;
 
-  // STRICT CUSTOM RED PALETTE
+  // UPDATED READABLE PALETTE
   const colors = {
-    bgMain: "bg-[#0f0606]",
-    bgCard: "bg-[#200b0b]",
-    borderCard: "border-[#2f0000]",
-    textPrimary: "text-[#ffffff]",
-    textSecondary: "text-[#ffffff]/70",
-    accentLight: "#650000",
-    accentDark: "#490000",
+    bgMain: "bg-[#f2f5fa]", // Clean light background
+    bgCard: "bg-white",     // Crisp white cards
+    borderCard: "border-[#ced2dc]", // Soft boundaries
+    textPrimary: "text-[#2a2522]",  // High contrast text
+    textSecondary: "text-[#2a2522]/70",
   };
 
   const getSeverityColor = (score: number) => {
-    if (score >= 80) return "#650000"; // Critical
-    if (score >= 60) return "#490000"; // High 
-    return "#2f0000"; // Elevated/Baseline
+    if (score >= 80) return "#650000"; // Critical Red
+    if (score >= 60) return "#490000"; // High Red
+    return "#2a2522"; // Elevated/Baseline Gray-Brown
   };
 
   const dominantLabels: Record<string, string> = {
@@ -39,17 +37,15 @@ export default function ManipulationMasterReport({ result }: Props) {
     "high_coercive_control": "High Coercive Control"
   };
 
-  // Custom Inline Locked Card to preserve the exact strict color palette
   const CustomLockedCard = ({ title, teaser }: { title: string, teaser: string }) => {
     if (isPremium) {
       return (
         <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full ${colors.bgCard} ${colors.borderCard}`}>
-          <h4 className="text-sm font-bold uppercase tracking-widest text-[#ffffff]/50 mb-4 flex items-center gap-2">
+          <h4 className="text-sm font-bold uppercase tracking-widest text-[#650000] mb-4 flex items-center gap-2">
              Premium Insight Unlocked
           </h4>
           <h3 className={`text-2xl font-extrabold ${colors.textPrimary} mb-4`}>{title}</h3>
           <p className={`${colors.textSecondary} leading-relaxed`}>
-            {/* Premium Content goes here if unlocked */}
             This section reveals the precise psychological mechanisms mapping to this behavior, including the underlying schema triggers and behavioral scripts used to distort reality and enforce compliance.
           </p>
         </div>
@@ -64,14 +60,14 @@ export default function ManipulationMasterReport({ result }: Props) {
           <p className={`${colors.textSecondary} leading-relaxed mb-4`}>
             This section contains a deep clinical analysis of these psychological patterns. It explains exactly how these specific tactics trigger your nervous system, the mechanisms driving this behavior, and the step-by-step reality check needed to break the cycle.
           </p>
-          <div className="w-full h-4 bg-[#650000]/20 rounded mb-2"></div>
-          <div className="w-3/4 h-4 bg-[#650000]/20 rounded mb-2"></div>
-          <div className="w-5/6 h-4 bg-[#650000]/20 rounded"></div>
+          <div className="w-full h-4 bg-[#ced2dc] rounded mb-2"></div>
+          <div className="w-3/4 h-4 bg-[#ced2dc] rounded mb-2"></div>
+          <div className="w-5/6 h-4 bg-[#ced2dc] rounded"></div>
         </div>
         
-        {/* Overlay */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-[#0f0606]/60">
-          <div className="w-14 h-14 bg-[#2f0000] rounded-full flex items-center justify-center mb-4 border border-[#490000] shadow-lg group-hover:scale-110 transition-transform">
+        {/* Overlay Block - Lock uses Red tag coloring */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-white/80 backdrop-blur-sm">
+          <div className="w-14 h-14 bg-[#650000] rounded-full flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform">
             <Lock className="w-6 h-6 text-white" />
           </div>
           <h4 className={`text-xl font-extrabold ${colors.textPrimary} mb-2`}>{title}</h4>
@@ -88,51 +84,51 @@ export default function ManipulationMasterReport({ result }: Props) {
     <div className={`min-h-screen ${colors.bgMain} py-12 w-full`}>
       <div className="w-full max-w-6xl mx-auto px-6 md:px-10 lg:px-12 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
         
-        {/* HERO SECTION — Match Attachment Style Hero */}
+        {/* HERO SECTION — Striking Dark Contrast Card */}
         <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-20 items-stretch">
           
           {/* LEFT CARD */}
-          <div className={`rounded-3xl border p-10 md:p-12 flex flex-col justify-center ${colors.bgCard} ${colors.borderCard}`}>
-            <div className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold tracking-widest mb-8 w-fit bg-[#2f0000]/50 border border-[#490000] text-white`}>
-              <ShieldCheck className="w-4 h-4 text-[#650000]" />
+          <div className={`rounded-3xl border p-10 md:p-12 flex flex-col justify-center bg-[#2a2522] border-[#2a2522] shadow-xl`}>
+            <div className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold tracking-widest mb-8 w-fit bg-[#650000] text-white shadow-md`}>
+              <ShieldCheck className="w-4 h-4" />
               CLINICAL BATTERY COMPLETE
             </div>
             
-            <h2 className={`text-4xl md:text-5xl font-extrabold leading-none tracking-tighter mb-8 ${colors.textPrimary}`}>
+            <h2 className={`text-4xl md:text-5xl font-extrabold leading-none tracking-tighter mb-8 text-[#f2f5fa]`}>
               Manipulation &<br />Control Analysis
             </h2>
             
-            <p className={`text-[17px] leading-relaxed mb-6 ${colors.textSecondary}`}>
+            <p className={`text-[17px] leading-relaxed mb-6 text-[#f2f5fa]/80`}>
               Based on the 93-item clinical battery. This report maps exact tactics across demands, threats, isolation, and gaslighting to determine if your relationship crosses the threshold for psychological friction.
             </p>
 
-            <div className={`inline-block border p-4 rounded-xl mb-10 ${colors.borderCard} bg-[#0f0606]/50`}>
-              <p className="text-xs uppercase tracking-wider opacity-70 mb-1 text-white">Dominant Pattern Detected</p>
-              <p className="text-xl font-bold text-[#ffffff]">{dominantLabels[result.dominantPattern]}</p>
+            <div className={`inline-block border p-4 rounded-xl mb-10 border-[#ced2dc]/20 bg-white/5`}>
+              <p className="text-xs uppercase tracking-wider opacity-70 mb-1 text-[#f2f5fa]">Dominant Pattern Detected</p>
+              <p className="text-xl font-bold text-white">{dominantLabels[result.dominantPattern]}</p>
             </div>
             
             <div className="mt-auto">
-              <button className={`inline-flex items-center gap-3 font-semibold text-lg text-[#ffffff] hover:text-[#ffffff]/70 transition-colors`}>
+              <button className={`inline-flex items-center gap-3 font-semibold text-lg text-white hover:text-white/70 transition-colors`}>
                 View Breakdown <ArrowRight className="w-5 h-5" />
               </button>
             </div>
           </div>
 
           {/* RIGHT CARD — Circular Score */}
-          <div className={`rounded-3xl border p-10 md:p-12 flex flex-col items-center justify-center ${colors.bgCard} ${colors.borderCard}`}>
+          <div className={`rounded-3xl border p-10 md:p-12 flex flex-col items-center justify-center ${colors.bgCard} ${colors.borderCard} shadow-sm`}>
              <CircularScore 
               value={result.overallRisk100} 
               title="Overall Risk Index" 
               color={getSeverityColor(result.overallRisk100)} 
-              isDarkTheme={true}
+              isDarkTheme={false}
             />
             <p className={`mt-6 font-bold uppercase tracking-widest text-sm ${colors.textSecondary}`}>Tier: {result.severityTier}</p>
           </div>
         </div>
 
-        {/* SAFETY FLAGS WARNING */}
+        {/* SAFETY FLAGS WARNING (Red Alert) */}
         {result.safetyFlags.length > 0 && (
-          <div className="bg-[#650000] text-white p-8 rounded-3xl shadow-lg border border-[#ffffff]/20 flex items-start gap-6 mb-16">
+          <div className="bg-[#650000] text-white p-8 rounded-3xl shadow-lg flex items-start gap-6 mb-16">
             <div className="text-4xl">⚠️</div>
             <div>
               <h3 className="text-2xl font-bold mb-2">Critical Safety Escalation</h3>
@@ -152,10 +148,10 @@ export default function ManipulationMasterReport({ result }: Props) {
           
           {/* SECTION 1: COERCIVE CONTROL */}
           <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
-            <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full ${colors.bgCard} ${colors.borderCard}`}>
+            <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full ${colors.bgCard} ${colors.borderCard} shadow-sm`}>
               <div className="flex justify-between items-start mb-6">
                 <div>
-                  <h4 className="text-sm font-bold uppercase tracking-widest text-[#ffffff]/50 mb-2">Module Breakdown</h4>
+                  <h4 className="text-sm font-bold uppercase tracking-widest text-[#ced2dc] mb-2">Module Breakdown</h4>
                   <h2 className={`text-3xl md:text-4xl font-extrabold ${colors.textPrimary}`}>Coercive Control</h2>
                 </div>
                 <span className={`text-3xl font-bold text-[#650000]`}>{coercive_control?.normalized100}%</span>
@@ -163,8 +159,8 @@ export default function ManipulationMasterReport({ result }: Props) {
               <div className="space-y-5 mb-8 flex-grow">
                 <ScoreBar label="Demands & Strict Rules" value={coercive_control?.subscales.demands.normalized100 || 0} color="bg-[#490000]" />
                 <ScoreBar label="Threats & Retaliation" value={coercive_control?.subscales.threats.normalized100 || 0} color="bg-[#650000]" />
-                <ScoreBar label="Surveillance & Stalking" value={coercive_control?.subscales.surveillance.normalized100 || 0} color="bg-[#2f0000]" />
-                <ScoreBar label="Forced Appeasement" value={coercive_control?.subscales.response_to_demands.normalized100 || 0} color="bg-[#ffffff]" />
+                <ScoreBar label="Surveillance & Stalking" value={coercive_control?.subscales.surveillance.normalized100 || 0} color="bg-[#2a2522]" />
+                <ScoreBar label="Forced Appeasement" value={coercive_control?.subscales.response_to_demands.normalized100 || 0} color="bg-[#ced2dc]" />
               </div>
             </div>
             <CustomLockedCard 
@@ -175,10 +171,10 @@ export default function ManipulationMasterReport({ result }: Props) {
 
           {/* SECTION 2: GASLIGHTING */}
           <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
-            <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full ${colors.bgCard} ${colors.borderCard}`}>
+            <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full ${colors.bgCard} ${colors.borderCard} shadow-sm`}>
                <div className="flex justify-between items-start mb-6">
                 <div>
-                  <h4 className="text-sm font-bold uppercase tracking-widest text-[#ffffff]/50 mb-2">Module Breakdown</h4>
+                  <h4 className="text-sm font-bold uppercase tracking-widest text-[#ced2dc] mb-2">Module Breakdown</h4>
                   <h2 className={`text-3xl md:text-4xl font-extrabold ${colors.textPrimary}`}>Gaslighting Index</h2>
                 </div>
                 <span className={`text-3xl font-bold text-[#650000]`}>{gaslighting?.normalized100}%</span>
@@ -186,7 +182,7 @@ export default function ManipulationMasterReport({ result }: Props) {
               <div className="space-y-5 mb-8 flex-grow">
                 <ScoreBar label="Reality Distortion (Denial)" value={gaslighting?.subscales.reality_distortion.normalized100 || 0} color="bg-[#650000]" />
                 <ScoreBar label="Self-Doubt Induction" value={gaslighting?.subscales.self_doubt_induction.normalized100 || 0} color="bg-[#490000]" />
-                <ScoreBar label="Confusion Dependency" value={gaslighting?.subscales.confusion_dependency.normalized100 || 0} color="bg-[#2f0000]" />
+                <ScoreBar label="Confusion Dependency" value={gaslighting?.subscales.confusion_dependency.normalized100 || 0} color="bg-[#2a2522]" />
               </div>
             </div>
             <CustomLockedCard 
@@ -197,10 +193,10 @@ export default function ManipulationMasterReport({ result }: Props) {
 
           {/* SECTION 3: POWER TACTICS */}
           <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
-            <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full ${colors.bgCard} ${colors.borderCard}`}>
+            <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full ${colors.bgCard} ${colors.borderCard} shadow-sm`}>
                <div className="flex justify-between items-start mb-6">
                 <div>
-                  <h4 className="text-sm font-bold uppercase tracking-widest text-[#ffffff]/50 mb-2">Module Breakdown</h4>
+                  <h4 className="text-sm font-bold uppercase tracking-widest text-[#ced2dc] mb-2">Module Breakdown</h4>
                   <h2 className={`text-3xl md:text-4xl font-extrabold ${colors.textPrimary}`}>Power Tactics</h2>
                 </div>
                 <span className={`text-3xl font-bold text-[#650000]`}>{power_tactics?.normalized100}%</span>
@@ -208,8 +204,8 @@ export default function ManipulationMasterReport({ result }: Props) {
               <div className="space-y-5 mb-8 flex-grow">
                 <ScoreBar label="Intimidation & Fear" value={power_tactics?.subscales.intimidation.normalized100 || 0} color="bg-[#650000]" />
                 <ScoreBar label="Isolation & Social Sabotage" value={power_tactics?.subscales.isolation_dependency.normalized100 || 0} color="bg-[#490000]" />
-                <ScoreBar label="Blame Reversal (DARVO)" value={power_tactics?.subscales.blame_minimization.normalized100 || 0} color="bg-[#ffffff]" />
-                <ScoreBar label="Economic/Financial Control" value={power_tactics?.subscales.economic_control.normalized100 || 0} color="bg-[#2f0000]" />
+                <ScoreBar label="Blame Reversal (DARVO)" value={power_tactics?.subscales.blame_minimization.normalized100 || 0} color="bg-[#ced2dc]" />
+                <ScoreBar label="Economic/Financial Control" value={power_tactics?.subscales.economic_control.normalized100 || 0} color="bg-[#2a2522]" />
               </div>
             </div>
             <CustomLockedCard 
@@ -220,7 +216,7 @@ export default function ManipulationMasterReport({ result }: Props) {
           
         </div>
 
-        {/* 7. UPSELL BANNER (Only show if not premium) */}
+        {/* 7. UPSELL BANNER */}
         {!isPremium && (
           <div className="mt-16">
             <UnlockBanner />
