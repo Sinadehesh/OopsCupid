@@ -14,7 +14,6 @@ export default function ManipulationQuizWidget() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [result, setResult] = useState<AssessmentResult | null>(null);
 
-  // Animation & UX States
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [isAnimating, setIsAnimating]       = useState(false);
   const [slideDirection, setSlideDirection] = useState<"forward" | "backward">("forward");
@@ -25,40 +24,33 @@ export default function ManipulationQuizWidget() {
 
   const progress = Math.round((currentIndex / activeQuestions.length) * 100);
 
-  // UPDATED PALETTE: High Readability + Red Action Indicators
+  // HIGH READABILITY PALETTE WITH RED ACTION INDICATORS
   const colors = {
     bgCard: "bg-white",
     borderCard: "border-[#ced2dc]",
     textPrimary: "text-[#2a2522]",
     textSecondary: "text-[#2a2522]/70",
     progressTrack: "bg-[#ced2dc]",
-    progressFill: "bg-[#650000]", // Red Indicator
+    progressFill: "bg-[#650000]", 
     optionBorder: "border-[#ced2dc]",
     optionHover: "hover:border-[#650000] hover:bg-[#650000]/5 hover:-translate-y-0.5",
-    optionSelected: "border-[#650000] bg-[#650000]/10 shadow-inner", // Red Indicator
-    btnPrimary: "bg-[#650000] text-white hover:bg-[#490000] shadow-lg", // Red Action
+    optionSelected: "border-[#650000] bg-[#650000]/10 shadow-inner", 
+    btnPrimary: "bg-[#650000] text-white hover:bg-[#490000] shadow-lg", 
     btnBack: "border-[#ced2dc] text-[#2a2522]/70 hover:bg-[#ced2dc]/30 hover:text-[#2a2522]",
-    chipBg: "bg-[#650000]/10", // Red Tag
-    chipText: "text-[#650000]", // Red Tag
-    indicatorSelected: "border-[#650000] bg-[#650000]", // Red Radio
+    chipBg: "bg-[#650000]/10", 
+    chipText: "text-[#650000]", 
+    indicatorSelected: "border-[#650000] bg-[#650000]", 
     indicatorUnselected: "border-[#ced2dc] bg-white"
   };
 
   const likertOptions = [
-    { label: "Never", val: 0 },
-    { label: "Rarely", val: 1 },
-    { label: "Sometimes", val: 2 },
-    { label: "Often", val: 3 },
-    { label: "Very Often", val: 4 },
-    { label: "Constantly", val: 5 }
+    { label: "Never", val: 0 }, { label: "Rarely", val: 1 }, { label: "Sometimes", val: 2 },
+    { label: "Often", val: 3 }, { label: "Very Often", val: 4 }, { label: "Constantly", val: 5 }
   ];
 
   const impactOptions = [
-    { label: "Not at all", val: 0 },
-    { label: "A little", val: 1 },
-    { label: "Moderately", val: 2 },
-    { label: "Quite a bit", val: 3 },
-    { label: "Extremely", val: 4 }
+    { label: "Not at all", val: 0 }, { label: "A little", val: 1 }, { label: "Moderately", val: 2 },
+    { label: "Quite a bit", val: 3 }, { label: "Extremely", val: 4 }
   ];
 
   const currentOptions = currentQ?.responseType === "impact_0_4" ? impactOptions : likertOptions;
@@ -127,7 +119,7 @@ export default function ManipulationQuizWidget() {
 
   if (step === "master_report" && result) {
     return (
-      <div ref={topRef} className="w-full animate-in fade-in duration-500">
+      <div ref={topRef} className="w-full animate-in fade-in duration-500 relative z-10">
         <ManipulationMasterReport result={result} />
       </div>
     );
@@ -135,11 +127,11 @@ export default function ManipulationQuizWidget() {
 
   if (step === "intro") {
     return (
-      <div ref={topRef} className={`w-full max-w-3xl mx-auto ${colors.bgCard} rounded-[32px] shadow-xl border ${colors.borderCard} p-8 md:p-12 text-center animate-in fade-in`}>
+      <div ref={topRef} className={`w-full max-w-3xl mx-auto ${colors.bgCard} rounded-[32px] shadow-2xl border ${colors.borderCard} p-8 md:p-12 text-center animate-in fade-in relative z-10`}>
         <div className="w-20 h-20 mx-auto bg-[#650000]/10 rounded-full flex items-center justify-center mb-6 border border-[#650000]/30">
           <span className="text-3xl">⚠️</span>
         </div>
-        <h2 className={`text-3xl md:text-4xl font-extrabold ${colors.textPrimary} mb-6 leading-tight`}>Is He Manipulating You?</h2>
+        <h2 className={`text-3xl md:text-4xl font-extrabold ${colors.textPrimary} mb-6 leading-tight`}>Begin Assessment</h2>
         <p className={`text-lg ${colors.textSecondary} mb-10 leading-relaxed max-w-xl mx-auto`}>
           This 93-item clinical battery screens for patterns of coercive control, power tactics, and gaslighting. It is designed to map exactly how your reality is being distorted.
         </p>
@@ -155,7 +147,7 @@ export default function ManipulationQuizWidget() {
 
   if (step === "consent") {
     return (
-      <div ref={topRef} className={`w-full max-w-3xl mx-auto ${colors.bgCard} rounded-[32px] shadow-xl border ${colors.borderCard} p-8 md:p-12 animate-in fade-in slide-in-from-bottom-4`}>
+      <div ref={topRef} className={`w-full max-w-3xl mx-auto ${colors.bgCard} rounded-[32px] shadow-2xl border ${colors.borderCard} p-8 md:p-12 animate-in fade-in slide-in-from-bottom-4 relative z-10`}>
         <h2 className={`text-3xl font-extrabold mb-6 ${colors.textPrimary}`}>Safety & Privacy Notice</h2>
         <p className={`text-lg mb-6 leading-relaxed ${colors.textSecondary}`}>
           This assessment asks about sensitive relationship dynamics, including threats, control, and emotional pressure. Your answers are completely private and are not saved unless you choose to unlock your report.
@@ -173,7 +165,7 @@ export default function ManipulationQuizWidget() {
 
   if (step === "calculating") {
     return (
-      <div ref={topRef} className={`w-full max-w-2xl mx-auto text-center py-24 ${colors.bgCard} rounded-[32px] shadow-xl border ${colors.borderCard} animate-in fade-in`}>
+      <div ref={topRef} className={`w-full max-w-2xl mx-auto text-center py-24 ${colors.bgCard} rounded-[32px] shadow-xl border ${colors.borderCard} animate-in fade-in relative z-10`}>
         <div className={`w-16 h-16 border-4 border-t-transparent border-[#650000] rounded-full animate-spin mx-auto mb-8`}></div>
         <h3 className={`text-2xl font-extrabold ${colors.textPrimary} mb-3 animate-pulse`}>Generating Clinical Map...</h3>
         <p className={`${colors.textSecondary}`}>Correlating subscales and coercion patterns.</p>
@@ -182,9 +174,7 @@ export default function ManipulationQuizWidget() {
   }
 
   return (
-    <div ref={topRef} className={`w-full max-w-3xl mx-auto ${colors.bgCard} rounded-[32px] shadow-xl border ${colors.borderCard} flex flex-col justify-center min-h-[450px] p-6 md:p-10`}>
-      
-      {/* HEADER: Section Indicator & Progress */}
+    <div ref={topRef} className={`w-full max-w-3xl mx-auto ${colors.bgCard} rounded-[32px] shadow-2xl border ${colors.borderCard} flex flex-col justify-center min-h-[450px] p-6 md:p-10 relative z-10`}>
       <div className="mb-10">
         <div className="flex justify-between items-end mb-4">
           <div>
@@ -199,24 +189,19 @@ export default function ManipulationQuizWidget() {
             {currentIndex + 1} / {activeQuestions.length}
           </div>
         </div>
-        
-        {/* Progress Bar */}
         <div className={`w-full h-2 rounded-full ${colors.progressTrack} overflow-hidden`}>
           <div className={`h-full rounded-full transition-all duration-500 ease-out ${colors.progressFill}`} style={{ width: `${progress}%` }} />
         </div>
       </div>
 
-      {/* QUESTION & OPTIONS */}
       <div className={`transition-all duration-250 ease-in-out transform ${isAnimating ? (slideDirection === 'forward' ? 'opacity-0 -translate-y-4 scale-[0.99]' : 'opacity-0 translate-y-4 scale-[0.99]') : 'opacity-100 translate-y-0 scale-100'}`}>
         <h3 className={`text-2xl md:text-[28px] font-extrabold ${colors.textPrimary} mb-8 leading-snug text-left md:text-center`}>
           {currentQ.stem}
         </h3>
-
         <div className="grid grid-cols-1 gap-3 md:gap-4 w-full">
           {currentOptions.map((opt) => {
             const isSelected = selectedAnswer === opt.val;
             const isDisabled = selectedAnswer !== null && !isSelected;
-            
             return (
               <button 
                 key={opt.val} 
@@ -240,20 +225,16 @@ export default function ManipulationQuizWidget() {
         </div>
       </div>
 
-      {/* FOOTER: Back Button */}
       <div className="mt-10 flex justify-between items-center">
         <button 
           onClick={handleBack} 
           disabled={currentIndex === 0 || isAnimating || selectedAnswer !== null}
           className={`text-sm font-extrabold flex items-center gap-2 px-5 py-2.5 rounded-[12px] border-[2px] transition-all bg-white
-            ${currentIndex === 0 || isAnimating || selectedAnswer !== null
-              ? 'opacity-0 pointer-events-none' 
-              : colors.btnBack}`}
+            ${currentIndex === 0 || isAnimating || selectedAnswer !== null ? 'opacity-0 pointer-events-none' : colors.btnBack}`}
         >
           <span>←</span> Back
         </button>
       </div>
-
     </div>
   );
 }

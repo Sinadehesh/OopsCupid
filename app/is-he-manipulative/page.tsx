@@ -9,37 +9,27 @@ export const metadata: Metadata = {
 
 export default function IsHeManipulativePage() {
   return (
-    <main className="min-h-screen bg-[#FDF6EE]">
+    <main className="min-h-screen bg-[#f2f5fa] relative overflow-hidden pb-20">
+      {/* THE FIXED RED SIDEBARS */}
+      <div className="fixed top-0 left-0 w-3 md:w-6 lg:w-10 h-full bg-[#650000] border-r-4 border-[#490000] z-50 pointer-events-none shadow-[4px_0_15px_rgba(101,0,0,0.2)]"></div>
+      <div className="fixed top-0 right-0 w-3 md:w-6 lg:w-10 h-full bg-[#650000] border-l-4 border-[#490000] z-50 pointer-events-none shadow-[-4px_0_15px_rgba(101,0,0,0.2)]"></div>
+
       {/* Hero Header */}
-      <header className="bg-[#3B1F2B] text-white py-20 px-6 text-center relative overflow-hidden">
+      <header className="bg-[#2a2522] text-white py-24 px-12 md:px-20 text-center relative z-10 shadow-xl border-b-[6px] border-[#650000]">
         <div className="max-w-4xl mx-auto relative z-10">
-          <p className="text-[#A23B72] font-black tracking-widest mb-4 uppercase text-sm">Psychological Screening</p>
+          <p className="text-[#ced2dc] font-black tracking-[0.2em] mb-4 uppercase text-sm">Clinical Screening</p>
           <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
             Is He Manipulating You?
           </h1>
-          <p className="text-xl opacity-80 max-w-2xl mx-auto">
-            Take the validated 20-item screening to see if your relationship crosses the clinical threshold for psychological friction.
+          <p className="text-xl opacity-80 max-w-2xl mx-auto text-[#f2f5fa]">
+            Take the validated 93-item clinical battery to map exact coercion tactics, isolation patterns, and gaslighting.
           </p>
         </div>
       </header>
 
       {/* Quiz Section */}
-      <section className="py-16 px-4 md:px-10 -mt-10 relative z-20">
+      <section className="py-16 px-8 md:px-20 -mt-12 relative z-20">
         <ManipulationQuizWidget />
-      </section>
-      
-      {/* Educational Context below the fold */}
-      <section className="py-20 px-6 max-w-4xl mx-auto text-[#3B1F2B]">
-        <h2 className="text-3xl font-bold mb-6 text-center">Why You Should Take This Test</h2>
-        <p className="text-lg leading-relaxed mb-6">
-          Manipulation is rarely obvious. It doesn't usually look like a movie villain demanding control. 
-          Instead, it looks like confusion. It looks like apologizing when you didn't do anything wrong. 
-          It looks like slowly shrinking your world to keep the peace.
-        </p>
-        <p className="text-lg leading-relaxed">
-          This battery uses structured clinical frameworks (including the PAR scale) to measure specific 
-          behaviors: how demands are made, how threats are implied, and how reality is distorted over time.
-        </p>
       </section>
     </main>
   );
