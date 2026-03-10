@@ -1,7 +1,7 @@
 import React from "react";
 import { AssessmentResult } from "@/lib/psychometrics/manipulation/types";
 import CircularScore from "./CircularScore";
-import ScoreBars from "./ScoreBars";
+import { ScoreBar } from "./ScoreBars";
 
 interface Props {
   result: AssessmentResult;
@@ -56,7 +56,7 @@ export default function ManipulationMasterReport({ result }: Props) {
           </div>
         </div>
 
-        {/* SAFETY FLAGS WARNING (Only shows if flags exist) */}
+        {/* SAFETY FLAGS WARNING */}
         {result.safetyFlags.length > 0 && (
           <div className="bg-[#C73E1D] text-white p-8 rounded-3xl shadow-lg border-4 border-[#C73E1D]/50 flex items-start gap-6">
             <div className="text-4xl">⚠️</div>
@@ -79,12 +79,12 @@ export default function ManipulationMasterReport({ result }: Props) {
               <span className="text-3xl font-bold text-[#A23B72]">{coercive_control?.normalized100}%</span>
             </div>
             <p className="text-gray-600 mb-8 text-sm">Measures systematic attempts to strip away independence through rules, surveillance, and punishment.</p>
-            <ScoreBars items={[
-              { label: "Demands & Strict Rules", score: coercive_control?.subscales.demands.normalized100 || 0, color: "#A23B72" },
-              { label: "Threats & Retaliation", score: coercive_control?.subscales.threats.normalized100 || 0, color: "#C73E1D" },
-              { label: "Surveillance & Stalking", score: coercive_control?.subscales.surveillance.normalized100 || 0, color: "#3B1F2B" },
-              { label: "Forced Appeasement", score: coercive_control?.subscales.response_to_demands.normalized100 || 0, color: "#2E86AB" },
-            ]} />
+            <div className="space-y-4">
+              <ScoreBar label="Demands & Strict Rules" value={coercive_control?.subscales.demands.normalized100 || 0} color="bg-[#A23B72]" />
+              <ScoreBar label="Threats & Retaliation" value={coercive_control?.subscales.threats.normalized100 || 0} color="bg-[#C73E1D]" />
+              <ScoreBar label="Surveillance & Stalking" value={coercive_control?.subscales.surveillance.normalized100 || 0} color="bg-[#3B1F2B]" />
+              <ScoreBar label="Forced Appeasement" value={coercive_control?.subscales.response_to_demands.normalized100 || 0} color="bg-[#2E86AB]" />
+            </div>
           </div>
 
           {/* GASLIGHTING SCREEN */}
@@ -94,11 +94,11 @@ export default function ManipulationMasterReport({ result }: Props) {
               <span className="text-3xl font-bold text-[#F18F01]">{gaslighting?.normalized100}%</span>
             </div>
             <p className="text-gray-600 mb-8 text-sm">Measures psychological manipulation designed to make you doubt your memory, perception, and sanity.</p>
-            <ScoreBars items={[
-              { label: "Reality Distortion (Denial)", score: gaslighting?.subscales.reality_distortion.normalized100 || 0, color: "#F18F01" },
-              { label: "Self-Doubt Induction", score: gaslighting?.subscales.self_doubt_induction.normalized100 || 0, color: "#A23B72" },
-              { label: "Confusion Dependency", score: gaslighting?.subscales.confusion_dependency.normalized100 || 0, color: "#3B1F2B" },
-            ]} />
+            <div className="space-y-4">
+              <ScoreBar label="Reality Distortion (Denial)" value={gaslighting?.subscales.reality_distortion.normalized100 || 0} color="bg-[#F18F01]" />
+              <ScoreBar label="Self-Doubt Induction" value={gaslighting?.subscales.self_doubt_induction.normalized100 || 0} color="bg-[#A23B72]" />
+              <ScoreBar label="Confusion Dependency" value={gaslighting?.subscales.confusion_dependency.normalized100 || 0} color="bg-[#3B1F2B]" />
+            </div>
           </div>
 
           {/* POWER TACTICS PROFILE */}
@@ -109,14 +109,14 @@ export default function ManipulationMasterReport({ result }: Props) {
             </div>
             <p className="text-gray-600 mb-8 text-sm max-w-2xl">Breaks down the specific behavioral methods used to maintain dominance, deflect blame, and isolate you from support networks.</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12">
-              <ScoreBars items={[
-                { label: "Intimidation & Fear", score: power_tactics?.subscales.intimidation.normalized100 || 0, color: "#C73E1D" },
-                { label: "Isolation & Social Sabotage", score: power_tactics?.subscales.isolation_dependency.normalized100 || 0, color: "#3B1F2B" },
-              ]} />
-              <ScoreBars items={[
-                { label: "Blame Reversal (DARVO)", score: power_tactics?.subscales.blame_minimization.normalized100 || 0, color: "#F18F01" },
-                { label: "Economic/Financial Control", score: power_tactics?.subscales.economic_control.normalized100 || 0, color: "#2E86AB" },
-              ]} />
+              <div className="space-y-4">
+                <ScoreBar label="Intimidation & Fear" value={power_tactics?.subscales.intimidation.normalized100 || 0} color="bg-[#C73E1D]" />
+                <ScoreBar label="Isolation & Social Sabotage" value={power_tactics?.subscales.isolation_dependency.normalized100 || 0} color="bg-[#3B1F2B]" />
+              </div>
+              <div className="space-y-4">
+                <ScoreBar label="Blame Reversal (DARVO)" value={power_tactics?.subscales.blame_minimization.normalized100 || 0} color="bg-[#F18F01]" />
+                <ScoreBar label="Economic/Financial Control" value={power_tactics?.subscales.economic_control.normalized100 || 0} color="bg-[#2E86AB]" />
+              </div>
             </div>
           </div>
 
