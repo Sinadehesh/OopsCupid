@@ -2,6 +2,7 @@ import React from "react";
 import { PsychologicalProfile } from "@/lib/psychometrics/classification";
 import AttachmentQuadrant, { DomainPoint } from "./AttachmentQuadrant";
 import { ScoreBar } from "./ScoreBars";
+import CircularScore from "./CircularScore";
 import LockedInsightCard from "./LockedInsightCard";
 import UnlockBanner from "./UnlockBanner";
 import { generateAttachmentNarrative, generateEmotionNarrative, generateSelfEsteemNarrative } from "@/lib/psychometrics/narratives";
@@ -160,28 +161,49 @@ export default function MasterReport({ profile, demographics, isDarkTheme = fals
             />
           </div>
 
-          {/* 6. SELF ESTEEM & EMOTION REGULATION */}
-          <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch pt-12 border-t border-slate-200">
-            <div className="flex flex-col gap-8 lg:gap-12 h-full">
-              <div className={`rounded-3xl border p-8 md:p-10 flex-col ${cardClass}`}>
-                <h3 className={`text-xl font-bold mb-6 ${tH3}`}>Baseline Self-Esteem</h3>
-                <ScoreBar label="Total Self-Worth Index" value={profile.selfEsteem.score} color={profile.selfEsteem.score < 50 ? "bg-orange-400" : "bg-[#006ba6]"} />
-              </div>
-              <div className={`rounded-3xl border p-8 md:p-10 flex-col ${cardClass}`}>
-                <h3 className={`text-xl font-bold mb-6 ${tH3}`}>Emotion Regulation</h3>
-                <ScoreBar label="Overall Dysregulation Risk" value={profile.emotionRegulation.score} color={profile.emotionRegulation.score > 60 ? "bg-red-500" : "bg-[#006ba6]"} />
-                <p className={`mt-6 text-base font-medium leading-relaxed ${tText}`}>
-                  {generateEmotionNarrative(profile.emotionRegulation.level)}
-                </p>
-              </div>
+          {/* 6. SELF ESTEEM & EMOTION REGULATION (DATA DASHBOARD) */}
+        <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch pt-12 border-t border-slate-200">
+          <div className={`rounded-[24px] border p-6 md:p-10 flex flex-col justify-center h-full ${cardClass}`}>
+            <h3 className={`text-xl md:text-2xl font-extrabold mb-8 text-center ${tH3}`}>
+              Core Psychological Drivers
+            </h3>
+            
+            <div className="flex flex-col md:flex-row items-center justify-around gap-8 md:gap-4 w-full mb-8">
+              <CircularScore 
+                title="Self-Esteem" 
+                value={profile.selfEsteem.score} 
+                max={100} 
+                subtitle="Self-Worth Index" 
+                color={profile.selfEsteem.score < 50 ? "#F6511D" : "#00A6ED"} 
+                isDarkTheme={isDarkTheme} 
+              />
+              
+              <div className={`hidden md:block w-px h-32 ${isDarkTheme ? 'bg-slate-700' : 'bg-slate-100'}`}></div>
+              <div className={`block md:hidden h-px w-32 ${isDarkTheme ? 'bg-slate-700' : 'bg-slate-100'}`}></div>
+
+              <CircularScore 
+                title="Emotion Control" 
+                value={profile.emotionRegulation.score} 
+                max={100} 
+                subtitle="Dysregulation Risk" 
+                color={profile.emotionRegulation.score > 60 ? "#F6511D" : "#FFB400"} 
+                isDarkTheme={isDarkTheme} 
+              />
             </div>
-            <LockedInsightCard 
-              title="Partner Attraction Magnets" 
-              teaser={`Understand why your '${profile.loveStyle}' love style magnetically draws you to the same toxic or unavailable types, and how to rewire your attraction.`} 
-              blurredBody={dummyBlurText}
-              isDarkTheme={isDarkTheme}
-            />
+            
+            <div className={`mt-auto p-5 rounded-[16px] border ${isDarkTheme ? 'bg-slate-800/50 border-slate-700' : 'bg-slate-50 border-slate-100'}`}>
+              <p className={`text-sm md:text-base font-medium leading-relaxed text-center ${tText}`}>
+                {generateEmotionNarrative(profile.emotionRegulation.level)}
+              </p>
+            </div>
           </div>
+          
+          <LockedInsightCard 
+            title="Partner Attraction Magnets" 
+            teaser={`Understand why your '${profile.loveStyle}' love style magnetically draws you to the same toxic or unavailable types, and how to rewire your attraction.`} 
+            blurredBody={dummyBlurText}
+            isDarkTheme={isDarkTheme}
+          />
         </div>
 
         {/* 7. UPSELL BANNER */}
