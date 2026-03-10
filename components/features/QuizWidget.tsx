@@ -167,16 +167,25 @@ const PHASE_LABELS: Record<string, string> = {
 };
 
 export default function QuizWidget({ quizName }: { quizName: string }) {
-  const [currentIndex, setCurrentIndex]   = useState(0);
-  const [answers, setAnswers]             = useState<Record<string, string>>({});
-  const [showResult, setShowResult]       = useState(false);
-  const [resultData, setResultData]       = useState<any>(null);
-  const [loading, setLoading]             = useState(false);
+  const [currentIndex, setCurrentIndex]     = useState(0);
+  const [answers, setAnswers]               = useState<Record<string, string>>({});
+  const [showResult, setShowResult]         = useState(false);
+  const [resultData, setResultData]         = useState<any>(null);
+  const [loading, setLoading]               = useState(false);
+  
+  // New Animation & UX States
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [isAnimating, setIsAnimating]       = useState(false);
+  const [slideDirection, setSlideDirection] = useState<"forward" | "backward">("forward");
+
   const topRef = useRef<HTMLDivElement>(null);
 
   const isDarkTheme = ["partners-attachment-style","is-he-manipulative"].includes(quizName);
+  
+  // Custom Theme Flag specifically for Attraction Patterns
+  const isAttraction = quizName === "attraction-patterns" || quizName === "who-finds-me-attractive";
 
-  const activeQuestions = useMemo((): Question[] => {
+  const activeQuestions = useMemo(() => {
     if (quizName === "attachment-style") {
       const hasKids = answers["demo_2"] === "Yes";
       return [...demoQ, ...ecrQ, ...rsQ, ...dersQ, ...loveQ, ...yqsQ, ...crqQ, ...mdsQ, ...(hasKids ? parQ : [])];
@@ -188,21 +197,49 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const isFinished = currentIndex >= activeQuestions.length;
   const progress   = Math.round((currentIndex / activeQuestions.length) * 100);
 
-  const tBg          = isDarkTheme ? "bg-[#fdffff]"                  : "bg-white";
-  const tH3          = isDarkTheme ? "text-[#280000]"                : "text-[#334B63]";
-  const tP           = isDarkTheme ? "text-[#570000]"                : "text-[#5E6E79]";
-  const tBorder      = isDarkTheme ? "border-[#de7c5a]/40"           : "border-[#dee2ff]";
-  const tAccentBg    = isDarkTheme ? "bg-[#b10f2e]"                  : "bg-[#006ba6]";
-  const tAccentHover = isDarkTheme ? "hover:bg-[#8a0b23]"            : "hover:bg-[#0496ff]";
-  const tAccentLight = isDarkTheme ? "bg-[#b10f2e]/10"               : "bg-[#0496ff]/5";
+  // DYNAMIC STYLING BASED ON THEME
+  const colors = {
+    bg: isAttraction ? "bg-white" : isDarkTheme ? "bg-[#0f172a]" : "bg-white",
+    cardBorder: isAttraction ? "border-transparent" : isDarkTheme ? "border-slate-700" : "border-slate-100",
+    textPrimary: isAttraction ? "text-[#086788]" : isDarkTheme ? "text-slate-100" : "text-slate-900",
+    textSecondary: isAttraction ? "text-[#086788]/70" : isDarkTheme ? "text-slate-400" : "text-slate-500",
+    progressTrack: isAttraction ? "bg-[#086788]/10" : "bg-slate-100",
+    progressFill: isAttraction ? "bg-[#F0C808]" : "bg-[#0496ff]",
+    optionBorder: isAttraction ? "border-[#06AED5]/40" : isDarkTheme ? "border-slate-700" : "border-slate-200",
+    optionHover: isAttraction ? "hover:border-[#06AED5] hover:bg-[#06AED5]/5 hover:-translate-y-0.5 hover:shadow-sm" : isDarkTheme ? "hover:border-[#b10f2e] hover:bg-[#b10f2e]/10" : "hover:border-[#0496ff] hover:bg-[#0496ff]/5",
+    optionSelected: isAttraction ? "border-[#086788] bg-[#06AED5]/10 shadow-inner" : "border-[#0496ff] bg-[#0496ff]/10",
+    btnPrimary: isAttraction ? "bg-[#DD1C1A] text-white hover:bg-[#C11715]" : isDarkTheme ? "bg-[#b10f2e] text-white" : "bg-[#006ba6] text-white"
+  };
 
   const handleOptionClick = (option: string) => {
+    if (isAnimating || selectedAnswer !== null) return; // Prevent double clicks
+    
+    setSelectedAnswer(option);
     const q = activeQuestions[currentIndex];
     setAnswers(prev => ({ ...prev, [q.id]: option }));
-    setCurrentIndex(prev => prev + 1);
     
-    if (topRef.current) {
-      topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    // Auto-advance sequence
+    setTimeout(() => {
+      setIsAnimating(true);
+      setSlideDirection("forward");
+      
+      setTimeout(() => {
+        setCurrentIndex(prev => prev + 1);
+        setSelectedAnswer(null);
+        setIsAnimating(false);
+      }, 250); // CSS Transition time
+    }, 400); // Wait time to show the user their selection was registered
+  };
+
+  const handleBack = () => {
+    if (currentIndex > 0 && !isAnimating) {
+      setIsAnimating(true);
+      setSlideDirection("backward");
+      setTimeout(() => {
+        setCurrentIndex(prev => prev - 1);
+        setSelectedAnswer(null); 
+        setIsAnimating(false);
+      }, 250);
     }
   };
 
@@ -229,11 +266,10 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
   if (loading) {
     return (
-      <div ref={topRef} className={`w-full mx-auto text-center py-20 animate-in fade-in duration-300 ${tBg} rounded-2xl`}>
+      <div ref={topRef} className={`w-full text-center py-24 ${colors.bg} rounded-3xl ${isAttraction ? '' : 'shadow-xl border'} ${colors.cardBorder} animate-in fade-in`}>
         <div className="flex flex-col items-center justify-center">
-          <div className={`w-16 h-16 border-4 ${isDarkTheme ? "border-[#b10f2e]/20 border-t-[#b10f2e]" : "border-[#006ba6]/20 border-t-[#006ba6]"} rounded-full animate-spin mb-6`}></div>
-          <h3 className={`text-2xl font-extrabold ${tH3} mb-2 animate-pulse`}>Computing Master Profile...</h3>
-          <p className="text-lg text-[#5E6E79] font-medium">Cross-referencing metrics.</p>
+          <div className={`w-16 h-16 border-4 border-t-transparent ${isAttraction ? 'border-[#06AED5]' : 'border-[#0496ff]'} rounded-full animate-spin mb-6`}></div>
+          <h3 className={`text-2xl font-extrabold ${colors.textPrimary} mb-2 animate-pulse`}>Analyzing Profile...</h3>
         </div>
       </div>
     );
@@ -242,70 +278,116 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   if (showResult && resultData) {
     if (quizName === "attachment-style" && resultData.profile) {
       return (
-        <div ref={topRef} className={`rounded-2xl ${tBg} text-left w-full mx-auto animate-in fade-in duration-500`}>
-          <span className="text-sm font-bold uppercase tracking-widest text-[#d81159] mb-3 block text-center">
-            Clinical Assessment Complete
-          </span>
-          <h3 className={`text-[28px] md:text-[34px] font-extrabold ${tH3} mb-10 leading-tight text-center`}>
-            Your Master Psychological Profile
-          </h3>
+        <div ref={topRef} className="w-full animate-in fade-in duration-500">
           <MasterReport profile={resultData.profile} demographics={resultData.demographics} isDarkTheme={isDarkTheme} />
         </div>
       );
     }
 
     return (
-      <div ref={topRef} className={`rounded-2xl ${tBg} text-left w-full mx-auto animate-in fade-in duration-500`}>
-        <h3 className={`text-[28px] md:text-[34px] font-extrabold ${tH3} mb-10 leading-tight text-center`}>{resultData.title}</h3>
+      <div ref={topRef} className={`rounded-3xl ${colors.bg} text-left w-full ${isAttraction ? '' : 'shadow-xl border'} ${colors.cardBorder} animate-in fade-in duration-500`}>
+        <h3 className={`text-[28px] md:text-[34px] font-extrabold ${colors.textPrimary} mb-10 leading-tight text-center`}>{resultData.title}</h3>
         {quizName === "who-finds-me-attractive" || quizName === "attraction-patterns" ? (
           <MultiGaugeGrid dialData={resultData.dialData} percentagesData={resultData.percentagesData} title={resultData.title} subLabelStr="%" />
         ) : (
           <DashboardGrid healthScore={resultData.healthScore} gaugeScore={resultData.gaugeScore} gaugeLabel={resultData.gaugeLabel} />
         )}
-        <p className={`${tP} p-6 border ${tBorder} rounded-xl font-medium text-lg whitespace-pre-wrap`}>{resultData.description}</p>
-        <p className={`${tP} p-6 mt-4 border ${tBorder} rounded-xl font-medium text-lg whitespace-pre-wrap`}>{resultData.behaviors}</p>
+        <p className={`${colors.textPrimary} p-6 border ${colors.optionBorder} rounded-2xl font-medium text-lg whitespace-pre-wrap mb-4 bg-slate-50/50`}>{resultData.description}</p>
+        <p className={`${colors.textPrimary} p-6 border ${colors.optionBorder} rounded-2xl font-medium text-lg whitespace-pre-wrap bg-slate-50/50`}>{resultData.behaviors}</p>
       </div>
     );
   }
 
   if (isFinished) {
     return (
-      <div ref={topRef} className={`max-w-3xl mx-auto bg-white p-10 rounded-3xl shadow-xl border border-blue-100 text-center py-10 animate-in fade-in zoom-in duration-300 ${tP}`}>
-        <div className={`w-20 h-20 mx-auto ${tAccentLight} rounded-full flex items-center justify-center mb-6 shadow-inner border-2 ${tBorder}`}>
-          <span className="text-3xl">🧠</span>
+      <div ref={topRef} className={`w-full ${colors.bg} rounded-3xl ${isAttraction ? '' : 'shadow-xl border'} ${colors.cardBorder} text-center py-16 animate-in fade-in zoom-in`}>
+        <div className={`w-24 h-24 mx-auto ${colors.progressTrack} rounded-full flex items-center justify-center mb-6`}>
+          <span className="text-4xl">🧠</span>
         </div>
-        <h3 className={`text-3xl font-extrabold ${tH3} mb-4`}>Assessment Complete</h3>
-        <p className="text-lg mb-10 max-w-md mx-auto font-medium">All data captured. We are ready to compile your multi-dimensional psychological profile.</p>
-        <button onClick={handleSubmit} className={`w-full max-w-sm mx-auto block ${tAccentBg} text-white font-bold py-4 rounded-xl transform hover:-translate-y-1 transition-all duration-300`}>
-          Reveal My Profile
+        <h3 className={`text-3xl font-extrabold ${colors.textPrimary} mb-4`}>Assessment Complete</h3>
+        <p className={`text-lg mb-10 max-w-md mx-auto font-medium ${colors.textSecondary}`}>All data captured. We are ready to compile your specific psychological attraction map.</p>
+        <button onClick={handleSubmit} className={`w-full max-w-sm mx-auto block ${colors.btnPrimary} font-extrabold py-4 rounded-xl transform hover:-translate-y-1 transition-all duration-300 shadow-lg`}>
+          Reveal My Blueprint
         </button>
       </div>
     );
   }
 
   const q = activeQuestions[currentIndex];
+  const sectionName = PHASE_LABELS[q.section || "default"] ?? q.section ?? "Assessment";
 
   return (
-    <div ref={topRef} className="max-w-3xl mx-auto bg-white p-6 md:p-10 rounded-3xl shadow-xl border border-blue-100 animate-in slide-in-from-right-4 duration-300">
-      <div className="mb-8">
-        <div className={`flex justify-between items-center text-sm font-bold uppercase tracking-wider mb-3 ${isDarkTheme ? "text-[#b10f2e]" : "text-[#006ba6]"}`}>
-          <span>{PHASE_LABELS[q.section || "default"] ?? q.section ?? "Assessment"}</span>
-          <span>{progress}%</span>
+    <div ref={topRef} className={`w-full ${colors.bg} rounded-3xl flex flex-col justify-center min-h-[450px]`}>
+      
+      {/* HEADER: Section Indicator & Progress */}
+      <div className="mb-10">
+        <div className="flex justify-between items-end mb-4">
+          <div>
+            <span className={`text-[10px] font-extrabold uppercase tracking-widest ${colors.textSecondary} block mb-1.5`}>
+              Section
+            </span>
+            <span className={`text-xs md:text-sm font-bold px-3 py-1 rounded-md ${isAttraction ? 'bg-[#086788]/10 text-[#086788]' : 'bg-slate-100 text-slate-700'}`}>
+              {sectionName}
+            </span>
+          </div>
+          <div className={`text-xs font-bold tracking-widest ${colors.textSecondary}`}>
+            QUESTION {currentIndex + 1} / {activeQuestions.length}
+          </div>
         </div>
-        <div className={`w-full ${tAccentLight} rounded-full h-2.5 border ${tBorder} overflow-hidden`}>
-          <div className={`${tAccentBg} h-full rounded-full transition-all duration-500`} style={{ width: `${progress}%` }} />
+        
+        {/* Progress Bar */}
+        <div className={`w-full h-1.5 rounded-full ${colors.progressTrack} overflow-hidden`}>
+          <div className={`h-full rounded-full transition-all duration-500 ease-out ${colors.progressFill}`} style={{ width: `${progress}%` }} />
         </div>
       </div>
 
-      <h3 className={`text-2xl md:text-3xl font-extrabold ${tH3} mb-8 leading-snug text-center min-h-[100px] flex items-center justify-center`}>{q.text}</h3>
+      {/* QUESTION & OPTIONS (Animated Container) */}
+      <div className={`transition-all duration-250 ease-in-out transform ${isAnimating ? (slideDirection === 'forward' ? 'opacity-0 -translate-y-4 scale-[0.99]' : 'opacity-0 translate-y-4 scale-[0.99]') : 'opacity-100 translate-y-0 scale-100'}`}>
+        <h3 className={`text-xl md:text-2xl font-extrabold ${colors.textPrimary} mb-8 leading-snug text-center`}>
+          {q.text}
+        </h3>
 
-      <div className="space-y-4">
-        {q.options.map((option: string, idx: number) => (
-          <button key={idx} onClick={() => handleOptionClick(option)} className={`w-full text-center p-5 rounded-2xl border-2 ${tBorder} hover:border-[${isDarkTheme ? '#b10f2e' : '#006ba6'}] hover:bg-[${isDarkTheme ? '#b10f2e' : '#0496ff'}]/5 transition-all duration-200 ${tP} font-bold text-lg hover:shadow-md hover:-translate-y-0.5 focus:outline-none`}>
-            {option}
-          </button>
-        ))}
+        <div className="grid grid-cols-1 gap-3 md:gap-4 w-full">
+          {q.options.map((option: string, idx: number) => {
+            const isSelected = selectedAnswer === option;
+            const isDisabled = selectedAnswer !== null && !isSelected;
+            
+            return (
+              <button 
+                key={idx} 
+                onClick={() => handleOptionClick(option)} 
+                disabled={isDisabled}
+                className={`
+                  w-full text-center p-4 md:p-[20px] rounded-xl border-2 font-bold text-sm md:text-base transition-all duration-200 
+                  ${isSelected ? colors.optionSelected : colors.optionBorder}
+                  ${!isDisabled && !isSelected ? colors.optionHover : ''}
+                  ${isDisabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}
+                  ${colors.textPrimary}
+                `}
+              >
+                {option}
+              </button>
+            )
+          })}
+        </div>
       </div>
+
+      {/* FOOTER: Back Button (No Next Button per requirements) */}
+      <div className="mt-8 flex justify-start">
+        <button 
+          onClick={handleBack} 
+          disabled={currentIndex === 0 || isAnimating || selectedAnswer !== null}
+          className={`text-sm font-bold flex items-center gap-1.5 px-5 py-2.5 rounded-lg border-2 transition-all 
+            ${currentIndex === 0 || isAnimating || selectedAnswer !== null
+              ? 'opacity-0 pointer-events-none' 
+              : isAttraction 
+                ? 'border-[#086788]/20 text-[#086788] hover:bg-[#086788]/5 hover:border-[#086788]' 
+                : 'border-slate-200 text-slate-500 hover:bg-slate-50'}`}
+        >
+          <span>←</span> Back
+        </button>
+      </div>
+
     </div>
   );
 }
