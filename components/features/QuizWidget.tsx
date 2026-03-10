@@ -343,7 +343,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         
         {/* Progress Bar */}
         <div className={`w-full h-2 rounded-full ${colors.progressTrack} overflow-hidden`}>
-          <div className={`h-full rounded-full transition-all duration-500 ease-out ${colors.progressFill}`} style={{ width: \`\${progress}%\` }} />
+          <div className={`h-full rounded-full transition-all duration-500 ease-out ${colors.progressFill}`} style={{ width: `${progress}%` }} />
         </div>
       </div>
 
