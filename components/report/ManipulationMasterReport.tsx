@@ -46,11 +46,12 @@ export default function ManipulationMasterReport({ result }: Props) {
           </div>
 
           <div className="relative z-10 flex flex-col items-center">
+            {/* FIXED PROPS HERE: value and title instead of score and label, and removed size */}
             <CircularScore 
-              score={result.overallRisk100} 
-              label="Overall Risk Index" 
+              value={result.overallRisk100} 
+              title="Overall Risk Index" 
               color={getSeverityColor(result.overallRisk100)} 
-              size={200} 
+              isDarkTheme={true}
             />
             <p className="mt-4 font-bold uppercase tracking-widest text-sm opacity-80">Tier: {result.severityTier}</p>
           </div>
