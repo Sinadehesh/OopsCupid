@@ -211,5 +211,6 @@ export default function MasterReport({ profile, demographics, isDarkTheme = fals
 
       </div>
     </div>
+  </div>
   );
 }
