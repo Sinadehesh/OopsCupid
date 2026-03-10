@@ -27,7 +27,7 @@ const defaultCards: MainHeroCard[] = [
     imageAlt: "woman reflecting on her relationship patterns",
     title: "Me",
     description: "Understand your dating patterns and blind spots",
-    bgColor: "#DD1C1A", // Red
+    bgColor: "#00A6ED", // New Blue
     textColor: "#FFFFFF",
     href: "/me",
   },
@@ -36,7 +36,7 @@ const defaultCards: MainHeroCard[] = [
     imageAlt: "handsome young man in a thoughtful pose",
     title: "Him",
     description: "Decode mixed signals, texts, and red flag behavior",
-    bgColor: "#06AED5", // Cyan
+    bgColor: "#DD1C1A", // Red moved from 'Me'
     textColor: "#FFFFFF",
     href: "/him",
   },
@@ -45,8 +45,8 @@ const defaultCards: MainHeroCard[] = [
     imageAlt: "friends together but one looks uncomfortable",
     title: "My Friends",
     description: "Identify toxic friendships and one-sided connections",
-    bgColor: "#F0C808", // Yellow
-    textColor: "#086788", // Deep Teal text for contrast
+    bgColor: "#7FB800", // New Green
+    textColor: "#FFFFFF", // Changed from Teal to White
     href: "/friends",
   },
   {
@@ -54,7 +54,7 @@ const defaultCards: MainHeroCard[] = [
     imageAlt: "two people walking on a beach representing relationship tools",
     title: "Free Tools",
     description: "Chat analyzer, quizzes, and profile readers",
-    bgColor: "#086788", // Deep Teal
+    bgColor: "#086788", // Kept same
     textColor: "#FFFFFF",
     href: "/tools",
   },
