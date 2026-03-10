@@ -52,11 +52,11 @@ const defaultCards: MainHeroCard[] = [
   {
     imageSrc: "https://img.freepik.com/free-photo/two-people-love-walking-beach-generated-by-ai_188544-18425.jpg?semt=ais_rp_50_assets&w=600&q=75",
     imageAlt: "two people walking on a beach representing relationship tools",
-    title: "Free Tools",
+    title: "Clarity Hub",
     description: "Chat analyzer, quizzes, and profile readers",
     bgColor: "#086788", // Kept same
     textColor: "#FFFFFF",
-    href: "/tools",
+    href: "/articles",
   },
 ];
 

@@ -1,56 +1,47 @@
-import type { Metadata } from 'next';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
 
-export const metadata: Metadata = {
-  title: "The 4 Adult Attachment Styles Explained | OopsCupid",
-  description: "Why do you push love away or cling too tightly? Understand the four adult attachment styles (Anxious, Avoidant, Secure, Disorganized) and how they affect your relationships.",
-  keywords: ["attachment styles", "anxious attachment", "avoidant attachment", "relationship patterns", "why do I push love away"],
-};
-
-export default function AttachmentArticlePage() {
+export default function AttachmentEssay() {
   return (
-    <main className="bg-[#FFFDFC] min-h-screen py-20 px-6 md:px-10 lg:px-14">
-      <article className="max-w-3xl mx-auto prose prose-lg">
-        <h1 className="text-[32px] md:text-[42px] font-semibold text-[#334B63] mb-6 leading-tight">
-          The 4 Adult Attachment Styles: Why You Love the Way You Do
-        </h1>
-        
-        <p className="text-[18px] md:text-[22px] font-normal leading-relaxed text-[#5E6E79] mb-10">
-          Do you find yourself constantly worrying that your partner is going to leave you? Or do you instinctively pull away the second someone gets too close? The answer usually lies in your attachment style.
-        </p>
+    <article className="min-h-screen bg-white font-sans text-[#3B1F2B]">
+      {/* Hero Header */}
+      <header className="bg-[#3B1F2B] text-white py-24 px-6 text-center">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-[#F18F01] font-bold tracking-widest mb-4 uppercase">Psychology Deep Dive</p>
+          <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
+            Attachment Styles, Explained: The Real Reason You Keep Repeating Patterns
+          </h1>
+        </div>
+      </header>
 
-        {/* Call to Action Box tailored to your colors */}
-        <div className="bg-[#FFB8A1]/20 border-l-4 border-[#FFB8A1] p-8 my-10 rounded-r-2xl">
-          <h3 className="text-[22px] font-semibold text-[#334B63] mb-3">Not sure which style you are?</h3>
-          <p className="text-[#5E6E79] mb-6">Take our free clinical assessment to uncover your specific attachment style and relationship patterns.</p>
-          <Link 
-            href="/attachment-style-quiz" 
-            className="inline-block bg-[#FFB8A1] text-[#111111] font-semibold px-8 py-3 rounded-full hover:bg-[#F0A090] transition-colors"
-          >
-            Take the Attachment Style Quiz →
+      <div className="max-w-3xl mx-auto px-6 py-16 text-lg leading-relaxed">
+        <p className="mb-8 font-bold text-xl">You tell yourself this time will be different. And then it happens again.</p>
+        
+        <p className="mb-6">You meet someone promising, feel the spark, and within weeks you are back in the same emotional maze: overthinking texts, feeling sick when they pull away, or suddenly losing interest the moment someone gets too close.</p>
+
+        {/* CTA 1 */}
+        <div className="my-12 p-8 bg-[#2E86AB]/10 rounded-3xl border-2 border-dashed border-[#2E86AB] text-center">
+          <h3 className="text-2xl font-bold mb-4">Don't just read about it—find your blueprint.</h3>
+          <Link href="/attachment-style-quiz" className="inline-block bg-[#2E86AB] text-white px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform">
+            Take the Free Attachment Quiz →
           </Link>
         </div>
 
-        <h2 className="text-[26px] font-semibold text-[#334B63] mt-12 mb-4">1. Anxious Attachment</h2>
-        <p className="text-[#5E6E79] leading-relaxed mb-6">
-          People with an anxious attachment style often feel a deep fear of abandonment. They crave extreme closeness and intimacy but constantly worry that their partner doesn't want to be as close as they do. If he takes three hours to text back, your brain immediately assumes he's losing interest.
-        </p>
+        <h2 className="text-3xl font-bold mt-12 mb-6 text-[#A23B72]">Your Attachment Style Is Not Random</h2>
+        <p className="mb-6">At the core of attachment are two psychological dimensions: <strong>Anxiety</strong> and <strong>Avoidance</strong>. Attachment anxiety is the fear of rejection, while avoidance is discomfort with emotional closeness.</p>
+        
+        <h2 className="text-3xl font-bold mt-12 mb-6 text-[#C73E1D]">The Free Result is the Label. The Master Report is the Map.</h2>
+        <p className="mb-6">A free test can name the pattern, but the <strong>OopsCupid Master Report</strong> shows you the architecture. It reveals your Attachment Quadrant Map and the Circular Data Rings that track your Self-Worth Index.</p>
 
-        <h2 className="text-[26px] font-semibold text-[#334B63] mt-12 mb-4">2. Avoidant Attachment</h2>
-        <p className="text-[#5E6E79] leading-relaxed mb-6">
-          Avoidant individuals equate intimacy with a loss of independence. When things get serious, they feel suffocated and naturally start creating distance. They might hyper-focus on their partner's flaws as an excuse to pull away.
-        </p>
-
-        <h2 className="text-[26px] font-semibold text-[#334B63] mt-12 mb-4">3. Disorganized (Fearful-Avoidant)</h2>
-        <p className="text-[#5E6E79] leading-relaxed mb-6">
-          This is a confusing mix of both anxious and avoidant traits, usually stemming from past trauma. You desperately want love, but you are also terrified of it. It creates a volatile "come here, now go away" dynamic in relationships.
-        </p>
-
-        <h2 className="text-[26px] font-semibold text-[#334B63] mt-12 mb-4">4. Secure Attachment</h2>
-        <p className="text-[#5E6E79] leading-relaxed mb-8">
-          The holy grail of relationships. Secure individuals are comfortable with intimacy, don't panic over normal space in a relationship, and communicate their needs effectively without game-playing.
-        </p>
-      </article>
-    </main>
+        {/* FINAL PREMIUM CTA */}
+        <div className="mt-20 p-10 bg-[#3B1F2B] text-white rounded-[40px] text-center shadow-2xl">
+          <h2 className="text-3xl md:text-4xl font-extrabold mb-6">Ready to break the cycle?</h2>
+          <p className="text-[#F18F01] text-xl mb-8 font-medium">Get the full Master Report and see the exact childhood schemas driving your dating choices.</p>
+          <Link href="/attachment-style-quiz" className="inline-block bg-[#C73E1D] text-white px-10 py-5 rounded-full text-xl font-bold hover:bg-[#A83519] transition-colors">
+            Start Quiz & Unlock Report
+          </Link>
+        </div>
+      </div>
+    </article>
   );
 }
