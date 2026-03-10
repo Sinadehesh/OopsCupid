@@ -34,8 +34,8 @@ const defaultCards: MainHeroCard[] = [
   },
   {
     imageSrc:
-      "https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?auto=format&fit=crop&w=900&q=80",
-    imageAlt: "man thoughtfully reading a text message on his phone",
+      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80",
+    imageAlt: "handsome young man looking directly at camera",
     title: "Him",
     description: "Decode mixed signals, texts, and red flag behavior",
     bgColor: "#9ED0CB",
