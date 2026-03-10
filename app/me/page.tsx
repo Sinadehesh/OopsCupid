@@ -31,7 +31,7 @@ export default function MeHubPage() {
             variant="quiz"
             title="What Is My Attachment Style? Clinical Test"
             href="/attachment-style-quiz"
-            imageUrl="https://images.unsplash.com/photo-1516575334481-ba558110b9af?auto=format&fit=crop&w=800&q=80"
+            imageUrl="https://cdn.psychologytoday.com/sites/default/files/styles/image-article_inline_full_caption/public/field_blog_entry_images/2019-01/how_to_improve_your_romantic_relationship_dr._konstantin_lukin.jpg?itok=G9wg0ST1"
             accentColor="bg-[#0496ff]/20"
             textColor="text-[#006ba6]"
           />
