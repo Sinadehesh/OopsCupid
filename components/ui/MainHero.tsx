@@ -34,8 +34,8 @@ const defaultCards: MainHeroCard[] = [
   },
   {
     imageSrc:
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80",
-    imageAlt: "handsome young man looking directly at camera",
+      "https://images.pexels.com/photos/20183378/pexels-photo-20183378.jpeg?auto=compress&cs=tinysrgb&w=600",
+    imageAlt: "handsome young man in a thoughtful pose",
     title: "Him",
     description: "Decode mixed signals, texts, and red flag behavior",
     bgColor: "#9ED0CB",
@@ -54,8 +54,8 @@ const defaultCards: MainHeroCard[] = [
   },
   {
     imageSrc:
-      "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=900&q=80",
-    imageAlt: "clean desk with a laptop and notebook for analysis tools",
+      "https://img.freepik.com/free-photo/two-people-love-walking-beach-generated-by-ai_188544-18425.jpg?semt=ais_rp_50_assets&w=600&q=75",
+    imageAlt: "two people walking on a beach representing relationship tools",
     title: "Free Tools",
     description: "Chat analyzer, quizzes, and profile readers",
     bgColor: "#425E76",
