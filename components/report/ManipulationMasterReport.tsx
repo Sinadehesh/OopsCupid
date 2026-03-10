@@ -2,6 +2,8 @@ import React from "react";
 import { AssessmentResult } from "@/lib/psychometrics/manipulation/types";
 import CircularScore from "./CircularScore";
 import { ScoreBar } from "./ScoreBars";
+import UnlockBanner from "./UnlockBanner";
+import { ShieldCheck, ArrowRight, Lock } from "lucide-react";
 
 interface Props {
   result: AssessmentResult;
@@ -10,11 +12,23 @@ interface Props {
 export default function ManipulationMasterReport({ result }: Props) {
   const { par, coercive_control, power_tactics, gaslighting, impact } = result.modules;
 
+  const isPremium = result.premiumUnlocked; // Use this to toggle blur vs unblur
+
+  // STRICT CUSTOM RED PALETTE
+  const colors = {
+    bgMain: "bg-[#0f0606]",
+    bgCard: "bg-[#200b0b]",
+    borderCard: "border-[#2f0000]",
+    textPrimary: "text-[#ffffff]",
+    textSecondary: "text-[#ffffff]/70",
+    accentLight: "#650000",
+    accentDark: "#490000",
+  };
+
   const getSeverityColor = (score: number) => {
-    if (score >= 80) return "#C73E1D"; // Critical Red
-    if (score >= 60) return "#F18F01"; // High Orange
-    if (score >= 40) return "#A23B72"; // Elevated Magenta
-    return "#2E86AB"; // Baseline Blue
+    if (score >= 80) return "#650000"; // Critical
+    if (score >= 60) return "#490000"; // High 
+    return "#2f0000"; // Elevated/Baseline
   };
 
   const dominantLabels: Record<string, string> = {
@@ -25,45 +39,104 @@ export default function ManipulationMasterReport({ result }: Props) {
     "high_coercive_control": "High Coercive Control"
   };
 
-  return (
-    <div className="bg-[#FDF6EE] min-h-screen py-10">
-      <div className="max-w-5xl mx-auto space-y-8 px-4 sm:px-6">
+  // Custom Inline Locked Card to preserve the exact strict color palette
+  const CustomLockedCard = ({ title, teaser }: { title: string, teaser: string }) => {
+    if (isPremium) {
+      return (
+        <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full ${colors.bgCard} ${colors.borderCard}`}>
+          <h4 className="text-sm font-bold uppercase tracking-widest text-[#ffffff]/50 mb-4 flex items-center gap-2">
+             Premium Insight Unlocked
+          </h4>
+          <h3 className={`text-2xl font-extrabold ${colors.textPrimary} mb-4`}>{title}</h3>
+          <p className={`${colors.textSecondary} leading-relaxed`}>
+            {/* Premium Content goes here if unlocked */}
+            This section reveals the precise psychological mechanisms mapping to this behavior, including the underlying schema triggers and behavioral scripts used to distort reality and enforce compliance.
+          </p>
+        </div>
+      );
+    }
+
+    return (
+      <div className={`relative rounded-3xl border p-8 md:p-10 flex flex-col h-full overflow-hidden ${colors.bgCard} ${colors.borderCard} group`}>
+        {/* Blurred Content */}
+        <div className="filter blur-[6px] opacity-40 select-none">
+          <h3 className={`text-2xl font-extrabold ${colors.textPrimary} mb-4`}>{title}</h3>
+          <p className={`${colors.textSecondary} leading-relaxed mb-4`}>
+            This section contains a deep clinical analysis of these psychological patterns. It explains exactly how these specific tactics trigger your nervous system, the mechanisms driving this behavior, and the step-by-step reality check needed to break the cycle.
+          </p>
+          <div className="w-full h-4 bg-[#650000]/20 rounded mb-2"></div>
+          <div className="w-3/4 h-4 bg-[#650000]/20 rounded mb-2"></div>
+          <div className="w-5/6 h-4 bg-[#650000]/20 rounded"></div>
+        </div>
         
-        {/* HEADER SECTION */}
-        <div className="bg-[#3B1F2B] text-white p-8 md:p-12 rounded-[40px] shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-10">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#A23B72] rounded-full blur-[120px] opacity-20 translate-x-1/3 -translate-y-1/3"></div>
+        {/* Overlay */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-[#0f0606]/60">
+          <div className="w-14 h-14 bg-[#2f0000] rounded-full flex items-center justify-center mb-4 border border-[#490000] shadow-lg group-hover:scale-110 transition-transform">
+            <Lock className="w-6 h-6 text-white" />
+          </div>
+          <h4 className={`text-xl font-extrabold ${colors.textPrimary} mb-2`}>{title}</h4>
+          <p className={`text-sm ${colors.textSecondary} mb-6 max-w-sm`}>{teaser}</p>
+          <button className={`px-6 py-3 rounded-full font-bold text-sm bg-[#650000] text-white shadow-lg hover:bg-[#490000] transition-colors`}>
+            Unlock Full Analysis
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className={`min-h-screen ${colors.bgMain} py-12 w-full`}>
+      <div className="w-full max-w-6xl mx-auto px-6 md:px-10 lg:px-12 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
+        
+        {/* HERO SECTION — Match Attachment Style Hero */}
+        <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-20 items-stretch">
           
-          <div className="relative z-10 flex-1">
-            <p className="text-[#F18F01] font-bold tracking-[0.2em] uppercase text-sm mb-4">Official Master Report</p>
-            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Manipulation & Control Analysis</h1>
-            <p className="text-lg opacity-80 mb-6 max-w-xl">
-              Based on the 93-item clinical battery. This report maps exact tactics across demands, threats, isolation, and gaslighting.
+          {/* LEFT CARD */}
+          <div className={`rounded-3xl border p-10 md:p-12 flex flex-col justify-center ${colors.bgCard} ${colors.borderCard}`}>
+            <div className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold tracking-widest mb-8 w-fit bg-[#2f0000]/50 border border-[#490000] text-white`}>
+              <ShieldCheck className="w-4 h-4 text-[#650000]" />
+              CLINICAL BATTERY COMPLETE
+            </div>
+            
+            <h2 className={`text-4xl md:text-5xl font-extrabold leading-none tracking-tighter mb-8 ${colors.textPrimary}`}>
+              Manipulation &<br />Control Analysis
+            </h2>
+            
+            <p className={`text-[17px] leading-relaxed mb-6 ${colors.textSecondary}`}>
+              Based on the 93-item clinical battery. This report maps exact tactics across demands, threats, isolation, and gaslighting to determine if your relationship crosses the threshold for psychological friction.
             </p>
-            <div className="inline-block bg-white/10 backdrop-blur-md border border-white/20 px-6 py-3 rounded-2xl">
-              <p className="text-sm uppercase tracking-wider opacity-70 mb-1">Dominant Pattern Detected</p>
-              <p className="text-2xl font-bold text-[#F18F01]">{dominantLabels[result.dominantPattern]}</p>
+
+            <div className={`inline-block border p-4 rounded-xl mb-10 ${colors.borderCard} bg-[#0f0606]/50`}>
+              <p className="text-xs uppercase tracking-wider opacity-70 mb-1 text-white">Dominant Pattern Detected</p>
+              <p className="text-xl font-bold text-[#ffffff]">{dominantLabels[result.dominantPattern]}</p>
+            </div>
+            
+            <div className="mt-auto">
+              <button className={`inline-flex items-center gap-3 font-semibold text-lg text-[#ffffff] hover:text-[#ffffff]/70 transition-colors`}>
+                View Breakdown <ArrowRight className="w-5 h-5" />
+              </button>
             </div>
           </div>
 
-          <div className="relative z-10 flex flex-col items-center">
-            {/* FIXED PROPS HERE: value and title instead of score and label, and removed size */}
-            <CircularScore 
+          {/* RIGHT CARD — Circular Score */}
+          <div className={`rounded-3xl border p-10 md:p-12 flex flex-col items-center justify-center ${colors.bgCard} ${colors.borderCard}`}>
+             <CircularScore 
               value={result.overallRisk100} 
               title="Overall Risk Index" 
               color={getSeverityColor(result.overallRisk100)} 
               isDarkTheme={true}
             />
-            <p className="mt-4 font-bold uppercase tracking-widest text-sm opacity-80">Tier: {result.severityTier}</p>
+            <p className={`mt-6 font-bold uppercase tracking-widest text-sm ${colors.textSecondary}`}>Tier: {result.severityTier}</p>
           </div>
         </div>
 
         {/* SAFETY FLAGS WARNING */}
         {result.safetyFlags.length > 0 && (
-          <div className="bg-[#C73E1D] text-white p-8 rounded-3xl shadow-lg border-4 border-[#C73E1D]/50 flex items-start gap-6">
+          <div className="bg-[#650000] text-white p-8 rounded-3xl shadow-lg border border-[#ffffff]/20 flex items-start gap-6 mb-16">
             <div className="text-4xl">⚠️</div>
             <div>
               <h3 className="text-2xl font-bold mb-2">Critical Safety Escalation</h3>
-              <p className="text-lg opacity-95 mb-4">
+              <p className="text-lg opacity-95">
                 Your responses triggered clinical safety flags (e.g., threats, surveillance, or restriction of essentials). 
                 This indicates severe risk. Please consider speaking with a domestic abuse advocate safely.
               </p>
@@ -71,57 +144,89 @@ export default function ManipulationMasterReport({ result }: Props) {
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <h3 className={`text-2xl md:text-3xl font-extrabold ${colors.textPrimary} mb-8 border-b ${colors.borderCard} pb-3`}>
+          Detailed Behavioral Breakdown
+        </h3>
+        
+        <div className="space-y-12 md:space-y-16 w-full">
           
-          {/* COERCIVE CONTROL DEEP DIVE */}
-          <div className="bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-gray-100">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-extrabold text-[#3B1F2B]">Coercive Control</h3>
-              <span className="text-3xl font-bold text-[#A23B72]">{coercive_control?.normalized100}%</span>
-            </div>
-            <p className="text-gray-600 mb-8 text-sm">Measures systematic attempts to strip away independence through rules, surveillance, and punishment.</p>
-            <div className="space-y-4">
-              <ScoreBar label="Demands & Strict Rules" value={coercive_control?.subscales.demands.normalized100 || 0} color="bg-[#A23B72]" />
-              <ScoreBar label="Threats & Retaliation" value={coercive_control?.subscales.threats.normalized100 || 0} color="bg-[#C73E1D]" />
-              <ScoreBar label="Surveillance & Stalking" value={coercive_control?.subscales.surveillance.normalized100 || 0} color="bg-[#3B1F2B]" />
-              <ScoreBar label="Forced Appeasement" value={coercive_control?.subscales.response_to_demands.normalized100 || 0} color="bg-[#2E86AB]" />
-            </div>
-          </div>
-
-          {/* GASLIGHTING SCREEN */}
-          <div className="bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-gray-100">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-extrabold text-[#3B1F2B]">Gaslighting Index</h3>
-              <span className="text-3xl font-bold text-[#F18F01]">{gaslighting?.normalized100}%</span>
-            </div>
-            <p className="text-gray-600 mb-8 text-sm">Measures psychological manipulation designed to make you doubt your memory, perception, and sanity.</p>
-            <div className="space-y-4">
-              <ScoreBar label="Reality Distortion (Denial)" value={gaslighting?.subscales.reality_distortion.normalized100 || 0} color="bg-[#F18F01]" />
-              <ScoreBar label="Self-Doubt Induction" value={gaslighting?.subscales.self_doubt_induction.normalized100 || 0} color="bg-[#A23B72]" />
-              <ScoreBar label="Confusion Dependency" value={gaslighting?.subscales.confusion_dependency.normalized100 || 0} color="bg-[#3B1F2B]" />
-            </div>
-          </div>
-
-          {/* POWER TACTICS PROFILE */}
-          <div className="bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-gray-100 md:col-span-2">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-extrabold text-[#3B1F2B]">Power Tactics Profile</h3>
-              <span className="text-3xl font-bold text-[#2E86AB]">{power_tactics?.normalized100}%</span>
-            </div>
-            <p className="text-gray-600 mb-8 text-sm max-w-2xl">Breaks down the specific behavioral methods used to maintain dominance, deflect blame, and isolate you from support networks.</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12">
-              <div className="space-y-4">
-                <ScoreBar label="Intimidation & Fear" value={power_tactics?.subscales.intimidation.normalized100 || 0} color="bg-[#C73E1D]" />
-                <ScoreBar label="Isolation & Social Sabotage" value={power_tactics?.subscales.isolation_dependency.normalized100 || 0} color="bg-[#3B1F2B]" />
+          {/* SECTION 1: COERCIVE CONTROL */}
+          <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+            <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full ${colors.bgCard} ${colors.borderCard}`}>
+              <div className="flex justify-between items-start mb-6">
+                <div>
+                  <h4 className="text-sm font-bold uppercase tracking-widest text-[#ffffff]/50 mb-2">Module Breakdown</h4>
+                  <h2 className={`text-3xl md:text-4xl font-extrabold ${colors.textPrimary}`}>Coercive Control</h2>
+                </div>
+                <span className={`text-3xl font-bold text-[#650000]`}>{coercive_control?.normalized100}%</span>
               </div>
-              <div className="space-y-4">
-                <ScoreBar label="Blame Reversal (DARVO)" value={power_tactics?.subscales.blame_minimization.normalized100 || 0} color="bg-[#F18F01]" />
-                <ScoreBar label="Economic/Financial Control" value={power_tactics?.subscales.economic_control.normalized100 || 0} color="bg-[#2E86AB]" />
+              <div className="space-y-5 mb-8 flex-grow">
+                <ScoreBar label="Demands & Strict Rules" value={coercive_control?.subscales.demands.normalized100 || 0} color="bg-[#490000]" />
+                <ScoreBar label="Threats & Retaliation" value={coercive_control?.subscales.threats.normalized100 || 0} color="bg-[#650000]" />
+                <ScoreBar label="Surveillance & Stalking" value={coercive_control?.subscales.surveillance.normalized100 || 0} color="bg-[#2f0000]" />
+                <ScoreBar label="Forced Appeasement" value={coercive_control?.subscales.response_to_demands.normalized100 || 0} color="bg-[#ffffff]" />
               </div>
             </div>
+            <CustomLockedCard 
+              title="Control Mechanics" 
+              teaser="Discover exactly how these specific surveillance and demand tactics are systematically stripping your independence." 
+            />
           </div>
 
+          {/* SECTION 2: GASLIGHTING */}
+          <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+            <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full ${colors.bgCard} ${colors.borderCard}`}>
+               <div className="flex justify-between items-start mb-6">
+                <div>
+                  <h4 className="text-sm font-bold uppercase tracking-widest text-[#ffffff]/50 mb-2">Module Breakdown</h4>
+                  <h2 className={`text-3xl md:text-4xl font-extrabold ${colors.textPrimary}`}>Gaslighting Index</h2>
+                </div>
+                <span className={`text-3xl font-bold text-[#650000]`}>{gaslighting?.normalized100}%</span>
+              </div>
+              <div className="space-y-5 mb-8 flex-grow">
+                <ScoreBar label="Reality Distortion (Denial)" value={gaslighting?.subscales.reality_distortion.normalized100 || 0} color="bg-[#650000]" />
+                <ScoreBar label="Self-Doubt Induction" value={gaslighting?.subscales.self_doubt_induction.normalized100 || 0} color="bg-[#490000]" />
+                <ScoreBar label="Confusion Dependency" value={gaslighting?.subscales.confusion_dependency.normalized100 || 0} color="bg-[#2f0000]" />
+              </div>
+            </div>
+            <CustomLockedCard 
+              title="Reality Distortion Breakdown" 
+              teaser="See the exact linguistic scripts being used to induce self-doubt, and the steps to trust your memory again." 
+            />
+          </div>
+
+          {/* SECTION 3: POWER TACTICS */}
+          <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+            <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full ${colors.bgCard} ${colors.borderCard}`}>
+               <div className="flex justify-between items-start mb-6">
+                <div>
+                  <h4 className="text-sm font-bold uppercase tracking-widest text-[#ffffff]/50 mb-2">Module Breakdown</h4>
+                  <h2 className={`text-3xl md:text-4xl font-extrabold ${colors.textPrimary}`}>Power Tactics</h2>
+                </div>
+                <span className={`text-3xl font-bold text-[#650000]`}>{power_tactics?.normalized100}%</span>
+              </div>
+              <div className="space-y-5 mb-8 flex-grow">
+                <ScoreBar label="Intimidation & Fear" value={power_tactics?.subscales.intimidation.normalized100 || 0} color="bg-[#650000]" />
+                <ScoreBar label="Isolation & Social Sabotage" value={power_tactics?.subscales.isolation_dependency.normalized100 || 0} color="bg-[#490000]" />
+                <ScoreBar label="Blame Reversal (DARVO)" value={power_tactics?.subscales.blame_minimization.normalized100 || 0} color="bg-[#ffffff]" />
+                <ScoreBar label="Economic/Financial Control" value={power_tactics?.subscales.economic_control.normalized100 || 0} color="bg-[#2f0000]" />
+              </div>
+            </div>
+            <CustomLockedCard 
+              title="DARVO & Isolation Strategies" 
+              teaser="Understand how blame is being systematically reversed onto you, and why your social circle is shrinking." 
+            />
+          </div>
+          
         </div>
+
+        {/* 7. UPSELL BANNER (Only show if not premium) */}
+        {!isPremium && (
+          <div className="mt-16">
+            <UnlockBanner />
+          </div>
+        )}
+
       </div>
     </div>
   );
