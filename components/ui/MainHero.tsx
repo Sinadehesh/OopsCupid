@@ -34,8 +34,8 @@ const defaultCards: MainHeroCard[] = [
   },
   {
     imageSrc:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=900&q=80",
-    imageAlt: "woman reading confusing text messages on her phone",
+      "https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?auto=format&fit=crop&w=900&q=80",
+    imageAlt: "man thoughtfully reading a text message on his phone",
     title: "Him",
     description: "Decode mixed signals, texts, and red flag behavior",
     bgColor: "#9ED0CB",
@@ -54,8 +54,8 @@ const defaultCards: MainHeroCard[] = [
   },
   {
     imageSrc:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80",
-    imageAlt: "woman confidently using relationship clarity tool",
+      "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=900&q=80",
+    imageAlt: "clean desk with a laptop and notebook for analysis tools",
     title: "Free Tools",
     description: "Chat analyzer, quizzes, and profile readers",
     bgColor: "#425E76",
