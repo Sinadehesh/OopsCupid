@@ -1,4 +1,5 @@
 import React from "react";
+import SharePrintButtons from "@/components/ui/SharePrintButtons";
 import { PsychologicalProfile } from "@/lib/psychometrics/classification";
 import AttachmentQuadrant, { DomainPoint } from "./AttachmentQuadrant";
 import { ScoreBar } from "./ScoreBars";
@@ -208,6 +209,7 @@ export default function MasterReport({ profile, demographics, isDarkTheme = fals
 
         {/* 7. UPSELL BANNER */}
         <UnlockBanner />
+      <SharePrintButtons />
 
       </div>
     </div>

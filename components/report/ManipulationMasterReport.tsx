@@ -1,4 +1,5 @@
 import React from "react";
+import SharePrintButtons from "@/components/ui/SharePrintButtons";
 import { AssessmentResult } from "@/lib/psychometrics/manipulation/types";
 import CircularScore from "./CircularScore";
 import { ScoreBar } from "./ScoreBars";
@@ -197,6 +198,7 @@ export default function ManipulationMasterReport({ result }: Props) {
         {!isPremium && (
           <div className="mt-16">
             <UnlockBanner />
+      <SharePrintButtons />
           </div>
         )}
       </div>

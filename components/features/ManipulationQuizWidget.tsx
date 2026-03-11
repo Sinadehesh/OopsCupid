@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import SharePrintButtons from "@/components/ui/SharePrintButtons";
 import { MANIPULATION_QUESTIONS } from "@/lib/psychometrics/manipulation/questions";
 import { calculateManipulationScore } from "@/lib/psychometrics/manipulation/scoring";
 import { Answer, AssessmentResult } from "@/lib/psychometrics/manipulation/types";

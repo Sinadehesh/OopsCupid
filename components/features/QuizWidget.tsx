@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useRef } from "react";
+import SharePrintButtons from "@/components/ui/SharePrintButtons";
 import Link from "next/link";
 import { generatePsychologicalProfile, computeLegacyResult } from "@/lib/psychometrics/classification";
 import MasterReport from "@/components/report/MasterReport";
@@ -317,6 +318,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         )}
         <p className={`${colors.textPrimary} p-6 border ${colors.optionBorder} rounded-[16px] font-medium text-lg whitespace-pre-wrap mb-4 bg-slate-50/50`}>{resultData.description}</p>
         <p className={`${colors.textPrimary} p-6 border ${colors.optionBorder} rounded-[16px] font-medium text-lg whitespace-pre-wrap bg-slate-50/50`}>{resultData.behaviors}</p>
+        <SharePrintButtons />
       </div>
     );
   }
