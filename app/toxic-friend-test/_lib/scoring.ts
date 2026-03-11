@@ -2,35 +2,41 @@ import { TOXIC_FRIEND_QUESTIONS } from "../_data/questions";
 
 export function calculateToxicScores(answers: Record<string, string>) {
   const sums: Record<string, { total: number; max: number }> = {
-    Victimization: { total: 0, max: 0 },
-    Quality: { total: 0, max: 0 },
-    Aggression: { total: 0, max: 0 },
-    Manipulation: { total: 0, max: 0 },
-    Antisocial: { total: 0, max: 0 },
-    Vulnerability: { total: 0, max: 0 },
-    Impact: { total: 0, max: 0 }
+    victimization: { total: 0, max: 0 },
+    neg_quality: { total: 0, max: 0 },
+    relational_aggression: { total: 0, max: 0 },
+    manipulation: { total: 0, max: 0 },
+    antisocial: { total: 0, max: 0 },
+    vulnerability: { total: 0, max: 0 },
+    impact: { total: 0, max: 0 }
   };
 
   let safetyFlagTriggered = false;
 
-  // 1. Tally raw scores based on question weights
+  // 1. Tally raw scores based on question weights & reverse coding
   Object.entries(answers).forEach(([id, val]) => {
     const q = TOXIC_FRIEND_QUESTIONS.find(x => x.id === id);
-    if (!q) return;
+    if (!q || q.module === "validity") return; // Exclude validity items from mathematical score
 
     let num = 0;
     if (q.responseType === "binary") {
-      num = val === "Yes" ? 4 : 0;
+      num = val === "Yes" ? 4 : 0; // Normalize binary to 0-4 scale to match weight calculations
     } else {
-      num = parseInt(val.charAt(0)) || 0;
+      num = parseInt(val.charAt(0));
+      if (isNaN(num)) return;
+    }
+
+    // Apply Reverse Coding (e.g. 0 becomes 4, 4 becomes 0)
+    if (q.reverseCoded) {
+      num = 4 - num;
     }
 
     if (sums[q.module]) {
       sums[q.module].total += num * q.weight;
-      sums[q.module].max += 4 * q.weight;
+      sums[q.module].max += 4 * q.weight; // Max possible score per weight point is 4
     }
 
-    // Safety Flag Escalation Check
+    // Safety Flag Escalation Check (Trigger on >= 3 or Binary 'Yes')
     if (q.hardFlag && num >= 3) {
       safetyFlagTriggered = true;
     }
@@ -43,20 +49,20 @@ export function calculateToxicScores(answers: Record<string, string>) {
   };
 
   const mods = {
-    victimization: norm("Victimization"),
-    quality: norm("Quality"),
-    aggression: norm("Aggression"),
-    manipulation: norm("Manipulation"),
-    antisocial: norm("Antisocial"),
-    vulnerability: norm("Vulnerability"),
-    impact: norm("Impact")
+    victimization: norm("victimization"),
+    quality: norm("neg_quality"),
+    aggression: norm("relational_aggression"),
+    manipulation: norm("manipulation"),
+    antisocial: norm("antisocial"),
+    vulnerability: norm("vulnerability"),
+    impact: norm("impact")
   };
 
-  // 3. Weighted Core Toxicity Score
+  // 3. Weighted Core Toxicity Score exactly matching prompt specification
   let riskScore = Math.round(
     mods.victimization * 0.30 +
-    mods.quality * 0.20 +
-    mods.aggression * 0.20 +
+    mods.quality * 0.25 +
+    mods.aggression * 0.15 +
     mods.manipulation * 0.15 +
     mods.antisocial * 0.15
   );
@@ -71,7 +77,7 @@ export function calculateToxicScores(answers: Record<string, string>) {
   // AUTO-ESCALATE if safety/fear threshold is met
   if (safetyFlagTriggered && tier < 4) {
     tier = 4; 
-    riskScore = Math.max(riskScore, 65);
+    riskScore = Math.max(riskScore, 65); // Boost visual gauge to match tier
   }
 
   // 5. Archetype Extraction
