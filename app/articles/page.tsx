@@ -15,6 +15,14 @@ export default function ClarityHub() {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-16">
+          <Card 
+            variant="article"
+            title="Is My Friend Toxic? The Real Reason Some Friendships Drain You"
+            href="/articles/is-my-friend-toxic"
+            imageUrl="https://images.unsplash.com/photo-1524508762098-fd966ffb6ef9?auto=format&fit=crop&w=800&q=80"
+            accentColor="bg-[#ffbc42]/30"
+            textColor="text-[#006ba6]"
+          />
             {/* ATTACHMENT ESSAY */}
             <div className="group bg-white rounded-[40px] overflow-hidden shadow-xl transition-all hover:-translate-y-3 flex flex-col border border-[#ced2dc]">
               <div className="h-56 bg-[#0D2C54] flex items-center justify-center p-10 text-center relative overflow-hidden">
