@@ -14,15 +14,21 @@ export default function ClarityHub() {
             Psychology-backed guides designed to help you decode patterns, spot red flags, and understand the science of your heart.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-16">
-          <Card 
-            variant="article"
-            title="Is My Friend Toxic? The Real Reason Some Friendships Drain You"
-            href="/articles/is-my-friend-toxic"
-            imageUrl="https://images.unsplash.com/photo-1524508762098-fd966ffb6ef9?auto=format&fit=crop&w=800&q=80"
-            accentColor="bg-[#ffbc42]/30"
-            textColor="text-[#006ba6]"
-          />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-16">
+            {/* FRIENDSHIP ESSAY */}
+            <div className="group bg-white rounded-[40px] overflow-hidden shadow-xl transition-all hover:-translate-y-3 flex flex-col border border-[#ced2dc]">
+              <div className="h-56 bg-[#ffbc42] flex items-center justify-center p-10 text-center relative overflow-hidden">
+                <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
+                <h3 className="text-3xl font-extrabold text-[#006ba6] relative z-10">Is My Friend Toxic?</h3>
+              </div>
+              <div className="p-10 text-left flex-grow flex flex-col">
+                <p className="text-[#2a2522]/80 text-lg mb-8 flex-grow">The real reason some friendships drain you—and how to spot the signs before it's too late.</p>
+                <Link href="/articles/is-my-friend-toxic" className="inline-block bg-[#006ba6] text-white px-8 py-4 rounded-full font-bold text-center hover:bg-[#005a8c] transition-colors shadow-md">
+                  Read Full Essay →
+                </Link>
+              </div>
+            </div>
+
             {/* ATTACHMENT ESSAY */}
             <div className="group bg-white rounded-[40px] overflow-hidden shadow-xl transition-all hover:-translate-y-3 flex flex-col border border-[#ced2dc]">
               <div className="h-56 bg-[#0D2C54] flex items-center justify-center p-10 text-center relative overflow-hidden">
