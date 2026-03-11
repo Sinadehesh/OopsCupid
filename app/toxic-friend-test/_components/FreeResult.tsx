@@ -2,6 +2,21 @@
 import React, { useState } from "react";
 import PremiumReport from "./PremiumReport";
 
+// Reusable Bar Component for the Dimensions
+function DimensionBar({ label, score, color }: { label: string, score: number, color: string }) {
+  return (
+    <div>
+      <div className="flex justify-between items-end mb-2">
+        <span className="font-extrabold text-[#0D2C54] text-sm md:text-base">{label}</span>
+        <span className="font-bold text-slate-500 text-sm">{score}%</span>
+      </div>
+      <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+        <div className={`h-full rounded-full transition-all duration-1000 ${color}`} style={{ width: `${score}%` }}></div>
+      </div>
+    </div>
+  );
+}
+
 export default function FreeResult({ data, rawAnswers }: { data: any, rawAnswers: Record<string, string> }) {
   const [isUnlocked, setIsUnlocked] = useState(false);
 
@@ -17,6 +32,7 @@ export default function FreeResult({ data, rawAnswers }: { data: any, rawAnswers
   return (
     <div className="w-full max-w-3xl mx-auto space-y-8 animate-in fade-in duration-700">
       
+      {/* Overview Card */}
       <div className="bg-white rounded-[24px] shadow-[0_12px_40px_rgba(13,44,84,0.06)] border border-[#0D2C54]/10 p-8 md:p-12 flex flex-col md:flex-row items-center gap-8">
         <div className="relative flex items-center justify-center w-32 h-32 shrink-0">
           <svg className="absolute w-full h-full transform -rotate-90">
@@ -46,12 +62,36 @@ export default function FreeResult({ data, rawAnswers }: { data: any, rawAnswers
         </div>
       </div>
 
+      {/* NEW: Dimension Breakdown Card */}
+      <div className="bg-white rounded-[24px] shadow-[0_12px_40px_rgba(13,44,84,0.06)] border border-[#0D2C54]/10 p-8 md:p-10">
+        <h3 className="text-xl md:text-2xl font-extrabold text-[#0D2C54] mb-2">Your Toxicity Dimensions</h3>
+        <p className="text-slate-500 font-medium mb-8 text-sm md:text-base">
+          Toxic friendships operate across multiple invisible layers. Here is your specific breakdown based on your answers:
+        </p>
+
+        <div className="space-y-6">
+          <DimensionBar label="Friendship Victimization (Direct Harm)" score={data.mods.victimization} color="bg-[#d81159]" />
+          <DimensionBar label="Relational Aggression (Social Harm)" score={data.mods.aggression} color="bg-[#ffbc42]" />
+          <DimensionBar label="Manipulation & Control" score={data.mods.manipulation} color="bg-[#8f2d56]" />
+          <DimensionBar label="Negative Quality (Low Support)" score={data.mods.quality} color="bg-[#00A6ED]" />
+          <DimensionBar label="Antisocial Influence (Recklessness)" score={data.mods.antisocial} color="bg-slate-800" />
+          
+          <div className="border-t border-slate-100 pt-6 mt-8 space-y-6">
+            <DimensionBar label="Your Vulnerability Factors" score={data.mods.vulnerability} color="bg-slate-400" />
+            <DimensionBar label="Emotional Harm Impact" score={data.mods.impact} color="bg-rose-400" />
+          </div>
+        </div>
+      </div>
+
+      {/* Premium Upsell Card - Updated text to reflect the new value prop */}
       <div className="bg-[#0f172a] rounded-[24px] shadow-2xl border border-slate-800 p-8 md:p-10 relative overflow-hidden text-center">
         <div className="absolute -top-20 -right-20 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
         <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-rose-500/10 rounded-full blur-3xl pointer-events-none"></div>
         <span className="inline-block bg-rose-500/20 text-rose-400 font-extrabold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">🔒 Premium Analysis Unlock</span>
-        <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-4">Unlock Your Full Friendship Profile</h3>
-        <p className="text-slate-300 text-lg mb-8 max-w-xl mx-auto">See your exact scores across 5 hidden dimensions. Discover your vulnerability modifiers, get a 10-step boundary plan, and access specific copy-paste scripts.</p>
+        <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-4">Unlock Your Full Action Plan</h3>
+        <p className="text-slate-300 text-lg mb-8 max-w-xl mx-auto">
+          You've seen your scores. Now see exactly what they mean. Unlock the <strong>distortion check</strong>, extract your <strong>top red flags</strong>, and get copy-paste <strong>boundary scripts</strong> tailored to your results.
+        </p>
         
         <button 
           onClick={() => setIsUnlocked(true)}
