@@ -43,7 +43,7 @@ export default function ToxicQuizEngine() {
 
   // Render Result State
   if (isFinished && resultsData) {
-    return <FreeResult data={resultsData} />;
+    return <FreeResult data={resultsData} answers={answers} />;
   }
 
   // Render Calculation Loading State
