@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { TOXIC_FRIEND_QUESTIONS, OPTIONS, Question } from "../_data/questions";
 import SafetyModal from "./SafetyModal";
+import FreeResult from "./FreeResult";
+import { calculateToxicScores } from "../_lib/scoring";
 
 const STORAGE_KEY = "oopscupid_toxic_friend_progress";
 
@@ -10,9 +12,12 @@ export default function ToxicQuizEngine() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showSafety, setShowSafety] = useState(false);
+  
   const [isFinished, setIsFinished] = useState(false);
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [resultsData, setResultsData] = useState<any>(null);
 
-  // Hydrate from localStorage (Save/Resume functionality)
+  // Hydrate from localStorage
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
@@ -27,31 +32,27 @@ export default function ToxicQuizEngine() {
     setMounted(true);
   }, []);
 
-  // Save to localStorage on every change
+  // Save on change
   useEffect(() => {
-    if (mounted) {
+    if (mounted && !isFinished) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({ answers, currentIndex }));
     }
-  }, [answers, currentIndex, mounted]);
+  }, [answers, currentIndex, mounted, isFinished]);
 
-  if (!mounted) return <div className="min-h-[400px] flex items-center justify-center">Loading Engine...</div>;
+  if (!mounted) return <div className="min-h-[400px] flex items-center justify-center text-slate-500">Loading Engine...</div>;
 
-  if (isFinished) {
+  // Render Result State
+  if (isFinished && resultsData) {
+    return <FreeResult data={resultsData} />;
+  }
+
+  // Render Calculation Loading State
+  if (isCalculating) {
     return (
-      <div className="w-full max-w-2xl mx-auto bg-white rounded-[24px] shadow-lg border border-slate-200 p-10 text-center animate-in fade-in zoom-in">
-        <h2 className="text-3xl font-extrabold text-[#0D2C54] mb-4">Assessment Complete</h2>
-        <p className="text-lg text-slate-600 mb-8">Your psychological profile has been recorded.</p>
-        <button 
-          onClick={() => {
-            localStorage.removeItem(STORAGE_KEY);
-            setAnswers({});
-            setCurrentIndex(0);
-            setIsFinished(false);
-          }}
-          className="bg-[#00A6ED] text-white font-bold py-3 px-8 rounded-xl hover:bg-[#008fcc] transition-all"
-        >
-          Reset Demo
-        </button>
+      <div className="w-full max-w-2xl mx-auto bg-white rounded-[24px] shadow-lg border border-slate-200 p-16 text-center animate-in fade-in zoom-in">
+        <div className="w-16 h-16 border-4 border-[#0D2C54]/20 border-t-[#00A6ED] rounded-full animate-spin mx-auto mb-6"></div>
+        <h2 className="text-2xl font-extrabold text-[#0D2C54]">Computing Diagnostics...</h2>
+        <p className="text-slate-500 mt-2">Analyzing multi-dimensional risk factors.</p>
       </div>
     );
   }
@@ -61,7 +62,8 @@ export default function ToxicQuizEngine() {
   const currentOptions = OPTIONS[question.responseType];
 
   const handleSelect = (option: string) => {
-    setAnswers(prev => ({ ...prev, [question.id]: option }));
+    const newAnswers = { ...answers, [question.id]: option };
+    setAnswers(newAnswers);
 
     // Hard Flag Safety Check
     if (question.hardFlag) {
@@ -73,9 +75,18 @@ export default function ToxicQuizEngine() {
       if (currentIndex < TOXIC_FRIEND_QUESTIONS.length - 1) {
         setCurrentIndex(prev => prev + 1);
       } else {
-        setIsFinished(true);
+        // Complete the test
+        setIsCalculating(true);
+        setTimeout(() => {
+          const res = calculateToxicScores(newAnswers);
+          setResultsData(res);
+          setIsCalculating(false);
+          setIsFinished(true);
+          // Optional: clear local storage if you want them to start over next time
+          // localStorage.removeItem(STORAGE_KEY);
+        }, 1500); // Faux calculation delay for UX impact
       }
-    }, 400);
+    }, 350);
   };
 
   const handleBack = () => {
