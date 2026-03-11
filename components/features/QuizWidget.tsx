@@ -341,10 +341,10 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const sectionName = q.subscale ? `${baseSectionName} • ${q.subscale}` : baseSectionName;
 
   return (
-    <div ref={topRef} className={`w-full max-w-3xl mx-auto ${colors.bg} rounded-[24px] ${colors.cardShadow} border ${colors.cardBorder} flex flex-col justify-center min-h-[450px] p-6 md:p-10`}>
+    <div ref={topRef} className={`w-full max-w-3xl mx-auto ${colors.bg} rounded-[24px] ${colors.cardShadow} border ${colors.cardBorder} flex flex-col justify-center min-h-[320px] p-5 md:p-6`}>
       
       {/* HEADER: Section Indicator & Progress */}
-      <div className="mb-10">
+      <div className="mb-5">
         <div className="flex justify-between items-end mb-4">
           <div>
             <span className={`text-[11px] font-extrabold uppercase tracking-widest ${colors.textSecondary} block mb-2`}>
@@ -367,7 +367,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
       {/* QUESTION & OPTIONS (Animated Container) */}
       <div className={`transition-all duration-250 ease-in-out transform ${isAnimating ? (slideDirection === 'forward' ? 'opacity-0 -translate-y-4 scale-[0.99]' : 'opacity-0 translate-y-4 scale-[0.99]') : 'opacity-100 translate-y-0 scale-100'}`}>
-        <h3 className={`text-2xl md:text-[28px] font-extrabold ${colors.textPrimary} mb-8 leading-snug text-left md:text-center`}>
+        <h3 className={`text-xl md:text-2xl font-extrabold ${colors.textPrimary} mb-5 leading-snug text-left md:text-center`}>
           {q.text}
         </h3>
 
@@ -382,7 +382,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
                 onClick={() => handleOptionClick(option)} 
                 disabled={isDisabled}
                 className={`
-                  w-full text-left p-4 md:p-[20px] rounded-[16px] border-[2px] font-bold text-base md:text-lg transition-all duration-200 flex items-center
+                  w-full text-left py-3 px-4 md:py-4 md:px-5 rounded-[12px] border-[2px] font-bold text-sm md:text-base transition-all duration-200 flex items-center
                   ${isSelected ? colors.optionSelected : colors.optionBorder}
                   ${!isDisabled && !isSelected ? colors.optionHover : ''}
                   ${isDisabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}

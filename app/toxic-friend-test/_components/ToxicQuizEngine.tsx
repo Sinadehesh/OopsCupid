@@ -88,7 +88,7 @@ export default function ToxicQuizEngine() {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto space-y-6 animate-in slide-in-from-bottom-4 duration-500 relative">
+    <div className="w-full max-w-2xl mx-auto space-y-4 animate-in slide-in-from-bottom-4 duration-500 relative">
       {showSafety && <SafetyModal onClose={() => setShowSafety(false)} />}
       
       {/* Header & Progress (Hidden from screen readers to avoid noise) */}
@@ -108,7 +108,7 @@ export default function ToxicQuizEngine() {
       </div>
 
       <div className="bg-white rounded-[24px] shadow-[0_12px_40px_rgba(13,44,84,0.06)] border border-[#0D2C54]/10 p-6 md:p-10 min-h-[350px] flex flex-col justify-center">
-        <h3 className="text-2xl md:text-[28px] font-extrabold text-[#0D2C54] mb-10 leading-snug" aria-live="polite">
+        <h3 className="text-xl md:text-2xl font-extrabold text-[#0D2C54] mb-5 leading-snug" aria-live="polite">
           {question.text}
         </h3>
         
@@ -122,7 +122,7 @@ export default function ToxicQuizEngine() {
                 role="radio"
                 aria-checked={isSelected}
                 onClick={() => handleSelect(opt)}
-                className={`w-full text-left p-4 md:p-5 min-h-[64px] rounded-[16px] border-[2px] font-bold text-lg transition-all duration-200 flex items-center focus:outline-none focus:ring-4 focus:ring-[#00A6ED]/30
+                className={`w-full text-left py-3 px-4 md:py-4 md:px-5 min-h-[50px] rounded-[12px] border-[2px] font-bold text-sm md:text-base transition-all duration-200 flex items-center focus:outline-none focus:ring-4 focus:ring-[#00A6ED]/30
                   ${isSelected 
                     ? "border-[#00A6ED] bg-[#00A6ED]/10 text-[#00A6ED] shadow-inner" 
                     : "border-[#0D2C54]/15 text-[#0D2C54] hover:border-[#00A6ED]/50 hover:bg-slate-50"
@@ -135,7 +135,7 @@ export default function ToxicQuizEngine() {
         </div>
       </div>
 
-      <div className="flex justify-between items-center mt-6">
+      <div className="flex justify-between items-center mt-4">
         <button 
           onClick={handleBack} 
           disabled={currentIndex === 0}
