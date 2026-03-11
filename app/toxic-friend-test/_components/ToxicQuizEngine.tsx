@@ -113,7 +113,7 @@ export default function ToxicQuizEngine() {
         </h3>
         
         {/* Accessible Radiogroup with enlarged touch targets */}
-        <div className="grid grid-cols-1 gap-3 w-full" role="radiogroup" aria-label="Answer options">
+        <div className="flex flex-wrap justify-center gap-2 md:gap-3 w-full" role="radiogroup" aria-label="Answer options">
           {currentOptions.map((opt) => {
             const isSelected = answers[question.id] === opt;
             return (
@@ -122,7 +122,7 @@ export default function ToxicQuizEngine() {
                 role="radio"
                 aria-checked={isSelected}
                 onClick={() => handleSelect(opt)}
-                className={`w-full text-left py-3 px-4 md:py-4 md:px-5 min-h-[50px] rounded-[12px] border-[2px] font-bold text-sm md:text-base transition-all duration-200 flex items-center focus:outline-none focus:ring-4 focus:ring-[#00A6ED]/30
+                className={`w-[30%] min-w-[100px] flex-grow text-center flex-col justify-center py-3 px-4 md:py-4 md:px-5 min-h-[50px] rounded-[12px] border-[2px] font-bold text-sm md:text-base transition-all duration-200 flex items-center focus:outline-none focus:ring-4 focus:ring-[#00A6ED]/30
                   ${isSelected 
                     ? "border-[#00A6ED] bg-[#00A6ED]/10 text-[#00A6ED] shadow-inner" 
                     : "border-[#0D2C54]/15 text-[#0D2C54] hover:border-[#00A6ED]/50 hover:bg-slate-50"

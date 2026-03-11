@@ -371,7 +371,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
           {q.text}
         </h3>
 
-        <div className="grid grid-cols-1 gap-3 md:gap-4 w-full">
+        <div className="flex flex-wrap justify-center gap-2 md:gap-3 w-full">
           {q.options.map((option: string, idx: number) => {
             const isSelected = selectedAnswer === option;
             const isDisabled = selectedAnswer !== null && !isSelected;
@@ -382,7 +382,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
                 onClick={() => handleOptionClick(option)} 
                 disabled={isDisabled}
                 className={`
-                  w-full text-left py-3 px-4 md:py-4 md:px-5 rounded-[12px] border-[2px] font-bold text-sm md:text-base transition-all duration-200 flex items-center
+                  w-[30%] min-w-[100px] flex-grow text-center flex-col justify-center py-3 px-4 md:py-4 md:px-5 rounded-[12px] border-[2px] font-bold text-sm md:text-base transition-all duration-200 flex items-center
                   ${isSelected ? colors.optionSelected : colors.optionBorder}
                   ${!isDisabled && !isSelected ? colors.optionHover : ''}
                   ${isDisabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}
@@ -395,7 +395,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
                     {isSelected && <div className="w-2 h-2 rounded-full bg-white shadow-sm" />}
                   </div>
                 )}
-                <span className="flex-1">{option}</span>
+                <span className="w-full text-center">{option}</span>
               </button>
             )
           })}

@@ -198,7 +198,7 @@ export default function ManipulationQuizWidget() {
         <h3 className={`text-2xl md:text-[28px] font-extrabold ${colors.textPrimary} mb-8 leading-snug text-left md:text-center`}>
           {currentQ.stem}
         </h3>
-        <div className="grid grid-cols-1 gap-3 md:gap-4 w-full">
+        <div className="flex flex-wrap justify-center gap-2 md:gap-3 w-full">
           {currentOptions.map((opt) => {
             const isSelected = selectedAnswer === opt.val;
             const isDisabled = selectedAnswer !== null && !isSelected;
@@ -208,7 +208,7 @@ export default function ManipulationQuizWidget() {
                 onClick={() => handleOptionClick(opt.val)} 
                 disabled={isDisabled}
                 className={`
-                  w-full text-left p-4 md:p-[20px] rounded-[16px] border-[2px] font-bold text-base md:text-lg transition-all duration-200 flex items-center bg-white
+                  w-[30%] min-w-[100px] flex-grow text-center flex-col justify-center p-4 md:p-[20px] rounded-[16px] border-[2px] font-bold text-base md:text-lg transition-all duration-200 flex items-center bg-white
                   ${isSelected ? colors.optionSelected : colors.optionBorder}
                   ${!isDisabled && !isSelected ? colors.optionHover : ''}
                   ${isDisabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}
@@ -218,7 +218,7 @@ export default function ManipulationQuizWidget() {
                 <div className={`shrink-0 w-[22px] h-[22px] rounded-full border-[2px] mr-4 flex items-center justify-center transition-all duration-200 ${isSelected ? colors.indicatorSelected : colors.indicatorUnselected}`}>
                   {isSelected && <div className="w-2 h-2 rounded-full bg-white shadow-sm" />}
                 </div>
-                <span className="flex-1">{opt.label}</span>
+                <span className="w-full text-center">{opt.label}</span>
               </button>
             )
           })}
