@@ -22,6 +22,10 @@ import AttractorMasterReport from "@/components/report/AttractorMasterReport";
 
 import { generatePartnerAttachmentProfile } from "@/lib/psychometrics/partner-attachment/scoring";
 import PartnerAttachmentReport from "@/components/report/PartnerAttachmentReport";
+import { infidelityQuestions } from "@/lib/psychometrics/infidelity/questions";
+import { generateInfidelityProfile } from "@/lib/psychometrics/infidelity/scoring";
+import InfidelityMasterReport from "@/components/report/InfidelityMasterReport";
+
 
 const legacyBanks: Record<string, Question[]> = {
   "is-he-manipulative": [
@@ -58,15 +62,17 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const isAttraction = quizName === "attraction-patterns";
   const isAttractor = quizName === "who-is-attracted-to-me";
   const isPartnerAttachment = quizName === "partners-attachment-style";
+  const isCheating = quizName === "is-he-cheating";
   
   // Apply the premium, high-contrast UI to all advanced tests
-  const isPremiumUI = isAttraction || isAttractor || isPartnerAttachment;
+  const isPremiumUI = isAttraction || isAttractor || isPartnerAttachment || isCheating;
 
   const activeQuestions = useMemo(() => {
     if (quizName === "attachment-style") return attachmentQuestions; 
     if (isAttraction) return attractionQuestions;
     if (isAttractor) return attractorQuestions; 
-    if (isPartnerAttachment) return partnerAttachmentQuestions; // Load the 60 partner diagnostic items
+    if (isPartnerAttachment) return partnerAttachmentQuestions;
+    if (isCheating) return infidelityQuestions; // Load the 60 partner diagnostic items
 
     return legacyBanks[quizName] || legacyBanks["default"];
   }, [quizName, isAttraction, isAttractor, isPartnerAttachment]);
@@ -86,6 +92,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       else if (isAttractor) colors = { ...colors, textPrimary: "text-[#3B1F2B]", textSecondary: "text-[#3B1F2B]/70", progressTrack: "bg-[#3B1F2B]/10", progressFill: "bg-[#F18F01]", optionBorder: "border-[#A23B72]/40", optionHover: "hover:border-[#A23B72] hover:bg-[#A23B72]/5", optionSelected: "border-[#3B1F2B] bg-[#A23B72]/10", btnPrimary: "bg-[#C73E1D] text-white", btnBack: "border-[#3B1F2B]/20 text-[#3B1F2B]", chipBg: "bg-[#3B1F2B]/10", chipText: "text-[#3B1F2B]" };
       // Navy Theme for Partner Diagnostic
       else if (isPartnerAttachment) colors = { ...colors, textPrimary: "text-[#0f172a]", textSecondary: "text-[#0f172a]/70", progressTrack: "bg-[#0f172a]/10", progressFill: "bg-[#e11d48]", optionBorder: "border-[#94a3b8]/40", optionHover: "hover:border-[#94a3b8] hover:bg-[#94a3b8]/5", optionSelected: "border-[#0f172a] bg-[#94a3b8]/10", btnPrimary: "bg-[#e11d48] text-white hover:bg-[#be123c]", btnBack: "border-[#0f172a]/20 text-[#0f172a]", chipBg: "bg-[#0f172a]/10", chipText: "text-[#0f172a]" };
+      else if (isCheating) colors = { ...colors, bg: "bg-[#0a0a0a]", cardBorder: "border-[#27272a]", cardShadow: "shadow-2xl shadow-red-900/10", textPrimary: "text-white", textSecondary: "text-gray-400", progressTrack: "bg-white/10", progressFill: "bg-[#ef4444]", optionBorder: "border-[#27272a]", optionHover: "hover:border-[#ef4444] hover:bg-[#ef4444]/10", optionSelected: "border-[#ef4444] bg-[#ef4444]/20", btnPrimary: "bg-[#ef4444] text-white hover:bg-[#dc2626]", btnBack: "border-white/20 text-white", chipBg: "bg-black/50 border border-[#ef4444]/30", chipText: "text-[#ef4444]" };
   } else if (isDarkTheme) {
       colors = { ...colors, bg: "bg-[#0f172a]", cardBorder: "border-slate-700", textPrimary: "text-slate-100", textSecondary: "text-slate-400", progressTrack: "bg-slate-100", progressFill: "bg-[#0496ff]", optionBorder: "border-slate-700", optionHover: "hover:border-[#b10f2e] hover:bg-[#b10f2e]/10", optionSelected: "border-[#0496ff] bg-[#0496ff]/10", btnPrimary: "bg-[#b10f2e] text-white", btnBack: "border-slate-700 text-slate-400 hover:bg-slate-800", chipBg: "bg-slate-800", chipText: "text-slate-300" };
   }
@@ -152,6 +159,9 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         // 🔥 ROUTE PARTNER DIAGNOSTIC
         const profile = { ...generatePartnerAttachmentProfile(answers), premiumUnlocked: false };
         setResultData({ profile, type: "partner" });
+      } else if (isCheating) {
+        const profile = { ...generateInfidelityProfile(answers), premiumUnlocked: false };
+        setResultData({ profile, type: "infidelity" });
       } else {
         const res = computeLegacyResult(answers, quizName);
         setResultData({ ...res, type: "legacy" });
@@ -166,7 +176,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     return (
       <div ref={topRef} className={`w-full text-center py-24 ${colors.bg} rounded-[24px] ${colors.cardShadow} border ${colors.cardBorder} animate-in fade-in`}>
         <div className="flex flex-col items-center justify-center">
-          <div className={`w-16 h-16 border-4 border-t-transparent ${isPartnerAttachment ? 'border-[#0f172a]' : isAttractor ? 'border-[#3B1F2B]' : isAttraction ? 'border-[#086788]' : 'border-[#00A6ED]'} rounded-full animate-spin mb-6`}></div>
+          <div className={`w-16 h-16 border-4 border-t-transparent ${isCheating ? 'border-[#ef4444]' : isPartnerAttachment ? 'border-[#0f172a]' : isAttractor ? 'border-[#3B1F2B]' : isAttraction ? 'border-[#086788]' : 'border-[#00A6ED]'} rounded-full animate-spin mb-6`}></div>
           <h3 className={`text-2xl font-extrabold ${colors.textPrimary} mb-2 animate-pulse`}>Analyzing Subject...</h3>
         </div>
       </div>
@@ -185,6 +195,9 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     }
     if (resultData.type === "partner") {
       return <div ref={topRef} className="w-full animate-in fade-in duration-500"><PartnerAttachmentReport profile={resultData.profile} /></div>;
+    }
+    if (resultData.type === "infidelity") {
+      return <div ref={topRef} className="w-full animate-in fade-in duration-500"><InfidelityMasterReport profile={resultData.profile} /></div>;
     }
 
     return (
