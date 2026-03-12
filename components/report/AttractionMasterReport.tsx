@@ -7,7 +7,6 @@ import { ShieldCheck, Lock, Target, Brain, AlertTriangle } from "lucide-react";
 export default function AttractionMasterReport({ profile }: any) {
   const isPremium = profile.premiumUnlocked;
 
-  // UI Palette
   const colors = {
     bgMain: "bg-[#f2f5fa]", 
     bgCard: "bg-white",     
@@ -17,29 +16,60 @@ export default function AttractionMasterReport({ profile }: any) {
   };
 
   const getSeverityColor = (score: number) => {
-    if (score >= 75) return "#DD1C1A"; // Red
-    if (score >= 50) return "#F0C808"; // Yellow
-    return "#06AED5"; // Blue
+    if (score >= 75) return "#DD1C1A"; 
+    if (score >= 50) return "#F0C808"; 
+    return "#06AED5"; 
   };
 
-  // 🧠 THE FREE PREDICTION DICTIONARY
-  // This gives them exactly what they asked for ("who am I attracted to") for free, hooking them in.
+  // 🧠 THE 12-ARCHETYPE DICTIONARY
   const ARCHETYPES: Record<string, { subtitle: string, prediction: string }> = {
     "The Dark Magnet": {
         subtitle: "You associate power and dominance with attraction.",
-        prediction: "You are statistically drawn to highly ambitious, dominant, and status-driven individuals who may exhibit 'Dark Triad' traits (narcissism, Machiavellianism). You are attracted to their confidence, decisiveness, and social gravity. However, while this provides intense excitement and a feeling of being 'protected' or elevated, it often comes with a high risk of emotional unavailability, power struggles, and feeling systematically undervalued once the honeymoon phase ends."
+        prediction: "You are statistically drawn to highly ambitious, dominant, and status-driven individuals who may exhibit 'Dark Triad' traits (narcissism, Machiavellianism). You are attracted to their confidence and social gravity. While this provides intense excitement and a feeling of being 'elevated', it often comes with a high risk of emotional unavailability, power struggles, and feeling systematically undervalued once the honeymoon phase ends."
+    },
+    "The Emotional Masochist": {
+        subtitle: "You subconsciously equate anxiety and overpowering behavior with love.",
+        prediction: "Your data indicates a dangerous attraction to partners who exert coercive dominance or high negative emotionality. Because of underlying attachment anxiety, your nervous system interprets being overpowered, controlled, or 'managed' as a sign of deep caring. This pattern puts you at severe risk of entering trauma bonds, where the very person causing your distress becomes the only person who can soothe it."
+    },
+    "The Ghost Hunter": {
+        subtitle: "You are irresistibly drawn to emotional unavailability.",
+        prediction: "You consistently pursue partners who prize absolute independence, detachment, and emotional distance. Paradoxically, you likely do this because deep down, true intimacy terrifies you. By choosing avoidant partners ('ghosts'), your nervous system stays safe from the threat of actual engulfment, allowing you to chase the fantasy of a relationship without the vulnerability of a real one."
+    },
+    "The Chaos Junkie": {
+        subtitle: "You crave adrenaline, unpredictability, and high-stakes romance.",
+        prediction: "You are deeply attracted to highly impulsive, uninhibited individuals (who may have elevated ADHD or substance risk). To you, a stable partner feels suffocating or boring. You want a co-pilot for the rollercoaster. The cost of this thrilling attraction is that you frequently end up managing their external crises, dealing with broken promises, and living in a state of perpetual instability."
     },
     "The Fixer": {
-        subtitle: "You associate caretaking and healing with love.",
-        prediction: "You are deeply attracted to 'wounded birds'—partners who show vulnerability, emotional instability, or a deep need to be saved or guided. Your high empathy makes you a natural caretaker, and you feel most secure and loved when you are needed. However, this pattern almost always leads to one-sided relationships, emotional burnout, and a dynamic where your own needs are perpetually put on hold to manage their crises."
+        subtitle: "You associate caretaking and healing with being loved.",
+        prediction: "You are deeply attracted to 'wounded birds'—partners who show vulnerability, emotional instability, or a deep need to be saved. Your high empathy makes you a natural caretaker, and you feel most secure when you are needed. However, this pattern almost always leads to one-sided relationships, emotional burnout, and a dynamic where your own needs are perpetually put on hold."
+    },
+    "The Power Submissive": {
+        subtitle: "You seek absolute protection through surrender.",
+        prediction: "You are attracted to highly dominant partners who promise to take the wheel and shield you from the world. You value feeling safe, guided, and relieved of decision-making. While this can look like traditional chivalry, your specific data shows a risk of outsourcing too much of your autonomy, making you vulnerable to partners who use 'protection' as an excuse for isolation and control."
     },
     "The Intensity Chaser": {
-        subtitle: "You associate anxiety and unpredictability with passion.",
-        prediction: "For you, peace often feels like boredom. You are drawn to partners who provide explosive physical chemistry, unpredictability, and severe emotional highs and lows. This is usually driven by an underlying anxious-avoidant 'push-pull' dynamic. You subconsciously seek out inconsistent partners because the anxiety of winning them over feels exactly like passionate love to your nervous system."
+        subtitle: "You associate extreme highs and lows with true passion.",
+        prediction: "For you, peace often feels like boredom. You are drawn to partners who provide explosive physical chemistry and unpredictability. This is usually driven by an underlying anxious-avoidant 'push-pull' dynamic. You subconsciously seek out inconsistent partners because the anxiety of winning them over feels exactly like passionate love to your nervous system."
+    },
+    "The Status Climber": {
+        subtitle: "You view romantic partnerships as a strategic alliance.",
+        prediction: "You unapologetically prioritize resources, social prestige, and financial success. You are attracted to what a partner represents to the world just as much as who they are in private. While this protects you from financial instability, your risk lies in overlooking severe emotional deficits, cruelty, or incompatibility just because the person looks perfect on paper."
+    },
+    "The Trophy Hunter": {
+        subtitle: "You prioritize extreme physical aesthetics and social validation.",
+        prediction: "Your attraction is heavily visually and socially motivated. You pursue partners who turn heads and elevate your own social standing. Because you weight physical chemistry and looks so heavily, you are highly likely to accidentally select partners with high narcissistic traits, trading deep emotional intimacy for superficial perfection."
+    },
+    "The Intellectual Sparring Partner": {
+        subtitle: "You require constant mental stimulation to feel a spark.",
+        prediction: "You are attracted to high openness, extreme intelligence, and verbal dexterity. If someone cannot keep up with you in a debate, your attraction instantly dies. While this ensures you are never bored in conversation, you often struggle to find partners because you mistake emotional warmth for intellectual simplicity, occasionally isolating yourself."
+    },
+    "The Traditionalist": {
+        subtitle: "You are attracted to shared values, family orientation, and predictable roles.",
+        prediction: "You highly value dependability, exact moral alignment, and a desire to build a home. You are drawn to partners who color inside the lines. This is a highly stable attraction pattern, but your risk is rigidity—you may stay in a lifeless or emotionally vacant relationship simply because the partner 'checks all the boxes' on your traditional life plan."
     },
     "The Safe-But-Bored Seeker": {
         subtitle: "You value stability, but may struggle with the quietness of secure love.",
-        prediction: "You consciously prioritize stability, kindness, and safety. You are attracted to dependable partners who provide a secure base and don't play emotional games. However, if your baseline leans secure, you might occasionally find 'healthy' feeling a bit too quiet or lacking in explosive chemistry. Your psychological challenge is learning to build excitement and passion within a safe container, rather than seeking out chaotic personalities to manufacture a spark."
+        prediction: "You consciously prioritize stability, kindness, and safety. You are attracted to dependable partners who provide a secure base. However, if your baseline leans secure, you might occasionally find 'healthy' feeling a bit too quiet. Your psychological challenge is learning to build excitement and passion within a safe container, rather than seeking out chaotic personalities to manufacture a spark."
     }
   };
 
@@ -87,7 +117,6 @@ export default function AttractionMasterReport({ profile }: any) {
   };
 
   return (
-    // FULL WIDTH CONTAINER UP TO 1400px
     <div className={`py-8 md:py-12 w-full ${colors.bgMain}`}>
       <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
         
@@ -112,7 +141,6 @@ export default function AttractionMasterReport({ profile }: any) {
         {/* WIDESCREEN FREE PREDICTION & GAUGE GRID */}
         <div className="grid w-full grid-cols-1 lg:grid-cols-3 gap-8 mb-16 items-stretch">
           
-          {/* THE FREE PREDICTION REVEAL (2/3 width) */}
           <div className={`lg:col-span-2 rounded-3xl border p-8 md:p-12 flex flex-col h-full ${colors.bgCard} ${colors.borderCard} shadow-lg`}>
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-12 rounded-full bg-[#086788]/10 flex items-center justify-center">
@@ -125,7 +153,6 @@ export default function AttractionMasterReport({ profile }: any) {
             </p>
           </div>
 
-          {/* RISK GAUGE (1/3 width) */}
           <div className={`lg:col-span-1 rounded-3xl border p-8 md:p-10 flex flex-col items-center justify-center ${colors.bgCard} ${colors.borderCard} shadow-lg text-center`}>
             <CircularScore 
               value={profile.riskIndex || 0} 
@@ -139,7 +166,6 @@ export default function AttractionMasterReport({ profile }: any) {
           </div>
         </div>
 
-        {/* CHARTS & LOCKED SECTIONS */}
         <h3 className={`text-2xl md:text-3xl font-extrabold ${colors.textPrimary} mb-8 border-b ${colors.borderCard} pb-3`}>
           Your Baseline Profile
         </h3>

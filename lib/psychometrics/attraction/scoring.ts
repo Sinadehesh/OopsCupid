@@ -35,15 +35,35 @@ export function generateAttractionProfile(answers: Record<string, string>) {
   const rawRisk = (pidRisk * 0.25) + (dtRisk * 0.20) + (attachRisk * 0.20) + (sympRisk * 0.15) + (bfRisk * 0.10) + (prefRiskScore * 0.10);
   const riskIndex = Math.min(100, Math.max(0, Math.round(rawRisk)));
 
-  // Much more aggressive Archetype triggering to ensure specific readings
-  let archetype = "The Safe-But-Bored Seeker";
+  // 12-ARCHETYPE DECISION TREE (Order matters: most extreme risk patterns trigger first)
+  let archetype = "The Safe-But-Bored Seeker"; // Fallback
   
-  if (dtRisk > 40 && (normalized["Status"] > 50 || normalized["Dominance"] > 50)) {
+  if (attachRisk > 60 && normalized["Dominance"] > 60 && normalized["NegativeAffect"] > 50) {
+    archetype = "The Emotional Masochist";
+  } else if (dtRisk > 40 && (normalized["Status"] > 60 || normalized["Dominance"] > 60)) {
     archetype = "The Dark Magnet";
-  } else if (normalized["Vulnerability"] > 50 && normalized["Agreeableness"] > 60) {
+  } else if (normalized["Avoidance"] > 50 && normalized["Independence"] > 60) {
+    archetype = "The Ghost Hunter";
+  } else if (normalized["Disinhibition"] > 50 && normalized["Excitement"] > 60) {
+    archetype = "The Chaos Junkie";
+  } else if (normalized["Dominance"] > 70 && normalized["Protection"] > 70) {
+    archetype = "The Power Submissive";
+  } else if (normalized["Vulnerability"] > 60 && normalized["Agreeableness"] > 60) {
     archetype = "The Fixer";
-  } else if (attachRisk > 50 || normalized["Chemistry"] > 60 || normalized["Excitement"] > 60) {
+  } else if (normalized["Chemistry"] > 70 && attachRisk > 50) {
     archetype = "The Intensity Chaser";
+  } else if (normalized["Resources"] > 70 && normalized["Status"] > 70) {
+    archetype = "The Status Climber";
+  } else if (normalized["Looks"] > 75 && dtRisk > 30) {
+    archetype = "The Trophy Hunter";
+  } else if (normalized["Intelligence"] > 75 && normalized["Openness"] > 60) {
+    archetype = "The Intellectual Sparring Partner";
+  } else if (normalized["Family"] > 70 && normalized["Values"] > 70) {
+    archetype = "The Traditionalist";
+  } else if (normalized["Chemistry"] > 65) {
+    archetype = "The Intensity Chaser"; 
+  } else if (normalized["Vulnerability"] > 50) {
+    archetype = "The Fixer"; 
   }
 
   return {
