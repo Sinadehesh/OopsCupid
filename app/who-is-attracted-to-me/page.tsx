@@ -34,7 +34,7 @@ export default function MagnetPatternsPage() {
       {/* OVERLAPPING QUIZ WIDGET */}
       <section className="max-w-3xl mx-auto px-6 md:px-10 -mt-24 relative z-10 mb-24">
         <div className="bg-white rounded-[24px] shadow-xl shadow-[#8e9aaf]/10 border-2 border-[#dee2ff] p-8 md:p-12">
-          <QuizWidget quizName="who-finds-me-attractive" />
+          <QuizWidget quizName="who-is-attracted-to-me" />
         </div>
       </section>
 
