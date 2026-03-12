@@ -28,7 +28,7 @@ export default function FriendsHub() {
 
       {/* 3-CARD GRID SECTION */}
       <section className="py-20 px-6">
-        <div className="w-full max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="w-full max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
           
           {/* Card 1: Friend Group Role (The New Tool) */}
           <Link href="/friend-group-role" className="group block h-full">
@@ -95,6 +95,29 @@ export default function FriendsHub() {
               </div>
             </div>
           </Link>
+
+          {/* Card 4: Are Your Friends Using You (The New Tool) */}
+          <Link href="/are-your-friends-using-you" className="group block h-full">
+            <div className="bg-white rounded-[32px] p-8 md:p-10 border border-[#0D2C54]/10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full flex flex-col relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#10b981]/10 rounded-bl-full -z-0 transition-transform group-hover:scale-110"></div>
+              
+              <div className="w-14 h-14 bg-[#10b981] rounded-2xl flex items-center justify-center mb-8 shadow-md z-10">
+                <span className="text-2xl">⚖️</span>
+              </div>
+              
+              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54] mb-4 z-10">
+                Are They Using You?
+              </h2>
+              <p className="text-[#0D2C54]/70 mb-8 leading-relaxed font-medium z-10 flex-grow">
+                Run a 108-point transactional audit on your circle. Measure emotional labor, financial drain, and reciprocity imbalances.
+              </p>
+              
+              <div className="flex items-center text-[#10b981] font-extrabold z-10 mt-auto uppercase text-sm tracking-wide">
+                Start Audit <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+              </div>
+            </div>
+          </Link>
+  
 
         </div>
       </section>
