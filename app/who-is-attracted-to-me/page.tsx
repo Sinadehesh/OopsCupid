@@ -13,14 +13,14 @@ export default function MagnetPatternsPage() {
       
       {/* HERO SECTION WITH BOHO PINK PALETTE */}
       <section className="relative bg-gradient-to-r from-[#cbc0d3] to-[#8e9aaf] pt-24 pb-40 px-6 md:px-10 lg:px-14 rounded-b-[3rem] text-white text-center shadow-md">
-        <div className="max-w-4xl mx-auto">
+        <div className="w-full max-w-[1400px] mx-auto">
           <span className="text-[#dee2ff] font-bold uppercase tracking-widest text-sm mb-4 block drop-shadow-sm">
             The Psychological Magnet Test
           </span>
           <h1 className="text-[40px] md:text-[56px] font-bold mb-6 leading-tight tracking-tight drop-shadow-sm">
             Who Finds Me Attractive?
           </h1>
-          <p className="text-[20px] md:text-[24px] font-medium mb-10 text-white/95 max-w-2xl mx-auto drop-shadow-sm">
+          <p className="text-[20px] md:text-[24px] font-medium mb-10 text-white/95 w-full max-w-[1400px] mx-auto drop-shadow-sm">
             People don't get attracted to you randomly. Find out which specific personality types are magnetically drawn to your exact energy, and the psychological “drug” you provide them.
           </p>
           <div className="flex justify-center items-center gap-6 text-sm md:text-base font-semibold text-white">
@@ -32,7 +32,7 @@ export default function MagnetPatternsPage() {
       </section>
 
       {/* OVERLAPPING QUIZ WIDGET */}
-      <section className="max-w-3xl mx-auto px-6 md:px-10 -mt-24 relative z-10 mb-24">
+      <section className="w-full max-w-[1400px] mx-auto px-6 md:px-10 -mt-24 relative z-10 mb-24">
         <div className="bg-white rounded-[24px] shadow-xl shadow-[#8e9aaf]/10 border-2 border-[#dee2ff] p-8 md:p-12">
           <QuizWidget quizName="who-is-attracted-to-me" />
         </div>
@@ -44,7 +44,7 @@ export default function MagnetPatternsPage() {
           <h2 className="text-[32px] md:text-[42px] font-bold text-[#334B63] mb-6">
             Why You Are Their Irresistible Magnet
           </h2>
-          <p className="text-xl text-[#5E6E79] max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-[#5E6E79] w-full max-w-[1400px] mx-auto leading-relaxed">
             Your personality broadcasts a specific emotional frequency. Their hidden issues light up when they sense your energy because you feel like the exact “missing piece” their nervous system has been craving.
           </p>
         </div>

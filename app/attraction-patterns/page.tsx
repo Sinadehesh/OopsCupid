@@ -14,14 +14,14 @@ export default function AttractionPatternsPage() {
       
       {/* HERO SECTION WITH NEW CUSTOM PALETTE */}
       <section className="relative bg-[#086788] pt-24 pb-40 px-6 md:px-10 lg:px-14 rounded-b-[3rem] text-white text-center shadow-lg">
-        <div className="max-w-4xl mx-auto">
+        <div className="w-full max-w-[1400px] mx-auto">
           <span className="text-[#F0C808] font-bold uppercase tracking-widest text-sm mb-4 block drop-shadow-sm">
             2026 Updated Clinical Edition
           </span>
           <h1 className="text-[40px] md:text-[56px] font-extrabold mb-6 leading-tight tracking-tight drop-shadow-sm text-[#FFF1D0]">
             The Ultimate "Who Am I Attracted To" Quiz
           </h1>
-          <p className="text-[20px] md:text-[24px] font-medium mb-10 text-[#FFF1D0]/90 max-w-2xl mx-auto drop-shadow-sm">
+          <p className="text-[20px] md:text-[24px] font-medium mb-10 text-[#FFF1D0]/90 w-full max-w-[1400px] mx-auto drop-shadow-sm">
             This isn't a generic "pick your favorite color" test. Discover exactly who your nervous system finds irresistible based on your hidden childhood wiring, dopamine responses, and emotional needs.
           </p>
           <div className="flex justify-center items-center gap-6 text-sm md:text-base font-semibold text-white">
@@ -33,7 +33,7 @@ export default function AttractionPatternsPage() {
       </section>
 
       {/* OVERLAPPING QUIZ WIDGET */}
-      <section className="w-full max-w-4xl mx-auto px-4 md:px-10 -mt-24 relative z-10 mb-24">
+      <section className="w-full w-full max-w-[1400px] mx-auto px-4 md:px-10 -mt-24 relative z-10 mb-24">
         <div className="bg-white rounded-[24px] shadow-xl border border-slate-100 p-4 md:p-8">
           <QuizWidget quizName="attraction-patterns" />
         </div>
@@ -45,7 +45,7 @@ export default function AttractionPatternsPage() {
           <h2 className="text-[32px] md:text-[42px] font-extrabold text-[#086788] mb-6">
             The Science of Relationship Magnets
           </h2>
-          <p className="text-xl text-[#086788]/80 max-w-3xl mx-auto leading-relaxed font-medium">
+          <p className="text-xl text-[#086788]/80 w-full max-w-[1400px] mx-auto leading-relaxed font-medium">
             Your attraction isn’t random. Your own hidden issues literally light up when you meet someone who matches a familiar emotional chemistry—even if it hurts later.
           </p>
         </div>
