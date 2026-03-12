@@ -53,23 +53,26 @@ const ecrBaseSingular = [
   "I worry that [TARGET] won't care about me as much as I care about them."
 ];
 
+// Contextual mapping: explains context on the very first question, then simplifies.
 const ecrDomainsConfig = [
-  { key: "general", text: "people I am close to", plural: true },
-  { key: "romantic", text: "my romantic partner", plural: false },
-  { key: "mother", text: "my mother (or mother-like figure)", plural: false },
-  { key: "father", text: "my father (or father-like figure)", plural: false },
-  { key: "work", text: "my colleagues/coworkers", plural: true }
+  { key: "general", text: "people I am close to", textFirst: "people I am close to", plural: true },
+  { key: "romantic", text: "my romantic partner", textFirst: "my romantic partner", plural: false },
+  { key: "mother", text: "my mother", textFirst: "my mother (or mother-like figure)", plural: false },
+  { key: "father", text: "my father", textFirst: "my father (or father-like figure)", plural: false },
+  { key: "work", text: "my coworkers", textFirst: "my coworkers", plural: true }
 ];
 
 const ecrQ: Question[] = [];
-ecrDomainsConfig.forEach(({ key, text, plural }) => {
+ecrDomainsConfig.forEach(({ key, text, textFirst, plural }) => {
   const base = plural ? ecrBasePlural : ecrBaseSingular;
   base.forEach((qText, i) => {
+    // Use the explicit explanation 'textFirst' only on the very first question (i === 0)
+    const targetText = i === 0 ? textFirst : text;
     ecrQ.push({
       id: `ecr_${key}_${i + 1}`,
       section: "ecr",
       subscale: key.charAt(0).toUpperCase() + key.slice(1),
-      text: qText.replace(/\[TARGET\]/g, text),
+      text: qText.replace(/\[TARGET\]/g, targetText),
       options: ["1 - Strongly Disagree", "2", "3", "4", "5", "6", "7 - Strongly Agree"]
     });
   });
@@ -184,7 +187,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
   const activeQuestions = useMemo(() => {
     if (quizName === "attachment-style") {
-      // THIS COMPILES EXACTLY TO THE 92 VERSION
       return [...demoQ, ...ecrQ, ...rsQ, ...dersQ, ...loveQ]; 
     }
     
