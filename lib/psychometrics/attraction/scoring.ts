@@ -1,162 +1,56 @@
-import { AttractionProfile, AttractionArchetype, ModuleScores } from "./types";
 import { attractionQuestions } from "./questions";
 
-// --- Helper Functions ---
-function normalize(raw: number, min: number, max: number): number {
-  return Math.max(0, Math.min(100, Math.round(((raw - min) / (max - min)) * 100)));
-}
+export function generateAttractionProfile(answers: Record<string, string>) {
+  const scores: Record<string, number> = {};
+  const counts: Record<string, number> = {};
 
-function getLevel(score: number): "Low" | "Moderate" | "High" | "Very High" {
-  if (score < 34) return "Low";
-  if (score < 67) return "Moderate";
-  if (score < 85) return "High";
-  return "Very High";
-}
+  attractionQuestions.forEach(q => {
+    if (!answers[q.id]) return;
+    
+    // Parse value from the string option (e.g., "3 - Agree" -> 3)
+    const match = answers[q.id].match(/^(\d+)/);
+    let val = match ? parseInt(match[1]) : 0;
+    
+    // Reverse score if needed
+    if (q.reverseScore) {
+      val = q.options.length - 1 - val;
+    }
 
-function scoreSubscale(answers: Record<string, string>, subscaleKey: string, minLimit: number, maxLimit: number): ModuleScores {
-  const items = attractionQuestions.filter(q => q.subscaleKey === subscaleKey);
-  let raw = 0;
-  
-  items.forEach(q => {
-    const ansRaw = parseInt(answers[q.id]?.split("-")[0]?.trim() || "3", 10);
-    raw += q.reverseScore ? (6 - ansRaw) : ansRaw; // Assuming 1-5 scale default logic
+    const key = q.subscaleKey;
+    scores[key] = (scores[key] || 0) + val;
+    counts[key] = (counts[key] || 0) + (q.options.length - 1);
   });
 
-  const normalized = normalize(raw, minLimit * items.length, maxLimit * items.length);
-  return { raw, normalized, level: getLevel(normalized) };
-}
+  const normalized: Record<string, number> = {};
+  for (const key in scores) {
+    normalized[key] = counts[key] > 0 ? Math.round((scores[key] / counts[key]) * 100) : 0;
+  }
 
-// --- Main Engine ---
-export function generateAttractionProfile(answers: Record<string, string>): AttractionProfile {
-  // 1. Score User Traits
-  const bigFive = {
-    extraversion: scoreSubscale(answers, "extraversion", 1, 5),
-    agreeableness: scoreSubscale(answers, "agreeableness", 1, 5),
-    conscientiousness: scoreSubscale(answers, "conscientiousness", 1, 5),
-    neuroticism: scoreSubscale(answers, "neuroticism", 1, 5),
-    openness: scoreSubscale(answers, "openness", 1, 5),
-  };
-
-  const attachmentRaw = {
-    anxiety: scoreSubscale(answers, "anxiety", 1, 5),
-    avoidance: scoreSubscale(answers, "avoidance", 1, 5),
-  };
+  // Calculate Risk Index based on prompt formula
+  const pidRisk = ((normalized["NegativeAffect"] || 0) + (normalized["Antagonism"] || 0) + (normalized["Disinhibition"] || 0)) / 3;
+  const dtRisk = ((normalized["Machiavellianism"] || 0) + (normalized["Narcissism"] || 0) + (normalized["Psychopathy"] || 0)) / 3;
+  const attachRisk = ((normalized["Anxiety"] || 0) + (normalized["Avoidance"] || 0)) / 2;
+  const sympRisk = ((normalized["Depression"] || 0) + (normalized["ADHD"] || 0) + (normalized["Substance"] || 0)) / 3;
   
-  let styleLabel = "Secure";
-  if (attachmentRaw.anxiety.normalized > 50 && attachmentRaw.avoidance.normalized > 50) styleLabel = "Fearful-Avoidant";
-  else if (attachmentRaw.anxiety.normalized > 50) styleLabel = "Anxious-Preoccupied";
-  else if (attachmentRaw.avoidance.normalized > 50) styleLabel = "Dismissive-Avoidant";
+  // High N, Low A, Low C risk
+  const bfRisk = ((normalized["Neuroticism"] || 0) + (100 - (normalized["Agreeableness"] || 100)) + (100 - (normalized["Conscientiousness"] || 100))) / 3;
+  
+  // Risky preferences (Excitement, Dominance, Vulnerability > Stability, Kindness)
+  const prefRiskScore = ((normalized["Excitement"] || 0) + (normalized["Dominance"] || 0) + (normalized["Vulnerability"] || 0)) / 3;
 
-  const attachment = { ...attachmentRaw, styleLabel };
+  const rawRisk = (pidRisk * 0.25) + (dtRisk * 0.20) + (attachRisk * 0.20) + (sympRisk * 0.15) + (bfRisk * 0.10) + (prefRiskScore * 0.10);
+  const riskIndex = Math.min(100, Math.max(0, Math.round(rawRisk)));
 
-  const maladaptive = {
-    negativeAffect: scoreSubscale(answers, "negativeAffect", 1, 5),
-    detachment: scoreSubscale(answers, "detachment", 1, 5),
-    antagonism: scoreSubscale(answers, "antagonism", 1, 5),
-    disinhibition: scoreSubscale(answers, "disinhibition", 1, 5),
-    psychoticism: scoreSubscale(answers, "psychoticism", 1, 5),
-  };
-
-  const darkTriad = {
-    machiavellianism: scoreSubscale(answers, "machiavellianism", 1, 5),
-    narcissism: scoreSubscale(answers, "narcissism", 1, 5),
-    psychopathy: scoreSubscale(answers, "psychopathy", 1, 5),
-  };
-
-  const symptoms = {
-    depression: scoreSubscale(answers, "depression", 1, 5),
-    anxiety: scoreSubscale(answers, "anxiety", 1, 5),
-    adhd: scoreSubscale(answers, "adhd", 1, 5),
-    substance: scoreSubscale(answers, "substance", 1, 5),
-  };
-
-  const preferences = {
-    loveStatus: scoreSubscale(answers, "loveStatus", 0, 3),
-    stabilityLooks: scoreSubscale(answers, "stabilityLooks", 0, 3),
-    intellectHome: scoreSubscale(answers, "intellectHome", 0, 3),
-    socialValues: scoreSubscale(answers, "socialValues", 0, 3),
-  };
-
-  // 2. Predict Partner Profile (Assortative Mating Logic)
-  // Scientific coefficients: Big Five (s≈0.2), Attachment (s≈0.4 w/ secure bias), DT (s≈0.5)
-  const predictedPartner = {
-    bigFive: {
-      extraversion: Math.round(bigFive.extraversion.normalized * 0.2 + 50 * 0.8),
-      agreeableness: Math.round(bigFive.agreeableness.normalized * 0.2 + 50 * 0.8),
-      conscientiousness: Math.round(bigFive.conscientiousness.normalized * 0.2 + 50 * 0.8),
-      neuroticism: Math.round(bigFive.neuroticism.normalized * 0.2 + 50 * 0.8),
-      openness: Math.round(bigFive.openness.normalized * 0.2 + 50 * 0.8),
-    },
-    attachment: {
-      anxiety: Math.round(attachment.anxiety.normalized * 0.7), // Secure bias
-      avoidance: Math.round(attachment.avoidance.normalized * 0.7), // Secure bias
-    },
-    darkTriad: Math.round(
-      (darkTriad.machiavellianism.normalized + darkTriad.narcissism.normalized + darkTriad.psychopathy.normalized) / 3 * 0.5 + 20 * 0.5
-    ),
-    symptomRisk: Math.round(
-      (symptoms.depression.normalized + symptoms.adhd.normalized + symptoms.substance.normalized) / 3 * 0.4 + 20 * 0.6
-    ),
-    description: "Based on assortative mating algorithms, your predicted partner profile reveals...",
-  };
-
-  // 3. Attraction Risk Index Calculation
-  const riskScore = Math.round(
-    ((maladaptive.negativeAffect.normalized + maladaptive.antagonism.normalized + maladaptive.disinhibition.normalized) / 3) * 0.25 +
-    ((darkTriad.machiavellianism.normalized + darkTriad.narcissism.normalized + darkTriad.psychopathy.normalized) / 3) * 0.20 +
-    ((attachment.anxiety.normalized + attachment.avoidance.normalized) / 2) * 0.20 +
-    ((symptoms.depression.normalized + symptoms.adhd.normalized + symptoms.substance.normalized) / 3) * 0.15 +
-    (bigFive.neuroticism.normalized) * 0.10 +
-    (preferences.socialValues.normalized) * 0.10 // High thrill-seeking
-  );
-
-  const riskIndex = {
-    score: riskScore,
-    band: riskScore < 25 ? "Low Risk" : riskScore < 50 ? "Moderate Risk" : riskScore < 75 ? "High Risk" : "Very High Risk" as any
-  };
-
-  // 4. Archetype Engine
-  const availableArchetypes = [
-    {
-      id: "intensity_chaser",
-      label: "The Intensity Chaser",
-      description: "You mistake anxiety and chaos for passion, often drawn to unpredictable partners.",
-      shadowPattern: "Attracting emotionally unavailable or volatile partners to recreate a familiar adrenaline loop.",
-      score: attachment.anxiety.normalized + maladaptive.negativeAffect.normalized + preferences.socialValues.normalized
-    },
-    {
-      id: "dark_magnet",
-      label: "The Dark Magnet",
-      description: "You are drawn to dominant, charismatic, and sometimes ruthless individuals.",
-      shadowPattern: "Ignoring red flags of narcissism or low empathy because you value status or excitement.",
-      score: darkTriad.narcissism.normalized + maladaptive.antagonism.normalized + preferences.loveStatus.normalized
-    },
-    {
-      id: "fixer",
-      label: "The Fixer",
-      description: "You seek out partners with deep wounds, hoping your love can heal them.",
-      shadowPattern: "Becoming a caretaker and sacrificing your own needs, leading to eventual burnout and resentment.",
-      score: bigFive.agreeableness.normalized + symptoms.depression.normalized + (100 - attachment.avoidance.normalized)
-    },
-    {
-      id: "safe_seeker",
-      label: "The Safe-But-Bored Seeker",
-      description: "You heavily prioritize stability, but sometimes sabotage it to find excitement.",
-      shadowPattern: "Finding secure love 'boring' and unconsciously picking fights to generate a spark.",
-      score: preferences.stabilityLooks.normalized + attachment.avoidance.normalized + bigFive.conscientiousness.normalized
-    }
-  ];
-
-  // Sort and pick top 2
-  availableArchetypes.sort((a, b) => b.score - a.score);
+  // Archetype Logic
+  let archetype = "The Safe-But-Bored Seeker";
+  if (dtRisk > 60 && normalized["Status"] > 60) archetype = "The Dark Magnet";
+  else if (normalized["Vulnerability"] > 60 && normalized["Agreeableness"] > 70) archetype = "The Fixer";
+  else if (attachRisk > 60 && normalized["Chemistry"] > 70) archetype = "The Intensity Chaser";
 
   return {
-    userTraits: { bigFive, attachment, maladaptive, darkTriad, symptoms, preferences },
-    predictedPartner,
-    archetypes: {
-      primary: availableArchetypes[0],
-      secondary: availableArchetypes[1],
-    },
-    riskIndex
+    riskIndex,
+    archetype,
+    normalizedScores: normalized,
+    premiumUnlocked: false // Set to false to trigger the Sunk Cost Paywall!
   };
 }
