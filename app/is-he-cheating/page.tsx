@@ -21,7 +21,7 @@ export default function QuizPage() {
                 &larr; Back to Relationship Red Flags Hub
             </Link>
         </div>
-        <QuizWidget quizName="Is He Cheating?" />
+        <QuizWidget quizName="is-he-cheating" />
       </div>
     </>
   );
