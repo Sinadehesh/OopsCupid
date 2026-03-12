@@ -11,7 +11,8 @@ import { DashboardGrid, MultiGaugeGrid } from "@/components/report/ScoreBars";
 import { attachmentQuestions, Question } from "@/lib/psychometrics/attachment/questions";
 import { attractionQuestions } from "@/lib/psychometrics/attraction/questions";
 import { attractorQuestions } from "@/lib/psychometrics/attractor/questions";
-import { partnerAttachmentQuestions } from "@/lib/psychometrics/partner-attachment/questions"; // NEW 60 ITEMS
+import { partnerAttachmentQuestions } from "@/lib/psychometrics/partner-attachment/questions";
+import { infidelityQuestions } from "@/lib/psychometrics/infidelity/questions";
 
 // EXTERNAL REPORT IMPORTS
 import { generateAttractionProfile } from "@/lib/psychometrics/attraction/scoring";
@@ -22,14 +23,9 @@ import AttractorMasterReport from "@/components/report/AttractorMasterReport";
 
 import { generatePartnerAttachmentProfile } from "@/lib/psychometrics/partner-attachment/scoring";
 import PartnerAttachmentReport from "@/components/report/PartnerAttachmentReport";
-import { infidelityQuestions } from "@/lib/psychometrics/infidelity/questions";
+
 import { generateInfidelityProfile } from "@/lib/psychometrics/infidelity/scoring";
 import InfidelityMasterReport from "@/components/report/InfidelityMasterReport";
-
-import { infidelityQuestions } from "@/lib/psychometrics/infidelity/questions";
-import { generateInfidelityProfile } from "@/lib/psychometrics/infidelity/scoring";
-import InfidelityMasterReport from "@/components/report/InfidelityMasterReport";
-
 
 const legacyBanks: Record<string, Question[]> = {
   "is-he-manipulative": [
@@ -67,7 +63,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const isAttractor = quizName === "who-is-attracted-to-me";
   const isPartnerAttachment = quizName === "partners-attachment-style";
   const isCheating = quizName === "is-he-cheating";
-  const isCheating = quizName === "is-he-cheating";
   
   // Apply the premium, high-contrast UI to all advanced tests
   const isPremiumUI = isAttraction || isAttractor || isPartnerAttachment || isCheating;
@@ -78,10 +73,9 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     if (isAttractor) return attractorQuestions; 
     if (isPartnerAttachment) return partnerAttachmentQuestions;
     if (isCheating) return infidelityQuestions;
-    if (isCheating) return infidelityQuestions; // Load the 60 partner diagnostic items
 
     return legacyBanks[quizName] || legacyBanks["default"];
-  }, [quizName, isAttraction, isAttractor, isPartnerAttachment]);
+  }, [quizName, isAttraction, isAttractor, isPartnerAttachment, isCheating]);
 
   const isFinished = currentIndex >= activeQuestions.length;
   const progress   = Math.round((currentIndex / activeQuestions.length) * 100);
@@ -92,13 +86,9 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   };
 
   if (isPremiumUI) {
-      // Teal Theme for Seekers
       if (isAttraction) colors = { ...colors, textPrimary: "text-[#086788]", textSecondary: "text-[#086788]/70", progressTrack: "bg-[#086788]/10", progressFill: "bg-[#F0C808]", optionBorder: "border-[#06AED5]/40", optionHover: "hover:border-[#06AED5] hover:bg-[#06AED5]/5", optionSelected: "border-[#086788] bg-[#06AED5]/10", btnPrimary: "bg-[#DD1C1A] text-white", btnBack: "border-[#086788]/20 text-[#086788]", chipBg: "bg-[#086788]/10", chipText: "text-[#086788]" };
-      // Purple Theme for Attractors
       else if (isAttractor) colors = { ...colors, textPrimary: "text-[#3B1F2B]", textSecondary: "text-[#3B1F2B]/70", progressTrack: "bg-[#3B1F2B]/10", progressFill: "bg-[#F18F01]", optionBorder: "border-[#A23B72]/40", optionHover: "hover:border-[#A23B72] hover:bg-[#A23B72]/5", optionSelected: "border-[#3B1F2B] bg-[#A23B72]/10", btnPrimary: "bg-[#C73E1D] text-white", btnBack: "border-[#3B1F2B]/20 text-[#3B1F2B]", chipBg: "bg-[#3B1F2B]/10", chipText: "text-[#3B1F2B]" };
-      // Navy Theme for Partner Diagnostic
       else if (isPartnerAttachment) colors = { ...colors, textPrimary: "text-[#0f172a]", textSecondary: "text-[#0f172a]/70", progressTrack: "bg-[#0f172a]/10", progressFill: "bg-[#e11d48]", optionBorder: "border-[#94a3b8]/40", optionHover: "hover:border-[#94a3b8] hover:bg-[#94a3b8]/5", optionSelected: "border-[#0f172a] bg-[#94a3b8]/10", btnPrimary: "bg-[#e11d48] text-white hover:bg-[#be123c]", btnBack: "border-[#0f172a]/20 text-[#0f172a]", chipBg: "bg-[#0f172a]/10", chipText: "text-[#0f172a]" };
-      else if (isCheating) colors = { ...colors, bg: "bg-[#0a0a0a]", cardBorder: "border-[#27272a]", cardShadow: "shadow-2xl shadow-red-900/10", textPrimary: "text-white", textSecondary: "text-gray-400", progressTrack: "bg-white/10", progressFill: "bg-[#ef4444]", optionBorder: "border-[#27272a]", optionHover: "hover:border-[#ef4444] hover:bg-[#ef4444]/10", optionSelected: "border-[#ef4444] bg-[#ef4444]/20", btnPrimary: "bg-[#ef4444] text-white hover:bg-[#dc2626]", btnBack: "border-white/20 text-white", chipBg: "bg-black/50 border border-[#ef4444]/30", chipText: "text-[#ef4444]" };
       else if (isCheating) colors = { ...colors, bg: "bg-[#0a0a0a]", cardBorder: "border-[#27272a]", cardShadow: "shadow-2xl shadow-red-900/10", textPrimary: "text-white", textSecondary: "text-gray-400", progressTrack: "bg-white/10", progressFill: "bg-[#ef4444]", optionBorder: "border-[#27272a]", optionHover: "hover:border-[#ef4444] hover:bg-[#ef4444]/10", optionSelected: "border-[#ef4444] bg-[#ef4444]/20", btnPrimary: "bg-[#ef4444] text-white hover:bg-[#dc2626]", btnBack: "border-white/20 text-white", chipBg: "bg-black/50 border border-[#ef4444]/30", chipText: "text-[#ef4444]" };
   } else if (isDarkTheme) {
       colors = { ...colors, bg: "bg-[#0f172a]", cardBorder: "border-slate-700", textPrimary: "text-slate-100", textSecondary: "text-slate-400", progressTrack: "bg-slate-100", progressFill: "bg-[#0496ff]", optionBorder: "border-slate-700", optionHover: "hover:border-[#b10f2e] hover:bg-[#b10f2e]/10", optionSelected: "border-[#0496ff] bg-[#0496ff]/10", btnPrimary: "bg-[#b10f2e] text-white", btnBack: "border-slate-700 text-slate-400 hover:bg-slate-800", chipBg: "bg-slate-800", chipText: "text-slate-300" };
@@ -123,7 +113,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
   const handleGodMode = () => {
     const fakeAnswers = { ...answers };
-    activeQuestions.forEach(q => {
+    activeQuestions.forEach((q: any) => {
       if (!fakeAnswers[q.id]) {
         fakeAnswers[q.id] = q.options[Math.floor(Math.random() * q.options.length)];
       }
@@ -163,12 +153,8 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         const profile = { ...generateAttractorProfile(answers), premiumUnlocked: false };
         setResultData({ profile, type: "attractor" });
       } else if (isPartnerAttachment) {
-        // 🔥 ROUTE PARTNER DIAGNOSTIC
         const profile = { ...generatePartnerAttachmentProfile(answers), premiumUnlocked: false };
         setResultData({ profile, type: "partner" });
-      } else if (isCheating) {
-        const profile = { ...generateInfidelityProfile(answers), premiumUnlocked: false };
-        setResultData({ profile, type: "infidelity" });
       } else if (isCheating) {
         const profile = { ...generateInfidelityProfile(answers), premiumUnlocked: false };
         setResultData({ profile, type: "infidelity" });
@@ -183,11 +169,12 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   };
 
   if (loading) {
+    const spinnerColorClass = isCheating ? 'border-[#ef4444]' : isPartnerAttachment ? 'border-[#0f172a]' : isAttractor ? 'border-[#3B1F2B]' : isAttraction ? 'border-[#086788]' : 'border-[#00A6ED]';
     return (
       <div ref={topRef} className={`w-full text-center py-24 ${colors.bg} rounded-[24px] ${colors.cardShadow} border ${colors.cardBorder} animate-in fade-in`}>
         <div className="flex flex-col items-center justify-center">
-          <div className={`w-16 h-16 border-4 border-t-transparent ${isCheating ? 'border-[#ef4444]' : isPartnerAttachment ? 'border-[#0f172a]' : isAttractor ? 'border-[#3B1F2B]' : isAttraction ? 'border-[#086788]' : 'border-[#00A6ED]'} rounded-full animate-spin mb-6`}></div>
-          <h3 className={`text-2xl font-extrabold ${colors.textPrimary} mb-2 animate-pulse`}>Analyzing Subject...</h3>
+          <div className={`w-16 h-16 border-4 border-t-transparent ${spinnerColorClass} rounded-full animate-spin mb-6`}></div>
+          <h3 className={`text-2xl font-extrabold ${colors.textPrimary} mb-2 animate-pulse`}>Analyzing Profile...</h3>
         </div>
       </div>
     );
@@ -209,9 +196,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     if (resultData.type === "infidelity") {
       return <div ref={topRef} className="w-full animate-in fade-in duration-500"><InfidelityMasterReport profile={resultData.profile} /></div>;
     }
-    if (resultData.type === "infidelity") {
-      return <div ref={topRef} className="w-full animate-in fade-in duration-500"><InfidelityMasterReport profile={resultData.profile} /></div>;
-    }
 
     return (
       <div ref={topRef} className={`rounded-[24px] ${colors.bg} text-left w-full max-w-3xl mx-auto ${colors.cardShadow} border ${colors.cardBorder} animate-in fade-in duration-500 p-6 md:p-10`}>
@@ -228,12 +212,12 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     return (
       <div ref={topRef} className={`w-full max-w-3xl mx-auto ${colors.bg} rounded-[24px] ${colors.cardShadow} border ${colors.cardBorder} text-center py-16 px-6 animate-in fade-in zoom-in`}>
         <div className={`w-24 h-24 mx-auto ${colors.progressTrack} rounded-full flex items-center justify-center mb-6`}>
-          <span className="text-4xl">🔬</span>
+          <span className="text-4xl">🧠</span>
         </div>
-        <h3 className={`text-3xl font-extrabold ${colors.textPrimary} mb-4`}>Diagnostic Complete</h3>
-        <p className={`text-lg mb-10 max-w-md mx-auto font-medium ${colors.textSecondary}`}>All behavioral data has been logged. We are ready to generate his clinical read.</p>
+        <h3 className={`text-3xl font-extrabold ${colors.textPrimary} mb-4`}>Assessment Complete</h3>
+        <p className={`text-lg mb-10 max-w-md mx-auto font-medium ${colors.textSecondary}`}>All data captured. We are ready to compile your specific psychological profile.</p>
         <button onClick={handleSubmit} className={`w-full max-w-sm mx-auto block ${colors.btnPrimary} font-extrabold py-4 rounded-[14px] transform hover:-translate-y-1 transition-all duration-300`}>
-          Reveal His Profile
+          Reveal Profile
         </button>
       </div>
     );
@@ -284,7 +268,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
           className={`text-sm font-extrabold flex items-center gap-2 px-5 py-2.5 rounded-[12px] border-[2px] transition-all ${currentIndex === 0 || isAnimating || selectedAnswer !== null ? 'opacity-0 pointer-events-none' : colors.btnBack}`}>
           <span>←</span> Back
         </button>
-        <button onClick={handleGodMode} type="button" title="Instantly jump to results" className="text-[10px] md:text-xs font-bold text-slate-400 hover:text-slate-600 transition-all border border-slate-200 hover:border-slate-300 rounded-lg px-3 py-1.5 ml-auto bg-white shadow-sm">
+        <button onClick={handleGodMode} type="button" title="Instantly jump to results" className={`text-[10px] md:text-xs font-bold transition-all border rounded-lg px-3 py-1.5 ml-auto shadow-sm ${isCheating ? 'text-gray-500 border-[#27272a] hover:text-[#ef4444] bg-[#171717]' : 'text-slate-400 hover:text-slate-600 border-slate-200 hover:border-slate-300 bg-white'}`}>
           ⚡ God Mode
         </button>
       </div>
