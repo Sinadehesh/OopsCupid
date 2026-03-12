@@ -80,7 +80,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const handleOptionClick = (option: string) => {
     if (isAnimating || selectedAnswer !== null) return; 
     setSelectedAnswer(option);
-    const q = activeQuestions[currentIndex];
+    const q = activeQuestions[currentIndex] as any;
     setAnswers(prev => ({ ...prev, [q.id]: option }));
     
     setTimeout(() => {
@@ -195,7 +195,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     );
   }
 
-  const q = activeQuestions[currentIndex];
+  const q = activeQuestions[currentIndex] as any;
   const baseSectionName = PHASE_LABELS[q.section || q.moduleKey || "default"] ?? q.section ?? q.moduleKey ?? "Assessment";
   const sectionName = q.subscaleKey || q.subscale ? `${baseSectionName} • ${q.subscaleKey || q.subscale}` : baseSectionName;
 
