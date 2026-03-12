@@ -28,25 +28,26 @@ export function generateFriendRoleProfile(answers: Record<string, string>) {
   // Helper function to safely get avg
   const getAvg = (k: string) => avg[k] || 3.0; // Default to neutral if missing
 
-  // 2. Apply Weighted Formulas for Archetypes
+  // 2. Expand to 12 Viral Archetypes using precise weighting
   const archScores = {
-    "The Leader": (getAvg("Social Leadership") * 0.40) + (getAvg("Attention & Spotlight") * 0.20) + (getAvg("Observational Insight") * 0.15) + (getAvg("Social Glue") * 0.15) + (getAvg("Adventure & Risk") * 0.10),
-    "The Therapist": (getAvg("Emotional Support") * 0.45) + (getAvg("Observational Insight") * 0.30) + (getAvg("Conflict Mediation") * 0.25),
-    "The Entertainer": (getAvg("Humor & Entertainment") * 0.50) + (getAvg("Attention & Spotlight") * 0.30) + (getAvg("Social Glue") * 0.20),
-    "The Adventurer": (getAvg("Adventure & Risk") * 0.55) + (getAvg("Humor & Entertainment") * 0.20) + (getAvg("Independence") * 0.15) + (getAvg("Attention & Spotlight") * 0.10),
-    "The Peacekeeper": (getAvg("Conflict Mediation") * 0.45) + (getAvg("Emotional Support") * 0.30) + (getAvg("Observational Insight") * 0.25),
-    "The Protector": (getAvg("Loyalty & Protection") * 0.50) + (getAvg("Social Leadership") * 0.20) + (getAvg("Observational Insight") * 0.20) + (getAvg("Emotional Support") * 0.10),
-    "The Connector": (getAvg("Social Glue") * 0.45) + (getAvg("Emotional Support") * 0.25) + (getAvg("Social Leadership") * 0.15) + (getAvg("Humor & Entertainment") * 0.15),
-    "The Lone Wolf": (getAvg("Independence") * 0.60) + (getAvg("Observational Insight") * 0.20) + ((6 - getAvg("Social Glue")) * 0.20)
+    "The Leader": (getAvg("Social Leadership") * 0.70) + (getAvg("Attention & Spotlight") * 0.30),
+    "The Therapist": (getAvg("Emotional Support") * 0.60) + (getAvg("Observational Insight") * 0.40),
+    "The Entertainer": (getAvg("Humor & Entertainment") * 0.60) + (getAvg("Attention & Spotlight") * 0.40),
+    "The Adventurer": (getAvg("Adventure & Risk") * 0.70) + (getAvg("Independence") * 0.30),
+    "The Peacekeeper": (getAvg("Conflict Mediation") * 0.60) + (getAvg("Emotional Support") * 0.40),
+    "The Protector": (getAvg("Loyalty & Protection") * 0.70) + (getAvg("Social Leadership") * 0.30),
+    "The Connector": (getAvg("Social Glue") * 0.70) + (getAvg("Emotional Support") * 0.30),
+    "The Wild Card": (getAvg("Humor & Entertainment") * 0.50) + (getAvg("Adventure & Risk") * 0.50),
+    "The Observer": (getAvg("Observational Insight") * 0.60) + ((6 - getAvg("Attention & Spotlight")) * 0.40),
+    "The Lone Wolf": (getAvg("Independence") * 0.60) + ((6 - getAvg("Social Glue")) * 0.40),
+    "The Chaos Friend": (getAvg("Adventure & Risk") * 0.50) + (getAvg("Humor & Entertainment") * 0.30) + ((6 - getAvg("Conflict Mediation")) * 0.20),
+    "The Overachiever": (getAvg("Social Leadership") * 0.60) + (getAvg("Independence") * 0.40)
   };
 
-  // 3. Determine the Winner & Check for Hybrid
+  // 3. Determine Primary and Secondary Roles
   let sortedArchetypes = Object.entries(archScores).sort((a, b) => b[1] - a[1]);
   let primaryArchetype = sortedArchetypes[0][0];
-  
-  if (sortedArchetypes[0][1] - sortedArchetypes[1][1] <= 0.20) {
-    primaryArchetype = `${sortedArchetypes[0][0]} / ${sortedArchetypes[1][0]}`;
-  }
+  let secondaryArchetype = sortedArchetypes[1][0];
 
   // Transform averages to 0-100 percentages for visual bar charts
   const normalized: Record<string, number> = {};
@@ -61,7 +62,9 @@ export function generateFriendRoleProfile(answers: Record<string, string>) {
     .map(t => ({ name: t[0], score: t[1] }));
 
   return {
-    archetype: primaryArchetype,
+    archetype: primaryArchetype, // Legacy hook for the Hero UI
+    primaryArchetype,
+    secondaryArchetype,
     topTraits,
     normalizedScores: normalized,
     premiumUnlocked: false
