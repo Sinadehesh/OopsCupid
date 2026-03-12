@@ -26,6 +26,10 @@ import PartnerAttachmentReport from "@/components/report/PartnerAttachmentReport
 
 import { generateInfidelityProfile } from "@/lib/psychometrics/infidelity/scoring";
 import InfidelityMasterReport from "@/components/report/InfidelityMasterReport";
+import { friendRoleQuestions } from "@/lib/psychometrics/friend-role/questions";
+import { generateFriendRoleProfile } from "@/lib/psychometrics/friend-role/scoring";
+import FriendRoleMasterReport from "@/components/report/FriendRoleMasterReport";
+
 
 const legacyBanks: Record<string, Question[]> = {
   "is-he-manipulative": [
@@ -63,9 +67,10 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const isAttractor = quizName === "who-is-attracted-to-me";
   const isPartnerAttachment = quizName === "partners-attachment-style";
   const isCheating = quizName === "is-he-cheating";
+  const isFriendRole = quizName === "friend-group-role";
   
   // Apply the premium, high-contrast UI to all advanced tests
-  const isPremiumUI = isAttraction || isAttractor || isPartnerAttachment || isCheating;
+  const isPremiumUI = isAttraction || isAttractor || isPartnerAttachment || isCheating || isFriendRole;
 
   const activeQuestions = useMemo(() => {
     if (quizName === "attachment-style") return attachmentQuestions; 
@@ -73,6 +78,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     if (isAttractor) return attractorQuestions; 
     if (isPartnerAttachment) return partnerAttachmentQuestions;
     if (isCheating) return infidelityQuestions;
+    if (isFriendRole) return friendRoleQuestions;
 
     return legacyBanks[quizName] || legacyBanks["default"];
   }, [quizName, isAttraction, isAttractor, isPartnerAttachment, isCheating]);
@@ -158,6 +164,9 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       } else if (isCheating) {
         const profile = { ...generateInfidelityProfile(answers), premiumUnlocked: false };
         setResultData({ profile, type: "infidelity" });
+      } else if (isFriendRole) {
+        const profile = { ...generateFriendRoleProfile(answers), premiumUnlocked: false };
+        setResultData({ profile, type: "friendrole" });
       } else {
         const res = computeLegacyResult(answers, quizName);
         setResultData({ ...res, type: "legacy" });
@@ -195,6 +204,9 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     }
     if (resultData.type === "infidelity") {
       return <div ref={topRef} className="w-full animate-in fade-in duration-500"><InfidelityMasterReport profile={resultData.profile} /></div>;
+    }
+    if (resultData.type === "friendrole") {
+      return <div ref={topRef} className="w-full animate-in fade-in duration-500"><FriendRoleMasterReport profile={resultData.profile} /></div>;
     }
 
     return (
