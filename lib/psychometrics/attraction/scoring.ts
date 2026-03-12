@@ -1,3 +1,11 @@
+/**
+ * 🔒 SECURE VAULT: ATTRACTION SCORING ENGINE
+ * * WARNING: DO NOT MODIFY THIS SCORING LOGIC.
+ * * This file contains the precise algorithms for calculating the
+ * Attraction Risk Index and the strict 12-Archetype decision tree.
+ * Altering these thresholds will break the resulting psychological profiles.
+ */
+
 import { attractionQuestions } from "./questions";
 
 export function generateAttractionProfile(answers: Record<string, string>) {

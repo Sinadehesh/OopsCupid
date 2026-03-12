@@ -1,3 +1,16 @@
+/**
+ * 🔒 SECURE VAULT: ATTRACTION PATTERNS BATTERY (78 ITEMS)
+ * * WARNING: DO NOT MODIFY THIS FILE OR REMOVE ITEMS.
+ * * This is the strict clinical battery consisting of:
+ * - Module A: Big Five (15 items)
+ * - Module B: Attachment (12 items)
+ * - Module C: PID-5 Maladaptive Traits (15 items)
+ * - Module D: Dark Triad (9 items)
+ * - Module E: Symptom Screens (12 items)
+ * - Module F: Explicit Preferences (15 items)
+ * TOTAL: 78 Questions
+ */
+
 export type Question = {
   id: string;
   moduleKey: string;
