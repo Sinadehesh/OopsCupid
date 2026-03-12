@@ -134,7 +134,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         const profile = generatePsychologicalProfile(answers, hasChildren);
         setResultData({ profile, demographics: { isSingle, gender, hasChildren }, type: "attachment" });
       } else if (isAttraction) {
-        const profile = generateAttractionProfile(answers);
+        const profile = { ...generateAttractionProfile(answers), premiumUnlocked: false };
         setResultData({ profile, type: "attraction" });
       } else {
         const res = computeLegacyResult(answers, quizName);

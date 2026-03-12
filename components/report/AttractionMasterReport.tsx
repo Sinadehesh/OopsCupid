@@ -1,132 +1,148 @@
 import React from "react";
-import SharePrintButtons from "@/components/ui/SharePrintButtons";
-import { AttractionProfile } from "@/lib/psychometrics/attraction/types";
-import { ScoreBar } from "./ScoreBars";
-import LockedInsightCard from "./LockedInsightCard";
+import { DashboardGrid } from "./ScoreBars";
 import UnlockBanner from "./UnlockBanner";
-import CircularScore from "./CircularScore";
-import { ShieldCheck, ArrowRight, Magnet } from "lucide-react";
+import { ShieldCheck, Lock } from "lucide-react";
 
-interface AttractionMasterReportProps {
-  profile: AttractionProfile;
-  isDarkTheme?: boolean;
-}
+export default function AttractionMasterReport({ profile, isDarkTheme = false }: any) {
+  const isPremium = profile.premiumUnlocked || false;
 
-export default function AttractionMasterReport({ profile, isDarkTheme = false }: AttractionMasterReportProps) {
-  const dummyBlurText = "This section contains a deep clinical analysis of your psychological patterns. It explains exactly how your nervous system reacts to specific triggers, the childhood origins of these patterns, and the subconscious mechanisms driving your behavior today. Unlocking this reveals the exact step-by-step strategies needed to rewire your responses and break the cycle.";
+  // Modern, high-readability palette with dynamic action color
+  const colors = {
+    bgMain: "bg-transparent",
+    bgCard: "bg-white",     
+    borderCard: "border-[#ced2dc]", 
+    textPrimary: "text-[#086788]",  
+    textSecondary: "text-[#086788]/70",
+    accent: "#DD1C1A"
+  };
 
-  const tH3 = isDarkTheme ? "text-slate-100" : "text-slate-900";
-  const tText = isDarkTheme ? "text-slate-300" : "text-slate-600";
-  const cardClass = isDarkTheme ? "bg-slate-800 border-slate-700 shadow-sm" : "bg-white border-slate-200 shadow-sm";
+  const getSeverityColor = (score: number) => {
+    if (score >= 75) return "#DD1C1A"; // High Risk (Red)
+    if (score >= 50) return "#F0C808"; // Moderate Risk (Yellow)
+    return "#06AED5"; // Baseline (Blue)
+  };
+
+  // Custom Locked Card Component
+  const CustomLockedCard = ({ title, teaser }: { title: string, teaser: string }) => {
+    if (isPremium) {
+      return (
+        <div className={`rounded-[24px] border p-8 md:p-10 flex flex-col h-full ${colors.bgCard} ${colors.borderCard} shadow-sm`}>
+          <h4 className={`text-xs font-bold uppercase tracking-widest text-[#DD1C1A] mb-4 flex items-center gap-2`}>
+             Premium Insight Unlocked
+          </h4>
+          <h3 className={`text-2xl font-extrabold ${colors.textPrimary} mb-4`}>{title}</h3>
+          <p className={`${colors.textSecondary} leading-relaxed`}>
+            This premium section contains your personalized deep-dive analysis based on your unique combination of Big Five traits, Attachment patterns, and explicit mate preferences.
+          </p>
+        </div>
+      );
+    }
+
+    return (
+      <div className={`relative rounded-[24px] border p-8 md:p-10 flex flex-col h-full overflow-hidden ${colors.bgCard} ${colors.borderCard} group shadow-sm`}>
+        <div className="filter blur-[6px] opacity-40 select-none">
+          <h3 className={`text-2xl font-extrabold ${colors.textPrimary} mb-4`}>{title}</h3>
+          <p className={`${colors.textSecondary} leading-relaxed mb-4`}>
+            This premium section contains your personalized deep-dive analysis based on your unique combination of Big Five traits, Attachment patterns, and explicit mate preferences.
+          </p>
+          <div className="w-full h-4 bg-[#ced2dc] rounded mb-2"></div>
+          <div className="w-3/4 h-4 bg-[#ced2dc] rounded mb-2"></div>
+          <div className="w-5/6 h-4 bg-[#ced2dc] rounded"></div>
+        </div>
+        
+        <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-white/80 backdrop-blur-sm">
+          <div className="w-14 h-14 bg-[#DD1C1A] rounded-full flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform">
+            <Lock className="w-6 h-6 text-white" />
+          </div>
+          <h4 className={`text-xl font-extrabold ${colors.textPrimary} mb-2`}>{title}</h4>
+          <p className={`text-sm ${colors.textSecondary} mb-6 max-w-sm`}>{teaser}</p>
+          <button className={`px-6 py-3 rounded-full font-bold text-sm bg-[#DD1C1A] text-white shadow-lg hover:bg-[#C11715] transition-colors`}>
+            Unlock Full Analysis
+          </button>
+        </div>
+      </div>
+    );
+  };
 
   return (
-    <div className={`min-h-screen ${isDarkTheme ? 'bg-[#0f172a]' : 'bg-[#fafafa]'} py-12 w-full`}>
-      <div className="w-full max-w-6xl mx-auto px-6 md:px-10 lg:px-12 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
+    <div className="py-6 w-full max-w-5xl mx-auto space-y-12">
+      
+      {/* HERO SECTION */}
+      <div className="bg-[#086788] text-white rounded-[32px] p-10 md:p-12 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-10">
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
         
-        {/* HERO SECTION */}
-        <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-16 items-stretch">
-          <div className={`rounded-3xl border p-10 md:p-12 flex flex-col justify-center ${cardClass}`}>
-            <div className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold tracking-widest mb-8 w-fit ${isDarkTheme ? 'bg-rose-500/10 border-rose-500/30 text-rose-400' : 'bg-rose-50 border-rose-100 text-rose-700'}`}>
-              <Magnet className="w-4 h-4" />
-              YOUR ATTRACTION BLUEPRINT
-            </div>
-            
-            <h4 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-2">Primary Archetype</h4>
-            <h2 className={`text-4xl md:text-5xl font-extrabold leading-none tracking-tighter mb-6 ${tH3}`}>
-              {profile.archetypes.primary.label}
-            </h2>
-            
-            <p className={`text-[17px] leading-relaxed mb-10 ${tText}`}>
-              {profile.archetypes.primary.description}
-            </p>
-            
-            <div className={`mt-auto p-6 rounded-[16px] border ${isDarkTheme ? 'bg-slate-900/50 border-slate-700' : 'bg-slate-50/50 border-slate-100'}`}>
-              <h5 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-2">The Shadow Pattern</h5>
-              <p className={`text-sm md:text-base font-medium leading-relaxed ${tText}`}>
-                {profile.archetypes.primary.shadowPattern}
-              </p>
-            </div>
+        <div className="relative z-10 flex-1">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest mb-6 w-fit bg-white/10 border border-white/20">
+            <ShieldCheck className="w-4 h-4 text-[#F0C808]" />
+            CLINICAL ATTRACTION MAP
           </div>
-
-          {/* RISK INDEX & OVERVIEW */}
-          <div className={`rounded-3xl border p-10 md:p-12 flex flex-col items-center justify-center text-center ${cardClass}`}>
-            <h3 className={`text-2xl font-extrabold mb-8 ${tH3}`}>Attraction Risk Index</h3>
-            <CircularScore 
-              title="Risk Score" 
-              value={profile.riskIndex.score} 
-              max={100} 
-              subtitle={profile.riskIndex.band} 
-              color={profile.riskIndex.score > 50 ? "#F6511D" : (profile.riskIndex.score > 25 ? "#FFB400" : "#00A6ED")} 
-              isDarkTheme={isDarkTheme} 
-            />
-            <p className={`mt-8 text-base font-medium leading-relaxed ${tText} max-w-sm`}>
-              This index measures the statistical probability that your psychological traits will draw you toward emotionally turbulent, unavailable, or high-conflict partners.
-            </p>
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight tracking-tight">Your Attraction Archetype</h1>
+          <p className="text-lg opacity-80 mb-6 max-w-xl leading-relaxed">
+            Based on your personality, attachment, and explicit preferences, we have mapped the exact psychological profile of the people you are drawn to.
+          </p>
+          <div className="inline-block bg-[#06AED5]/20 border border-[#06AED5]/40 px-6 py-3 rounded-xl backdrop-blur-sm">
+            <p className="text-xs uppercase tracking-wider opacity-70 mb-1 font-bold">Primary Archetype</p>
+            <p className="text-2xl font-bold text-white">{profile.archetype || "Analyzing..."}</p>
           </div>
         </div>
-
-        <h3 className={`text-2xl md:text-3xl font-extrabold ${tH3} mt-16 mb-8 border-b ${isDarkTheme ? 'border-slate-800' : 'border-slate-200'} pb-3`}>
-          Your Trait Profile
-        </h3>
-        
-        <div className="space-y-12 md:space-y-16 w-full">
-          
-          {/* BIG FIVE TRAITS vs PREDICTED PARTNER PROFILE */}
-          <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
-            <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full ${cardClass}`}>
-              <h3 className={`text-xl font-bold mb-6 ${tH3}`}>Normative Personality (Big Five)</h3>
-              <div className="space-y-5 flex-grow">
-                <ScoreBar label="Extraversion" value={profile.userTraits.bigFive.extraversion.normalized} color="bg-[#00A6ED]" />
-                <ScoreBar label="Agreeableness" value={profile.userTraits.bigFive.agreeableness.normalized} color="bg-[#00A6ED]" />
-                <ScoreBar label="Conscientiousness" value={profile.userTraits.bigFive.conscientiousness.normalized} color="bg-[#00A6ED]" />
-                <ScoreBar label="Neuroticism" value={profile.userTraits.bigFive.neuroticism.normalized} color="bg-[#F6511D]" />
-                <ScoreBar label="Openness" value={profile.userTraits.bigFive.openness.normalized} color="bg-[#00A6ED]" />
-              </div>
-            </div>
-            
-            {/* LOCKED: PREDICTED PARTNER PROFILE */}
-            <LockedInsightCard 
-              title="Predicted Partner Profile" 
-              teaser="Based on assortative mating algorithms, discover the exact personality and attachment traits you are statistically guaranteed to attract." 
-              blurredBody={dummyBlurText}
-              isDarkTheme={isDarkTheme}
-            />
-          </div>
-
-          {/* ATTACHMENT & MALADAPTIVE TRAITS vs DARK TRIAD ANALYSIS */}
-          <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
-            <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full ${cardClass}`}>
-              <h3 className={`text-xl font-bold mb-6 ${tH3}`}>Attachment & Core Needs</h3>
-              <div className="space-y-5 mb-8">
-                <ScoreBar label="Attachment Anxiety" value={profile.userTraits.attachment.anxiety.normalized} color="bg-[#FFB400]" />
-                <ScoreBar label="Attachment Avoidance" value={profile.userTraits.attachment.avoidance.normalized} color="bg-[#FFB400]" />
-              </div>
-              <h3 className={`text-xl font-bold mb-6 mt-4 ${tH3}`}>Maladaptive Traits (PID-5)</h3>
-              <div className="space-y-5">
-                <ScoreBar label="Negative Affectivity" value={profile.userTraits.maladaptive.negativeAffect.normalized} color="bg-[#a855f7]" />
-                <ScoreBar label="Detachment" value={profile.userTraits.maladaptive.detachment.normalized} color="bg-[#a855f7]" />
-                <ScoreBar label="Antagonism" value={profile.userTraits.maladaptive.antagonism.normalized} color="bg-[#a855f7]" />
-              </div>
-            </div>
-            
-            {/* LOCKED: DARK TRIAD ANALYSIS */}
-            <LockedInsightCard 
-              title="Dark Triad Compatibility" 
-              teaser="See your vulnerability to Machiavellian, Narcissistic, and Psychopathic partners, and why your nervous system might confuse danger with chemistry." 
-              blurredBody={dummyBlurText}
-              isDarkTheme={isDarkTheme}
-            />
-          </div>
-
-        </div>
-
-        {/* UPSELL BANNER & FOOTER */}
-        <div className="mt-16">
-          <UnlockBanner />
-          <SharePrintButtons />
-        </div>
-
       </div>
+
+      {/* CORE METRICS DASHBOARD (FREE) */}
+      <div className="space-y-6">
+        <h3 className={`text-2xl md:text-3xl font-extrabold ${colors.textPrimary} border-b ${colors.borderCard} pb-3`}>
+          Your Baseline Psychology
+        </h3>
+        <p className={`${colors.textSecondary} max-w-3xl leading-relaxed`}>
+          Your attraction patterns are a reflection of your own psychological baseline. Before we predict your partner, we measure you.
+        </p>
+        
+        <DashboardGrid 
+          healthScore={100 - profile.riskIndex} 
+          gaugeScore={profile.riskIndex} 
+          gaugeLabel="Attraction Risk Index" 
+        />
+      </div>
+
+      {/* PREDICTED PARTNER PROFILE (LOCKED CONTENT) */}
+      <div className="space-y-6 pt-8">
+        <h3 className={`text-2xl md:text-3xl font-extrabold ${colors.textPrimary} border-b ${colors.borderCard} pb-3`}>
+          Predicted Partner Trait Profile
+        </h3>
+        <p className={`${colors.textSecondary} max-w-3xl leading-relaxed`}>
+          Based on scientific data regarding assortative mating (how similar traits cluster) and your explicit values, this is the exact behavioral profile you are statistically likely to pursue.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <CustomLockedCard 
+            title="The Partner Profile" 
+            teaser="Unlock your report to see the Big Five, Attachment, and Dark Triad breakdown of the partners you keep choosing." 
+          />
+          <CustomLockedCard 
+            title="Your Attraction Magnets" 
+            teaser="Discover the specific traits you unknowingly over-value, and how they expose you to relationship risk." 
+          />
+        </div>
+      </div>
+
+      {/* NARRATIVE & BREAK THE PATTERN (LOCKED) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8">
+        <CustomLockedCard 
+          title="The Psychological Narrative" 
+          teaser="Read the full story of why your nervous system considers this specific archetype to be 'safe' or 'exciting'." 
+        />
+        <CustomLockedCard 
+          title="Break The Pattern" 
+          teaser="Concrete, clinical levers you can pull to re-wire your attraction away from toxic traits and toward stability." 
+        />
+      </div>
+
+      {/* UPSELL BANNER */}
+      {!isPremium && (
+        <div className="pt-12">
+          <UnlockBanner />
+        </div>
+      )}
+
     </div>
   );
 }
