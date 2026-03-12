@@ -166,7 +166,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     return (
       <div ref={topRef} className={`w-full text-center py-24 ${colors.bg} rounded-[24px] ${colors.cardShadow} border ${colors.cardBorder} animate-in fade-in`}>
         <div className="flex flex-col items-center justify-center">
-          <div className={`w-16 h-16 border-4 border-t-transparent border-[${colors.accentNavy || '#00A6ED'}] rounded-full animate-spin mb-6`}></div>
+          <div className={`w-16 h-16 border-4 border-t-transparent ${isPartnerAttachment ? 'border-[#0f172a]' : isAttractor ? 'border-[#3B1F2B]' : isAttraction ? 'border-[#086788]' : 'border-[#00A6ED]'} rounded-full animate-spin mb-6`}></div>
           <h3 className={`text-2xl font-extrabold ${colors.textPrimary} mb-2 animate-pulse`}>Analyzing Subject...</h3>
         </div>
       </div>
