@@ -29,8 +29,7 @@ export function generateAttractorProfile(answers: Record<string, string>) {
     normalized[key] = counts[key] > 0 ? Math.round((scores[key] / counts[key]) * 100) : 0;
   }
 
-  // CALCULATE INBOUND VULNERABILITY INDEX (Likelihood of attracting toxic partners)
-  // If you signal extreme wealth, submission, innocence, high anxiety, or chaos, you draw predators.
+  // CALCULATE INBOUND VULNERABILITY INDEX
   const preyRisk = ((normalized["Anxiety"] || 0) + (normalized["Agreeableness"] || 0) + (normalized["Innocence"] || 0) + (normalized["Submissiveness"] || 0) + (normalized["Victimhood"] || 0)) / 5;
   const chaosRisk = ((normalized["Disinhibition"] || 0) + (normalized["Substance"] || 0) + (normalized["Chaos"] || 0) + (normalized["NegativeAffect"] || 0)) / 4;
   const objectRisk = ((normalized["Aesthetics"] || 0) + (normalized["Wealth"] || 0) + (normalized["Sexuality"] || 0)) / 3;
@@ -38,8 +37,8 @@ export function generateAttractorProfile(answers: Record<string, string>) {
   const rawRisk = (preyRisk * 0.4) + (chaosRisk * 0.3) + (objectRisk * 0.3);
   const vulnerabilityIndex = Math.min(100, Math.max(0, Math.round(rawRisk)));
 
-  // 12 INBOUND ATTRACTOR ARCHETYPES (Who you draw in)
-  let archetype = "The Safe Harbor"; // Default
+  // 12 INBOUND ATTRACTOR ARCHETYPES
+  let archetype = "The Safe Harbor"; 
   
   if (normalized["Victimhood"] > 60 && normalized["Anxiety"] > 50) {
     archetype = "The Predator Magnet";
@@ -71,6 +70,6 @@ export function generateAttractorProfile(answers: Record<string, string>) {
     vulnerabilityIndex,
     archetype,
     normalizedScores: normalized,
-    premiumUnlocked: false // Locked by default for Sunk Cost
+    premiumUnlocked: false // Sunk Cost Paywall Trigger
   };
 }

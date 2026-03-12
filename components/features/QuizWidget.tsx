@@ -7,18 +7,21 @@ import { generatePsychologicalProfile, computeLegacyResult } from "@/lib/psychom
 import MasterReport from "@/components/report/MasterReport";
 import { DashboardGrid, MultiGaugeGrid } from "@/components/report/ScoreBars";
 
-// EXTERNAL QUESTION VAULTS (SAFE FROM UI EDITS)
-import { attractionQuestions } from "@/lib/psychometrics/attraction/questions";
+// EXTERNAL QUESTION VAULTS
 import { attachmentQuestions, Question } from "@/lib/psychometrics/attachment/questions";
+import { attractionQuestions } from "@/lib/psychometrics/attraction/questions";
+import { attractorQuestions } from "@/lib/psychometrics/attractor/questions"; // THE NEW 78 ITEMS
 
 // EXTERNAL REPORT IMPORTS
 import { generateAttractionProfile } from "@/lib/psychometrics/attraction/scoring";
 import AttractionMasterReport from "@/components/report/AttractionMasterReport";
 
+import { generateAttractorProfile } from "@/lib/psychometrics/attractor/scoring";
+import AttractorMasterReport from "@/components/report/AttractorMasterReport";
+
 const legacyBanks: Record<string, Question[]> = {
   "is-he-manipulative": [
     { id: "1", text: "When you bring up something he did wrong, how does he react?", options: ["Apologizes and tries to fix it", "Denies it ever happened", "Blames you for making him act that way", "Changes the subject entirely"] },
-    { id: "2", text: "How does he act around your friends or family?", options: ["Supportive and friendly", "Complains about them constantly", "Refuses to spend time with them", "Convinces you they don't care about you"] },
   ],
   "partners-attachment-style": [
     { id: "1", text: "When stressed, your partner:", options: ["Talks openly to connect", "Seeks lots of reassurance", "Withdraws/needs space alone", "Panics then shuts down"] },
@@ -49,31 +52,24 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const topRef = useRef<HTMLDivElement>(null);
 
   const isDarkTheme = ["partners-attachment-style","is-he-manipulative"].includes(quizName);
-  const isAttraction = quizName === "attraction-patterns" || quizName === "who-finds-me-attractive";
+  
+  // 🔥 ROUTING LOGIC (Exactly matching your URLs)
+  const isAttraction = quizName === "attraction-patterns";
+  const isAttractor = quizName === "who-is-attracted-to-me";
+  const isPremiumUI = isAttraction || isAttractor;
 
   const activeQuestions = useMemo(() => {
-    // 🔥 SAFE IMPORT: Loads exact 92 questions from the secure vault
-    if (quizName === "attachment-style") {
-      return attachmentQuestions; 
-    }
-    
-    if (isAttraction) {
-      return attractionQuestions.map(q => ({
-        id: q.id,
-        section: q.moduleKey,
-        subscale: q.subscaleKey,
-        text: q.text,
-        options: q.options
-      }));
-    }
+    if (quizName === "attachment-style") return attachmentQuestions; 
+    if (isAttraction) return attractionQuestions;
+    if (isAttractor) return attractorQuestions; // Loads the brand new inbound questions!
 
     return legacyBanks[quizName] || legacyBanks["default"];
-  }, [quizName, isAttraction]);
+  }, [quizName, isAttraction, isAttractor]);
 
   const isFinished = currentIndex >= activeQuestions.length;
   const progress   = Math.round((currentIndex / activeQuestions.length) * 100);
 
-  const colors = isAttraction ? {
+  const colors = isPremiumUI ? {
     bg: "bg-white", cardBorder: "border-transparent", cardShadow: "", textPrimary: "text-[#086788]", textSecondary: "text-[#086788]/70", progressTrack: "bg-[#086788]/10", progressFill: "bg-[#F0C808]", optionBorder: "border-[#06AED5]/40", optionHover: "hover:border-[#06AED5] hover:bg-[#06AED5]/5 hover:-translate-y-0.5 hover:shadow-sm", optionSelected: "border-[#086788] bg-[#06AED5]/10 shadow-inner", btnPrimary: "bg-[#DD1C1A] text-white hover:bg-[#C11715]", btnBack: "border-[#086788]/20 text-[#086788] hover:bg-[#086788]/5 hover:border-[#086788]", chipBg: "bg-[#086788]/10", chipText: "text-[#086788]"
   } : isDarkTheme ? {
     bg: "bg-[#0f172a]", cardBorder: "border-slate-700", cardShadow: "shadow-xl", textPrimary: "text-slate-100", textSecondary: "text-slate-400", progressTrack: "bg-slate-100", progressFill: "bg-[#0496ff]", optionBorder: "border-slate-700", optionHover: "hover:border-[#b10f2e] hover:bg-[#b10f2e]/10", optionSelected: "border-[#0496ff] bg-[#0496ff]/10", btnPrimary: "bg-[#b10f2e] text-white", btnBack: "border-slate-700 text-slate-400 hover:bg-slate-800", chipBg: "bg-slate-800", chipText: "text-slate-300"
@@ -134,8 +130,13 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         const profile = generatePsychologicalProfile(answers, hasChildren);
         setResultData({ profile, demographics: { isSingle, gender, hasChildren }, type: "attachment" });
       } else if (isAttraction) {
+        // Safe, untouched routing for "Who am I attracted to"
         const profile = { ...generateAttractionProfile(answers), premiumUnlocked: false };
         setResultData({ profile, type: "attraction" });
+      } else if (isAttractor) {
+        // Safe, isolated routing for "Who is attracted to me"
+        const profile = { ...generateAttractorProfile(answers), premiumUnlocked: false };
+        setResultData({ profile, type: "attractor" });
       } else {
         const res = computeLegacyResult(answers, quizName);
         setResultData({ ...res, type: "legacy" });
@@ -150,7 +151,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     return (
       <div ref={topRef} className={`w-full text-center py-24 ${colors.bg} rounded-[24px] ${colors.cardShadow} border ${colors.cardBorder} animate-in fade-in`}>
         <div className="flex flex-col items-center justify-center">
-          <div className={`w-16 h-16 border-4 border-t-transparent ${isAttraction ? 'border-[#06AED5]' : 'border-[#00A6ED]'} rounded-full animate-spin mb-6`}></div>
+          <div className={`w-16 h-16 border-4 border-t-transparent ${isPremiumUI ? 'border-[#06AED5]' : 'border-[#00A6ED]'} rounded-full animate-spin mb-6`}></div>
           <h3 className={`text-2xl font-extrabold ${colors.textPrimary} mb-2 animate-pulse`}>Analyzing Profile...</h3>
         </div>
       </div>
@@ -159,19 +160,13 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
   if (showResult && resultData) {
     if (resultData.type === "attachment") {
-      return (
-        <div ref={topRef} className="w-full animate-in fade-in duration-500">
-          <MasterReport profile={resultData.profile} demographics={resultData.demographics} isDarkTheme={isDarkTheme} />
-        </div>
-      );
+      return <div ref={topRef} className="w-full animate-in fade-in duration-500"><MasterReport profile={resultData.profile} demographics={resultData.demographics} isDarkTheme={isDarkTheme} /></div>;
     }
-    
     if (resultData.type === "attraction") {
-      return (
-        <div ref={topRef} className="w-full animate-in fade-in duration-500">
-          <AttractionMasterReport profile={resultData.profile} isDarkTheme={isDarkTheme} />
-        </div>
-      );
+      return <div ref={topRef} className="w-full animate-in fade-in duration-500"><AttractionMasterReport profile={resultData.profile} /></div>;
+    }
+    if (resultData.type === "attractor") {
+      return <div ref={topRef} className="w-full animate-in fade-in duration-500"><AttractorMasterReport profile={resultData.profile} /></div>;
     }
 
     return (
@@ -201,8 +196,8 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   }
 
   const q = activeQuestions[currentIndex];
-  const baseSectionName = PHASE_LABELS[q.section || "default"] ?? q.section ?? "Assessment";
-  const sectionName = q.subscale ? `${baseSectionName} • ${q.subscale}` : baseSectionName;
+  const baseSectionName = PHASE_LABELS[q.section || q.moduleKey || "default"] ?? q.section ?? q.moduleKey ?? "Assessment";
+  const sectionName = q.subscaleKey || q.subscale ? `${baseSectionName} • ${q.subscaleKey || q.subscale}` : baseSectionName;
 
   return (
     <div ref={topRef} className={`w-full max-w-3xl mx-auto ${colors.bg} rounded-[24px] ${colors.cardShadow} border ${colors.cardBorder} flex flex-col justify-center min-h-[320px] p-5 md:p-6`}>
@@ -228,7 +223,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
             return (
               <button key={idx} onClick={() => handleOptionClick(option)} disabled={isDisabled}
                 className={`w-[30%] min-w-[100px] flex-grow text-center flex-col justify-center py-3 px-4 md:py-4 md:px-5 rounded-[12px] border-[2px] font-bold text-sm md:text-base transition-all duration-200 flex items-center ${isSelected ? colors.optionSelected : colors.optionBorder} ${!isDisabled && !isSelected ? colors.optionHover : ''} ${isDisabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'} ${colors.textPrimary}`}>
-                {(!isAttraction && !isDarkTheme) && (
+                {(!isPremiumUI && !isDarkTheme) && (
                   <div className={`shrink-0 w-[22px] h-[22px] rounded-full border-[2px] mr-4 flex items-center justify-center transition-all duration-200 ${isSelected ? 'border-[#00A6ED] bg-[#00A6ED]' : 'border-[#0D2C54]/20 bg-white'}`}>
                     {isSelected && <div className="w-2 h-2 rounded-full bg-white shadow-sm" />}
                   </div>
