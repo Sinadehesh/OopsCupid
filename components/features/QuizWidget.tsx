@@ -10,7 +10,8 @@ import { DashboardGrid, MultiGaugeGrid } from "@/components/report/ScoreBars";
 // EXTERNAL QUESTION VAULTS
 import { attachmentQuestions, Question } from "@/lib/psychometrics/attachment/questions";
 import { attractionQuestions } from "@/lib/psychometrics/attraction/questions";
-import { attractorQuestions } from "@/lib/psychometrics/attractor/questions"; // THE NEW 78 ITEMS
+import { attractorQuestions } from "@/lib/psychometrics/attractor/questions";
+import { partnerAttachmentQuestions } from "@/lib/psychometrics/partner-attachment/questions"; // NEW 60 ITEMS
 
 // EXTERNAL REPORT IMPORTS
 import { generateAttractionProfile } from "@/lib/psychometrics/attraction/scoring";
@@ -19,12 +20,12 @@ import AttractionMasterReport from "@/components/report/AttractionMasterReport";
 import { generateAttractorProfile } from "@/lib/psychometrics/attractor/scoring";
 import AttractorMasterReport from "@/components/report/AttractorMasterReport";
 
+import { generatePartnerAttachmentProfile } from "@/lib/psychometrics/partner-attachment/scoring";
+import PartnerAttachmentReport from "@/components/report/PartnerAttachmentReport";
+
 const legacyBanks: Record<string, Question[]> = {
   "is-he-manipulative": [
     { id: "1", text: "When you bring up something he did wrong, how does he react?", options: ["Apologizes and tries to fix it", "Denies it ever happened", "Blames you for making him act that way", "Changes the subject entirely"] },
-  ],
-  "partners-attachment-style": [
-    { id: "1", text: "When stressed, your partner:", options: ["Talks openly to connect", "Seeks lots of reassurance", "Withdraws/needs space alone", "Panics then shuts down"] },
   ],
   "default": [
     { id: "1", text: "How often do they text you first?", options: ["Every day", "Usually", "Rarely", "Never"] }
@@ -51,31 +52,43 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
   const topRef = useRef<HTMLDivElement>(null);
 
-  const isDarkTheme = ["partners-attachment-style","is-he-manipulative"].includes(quizName);
+  const isDarkTheme = ["is-he-manipulative"].includes(quizName);
   
-  // 🔥 ROUTING LOGIC (Exactly matching your URLs)
+  // 🔥 ROUTING LOGIC
   const isAttraction = quizName === "attraction-patterns";
   const isAttractor = quizName === "who-is-attracted-to-me";
-  const isPremiumUI = isAttraction || isAttractor;
+  const isPartnerAttachment = quizName === "partners-attachment-style";
+  
+  // Apply the premium, high-contrast UI to all advanced tests
+  const isPremiumUI = isAttraction || isAttractor || isPartnerAttachment;
 
   const activeQuestions = useMemo(() => {
     if (quizName === "attachment-style") return attachmentQuestions; 
     if (isAttraction) return attractionQuestions;
-    if (isAttractor) return attractorQuestions; // Loads the brand new inbound questions!
+    if (isAttractor) return attractorQuestions; 
+    if (isPartnerAttachment) return partnerAttachmentQuestions; // Load the 60 partner diagnostic items
 
     return legacyBanks[quizName] || legacyBanks["default"];
-  }, [quizName, isAttraction, isAttractor]);
+  }, [quizName, isAttraction, isAttractor, isPartnerAttachment]);
 
   const isFinished = currentIndex >= activeQuestions.length;
   const progress   = Math.round((currentIndex / activeQuestions.length) * 100);
 
-  const colors = isPremiumUI ? {
-    bg: "bg-white", cardBorder: "border-transparent", cardShadow: "", textPrimary: "text-[#086788]", textSecondary: "text-[#086788]/70", progressTrack: "bg-[#086788]/10", progressFill: "bg-[#F0C808]", optionBorder: "border-[#06AED5]/40", optionHover: "hover:border-[#06AED5] hover:bg-[#06AED5]/5 hover:-translate-y-0.5 hover:shadow-sm", optionSelected: "border-[#086788] bg-[#06AED5]/10 shadow-inner", btnPrimary: "bg-[#DD1C1A] text-white hover:bg-[#C11715]", btnBack: "border-[#086788]/20 text-[#086788] hover:bg-[#086788]/5 hover:border-[#086788]", chipBg: "bg-[#086788]/10", chipText: "text-[#086788]"
-  } : isDarkTheme ? {
-    bg: "bg-[#0f172a]", cardBorder: "border-slate-700", cardShadow: "shadow-xl", textPrimary: "text-slate-100", textSecondary: "text-slate-400", progressTrack: "bg-slate-100", progressFill: "bg-[#0496ff]", optionBorder: "border-slate-700", optionHover: "hover:border-[#b10f2e] hover:bg-[#b10f2e]/10", optionSelected: "border-[#0496ff] bg-[#0496ff]/10", btnPrimary: "bg-[#b10f2e] text-white", btnBack: "border-slate-700 text-slate-400 hover:bg-slate-800", chipBg: "bg-slate-800", chipText: "text-slate-300"
-  } : {
+  // Dynamic Theme Colors
+  let colors = {
     bg: "bg-white", cardBorder: "border-[#0D2C54]/10", cardShadow: "shadow-[0_12px_40px_rgba(13,44,84,0.06)]", textPrimary: "text-[#0D2C54]", textSecondary: "text-[#0D2C54]/60", progressTrack: "bg-[#0D2C54]/10", progressFill: "bg-[#FFB400]", optionBorder: "border-[#0D2C54]/15", optionHover: "hover:border-[#00A6ED] hover:bg-[#00A6ED]/[0.03] hover:-translate-y-[2px] hover:shadow-[0_4px_12px_rgba(0,166,237,0.12)]", optionSelected: "border-[#00A6ED] bg-[#00A6ED]/[0.05]", btnPrimary: "bg-[#00A6ED] text-white hover:bg-[#00A6ED]/90 shadow-md", btnBack: "border-[#0D2C54]/20 text-[#0D2C54] hover:bg-[#0D2C54]/5", chipBg: "bg-[#FFB400]/20", chipText: "text-[#0D2C54]"
   };
+
+  if (isPremiumUI) {
+      // Teal Theme for Seekers
+      if (isAttraction) colors = { ...colors, textPrimary: "text-[#086788]", textSecondary: "text-[#086788]/70", progressTrack: "bg-[#086788]/10", progressFill: "bg-[#F0C808]", optionBorder: "border-[#06AED5]/40", optionHover: "hover:border-[#06AED5] hover:bg-[#06AED5]/5", optionSelected: "border-[#086788] bg-[#06AED5]/10", btnPrimary: "bg-[#DD1C1A] text-white", btnBack: "border-[#086788]/20 text-[#086788]", chipBg: "bg-[#086788]/10", chipText: "text-[#086788]" };
+      // Purple Theme for Attractors
+      else if (isAttractor) colors = { ...colors, textPrimary: "text-[#3B1F2B]", textSecondary: "text-[#3B1F2B]/70", progressTrack: "bg-[#3B1F2B]/10", progressFill: "bg-[#F18F01]", optionBorder: "border-[#A23B72]/40", optionHover: "hover:border-[#A23B72] hover:bg-[#A23B72]/5", optionSelected: "border-[#3B1F2B] bg-[#A23B72]/10", btnPrimary: "bg-[#C73E1D] text-white", btnBack: "border-[#3B1F2B]/20 text-[#3B1F2B]", chipBg: "bg-[#3B1F2B]/10", chipText: "text-[#3B1F2B]" };
+      // Navy Theme for Partner Diagnostic
+      else if (isPartnerAttachment) colors = { ...colors, textPrimary: "text-[#0f172a]", textSecondary: "text-[#0f172a]/70", progressTrack: "bg-[#0f172a]/10", progressFill: "bg-[#e11d48]", optionBorder: "border-[#94a3b8]/40", optionHover: "hover:border-[#94a3b8] hover:bg-[#94a3b8]/5", optionSelected: "border-[#0f172a] bg-[#94a3b8]/10", btnPrimary: "bg-[#e11d48] text-white hover:bg-[#be123c]", btnBack: "border-[#0f172a]/20 text-[#0f172a]", chipBg: "bg-[#0f172a]/10", chipText: "text-[#0f172a]" };
+  } else if (isDarkTheme) {
+      colors = { ...colors, bg: "bg-[#0f172a]", cardBorder: "border-slate-700", textPrimary: "text-slate-100", textSecondary: "text-slate-400", progressTrack: "bg-slate-100", progressFill: "bg-[#0496ff]", optionBorder: "border-slate-700", optionHover: "hover:border-[#b10f2e] hover:bg-[#b10f2e]/10", optionSelected: "border-[#0496ff] bg-[#0496ff]/10", btnPrimary: "bg-[#b10f2e] text-white", btnBack: "border-slate-700 text-slate-400 hover:bg-slate-800", chipBg: "bg-slate-800", chipText: "text-slate-300" };
+  }
 
   const handleOptionClick = (option: string) => {
     if (isAnimating || selectedAnswer !== null) return; 
@@ -130,13 +143,15 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         const profile = generatePsychologicalProfile(answers, hasChildren);
         setResultData({ profile, demographics: { isSingle, gender, hasChildren }, type: "attachment" });
       } else if (isAttraction) {
-        // Safe, untouched routing for "Who am I attracted to"
         const profile = { ...generateAttractionProfile(answers), premiumUnlocked: false };
         setResultData({ profile, type: "attraction" });
       } else if (isAttractor) {
-        // Safe, isolated routing for "Who is attracted to me"
         const profile = { ...generateAttractorProfile(answers), premiumUnlocked: false };
         setResultData({ profile, type: "attractor" });
+      } else if (isPartnerAttachment) {
+        // 🔥 ROUTE PARTNER DIAGNOSTIC
+        const profile = { ...generatePartnerAttachmentProfile(answers), premiumUnlocked: false };
+        setResultData({ profile, type: "partner" });
       } else {
         const res = computeLegacyResult(answers, quizName);
         setResultData({ ...res, type: "legacy" });
@@ -151,8 +166,8 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     return (
       <div ref={topRef} className={`w-full text-center py-24 ${colors.bg} rounded-[24px] ${colors.cardShadow} border ${colors.cardBorder} animate-in fade-in`}>
         <div className="flex flex-col items-center justify-center">
-          <div className={`w-16 h-16 border-4 border-t-transparent ${isPremiumUI ? 'border-[#06AED5]' : 'border-[#00A6ED]'} rounded-full animate-spin mb-6`}></div>
-          <h3 className={`text-2xl font-extrabold ${colors.textPrimary} mb-2 animate-pulse`}>Analyzing Profile...</h3>
+          <div className={`w-16 h-16 border-4 border-t-transparent border-[${colors.accentNavy || '#00A6ED'}] rounded-full animate-spin mb-6`}></div>
+          <h3 className={`text-2xl font-extrabold ${colors.textPrimary} mb-2 animate-pulse`}>Analyzing Subject...</h3>
         </div>
       </div>
     );
@@ -167,6 +182,9 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     }
     if (resultData.type === "attractor") {
       return <div ref={topRef} className="w-full animate-in fade-in duration-500"><AttractorMasterReport profile={resultData.profile} /></div>;
+    }
+    if (resultData.type === "partner") {
+      return <div ref={topRef} className="w-full animate-in fade-in duration-500"><PartnerAttachmentReport profile={resultData.profile} /></div>;
     }
 
     return (
@@ -184,12 +202,12 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     return (
       <div ref={topRef} className={`w-full max-w-3xl mx-auto ${colors.bg} rounded-[24px] ${colors.cardShadow} border ${colors.cardBorder} text-center py-16 px-6 animate-in fade-in zoom-in`}>
         <div className={`w-24 h-24 mx-auto ${colors.progressTrack} rounded-full flex items-center justify-center mb-6`}>
-          <span className="text-4xl">🧠</span>
+          <span className="text-4xl">🔬</span>
         </div>
-        <h3 className={`text-3xl font-extrabold ${colors.textPrimary} mb-4`}>Assessment Complete</h3>
-        <p className={`text-lg mb-10 max-w-md mx-auto font-medium ${colors.textSecondary}`}>All data captured. We are ready to compile your specific psychological profile.</p>
+        <h3 className={`text-3xl font-extrabold ${colors.textPrimary} mb-4`}>Diagnostic Complete</h3>
+        <p className={`text-lg mb-10 max-w-md mx-auto font-medium ${colors.textSecondary}`}>All behavioral data has been logged. We are ready to generate his clinical read.</p>
         <button onClick={handleSubmit} className={`w-full max-w-sm mx-auto block ${colors.btnPrimary} font-extrabold py-4 rounded-[14px] transform hover:-translate-y-1 transition-all duration-300`}>
-          Reveal My Profile
+          Reveal His Profile
         </button>
       </div>
     );

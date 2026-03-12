@@ -13,11 +13,11 @@ export default function PartnerAttachmentQuizPage() {
       
       {/* HERO SECTION WITH CRIMSON PALETTE */}
       <section className="relative bg-gradient-to-r from-[#570000] to-[#b10f2e] pt-24 pb-40 px-6 md:px-10 lg:px-14 rounded-b-[3rem] text-white text-center shadow-lg">
-        <div className="max-w-4xl mx-auto">
+        <div className="w-full max-w-[1400px] mx-auto">
           <h1 className="text-[40px] md:text-[56px] font-bold mb-6 leading-tight tracking-tight drop-shadow-sm">
             Partner Attachment Assessment
           </h1>
-          <p className="text-[20px] md:text-[24px] font-medium mb-10 text-white/95 max-w-2xl mx-auto drop-shadow-sm">
+          <p className="text-[20px] md:text-[24px] font-medium mb-10 text-white/95 w-full max-w-[1400px] mx-auto drop-shadow-sm">
             Stop guessing his intentions. Use our clinical test to uncover his relationship blueprint, decode his mixed signals, and understand how he truly views intimacy.
           </p>
           <div className="flex justify-center items-center gap-6 text-sm md:text-base font-semibold text-[#de7c5a]">
@@ -29,7 +29,7 @@ export default function PartnerAttachmentQuizPage() {
       </section>
 
       {/* OVERLAPPING QUIZ WIDGET */}
-      <section className="max-w-3xl mx-auto px-6 md:px-10 -mt-24 relative z-10 mb-24">
+      <section className="w-full max-w-[1400px] mx-auto px-6 md:px-10 -mt-24 relative z-10 mb-24">
         <div className="bg-[#fdffff] rounded-[24px] shadow-2xl border border-[#de7c5a]/30 p-8 md:p-12">
           <QuizWidget quizName="partners-attachment-style" />
         </div>
