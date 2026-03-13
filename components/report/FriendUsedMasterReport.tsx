@@ -5,6 +5,32 @@ import UnlockBanner from "./UnlockBanner";
 import { ShieldAlert, Lock, HandCoins, AlertTriangle, LifeBuoy } from "lucide-react";
 
 export default function FriendUsedMasterReport({ profile }: any) {
+  
+  const [isRedirecting, setIsRedirecting] = useState(false);
+
+  const handleUnlock = async () => {
+    setIsRedirecting(true);
+    try {
+      // Calls your checkout API route
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ quizType: "are-your-friends-using-you" }),
+      });
+      const data = await res.json();
+      
+      if (data.url) {
+         window.location.href = data.url; // Redirects the user to Stripe
+      } else {
+         alert("Checkout failed to generate URL.");
+         setIsRedirecting(false);
+      }
+    } catch (err) {
+      console.error(err);
+      setIsRedirecting(false);
+    }
+  };
+
   const isPremium = profile.premiumUnlocked;
 
   // Sleek Emerald & Charcoal "Audit" Theme
@@ -110,9 +136,9 @@ export default function FriendUsedMasterReport({ profile }: any) {
           </div>
           <h4 className={`text-xl font-extrabold ${colors.textPrimary} mb-2`}>{title}</h4>
           <p className={`text-sm ${colors.textSecondary} mb-6 max-w-sm`}>{teaser}</p>
-          <button className={`px-6 py-3 rounded-full font-bold text-sm ${isAlert ? 'bg-red-500 hover:bg-red-600' : 'bg-emerald-500 hover:bg-emerald-600'} text-white shadow-lg transition-colors`}>
-            Unlock Full Analysis
-          </button>
+          <button onClick={handleUnlock} disabled={isRedirecting} className={`px-6 py-3 rounded-full font-bold text-sm ${isAlert ? 'bg-red-500 hover:bg-red-600' : 'bg-emerald-500 hover:bg-emerald-600'} text-white shadow-lg transition-colors disabled:opacity-70`}>
+      {isRedirecting ? "Securely redirecting..." : "Unlock Full Analysis"}
+    </button>
         </div>
       </div>
     );
