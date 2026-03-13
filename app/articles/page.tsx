@@ -59,7 +59,7 @@ export default function ClarityHub() {
               <div className="w-14 h-14 bg-[#10B981] rounded-2xl flex items-center justify-center mb-8 shadow-md z-10">
                 <HeartCrack className="w-7 h-7 text-white" />
               </div>
-              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54] mb-4 z-10">Love Bombing vs. Affection</h2>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54] mb-4 z-10">Love Bombing vs. Affection <span className="text-sm font-bold opacity-60 tracking-normal align-middle whitespace-nowrap">(Coming Soon)</span></h2>
               <p className="text-[#0D2C54]/70 mb-8 leading-relaxed font-medium z-10 flex-grow">How to tell if they are moving too fast to trap you.</p>
               <div className="flex items-center text-[#10B981] font-extrabold z-10 mt-auto uppercase text-sm tracking-wide">
                 Read Essay <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
@@ -73,7 +73,7 @@ export default function ClarityHub() {
               <div className="w-14 h-14 bg-[#EAB308] rounded-2xl flex items-center justify-center mb-8 shadow-md z-10">
                 <BookOpen className="w-7 h-7 text-white" />
               </div>
-              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54] mb-4 z-10">Trauma Bonding Signs</h2>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54] mb-4 z-10">Trauma Bonding Signs <span className="text-sm font-bold opacity-60 tracking-normal align-middle whitespace-nowrap">(Coming Soon)</span></h2>
               <p className="text-[#0D2C54]/70 mb-8 leading-relaxed font-medium z-10 flex-grow">Understand the biological addiction to a toxic partner.</p>
               <div className="flex items-center text-[#EAB308] font-extrabold z-10 mt-auto uppercase text-sm tracking-wide">
                 Read Essay <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />

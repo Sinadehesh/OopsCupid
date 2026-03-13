@@ -73,7 +73,7 @@ export default function MeHub() {
               <div className="w-14 h-14 bg-[#F43F5E] rounded-2xl flex items-center justify-center mb-8 shadow-md z-10">
                 <Bomb className="w-7 h-7 text-white" />
               </div>
-              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54] mb-4 z-10">Why Do I Sabotage?</h2>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54] mb-4 z-10">Why Do I Sabotage? <span className="text-sm font-bold opacity-60 tracking-normal align-middle whitespace-nowrap">(Coming Soon)</span></h2>
               <p className="text-[#0D2C54]/70 mb-8 leading-relaxed font-medium z-10 flex-grow">Understand the hidden fears making you push good people away.</p>
               <div className="flex items-center text-[#F43F5E] font-extrabold z-10 mt-auto uppercase text-sm tracking-wide">
                 Find Out Why <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />

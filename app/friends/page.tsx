@@ -84,7 +84,7 @@ export default function FriendsHub() {
               </div>
               
               <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54] mb-4 z-10">
-                Are They Bad For Me?
+                Are They Bad For Me? <span className="text-sm font-bold opacity-60 tracking-normal align-middle whitespace-nowrap">(Coming Soon)</span>
               </h2>
               <p className="text-[#0D2C54]/70 mb-8 leading-relaxed font-medium z-10 flex-grow">
                 Evaluate your entire friend group's influence. Are they helping you grow, or are they subtly holding you back?

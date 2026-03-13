@@ -13,10 +13,10 @@ const quizCategories = [
     description: "Identify manipulative behaviors, deception, and unhealthy dynamics in your romantic life.",
     quizzes: [
       { title: "Is He Manipulative?", path: "/is-he-manipulative", icon: Ghost, color: "bg-red-50 text-red-600", border: "border-red-100" },
-      { title: "Is He Gaslighting Me?", path: "/is-he-gaslighting-me", icon: Flame, color: "bg-orange-50 text-orange-600", border: "border-orange-100" },
+      { title: "Is He Gaslighting Me? (Coming Soon)", path: "/is-he-gaslighting-me", icon: Flame, color: "bg-orange-50 text-orange-600", border: "border-orange-100" },
       { title: "Is He Cheating?", path: "/is-he-cheating", icon: Search, color: "bg-yellow-50 text-yellow-600", border: "border-yellow-100" },
-      { title: "Relationship Red Flags", path: "/relationship-red-flags", icon: Flag, color: "bg-rose-50 text-rose-600", border: "border-rose-100" },
-      { title: "Love Bombing Signs", path: "/love-bombing-signs", icon: HeartCrack, color: "bg-pink-50 text-pink-600", border: "border-pink-100" },
+      { title: "Relationship Red Flags (Coming Soon)", path: "/relationship-red-flags", icon: Flag, color: "bg-rose-50 text-rose-600", border: "border-rose-100" },
+      { title: "Love Bombing Signs (Coming Soon)", path: "/love-bombing-signs", icon: HeartCrack, color: "bg-pink-50 text-pink-600", border: "border-pink-100" },
     ]
   },
   {
@@ -35,15 +35,15 @@ const quizCategories = [
       { title: "Your Attachment Style", path: "/attachment-style-quiz", icon: LinkIcon, color: "bg-indigo-50 text-indigo-600", border: "border-indigo-100" },
       { title: "Partner's Attachment Style", path: "/partners-attachment-style", icon: UserCheck, color: "bg-cyan-50 text-cyan-600", border: "border-cyan-100" },
       { title: "Why Do I Attract Toxic People?", path: "/why-do-i-attract-toxic-people", icon: Magnet, color: "bg-violet-50 text-violet-600", border: "border-violet-100" },
-      { title: "Why Do I Sabotage Relationships?", path: "/why-do-i-sabotage-relationships", icon: Bomb, color: "bg-slate-50 text-slate-600", border: "border-slate-200" },
+      { title: "Why Do I Sabotage Relationships? (Coming Soon)", path: "/why-do-i-sabotage-relationships", icon: Bomb, color: "bg-slate-50 text-slate-600", border: "border-slate-200" },
     ]
   },
   {
     title: "AI Analysis Tools",
     description: "Let our clinical AI review your real-life data for objective, unfiltered insights.",
     quizzes: [
-      { title: "Chat & Text Analyzer", path: "/chat-analyzer", icon: MessageCircle, color: "bg-teal-50 text-teal-600", border: "border-teal-100" },
-      { title: "Dating Profile Analyzer", path: "/dating-profile-analyzer", icon: ScanFace, color: "bg-fuchsia-50 text-fuchsia-600", border: "border-fuchsia-100" },
+      { title: "Chat & Text Analyzer (Coming Soon)", path: "/chat-analyzer", icon: MessageCircle, color: "bg-teal-50 text-teal-600", border: "border-teal-100" },
+      { title: "Dating Profile Analyzer (Coming Soon)", path: "/dating-profile-analyzer", icon: ScanFace, color: "bg-fuchsia-50 text-fuchsia-600", border: "border-fuchsia-100" },
     ]
   }
 ];

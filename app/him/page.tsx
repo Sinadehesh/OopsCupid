@@ -45,7 +45,7 @@ export default function HimHub() {
               <div className="w-14 h-14 bg-[#EF4444] rounded-2xl flex items-center justify-center mb-8 shadow-md z-10">
                 <Flame className="w-7 h-7 text-white" />
               </div>
-              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54] mb-4 z-10">Is He Gaslighting Me?</h2>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54] mb-4 z-10">Is He Gaslighting Me? <span className="text-sm font-bold opacity-60 tracking-normal align-middle whitespace-nowrap">(Coming Soon)</span></h2>
               <p className="text-[#0D2C54]/70 mb-8 leading-relaxed font-medium z-10 flex-grow">Determine if he is altering your reality.</p>
               <div className="flex items-center text-[#EF4444] font-extrabold z-10 mt-auto uppercase text-sm tracking-wide">
                 Check Signs <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
@@ -73,7 +73,7 @@ export default function HimHub() {
               <div className="w-14 h-14 bg-[#EF4444] rounded-2xl flex items-center justify-center mb-8 shadow-md z-10">
                 <MessageCircle className="w-7 h-7 text-white" />
               </div>
-              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54] mb-4 z-10">Texting Analyzer AI</h2>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54] mb-4 z-10">Texting Analyzer AI <span className="text-sm font-bold opacity-60 tracking-normal align-middle whitespace-nowrap">(Coming Soon)</span></h2>
               <p className="text-[#0D2C54]/70 mb-8 leading-relaxed font-medium z-10 flex-grow">Let our AI analyze his actual text messages.</p>
               <div className="flex items-center text-[#EF4444] font-extrabold z-10 mt-auto uppercase text-sm tracking-wide">
                 Upload Texts <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />

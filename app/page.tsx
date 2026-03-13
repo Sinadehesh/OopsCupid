@@ -58,8 +58,8 @@ export default function Home() {
             Relationship Analysis Tools
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Card variant="tool" title="Chat Analyzer — Decode What He Actually Means" description="Paste any conversation and get a psychology-backed breakdown of his texting behavior, interest level, and red flags — in plain English." href="/tools/chat-analyzer" buttonText="Try Chat Analyzer" />
-            <Card variant="tool" title="Dating Profile Analyzer — See Red Flags Before the First Date" description="Share his profile and get a clear read on what his bio, word choices, and photos are really signaling before you swipe right." href="/tools/profile-analyzer" buttonText="Try Profile Analyzer" />
+            <Card variant="tool" title="Chat Analyzer (Coming Soon) — Decode What He Actually Means" description="Paste any conversation and get a psychology-backed breakdown of his texting behavior, interest level, and red flags — in plain English." href="/tools/chat-analyzer" buttonText="Try Chat Analyzer" />
+            <Card variant="tool" title="Dating Profile Analyzer (Coming Soon) — See Red Flags Before the First Date" description="Share his profile and get a clear read on what his bio, word choices, and photos are really signaling before you swipe right." href="/tools/profile-analyzer" buttonText="Try Profile Analyzer" />
           </div>
         </div>
       </section>
@@ -117,7 +117,7 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <Card variant="article" tag="Red Flags" title="Is He Gaslighting Me? 9 Signs You're Not Imagining It" href="/is-he-gaslighting-me" />
+            <Card variant="article" tag="Red Flags" title="Is He Gaslighting Me? (Coming Soon) 9 Signs You're Not Imagining It" href="/is-he-gaslighting-me" />
             <Card variant="article" tag="Attachment Styles" title="The 4 Adult Attachment Styles Explained" href="/understanding-attachment-styles" />
             <Card variant="article" tag="Toxic Friendships" title="Signs Your Best Friend Is Secretly Jealous of You" href="/signs-of-a-toxic-friend" />
           </div>

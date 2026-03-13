@@ -78,6 +78,6 @@ export function generateFriendUsedProfile(answers: Record<string, string>) {
     primaryArchetype,
     secondaryArchetype,
     normalizedScores: normalized,
-    premiumUnlocked: true
+    premiumUnlocked: false
   };
 }
