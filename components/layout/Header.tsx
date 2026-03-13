@@ -3,14 +3,18 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Search, ShoppingCart, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 
 const navLinks = [
-  { label: "Red Flags", href: "/relationship-red-flags", title: "Relationship Red Flags" },
-  { label: "Texting", href: "/dating-texting-analysis", title: "Dating Texting Analysis" },
-  { label: "Friendships", href: "/toxic-friendships", title: "Toxic Friendship Signs" },
-  { label: "Patterns", href: "/dating-patterns", title: "Dating Pattern Quiz" },
+  { label: "All Quizzes", href: "/quizzes", title: "All Quizzes" },
+  { label: "All Resources", href: "/articles", title: "All Resources and Essays" },
+];
+
+const categoryLinks = [
+  { label: "Me", href: "/me", title: "About Me" },
+  { label: "Him", href: "/him", title: "About Him" },
+  { label: "Friends", href: "/friends", title: "About Friends" },
 ];
 
 export default function Header() {
@@ -55,7 +59,7 @@ export default function Header() {
         {/* Center — Desktop Nav */}
         <nav
           aria-label="Main navigation"
-          className="hidden md:flex items-center gap-1"
+          className="hidden md:flex items-center gap-2"
         >
           {navLinks.map((link) => {
             const isActive = pathname?.startsWith(link.href);
@@ -77,35 +81,26 @@ export default function Header() {
           })}
         </nav>
 
-        {/* Right — Actions */}
-        <div className="hidden md:flex items-center gap-3">
-          <button
-            aria-label="Search OopsCupid"
-            className="rounded-full p-2 text-[#5E6E79] transition-colors duration-200 hover:bg-[#F3ECEB] hover:text-[#334B63]"
-          >
-            <Search className="h-[18px] w-[18px]" />
-          </button>
-
-          <button
-            aria-label="Shopping cart"
-            className="relative rounded-full p-2 text-[#5E6E79] transition-colors duration-200 hover:bg-[#F3ECEB] hover:text-[#334B63]"
-          >
-            <ShoppingCart className="h-[18px] w-[18px]" />
-            <span
-              aria-label="3 items in cart"
-              className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#FFB8A1] text-[10px] font-semibold text-black"
-            >
-              3
-            </span>
-          </button>
-
-          {/* I went ahead and linked this to your new /me dashboard! */}
-          <Link
-            href="/me"
-            className="rounded-full border border-[#5A7492] px-5 py-1.5 text-[14px] font-semibold text-[#5A7492] transition-all duration-200 hover:bg-[#5A7492] hover:text-white"
-          >
-            My Account
-          </Link>
+        {/* Right — Actions (Me, Him, Friends) */}
+        <div className="hidden md:flex items-center gap-1">
+          {categoryLinks.map((link) => {
+             const isActive = pathname?.startsWith(link.href);
+             return (
+               <Link
+                 key={link.href}
+                 href={link.href}
+                 title={link.title}
+                 className={`rounded-full px-4 py-1.5 text-[15px] font-semibold tracking-[-0.01em] transition-all duration-200
+                   ${
+                     isActive
+                       ? "text-[#FFB8A1]"
+                       : "text-[#5A7492] hover:bg-[#F3ECEB] hover:text-[#334B63]"
+                   }`}
+               >
+                 {link.label}
+               </Link>
+             );
+          })}
         </div>
 
         {/* Mobile — Hamburger */}
@@ -124,23 +119,33 @@ export default function Header() {
           aria-label="Mobile navigation"
           className="flex flex-col border-t border-[rgba(51,75,99,0.08)] bg-[#F9F4F4] px-6 pb-6 pt-4 md:hidden"
         >
+          {/* Main Links */}
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               title={link.title}
               onClick={() => setMobileOpen(false)}
-              className="py-3 text-[16px] font-medium text-[#5E6E79] border-b border-[rgba(51,75,99,0.06)] last:border-0 hover:text-[#334B63] transition-colors duration-200"
+              className="py-3 text-[16px] font-medium text-[#5E6E79] border-b border-[rgba(51,75,99,0.06)] hover:text-[#334B63] transition-colors duration-200"
             >
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/me"
-            className="mt-5 rounded-full border border-[#5A7492] px-5 py-2.5 text-center text-[15px] font-semibold text-[#5A7492]"
-          >
-            My Account
-          </Link>
+          
+          {/* Right side category links for mobile */}
+          <div className="mt-2 flex flex-col">
+            {categoryLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                title={link.title}
+                onClick={() => setMobileOpen(false)}
+                className="py-3 text-[16px] font-semibold text-[#5A7492] border-b border-[rgba(51,75,99,0.06)] last:border-0 hover:text-[#334B63] transition-colors duration-200"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
         </nav>
       )}
     </header>
