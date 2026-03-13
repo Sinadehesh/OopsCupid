@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Search, Ghost, Flame, UserCheck, MessageCircle, ArrowRight } from "lucide-react";
+import { Search, Ghost, Flame, UserCheck, MessageCircle, ArrowRight, Eye } from "lucide-react";
 
 export const metadata = { title: "The Him Hub | OopsCupid" };
 
@@ -49,6 +49,21 @@ export default function HimHub() {
               <p className="text-[#0D2C54]/70 mb-8 leading-relaxed font-medium z-10 flex-grow">Determine if he is altering your reality.</p>
               <div className="flex items-center text-[#EF4444] font-extrabold z-10 mt-auto uppercase text-sm tracking-wide">
                 Check Signs <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+              </div>
+            </div>
+          </Link>
+
+          {/* NEW CARD: IS HE CHEATING? */}
+          <Link href="/is-he-cheating" className="group block h-full">
+            <div className="bg-white rounded-[32px] p-8 md:p-10 border border-[#0D2C54]/10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full flex flex-col relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#EF4444]/10 rounded-bl-full -z-0 transition-transform group-hover:scale-110"></div>
+              <div className="w-14 h-14 bg-[#EF4444] rounded-2xl flex items-center justify-center mb-8 shadow-md z-10">
+                <Eye className="w-7 h-7 text-white" />
+              </div>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54] mb-4 z-10">Is He Cheating?</h2>
+              <p className="text-[#0D2C54]/70 mb-8 leading-relaxed font-medium z-10 flex-grow">Analyze his behavioral shifts and spot hidden signs of infidelity.</p>
+              <div className="flex items-center text-[#EF4444] font-extrabold z-10 mt-auto uppercase text-sm tracking-wide">
+                Start Audit <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
               </div>
             </div>
           </Link>
