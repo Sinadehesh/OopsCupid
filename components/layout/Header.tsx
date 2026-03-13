@@ -8,13 +8,10 @@ import { useState } from "react";
 
 const navLinks = [
   { label: "All Quizzes", href: "/quizzes", title: "All Quizzes" },
-  { label: "All Resources", href: "/articles", title: "All Resources and Essays" },
-];
-
-const categoryLinks = [
-  { label: "Me", href: "/me", title: "About Me" },
-  { label: "Him", href: "/him", title: "About Him" },
-  { label: "Friends", href: "/friends", title: "About Friends" },
+  { label: "All Resources", href: "/articles", title: "All Resources & Essays" },
+  { label: "Me", href: "/me", title: "Me Hub" },
+  { label: "Him", href: "/him", title: "Him Hub" },
+  { label: "Friends", href: "/friends", title: "Friends Hub" },
 ];
 
 export default function Header() {
@@ -56,13 +53,14 @@ export default function Header() {
           </span>
         </Link>
 
-        {/* Center — Desktop Nav */}
+        {/* Center/Right — Desktop Nav */}
         <nav
           aria-label="Main navigation"
-          className="hidden md:flex items-center gap-2"
+          className="hidden md:flex items-center gap-1"
         >
           {navLinks.map((link) => {
-            const isActive = pathname?.startsWith(link.href);
+            // Highlight link if the path matches exactly or starts with the link's href + a slash
+            const isActive = pathname === link.href || pathname?.startsWith(link.href + "/");
             return (
               <Link
                 key={link.href}
@@ -81,28 +79,6 @@ export default function Header() {
           })}
         </nav>
 
-        {/* Right — Actions (Me, Him, Friends) */}
-        <div className="hidden md:flex items-center gap-1">
-          {categoryLinks.map((link) => {
-             const isActive = pathname?.startsWith(link.href);
-             return (
-               <Link
-                 key={link.href}
-                 href={link.href}
-                 title={link.title}
-                 className={`rounded-full px-4 py-1.5 text-[15px] font-semibold tracking-[-0.01em] transition-all duration-200
-                   ${
-                     isActive
-                       ? "text-[#FFB8A1]"
-                       : "text-[#5A7492] hover:bg-[#F3ECEB] hover:text-[#334B63]"
-                   }`}
-               >
-                 {link.label}
-               </Link>
-             );
-          })}
-        </div>
-
         {/* Mobile — Hamburger */}
         <button
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
@@ -119,33 +95,17 @@ export default function Header() {
           aria-label="Mobile navigation"
           className="flex flex-col border-t border-[rgba(51,75,99,0.08)] bg-[#F9F4F4] px-6 pb-6 pt-4 md:hidden"
         >
-          {/* Main Links */}
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               title={link.title}
               onClick={() => setMobileOpen(false)}
-              className="py-3 text-[16px] font-medium text-[#5E6E79] border-b border-[rgba(51,75,99,0.06)] hover:text-[#334B63] transition-colors duration-200"
+              className="py-3 text-[16px] font-medium text-[#5E6E79] border-b border-[rgba(51,75,99,0.06)] last:border-0 hover:text-[#334B63] transition-colors duration-200"
             >
               {link.label}
             </Link>
           ))}
-          
-          {/* Right side category links for mobile */}
-          <div className="mt-2 flex flex-col">
-            {categoryLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                title={link.title}
-                onClick={() => setMobileOpen(false)}
-                className="py-3 text-[16px] font-semibold text-[#5A7492] border-b border-[rgba(51,75,99,0.06)] last:border-0 hover:text-[#334B63] transition-colors duration-200"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
         </nav>
       )}
     </header>
