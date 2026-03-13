@@ -1,5 +1,8 @@
 import { MetadataRoute } from 'next'
 
+// FORCES NEXT.JS TO GENERATE THIS AT BUILD TIME FOR STATIC EXPORTS
+export const dynamic = 'force-static'
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://oopscupid.com'
 
