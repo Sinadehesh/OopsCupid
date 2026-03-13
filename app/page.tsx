@@ -93,13 +93,18 @@ export default function Home() {
       {/* SECTION 6 — PROOF (White Background) */}
       <section className="bg-white py-20 md:py-32">
         <div className="container mx-auto px-6 md:px-10 lg:px-14">
-          <h2 className="text-[32px] md:text-[42px] font-extrabold text-[#086788] mb-16 text-center">
-            Why Women Use OopsCupid
-          </h2>
+          <div className="text-center max-w-4xl mx-auto mb-16">
+            <h2 className="text-[32px] md:text-[42px] font-extrabold text-[#086788] mb-6">
+              Why Women Trust OopsCupid
+            </h2>
+            <p className="text-[18px] md:text-[20px] font-medium leading-relaxed text-[#086788]/80">
+              OopsCupid is for women who are tired of losing time to confusion. When someone is inconsistent, unclear, or emotionally difficult to read, it becomes easy to overthink, self-correct, and stay longer than you should. OopsCupid helps you step back, see the pattern with more honesty, and make decisions from clarity instead of doubt.
+            </p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card variant="proof" title="Stop Replaying the Conversation" description="Get a clear answer in minutes instead of analyzing the same text for three days." />
-            <Card variant="proof" title="Know Before You're in Too Deep" description="Spot the warning signs early — not after six months of confusion and wasted energy." />
-            <Card variant="proof" title="Understand the Pattern" description="Find out why you keep ending up here, so next time looks completely different." />
+            <Card variant="proof" title="Stop Doubting Your Read" description="Sometimes you already know something feels off. You just need help trusting what you are seeing." />
+            <Card variant="proof" title="See the Pattern Earlier" description="The hardest part is not always the red flag. It is how easy it is to explain it away. OopsCupid helps you notice patterns before they become attachments." />
+            <Card variant="proof" title="Get Clear Without the Spiral" description="Not every situation needs more analysis. Sometimes you need a calmer, clearer view of what is right in front of you." />
           </div>
         </div>
       </section>
