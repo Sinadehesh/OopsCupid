@@ -1,82 +1,46 @@
 import React from "react";
 import Link from "next/link";
-import Card from "@/components/ui/Card";
+import { BookOpen, ShieldAlert, BrainCircuit, HeartCrack, ChevronRight } from "lucide-react";
 
-export default function ClarityHub() {
+const clarityHubLinks = [
+  { title: "The Science of Manipulation", description: "Deep dive into the dark psychology of coercive control.", path: "/articles/manipulation-science", icon: BrainCircuit, color: "bg-amber-50 text-amber-600", border: "border-amber-200" },
+  { title: "Is My Friend Toxic?", description: "Learn the clinical signs of a one-sided, draining friendship.", path: "/articles/is-my-friend-toxic", icon: ShieldAlert, color: "bg-orange-50 text-orange-600", border: "border-orange-200" },
+  { title: "Love Bombing vs. Affection", description: "How to tell if they are moving too fast to trap you.", path: "/love-bombing-signs", icon: HeartCrack, color: "bg-emerald-50 text-emerald-600", border: "border-emerald-200" },
+  { title: "Trauma Bonding Signs", description: "Understand the biological addiction to a toxic partner.", path: "/trauma-bonding-signs", icon: BookOpen, color: "bg-yellow-50 text-yellow-600", border: "border-yellow-200" }
+];
+
+export default function ClarityHubPage() {
   return (
-    <main className="min-h-screen bg-[#f2f5fa]">
-      <section className="py-24 px-6">
-        <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-5xl md:text-7xl font-extrabold text-[#2a2522] mb-8 tracking-tighter">
-            Relationship Clarity Hub
-          </h1>
-          <p className="text-xl md:text-2xl text-[#2a2522]/70 max-w-3xl mx-auto mb-20 leading-relaxed">
-            Psychology-backed guides designed to help you decode patterns, spot red flags, and understand the science of your heart.
+    <div className="min-h-screen bg-[#F9F4F4] py-16 md:py-24">
+      <div className="max-w-[1200px] mx-auto px-6 lg:px-12">
+        <div className="mb-16 text-center max-w-3xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-[#334B63] mb-6">The Clarity Hub</h1>
+          <p className="text-lg md:text-xl text-[#5E6E79] leading-relaxed">
+            Stop guessing. Educate yourself. Read our clinical deep-dives into the science of human behavior, manipulation, and attachment.
           </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-16">
-            {/* FRIENDSHIP ESSAY */}
-            <div className="group bg-white rounded-[40px] overflow-hidden shadow-xl transition-all hover:-translate-y-3 flex flex-col border border-[#ced2dc]">
-              <div className="h-56 bg-[#ffbc42] flex items-center justify-center p-10 text-center relative overflow-hidden">
-                <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
-                <h3 className="text-3xl font-extrabold text-[#006ba6] relative z-10">Is My Friend Toxic?</h3>
-              </div>
-              <div className="p-10 text-left flex-grow flex flex-col">
-                <p className="text-[#2a2522]/80 text-lg mb-8 flex-grow">The real reason some friendships drain you—and how to spot the signs before it's too late.</p>
-                <Link href="/articles/is-my-friend-toxic" className="inline-block bg-[#006ba6] text-white px-8 py-4 rounded-full font-bold text-center hover:bg-[#005a8c] transition-colors shadow-md">
-                  Read Full Essay →
-                </Link>
-              </div>
-            </div>
-
-            {/* ATTACHMENT ESSAY */}
-            <div className="group bg-white rounded-[40px] overflow-hidden shadow-xl transition-all hover:-translate-y-3 flex flex-col border border-[#ced2dc]">
-              <div className="h-56 bg-[#0D2C54] flex items-center justify-center p-10 text-center relative overflow-hidden">
-                <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
-                <h3 className="text-3xl font-extrabold text-white relative z-10">Attachment Styles, Explained</h3>
-              </div>
-              <div className="p-10 text-left flex-grow flex flex-col">
-                <p className="text-[#2a2522]/80 text-lg mb-8 flex-grow">The real reason you keep repeating the same relationship patterns—and how to finally break the cycle.</p>
-                <Link href="/understanding-attachment-styles" className="inline-block bg-[#00A6ED] text-white px-8 py-4 rounded-full font-bold text-center hover:bg-[#00A6ED]/90 transition-colors shadow-md">
-                  Read Full Essay →
-                </Link>
-              </div>
-            </div>
-
-            {/* MANIPULATION ESSAY */}
-            <div className="group bg-white rounded-[40px] overflow-hidden shadow-xl transition-all hover:-translate-y-3 flex flex-col border border-[#ced2dc]">
-              <div className="h-56 bg-[#2a2522] flex items-center justify-center p-10 text-center relative overflow-hidden border-b-4 border-[#650000]">
-                <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
-                <h3 className="text-3xl font-extrabold text-white relative z-10">The Science of Manipulation</h3>
-              </div>
-              <div className="p-10 text-left flex-grow flex flex-col">
-                <p className="text-[#2a2522]/80 text-lg mb-8 flex-grow">Gaslighting, coercive control, and the hidden patterns designed to make you stop trusting yourself.</p>
-                <Link href="/articles/manipulation-science" className="inline-block bg-[#650000] text-white px-8 py-4 rounded-full font-bold text-center hover:bg-[#490000] transition-colors shadow-md">
-                  Read Full Essay →
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            {/* TOOLS REDIRECT CARDS */}
-            <Card 
-              variant="tool" 
-              title="Chat Analyzer" 
-              description="Decode mixed signals and texting behavior with AI-driven psychology." 
-              href="/chat-analyzer" 
-              buttonText="Open Tool" 
-            />
-            <Card 
-              variant="tool" 
-              title="Profile Analyzer" 
-              description="Spot red flags in dating bios before you swipe right." 
-              href="/dating-profile-analyzer" 
-              buttonText="Open Tool" 
-            />
-          </div>
         </div>
-      </section>
-    </main>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-8 duration-700">
+          {clarityHubLinks.map((link, idx) => {
+            const Icon = link.icon;
+            return (
+              <Link key={idx} href={link.path} className="group bg-white rounded-3xl p-8 border border-[#E2E8F0] shadow-sm hover:shadow-md hover:border-[#CBD5E1] transition-all duration-300 flex flex-col justify-between h-full">
+                <div className="flex items-start justify-between mb-6">
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${link.color} ${link.border} border-2`}>
+                    <Icon className="w-7 h-7" />
+                  </div>
+                  <div className="w-10 h-10 rounded-full bg-[#F3ECEB] flex items-center justify-center text-[#5E6E79] group-hover:bg-[#FFB8A1] group-hover:text-black transition-colors duration-200">
+                    <ChevronRight className="w-5 h-5" />
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-[#334B63] mb-2 group-hover:text-[#5A7492] transition-colors">{link.title}</h3>
+                  <p className="text-[#5E6E79]">{link.description}</p>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    </div>
   );
 }

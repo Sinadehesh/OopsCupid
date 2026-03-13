@@ -1,89 +1,47 @@
-import Card from "@/components/ui/Card";
-import { Metadata } from "next";
+import React from "react";
+import Link from "next/link";
+import { Ghost, Flame, Search, UserCheck, MessageCircle, ChevronRight } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Analyze Him | OopsCupid",
-  description: "Decode his behavior, spot the red flags, and understand exactly what is going on in his head with our psychology-backed tools.",
-};
+const himHubLinks = [
+  { title: "Is He Manipulative?", description: "Spot the hidden signs of coercive control.", path: "/is-he-manipulative", icon: Ghost, color: "bg-blue-50 text-blue-600", border: "border-blue-200" },
+  { title: "Is He Gaslighting Me?", description: "Determine if he is altering your reality.", path: "/is-he-gaslighting-me", icon: Flame, color: "bg-indigo-50 text-indigo-600", border: "border-indigo-200" },
+  { title: "Is He Cheating?", description: "Audit the behavioral shifts indicating infidelity.", path: "/is-he-cheating", icon: Search, color: "bg-cyan-50 text-cyan-600", border: "border-cyan-200" },
+  { title: "His Attachment Style", description: "Decode why he pulls away or gets clingy.", path: "/partners-attachment-style", icon: UserCheck, color: "bg-sky-50 text-sky-600", border: "border-sky-200" },
+  { title: "Texting Analyzer AI", description: "Let our AI analyze his actual text messages.", path: "/dating-texting-analysis", icon: MessageCircle, color: "bg-teal-50 text-teal-600", border: "border-teal-200" }
+];
 
 export default function HimHubPage() {
   return (
-    <main className="bg-gradient-to-b from-[#fdffff] to-[#f9f4f4] min-h-screen py-24 px-6 md:px-10 lg:px-14">
-      <div className="max-w-6xl mx-auto">
-        
-        {/* Hub Header with the dark, intense aesthetic */}
-        <div className="text-center max-w-3xl mx-auto mb-20 relative">
-          <span className="text-[#b10f2e] font-bold uppercase tracking-widest text-sm mb-4 block drop-shadow-sm">
-            Partner Analysis Hub
-          </span>
-          <h1 className="text-[42px] md:text-[56px] font-extrabold text-[#280000] mb-6 leading-tight">
-            Decode His <span className="text-[#b10f2e] font-serif italic">Behavior</span>
-          </h1>
-          <p className="text-[20px] md:text-[24px] font-medium leading-relaxed text-[#570000]/80">
-            Stop guessing. Use our clinical-grade tools to analyze his texts, spot the hidden red flags, and understand exactly what he's really thinking.
+    <div className="min-h-screen bg-[#F9F4F4] py-16 md:py-24">
+      <div className="max-w-[1200px] mx-auto px-6 lg:px-12">
+        <div className="mb-16 text-center max-w-3xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-[#334B63] mb-6">The Him Hub</h1>
+          <p className="text-lg md:text-xl text-[#5E6E79] leading-relaxed">
+            Decode his behavior. Analyze text messages, spot clinical red flags, and determine if he is manipulative or genuine.
           </p>
         </div>
-        
-        {/* Grid of 7 Quiz/Tool Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          
-          <Card 
-            variant="quiz"
-            title="What Is His Attachment Style? Partner Test"
-            href="/partners-attachment-style"
-            accentColor="bg-[#de7c5a]/20"
-          />
-          
-          <Card 
-            variant="quiz"
-            title="Is He Manipulative? Spot the Hidden Signs"
-            href="/is-he-manipulative"
-            accentColor="bg-[#b10f2e]/10"
-          />
-          
-          <Card 
-            variant="quiz"
-            title="Is He Emotionally Unavailable?"
-            href="/emotionally-unavailable-test"
-            accentColor="bg-[#570000]/10"
-          />
-          
-          <Card 
-            variant="quiz"
-            title="Is He Gaslighting Me? 9 Warning Signs"
-            href="/is-he-gaslighting-me"
-            accentColor="bg-[#b10f2e]/15"
-          />
-          
-          <Card 
-            variant="quiz"
-            title="Am I Dating a Covert Narcissist?"
-            href="/dating-a-narcissist-test"
-            accentColor="bg-[#280000]/5"
-          />
-          
-          <Card 
-            variant="quiz"
-            title="Is He Cheating? The Micro-Cheating Test"
-            href="/is-he-cheating"
-            accentColor="bg-[#de7c5a]/30"
-          />
-
-          {/* Featured 7th Card - Centered and wider */}
-          <div className="md:col-span-1 md:col-start-1 md:col-end-3 lg:col-span-3 lg:w-2/3 mx-auto w-full mt-4">
-              <Card 
-                variant="tool"
-                title="Chat Analyzer: Decode What He Actually Means"
-                description="Paste his confusing texts here. Our AI will break down his interest level, red flags, and hidden intentions in plain English."
-                buttonText="Analyze His Texts →"
-                href="/chat-analyzer"
-                accentColor="bg-gradient-to-r from-[#b10f2e]/10 to-[#de7c5a]/20 border border-[#b10f2e]/20"
-              />
-          </div>
-
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-8 duration-700">
+          {himHubLinks.map((link, idx) => {
+            const Icon = link.icon;
+            return (
+              <Link key={idx} href={link.path} className="group bg-white rounded-3xl p-8 border border-[#E2E8F0] shadow-sm hover:shadow-md hover:border-[#CBD5E1] transition-all duration-300 flex flex-col justify-between h-full">
+                <div className="flex items-start justify-between mb-6">
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${link.color} ${link.border} border-2`}>
+                    <Icon className="w-7 h-7" />
+                  </div>
+                  <div className="w-10 h-10 rounded-full bg-[#F3ECEB] flex items-center justify-center text-[#5E6E79] group-hover:bg-[#FFB8A1] group-hover:text-black transition-colors duration-200">
+                    <ChevronRight className="w-5 h-5" />
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-[#334B63] mb-2 group-hover:text-[#5A7492] transition-colors">{link.title}</h3>
+                  <p className="text-[#5E6E79] text-sm">{link.description}</p>
+                </div>
+              </Link>
+            );
+          })}
         </div>
-
       </div>
-    </main>
+    </div>
   );
 }
