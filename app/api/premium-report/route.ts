@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 export async function POST(req: Request) {
+  // 🚨 FIX: Moved inside the function and added a build-safe fallback!
+  const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY || "dummy-key-for-build-process",
+  });
+
   try {
     const body = await req.json();
     const { quizType, primaryArchetype, secondaryArchetype, normalizedScores, useRiskIndex } = body;
@@ -29,11 +30,11 @@ export async function POST(req: Request) {
         
         REQUIREMENTS FOR JSON SECTIONS:
         
-        1. "theColdRead" (3 paragraphs): Based on their specific high/low scores, explain *why* they attract this dynamic. What is their hidden fear? (e.g., If 'Boundary Respect' is bad but 'Emotional Labor' is high, explain how they buy love through self-sacrifice). Make it profound.
+        1. "theColdRead" (3 paragraphs): Based on their specific high/low scores, explain *why* they attract this dynamic. What is their hidden fear? Make it profound.
         
         2. "theHarshTruth" (3 bullet points): The specific, undeniable behavioral loops their friends use against them. Name the manipulation tactics directly based on their data. Do not pull punches.
         
-        3. "tacticalPlaybook" (3 highly specific steps + 2 text scripts): Do not give generic advice like "set boundaries." Give them a tactical, phased protocol. (e.g., "Phase 1: The 48-Hour Favor Freeze. For the next two days, default to 'Let me check my schedule'"). Include 2 copy-paste text scripts that are lethal, polite, and impossible to argue with.
+        3. "tacticalPlaybook" (3 highly specific steps + 2 text scripts): Do not give generic advice like "set boundaries." Give them a tactical, phased protocol. Include 2 copy-paste text scripts that are lethal, polite, and impossible to argue with.
 
         RETURN STRICTLY AS JSON:
         {
