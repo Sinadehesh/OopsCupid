@@ -5,12 +5,76 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "OopsCupid | Relationship Red Flags, Texting Analysis & Dating Quizzes",
-  description: "Not sure if he likes you or just likes the attention? OopsCupid helps women spot relationship red flags, decode mixed signals, analyze texts, and understand toxic patterns with free quizzes and tools.",
+  description: "Spot relationship red flags, decode mixed signals, analyze texts, and understand dating patterns with free quizzes and clarity tools.",
+  openGraph: {
+    title: "OopsCupid | Relationship Red Flags, Texting Analysis & Dating Quizzes",
+    description: "Spot relationship red flags, decode mixed signals, analyze texts, and understand dating patterns with free quizzes and clarity tools.",
+    url: "https://oopscupid.com",
+    siteName: "OopsCupid",
+    images: [
+      {
+        url: "https://oopscupid.com/logo.png", // NOTE: Replace this with a 1200x630 social banner URL when you have one
+        width: 1200,
+        height: 630,
+        alt: "OopsCupid - Relationship Clarity Tools",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "OopsCupid | Relationship Red Flags, Texting Analysis & Dating Quizzes",
+    description: "Spot relationship red flags, decode mixed signals, analyze texts, and understand dating patterns with free quizzes and clarity tools.",
+    images: ["https://oopscupid.com/logo.png"],
+  },
 };
 
 export default function Home() {
+  // Schema.org JSON-LD structured data for Google
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://oopscupid.com/#organization",
+        "name": "OopsCupid",
+        "url": "https://oopscupid.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://oopscupid.com/logo.png"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://oopscupid.com/#website",
+        "url": "https://oopscupid.com/",
+        "name": "OopsCupid",
+        "publisher": {
+          "@id": "https://oopscupid.com/#organization"
+        }
+      },
+      {
+        "@type": "CollectionPage",
+        "@id": "https://oopscupid.com/#webpage",
+        "url": "https://oopscupid.com/",
+        "name": "OopsCupid | Relationship Red Flags, Texting Analysis & Dating Quizzes",
+        "isPartOf": {
+          "@id": "https://oopscupid.com/#website"
+        },
+        "description": "Spot relationship red flags, decode mixed signals, analyze texts, and understand dating patterns with free quizzes and clarity tools."
+      }
+    ]
+  };
+
   return (
     <main>
+      {/* Injecting Schema.org data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <MainHero />
 
       {/* SECTION 3 — WHAT IS OOPSCUPID (Cream Background) */}
