@@ -30,6 +30,62 @@ export const metadata: Metadata = {
   },
 };
 
+const testimonies = [
+  "I finally found out why my boyfriend hates me. The quiz opened my eyes to our toxic dynamic.",
+  "I learned that my best friend is a narcissist thanks to this free test.",
+  "The attachment style quiz explained exactly why I keep attracting emotionally unavailable men.",
+  "Spotting relationship red flags is so much easier now. I avoided a toxic trap!",
+  "Is he gaslighting me? This site gave me the clarity I needed to leave a manipulative relationship.",
+  "I finally understand my anxious attachment style and how to heal.",
+  "The toxic friend test validated everything I was feeling. It wasn't just in my head.",
+  "Decoding mixed signals from guys used to drive me crazy. Now I see the truth immediately.",
+  "Why do I attract toxic people? The insights here completely changed my dating patterns.",
+  "I realized I was dealing with a covert narcissist. The signs were all there.",
+  "This helped me figure out if my boyfriend is cheating or just pulling away.",
+  "Love bombing or genuine interest? The articles here saved me from a huge mistake.",
+  "Understanding trauma bonding helped me break free from an awful ex.",
+  "Finally, a way to know if your friends are using you. Highly recommend!",
+  "The chat analyzer accurately predicted he was breadcrumbing me.",
+  "I learned how to deal with an avoidant partner without losing my mind.",
+  "Are my friends bad for me? The quiz results were shockingly accurate.",
+  "Recognizing manipulation tactics in relationships has never been this clear.",
+  "The dating profile analyzer caught red flags I completely missed.",
+  "Why do I keep dating the same type? This site finally gave me the answer.",
+  "Is my friend toxic or just going through a phase? The checklist was eye-opening.",
+  "I discovered the subtle signs of emotional abuse I was ignoring.",
+  "I finally figured out why he pulls away when things get serious.",
+  "The narcissist test for partners is a must-take if you feel crazy in your relationship.",
+  "Decoding his text messages saved me weeks of overthinking.",
+  "I finally stopped blaming myself for his silent treatment.",
+  "The friendship red flags guide helped me cut off a toxic energy vampire.",
+  "Am I the toxic one? The self-reflection quizzes are brutally honest and helpful.",
+  "I learned how to set boundaries with manipulative family members and friends.",
+  "Is he a narcissist or just selfish? The breakdown gave me exactly what I needed.",
+  "I finally understand the fearful avoidant attachment style of my ex.",
+  "The signs of gaslighting in a relationship guide literally saved my sanity.",
+  "Why does he ignore my texts? The texting analysis gave me the harsh but needed truth.",
+  "I found out my best friend is secretly jealous of me. Everything makes sense now.",
+  "The quizzes helped me realize I was in a codependent relationship.",
+  "Spotting a toxic relationship early on is my new superpower thanks to OopsCupid.",
+  "I finally know how to spot a player before the first date.",
+  "The insights on why men pull away are the most accurate I've ever read.",
+  "Is he a sociopath or just a jerk? The red flag checklist is terrifyingly accurate.",
+  "I realized my friendship was one-sided and finally walked away.",
+  "Understanding my partner's attachment style saved our marriage.",
+  "I learned the difference between settling and having realistic relationship expectations.",
+  "The trauma bond test was a tough pill to swallow but exactly what I needed.",
+  "I finally figured out why I self-sabotage healthy relationships.",
+  "This site is a goldmine for understanding male psychology and texting habits.",
+  "I stopped chasing emotionally unavailable men after reading the attraction patterns guide.",
+  "The subtle signs of a cheating boyfriend were right in front of me.",
+  "I learned how to stop being a people pleaser in my romantic relationships.",
+  "Is my relationship worth saving? The clarity tools helped me decide.",
+  "I finally escaped a narcissist. The validation from these quizzes gave me the strength."
+];
+
+// We double the array so the continuous scroll loops perfectly without jumping
+const carouselItems = [...testimonies, ...testimonies];
+
 export default function Home() {
   // Schema.org JSON-LD structured data for Google
   const jsonLd = {
@@ -74,6 +130,22 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      
+      {/* Testimonials Animation Keyframes */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes scroll-left {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-scroll-left {
+          display: flex;
+          width: max-content;
+          animation: scroll-left 120s linear infinite;
+        }
+        .animate-scroll-left:hover {
+          animation-play-state: paused;
+        }
+      `}} />
 
       <MainHero />
 
@@ -169,6 +241,58 @@ export default function Home() {
             <Card variant="proof" title="Stop Doubting Your Read" description="Sometimes you already know something feels off. You just need help trusting what you are seeing." />
             <Card variant="proof" title="See the Pattern Earlier" description="The hardest part is not always the red flag. It is how easy it is to explain it away. OopsCupid helps you notice patterns before they become attachments." />
             <Card variant="proof" title="Get Clear Without the Spiral" description="Not every situation needs more analysis. Sometimes you need a calmer, clearer view of what is right in front of you." />
+          </div>
+        </div>
+      </section>
+
+      {/* NEW SECTION — TESTIMONIALS (Animated Carousel) */}
+      <section className="bg-[#880d1e] py-20 overflow-hidden">
+        <div className="container mx-auto px-6 md:px-10 lg:px-14 mb-12">
+          <div className="text-center max-w-3xl mx-auto">
+            <h2 className="text-[32px] md:text-[42px] font-extrabold text-[#cbeef3] mb-4">
+              Real Women, Real Clarity
+            </h2>
+            <p className="text-[18px] md:text-[20px] font-medium text-[#f49cbb]">
+              Join thousands of women who finally found their answers.
+            </p>
+          </div>
+        </div>
+
+        {/* Carousel Container */}
+        <div className="relative w-full">
+          {/* Fading Edges for the Carousel */}
+          <div className="absolute top-0 left-0 h-full w-12 md:w-32 bg-gradient-to-r from-[#880d1e] to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute top-0 right-0 h-full w-12 md:w-32 bg-gradient-to-l from-[#880d1e] to-transparent z-10 pointer-events-none"></div>
+
+          <div className="animate-scroll-left gap-6 px-6">
+            {carouselItems.map((testimony, index) => (
+              <div 
+                key={index} 
+                className={`flex-shrink-0 w-80 md:w-96 rounded-2xl p-6 shadow-xl border-b-4 ${
+                  index % 2 === 0 
+                    ? "bg-[#cbeef3] border-[#f26a8d]" 
+                    : "bg-[#f49cbb] border-[#dd2d4a]"
+                }`}
+              >
+                <div className="flex gap-1 mb-3">
+                  {/* 5 Stars using the requested palette #dd2d4a */}
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-5 h-5 text-[#dd2d4a] fill-current" viewBox="0 0 24 24">
+                      <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                  ))}
+                </div>
+                <p className="text-[#880d1e] font-semibold text-[16px] md:text-[18px] leading-snug">
+                  "{testimony}"
+                </p>
+                <div className="mt-4 flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-[#f26a8d] flex items-center justify-center text-white font-bold text-sm">
+                    {String.fromCharCode(65 + (index % 26))}
+                  </div>
+                  <span className="text-[#880d1e] font-bold text-sm opacity-80">— Anonymous User</span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
