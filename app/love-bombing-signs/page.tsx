@@ -1,11 +1,37 @@
+import React from "react";
 import Link from "next/link";
 import { ArrowLeft, HeartCrack, Flame, ShieldAlert, BookOpen, Clock, Activity, MessageCircle } from "lucide-react";
-import ReportSection from "@/components/report/ReportSection";
 
 export const metadata = {
   title: "Love Bombing vs. Genuine Affection | OopsCupid",
   description: "How to tell the difference between real love and emotional manipulation. Learn the signs of love bombing and why it feels so confusing.",
 };
+
+// Custom section component just for this article to handle the colorful themes and icons
+function ArticleSection({ title, icon, theme, children }: { title: string, icon: React.ReactNode, theme: string, children: React.ReactNode }) {
+  const themeStyles: Record<string, string> = {
+    indigo: "bg-indigo-50 border-indigo-100",
+    orange: "bg-orange-50 border-orange-100",
+    pink: "bg-pink-50 border-pink-100",
+    red: "bg-red-50 border-red-100",
+    emerald: "bg-emerald-50 border-emerald-100",
+    blue: "bg-blue-50 border-blue-100",
+    amber: "bg-amber-50 border-amber-100",
+  };
+  const themeClass = themeStyles[theme] || "bg-slate-50 border-slate-100";
+
+  return (
+    <div className={`p-6 md:p-8 rounded-3xl border ${themeClass} mb-12`}>
+      <div className="flex items-center gap-3 mb-6">
+        <div className="p-2 bg-white rounded-xl shadow-sm border border-slate-100 flex-shrink-0">
+           {icon}
+        </div>
+        <h2 className="text-2xl font-bold text-[#334B63] m-0">{title}</h2>
+      </div>
+      {children}
+    </div>
+  );
+}
 
 export default function LoveBombingArticle() {
   return (
@@ -61,7 +87,7 @@ export default function LoveBombingArticle() {
             </p>
           </div>
 
-          <ReportSection 
+          <ArticleSection 
             title="The Seduction of Intensity" 
             icon={<Activity className="w-6 h-6 text-indigo-500" />}
             theme="indigo"
@@ -82,9 +108,9 @@ export default function LoveBombingArticle() {
                 Love bombing exploits this same biological mechanism — but with a different goal.
               </p>
             </div>
-          </ReportSection>
+          </ArticleSection>
 
-          <ReportSection 
+          <ArticleSection 
             title="What Love Bombing Really Is" 
             icon={<Flame className="w-6 h-6 text-orange-500" />}
             theme="orange"
@@ -105,9 +131,9 @@ export default function LoveBombingArticle() {
                 And when that happens, the emotional experience can feel overwhelming in the best possible way. At first.
               </p>
             </div>
-          </ReportSection>
+          </ArticleSection>
 
-          <ReportSection 
+          <ArticleSection 
             title="The Early Phase: The Perfect Partner Illusion" 
             icon={<HeartCrack className="w-6 h-6 text-pink-500" />}
             theme="pink"
@@ -138,9 +164,9 @@ export default function LoveBombingArticle() {
                 True intimacy requires time. Real understanding develops through shared experiences and observation. When someone idealizes you immediately, they are often projecting an image rather than responding to the real person.
               </p>
             </div>
-          </ReportSection>
+          </ArticleSection>
 
-          <ReportSection 
+          <ArticleSection 
             title="The Shift That Changes Everything" 
             icon={<ShieldAlert className="w-6 h-6 text-red-500" />}
             theme="red"
@@ -174,9 +200,9 @@ export default function LoveBombingArticle() {
                 Why? Because the brain begins trying to <strong>recover the reward</strong>. You become more invested in regaining the emotional high you experienced during the beginning of the relationship. What once felt like love slowly becomes emotional pursuit.
               </p>
             </div>
-          </ReportSection>
+          </ArticleSection>
 
-          <ReportSection 
+          <ArticleSection 
             title="What Genuine Affection Looks Like" 
             icon={<BookOpen className="w-6 h-6 text-emerald-500" />}
             theme="emerald"
@@ -202,9 +228,9 @@ export default function LoveBombingArticle() {
                 </p>
               </div>
             </div>
-          </ReportSection>
+          </ArticleSection>
 
-          <ReportSection 
+          <ArticleSection 
             title="The Key Difference: Pace" 
             icon={<Clock className="w-6 h-6 text-blue-500" />}
             theme="blue"
@@ -227,9 +253,9 @@ export default function LoveBombingArticle() {
                 The difference may seem subtle in the moment, but over time it becomes profound.
               </p>
             </div>
-          </ReportSection>
+          </ArticleSection>
 
-          <ReportSection 
+          <ArticleSection 
             title="Warning Signs That Affection Might Be Love Bombing" 
             icon={<MessageCircle className="w-6 h-6 text-amber-500" />}
             theme="amber"
@@ -264,7 +290,7 @@ export default function LoveBombingArticle() {
                 These signals do not automatically mean someone is manipulative. But when multiple signs appear together, it is wise to slow down and observe the dynamic more carefully.
               </p>
             </div>
-          </ReportSection>
+          </ArticleSection>
 
           {/* Conclusion */}
           <div className="bg-white rounded-3xl p-8 md:p-12 border border-[#E2E8F0] shadow-sm text-center">
