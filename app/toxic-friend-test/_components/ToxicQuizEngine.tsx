@@ -5,8 +5,6 @@ import SafetyModal from "./SafetyModal";
 import FreeResult from "./FreeResult";
 import { calculateToxicScores } from "../_lib/scoring";
 
-const STORAGE_KEY = "oopscupid_toxic_friend_progress";
-
 export default function ToxicQuizEngine() {
   const [mounted, setMounted] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -17,27 +15,9 @@ export default function ToxicQuizEngine() {
   const [isCalculating, setIsCalculating] = useState(false);
   const [resultsData, setResultsData] = useState<any>(null);
 
-  // Hydrate from localStorage
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        setAnswers(parsed.answers || {});
-        setCurrentIndex(parsed.currentIndex || 0);
-      } catch (e) {
-        console.error("Failed to parse saved progress");
-      }
-    }
     setMounted(true);
   }, []);
-
-  // Save on change
-  useEffect(() => {
-    if (mounted && !isFinished) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ answers, currentIndex }));
-    }
-  }, [answers, currentIndex, mounted, isFinished]);
 
   if (!mounted) return <div className="min-h-[400px] flex items-center justify-center text-slate-500" aria-live="polite">Loading Engine...</div>;
 
@@ -144,9 +124,6 @@ export default function ToxicQuizEngine() {
         >
           &larr; Back
         </button>
-        <span className="text-xs font-medium text-slate-400 flex items-center gap-1" aria-hidden="true">
-          💾 Auto-saving
-        </span>
       </div>
     </div>
   );
