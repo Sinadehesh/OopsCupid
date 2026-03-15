@@ -1,28 +1,19 @@
-import MainHero from "@/components/ui/MainHero";
-import QuizWidget from "@/components/features/QuizWidget";
-import Link from "next/link";
-import { Metadata } from "next";
+import React from "react";
+import GaslightingQuizEngine from "./_components/GaslightingQuizEngine";
 
-export const metadata: Metadata = {
-  title: "Is He Gaslighting Me? | OopsCupid Quiz",
-  description: "Find out the answer to is he gaslighting me? with our quick psychological assessment.",
+export const metadata = {
+  title: "Is He Gaslighting Me? | Clinical Screening Tool",
+  description: "A 50-item behavioral audit measuring reality denial, invalidation, and the erosion of self-trust."
 };
 
-export default function QuizPage() {
+export default function GaslightingPage() {
   return (
-    <>
-      <MainHero
-        headline="Is He Gaslighting Me?"
-        subheadline="Take this quick quiz to gain some objective clarity."
-      />
-      <div className="container mx-auto px-4 py-16">
-        <div className="mb-12">
-            <Link href="/relationship-red-flags" className="text-primary-600 hover:text-primary-700 font-medium">
-                &larr; Back to Relationship Red Flags Hub
-            </Link>
-        </div>
-        <QuizWidget quizName="Is He Gaslighting Me?" />
+    <main className="min-h-screen bg-[#F8FAFC] py-16 px-6">
+      <div className="max-w-3xl mx-auto text-center mb-10">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 mb-4 tracking-tight">Is He Gaslighting Me?</h1>
+        <p className="text-slate-500 text-lg">Stop guessing. Start measuring. Run a 50-point clinical screening on his behavior and your mental clarity.</p>
       </div>
-    </>
+      <GaslightingQuizEngine />
+    </main>
   );
 }
