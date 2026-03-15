@@ -1,28 +1,19 @@
-import MainHero from "@/components/ui/MainHero";
-import QuizWidget from "@/components/features/QuizWidget";
-import Link from "next/link";
-import { Metadata } from "next";
+import React from "react";
+import SabotageQuizEngine from "./_components/SabotageQuizEngine";
 
-export const metadata: Metadata = {
-  title: "Why Do I Sabotage Relationships? | OopsCupid Quiz",
-  description: "Find out the answer to why do i sabotage relationships? with our quick psychological assessment.",
+export const metadata = {
+  title: "Why Do I Sabotage Relationships? | Clinical Quiz",
+  description: "A 50-item behavioral audit measuring fear of closeness, rejection alarm, and self-protective distancing."
 };
 
-export default function QuizPage() {
+export default function SabotagePage() {
   return (
-    <>
-      <MainHero
-        headline="Why Do I Sabotage Relationships?"
-        subheadline="Take this quick quiz to gain some objective clarity."
-      />
-      <div className="container mx-auto px-4 py-16">
-        <div className="mb-12">
-            <Link href="/attraction-patterns" className="text-primary-600 hover:text-primary-700 font-medium">
-                &larr; Back to Attraction Patterns Hub
-            </Link>
-        </div>
-        <QuizWidget quizName="Why Do I Sabotage Relationships?" />
+    <main className="min-h-screen bg-[#F8FAFC] py-16 px-6">
+      <div className="max-w-3xl mx-auto text-center mb-10">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 mb-4 tracking-tight">Why Do I Sabotage Relationships?</h1>
+        <p className="text-slate-500 text-lg">Stop guessing. Start measuring. Run a 50-point clinical screening on your attachment anxiety, fear of rejection, and protective instincts.</p>
       </div>
-    </>
+      <SabotageQuizEngine />
+    </main>
   );
 }
