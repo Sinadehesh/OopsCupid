@@ -7,7 +7,7 @@ import CircularScore from "./CircularScore";
 import LockedInsightCard from "./LockedInsightCard";
 import UnlockBanner from "./UnlockBanner";
 import { generateAttachmentNarrative, generateEmotionNarrative, generateSelfEsteemNarrative } from "@/lib/psychometrics/narratives";
-import { ShieldCheck, ArrowRight } from "lucide-react";
+import { ShieldCheck, ArrowRight, Info } from "lucide-react";
 
 interface MasterReportProps {
   profile: PsychologicalProfile;
@@ -23,7 +23,7 @@ export default function MasterReport({ profile, demographics, isDarkTheme = fals
     return { name: nameMap[key], anxiety: data.anxietyScore, avoidance: data.avoidanceScore };
   });
 
-  const dummyBlurText = "This section contains a deep clinical analysis of your psychological patterns. It explains exactly how your nervous system reacts to specific triggers, the childhood origins of these patterns, and the subconscious mechanisms driving your behavior today. Unlocking this reveals the exact step-by-step strategies needed to rewire your responses and achieve secure attachment.";
+  const dummyBlurText = "This section contains the exact text scripts and step-by-step extraction plan you need to rewire this dynamic. Unlocking this reveals the undeniable truth about why they act this way, and gives you the exact tactical playbook to set boundaries that actually work.";
 
   const tH3 = isDarkTheme ? "text-slate-100" : "text-slate-900";
   const tText = isDarkTheme ? "text-slate-300" : "text-slate-600";
@@ -31,71 +31,84 @@ export default function MasterReport({ profile, demographics, isDarkTheme = fals
 
   return (
     <div className={`min-h-screen ${isDarkTheme ? 'bg-[#0f172a]' : 'bg-[#fafafa]'} py-12 w-full`}>
-      {/* Clean, reliable centered container — NO w-screen negative margins */}
       <div className="w-full max-w-6xl mx-auto px-6 md:px-10 lg:px-12 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
         
-        {/* HERO SECTION — perfectly balanced cards */}
+        {/* HERO SECTION — Outcome Driven */}
         <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-20 items-stretch">
           
-          {/* LEFT CARD — generous padding, shadow, and breathing room */}
           <div className={`rounded-3xl border p-10 md:p-12 flex flex-col justify-center ${cardClass}`}>
-            <div className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold tracking-widest mb-8 w-fit ${isDarkTheme ? 'bg-blue-500/10 border-blue-500/30 text-blue-400' : 'bg-blue-50 border-blue-100 text-blue-700'}`}>
+            <div className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold tracking-widest mb-8 w-fit ${isDarkTheme ? 'bg-rose-500/10 border-rose-500/30 text-rose-400' : 'bg-rose-50 border-rose-200 text-rose-600'}`}>
               <ShieldCheck className="w-4 h-4" />
-              TRUSTED BY MILLIONS WORLDWIDE
+              INSTANT DIAGNOSTIC AUDIT
             </div>
             
-            <h2 className={`text-4xl md:text-5xl font-extrabold leading-none tracking-tighter mb-8 ${tH3}`}>
-              Your Complete<br />Attachment Profile
+            <h2 className={`text-4xl md:text-5xl font-extrabold leading-none tracking-tighter mb-6 ${tH3}`}>
+              Stop Guessing. Here Is <br className="hidden md:block"/> <span className="text-rose-500">Your Diagnosis.</span>
             </h2>
             
-            <p className={`text-[17px] leading-relaxed mb-10 ${tText}`}>
-              Your attachment style affects how you experience close relationships with others. When we feel secure, we experience healthier relationships that support and protect our well-being. If we feel insecure, it can be more difficult for us to feel safe, seen, valued, or supported in relationships.
+            <p className={`text-[18px] font-medium leading-relaxed mb-10 ${tText}`}>
+              Your psychological scan is complete. Below is the cold-hard truth about why you react the way you do, why you keep attracting the exact same relationship problems, and exactly what you need to do to fix it today.
             </p>
             
             <div className="mt-auto">
-              <button className={`inline-flex items-center gap-3 font-semibold text-lg ${isDarkTheme ? 'text-blue-400 hover:text-blue-300' : 'text-[#006ba6] hover:text-[#0496ff]'}`}>
-                Learn More <ArrowRight className="w-5 h-5" />
+              <button className={`inline-flex items-center gap-3 font-extrabold text-lg ${isDarkTheme ? 'text-rose-400 hover:text-rose-300' : 'text-rose-600 hover:text-rose-500'}`}>
+                Read My Diagnosis <ArrowRight className="w-5 h-5" />
               </button>
             </div>
           </div>
 
-          {/* RIGHT CARD — Quadrant */}
-          <div className="flex items-center justify-center w-full h-full">
+          {/* RIGHT CARD — Quadrant with Explanation */}
+          <div className="flex flex-col items-center justify-center w-full h-full gap-4">
             <AttachmentQuadrant domains={quadrantDomains} isDarkTheme={isDarkTheme} />
+            <div className={`w-full p-5 rounded-2xl border ${isDarkTheme ? 'bg-slate-800/80 border-slate-700' : 'bg-white border-slate-200'} shadow-sm`}>
+               <h4 className="font-extrabold text-sm uppercase tracking-widest mb-3 text-rose-500 flex items-center gap-2"><Info className="w-4 h-4"/> How To Read Your Graph</h4>
+               <p className={`text-sm font-medium ${tText} leading-relaxed`}>
+                 <strong>Vertical Line (Anxiety):</strong> Higher dots mean you overthink, fear abandonment, and stress over texts.<br/>
+                 <strong>Horizontal Line (Avoidance):</strong> Dots further to the right mean you easily feel trapped, suffocated, and pull away from closeness.
+               </p>
+            </div>
           </div>
         </div>
 
         <h3 className={`text-2xl md:text-3xl font-extrabold ${tH3} mt-16 mb-8 border-b ${isDarkTheme ? 'border-slate-800' : 'border-slate-200'} pb-3`}>
-          Detailed Domain Breakdown
+          Your Brutally Honest Breakdowns
         </h3>
         
         <div className="space-y-12 md:space-y-16 w-full">
           
-          {/* 2. GENERAL ATTACHMENT */}
+          {/* GENERAL ATTACHMENT */}
           <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
             <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full ${cardClass}`}>
-              <h4 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-2">General Attachment Style</h4>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-[#a855f7] mb-8">{profile.attachment.general.classification}</h2>
-              <div className="space-y-5 mb-8 flex-grow">
+              <h4 className="text-sm font-extrabold uppercase tracking-widest text-slate-500 mb-2">How You Operate (General)</h4>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-[#a855f7] mb-6">{profile.attachment.general.classification}</h2>
+              
+              <div className="space-y-5 mb-6">
                 <ScoreBar label="Avoidance" value={profile.attachment.general.avoidanceScore} color="bg-[#a855f7]" />
                 <ScoreBar label="Anxiety" value={profile.attachment.general.anxietyScore} color={isDarkTheme ? "bg-slate-500" : "bg-slate-800"} />
               </div>
-              <p className={`text-base md:text-lg font-medium leading-relaxed ${tText}`}>
+              
+              <div className={`p-4 mb-6 rounded-xl border ${isDarkTheme ? 'bg-[#a855f7]/10 border-[#a855f7]/20' : 'bg-[#a855f7]/5 border-[#a855f7]/10'}`}>
+                 <p className={`text-sm font-medium ${tText} leading-relaxed`}>
+                   <strong className="text-[#a855f7]">High Avoidance</strong> means you view emotional closeness as a threat to your freedom. <strong className={isDarkTheme ? "text-slate-300" : "text-slate-800"}>High Anxiety</strong> means your nervous system is stuck waiting for the other shoe to drop.
+                 </p>
+              </div>
+
+              <p className={`text-base md:text-lg font-medium leading-relaxed ${tText} flex-grow`}>
                 {generateAttachmentNarrative("general", profile.attachment.general.classification, isSingle, gender, hasChildren)}
               </p>
             </div>
             <LockedInsightCard 
-              title={`${profile.attachment.general.classification} Characteristics`} 
-              teaser="A deep dive into your primary attachment behaviors, defensive patterns, and the exact psychological mechanisms driving your responses." 
+              title={`The ${profile.attachment.general.classification} Playbook`} 
+              teaser="A tactical deep dive into the exact mind games your brain plays on you, and the copy-paste scripts you need to set boundaries today." 
               blurredBody={dummyBlurText}
               isDarkTheme={isDarkTheme}
             />
           </div>
 
-          {/* 3. ROMANTIC ATTACHMENT */}
+          {/* ROMANTIC ATTACHMENT */}
           <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
             <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full ${cardClass}`}>
-              <h4 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-2">Your Romantic Attachment Style</h4>
+              <h4 className="text-sm font-extrabold uppercase tracking-widest text-slate-500 mb-2">Your Dating Blind Spots</h4>
               <h2 className="text-3xl md:text-4xl font-extrabold text-[#ef4444] mb-8">{profile.attachment.romantic.classification}</h2>
               <div className="space-y-5 mb-8 flex-grow">
                 <ScoreBar label="Avoidance" value={profile.attachment.romantic.avoidanceScore} color="bg-[#ef4444]" />
@@ -106,18 +119,18 @@ export default function MasterReport({ profile, demographics, isDarkTheme = fals
               </p>
             </div>
             <LockedInsightCard 
-              title="Relationship Compatibility Patterns" 
-              teaser="See exactly which attachment styles you thrive with romantically, and which ones will trigger your deepest insecurities." 
+              title="Who You Magnetically Attract" 
+              teaser="See exactly which toxic personalities you naturally attract, why they target you, and the exact red flags you are ignoring." 
               blurredBody={dummyBlurText}
               isDarkTheme={isDarkTheme}
             />
           </div>
 
-          {/* 4. CAREGIVERS */}
+          {/* CAREGIVERS */}
           <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch pt-8">
             <div className="flex flex-col gap-8 lg:gap-12 h-full">
               <div className={`rounded-3xl border p-8 md:p-10 flex-1 ${cardClass}`}>
-                <h3 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-2">Maternal Figure</h3>
+                <h3 className="text-sm font-extrabold uppercase tracking-widest text-slate-500 mb-2">Childhood Roots: Mother</h3>
                 <h2 className="text-2xl md:text-3xl font-extrabold text-[#8b5cf6] mb-6">{profile.attachment.mother.classification}</h2>
                 <div className="space-y-4">
                   <ScoreBar label="Avoidance" value={profile.attachment.mother.avoidanceScore} color="bg-[#8b5cf6]" />
@@ -125,7 +138,7 @@ export default function MasterReport({ profile, demographics, isDarkTheme = fals
                 </div>
               </div>
               <div className={`rounded-3xl border p-8 md:p-10 flex-1 ${cardClass}`}>
-                <h3 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-2">Paternal Figure</h3>
+                <h3 className="text-sm font-extrabold uppercase tracking-widest text-slate-500 mb-2">Childhood Roots: Father</h3>
                 <h2 className="text-2xl md:text-3xl font-extrabold text-[#fb923c] mb-6">{profile.attachment.father.classification}</h2>
                 <div className="space-y-4">
                   <ScoreBar label="Avoidance" value={profile.attachment.father.avoidanceScore} color="bg-[#fb923c]" />
@@ -134,47 +147,27 @@ export default function MasterReport({ profile, demographics, isDarkTheme = fals
               </div>
             </div>
             <LockedInsightCard 
-              title="Deep Schema Interpretation" 
-              teaser={`You scored high for '${profile.schemas[0]?.name || "Fear of Abandonment"}'. Discover the exact childhood events that programmed this trigger.`} 
+              title="The Hidden Trauma Loop" 
+              teaser={`You scored high for '${profile.schemas[0]?.name || "Fear of Abandonment"}'. Discover the exact childhood events that programmed this trigger and how to delete it.`} 
               blurredBody={dummyBlurText}
               isDarkTheme={isDarkTheme}
             />
           </div>
 
-          {/* 5. WORK ATTACHMENT */}
-          <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch pt-8">
-            <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full ${cardClass}`}>
-              <h4 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-2">Your Attachment at Work</h4>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-[#f97316] mb-8">{profile.attachment.work.classification}</h2>
-              <div className="space-y-5 mb-8 flex-grow">
-                <ScoreBar label="Avoidance" value={profile.attachment.work.avoidanceScore} color="bg-[#f97316]" />
-                <ScoreBar label="Anxiety" value={profile.attachment.work.anxietyScore} color={isDarkTheme ? "bg-slate-500" : "bg-slate-800"} />
-              </div>
-              <p className={`text-base md:text-lg font-medium leading-relaxed ${tText}`}>
-                {generateAttachmentNarrative("work", profile.attachment.work.classification, isSingle, gender, hasChildren)}
-              </p>
-            </div>
-            <LockedInsightCard 
-              title="Workplace & Success Triggers" 
-              teaser="Understand how your attachment style affects your career trajectory, how you handle authority, and why you might experience imposter syndrome." 
-              blurredBody={dummyBlurText}
-              isDarkTheme={isDarkTheme}
-            />
-          </div>
-
-          {/* 6. SELF ESTEEM & EMOTION REGULATION (DATA DASHBOARD) */}
+          {/* SELF ESTEEM & EMOTION REGULATION */}
         <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch pt-12 border-t border-slate-200">
           <div className={`rounded-[24px] border p-6 md:p-10 flex flex-col justify-center h-full ${cardClass}`}>
-            <h3 className={`text-xl md:text-2xl font-extrabold mb-8 text-center ${tH3}`}>
-              Core Psychological Drivers
+            <h3 className={`text-xl md:text-2xl font-extrabold mb-4 text-center ${tH3}`}>
+              Your Vulnerability Scanners
             </h3>
+            <p className="text-center text-sm font-medium text-slate-500 mb-8 max-w-sm mx-auto">These meters show exactly how vulnerable you are to emotional manipulation right now.</p>
             
             <div className="flex flex-col md:flex-row items-center justify-around gap-8 md:gap-4 w-full mb-8">
               <CircularScore 
                 title="Self-Esteem" 
                 value={profile.selfEsteem.score} 
                 max={100} 
-                subtitle="Self-Worth Index" 
+                subtitle="Your Internal Armor" 
                 color={profile.selfEsteem.score < 50 ? "#F6511D" : "#00A6ED"} 
                 isDarkTheme={isDarkTheme} 
               />
@@ -186,7 +179,7 @@ export default function MasterReport({ profile, demographics, isDarkTheme = fals
                 title="Emotion Control" 
                 value={profile.emotionRegulation.score} 
                 max={100} 
-                subtitle="Dysregulation Risk" 
+                subtitle="Spiral Risk" 
                 color={profile.emotionRegulation.score > 60 ? "#F6511D" : "#FFB400"} 
                 isDarkTheme={isDarkTheme} 
               />
@@ -194,20 +187,20 @@ export default function MasterReport({ profile, demographics, isDarkTheme = fals
             
             <div className={`mt-auto p-5 rounded-[16px] border ${isDarkTheme ? 'bg-slate-800/50 border-slate-700' : 'bg-slate-50 border-slate-100'}`}>
               <p className={`text-sm md:text-base font-medium leading-relaxed text-center ${tText}`}>
-                {generateEmotionNarrative(profile.emotionRegulation.level)}
+                {generateEmotionNarrative(profile.emotionRegulation.level)} {generateSelfEsteemNarrative(profile.selfEsteem.score)}
               </p>
             </div>
           </div>
           
           <LockedInsightCard 
-            title="Partner Attraction Magnets" 
-            teaser={`Understand why your '${profile.loveStyle}' love style magnetically draws you to the same toxic or unavailable types, and how to rewire your attraction.`} 
+            title="The Step-By-Step Extraction Plan" 
+            teaser={`Understand why your '${profile.loveStyle}' love style magnetically draws you to toxic people, and unlock the exact, step-by-step plan to rewire your attraction today.`} 
             blurredBody={dummyBlurText}
             isDarkTheme={isDarkTheme}
           />
         </div>
 
-        {/* 7. UPSELL BANNER */}
+        {/* UPSELL BANNER */}
         <UnlockBanner />
       <SharePrintButtons />
 
