@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import PremiumReport from "./PremiumReport";
+import { MessageSquare, ShieldCheck } from "lucide-react";
 
 // Reusable Bar Component for the Dimensions
 function DimensionBar({ label, score, color }: { label: string, score: number, color: string }) {
@@ -104,22 +105,31 @@ export default function FreeResult({ data, rawAnswers }: { data: any, rawAnswers
         </div>
       </div>
 
-      {/* Premium Upsell Card */}
-      <div className="bg-[#0f172a] rounded-[24px] shadow-2xl border border-slate-800 p-8 md:p-10 relative overflow-hidden text-center">
-        <div className="absolute -top-20 -right-20 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-rose-500/10 rounded-full blur-3xl pointer-events-none"></div>
-        <span className="inline-block bg-rose-500/20 text-rose-400 font-extrabold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">🔒 Premium Analysis Unlock</span>
-        <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-4">Unlock Your Full Action Plan</h3>
-        <p className="text-slate-300 text-lg mb-8 max-w-xl mx-auto">
-          You've seen your scores. Now see exactly what they mean. Unlock the <strong>distortion check</strong>, extract your <strong>top red flags</strong>, and get copy-paste <strong>boundary scripts</strong> tailored to your results.
-        </p>
+      {/* HORMOZI-STYLE GRAND SLAM UPSELL CARD */}
+      <div className="bg-[#0f172a] rounded-[24px] shadow-2xl border border-rose-500/30 p-8 md:p-10 relative overflow-hidden text-center md:text-left flex flex-col md:flex-row items-center gap-8">
+        <div className="absolute -top-20 -right-20 w-64 h-64 bg-rose-500/20 rounded-full blur-3xl pointer-events-none"></div>
         
-        <button 
-          onClick={() => setIsUnlocked(true)}
-          className="w-full md:w-auto bg-[#00A6ED] hover:bg-[#008fcc] text-white font-extrabold text-lg py-4 px-10 rounded-[14px] transition-all transform hover:-translate-y-1 shadow-[0_8px_20px_rgba(0,166,237,0.3)]"
-        >
-          Mock Checkout & Reveal
-        </button>
+        <div className="flex-1 z-10">
+          <div className="inline-flex items-center gap-2 bg-rose-500/20 text-rose-400 font-extrabold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-4">
+            <MessageSquare className="w-4 h-4" /> The Playbook & Scripts
+          </div>
+          <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-3">Don't Know What To Say?</h3>
+          <p className="text-slate-300 text-lg mb-6 font-medium">
+            Stop stressing over how to set a boundary. Unlock your customized <strong>Tactical Playbook</strong> and get exact, copy-paste text scripts to handle this friendship without the drama.
+          </p>
+          <div className="flex items-center gap-2 text-sm text-green-400 font-bold mb-6 justify-center md:justify-start">
+            <ShieldCheck className="w-5 h-5" /> Backed by our 7-Day Money-Back Guarantee
+          </div>
+        </div>
+
+        <div className="w-full md:w-auto z-10 shrink-0">
+          <button 
+            onClick={() => setIsUnlocked(true)}
+            className="w-full bg-[#ffbc42] hover:bg-[#e5a93c] hover:scale-105 text-black font-extrabold text-lg py-5 px-8 rounded-2xl transition-all shadow-[0_0_20px_rgba(255,188,66,0.3)]"
+          >
+            Unlock Playbook
+          </button>
+        </div>
       </div>
 
     </div>
