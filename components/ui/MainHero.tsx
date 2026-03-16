@@ -26,7 +26,7 @@ const defaultCards: MainHeroCard[] = [
     imageSrc: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=80",
     imageAlt: "woman reflecting on her relationship patterns",
     title: "Me",
-    description: "Understand your dating patterns and blind spots",
+    description: "Why do I pick bad guys? Fix your dating habits fast.",
     bgColor: "#00A6ED", // New Blue
     textColor: "#FFFFFF",
     href: "/me",
@@ -35,7 +35,7 @@ const defaultCards: MainHeroCard[] = [
     imageSrc: "https://images.pexels.com/photos/20183378/pexels-photo-20183378.jpeg?auto=compress&cs=tinysrgb&w=600",
     imageAlt: "handsome young man in a thoughtful pose",
     title: "Him",
-    description: "Decode mixed signals, texts, and red flag behavior",
+    description: "Is he lying? Spot the red flags and get the exact text to send him.",
     bgColor: "#DD1C1A", // Red moved from 'Me'
     textColor: "#FFFFFF",
     href: "/him",
@@ -44,7 +44,7 @@ const defaultCards: MainHeroCard[] = [
     imageSrc: "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=900&q=80",
     imageAlt: "friends together but one looks uncomfortable",
     title: "My Friends",
-    description: "Identify toxic friendships and one-sided connections",
+    description: "Are they using you? Spot fake friends before you get hurt.",
     bgColor: "#7FB800", // New Green
     textColor: "#FFFFFF", // Changed from Teal to White
     href: "/friends",
@@ -53,7 +53,7 @@ const defaultCards: MainHeroCard[] = [
     imageSrc: "https://img.freepik.com/free-photo/two-people-love-walking-beach-generated-by-ai_188544-18425.jpg?semt=ais_rp_50_assets&w=600&q=75",
     imageAlt: "two people walking on a beach representing relationship tools",
     title: "Clarity Hub",
-    description: "Chat analyzer, quizzes, and profile readers",
+    description: "Instant Answers. Quick tests and chat readers.",
     bgColor: "#086788", // Kept same
     textColor: "#FFFFFF",
     href: "/articles",
@@ -98,11 +98,11 @@ function HeroCard({ card }: { card: MainHeroCard }) {
 export default function MainHero(props: MainHeroProps) {
   const {
     topSubheading = "WELCOME TO OOPSCUPID",
-    headline = "Relationship Red Flags, Mixed Signals & Dating Pattern Quizzes",
+    headline = "Stop Guessing. Know Exactly What To Say Next.",
     question, subheadline, children, cards = defaultCards,
   } = props;
 
-  const displayQuestion = question || subheadline || "Not sure if he likes you or just likes the attention? Spot red flags, decode texts, and understand why you keep ending up in the same situations.";
+  const displayQuestion = question || subheadline || "Take a quick 3-minute test. Find out if he is playing you, and get the exact copy-paste texts to take your power back. No more waiting by the phone.";
 
   return (
     <section className="relative overflow-hidden bg-white pt-12 md:pt-16 lg:pt-20 pb-16 md:pb-20">
