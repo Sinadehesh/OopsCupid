@@ -1,11 +1,14 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-// Initialize OpenAI. It will automatically use process.env.OPENAI_API_KEY
-const openai = new OpenAI();
+// Force dynamic rendering so Next.js doesn't try to statically evaluate this at build time
+export const dynamic = 'force-dynamic';
 
 export async function POST(req: Request) {
   try {
+    // Initialize OpenAI INSIDE the request handler to avoid build-time crashes
+    const openai = new OpenAI();
+
     const { data } = await req.json();
 
     const prompt = `
