@@ -28,6 +28,24 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
   const tText = isDarkTheme ? "text-slate-300" : "text-slate-600";
   const cardClass = isDarkTheme ? "bg-slate-800 border-slate-700 shadow-sm" : "bg-white border-slate-200 shadow-sm";
 
+  // Hormozi Framework Parser: Splits paragraphs and automatically bolds titles
+  const renderNarrative = (text: string) => {
+    return text.split('\n\n').map((paragraph, i) => {
+      const colonIndex = paragraph.indexOf(': ');
+      if (colonIndex !== -1 && colonIndex < 40) { // Limit to catch titles like "The Sharp Truth:"
+        const title = paragraph.substring(0, colonIndex);
+        const rest = paragraph.substring(colonIndex + 2);
+        return (
+          <span key={i} className="block mb-4 last:mb-0">
+            <strong className={`font-extrabold ${isDarkTheme ? 'text-slate-100' : 'text-slate-900'}`}>{title}: </strong>
+            {rest}
+          </span>
+        );
+      }
+      return <span key={i} className="block mb-4 last:mb-0">{paragraph}</span>;
+    });
+  };
+
   return (
     // BREAKOUT CONTAINER: 100vw width breaks out of the narrow QuizWidget parent
     <div className={`w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] ${isDarkTheme ? 'bg-[#0f172a]' : 'bg-[#fafafa]'} py-12 border-t ${isDarkTheme ? 'border-slate-800' : 'border-slate-200'}`}>
@@ -36,10 +54,8 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
       <div className="max-w-5xl mx-auto px-4 md:px-8 py-10 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
         
         {/* 1. HERO SECTION & ATTACHMENT QUADRANT */}
-        {/* Stacks naturally on mobile (text first, then chart). Side-by-side on md/lg screens. */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-stretch mb-16 md:mb-24">
           
-          {/* Left Text Intro (Now inside a beautiful card!) */}
           <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full ${cardClass}`}>
             <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-extrabold tracking-wider uppercase mb-6 w-fit border shadow-sm ${isDarkTheme ? 'bg-blue-500/10 border-blue-500/20 text-blue-400' : 'bg-blue-50 border-blue-100 text-blue-700'}`}>
               <ShieldCheck className="w-4 h-4" />
@@ -61,7 +77,6 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
             </div>
           </div>
 
-          {/* Right Quadrant (The component already renders its own white card) */}
           <div className="flex flex-col w-full h-full justify-center">
             <AttachmentQuadrant domains={quadrantDomains} isDarkTheme={isDarkTheme} />
           </div>
@@ -83,9 +98,9 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
                 <ScoreBar label="Avoidance" value={profile.attachment.general.avoidanceScore} color="bg-[#a855f7]" />
                 <ScoreBar label="Anxiety" value={profile.attachment.general.anxietyScore} color={isDarkTheme ? "bg-slate-500" : "bg-slate-800"} />
               </div>
-              <p className={`text-base md:text-lg font-medium leading-relaxed ${tText}`}>
-                {generateAttachmentNarrative("general", profile.attachment.general.classification, isSingle, gender, hasChildren)}
-              </p>
+              <div className={`text-base md:text-lg font-medium leading-relaxed ${tText}`}>
+                {renderNarrative(generateAttachmentNarrative("general", profile.attachment.general.classification, isSingle, gender, hasChildren))}
+              </div>
             </div>
             <LockedInsightCard 
               title={`${profile.attachment.general.classification} Characteristics`} 
@@ -104,9 +119,9 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
                 <ScoreBar label="Avoidance" value={profile.attachment.romantic.avoidanceScore} color="bg-[#ef4444]" />
                 <ScoreBar label="Anxiety" value={profile.attachment.romantic.anxietyScore} color={isDarkTheme ? "bg-slate-500" : "bg-slate-800"} />
               </div>
-              <p className={`text-base md:text-lg font-medium leading-relaxed ${tText}`}>
-                {generateAttachmentNarrative("romantic", profile.attachment.romantic.classification, isSingle, gender, hasChildren)}
-              </p>
+              <div className={`text-base md:text-lg font-medium leading-relaxed ${tText}`}>
+                {renderNarrative(generateAttachmentNarrative("romantic", profile.attachment.romantic.classification, isSingle, gender, hasChildren))}
+              </div>
             </div>
             <LockedInsightCard 
               title="Relationship Compatibility Patterns" 
@@ -153,9 +168,9 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
                 <ScoreBar label="Avoidance" value={profile.attachment.work.avoidanceScore} color="bg-[#f97316]" />
                 <ScoreBar label="Anxiety" value={profile.attachment.work.anxietyScore} color={isDarkTheme ? "bg-slate-500" : "bg-slate-800"} />
               </div>
-              <p className={`text-base md:text-lg font-medium leading-relaxed ${tText}`}>
-                {generateAttachmentNarrative("work", profile.attachment.work.classification, isSingle, gender, hasChildren)}
-              </p>
+              <div className={`text-base md:text-lg font-medium leading-relaxed ${tText}`}>
+                {renderNarrative(generateAttachmentNarrative("work", profile.attachment.work.classification, isSingle, gender, hasChildren))}
+              </div>
             </div>
             <LockedInsightCard 
               title="Workplace & Success Triggers" 
@@ -175,9 +190,9 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
               <div className={`rounded-3xl border p-8 md:p-10 flex-col ${cardClass}`}>
                 <h3 className={`text-xl font-bold mb-6 ${tH3}`}>Emotion Regulation</h3>
                 <ScoreBar label="Overall Dysregulation Risk" value={profile.emotionRegulation.score} color={profile.emotionRegulation.score > 60 ? "bg-red-500" : "bg-[#006ba6]"} />
-                <p className={`mt-6 text-base font-medium leading-relaxed ${tText}`}>
-                  {generateEmotionNarrative(profile.emotionRegulation.level)}
-                </p>
+                <div className={`mt-6 text-base font-medium leading-relaxed ${tText}`}>
+                  {renderNarrative(generateEmotionNarrative(profile.emotionRegulation.level))}
+                </div>
               </div>
             </div>
             <LockedInsightCard 
