@@ -1,32 +1,36 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-// Force dynamic rendering so Next.js doesn't try to statically evaluate this at build time
-export const dynamic = 'force-dynamic';
+// FIX: Switch to the Edge runtime. This prevents the "output: export" build crash 
+// caused by force-dynamic, and is heavily optimized for OpenAI on Vercel.
+export const runtime = 'edge';
 
 export async function POST(req: Request) {
   try {
-    // Initialize OpenAI INSIDE the request handler to avoid build-time crashes
     const openai = new OpenAI();
-
     const { data } = await req.json();
 
     const prompt = `
-    Act as a brutally honest, high-end behavioral psychologist. The user just took an "Are My Friends Bad For Me?" test.
-    Their overall diagnostic tier is: "${data.tier}".
-    Their #1 highest vulnerability/pain point is: "${data.top1}".
-    Here is the full breakdown of their risk percentages across 10 vectors:
+    You are an elite psychological profiler and direct-response behavioral strategist charging $10,000/hour. 
+    The user just completed the "Are My Friends Bad For Me?" assessment.
+    
+    Diagnostic Tier: "${data.tier}"
+    Highest Vulnerability: "${data.top1}"
+    Risk Breakdown:
     ${data.sortedSubcategories.map((s: any) => `- ${s.name}: ${s.percentage}% Risk`).join('\n')}
 
-    Based on these exact scores, write a highly personalized, emotionally hitting action plan. 
-    Use short sentences. Be direct. Do not use academic filler. Hit their exact pain points.
-    
+    Your objective is to generate a hyper-personalized, brutal, but highly actionable insights report.
+    You must optimize the report using these principles:
+    1. THE PAIN IS THE PITCH: Accurately articulate the specific pain and frustration of their current patterns. Make them feel perfectly understood.
+    2. ZERO FLUFF: Do not use generic self-help clichés (e.g., "journey," "authentic self"). Speak with absolute certainty, utilizing sharp behavioral terminology.
+    3. DECREASE EFFORT & SACRIFICE: The scripts provided must be low-friction and immediately actionable.
+
     Format the response STRICTLY as a JSON object with the following keys:
     {
-      "howTheyUseYou": "A 2-paragraph brutally honest explanation of exactly how their friends are exploiting their top vulnerabilities right now.",
-      "whatKeepsYouStuck": "A 1-paragraph explanation of the specific psychological trap (like guilt, fear of loneliness, or people-pleasing) keeping them in this toxic circle.",
-      "softScript": "A 1-sentence polite but firm text message they can copy-paste to set a boundary when a friend asks for a favor.",
-      "firmScript": "A 1-sentence lethal, shut-it-down text message they can copy-paste when a friend crosses the line or gaslights them."
+      "howTheyUseYou": "The Sharp Truth (2 paragraphs). Explain exactly how their friends are exploiting their top vulnerability right now. Expose the hidden 'why' behind their friends' behavior without clinical diagnoses.",
+      "whatKeepsYouStuck": "The Cost (1 paragraph). Describe the specific psychological trap (like guilt, fear of loneliness, or boundary collapse) keeping them in this loop, and the toll it takes on their peace.",
+      "softScript": "The Pivot: Low Friction. A 1-sentence polite but firm text message they can copy-paste to buy time or set a boundary without triggering immediate confrontation.",
+      "firmScript": "The Pivot: High Authority. A 1-sentence lethal, emotionally detached text message they can copy-paste to shut it down when a friend actively crosses a line."
     }
     `;
 
