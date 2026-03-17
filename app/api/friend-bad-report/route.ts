@@ -13,7 +13,7 @@ export async function POST(req: Request) {
     Their overall diagnostic tier is: "${data.tier}".
     Their #1 highest vulnerability/pain point is: "${data.top1}".
     Here is the full breakdown of their risk percentages across 10 vectors:
-    ${data.sortedSubcategories.map((s: any) => \`- ${s.name}: ${s.percentage}% Risk\`).join('\n')}
+    ${data.sortedSubcategories.map((s: any) => `- ${s.name}: ${s.percentage}% Risk`).join('\n')}
 
     Based on these exact scores, write a highly personalized, emotionally hitting action plan. 
     Use short sentences. Be direct. Do not use academic filler. Hit their exact pain points.
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     `;
 
     const response = await openai.chat.completions.create({
-      model: 'gpt-4o-mini', // Fast, cheap, and excellent at JSON formatting
+      model: 'gpt-4o-mini',
       response_format: { type: "json_object" },
       messages: [{ role: 'user', content: prompt }],
       temperature: 0.7,

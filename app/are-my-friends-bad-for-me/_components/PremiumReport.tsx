@@ -26,10 +26,10 @@ export default function PremiumReport({ data, handleShare }: { data: any, handle
   }, [data]);
 
   const getBarColor = (percentage: number) => {
-    if (percentage >= 80) return "bg-[#e11d48]"; // High risk
-    if (percentage >= 60) return "bg-[#f59e0b]"; // Active problem
-    if (percentage >= 40) return "bg-[#086788]"; // Mild concern
-    return "bg-slate-300"; // Healthy
+    if (percentage >= 80) return "bg-[#e11d48]";
+    if (percentage >= 60) return "bg-[#f59e0b]";
+    if (percentage >= 40) return "bg-[#086788]";
+    return "bg-slate-300";
   };
 
   return (
@@ -84,7 +84,7 @@ export default function PremiumReport({ data, handleShare }: { data: any, handle
             <ShieldAlert className="w-8 h-8 text-[#10b981] mb-4" />
             <h4 className="font-extrabold text-xl mb-3">How They Are Using You</h4>
             <div className="text-slate-300 font-medium leading-relaxed mb-6 whitespace-pre-wrap flex-grow">
-              {aiReport?.howTheyUseYou || \`Because your highest pain point is \${data.top1}, your friends view you as a convenience.\`}
+              {aiReport?.howTheyUseYou || `Because your highest pain point is ${data.top1}, your friends view you as a convenience.`}
             </div>
             <div className="bg-white/5 p-4 rounded-xl border border-white/10 mt-auto">
               <p className="text-[#10b981] font-bold text-sm uppercase tracking-wider mb-1">What Keeps You Stuck</p>
