@@ -76,24 +76,30 @@ export default function QuizEngine() {
         </div>
       </div>
       
-      <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-xl border border-slate-100 text-center mb-8 min-h-[200px] flex items-center justify-center">
+      <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-xl border border-slate-100 text-center mb-10 min-h-[200px] flex items-center justify-center">
         <h2 className="text-2xl md:text-3xl font-extrabold text-slate-800 leading-tight">"{question.text}"</h2>
       </div>
 
-      <div className="space-y-3">
+      {/* KEYPAD LAYOUT: 3 on top, 2 wrapped and centered on bottom */}
+      <div className="flex flex-wrap justify-center gap-3 md:gap-4 max-w-md mx-auto">
         {[
-          { label: "1 - Never true", val: 1 },
-          { label: "2 - Rarely true", val: 2 },
-          { label: "3 - Sometimes true", val: 3 },
-          { label: "4 - Often true", val: 4 },
-          { label: "5 - Very true", val: 5 },
+          { text: "Never", val: 1 },
+          { text: "Rarely", val: 2 },
+          { text: "Sometimes", val: 3 },
+          { text: "Often", val: 4 },
+          { text: "Always", val: 5 },
         ].map((opt) => (
           <button
             key={opt.val}
             onClick={() => handleAnswer(opt.val)}
-            className="w-full text-left bg-white border-2 border-slate-100 p-5 rounded-2xl font-bold text-lg text-slate-700 hover:border-rose-500 hover:bg-rose-50 transition-all focus:outline-none focus:ring-4 focus:ring-rose-200"
+            className="group flex flex-col items-center justify-center w-[30%] aspect-square bg-white border-2 border-slate-100 rounded-[24px] shadow-[0_4px_10px_rgba(0,0,0,0.03)] hover:border-rose-500 hover:bg-rose-50 hover:-translate-y-1 hover:shadow-lg transition-all focus:outline-none focus:ring-4 focus:ring-rose-200 active:scale-95"
           >
-            {opt.label}
+            <span className="text-3xl md:text-4xl font-extrabold text-slate-300 group-hover:text-rose-600 transition-colors mb-1">
+              {opt.val}
+            </span>
+            <span className="text-[11px] md:text-sm font-extrabold text-slate-600 uppercase tracking-wider text-center">
+              {opt.text}
+            </span>
           </button>
         ))}
       </div>
