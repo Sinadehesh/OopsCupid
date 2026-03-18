@@ -7,7 +7,8 @@ import AttachmentQuadrant, { DomainPoint } from "./AttachmentQuadrant";
 import { ScoreBar } from "./ScoreBars";
 import LockedInsightCard from "./LockedInsightCard";
 import UnlockBanner from "./UnlockBanner";
-import { ShieldCheck, Lock, AlertTriangle, Loader2, Sparkles, CheckCircle2 } from "lucide-react";
+// FIXED: Added 'Unlock' to the imports below so TypeScript doesn't crash the build
+import { ShieldCheck, Lock, Unlock, AlertTriangle, Loader2, Sparkles, CheckCircle2 } from "lucide-react";
 
 interface AttachmentReportProps {
   profile: PsychologicalProfile;
@@ -64,7 +65,6 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
     }
   };
 
-  // THE NEW SEDUCTIVE COPY: Intrigue + Fear + Curiosity
   const renderSeductiveCopy = (domainName: string, classification: string) => {
     return (
       <div className="mt-4 flex flex-col h-full">
@@ -123,7 +123,6 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
           </div>
         </div>
 
-        {/* CONDITIONALLY RENDER: EITHER SEDUCTION TEASERS OR THE AI PREMIUM REPORT */}
         {!isPremium ? (
           <>
             <h3 className={`text-2xl md:text-3xl font-extrabold ${tH3} mt-16 mb-8 border-b ${isDarkTheme ? 'border-slate-800' : 'border-slate-200'} pb-3`}>
@@ -196,9 +195,6 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
             </div>
           </>
         ) : (
-          // ==================================================
-          // THE FULL AI UNLOCKED VIEW
-          // ==================================================
           <div className="mt-16 max-w-4xl mx-auto space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
              <div className={`p-8 md:p-12 rounded-3xl border shadow-xl ${cardClass}`}>
                  <h2 className="text-3xl md:text-4xl font-extrabold mb-6 flex items-center gap-3 text-blue-600 dark:text-blue-400">
