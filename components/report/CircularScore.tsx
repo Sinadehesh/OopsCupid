@@ -30,7 +30,7 @@ export default function CircularScore({
   const strokeDashoffset = circumference - (progress / max) * circumference;
 
   const tTitle = isDarkTheme ? "text-slate-100" : "text-[#0D2C54]";
-  const tSub = isDarkTheme ? "text-slate-400" : "text-[#0D2C54]/60";
+  const tSub = isDarkTheme ? "text-slate-400" : "text-[#0D2C54]/70";
   const bgStroke = isDarkTheme ? "#1e293b" : "#f1f5f9";
 
   return (
@@ -56,18 +56,20 @@ export default function CircularScore({
           />
         </svg>
 
-        {/* Center Text */}
+        {/* Center Text (Value Only) */}
         <div className="absolute flex flex-col items-center justify-center text-center mt-1">
           <span className="text-3xl md:text-4xl font-black" style={{ color }}>
             {value}
           </span>
-          {subtitle && (
-            <span className={`text-[9px] md:text-[10px] font-extrabold uppercase tracking-widest mt-1 ${tSub}`}>
-              {subtitle}
-            </span>
-          )}
         </div>
       </div>
+
+      {/* Subtitle placed strictly below the circle */}
+      {subtitle && (
+        <span className={`text-xs md:text-sm font-bold text-center mt-4 ${tSub} max-w-[140px] leading-tight`}>
+          {subtitle}
+        </span>
+      )}
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { ShieldCheck, Target, Heart, BrainCircuit } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: "The Master Psychological Battery | Attachment, Emotion, Self-Esteem",
-  description: "A comprehensive 44-question clinical assessment combining ECR-RS, DERS-16, and Rosenberg scales to reveal your true relationship blueprint.",
+  description: "A comprehensive 92-question clinical assessment combining ECR-RS, DERS-16, and Rosenberg scales to reveal your true relationship blueprint.",
 };
 
 export default function MegaBatteryPage() {
@@ -21,17 +21,17 @@ export default function MegaBatteryPage() {
             Your Complete Clinical Profile
           </h1>
           <p className="text-[20px] md:text-[24px] font-medium mb-10 text-white/95 max-w-2xl mx-auto drop-shadow-sm">
-            This is our most advanced, 44-question clinical battery. It measures your core attachment style, global self-esteem, emotion regulation capacity, and romantic love style all in one test.
+            This is our most advanced, 92-question clinical battery. It measures your core attachment style, global self-esteem, emotion regulation capacity, and romantic love style all in one test.
           </p>
           <div className="flex justify-center items-center gap-6 text-sm md:text-base font-semibold text-white">
             <span className="flex items-center gap-2">✓ 4 Clinical Scales</span>
-            <span className="flex items-center gap-2">✓ 44 Deep Questions</span>
+            <span className="flex items-center gap-2">✓ 92 Deep Questions</span>
             <span className="flex items-center gap-2">✓ Master Dashboard</span>
           </div>
         </div>
       </section>
 
-      {/* WIDE CONTAINER: Allows the report to expand, but QuizWidget keeps questions narrow */}
+      {/* WIDE CONTAINER */}
       <section className="w-full max-w-7xl mx-auto px-4 md:px-8 -mt-32 relative z-10 mb-24">
         <QuizWidget quizName="attachment-style" />
       </section>
