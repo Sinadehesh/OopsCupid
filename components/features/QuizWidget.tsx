@@ -4,7 +4,9 @@ import React, { useState, useMemo, useRef } from "react";
 import SharePrintButtons from "@/components/ui/SharePrintButtons";
 import Link from "next/link";
 import { generatePsychologicalProfile, computeLegacyResult } from "@/lib/psychometrics/classification";
-import MasterReport from "@/components/report/MasterReport";
+
+// 🔥 FIX: We are importing AttachmentReport instead of MasterReport
+import AttachmentReport from "@/components/report/AttachmentReport";
 import { DashboardGrid, MultiGaugeGrid } from "@/components/report/ScoreBars";
 
 // EXTERNAL QUESTION VAULTS
@@ -32,8 +34,6 @@ import FriendRoleMasterReport from "@/components/report/FriendRoleMasterReport";
 import { friendUsedQuestions } from "@/lib/psychometrics/friend-used/questions";
 import { generateFriendUsedProfile } from "@/lib/psychometrics/friend-used/scoring";
 import FriendUsedMasterReport from "@/components/report/FriendUsedMasterReport";
-
-
 
 const legacyBanks: Record<string, Question[]> = {
   "is-he-manipulative": [
@@ -66,7 +66,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
   const isDarkTheme = ["is-he-manipulative"].includes(quizName);
   
-  // 🔥 ROUTING LOGIC
   const isAttraction = quizName === "attraction-patterns";
   const isAttractor = quizName === "who-is-attracted-to-me";
   const isPartnerAttachment = quizName === "partners-attachment-style";
@@ -74,7 +73,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const isFriendRole = quizName === "friend-group-role";
   const isFriendUsed = quizName === "are-your-friends-using-you";
   
-  // Apply the premium, high-contrast UI to all advanced tests
   const isPremiumUI = isAttraction || isAttractor || isPartnerAttachment || isCheating || isFriendRole || isFriendUsed;
 
   const activeQuestions = useMemo(() => {
@@ -92,7 +90,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const isFinished = currentIndex >= activeQuestions.length;
   const progress   = Math.round((currentIndex / activeQuestions.length) * 100);
 
-  // Dynamic Theme Colors
   let colors = {
     bg: "bg-white", cardBorder: "border-[#0D2C54]/10", cardShadow: "shadow-[0_12px_40px_rgba(13,44,84,0.06)]", textPrimary: "text-[#0D2C54]", textSecondary: "text-[#0D2C54]/60", progressTrack: "bg-[#0D2C54]/10", progressFill: "bg-[#FFB400]", optionBorder: "border-[#0D2C54]/15", optionHover: "hover:border-[#00A6ED] hover:bg-[#00A6ED]/[0.03] hover:-translate-y-[2px] hover:shadow-[0_4px_12px_rgba(0,166,237,0.12)]", optionSelected: "border-[#00A6ED] bg-[#00A6ED]/[0.05]", btnPrimary: "bg-[#00A6ED] text-white hover:bg-[#00A6ED]/90 shadow-md", btnBack: "border-[#0D2C54]/20 text-[#0D2C54] hover:bg-[#0D2C54]/5", chipBg: "bg-[#FFB400]/20", chipText: "text-[#0D2C54]"
   };
@@ -200,8 +197,9 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   }
 
   if (showResult && resultData) {
+    // 🔥 FIX: Now it renders the active, seductive AttachmentReport correctly
     if (resultData.type === "attachment") {
-      return <div ref={topRef} className="w-full animate-in fade-in duration-500"><MasterReport profile={resultData.profile} demographics={resultData.demographics} isDarkTheme={isDarkTheme} /></div>;
+      return <div ref={topRef} className="w-full animate-in fade-in duration-500"><AttachmentReport profile={resultData.profile} demographics={resultData.demographics} isDarkTheme={isDarkTheme} /></div>;
     }
     if (resultData.type === "attraction") {
       return <div ref={topRef} className="w-full animate-in fade-in duration-500"><AttractionMasterReport profile={resultData.profile} /></div>;
