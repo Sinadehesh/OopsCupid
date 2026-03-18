@@ -33,22 +33,15 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
   const handleUnlockPremium = async () => {
     setIsGenerating(true);
     try {
-      // 🔥 THE FIX: Absolute URL + Dynamic Cache Buster.
-      // This forces the browser to send a strict POST request and completely ignores any cached 308 Permanent Redirects.
-      const apiUrl = `${window.location.origin}/api/premium-report/?_t=${Date.now()}`;
-      
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          quizType: "attachment-style",
-          primaryArchetype: profile.attachment.general.classification,
-          normalizedScores: {
-             anxiety: profile.attachment.general.anxietyScore,
-             avoidance: profile.attachment.general.avoidanceScore
-          }
-        }),
+      // 🔥 THE FIX: Constructing a GET request with URL search params.
+      // This completely bypasses the Next.js POST redirect/405 stripping bug.
+      const params = new URLSearchParams({
+         quizType: "attachment-style",
+         primaryArchetype: profile.attachment.general.classification,
+         _t: Date.now().toString()
       });
+      
+      const response = await fetch(`/api/premium-report?${params.toString()}`);
       
       if (!response.ok) {
          alert(`API Connection Failed: ${response.status} ${response.statusText}\n\nCheck Vercel logs or OpenAI API key.`);
