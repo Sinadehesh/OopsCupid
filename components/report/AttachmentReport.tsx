@@ -7,6 +7,7 @@ import { ScoreBar } from "./ScoreBars";
 import SharePrintButtons from "@/components/ui/SharePrintButtons";
 import UnlockBanner from "./UnlockBanner";
 import { Lock, Unlock, Loader2, AlertTriangle, Sparkles, CheckCircle2, ShieldCheck, BrainCircuit } from "lucide-react";
+import { generatePremiumReport } from "@/app/actions/generatePremiumReport";
 
 interface AttachmentReportProps {
   profile: PsychologicalProfile;
@@ -33,30 +34,20 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
   const handleUnlockPremium = async () => {
     setIsGenerating(true);
     try {
-      const params = new URLSearchParams({
-         quizType: "attachment-style",
-         primaryArchetype: profile.attachment.general.classification,
-         _t: Date.now().toString()
-      });
+      // 🔥 THE FIX: We are calling the direct Server Action RPC, completely bypassing fetch() and trailingSlash bugs.
+      const data = await generatePremiumReport(
+        profile.attachment.general.classification,
+        profile.attachment.general.anxietyScore,
+        profile.attachment.general.avoidanceScore
+      );
       
-      // 🔥 THE FIX: Notice the slash right before the question mark.
-      // This perfectly matches Next.js's strict trailingSlash requirement.
-      const response = await fetch(`/api/premium-report/?${params.toString()}`);
-      
-      if (!response.ok) {
-         alert(`API Connection Failed: ${response.status} ${response.statusText}\n\nCheck Vercel logs or OpenAI API key.`);
-         setIsGenerating(false);
-         return;
-      }
-
-      const data = await response.json();
       if (data.success && data.report) {
         setPremiumData(data.report);
         setIsPremium(true);
         setHasJustUnlocked(true);
         setTimeout(() => setHasJustUnlocked(false), 5000);
       } else {
-         alert("The AI returned an empty response. Please try again.");
+         alert(`AI Generation Failed: ${data.error || "Unknown Error. Check OpenAI API Key."}`);
       }
     } catch (error: any) {
       console.error("Failed to generate premium report", error);
@@ -102,7 +93,6 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
     return (
       <div className={`rounded-3xl border overflow-hidden mb-12 ${cardClass}`}>
         
-        {/* VISIBLE TOP HALF */}
         <div className={`p-8 md:p-10 border-b ${isDarkTheme ? 'border-[#000000]' : 'border-[#e5e5e5]'}`}>
           <div className="flex items-center justify-between mb-6">
              <h4 className="text-sm font-extrabold uppercase tracking-widest text-[#fca311]">Domain: {domain}</h4>
@@ -130,7 +120,6 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
           )}
         </div>
 
-        {/* LOCKED BOTTOM HALF */}
         {!isPremium && (
           <div className={`relative p-8 md:p-10 ${isDarkTheme ? 'bg-[#000000]/20' : 'bg-[#e5e5e5]/20'}`}>
             
