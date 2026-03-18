@@ -33,15 +33,15 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
   const handleUnlockPremium = async () => {
     setIsGenerating(true);
     try {
-      // 🔥 THE FIX: Constructing a GET request with URL search params.
-      // This completely bypasses the Next.js POST redirect/405 stripping bug.
       const params = new URLSearchParams({
          quizType: "attachment-style",
          primaryArchetype: profile.attachment.general.classification,
          _t: Date.now().toString()
       });
       
-      const response = await fetch(`/api/premium-report?${params.toString()}`);
+      // 🔥 THE FIX: Notice the slash right before the question mark.
+      // This perfectly matches Next.js's strict trailingSlash requirement.
+      const response = await fetch(`/api/premium-report/?${params.toString()}`);
       
       if (!response.ok) {
          alert(`API Connection Failed: ${response.status} ${response.statusText}\n\nCheck Vercel logs or OpenAI API key.`);
