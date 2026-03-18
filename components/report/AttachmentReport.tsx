@@ -20,7 +20,6 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
   const [isGenerating, setIsGenerating] = useState(false);
   const [premiumData, setPremiumData] = useState<any>(null);
 
-  // PALETTE DEFINITIONS
   const tH3 = isDarkTheme ? "text-[#ffffff]" : "text-[#000000]";
   const tText = isDarkTheme ? "text-[#e5e5e5]" : "text-[#14213d]";
   const cardClass = isDarkTheme ? "bg-[#14213d] border-[#000000] shadow-lg" : "bg-[#ffffff] border-[#e5e5e5] shadow-md";
@@ -34,7 +33,8 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
   const handleUnlockPremium = async () => {
     setIsGenerating(true);
     try {
-      const response = await fetch("/api/premium-report", {
+      // 🔥 THE FIX: Added the trailing slash to match your next.config.mjs
+      const response = await fetch("/api/premium-report/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
