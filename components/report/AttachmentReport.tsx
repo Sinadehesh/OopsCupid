@@ -33,8 +33,11 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
   const handleUnlockPremium = async () => {
     setIsGenerating(true);
     try {
-      // 🔥 THE FIX: Added the trailing slash to match your next.config.mjs
-      const response = await fetch("/api/premium-report/", {
+      // 🔥 THE FIX: Absolute URL + Dynamic Cache Buster.
+      // This forces the browser to send a strict POST request and completely ignores any cached 308 Permanent Redirects.
+      const apiUrl = `${window.location.origin}/api/premium-report/?_t=${Date.now()}`;
+      
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
