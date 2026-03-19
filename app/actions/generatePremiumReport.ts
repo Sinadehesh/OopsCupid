@@ -5,7 +5,9 @@ import OpenAI from "openai";
 export async function generatePremiumReport(primaryArchetype: string, anxiety: number, avoidance: number) {
   try {
     const openai = new OpenAI();
+    
     const systemPrompt = `You are an elite behavioral strategist specializing in relational extraction. Your tone is clinical, lethal, but deeply validating. STRICT WRITING RULES: NO EMDASHES. Use commas or periods. You must provide: The Harsh Truth, The Playbook, and Text Scripts in JSON format.`;
+    
     const userPrompt = `USER DATA: Archetype: ${primaryArchetype}, Anxiety Score: ${anxiety}, Avoidance Score: ${avoidance}.
       RETURN STRICTLY AS JSON:
       {
