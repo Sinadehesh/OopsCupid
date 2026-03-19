@@ -72,7 +72,7 @@ export default function PremiumCheckout({ onUnlock, isGenerating, isDarkTheme = 
             </div>
           </div>
           <button onClick={onUnlock} disabled={isGenerating} className="w-full py-5 bg-[#9d0208] hover:bg-[#9d0208]/90 text-[#ffffff] rounded-2xl font-extrabold text-xl md:text-2xl transition-all shadow-xl hover:-translate-y-1 flex items-center justify-center gap-3 disabled:opacity-80 disabled:hover:translate-y-0 cursor-pointer">
-            {isGenerating ? <><Loader2 className="w-7 h-7 animate-spin text-[#fca311]" /> Processing Secure Payment...</> : <><Lock className="w-6 h-6" /> Unlock Everything Now</>}
+            {isGenerating ? <><Loader2 className="w-7 h-7 animate-spin text-[#fca311]" /> Processing Secure Payment...</> : <><Lock className="w-6 h-6" /> Unlock Everything Now (v2.0)</>}
           </button>
           <div className="mt-6 flex items-center justify-center gap-2 text-[#14213d] dark:text-[#e5e5e5] opacity-80">
             <ShieldCheck className="w-5 h-5 text-[#fca311]" /><span className="text-sm font-bold">7-Day Guarantee: 100% money back if it's not accurate.</span>
