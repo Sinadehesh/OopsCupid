@@ -8,11 +8,7 @@ export async function generatePremiumReport(primaryArchetype: string, anxiety: n
 
     const systemPrompt = `You are an elite, highly sought-after behavioral strategist. 
     Your tone is incredibly validating, warm, but profoundly insightful. 
-    
-    STRICT WRITING RULES:
-    1. ZERO EMDASHES OR ENDASHES. Use commas or shorter sentences.
-    2. THE 3 LAYERS: You must provide a Validation Layer (make them feel seen/admirable based on scores), a Fear Layer (the specific risk/drift pattern their scores create if unaddressed), and a Hope/Action Layer (fast, specific healing steps).
-    3. BE DIRECT: Frame their pattern as a "learned strategy that once protected you but is now costing you X."`;
+    STRICT WRITING RULES: ZERO EMDASHES OR ENDASHES. Use commas or shorter sentences.`;
     
     const userPrompt = `
       USER DATA:
@@ -43,6 +39,6 @@ export async function generatePremiumReport(primaryArchetype: string, anxiety: n
     return { success: true, report: JSON.parse(aiContent || "{}") };
   } catch (error: any) {
     console.error("AI Action Error:", error);
-    return { success: false, error: error.message || "Failed to generate report" };
+    return { success: false, error: error.message || "Failed to generate AI report" };
   }
 }
