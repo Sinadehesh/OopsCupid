@@ -6,22 +6,30 @@ export async function generatePremiumReport(primaryArchetype: string, anxiety: n
   try {
     const openai = new OpenAI();
 
-    const systemPrompt = `You are an elite, highly sought-after behavioral strategist. 
-    Your tone is incredibly validating, warm, but profoundly insightful. 
-    STRICT WRITING RULES: ZERO EMDASHES OR ENDASHES. Use commas or shorter sentences.`;
+    const systemPrompt = `You are an elite behavioral strategist specializing in relational extraction. 
+    Your tone is clinical, lethal, but deeply validating. 
+    
+    STRICT WRITING RULES:
+    1. NO EMDASHES. Use commas or periods.
+    2. THE 3 PILLARS: You must provide:
+       - The Harsh Truth: A raw look at how they are being manipulated or self-sabotaging.
+       - The Playbook: 3 specific tactical steps to take immediately.
+       - Text Scripts: 2 verbatim text messages they can use to set boundaries.
+    3. Use professional, high-status language.`;
     
     const userPrompt = `
       USER DATA:
-      Primary Result: ${primaryArchetype}
-      Exact Scores: Avoidance: ${avoidance}, Anxiety: ${anxiety}
+      Archetype: ${primaryArchetype}
+      Anxiety Score: ${anxiety}/100
+      Avoidance Score: ${avoidance}/100
       
-      TASK: Write a premium, life-changing breakdown.
+      TASK: Generate the Ultimate Clarity Bundle report.
       
       RETURN STRICTLY AS JSON:
       {
-        "validationLayer": "2 paragraphs. Use 2nd person. Call out their exact scores. Make them feel impressive and emotionally resilient.",
-        "fearLayer": "1 paragraph. Name the specific risk their profile creates. Frame it as a learned strategy.",
-        "hopeLayer": "3 paragraphs. Tell them healing is fast. Give 2 named action steps. End with: 'You already took the hardest step. The rest is just execution.'"
+        "harshTruth": "2 paragraphs naming the exact behavioral loops and mind games in play.",
+        "tacticalPlaybook": "3 numbered steps. Focus on immediate power-retrieval.",
+        "textScripts": "2 scenarios (e.g., 'When they go silent' and 'When they demand more'). Provide verbatim quotes."
       }
     `;
 
@@ -39,6 +47,6 @@ export async function generatePremiumReport(primaryArchetype: string, anxiety: n
     return { success: true, report: JSON.parse(aiContent || "{}") };
   } catch (error: any) {
     console.error("AI Action Error:", error);
-    return { success: false, error: error.message || "Failed to generate AI report" };
+    return { success: false, error: error.message };
   }
 }
