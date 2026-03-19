@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Lock, Shield, Sparkles, Activity, Target, AlertTriangle, ArrowRight, CheckCircle2 } from "lucide-react";
 
@@ -11,7 +11,8 @@ interface PremiumReportData {
   extractionPlan: string;
 }
 
-export default function PremiumAttachmentReport() {
+// 1. Move the actual logic into an inner component
+function PremiumContent() {
   const searchParams = useSearchParams();
   const primaryArchetype = searchParams.get("style") || "Anxious Preoccupied";
   
@@ -176,5 +177,19 @@ export default function PremiumAttachmentReport() {
         
       </div>
     </div>
+  );
+}
+
+// 2. Wrap it in a Suspense boundary for Vercel's build compiler
+export default function PremiumAttachmentReport() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-50 px-4">
+        <div className="w-16 h-16 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mb-8 shadow-lg"></div>
+        <h2 className="text-3xl font-extrabold text-zinc-900 mb-4 tracking-tight">Loading Secure Page...</h2>
+      </div>
+    }>
+      <PremiumContent />
+    </Suspense>
   );
 }
