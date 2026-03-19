@@ -1,7 +1,12 @@
 import React from "react";
+import Link from "next/link";
 import { Sparkles, ShieldCheck, Clock, FileText, MessageSquare, Map } from "lucide-react";
 
-export default function UnlockBanner() {
+interface UnlockBannerProps {
+  primaryStyle?: string;
+}
+
+export default function UnlockBanner({ primaryStyle = "Anxious Preoccupied" }: UnlockBannerProps) {
   return (
     <div className="bg-gradient-to-br from-[#0f172a] to-[#1e293b] rounded-[32px] p-8 md:p-12 text-white shadow-2xl mt-12 mb-8 relative overflow-hidden border border-slate-700/50">
       {/* Decorative background elements */}
@@ -44,13 +49,17 @@ export default function UnlockBanner() {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center gap-6 w-full max-w-2xl bg-black/30 p-4 rounded-2xl border border-white/5 mb-8">
-           <button className="w-full md:w-auto bg-[#ffbc42] text-black text-xl font-extrabold py-5 px-10 rounded-xl shadow-[0_0_30px_rgba(255,188,66,0.3)] hover:bg-[#e5a93c] hover:scale-105 transition-all">
+        {/* Updated Button and Pricing Block */}
+        <div className="flex flex-col md:flex-row items-center justify-center gap-6 w-full max-w-2xl bg-black/30 p-4 rounded-2xl border border-white/5 mb-8">
+           <Link 
+             href={`/attachment-style-quiz/premium?style=${encodeURIComponent(primaryStyle)}`}
+             className="w-full md:w-auto text-center bg-[#ffbc42] text-black text-xl font-extrabold py-5 px-10 rounded-xl shadow-[0_0_30px_rgba(255,188,66,0.3)] hover:bg-[#e5a93c] hover:scale-105 transition-all"
+           >
              Unlock Everything Now
-           </button>
+           </Link>
            <div className="text-center md:text-left">
-             <div className="text-slate-400 text-sm font-bold line-through mb-1">Total Value: $197</div>
-             <div className="text-white text-2xl font-extrabold">Today: $19</div>
+             <div className="text-white text-3xl font-extrabold">$19.99</div>
+             <div className="text-slate-400 text-sm font-bold uppercase tracking-widest mt-1">One-Time Payment</div>
            </div>
         </div>
 

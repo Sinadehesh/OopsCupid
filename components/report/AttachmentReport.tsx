@@ -196,7 +196,7 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
             {renderUnifiedSeductionCard("Work & Authority", profile.attachment.work.classification, profile.attachment.work.avoidanceScore, profile.attachment.work.anxietyScore)}
             
             <div className="mt-16">
-              <UnlockBanner />
+              <UnlockBanner primaryStyle={profile.attachment.general.classification} />
               <SharePrintButtons />
             </div>
           </div>
