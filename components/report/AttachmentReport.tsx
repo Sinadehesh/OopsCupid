@@ -7,7 +7,6 @@ import { ScoreBar } from "./ScoreBars";
 import SharePrintButtons from "@/components/ui/SharePrintButtons";
 import UnlockBanner from "./UnlockBanner";
 import { Lock, Unlock, Loader2, AlertTriangle, Sparkles, CheckCircle2, ShieldCheck, BrainCircuit } from "lucide-react";
-import { generatePremiumReport } from "@/app/actions/generatePremiumReport";
 
 interface AttachmentReportProps {
   profile: PsychologicalProfile;
@@ -34,23 +33,39 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
   const handleUnlockPremium = async () => {
     setIsGenerating(true);
     try {
-      // 🔥 THE FIX: We are calling the direct Server Action RPC, completely bypassing fetch() and trailingSlash bugs.
-      const data = await generatePremiumReport(
-        profile.attachment.general.classification,
-        profile.attachment.general.anxietyScore,
-        profile.attachment.general.avoidanceScore
-      );
+      // Clean, standard POST request to the explicit API path
+      const response = await fetch("/api/premium-report", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          quizType: "attachment-style",
+          primaryArchetype: profile.attachment.general.classification,
+          normalizedScores: {
+             anxiety: profile.attachment.general.anxietyScore,
+             avoidance: profile.attachment.general.avoidanceScore
+          }
+        }),
+      });
       
+      if (!response.ok) {
+         const errData = await response.json().catch(() => null);
+         const errMsg = errData?.error ? errData.error : response.statusText;
+         alert(`API Error (${response.status}): ${errMsg}\n\nPlease check Vercel Logs or OpenAI API Key.`);
+         setIsGenerating(false);
+         return;
+      }
+
+      const data = await response.json();
       if (data.success && data.report) {
         setPremiumData(data.report);
         setIsPremium(true);
         setHasJustUnlocked(true);
         setTimeout(() => setHasJustUnlocked(false), 5000);
       } else {
-         alert(`AI Generation Failed: ${data.error || "Unknown Error. Check OpenAI API Key."}`);
+         alert("The AI returned an empty response. Please try again.");
       }
     } catch (error: any) {
-      console.error("Failed to generate premium report", error);
+      console.error("Network Error", error);
       alert(`Network Error: ${error.message}`);
     } finally {
       setIsGenerating(false);
@@ -92,7 +107,6 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
     
     return (
       <div className={`rounded-3xl border overflow-hidden mb-12 ${cardClass}`}>
-        
         <div className={`p-8 md:p-10 border-b ${isDarkTheme ? 'border-[#000000]' : 'border-[#e5e5e5]'}`}>
           <div className="flex items-center justify-between mb-6">
              <h4 className="text-sm font-extrabold uppercase tracking-widest text-[#fca311]">Domain: {domain}</h4>
@@ -122,7 +136,6 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
 
         {!isPremium && (
           <div className={`relative p-8 md:p-10 ${isDarkTheme ? 'bg-[#000000]/20' : 'bg-[#e5e5e5]/20'}`}>
-            
             <div className={`absolute inset-0 z-20 flex flex-col items-center justify-center backdrop-blur-[8px] ${isDarkTheme ? 'bg-[#000000]/60' : 'bg-[#ffffff]/60'}`}>
               <div className={`p-8 rounded-2xl border text-center shadow-2xl max-w-md w-full mx-4 transition-transform hover:scale-[1.02] ${isDarkTheme ? 'bg-[#14213d] border-[#fca311]/30' : 'bg-[#ffffff] border-[#e5e5e5]'}`}>
                 <Lock className="w-12 h-12 mx-auto mb-4 text-[#9d0208]" />
@@ -149,10 +162,9 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
                 A tactical deep dive into the exact mind games your brain plays on you, and the copy-paste scripts you need to set boundaries today.
               </p>
               <p className={`text-base ${tText}`}>
-                Step 1: The 20-minute physical delay. Put your phone on airplane mode, set a timer for 20 minutes, and physically leave the room. You are not ignoring them; you are actively short-circuiting the panic loop and proving to your nervous system that you are safe in the silence. Use the following text message verbatim when they inevitably reach out: "I am processing..."
+                Step 1: The 20-minute physical delay. Put your phone on airplane mode, set a timer for 20 minutes, and physically leave the room. You are not ignoring them; you are actively short-circuiting the panic loop and proving to your nervous system that you are safe in the silence. 
               </p>
             </div>
-
           </div>
         )}
       </div>
@@ -194,9 +206,8 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
             {renderUnifiedSeductionCard("Maternal (Mother)", profile.attachment.mother.classification, profile.attachment.mother.avoidanceScore, profile.attachment.mother.anxietyScore)}
             {renderUnifiedSeductionCard("Paternal (Father)", profile.attachment.father.classification, profile.attachment.father.avoidanceScore, profile.attachment.father.anxietyScore)}
             {renderUnifiedSeductionCard("Work & Authority", profile.attachment.work.classification, profile.attachment.work.avoidanceScore, profile.attachment.work.anxietyScore)}
-            
             <div className="mt-16">
-              <UnlockBanner primaryStyle={profile.attachment.general.classification} />
+              <UnlockBanner />
               <SharePrintButtons />
             </div>
           </div>
@@ -204,7 +215,6 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
 
         {isPremium && premiumData && (
           <div className="mt-16 max-w-4xl mx-auto space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
-             
              <div className={`p-8 md:p-12 rounded-3xl border shadow-sm mb-12 ${cardClass}`}>
                 <h4 className="text-sm font-extrabold uppercase tracking-widest text-[#fca311] mb-6">Verified Master Profile</h4>
                 <h2 className={`text-4xl md:text-5xl font-black mb-8 ${tH3}`}>
@@ -236,11 +246,9 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
                  </h2>
                  <div className={`text-lg md:text-xl leading-relaxed space-y-6 ${tText}`} dangerouslySetInnerHTML={{ __html: premiumData.hopeLayer }}></div>
              </div>
-             
              <SharePrintButtons />
           </div>
         )}
-
       </div>
     </div>
   );
