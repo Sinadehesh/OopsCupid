@@ -5,7 +5,7 @@ import { PsychologicalProfile } from "@/lib/psychometrics/classification";
 import AttachmentQuadrant, { DomainPoint } from "./AttachmentQuadrant";
 import { ScoreBar } from "./ScoreBars";
 import SharePrintButtons from "@/components/ui/SharePrintButtons";
-import { CheckCircle2, Sparkles, AlertTriangle, MessageSquare, ListChecks, ShieldCheck } from "lucide-react";
+import { CheckCircle2, AlertTriangle, MessageSquare, ListChecks, ShieldCheck } from "lucide-react";
 import { generatePremiumReport } from "@/app/actions/generatePremiumReport";
 import PremiumCheckout from "./PremiumCheckout";
 
@@ -32,12 +32,9 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
 
   const handleUnlockEverything = async () => {
     setIsGenerating(true);
-    
-    // Simulate Processing
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate Payment Processing
     
     try {
-      // THIS IS THE FIX. No fetch(). Direct RPC call to the Server Action.
       const data = await generatePremiumReport(
         profile.attachment.general.classification,
         profile.attachment.general.anxietyScore,
@@ -49,7 +46,6 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
         setIsPremium(true);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
-         // If it fails now, it will say THIS message, not the 404 API message.
          alert(`AI Generation Failed: ${data?.error || "Unknown Error"}`);
       }
     } catch (error: any) {
@@ -92,28 +88,18 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
 
         {isPremium && premiumData ? (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-10 duration-1000">
-            
             <div className={`p-8 md:p-12 rounded-3xl border-l-8 border-l-[#9d0208] ${cardClass}`}>
-              <h2 className="text-3xl font-black mb-6 flex items-center gap-3 text-[#9d0208]">
-                <AlertTriangle className="w-8 h-8" /> 1. The Harsh Truth
-              </h2>
+              <h2 className="text-3xl font-black mb-6 flex items-center gap-3 text-[#9d0208]"><AlertTriangle className="w-8 h-8" /> 1. The Harsh Truth</h2>
               <div className={`text-lg md:text-xl leading-relaxed space-y-6 font-medium ${tText}`} dangerouslySetInnerHTML={{ __html: premiumData.harshTruth }}></div>
             </div>
-
             <div className={`p-8 md:p-12 rounded-3xl border-l-8 border-l-[#fca311] ${cardClass}`}>
-              <h2 className="text-3xl font-black mb-6 flex items-center gap-3 text-[#fca311]">
-                <ListChecks className="w-8 h-8" /> 2. The Playbook
-              </h2>
+              <h2 className="text-3xl font-black mb-6 flex items-center gap-3 text-[#fca311]"><ListChecks className="w-8 h-8" /> 2. The Playbook</h2>
               <div className={`text-lg md:text-xl leading-relaxed space-y-6 font-medium ${tText}`} dangerouslySetInnerHTML={{ __html: premiumData.tacticalPlaybook }}></div>
             </div>
-
             <div className={`p-8 md:p-12 rounded-3xl border-l-8 border-l-[#14213d] bg-[#14213d] text-white`}>
-              <h2 className="text-3xl font-black mb-6 flex items-center gap-3 text-[#fca311]">
-                <MessageSquare className="w-8 h-8" /> 3. Text Scripts
-              </h2>
+              <h2 className="text-3xl font-black mb-6 flex items-center gap-3 text-[#fca311]"><MessageSquare className="w-8 h-8" /> 3. Text Scripts</h2>
               <div className="text-lg md:text-xl leading-relaxed space-y-6 font-mono opacity-90" dangerouslySetInnerHTML={{ __html: premiumData.textScripts }}></div>
             </div>
-
             <div className="pt-8"><SharePrintButtons /></div>
           </div>
         ) : (
