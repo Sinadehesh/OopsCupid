@@ -6,8 +6,9 @@ import AttachmentQuadrant, { DomainPoint } from "./AttachmentQuadrant";
 import { ScoreBar } from "./ScoreBars";
 import SharePrintButtons from "@/components/ui/SharePrintButtons";
 import UnlockBanner from "./UnlockBanner";
-import { Lock, Unlock, Loader2, AlertTriangle, Sparkles, CheckCircle2, ShieldCheck, BrainCircuit } from "lucide-react";
+import { AlertTriangle, Sparkles, CheckCircle2, BrainCircuit, Unlock } from "lucide-react";
 import { generatePremiumReport } from "@/app/actions/generatePremiumReport";
+import PremiumCheckout from "./PremiumCheckout";
 
 interface AttachmentReportProps {
   profile: PsychologicalProfile;
@@ -21,7 +22,6 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
   const [isGenerating, setIsGenerating] = useState(false);
   const [premiumData, setPremiumData] = useState<any>(null);
 
-  // PALETTE DEFINITIONS
   const tH3 = isDarkTheme ? "text-[#ffffff]" : "text-[#000000]";
   const tText = isDarkTheme ? "text-[#e5e5e5]" : "text-[#14213d]";
   const cardClass = isDarkTheme ? "bg-[#14213d] border-[#000000] shadow-lg" : "bg-[#ffffff] border-[#e5e5e5] shadow-md";
@@ -35,7 +35,6 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
   const handleUnlockPremium = async () => {
     setIsGenerating(true);
     try {
-      // Phase 1 Core Fix: Direct Server Action call. Zero API fetch routes used.
       const data = await generatePremiumReport(
         profile.attachment.general.classification,
         profile.attachment.general.anxietyScore,
@@ -106,29 +105,6 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
             </div>
           )}
         </div>
-
-        {!isPremium && (
-          <div className={`relative p-8 md:p-10 ${isDarkTheme ? 'bg-[#000000]/20' : 'bg-[#e5e5e5]/20'}`}>
-            <div className={`absolute inset-0 z-20 flex flex-col items-center justify-center backdrop-blur-[8px] ${isDarkTheme ? 'bg-[#000000]/60' : 'bg-[#ffffff]/60'}`}>
-              <div className={`p-8 rounded-2xl border text-center shadow-2xl max-w-md w-full mx-4 transition-transform hover:scale-[1.02] ${isDarkTheme ? 'bg-[#14213d] border-[#fca311]/30' : 'bg-[#ffffff] border-[#e5e5e5]'}`}>
-                <Lock className="w-12 h-12 mx-auto mb-4 text-[#9d0208]" />
-                <h3 className={`text-2xl font-extrabold mb-2 ${tH3}`}>Unlock The {classification.split('-')[0]} Playbook</h3>
-                <button 
-                  onClick={handleUnlockPremium}
-                  disabled={isGenerating}
-                  className="w-full py-4 mt-4 bg-[#9d0208] hover:bg-[#9d0208]/90 text-[#ffffff] rounded-xl font-extrabold text-lg transition-all shadow-lg flex items-center justify-center gap-3 disabled:opacity-70 cursor-pointer"
-                >
-                  {isGenerating ? <><Loader2 className="w-6 h-6 animate-spin text-[#fca311]" /> Unlocking...</> : "Reveal My Extraction Plan"}
-                </button>
-              </div>
-            </div>
-            <div className="filter blur-[6px] select-none pointer-events-none opacity-50 space-y-6">
-              <h3 className={`text-2xl font-black flex items-center gap-2 ${tH3}`}><Sparkles className="w-6 h-6 text-[#fca311]" /> The Playbook</h3>
-              <p className={`text-lg font-bold ${tText}`}>A tactical deep dive into the exact mind games your brain plays on you.</p>
-              <p className={`text-base ${tText}`}>Step 1: The 20-minute physical delay. Put your phone on airplane mode, set a timer for 20 minutes, and physically leave the room. You are actively short-circuiting the panic loop.</p>
-            </div>
-          </div>
-        )}
       </div>
     );
   };
@@ -161,6 +137,10 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
         {!isPremium && (
           <div className="animate-in fade-in duration-700">
             {renderUnifiedSeductionCard("General Life", profile.attachment.general.classification, profile.attachment.general.avoidanceScore, profile.attachment.general.anxietyScore)}
+            
+            {/* INJECTED PHASE 2: The High Converting Checkout UI */}
+            <PremiumCheckout onUnlock={handleUnlockPremium} isGenerating={isGenerating} isDarkTheme={isDarkTheme} />
+            
             <div className="mt-16"><UnlockBanner /><SharePrintButtons /></div>
           </div>
         )}
