@@ -5,7 +5,7 @@ import { PsychologicalProfile } from "@/lib/psychometrics/classification";
 import AttachmentQuadrant, { DomainPoint } from "./AttachmentQuadrant";
 import { ScoreBar } from "./ScoreBars";
 import SharePrintButtons from "@/components/ui/SharePrintButtons";
-import { CheckCircle2, ShieldCheck, Activity, Crosshair, Zap, FileText } from "lucide-react";
+import { CheckCircle2, ShieldCheck, Activity, Heart, Briefcase, Baby, UserCircle, Target, Sparkles } from "lucide-react";
 import { generatePremiumReport } from "@/app/actions/generatePremiumReport";
 import PremiumCheckout from "./PremiumCheckout";
 
@@ -15,7 +15,7 @@ interface AttachmentReportProps {
   isDarkTheme?: boolean;
 }
 
-export default function AttachmentReport({ profile, isDarkTheme = false }: AttachmentReportProps) {
+export default function AttachmentReport({ profile, demographics, isDarkTheme = false }: AttachmentReportProps) {
   const [isPremium, setIsPremium] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [premiumData, setPremiumData] = useState<any>(null);
@@ -24,6 +24,8 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
   const tText = isDarkTheme ? "text-[#e5e5e5]" : "text-[#14213d]";
   const cardClass = isDarkTheme ? "bg-[#14213d] border-[#000000] shadow-lg" : "bg-[#ffffff] border-[#e5e5e5] shadow-md";
   const pageBg = isDarkTheme ? "bg-[#000000]" : "bg-[#e5e5e5]";
+
+  const relationshipStatus = demographics?.relationshipStatus || "Unknown";
 
   const quadrantDomains: DomainPoint[] = Object.entries(profile.attachment).map(([key, data]) => {
     const nameMap: Record<string, string> = { general: "General", romantic: "Romantic", mother: "Mother", father: "Father", work: "Work" };
@@ -35,11 +37,8 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
     await new Promise(resolve => setTimeout(resolve, 1500)); 
     
     try {
-      const data = await generatePremiumReport(
-        profile.attachment.general.classification,
-        profile.attachment.general.anxietyScore,
-        profile.attachment.general.avoidanceScore
-      );
+      // Pass the ENTIRE profile and relationship status for deep synthesis
+      const data = await generatePremiumReport(profile.attachment, relationshipStatus);
       
       if (data && data.success && data.report) {
         setPremiumData(data.report);
@@ -73,8 +72,8 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
           <div className="mb-10 p-5 bg-[#14213d] border-2 border-[#fca311] text-[#fca311] rounded-2xl shadow-2xl flex items-center justify-center gap-4 animate-in zoom-in duration-500">
             <CheckCircle2 className="w-8 h-8 shrink-0" />
             <div>
-              <p className="font-black text-xl">THE SUBCONSCIOUS REWIRE PROTOCOL UNLOCKED</p>
-              <p className="text-sm opacity-90 font-bold uppercase tracking-widest">Authorized Clinical Access Granted</p>
+              <p className="font-black text-xl">THE MASTER AUDIT UNLOCKED</p>
+              <p className="text-sm opacity-90 font-bold uppercase tracking-widest">Multi-Domain Synthesis Complete</p>
             </div>
           </div>
         )}
@@ -115,33 +114,72 @@ export default function AttachmentReport({ profile, isDarkTheme = false }: Attac
         )}
 
         {isPremium && premiumData ? (
-          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-10 duration-1000">
+          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-10 duration-1000">
             
-            {/* Module 1: Reality Check */}
-            <div className={`p-8 md:p-12 rounded-3xl border-t-4 border-t-[#d81159] shadow-2xl relative ${cardClass}`}>
-              <div className="absolute top-0 right-0 bg-[#d81159] text-white text-[10px] font-black px-3 py-1 uppercase tracking-widest rounded-bl-lg">Module 1</div>
-              <h2 className="text-3xl font-black mb-6 flex items-center gap-3 text-[#d81159]"><Crosshair className="w-8 h-8" /> The Clinical Reality Check</h2>
-              <div className={`text-lg leading-relaxed space-y-6 font-medium ${tText}`} dangerouslySetInnerHTML={{ __html: premiumData.harshTruth }}></div>
+            {/* The Emotional Win */}
+            <div className="bg-gradient-to-br from-[#0D2C54] to-[#14213d] text-white p-8 md:p-12 rounded-3xl shadow-2xl relative overflow-hidden">
+              <Sparkles className="absolute top-4 right-4 w-24 h-24 text-white/5 rotate-12" />
+              <h2 className="text-2xl font-black mb-4 text-[#00A6ED]">The Master Assessment</h2>
+              <div className="text-lg md:text-xl font-medium leading-relaxed opacity-95" dangerouslySetInnerHTML={{ __html: premiumData.emotionalWin }}></div>
             </div>
 
-            {/* Module 2: The Playbook */}
-            <div className={`p-8 md:p-12 rounded-3xl border-t-4 border-t-[#FFB400] shadow-2xl relative ${cardClass}`}>
-               <div className="absolute top-0 right-0 bg-[#FFB400] text-black text-[10px] font-black px-3 py-1 uppercase tracking-widest rounded-bl-lg">Module 2</div>
-              <h2 className="text-3xl font-black mb-6 flex items-center gap-3 text-[#D97706]"><Zap className="w-8 h-8 fill-current" /> The Extraction Playbook</h2>
-              <div className={`text-lg leading-relaxed space-y-6 font-medium ${tText} [&>ol]:space-y-4 [&>ol]:list-decimal [&>ol]:pl-5 [&>ol>li>b]:text-[#D97706]`} dangerouslySetInnerHTML={{ __html: premiumData.tacticalPlaybook }}></div>
+            {/* Grid for Domain Connections */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              
+              {/* Maternal */}
+              <div className={`p-8 rounded-3xl border-t-4 border-t-[#d81159] ${cardClass}`}>
+                <div className="w-14 h-14 rounded-full bg-[#d81159]/10 flex items-center justify-center mb-6">
+                  <Baby className="w-7 h-7 text-[#d81159]" />
+                </div>
+                <h3 className={`text-xl font-black mb-4 ${tH3}`}>The Maternal Print</h3>
+                <div className={`text-base font-medium leading-relaxed ${tText}`} dangerouslySetInnerHTML={{ __html: premiumData.motherAnalysis }}></div>
+              </div>
+
+              {/* Paternal */}
+              <div className={`p-8 rounded-3xl border-t-4 border-t-[#8f2d56] ${cardClass}`}>
+                <div className="w-14 h-14 rounded-full bg-[#8f2d56]/10 flex items-center justify-center mb-6">
+                  <UserCircle className="w-7 h-7 text-[#8f2d56]" />
+                </div>
+                <h3 className={`text-xl font-black mb-4 ${tH3}`}>The Paternal Print</h3>
+                <div className={`text-base font-medium leading-relaxed ${tText}`} dangerouslySetInnerHTML={{ __html: premiumData.fatherAnalysis }}></div>
+              </div>
+
+              {/* Romantic */}
+              <div className={`p-8 rounded-3xl border-t-4 border-t-[#FFB400] ${cardClass}`}>
+                <div className="w-14 h-14 rounded-full bg-[#FFB400]/10 flex items-center justify-center mb-6">
+                  <Heart className="w-7 h-7 text-[#D97706]" />
+                </div>
+                <h3 className={`text-xl font-black mb-4 ${tH3}`}>The Romantic Bleed</h3>
+                <div className={`text-base font-medium leading-relaxed ${tText}`} dangerouslySetInnerHTML={{ __html: premiumData.romanticAnalysis }}></div>
+              </div>
+
+              {/* Work */}
+              <div className={`p-8 rounded-3xl border-t-4 border-t-[#00A6ED] ${cardClass}`}>
+                <div className="w-14 h-14 rounded-full bg-[#00A6ED]/10 flex items-center justify-center mb-6">
+                  <Briefcase className="w-7 h-7 text-[#00A6ED]" />
+                </div>
+                <h3 className={`text-xl font-black mb-4 ${tH3}`}>The Professional Bleed</h3>
+                <div className={`text-base font-medium leading-relaxed ${tText}`} dangerouslySetInnerHTML={{ __html: premiumData.workAnalysis }}></div>
+              </div>
+
             </div>
 
-            {/* Module 3: Lethal Scripts */}
-            <div className={`p-8 md:p-12 rounded-3xl border-t-4 border-t-[#00A6ED] shadow-2xl relative ${isDarkTheme ? 'bg-[#14213d]' : 'bg-[#0D2C54]'} text-white`}>
-              <div className="absolute top-0 right-0 bg-[#00A6ED] text-white text-[10px] font-black px-3 py-1 uppercase tracking-widest rounded-bl-lg">Module 3</div>
-              <h2 className="text-3xl font-black mb-6 flex items-center gap-3 text-[#00A6ED]"><FileText className="w-8 h-8" /> Lethal Text Scripts</h2>
-              <div className="text-lg leading-relaxed space-y-6 font-medium opacity-95 [&>blockquote]:border-l-4 [&>blockquote]:border-[#00A6ED] [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:bg-black/20 [&>blockquote]:py-3 [&>blockquote]:pr-4 [&>blockquote]:rounded-r-lg" dangerouslySetInnerHTML={{ __html: premiumData.textScripts }}></div>
+            {/* The Action Plan */}
+            <div className={`p-8 md:p-12 rounded-3xl border-2 border-[#D97706] bg-[#FFB400]/5`}>
+              <h2 className="text-3xl font-black mb-6 flex items-center gap-3 text-[#D97706]"><Target className="w-8 h-8" /> Your 24-Hour Action Plan</h2>
+              <div className={`text-lg leading-relaxed space-y-6 font-medium ${tText} [&>ul]:space-y-4 [&>ul]:list-disc [&>ul]:pl-5 [&>ul>li>b]:text-[#D97706]`} dangerouslySetInnerHTML={{ __html: premiumData.actionablePlan }}></div>
             </div>
 
             <div className="pt-8"><SharePrintButtons /></div>
           </div>
         ) : (
-          <PremiumCheckout onUnlock={handleUnlockEverything} isGenerating={isGenerating} isDarkTheme={isDarkTheme} />
+          <PremiumCheckout 
+            onUnlock={handleUnlockEverything} 
+            isGenerating={isGenerating} 
+            archetype={profile.attachment.general.classification}
+            relationshipStatus={relationshipStatus}
+            isDarkTheme={isDarkTheme} 
+          />
         )}
       </div>
     </div>
