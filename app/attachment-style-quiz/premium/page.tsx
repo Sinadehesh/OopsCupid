@@ -18,23 +18,25 @@ export default function PremiumAttachmentReportPage() {
       try {
         const savedData = localStorage.getItem('oc_saved_profile');
         if (!savedData) {
-          setError("No profile data found. Please complete the assessment first.");
+          setError("We couldn't find your profile data. Please complete the assessment first so we can securely compile your audit.");
           setIsLoading(false);
           return;
         }
 
-        const { profile, demographics, rawAnswers } = JSON.parse(savedData);
+        const parsedData = JSON.parse(savedData);
+        // Fallback for missing rawAnswers if they got here unexpectedly
+        const rawAnswers = parsedData.rawAnswers || {}; 
         
         // Pass the rawAnswers straight into the AI!
-        const data = await generatePremiumReport(profile.attachment, demographics, rawAnswers);
+        const data = await generatePremiumReport(parsedData.profile?.attachment || {}, parsedData.demographics || {}, rawAnswers);
         
-        if (data.success) {
+        if (data.success && data.report) {
           setPremiumData(data.report);
         } else {
-          setError("Failed to compile your master audit. " + data.error);
+          setError(`Analysis Server Error: ${data.error || "Missing AI response."}`);
         }
-      } catch (err) {
-        setError("An unexpected error occurred.");
+      } catch (err: any) {
+        setError(`Unexpected System Error: ${err.message}`);
       } finally {
         setIsLoading(false);
       }
@@ -49,7 +51,7 @@ export default function PremiumAttachmentReportPage() {
         <AlertTriangle className="w-16 h-16 text-[#dd1c1a] mb-6" />
         <h2 className="text-3xl font-black text-[#086788] mb-4">Access Denied</h2>
         <p className="text-lg font-medium text-[#086788]/80 max-w-md mb-8">{error}</p>
-        <button onClick={() => router.push('/attachment-style-quiz')} className="px-8 py-4 bg-[#086788] text-white rounded-xl font-black shadow-md">Return to Assessment</button>
+        <button onClick={() => router.push('/attachment-style-quiz')} className="px-8 py-4 bg-[#086788] hover:bg-[#06aed5] transition-colors text-white rounded-xl font-black shadow-md">Return to Assessment</button>
       </div>
     );
   }
@@ -95,9 +97,9 @@ export default function PremiumAttachmentReportPage() {
               
               <div className="relative w-full aspect-[2/1] overflow-hidden mb-6 flex justify-center mt-8">
                 <div className="absolute top-0 w-64 h-64 md:w-80 md:h-80 rounded-full border-[30px] border-[#d6d2d2] border-b-transparent border-l-transparent -rotate-45"></div>
-                <div className="absolute top-0 w-64 h-64 md:w-80 md:h-80 rounded-full border-[30px] border-[#dd1c1a] border-b-transparent border-l-transparent transition-transform duration-1000 ease-out" style={{ transform: `rotate(${-45 + (premiumData.partnerDangerScore / 100) * 180}deg)` }}></div>
+                <div className="absolute top-0 w-64 h-64 md:w-80 md:h-80 rounded-full border-[30px] border-[#dd1c1a] border-b-transparent border-l-transparent transition-transform duration-1000 ease-out" style={{ transform: `rotate(${-45 + ((premiumData.partnerDangerScore || 0) / 100) * 180}deg)` }}></div>
                 <div className="absolute bottom-0 w-full text-center pb-4">
-                  <span className="text-6xl md:text-7xl font-black text-[#dd1c1a]">{premiumData.partnerDangerScore}<span className="text-3xl text-[#086788]/50">/100</span></span>
+                  <span className="text-6xl md:text-7xl font-black text-[#dd1c1a]">{premiumData.partnerDangerScore || 0}<span className="text-3xl text-[#086788]/50">/100</span></span>
                 </div>
               </div>
             </div>
@@ -106,7 +108,7 @@ export default function PremiumAttachmentReportPage() {
             <div className={`p-8 md:p-12 rounded-2xl bg-white border border-[#d6d2d2] shadow-sm overflow-hidden`}>
               <h2 className={`text-3xl font-black text-[#086788] mb-4 text-center`}>His Manipulation Level</h2>
               <p className={`text-lg font-medium mb-8 text-[#086788]/80 text-center`}>
-                How manipulative is the partner you attract compared to average guys? Your partner sits in the <b>{premiumData.manipulationPercentile}th percentile</b>.
+                How manipulative is the partner you attract compared to average guys? Your partner sits in the <b>{premiumData.manipulationPercentile || 50}th percentile</b>.
               </p>
               <div className="relative w-full h-48 mt-4">
                 <svg viewBox="0 0 1000 200" className="w-full h-full preserve-3d overflow-visible">
@@ -115,10 +117,10 @@ export default function PremiumAttachmentReportPage() {
                   <path d="M 0 200 C 300 200, 400 20, 500 20 C 600 20, 700 200, 1000 200" fill="none" stroke="#dd1c1a" strokeWidth="4" strokeLinecap="round"/>
                   <line x1="500" y1="20" x2="500" y2="200" stroke="#086788" strokeWidth="2" strokeDasharray="6 6" opacity="0.3"/>
                   <text x="500" y="15" textAnchor="middle" fill="#086788" fontSize="14" fontWeight="bold">Average Guy (50)</text>
-                  <g style={{ transform: `translateX(${premiumData.manipulationPercentile * 10 - 500}px)`, transition: 'transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1)' }}>
+                  <g style={{ transform: `translateX(${(premiumData.manipulationPercentile || 50) * 10 - 500}px)`, transition: 'transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1)' }}>
                     <line x1="500" y1="20" x2="500" y2="200" stroke="#086788" strokeWidth="4" />
                     <circle cx="500" cy="20" r="8" fill="#086788" />
-                    <text x="500" y="0" textAnchor="middle" fill="#086788" fontSize="18" fontWeight="900">HIM ({premiumData.manipulationPercentile})</text>
+                    <text x="500" y="0" textAnchor="middle" fill="#086788" fontSize="18" fontWeight="900">HIM ({premiumData.manipulationPercentile || 50})</text>
                   </g>
                 </svg>
               </div>
@@ -128,7 +130,7 @@ export default function PremiumAttachmentReportPage() {
           {/* Deep Dives */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
             <div className={`p-8 md:p-10 rounded-2xl bg-white border border-[#d6d2d2] shadow-sm`}>
-              <div className="flex items-center gap-4 mb-6"><Users className="w-8 h-8 text-[#06aed5]" /><h3 className={`text-2xl font-black text-[#086788]`}>Profile of Your Boyfriend</h3></div>
+              <div className="flex items-center gap-4 mb-6"><Users className="w-8 h-8 text-[#06aed5]" /><h3 className={`text-2xl font-black text-[#086788]`}>Profile of Your Partner</h3></div>
               <div className={`text-base md:text-lg leading-relaxed space-y-4 font-medium text-[#086788]/90`} dangerouslySetInnerHTML={{ __html: premiumData.boyfriendProfile }}></div>
             </div>
 

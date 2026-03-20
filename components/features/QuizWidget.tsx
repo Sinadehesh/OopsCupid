@@ -92,7 +92,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     }
   };
 
-  // 1. Compile triggers the loading screen, then hits the Email Gate
+  // STEP 1: Compile triggers the loading screen, then hits the Email Gate (Fixed connection)
   const handleCompile = () => {
     setIsScoring(true);
     if (topRef.current) topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -102,11 +102,33 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     }, 2000);
   };
 
-  // 2. Email Submit fires the backend API, generates the profile, and unlocks the free results
+  // STEP 2: Email Submit fires the backend API, generates the profile, and unlocks the free results
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !agreed) return;
     setIsSubmitting(true);
+
+    let tempResultData = null;
+
+    try {
+      if (isAttachment) {
+        const hasChildren = answers["demo_2"] === "Yes";
+        const isSingle = answers["demo_1"] === "Single" || answers["demo_1"] === "It's complicated";
+        const gender = answers["demo_3"] ?? "Non-binary";
+        const profile = generatePsychologicalProfile(answers, hasChildren);
+        
+        // Pass rawAnswers DOWN SO THE AI CAN READ THEM LATER!
+        tempResultData = { profile, demographics: { isSingle, gender, hasChildren }, rawAnswers: answers, type: "attachment", email };
+      } else if (isAttraction) {
+        tempResultData = { profile: generateAttractionProfile(answers), type: "attraction" };
+      } else {
+        tempResultData = { ...computeLegacyResult(answers, quizName), type: "legacy" };
+      }
+      setResultData(tempResultData);
+    } catch (err) {
+      console.error(err);
+      setResultData({ type: "error" });
+    }
 
     try {
       await fetch('/api/leads', {
@@ -116,30 +138,13 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       }).catch(() => console.log("API not mapped yet. Proceeding."));
     } catch(err) {}
 
-    try {
-      if (isAttachment) {
-        const hasChildren = answers["demo_2"] === "Yes";
-        const isSingle = answers["demo_1"] === "Single" || answers["demo_1"] === "It's complicated";
-        const gender = answers["demo_3"] ?? "Non-binary";
-        const profile = generatePsychologicalProfile(answers, hasChildren);
-        // PASS rawAnswers DOWN SO THE AI CAN READ THEM LATER!
-        setResultData({ profile, demographics: { isSingle, gender, hasChildren }, rawAnswers: answers, type: "attachment", email });
-      } else if (isAttraction) {
-        setResultData({ profile: generateAttractionProfile(answers), type: "attraction" });
-      } else {
-        setResultData({ ...computeLegacyResult(answers, quizName), type: "legacy" });
-      }
-    } catch (err) {
-      console.error(err);
-      setResultData({ type: "error" });
-    }
-
     setShowEmailGate(false);
     setShowResult(true);
     setIsSubmitting(false);
     if (topRef.current) topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  // State 1: Loading
   if (isScoring) {
     return (
       <div ref={topRef} className={`w-full max-w-5xl mx-auto text-center py-32 bg-white rounded-2xl shadow-sm border border-[#d6d2d2] animate-in fade-in`}>
@@ -151,6 +156,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     );
   }
 
+  // State 2: Email Gate
   if (showEmailGate) {
     return (
       <div ref={topRef} className="w-full max-w-3xl mx-auto bg-white border border-[#d6d2d2] rounded-2xl shadow-md p-8 md:p-12 animate-in zoom-in fade-in">
@@ -198,14 +204,15 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     );
   }
 
+  // State 3: Show Result Component
   if (showResult && resultData) {
     if (resultData.type === "error") return <div className="text-center py-20 font-black text-[#dd1c1a]">Analysis Failed. Please refresh.</div>;
-    // Pass rawAnswers to AttachmentReport!
     if (resultData.type === "attachment") return <div ref={topRef} className="w-full animate-in fade-in duration-500"><AttachmentReport profile={resultData.profile} demographics={resultData.demographics} rawAnswers={resultData.rawAnswers} /></div>;
     if (resultData.type === "attraction") return <div ref={topRef} className="w-full animate-in fade-in"><AttractionMasterReport profile={resultData.profile} /></div>;
     return <div ref={topRef} className="w-full max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-[#d6d2d2] p-8 md:p-12 text-center"><h3 className="text-3xl font-black text-[#086788] mb-8">{resultData.title || "Result"}</h3><SharePrintButtons /></div>;
   }
 
+  // State 4: Finished Answering (Fixed button connection)
   if (isFinished) {
     return (
       <div ref={topRef} className={`w-full max-w-5xl mx-auto bg-white border border-[#d6d2d2] rounded-2xl shadow-sm text-center py-20 px-6 animate-in fade-in zoom-in`}>
@@ -221,6 +228,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     );
   }
 
+  // Active Quiz State
   const q = activeQuestions[currentIndex] as any;
   const sectionName = PHASE_LABELS[q.section || q.moduleKey || "default"] ?? "Assessment";
   const useKeypad = isAttachment && !String(q.id).startsWith("demo");
