@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { PsychologicalProfile } from "@/lib/psychometrics/classification";
 import AttachmentQuadrant, { DomainPoint } from "./AttachmentQuadrant";
 import { ScoreBar } from "./ScoreBars";
 import SharePrintButtons from "@/components/ui/SharePrintButtons";
-import { CheckCircle2, ShieldCheck, Activity, Heart, Briefcase, Baby, UserCircle, Target, Sparkles } from "lucide-react";
+import { CheckCircle2, ShieldCheck, Activity, Heart, Briefcase, Users, Target, Sparkles, ArrowRight, LineChart } from "lucide-react";
 import { generatePremiumReport } from "@/app/actions/generatePremiumReport";
 import PremiumCheckout from "./PremiumCheckout";
 
@@ -37,7 +38,6 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
     await new Promise(resolve => setTimeout(resolve, 1500)); 
     
     try {
-      // FIX: Pass BOTH the full profile AND the full demographics answers to the AI
       const data = await generatePremiumReport(profile.attachment, demographics);
       
       if (data && data.success && data.report) {
@@ -73,11 +73,12 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
             <CheckCircle2 className="w-8 h-8 shrink-0" />
             <div>
               <p className="font-black text-xl">THE MASTER AUDIT UNLOCKED</p>
-              <p className="text-sm opacity-90 font-bold uppercase tracking-widest">Multi-Domain Synthesis Complete</p>
+              <p className="text-sm opacity-90 font-bold uppercase tracking-widest">Full Clinical Synthesis Complete</p>
             </div>
           </div>
         )}
 
+        {/* Free Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-stretch mb-12">
           <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full ${cardClass}`}>
              <div className="flex items-center gap-2 mb-6 text-[#9d0208] font-black uppercase text-xs tracking-tighter">
@@ -113,60 +114,104 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
           </div>
         )}
 
+        {/* Premium Section */}
         {isPremium && premiumData ? (
-          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-10 duration-1000">
+          <div className="space-y-10 animate-in fade-in slide-in-from-bottom-10 duration-1000">
             
-            {/* The Emotional Win */}
+            {/* 1. Deep Validation */}
             <div className="bg-gradient-to-br from-[#0D2C54] to-[#14213d] text-white p-8 md:p-12 rounded-3xl shadow-2xl relative overflow-hidden">
-              <Sparkles className="absolute top-4 right-4 w-24 h-24 text-white/5 rotate-12" />
-              <h2 className="text-2xl font-black mb-4 text-[#00A6ED]">The Master Assessment</h2>
-              <div className="text-lg md:text-xl font-medium leading-relaxed opacity-95" dangerouslySetInnerHTML={{ __html: premiumData.emotionalWin }}></div>
+              <Sparkles className="absolute top-4 right-4 w-32 h-32 text-white/5 rotate-12 pointer-events-none" />
+              <h2 className="text-3xl font-black mb-6 text-[#00A6ED]">The Truth About You</h2>
+              <div className="text-lg md:text-xl font-medium leading-relaxed opacity-95 space-y-6" dangerouslySetInnerHTML={{ __html: premiumData.deepValidation }}></div>
             </div>
 
-            {/* Grid for Domain Connections */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* 2. The Bell Curve Graphic */}
+            <div className={`p-8 md:p-10 rounded-3xl border-2 border-[#e5e5e5] dark:border-[#333] ${cardClass} overflow-hidden relative`}>
+              <div className="flex items-center gap-3 mb-8">
+                <LineChart className="w-8 h-8 text-[#00A6ED]" />
+                <h2 className={`text-2xl font-black ${tH3}`}>The Normalcy Curve</h2>
+              </div>
+              <p className={`text-base font-medium mb-8 ${tText}`}>
+                You are not broken. Look at the chart below. Most humans operate with some level of insecurity or trauma. You score in the <b>{premiumData.populationPercentile}th percentile</b> for attachment security.
+              </p>
               
-              <div className={`p-8 rounded-3xl border-t-4 border-t-[#d81159] ${cardClass}`}>
-                <div className="w-14 h-14 rounded-full bg-[#d81159]/10 flex items-center justify-center mb-6">
-                  <Baby className="w-7 h-7 text-[#d81159]" />
-                </div>
-                <h3 className={`text-xl font-black mb-4 ${tH3}`}>The Maternal Print</h3>
-                <div className={`text-base font-medium leading-relaxed ${tText}`} dangerouslySetInnerHTML={{ __html: premiumData.motherAnalysis }}></div>
-              </div>
+              <div className="relative w-full h-48 md:h-64 mt-4 mb-4">
+                {/* Custom SVG Bell Curve */}
+                <svg viewBox="0 0 1000 200" className="w-full h-full preserve-3d overflow-visible">
+                  <defs>
+                    <linearGradient id="bellGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#00A6ED" stopOpacity="0.4" />
+                      <stop offset="100%" stopColor="#00A6ED" stopOpacity="0.0" />
+                    </linearGradient>
+                  </defs>
+                  
+                  {/* The Curve Fill */}
+                  <path 
+                    d="M 0 200 C 300 200, 400 20, 500 20 C 600 20, 700 200, 1000 200 Z" 
+                    fill="url(#bellGradient)" 
+                  />
+                  {/* The Curve Line */}
+                  <path 
+                    d="M 0 200 C 300 200, 400 20, 500 20 C 600 20, 700 200, 1000 200" 
+                    fill="none" 
+                    stroke="#00A6ED" 
+                    strokeWidth="4" 
+                    strokeLinecap="round"
+                  />
+                  
+                  {/* Average Marker */}
+                  <line x1="500" y1="20" x2="500" y2="200" stroke="#fca311" strokeWidth="2" strokeDasharray="6 6" />
+                  <text x="500" y="15" textAnchor="middle" fill="#fca311" fontSize="14" fontWeight="bold">Average (50)</text>
 
-              <div className={`p-8 rounded-3xl border-t-4 border-t-[#8f2d56] ${cardClass}`}>
-                <div className="w-14 h-14 rounded-full bg-[#8f2d56]/10 flex items-center justify-center mb-6">
-                  <UserCircle className="w-7 h-7 text-[#8f2d56]" />
-                </div>
-                <h3 className={`text-xl font-black mb-4 ${tH3}`}>The Paternal Print</h3>
-                <div className={`text-base font-medium leading-relaxed ${tText}`} dangerouslySetInnerHTML={{ __html: premiumData.fatherAnalysis }}></div>
+                  {/* User Pin */}
+                  <g style={{ transform: `translateX(${premiumData.populationPercentile * 10 - 500}px)`, transition: 'transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1)' }}>
+                    <line x1="500" y1="20" x2="500" y2="200" stroke="#d81159" strokeWidth="3" />
+                    <circle cx="500" cy="20" r="8" fill="#d81159" />
+                    <text x="500" y="0" textAnchor="middle" fill="#d81159" fontSize="16" fontWeight="900">YOU ({premiumData.populationPercentile})</text>
+                  </g>
+                </svg>
               </div>
-
-              <div className={`p-8 rounded-3xl border-t-4 border-t-[#FFB400] ${cardClass}`}>
-                <div className="w-14 h-14 rounded-full bg-[#FFB400]/10 flex items-center justify-center mb-6">
-                  <Heart className="w-7 h-7 text-[#D97706]" />
-                </div>
-                <h3 className={`text-xl font-black mb-4 ${tH3}`}>The Romantic Bleed</h3>
-                <div className={`text-base font-medium leading-relaxed ${tText}`} dangerouslySetInnerHTML={{ __html: premiumData.romanticAnalysis }}></div>
-              </div>
-
-              <div className={`p-8 rounded-3xl border-t-4 border-t-[#00A6ED] ${cardClass}`}>
-                <div className="w-14 h-14 rounded-full bg-[#00A6ED]/10 flex items-center justify-center mb-6">
-                  <Briefcase className="w-7 h-7 text-[#00A6ED]" />
-                </div>
-                <h3 className={`text-xl font-black mb-4 ${tH3}`}>The Professional Bleed</h3>
-                <div className={`text-base font-medium leading-relaxed ${tText}`} dangerouslySetInnerHTML={{ __html: premiumData.workAnalysis }}></div>
-              </div>
-
             </div>
 
-            {/* The Action Plan */}
-            <div className={`p-8 md:p-12 rounded-3xl border-2 border-[#D97706] bg-[#FFB400]/5`}>
-              <h2 className="text-3xl font-black mb-6 flex items-center gap-3 text-[#D97706]"><Target className="w-8 h-8" /> Your 80/20 Action Plan</h2>
-              <div className={`text-lg leading-relaxed space-y-6 font-medium ${tText} [&>ol]:space-y-4 [&>ol]:list-none [&>ol]:p-0 [&>ol>li>b]:text-[#D97706] [&>ol>li>b]:uppercase [&>ol>li>b]:tracking-wide [&>ol>li>b]:block [&>ol>li>b]:mb-1 [&>ol>li]:bg-white [&>ol>li]:dark:bg-[#000000] [&>ol>li]:p-4 [&>ol>li]:rounded-xl [&>ol>li]:border [&>ol>li]:border-[#D97706]/20`} dangerouslySetInnerHTML={{ __html: premiumData.actionablePlan }}></div>
+            {/* 3. The Details (Childhood, Romantic, Work) */}
+            <div className="space-y-6">
+              <div className={`p-8 md:p-10 rounded-3xl border-l-8 border-l-[#d81159] ${cardClass}`}>
+                <div className="flex items-center gap-4 mb-6"><Users className="w-8 h-8 text-[#d81159]" /><h3 className={`text-2xl font-black ${tH3}`}>The Origin Print</h3></div>
+                <div className={`text-lg leading-relaxed space-y-4 font-medium ${tText}`} dangerouslySetInnerHTML={{ __html: premiumData.childhoodPrint }}></div>
+              </div>
+
+              <div className={`p-8 md:p-10 rounded-3xl border-l-8 border-l-[#FFB400] ${cardClass}`}>
+                <div className="flex items-center gap-4 mb-6"><Heart className="w-8 h-8 text-[#D97706]" /><h3 className={`text-2xl font-black ${tH3}`}>The Romantic Threat</h3></div>
+                <div className={`text-lg leading-relaxed space-y-4 font-medium ${tText}`} dangerouslySetInnerHTML={{ __html: premiumData.romanticDanger }}></div>
+              </div>
+
+              <div className={`p-8 md:p-10 rounded-3xl border-l-8 border-l-[#00A6ED] ${cardClass}`}>
+                <div className="flex items-center gap-4 mb-6"><Briefcase className="w-8 h-8 text-[#00A6ED]" /><h3 className={`text-2xl font-black ${tH3}`}>The Workplace Threat</h3></div>
+                <div className={`text-lg leading-relaxed space-y-4 font-medium ${tText}`} dangerouslySetInnerHTML={{ __html: premiumData.workplaceDanger }}></div>
+              </div>
             </div>
 
-            <div className="pt-8"><SharePrintButtons /></div>
+            {/* 4. Action Plan */}
+            <div className={`p-8 md:p-12 rounded-3xl border-2 border-[#0D2C54] bg-[#f8fbff] dark:bg-[#000000]`}>
+              <h2 className="text-3xl font-black mb-6 flex items-center gap-3 text-[#0D2C54] dark:text-white"><Target className="w-8 h-8 text-[#00A6ED]" /> The Master Action Plan</h2>
+              <div className={`text-lg leading-relaxed font-medium ${tText} [&>ol]:space-y-6 [&>ol]:list-none [&>ol]:p-0 [&>ol>li>b]:text-[#0D2C54] [&>ol>li>b]:dark:text-white [&>ol>li>b]:uppercase [&>ol>li>b]:text-sm [&>ol>li>b]:tracking-widest [&>ol>li>b]:block [&>ol>li>b]:mb-2 [&>ol>li]:bg-white [&>ol>li]:dark:bg-[#14213d] [&>ol>li]:p-6 [&>ol>li]:rounded-2xl [&>ol>li]:border [&>ol>li]:shadow-sm`} dangerouslySetInnerHTML={{ __html: premiumData.masterActionPlan }}></div>
+            </div>
+
+            {/* 5. The Cross-Sell Push */}
+            <div className="bg-gradient-to-r from-[#d81159] to-[#8f2d56] p-1 rounded-3xl shadow-xl">
+              <div className="bg-white dark:bg-[#14213d] p-8 md:p-10 rounded-[22px] text-center">
+                <span className="inline-block py-1 px-4 rounded-full bg-rose-100 text-[#d81159] font-black text-xs tracking-widest uppercase mb-6">Your Next Target</span>
+                <h3 className={`text-3xl font-black mb-4 ${tH3}`}>Take The "{premiumData.recommendedNextTest?.testName}" Test</h3>
+                <p className={`text-lg font-medium max-w-2xl mx-auto mb-8 ${tText}`}>
+                  {premiumData.recommendedNextTest?.psychologicalPitch}
+                </p>
+                <Link href={`/${premiumData.recommendedNextTest?.testId}`} className="inline-flex items-center justify-center gap-3 py-4 px-8 bg-[#d81159] hover:bg-[#b10f2e] text-white rounded-full font-black text-lg transition-transform hover:-translate-y-1 shadow-lg">
+                  Start This Diagnostic Now <ArrowRight className="w-5 h-5" />
+                </Link>
+              </div>
+            </div>
+
+            <div className="pt-8 pb-12"><SharePrintButtons /></div>
           </div>
         ) : (
           <PremiumCheckout 
