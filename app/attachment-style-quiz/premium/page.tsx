@@ -1,195 +1,171 @@
 "use client";
 
-import { useState, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
-import { Lock, Shield, Sparkles, Activity, Target, AlertTriangle, ArrowRight, CheckCircle2 } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { generatePremiumReport } from "@/app/actions/generatePremiumReport";
+import { AlertTriangle, BrainCircuit, Activity, ShieldCheck, Target, ArrowRight, LineChart, Users, Heart, Ghost } from "lucide-react";
+import Link from "next/link";
+import SharePrintButtons from "@/components/ui/SharePrintButtons";
 
-interface PremiumReportData {
-  thePlaybook: string;
-  attractionMagnets: string;
-  traumaLoop: string;
-  extractionPlan: string;
-}
+export default function PremiumAttachmentReportPage() {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
+  const [premiumData, setPremiumData] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
-// 1. Move the actual logic into an inner component
-function PremiumContent() {
-  const searchParams = useSearchParams();
-  const primaryArchetype = searchParams.get("style") || "Anxious Preoccupied";
-  
-  const [isUnlocked, setIsUnlocked] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [reportData, setReportData] = useState<PremiumReportData | null>(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const savedData = localStorage.getItem('oc_saved_profile');
+        if (!savedData) {
+          setError("No profile data found. Please complete the assessment first.");
+          setIsLoading(false);
+          return;
+        }
 
-  const handleCheckout = async () => {
-    setIsLoading(true);
-    
-    try {
-      const response = await fetch("/api/premium-report", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          quizType: "attachment-style",
-          primaryArchetype: primaryArchetype,
-          loveStyle: "Unknown", 
-          schema: "Subconscious Attachment Trigger" 
-        }),
-      });
-
-      const data = await response.json();
-      if (data.success) {
-        setReportData(data.report);
-        setIsUnlocked(true);
-      } else {
-        alert("Something went wrong generating your report.");
+        const { profile, demographics, rawAnswers } = JSON.parse(savedData);
+        
+        // Pass the rawAnswers straight into the AI!
+        const data = await generatePremiumReport(profile.attachment, demographics, rawAnswers);
+        
+        if (data.success) {
+          setPremiumData(data.report);
+        } else {
+          setError("Failed to compile your master audit. " + data.error);
+        }
+      } catch (err) {
+        setError("An unexpected error occurred.");
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.error(error);
-      alert("Failed to connect to the server.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    };
+
+    fetchData();
+  }, []);
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#fff1d0] px-4 text-center">
+        <AlertTriangle className="w-16 h-16 text-[#dd1c1a] mb-6" />
+        <h2 className="text-3xl font-black text-[#086788] mb-4">Access Denied</h2>
+        <p className="text-lg font-medium text-[#086788]/80 max-w-md mb-8">{error}</p>
+        <button onClick={() => router.push('/attachment-style-quiz')} className="px-8 py-4 bg-[#086788] text-white rounded-xl font-black shadow-md">Return to Assessment</button>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-50 px-4">
-        <div className="w-16 h-16 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mb-8 shadow-lg"></div>
-        <h2 className="text-3xl font-extrabold text-zinc-900 mb-4 tracking-tight">Compiling Your Master Audit...</h2>
-        <p className="text-zinc-500 text-center max-w-md text-lg leading-relaxed">
-          Our elite behavioral AI is actively profiling your <span className="font-semibold text-indigo-600">{primaryArchetype}</span> patterns. 
-          Generating your custom extraction plan takes about 10-15 seconds. Please don't close this window.
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#fff1d0] px-4">
+        <div className="w-20 h-20 border-8 border-[#d6d2d2] border-t-[#06aed5] rounded-full animate-spin mb-8 shadow-sm"></div>
+        <h2 className="text-3xl md:text-4xl font-black text-[#086788] mb-4 text-center">Compiling Your Master Audit...</h2>
+        <p className="text-[#086788]/80 text-center max-w-md text-lg font-medium leading-relaxed">
+          Our elite behavioral AI is actively reading every single answer you provided to profile your relationship dynamic. Please wait 10-15 seconds.
         </p>
       </div>
     );
   }
 
-  if (isUnlocked && reportData) {
+  if (premiumData) {
     return (
-      <div className="min-h-screen bg-zinc-50 py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
+      <div className="min-h-screen bg-[#fff1d0] py-12 md:py-20 border-t border-[#d6d2d2]">
+        <div className="max-w-6xl mx-auto px-4 md:px-8 space-y-8 animate-in fade-in slide-in-from-bottom-10 duration-1000">
           
-          <div className="text-center mb-16">
-            <h1 className="text-4xl font-black text-zinc-900 sm:text-5xl tracking-tight mb-4">
-              Your Ultimate Clarity Bundle
-            </h1>
-            <p className="text-xl text-zinc-600 font-medium">
-              The tactical breakdown of your {primaryArchetype} attachment style.
+          {/* Header */}
+          <div className="bg-[#086788] text-white p-8 md:p-14 rounded-2xl shadow-lg text-center relative overflow-hidden">
+            <h1 className="text-4xl md:text-6xl font-black mb-6 text-white">Your Love Pattern Breakdown</h1>
+            <p className="text-xl md:text-2xl font-medium text-[#06aed5] max-w-3xl mx-auto">
+              Clinical access granted. We have successfully mapped your partner's playbook and the psychological threats you face.
             </p>
           </div>
 
-          <div className="bg-white rounded-3xl shadow-sm border border-zinc-200 p-8 sm:p-10">
-            <div className="flex items-center gap-4 mb-8 border-b border-zinc-100 pb-6">
-              <div className="p-3 bg-indigo-50 text-indigo-600 rounded-xl"><Activity size={28} strokeWidth={2.5} /></div>
-              <h2 className="text-2xl font-bold text-zinc-900">The Subconscious Playbook</h2>
-            </div>
-            <div 
-              className="text-zinc-700 text-lg leading-relaxed space-y-6 [&>strong]:text-indigo-900 [&>strong]:font-semibold [&>strong]:bg-indigo-50 [&>strong]:px-1" 
-              dangerouslySetInnerHTML={{ __html: reportData.thePlaybook }} 
-            />
+          {/* Deep Validation */}
+          <div className="bg-white border border-[#d6d2d2] border-l-8 border-l-[#f0c808] p-8 md:p-14 rounded-2xl shadow-sm">
+            <h2 className="text-4xl font-black mb-8 text-[#086788]">The Reality Check</h2>
+            <div className="text-xl font-medium leading-relaxed text-[#086788]/90 space-y-6" dangerouslySetInnerHTML={{ __html: premiumData.deepValidation }}></div>
           </div>
 
-          <div className="bg-white rounded-3xl shadow-sm border border-zinc-200 p-8 sm:p-10">
-            <div className="flex items-center gap-4 mb-8 border-b border-zinc-100 pb-6">
-              <div className="p-3 bg-rose-50 text-rose-600 rounded-xl"><Target size={28} strokeWidth={2.5} /></div>
-              <h2 className="text-2xl font-bold text-zinc-900">Your Attraction Magnets</h2>
+          {/* Visual Data Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            {/* Danger Meter */}
+            <div className={`p-8 md:p-12 rounded-2xl bg-white border border-[#d6d2d2] shadow-sm text-center`}>
+              <h2 className={`text-3xl font-black text-[#086788] mb-4`}>Relationship Danger Score</h2>
+              <p className={`text-lg font-medium text-[#086788]/80 mb-8`}>Based on your answers, how dangerous is it to stay in this dynamic?</p>
+              
+              <div className="relative w-full aspect-[2/1] overflow-hidden mb-6 flex justify-center mt-8">
+                <div className="absolute top-0 w-64 h-64 md:w-80 md:h-80 rounded-full border-[30px] border-[#d6d2d2] border-b-transparent border-l-transparent -rotate-45"></div>
+                <div className="absolute top-0 w-64 h-64 md:w-80 md:h-80 rounded-full border-[30px] border-[#dd1c1a] border-b-transparent border-l-transparent transition-transform duration-1000 ease-out" style={{ transform: `rotate(${-45 + (premiumData.partnerDangerScore / 100) * 180}deg)` }}></div>
+                <div className="absolute bottom-0 w-full text-center pb-4">
+                  <span className="text-6xl md:text-7xl font-black text-[#dd1c1a]">{premiumData.partnerDangerScore}<span className="text-3xl text-[#086788]/50">/100</span></span>
+                </div>
+              </div>
             </div>
-            <div 
-              className="text-zinc-700 text-lg leading-relaxed space-y-4 [&>ul]:list-disc [&>ul]:pl-6 [&>ul>li]:mb-4 [&>ul>li]:pl-2 [&>strong]:text-zinc-900" 
-              dangerouslySetInnerHTML={{ __html: reportData.attractionMagnets }} 
-            />
+
+            {/* Manipulation Bell Curve */}
+            <div className={`p-8 md:p-12 rounded-2xl bg-white border border-[#d6d2d2] shadow-sm overflow-hidden`}>
+              <h2 className={`text-3xl font-black text-[#086788] mb-4 text-center`}>His Manipulation Level</h2>
+              <p className={`text-lg font-medium mb-8 text-[#086788]/80 text-center`}>
+                How manipulative is the partner you attract compared to average guys? Your partner sits in the <b>{premiumData.manipulationPercentile}th percentile</b>.
+              </p>
+              <div className="relative w-full h-48 mt-4">
+                <svg viewBox="0 0 1000 200" className="w-full h-full preserve-3d overflow-visible">
+                  <defs><linearGradient id="mGrad" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stopColor="#dd1c1a" stopOpacity="0.3" /><stop offset="100%" stopColor="#dd1c1a" stopOpacity="0.0" /></linearGradient></defs>
+                  <path d="M 0 200 C 300 200, 400 20, 500 20 C 600 20, 700 200, 1000 200 Z" fill="url(#mGrad)" />
+                  <path d="M 0 200 C 300 200, 400 20, 500 20 C 600 20, 700 200, 1000 200" fill="none" stroke="#dd1c1a" strokeWidth="4" strokeLinecap="round"/>
+                  <line x1="500" y1="20" x2="500" y2="200" stroke="#086788" strokeWidth="2" strokeDasharray="6 6" opacity="0.3"/>
+                  <text x="500" y="15" textAnchor="middle" fill="#086788" fontSize="14" fontWeight="bold">Average Guy (50)</text>
+                  <g style={{ transform: `translateX(${premiumData.manipulationPercentile * 10 - 500}px)`, transition: 'transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1)' }}>
+                    <line x1="500" y1="20" x2="500" y2="200" stroke="#086788" strokeWidth="4" />
+                    <circle cx="500" cy="20" r="8" fill="#086788" />
+                    <text x="500" y="0" textAnchor="middle" fill="#086788" fontSize="18" fontWeight="900">HIM ({premiumData.manipulationPercentile})</text>
+                  </g>
+                </svg>
+              </div>
+            </div>
           </div>
 
-          <div className="bg-white rounded-3xl shadow-sm border border-zinc-200 p-8 sm:p-10">
-            <div className="flex items-center gap-4 mb-8 border-b border-zinc-100 pb-6">
-              <div className="p-3 bg-amber-50 text-amber-600 rounded-xl"><AlertTriangle size={28} strokeWidth={2.5} /></div>
-              <h2 className="text-2xl font-bold text-zinc-900">The Origin Loop</h2>
+          {/* Deep Dives */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+            <div className={`p-8 md:p-10 rounded-2xl bg-white border border-[#d6d2d2] shadow-sm`}>
+              <div className="flex items-center gap-4 mb-6"><Users className="w-8 h-8 text-[#06aed5]" /><h3 className={`text-2xl font-black text-[#086788]`}>Profile of Your Boyfriend</h3></div>
+              <div className={`text-base md:text-lg leading-relaxed space-y-4 font-medium text-[#086788]/90`} dangerouslySetInnerHTML={{ __html: premiumData.boyfriendProfile }}></div>
             </div>
-            <div 
-              className="text-zinc-700 text-lg leading-relaxed space-y-6 [&>strong]:text-zinc-900 [&>strong]:font-semibold" 
-              dangerouslySetInnerHTML={{ __html: reportData.traumaLoop }} 
-            />
+
+            <div className={`p-8 md:p-10 rounded-2xl bg-white border border-[#d6d2d2] shadow-sm`}>
+              <div className="flex items-center gap-4 mb-6"><Ghost className="w-8 h-8 text-[#f0c808]" /><h3 className={`text-2xl font-black text-[#086788]`}>His Playbook</h3></div>
+              <div className={`text-base md:text-lg leading-relaxed space-y-4 font-medium text-[#086788]/90`} dangerouslySetInnerHTML={{ __html: premiumData.hisPlaybook }}></div>
+            </div>
+
+            <div className={`p-8 md:p-10 rounded-2xl bg-white border border-[#d6d2d2] shadow-sm`}>
+              <div className="flex items-center gap-4 mb-6"><AlertTriangle className="w-8 h-8 text-[#dd1c1a]" /><h3 className={`text-2xl font-black text-[#086788]`}>Relationship Threats</h3></div>
+              <div className={`text-base md:text-lg leading-relaxed space-y-4 font-medium text-[#086788]/90`} dangerouslySetInnerHTML={{ __html: premiumData.relationshipThreats }}></div>
+            </div>
           </div>
 
-          <div className="bg-zinc-900 rounded-3xl shadow-2xl border border-zinc-800 p-8 sm:p-10 relative overflow-hidden">
-            <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-emerald-500 rounded-full blur-3xl opacity-20 pointer-events-none"></div>
-            <div className="flex items-center gap-4 mb-8 border-b border-zinc-800 pb-6 relative z-10">
-              <div className="p-3 bg-emerald-500/20 text-emerald-400 rounded-xl"><Sparkles size={28} strokeWidth={2.5} /></div>
-              <h2 className="text-2xl font-bold text-white">The Extraction Plan</h2>
-            </div>
-            <div 
-              className="text-zinc-300 text-lg leading-relaxed space-y-4 relative z-10 [&>ol]:list-decimal [&>ol]:pl-6 [&>ol>li]:mb-6 [&>ol>li]:pl-2 [&>strong]:text-white [&>strong]:font-semibold" 
-              dangerouslySetInnerHTML={{ __html: reportData.extractionPlan }} 
-            />
+          {/* Action Plan */}
+          <div className={`p-8 md:p-14 rounded-2xl border border-[#d6d2d2] bg-white shadow-sm`}>
+            <h2 className="text-3xl font-black mb-8 flex items-center gap-4 text-[#086788]"><Target className="w-10 h-10 text-[#06aed5]" /> What To Be Careful About (Action Plan)</h2>
+            <div className={`text-xl leading-relaxed font-medium text-[#086788] [&>ol]:space-y-6 [&>ol]:list-none [&>ol]:p-0 [&>ol>li>b]:text-[#086788] [&>ol>li>b]:uppercase [&>ol>li>b]:text-sm [&>ol>li>b]:tracking-widest [&>ol>li>b]:block [&>ol>li>b]:mb-3 [&>ol>li]:bg-[#fff1d0]/50 [&>ol>li]:p-8 [&>ol>li]:rounded-xl [&>ol>li]:border [&>ol>li]:border-[#d6d2d2]`} dangerouslySetInnerHTML={{ __html: premiumData.masterActionPlan }}></div>
           </div>
 
+          {/* Cross-Sell */}
+          <div className="bg-white border-2 border-[#dd1c1a] p-8 md:p-12 rounded-2xl shadow-md mt-12 text-center">
+            <span className="inline-block py-1.5 px-4 rounded bg-[#dd1c1a]/10 text-[#dd1c1a] font-black text-sm tracking-widest uppercase mb-6">Your Next Step</span>
+            <h3 className={`text-3xl md:text-4xl font-black mb-6 text-[#086788]`}>Take The "{premiumData.recommendedNextTest?.testName || 'Is He Manipulative?'}" Test</h3>
+            <p className={`text-xl font-medium max-w-3xl mx-auto mb-10 text-[#086788]/80`}>
+              {premiumData.recommendedNextTest?.psychologicalPitch || "Identify the exact manipulation tactics he is using on you right now."}
+            </p>
+            <Link href={`/${premiumData.recommendedNextTest?.testId || 'is-he-manipulative'}`} className="inline-flex items-center justify-center gap-3 py-5 px-10 min-h-[64px] bg-[#dd1c1a] hover:bg-[#b10f2e] text-white rounded-xl font-black text-xl transition-transform hover:-translate-y-1 shadow-md">
+              Start This Diagnostic Now <ArrowRight className="w-6 h-6" />
+            </Link>
+          </div>
+
+          <div className="pt-8 pb-12"><SharePrintButtons /></div>
         </div>
       </div>
     );
   }
 
-  return (
-    <div className="min-h-screen bg-zinc-50 py-16 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
-      <div className="max-w-xl w-full bg-white rounded-3xl shadow-xl border border-zinc-200 overflow-hidden">
-        
-        <div className="bg-zinc-900 p-8 sm:p-10 text-center relative overflow-hidden">
-          <div className="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-indigo-500 rounded-full blur-3xl opacity-30 pointer-events-none"></div>
-          <Lock className="w-12 h-12 text-indigo-400 mx-auto mb-6" />
-          <h1 className="text-3xl font-extrabold text-white mb-3 tracking-tight">The Ultimate Clarity Bundle</h1>
-          <p className="text-zinc-400 text-lg">
-            Unlock your custom extraction plan for <span className="text-white font-semibold">{primaryArchetype}</span> patterns.
-          </p>
-        </div>
-        
-        <div className="p-8 sm:p-10">
-          <ul className="space-y-5 mb-10">
-            {[
-              "Exactly how your brain self-sabotages (and how to stop it).",
-              "The specific toxic profiles you naturally attract.",
-              "The childhood origin of your emotional triggers.",
-              "A 3-phase behavioral plan to rewire your attraction today.",
-              "Copy-paste text scripts to set lethal, polite boundaries."
-            ].map((feature, idx) => (
-              <li key={idx} className="flex items-start gap-4">
-                <CheckCircle2 className="w-6 h-6 text-indigo-600 flex-shrink-0 mt-0.5" />
-                <span className="text-zinc-700 font-medium text-lg leading-snug">{feature}</span>
-              </li>
-            ))}
-          </ul>
-
-          <div className="border-t border-zinc-100 pt-8 mb-8 text-center">
-            <div className="text-6xl font-black text-zinc-900 mb-2 tracking-tight">$19.99</div>
-            <p className="text-sm text-zinc-500 font-bold uppercase tracking-widest">One-time payment • Lifetime access</p>
-          </div>
-
-          <button 
-            onClick={handleCheckout}
-            className="w-full py-5 px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold text-xl shadow-xl shadow-indigo-200 transition-all flex items-center justify-center gap-3 group"
-          >
-            Unlock My Playbook 
-            <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
-          </button>
-          
-          <div className="flex items-center justify-center gap-2 mt-8 text-zinc-400 text-sm font-medium">
-            <Shield size={18} />
-            <span>Secure 256-bit encryption</span>
-          </div>
-        </div>
-        
-      </div>
-    </div>
-  );
-}
-
-// 2. Wrap it in a Suspense boundary for Vercel's build compiler
-export default function PremiumAttachmentReport() {
-  return (
-    <Suspense fallback={
-      <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-50 px-4">
-        <div className="w-16 h-16 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mb-8 shadow-lg"></div>
-        <h2 className="text-3xl font-extrabold text-zinc-900 mb-4 tracking-tight">Loading Secure Page...</h2>
-      </div>
-    }>
-      <PremiumContent />
-    </Suspense>
-  );
+  return null;
 }
