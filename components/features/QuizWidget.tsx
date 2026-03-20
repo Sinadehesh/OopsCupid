@@ -5,9 +5,8 @@ import SharePrintButtons from "@/components/ui/SharePrintButtons";
 import Link from "next/link";
 import { generatePsychologicalProfile, computeLegacyResult } from "@/lib/psychometrics/classification";
 
-// 🔥 FIX: We are importing AttachmentReport instead of MasterReport
 import AttachmentReport from "@/components/report/AttachmentReport";
-import { DashboardGrid, MultiGaugeGrid } from "@/components/report/ScoreBars";
+import { DashboardGrid } from "@/components/report/ScoreBars";
 
 // EXTERNAL QUESTION VAULTS
 import { attachmentQuestions, Question } from "@/lib/psychometrics/attachment/questions";
@@ -15,25 +14,23 @@ import { attractionQuestions } from "@/lib/psychometrics/attraction/questions";
 import { attractorQuestions } from "@/lib/psychometrics/attractor/questions";
 import { partnerAttachmentQuestions } from "@/lib/psychometrics/partner-attachment/questions";
 import { infidelityQuestions } from "@/lib/psychometrics/infidelity/questions";
+import { friendRoleQuestions } from "@/lib/psychometrics/friend-role/questions";
+import { friendUsedQuestions } from "@/lib/psychometrics/friend-used/questions";
 
 // EXTERNAL REPORT IMPORTS
-import { generateAttractionProfile } from "@/lib/psychometrics/attraction/scoring";
 import AttractionMasterReport from "@/components/report/AttractionMasterReport";
-
-import { generateAttractorProfile } from "@/lib/psychometrics/attractor/scoring";
 import AttractorMasterReport from "@/components/report/AttractorMasterReport";
-
-import { generatePartnerAttachmentProfile } from "@/lib/psychometrics/partner-attachment/scoring";
 import PartnerAttachmentReport from "@/components/report/PartnerAttachmentReport";
-
-import { generateInfidelityProfile } from "@/lib/psychometrics/infidelity/scoring";
 import InfidelityMasterReport from "@/components/report/InfidelityMasterReport";
-import { friendRoleQuestions } from "@/lib/psychometrics/friend-role/questions";
-import { generateFriendRoleProfile } from "@/lib/psychometrics/friend-role/scoring";
 import FriendRoleMasterReport from "@/components/report/FriendRoleMasterReport";
-import { friendUsedQuestions } from "@/lib/psychometrics/friend-used/questions";
-import { generateFriendUsedProfile } from "@/lib/psychometrics/friend-used/scoring";
 import FriendUsedMasterReport from "@/components/report/FriendUsedMasterReport";
+
+import { generateAttractionProfile } from "@/lib/psychometrics/attraction/scoring";
+import { generateAttractorProfile } from "@/lib/psychometrics/attractor/scoring";
+import { generatePartnerAttachmentProfile } from "@/lib/psychometrics/partner-attachment/scoring";
+import { generateInfidelityProfile } from "@/lib/psychometrics/infidelity/scoring";
+import { generateFriendRoleProfile } from "@/lib/psychometrics/friend-role/scoring";
+import { generateFriendUsedProfile } from "@/lib/psychometrics/friend-used/scoring";
 
 const legacyBanks: Record<string, Question[]> = {
   "is-he-manipulative": [
@@ -65,7 +62,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const topRef = useRef<HTMLDivElement>(null);
 
   const isDarkTheme = ["is-he-manipulative"].includes(quizName);
-  
+  const isAttachment = quizName === "attachment-style";
   const isAttraction = quizName === "attraction-patterns";
   const isAttractor = quizName === "who-is-attracted-to-me";
   const isPartnerAttachment = quizName === "partners-attachment-style";
@@ -76,30 +73,30 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const isPremiumUI = isAttraction || isAttractor || isPartnerAttachment || isCheating || isFriendRole || isFriendUsed;
 
   const activeQuestions = useMemo(() => {
-    if (quizName === "attachment-style") return attachmentQuestions; 
+    if (isAttachment) return attachmentQuestions; 
     if (isAttraction) return attractionQuestions;
     if (isAttractor) return attractorQuestions; 
     if (isPartnerAttachment) return partnerAttachmentQuestions;
     if (isCheating) return infidelityQuestions;
     if (isFriendRole) return friendRoleQuestions;
     if (isFriendUsed) return friendUsedQuestions;
-
     return legacyBanks[quizName] || legacyBanks["default"];
-  }, [quizName, isAttraction, isAttractor, isPartnerAttachment, isCheating]);
+  }, [quizName, isAttachment, isAttraction, isAttractor, isPartnerAttachment, isCheating]);
 
   const isFinished = currentIndex >= activeQuestions.length;
   const progress   = Math.round((currentIndex / activeQuestions.length) * 100);
 
+  // Default Colors
   let colors = {
-    bg: "bg-white", cardBorder: "border-[#0D2C54]/10", cardShadow: "shadow-[0_12px_40px_rgba(13,44,84,0.06)]", textPrimary: "text-[#0D2C54]", textSecondary: "text-[#0D2C54]/60", progressTrack: "bg-[#0D2C54]/10", progressFill: "bg-[#FFB400]", optionBorder: "border-[#0D2C54]/15", optionHover: "hover:border-[#00A6ED] hover:bg-[#00A6ED]/[0.03] hover:-translate-y-[2px] hover:shadow-[0_4px_12px_rgba(0,166,237,0.12)]", optionSelected: "border-[#00A6ED] bg-[#00A6ED]/[0.05]", btnPrimary: "bg-[#00A6ED] text-white hover:bg-[#00A6ED]/90 shadow-md", btnBack: "border-[#0D2C54]/20 text-[#0D2C54] hover:bg-[#0D2C54]/5", chipBg: "bg-[#FFB400]/20", chipText: "text-[#0D2C54]"
+    bg: "bg-white", cardBorder: "border-[#d6d2d2]", cardShadow: "shadow-[0_12px_40px_rgba(8,103,136,0.06)]", textPrimary: "text-[#086788]", textSecondary: "text-[#086788]/60", progressTrack: "bg-[#d6d2d2]/50", progressFill: "bg-[#06aed5]", optionBorder: "border-[#d6d2d2]", optionHover: "hover:border-[#06aed5] hover:bg-[#06aed5]/5 hover:-translate-y-[2px] hover:shadow-md", optionSelected: "border-[#06aed5] bg-[#06aed5]/10 shadow-inner ring-4 ring-[#06aed5]/20", btnPrimary: "bg-[#086788] text-white hover:bg-[#06aed5] shadow-md", btnBack: "border-[#d6d2d2] text-[#086788] hover:bg-[#d6d2d2]/20", chipBg: "bg-[#f0c808]/20", chipText: "text-[#086788]"
   };
 
-  if (isPremiumUI) {
+  // Phase 1 Palette Override for Attachment
+  if (isAttachment) {
+     colors = { ...colors, bg: "bg-[#fff1d0]" }; // Warm cream background for the widget container
+  } else if (isPremiumUI) {
       if (isAttraction) colors = { ...colors, textPrimary: "text-[#086788]", textSecondary: "text-[#086788]/70", progressTrack: "bg-[#086788]/10", progressFill: "bg-[#F0C808]", optionBorder: "border-[#06AED5]/40", optionHover: "hover:border-[#06AED5] hover:bg-[#06AED5]/5", optionSelected: "border-[#086788] bg-[#06AED5]/10", btnPrimary: "bg-[#DD1C1A] text-white", btnBack: "border-[#086788]/20 text-[#086788]", chipBg: "bg-[#086788]/10", chipText: "text-[#086788]" };
-      else if (isAttractor) colors = { ...colors, textPrimary: "text-[#3B1F2B]", textSecondary: "text-[#3B1F2B]/70", progressTrack: "bg-[#3B1F2B]/10", progressFill: "bg-[#F18F01]", optionBorder: "border-[#A23B72]/40", optionHover: "hover:border-[#A23B72] hover:bg-[#A23B72]/5", optionSelected: "border-[#3B1F2B] bg-[#A23B72]/10", btnPrimary: "bg-[#C73E1D] text-white", btnBack: "border-[#3B1F2B]/20 text-[#3B1F2B]", chipBg: "bg-[#3B1F2B]/10", chipText: "text-[#3B1F2B]" };
-      else if (isPartnerAttachment) colors = { ...colors, textPrimary: "text-[#0f172a]", textSecondary: "text-[#0f172a]/70", progressTrack: "bg-[#0f172a]/10", progressFill: "bg-[#e11d48]", optionBorder: "border-[#94a3b8]/40", optionHover: "hover:border-[#94a3b8] hover:bg-[#94a3b8]/5", optionSelected: "border-[#0f172a] bg-[#94a3b8]/10", btnPrimary: "bg-[#e11d48] text-white hover:bg-[#be123c]", btnBack: "border-[#0f172a]/20 text-[#0f172a]", chipBg: "bg-[#0f172a]/10", chipText: "text-[#0f172a]" };
       else if (isCheating) colors = { ...colors, bg: "bg-[#0a0a0a]", cardBorder: "border-[#27272a]", cardShadow: "shadow-2xl shadow-red-900/10", textPrimary: "text-white", textSecondary: "text-gray-400", progressTrack: "bg-white/10", progressFill: "bg-[#ef4444]", optionBorder: "border-[#27272a]", optionHover: "hover:border-[#ef4444] hover:bg-[#ef4444]/10", optionSelected: "border-[#ef4444] bg-[#ef4444]/20", btnPrimary: "bg-[#ef4444] text-white hover:bg-[#dc2626]", btnBack: "border-white/20 text-white", chipBg: "bg-black/50 border border-[#ef4444]/30", chipText: "text-[#ef4444]" };
-      else if (isFriendUsed) colors = { ...colors, bg: "bg-[#0f172a]", cardBorder: "border-[#334155]", cardShadow: "shadow-2xl shadow-emerald-900/10", textPrimary: "text-white", textSecondary: "text-slate-400", progressTrack: "bg-white/10", progressFill: "bg-[#10b981]", optionBorder: "border-[#334155]", optionHover: "hover:border-[#10b981] hover:bg-[#10b981]/10", optionSelected: "border-[#10b981] bg-[#10b981]/20", btnPrimary: "bg-[#10b981] text-white hover:bg-[#059669]", btnBack: "border-white/20 text-white", chipBg: "bg-black/50 border border-[#10b981]/30", chipText: "text-[#10b981]" };
   } else if (isDarkTheme) {
       colors = { ...colors, bg: "bg-[#0f172a]", cardBorder: "border-slate-700", textPrimary: "text-slate-100", textSecondary: "text-slate-400", progressTrack: "bg-slate-100", progressFill: "bg-[#0496ff]", optionBorder: "border-slate-700", optionHover: "hover:border-[#b10f2e] hover:bg-[#b10f2e]/10", optionSelected: "border-[#0496ff] bg-[#0496ff]/10", btnPrimary: "bg-[#b10f2e] text-white", btnBack: "border-slate-700 text-slate-400 hover:bg-slate-800", chipBg: "bg-slate-800", chipText: "text-slate-300" };
   }
@@ -128,7 +125,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         fakeAnswers[q.id] = q.options[Math.floor(Math.random() * q.options.length)];
       }
     });
-    if (quizName === 'attachment-style') {
+    if (isAttachment) {
       fakeAnswers['demo_1'] = 'Single'; fakeAnswers['demo_2'] = 'No'; fakeAnswers['demo_3'] = 'Woman';
     }
     setAnswers(fakeAnswers);
@@ -150,33 +147,16 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const handleSubmit = () => {
     setLoading(true);
     setTimeout(() => {
-      if (quizName === "attachment-style") {
+      if (isAttachment) {
         const hasChildren = answers["demo_2"] === "Yes";
         const isSingle = answers["demo_1"] === "Single" || answers["demo_1"] === "It's complicated";
         const gender = answers["demo_3"] ?? "Non-binary";
         const profile = generatePsychologicalProfile(answers, hasChildren);
         setResultData({ profile, demographics: { isSingle, gender, hasChildren }, type: "attachment" });
       } else if (isAttraction) {
-        const profile = { ...generateAttractionProfile(answers), premiumUnlocked: false };
-        setResultData({ profile, type: "attraction" });
-      } else if (isAttractor) {
-        const profile = { ...generateAttractorProfile(answers), premiumUnlocked: false };
-        setResultData({ profile, type: "attractor" });
-      } else if (isPartnerAttachment) {
-        const profile = { ...generatePartnerAttachmentProfile(answers), premiumUnlocked: false };
-        setResultData({ profile, type: "partner" });
-      } else if (isCheating) {
-        const profile = { ...generateInfidelityProfile(answers), premiumUnlocked: false };
-        setResultData({ profile, type: "infidelity" });
-      } else if (isFriendRole) {
-        const profile = { ...generateFriendRoleProfile(answers), premiumUnlocked: false };
-        setResultData({ profile, type: "friendrole" });
-      } else if (isFriendUsed) {
-        const profile = { ...generateFriendUsedProfile(answers), premiumUnlocked: false };
-        setResultData({ profile, type: "friendused" });
+        setResultData({ profile: { ...generateAttractionProfile(answers), premiumUnlocked: false }, type: "attraction" });
       } else {
-        const res = computeLegacyResult(answers, quizName);
-        setResultData({ ...res, type: "legacy" });
+        setResultData({ ...computeLegacyResult(answers, quizName), type: "legacy" });
       }
       setShowResult(true);
       setLoading(false);
@@ -185,47 +165,24 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   };
 
   if (loading) {
-    const spinnerColorClass = isCheating ? 'border-[#ef4444]' : isPartnerAttachment ? 'border-[#0f172a]' : isAttractor ? 'border-[#3B1F2B]' : isAttraction ? 'border-[#086788]' : 'border-[#00A6ED]';
     return (
       <div ref={topRef} className={`w-full text-center py-24 ${colors.bg} rounded-[24px] ${colors.cardShadow} border ${colors.cardBorder} animate-in fade-in`}>
         <div className="flex flex-col items-center justify-center">
-          <div className={`w-16 h-16 border-4 border-t-transparent ${spinnerColorClass} rounded-full animate-spin mb-6`}></div>
-          <h3 className={`text-2xl font-extrabold ${colors.textPrimary} mb-2 animate-pulse`}>Analyzing Profile...</h3>
+          <div className={`w-16 h-16 border-4 border-t-transparent border-[#06aed5] rounded-full animate-spin mb-6`}></div>
+          <h3 className={`text-2xl font-black ${colors.textPrimary} mb-2 animate-pulse`}>Analyzing Profile...</h3>
         </div>
       </div>
     );
   }
 
   if (showResult && resultData) {
-    // 🔥 FIX: Now it renders the active, seductive AttachmentReport correctly
     if (resultData.type === "attachment") {
       return <div ref={topRef} className="w-full animate-in fade-in duration-500"><AttachmentReport profile={resultData.profile} demographics={resultData.demographics} isDarkTheme={isDarkTheme} /></div>;
     }
-    if (resultData.type === "attraction") {
-      return <div ref={topRef} className="w-full animate-in fade-in duration-500"><AttractionMasterReport profile={resultData.profile} /></div>;
-    }
-    if (resultData.type === "attractor") {
-      return <div ref={topRef} className="w-full animate-in fade-in duration-500"><AttractorMasterReport profile={resultData.profile} /></div>;
-    }
-    if (resultData.type === "partner") {
-      return <div ref={topRef} className="w-full animate-in fade-in duration-500"><PartnerAttachmentReport profile={resultData.profile} /></div>;
-    }
-    if (resultData.type === "infidelity") {
-      return <div ref={topRef} className="w-full animate-in fade-in duration-500"><InfidelityMasterReport profile={resultData.profile} /></div>;
-    }
-    if (resultData.type === "friendrole") {
-      return <div ref={topRef} className="w-full animate-in fade-in duration-500"><FriendRoleMasterReport profile={resultData.profile} /></div>;
-    }
-    if (resultData.type === "friendused") {
-      return <div ref={topRef} className="w-full animate-in fade-in duration-500"><FriendUsedMasterReport profile={resultData.profile} /></div>;
-    }
-
     return (
-      <div ref={topRef} className={`rounded-[24px] ${colors.bg} text-left w-full max-w-3xl mx-auto ${colors.cardShadow} border ${colors.cardBorder} animate-in fade-in duration-500 p-6 md:p-10`}>
-        <h3 className={`text-[28px] md:text-[34px] font-extrabold ${colors.textPrimary} mb-10 leading-tight text-center`}>{resultData.title}</h3>
-        <DashboardGrid healthScore={resultData.healthScore} gaugeScore={resultData.gaugeScore} gaugeLabel={resultData.gaugeLabel} />
-        <p className={`${colors.textPrimary} p-6 border ${colors.optionBorder} rounded-[16px] font-medium text-lg whitespace-pre-wrap mb-4 bg-slate-50/50`}>{resultData.description}</p>
-        <p className={`${colors.textPrimary} p-6 border ${colors.optionBorder} rounded-[16px] font-medium text-lg whitespace-pre-wrap bg-slate-50/50`}>{resultData.behaviors}</p>
+      <div ref={topRef} className={`rounded-[24px] bg-white text-left w-full max-w-3xl mx-auto shadow-xl border border-[#d6d2d2] animate-in fade-in duration-500 p-6 md:p-10`}>
+        <h3 className={`text-[28px] md:text-[34px] font-black text-[#086788] mb-10 text-center`}>{resultData.title}</h3>
+        <p className={`text-[#086788] p-6 border border-[#d6d2d2] rounded-[16px] font-medium text-lg whitespace-pre-wrap mb-4 bg-[#fff1d0]/50`}>{resultData.description}</p>
         <SharePrintButtons />
       </div>
     );
@@ -234,12 +191,12 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   if (isFinished) {
     return (
       <div ref={topRef} className={`w-full max-w-3xl mx-auto ${colors.bg} rounded-[24px] ${colors.cardShadow} border ${colors.cardBorder} text-center py-16 px-6 animate-in fade-in zoom-in`}>
-        <div className={`w-24 h-24 mx-auto ${colors.progressTrack} rounded-full flex items-center justify-center mb-6`}>
+        <div className={`w-24 h-24 mx-auto bg-white rounded-full flex items-center justify-center mb-6 shadow-sm border border-[#d6d2d2]`}>
           <span className="text-4xl">🧠</span>
         </div>
-        <h3 className={`text-3xl font-extrabold ${colors.textPrimary} mb-4`}>Assessment Complete</h3>
+        <h3 className={`text-3xl font-black ${colors.textPrimary} mb-4`}>Assessment Complete</h3>
         <p className={`text-lg mb-10 max-w-md mx-auto font-medium ${colors.textSecondary}`}>All data captured. We are ready to compile your specific psychological profile.</p>
-        <button onClick={handleSubmit} className={`w-full max-w-sm mx-auto block ${colors.btnPrimary} font-extrabold py-4 rounded-[14px] transform hover:-translate-y-1 transition-all duration-300`}>
+        <button onClick={handleSubmit} className={`w-full max-w-sm mx-auto block ${colors.btnPrimary} font-black py-4 rounded-[14px] transform hover:-translate-y-1 transition-all duration-300`}>
           Reveal Profile
         </button>
       </div>
@@ -249,16 +206,19 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const q = activeQuestions[currentIndex] as any;
   const baseSectionName = PHASE_LABELS[q.section || q.moduleKey || "default"] ?? q.section ?? q.moduleKey ?? "Assessment";
   const sectionName = q.subscaleKey || q.subscale ? `${baseSectionName} • ${q.subscaleKey || q.subscale}` : baseSectionName;
+  
+  const isDemographics = q.section === "demographics" || q.moduleKey === "demographics" || String(q.id).startsWith("demo");
+  const useKeypad = isAttachment && !isDemographics;
 
   return (
     <div ref={topRef} className={`w-full max-w-3xl mx-auto ${colors.bg} rounded-[24px] ${colors.cardShadow} border ${colors.cardBorder} flex flex-col justify-center min-h-[320px] p-5 md:p-6`}>
       <div className="mb-5">
         <div className="flex justify-between items-end mb-4">
           <div>
-            <span className={`text-[11px] font-extrabold uppercase tracking-widest ${colors.textSecondary} block mb-2`}>Section</span>
-            <span className={`text-xs md:text-sm font-extrabold px-3.5 py-1.5 rounded-md ${colors.chipBg} ${colors.chipText}`}>{sectionName}</span>
+            <span className={`text-[11px] font-black uppercase tracking-widest ${colors.textSecondary} block mb-2`}>Section</span>
+            <span className={`text-xs md:text-sm font-black px-3.5 py-1.5 rounded-md ${colors.chipBg} ${colors.chipText}`}>{sectionName}</span>
           </div>
-          <div className={`text-sm md:text-base font-extrabold tracking-wide ${colors.textPrimary}`}>QUESTION {currentIndex + 1} / {activeQuestions.length}</div>
+          <div className={`text-sm md:text-base font-black tracking-wide ${colors.textPrimary}`}>QUESTION {currentIndex + 1} / {activeQuestions.length}</div>
         </div>
         <div className={`w-full h-2 rounded-full ${colors.progressTrack} overflow-hidden`}>
           <div className={`h-full rounded-full transition-all duration-500 ease-out ${colors.progressFill}`} style={{ width: `${progress}%` }} />
@@ -266,32 +226,63 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       </div>
 
       <div className={`transition-all duration-250 ease-in-out transform ${isAnimating ? (slideDirection === 'forward' ? 'opacity-0 -translate-y-4 scale-[0.99]' : 'opacity-0 translate-y-4 scale-[0.99]') : 'opacity-100 translate-y-0 scale-100'}`}>
-        <h3 className={`text-xl md:text-2xl font-extrabold ${colors.textPrimary} mb-5 leading-snug text-left md:text-center`}>{q.text}</h3>
-        <div className="flex flex-wrap justify-center gap-2 md:gap-3 w-full">
-          {q.options.map((option: string, idx: number) => {
-            const isSelected = selectedAnswer === option;
-            const isDisabled = selectedAnswer !== null && !isSelected;
-            return (
-              <button key={idx} onClick={() => handleOptionClick(option)} disabled={isDisabled}
-                className={`w-[30%] min-w-[100px] flex-grow text-center flex-col justify-center py-3 px-4 md:py-4 md:px-5 rounded-[12px] border-[2px] font-bold text-sm md:text-base transition-all duration-200 flex items-center ${isSelected ? colors.optionSelected : colors.optionBorder} ${!isDisabled && !isSelected ? colors.optionHover : ''} ${isDisabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'} ${colors.textPrimary}`}>
-                {(!isPremiumUI && !isDarkTheme) && (
-                  <div className={`shrink-0 w-[22px] h-[22px] rounded-full border-[2px] mr-4 flex items-center justify-center transition-all duration-200 ${isSelected ? 'border-[#00A6ED] bg-[#00A6ED]' : 'border-[#0D2C54]/20 bg-white'}`}>
-                    {isSelected && <div className="w-2 h-2 rounded-full bg-white shadow-sm" />}
-                  </div>
-                )}
-                <span className="w-full text-center">{option}</span>
-              </button>
-            )
-          })}
-        </div>
+        <h3 className={`text-xl md:text-2xl font-black ${colors.textPrimary} mb-5 leading-snug text-left md:text-center`}>{q.text}</h3>
+        
+        {useKeypad ? (
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4 max-w-md mx-auto w-full">
+            {q.options.map((option: string, idx: number) => {
+              const isSelected = selectedAnswer === option;
+              const isDisabled = selectedAnswer !== null && !isSelected;
+              
+              return (
+                <button
+                  key={idx}
+                  onClick={() => handleOptionClick(option)}
+                  disabled={isDisabled}
+                  className={`group flex flex-col items-center justify-center w-[30%] aspect-square bg-white border-2 rounded-[24px] shadow-sm transition-all focus:outline-none active:scale-95 ${
+                    isSelected 
+                      ? 'border-[#06aed5] bg-[#06aed5]/10 shadow-inner ring-4 ring-[#06aed5]/20' 
+                      : isDisabled
+                        ? 'border-[#d6d2d2] opacity-40 cursor-not-allowed'
+                        : 'border-[#d6d2d2] hover:border-[#06aed5] hover:bg-[#06aed5]/5 hover:-translate-y-1 hover:shadow-md cursor-pointer ring-4 ring-transparent hover:ring-[#06aed5]/10'
+                  }`}
+                >
+                  <span className={`text-3xl md:text-4xl font-black transition-colors mb-1 ${
+                    isSelected ? 'text-[#06aed5]' : 'text-[#d6d2d2] group-hover:text-[#06aed5]'
+                  }`}>
+                    {idx + 1}
+                  </span>
+                  <span className={`text-[9px] md:text-[11px] font-black uppercase tracking-wider text-center px-1 leading-tight ${
+                    isSelected ? 'text-[#086788]' : 'text-[#086788]/60 group-hover:text-[#086788]'
+                  }`}>
+                    {option}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+        ) : (
+          <div className="flex flex-wrap justify-center gap-2 md:gap-3 w-full">
+            {q.options.map((option: string, idx: number) => {
+              const isSelected = selectedAnswer === option;
+              const isDisabled = selectedAnswer !== null && !isSelected;
+              return (
+                <button key={idx} onClick={() => handleOptionClick(option)} disabled={isDisabled}
+                  className={`w-[30%] min-w-[100px] flex-grow text-center flex-col justify-center py-3 px-4 md:py-4 md:px-5 rounded-[12px] border-[2px] font-bold text-sm md:text-base transition-all duration-200 flex items-center bg-white ${isSelected ? colors.optionSelected : colors.optionBorder} ${!isDisabled && !isSelected ? colors.optionHover : ''} ${isDisabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'} ${colors.textPrimary}`}>
+                  <span className="w-full text-center">{option}</span>
+                </button>
+              )
+            })}
+          </div>
+        )}
       </div>
 
       <div className="mt-10 flex justify-between items-center">
         <button onClick={handleBack} disabled={currentIndex === 0 || isAnimating || selectedAnswer !== null}
-          className={`text-sm font-extrabold flex items-center gap-2 px-5 py-2.5 rounded-[12px] border-[2px] transition-all ${currentIndex === 0 || isAnimating || selectedAnswer !== null ? 'opacity-0 pointer-events-none' : colors.btnBack}`}>
+          className={`text-sm font-black flex items-center gap-2 px-5 py-2.5 rounded-[12px] border-[2px] transition-all bg-white ${currentIndex === 0 || isAnimating || selectedAnswer !== null ? 'opacity-0 pointer-events-none' : colors.btnBack}`}>
           <span>←</span> Back
         </button>
-        <button onClick={handleGodMode} type="button" title="Instantly jump to results" className={`text-[10px] md:text-xs font-bold transition-all border rounded-lg px-3 py-1.5 ml-auto shadow-sm ${isCheating ? 'text-gray-500 border-[#27272a] hover:text-[#ef4444] bg-[#171717]' : 'text-slate-400 hover:text-slate-600 border-slate-200 hover:border-slate-300 bg-white'}`}>
+        <button onClick={handleGodMode} type="button" className={`text-[10px] md:text-xs font-bold transition-all border rounded-lg px-3 py-1.5 ml-auto shadow-sm text-[#086788]/50 hover:text-[#086788] border-[#d6d2d2] bg-white`}>
           ⚡ God Mode
         </button>
       </div>
