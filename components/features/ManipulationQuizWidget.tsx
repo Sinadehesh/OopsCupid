@@ -1,239 +1,207 @@
 "use client";
 
-import React, { useState, useRef } from "react";
-import SharePrintButtons from "@/components/ui/SharePrintButtons";
-import { MANIPULATION_QUESTIONS } from "@/lib/psychometrics/manipulation/questions";
-import { calculateManipulationScore } from "@/lib/psychometrics/manipulation/scoring";
-import { Answer, AssessmentResult } from "@/lib/psychometrics/manipulation/types";
+import React, { useState, useMemo, useRef } from "react";
+import { manipulationQuestions } from "@/lib/psychometrics/manipulation/questions";
+import { generateManipulationProfile } from "@/lib/psychometrics/manipulation/scoring";
 import ManipulationMasterReport from "@/components/report/ManipulationMasterReport";
 
-type QuizState = "intro" | "consent" | "questions" | "calculating" | "master_report";
+// FIX: Added CheckCircle2 to the imports here!
+import { Lock, Mail, ArrowRight, ShieldCheck, CheckCircle2 } from "lucide-react";
 
 export default function ManipulationQuizWidget() {
-  const [step, setStep] = useState<QuizState>("intro");
-  const [answers, setAnswers] = useState<Answer[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [result, setResult] = useState<AssessmentResult | null>(null);
+  const [answers, setAnswers] = useState<Record<string, string>>({});
+  
+  const [isScoring, setIsScoring] = useState(false);
+  const [showEmailGate, setShowEmailGate] = useState(false);
+  const [showResult, setShowResult] = useState(false);
+  const [resultData, setResultData] = useState<any>(null);
+  
+  const [email, setEmail] = useState("");
+  const [agreed, setAgreed] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
-  const [isAnimating, setIsAnimating]       = useState(false);
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [isAnimating, setIsAnimating] = useState(false);
   const [slideDirection, setSlideDirection] = useState<"forward" | "backward">("forward");
 
   const topRef = useRef<HTMLDivElement>(null);
-  const activeQuestions = MANIPULATION_QUESTIONS;
-  const currentQ = activeQuestions[currentIndex];
+  const isFinished = currentIndex >= manipulationQuestions.length;
+  const progress = Math.round((currentIndex / manipulationQuestions.length) * 100);
 
-  const progress = Math.round((currentIndex / activeQuestions.length) * 100);
-
-  // HIGH READABILITY PALETTE WITH RED ACTION INDICATORS
-  const colors = {
-    bgCard: "bg-white",
-    borderCard: "border-[#ced2dc]",
-    textPrimary: "text-[#2a2522]",
-    textSecondary: "text-[#2a2522]/70",
-    progressTrack: "bg-[#ced2dc]",
-    progressFill: "bg-[#650000]", 
-    optionBorder: "border-[#ced2dc]",
-    optionHover: "hover:border-[#650000] hover:bg-[#650000]/5 hover:-translate-y-0.5",
-    optionSelected: "border-[#650000] bg-[#650000]/10 shadow-inner", 
-    btnPrimary: "bg-[#650000] text-white hover:bg-[#490000] shadow-lg", 
-    btnBack: "border-[#ced2dc] text-[#2a2522]/70 hover:bg-[#ced2dc]/30 hover:text-[#2a2522]",
-    chipBg: "bg-[#650000]/10", 
-    chipText: "text-[#650000]", 
-    indicatorSelected: "border-[#650000] bg-[#650000]", 
-    indicatorUnselected: "border-[#ced2dc] bg-white"
-  };
-
-  const likertOptions = [
-    { label: "Never", val: 0 }, { label: "Rarely", val: 1 }, { label: "Sometimes", val: 2 },
-    { label: "Often", val: 3 }, { label: "Very Often", val: 4 }, { label: "Constantly", val: 5 }
-  ];
-
-  const impactOptions = [
-    { label: "Not at all", val: 0 }, { label: "A little", val: 1 }, { label: "Moderately", val: 2 },
-    { label: "Quite a bit", val: 3 }, { label: "Extremely", val: 4 }
-  ];
-
-  const currentOptions = currentQ?.responseType === "impact_0_4" ? impactOptions : likertOptions;
-
-  const handleStart = () => {
-    setStep("consent");
-    if (topRef.current) topRef.current.scrollIntoView({ behavior: "smooth" });
-  };
-  
-  const handleConsent = () => setStep("questions");
-
-  const handleOptionClick = (val: number) => {
+  const handleOptionClick = (option: string) => {
     if (isAnimating || selectedAnswer !== null) return; 
-    
-    setSelectedAnswer(val);
-    const newAnswers = [...answers.filter(a => a.questionId !== currentQ.id), { questionId: currentQ.id, value: val }];
-    setAnswers(newAnswers);
+    setSelectedAnswer(option);
+    const q = manipulationQuestions[currentIndex];
+    setAnswers(prev => ({ ...prev, [q.id]: option }));
     
     setTimeout(() => {
       setIsAnimating(true);
       setSlideDirection("forward");
-      
       setTimeout(() => {
-        if (currentIndex < activeQuestions.length - 1) {
-          setCurrentIndex(prev => prev + 1);
-          setSelectedAnswer(null);
-          setIsAnimating(false);
-        } else {
-          finishQuiz(newAnswers);
-        }
+        setCurrentIndex(prev => prev + 1);
+        setSelectedAnswer(null);
+        setIsAnimating(false);
       }, 250); 
     }, 400); 
   };
 
-  const handleBack = () => {
-    if (currentIndex > 0 && !isAnimating) {
-      setIsAnimating(true);
-      setSlideDirection("backward");
-      setTimeout(() => {
-        setCurrentIndex(prev => prev - 1);
-        setSelectedAnswer(null); 
-        setIsAnimating(false);
-      }, 250);
-    }
-  };
-
-  const finishQuiz = (finalAnswers: Answer[]) => {
-    setStep("calculating");
-    if (topRef.current) topRef.current.scrollIntoView({ behavior: "smooth" });
+  const handleCompile = () => {
+    setIsScoring(true);
+    if (topRef.current) topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     
     setTimeout(() => {
-      // Calculate score with premiumUnlocked = false initially to show the paywall
-      const finalResult = calculateManipulationScore(finalAnswers, MANIPULATION_QUESTIONS, false);
-      setResult(finalResult);
-      setStep("master_report");
+      const profile = generateManipulationProfile(answers);
+      setResultData(profile);
+      setIsScoring(false);
+      setShowEmailGate(true);
     }, 2000);
   };
 
-  const autoFillTest = () => {
-    const mockAnswers = MANIPULATION_QUESTIONS.map(q => ({
-      questionId: q.id,
-      value: Math.floor(Math.random() * (currentQ?.responseType === "impact_0_4" ? 4 : 5))
-    }));
-    finishQuiz(mockAnswers);
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !agreed) return;
+    
+    setIsSubmitting(true);
+    try {
+      await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, quizType: 'manipulation', profile: resultData })
+      }).catch(() => console.log("API not ready yet, proceeding anyway."));
+      
+      setResultData((prev: any) => ({ ...prev, userEmail: email }));
+      
+      setShowEmailGate(false);
+      setShowResult(true);
+      if (topRef.current) topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  if (step === "master_report" && result) {
-    return (
-      <div ref={topRef} className="w-full animate-in fade-in duration-500 relative z-10">
-        <ManipulationMasterReport result={result} />
-      </div>
-    );
-  }
+  const handleGodMode = () => {
+    const fakeAnswers = { ...answers };
+    manipulationQuestions.forEach((q) => {
+      if (!fakeAnswers[q.id]) fakeAnswers[q.id] = q.options[Math.floor(Math.random() * q.options.length)];
+    });
+    setAnswers(fakeAnswers);
+    setCurrentIndex(manipulationQuestions.length);
+  };
 
-  if (step === "intro") {
+  if (isScoring) {
     return (
-      <div ref={topRef} className={`w-full max-w-3xl mx-auto ${colors.bgCard} rounded-[32px] shadow-2xl border ${colors.borderCard} p-8 md:p-12 text-center animate-in fade-in relative z-10`}>
-        <div className="w-20 h-20 mx-auto bg-[#650000]/10 rounded-full flex items-center justify-center mb-6 border border-[#650000]/30">
-          <span className="text-3xl">⚠️</span>
+      <div ref={topRef} className={`w-full max-w-5xl mx-auto text-center py-32 bg-white rounded-2xl shadow-sm border border-[#d6d2d2] animate-in fade-in`}>
+        <div className="flex flex-col items-center justify-center">
+          <div className={`w-16 h-16 border-4 border-[#d6d2d2] border-t-[#dd1c1a] rounded-full animate-spin mb-6`}></div>
+          <h3 className={`text-2xl font-black text-[#086788] mb-2 animate-pulse`}>Compiling Red Flags...</h3>
         </div>
-        <h2 className={`text-3xl md:text-4xl font-extrabold ${colors.textPrimary} mb-6 leading-tight`}>Begin Assessment</h2>
-        <p className={`text-lg ${colors.textSecondary} mb-10 leading-relaxed max-w-xl mx-auto`}>
-          This 93-item clinical battery screens for patterns of coercive control, power tactics, and gaslighting. It is designed to map exactly how your reality is being distorted.
-        </p>
-        <button onClick={handleStart} className={`w-full md:w-auto px-10 py-5 rounded-full font-bold text-xl ${colors.btnPrimary} transition-all mb-6`}>
-          Start Clinical Screening
-        </button>
-        <button onClick={autoFillTest} className={`block mx-auto text-sm font-bold ${colors.textSecondary} hover:${colors.textPrimary} transition-colors underline underline-offset-4`}>
-          [DEV] Skip & Auto-Fill
-        </button>
       </div>
     );
   }
 
-  if (step === "consent") {
+  if (showEmailGate) {
     return (
-      <div ref={topRef} className={`w-full max-w-3xl mx-auto ${colors.bgCard} rounded-[32px] shadow-2xl border ${colors.borderCard} p-8 md:p-12 animate-in fade-in slide-in-from-bottom-4 relative z-10`}>
-        <h2 className={`text-3xl font-extrabold mb-6 ${colors.textPrimary}`}>Safety & Privacy Notice</h2>
-        <p className={`text-lg mb-6 leading-relaxed ${colors.textSecondary}`}>
-          This assessment asks about sensitive relationship dynamics, including threats, control, and emotional pressure. Your answers are completely private and are not saved unless you choose to unlock your report.
-        </p>
-        <div className={`bg-[#f2f5fa] p-6 rounded-2xl mb-10 border ${colors.borderCard}`}>
-          <p className={`font-bold mb-2 ${colors.textPrimary}`}>Important Instructions:</p>
-          <p className={`${colors.textSecondary}`}>Answer based on his behavior toward you over the <strong>last 12 months</strong>. Trust your initial instinct.</p>
+      <div ref={topRef} className="w-full max-w-3xl mx-auto bg-white border border-[#d6d2d2] rounded-2xl shadow-md p-8 md:p-12 animate-in zoom-in fade-in">
+        <div className="text-center max-w-xl mx-auto mb-8">
+          <div className="w-16 h-16 bg-[#fff1d0] rounded-full flex items-center justify-center mx-auto mb-6 border border-[#f0c808]/40">
+            <Lock className="w-8 h-8 text-[#086788]" />
+          </div>
+          <h3 className="text-3xl md:text-4xl font-black text-[#086788] mb-4">Your Master Audit is Ready.</h3>
+          <p className="text-lg font-medium text-[#086788]/80">
+            We have completely mapped his behavior. Where should we send your secure copy of the results?
+          </p>
         </div>
-        <button onClick={handleConsent} className={`w-full py-5 rounded-full font-bold text-xl ${colors.btnPrimary} transition-all`}>
-          I Understand, Continue
+
+        <form onSubmit={handleEmailSubmit} className="max-w-md mx-auto space-y-6">
+          <div>
+            <label className="block text-sm font-bold text-[#086788] mb-2">Email Address</label>
+            <div className="relative">
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#086788]/40" />
+              <input 
+                type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
+                className="w-full pl-12 pr-4 py-4 bg-white border-2 border-[#d6d2d2] rounded-xl focus:border-[#06aed5] focus:ring-4 focus:ring-[#06aed5]/20 outline-none text-[#086788] font-medium transition-all"
+                placeholder="Enter your best email..."
+              />
+            </div>
+          </div>
+          
+          <label className="flex items-start gap-3 cursor-pointer group">
+            <div className="relative flex items-center">
+              <input type="checkbox" required checked={agreed} onChange={(e) => setAgreed(e.target.checked)} className="peer sr-only" />
+              <div className="w-6 h-6 border-2 border-[#d6d2d2] rounded bg-white peer-checked:bg-[#06aed5] peer-checked:border-[#06aed5] transition-colors flex items-center justify-center group-hover:border-[#06aed5]">
+                {agreed && <CheckCircle2 className="w-4 h-4 text-white" />}
+              </div>
+            </div>
+            <span className="text-sm font-medium text-[#086788]/70 leading-snug pt-0.5">
+              I agree to the Terms of Service & Privacy Policy, and consent to receive my results and related psychological insights via email.
+            </span>
+          </label>
+
+          <button type="submit" disabled={!email || !agreed || isSubmitting} className="w-full min-h-[64px] bg-[#086788] text-white rounded-xl font-black text-xl transition-all shadow-md hover:-translate-y-1 flex items-center justify-center gap-3 disabled:opacity-50 disabled:hover:translate-y-0 cursor-pointer">
+            {isSubmitting ? "Saving..." : "Reveal My Profile"} <ArrowRight className="w-6 h-6" />
+          </button>
+          
+          <div className="flex justify-center items-center gap-2 mt-4 text-[#086788]/50 text-xs font-bold uppercase tracking-widest">
+            <ShieldCheck className="w-4 h-4" /> Secure 256-bit Encryption
+          </div>
+        </form>
+      </div>
+    );
+  }
+
+  if (showResult && resultData) {
+    return <div ref={topRef} className="w-full animate-in fade-in duration-500"><ManipulationMasterReport profile={resultData} /></div>;
+  }
+
+  if (isFinished) {
+    return (
+      <div ref={topRef} className={`w-full max-w-5xl mx-auto bg-white border border-[#d6d2d2] rounded-2xl shadow-sm text-center py-20 px-6 animate-in fade-in zoom-in`}>
+        <div className={`w-24 h-24 mx-auto bg-[#fff1d0] rounded-full flex items-center justify-center mb-6`}>
+          <span className="text-4xl">🚩</span>
+        </div>
+        <h3 className={`text-3xl md:text-4xl font-black text-[#086788] mb-4`}>Assessment Complete</h3>
+        <p className={`text-lg mb-10 max-w-xl mx-auto font-medium text-[#086788]/80`}>All behavioral data captured. We are ready to compile his psychological profile.</p>
+        <button onClick={handleCompile} className={`w-full max-w-md mx-auto block bg-[#dd1c1a] text-white font-black py-4 px-8 min-h-[56px] rounded-xl transform hover:-translate-y-1 transition-all duration-300 shadow-md`}>
+          Analyze His Behavior
         </button>
       </div>
     );
   }
 
-  if (step === "calculating") {
-    return (
-      <div ref={topRef} className={`w-full max-w-2xl mx-auto text-center py-24 ${colors.bgCard} rounded-[32px] shadow-xl border ${colors.borderCard} animate-in fade-in relative z-10`}>
-        <div className={`w-16 h-16 border-4 border-t-transparent border-[#650000] rounded-full animate-spin mx-auto mb-8`}></div>
-        <h3 className={`text-2xl font-extrabold ${colors.textPrimary} mb-3 animate-pulse`}>Generating Clinical Map...</h3>
-        <p className={`${colors.textSecondary}`}>Correlating subscales and coercion patterns.</p>
-      </div>
-    );
-  }
+  const q = manipulationQuestions[currentIndex];
 
   return (
-    <div ref={topRef} className={`w-full max-w-3xl mx-auto ${colors.bgCard} rounded-[32px] shadow-2xl border ${colors.borderCard} flex flex-col justify-center min-h-[450px] p-6 md:p-10 relative z-10`}>
+    <div ref={topRef} className={`w-full max-w-5xl mx-auto bg-white rounded-2xl shadow-sm border border-[#d6d2d2] flex flex-col justify-center min-h-[400px] p-6 md:p-12`}>
       <div className="mb-10">
         <div className="flex justify-between items-end mb-4">
-          <div>
-            <span className={`text-[11px] font-extrabold uppercase tracking-widest ${colors.textSecondary} block mb-2`}>
-              Module
-            </span>
-            <span className={`text-xs md:text-sm font-extrabold px-3.5 py-1.5 rounded-md ${colors.chipBg} ${colors.chipText} uppercase tracking-wider`}>
-              {currentQ.module.replace('_', ' ')}
-            </span>
-          </div>
-          <div className={`text-sm md:text-base font-extrabold tracking-wide ${colors.textPrimary}`}>
-            {currentIndex + 1} / {activeQuestions.length}
-          </div>
+          <div><span className={`text-xs md:text-sm font-bold px-3 py-1.5 rounded bg-[#fff1d0] text-[#086788]`}>{q.category}</span></div>
+          <div className={`text-sm md:text-base font-black tracking-wide text-[#086788]`}>QUESTION {currentIndex + 1} / {manipulationQuestions.length}</div>
         </div>
-        <div className={`w-full h-2 rounded-full ${colors.progressTrack} overflow-hidden`}>
-          <div className={`h-full rounded-full transition-all duration-500 ease-out ${colors.progressFill}`} style={{ width: `${progress}%` }} />
-        </div>
+        <div className={`w-full h-2 rounded-full bg-[#d6d2d2] overflow-hidden`}><div className={`h-full rounded-full transition-all duration-500 ease-out bg-[#dd1c1a]`} style={{ width: `${progress}%` }} /></div>
       </div>
 
-      <div className={`transition-all duration-250 ease-in-out transform ${isAnimating ? (slideDirection === 'forward' ? 'opacity-0 -translate-y-4 scale-[0.99]' : 'opacity-0 translate-y-4 scale-[0.99]') : 'opacity-100 translate-y-0 scale-100'}`}>
-        <h3 className={`text-2xl md:text-[28px] font-extrabold ${colors.textPrimary} mb-8 leading-snug text-left md:text-center`}>
-          {currentQ.stem}
-        </h3>
-        <div className="flex flex-wrap justify-center gap-2 md:gap-3 w-full">
-          {currentOptions.map((opt) => {
-            const isSelected = selectedAnswer === opt.val;
+      <div className={`transition-all duration-250 ease-in-out transform ${isAnimating ? 'opacity-0 -translate-y-4 scale-[0.99]' : 'opacity-100 translate-y-0 scale-100'}`}>
+        <h3 className={`text-2xl md:text-4xl font-black text-[#086788] mb-10 leading-tight text-center max-w-3xl mx-auto`}>{q.text}</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 w-full max-w-3xl mx-auto">
+          {q.options.map((option: string, idx: number) => {
+            const isSelected = selectedAnswer === option;
             const isDisabled = selectedAnswer !== null && !isSelected;
             return (
-              <button 
-                key={opt.val} 
-                onClick={() => handleOptionClick(opt.val)} 
-                disabled={isDisabled}
-                className={`
-                  w-[30%] min-w-[100px] flex-grow text-center flex-col justify-center p-4 md:p-[20px] rounded-[16px] border-[2px] font-bold text-base md:text-lg transition-all duration-200 flex items-center bg-white
-                  ${isSelected ? colors.optionSelected : colors.optionBorder}
-                  ${!isDisabled && !isSelected ? colors.optionHover : ''}
-                  ${isDisabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}
-                  ${colors.textPrimary}
-                `}
-              >
-                <div className={`shrink-0 w-[22px] h-[22px] rounded-full border-[2px] mr-4 flex items-center justify-center transition-all duration-200 ${isSelected ? colors.indicatorSelected : colors.indicatorUnselected}`}>
-                  {isSelected && <div className="w-2 h-2 rounded-full bg-white shadow-sm" />}
-                </div>
-                <span className="w-full text-center">{opt.label}</span>
+              <button key={idx} onClick={() => handleOptionClick(option)} disabled={isDisabled}
+                className={`w-full min-h-[64px] flex-col justify-center py-4 px-6 rounded-xl border-[2px] font-black text-base md:text-lg transition-all duration-200 flex items-center ${
+                  isSelected ? 'bg-[#086788] border-[#086788] text-white shadow-md' : isDisabled ? 'bg-white border-[#d6d2d2] opacity-40 cursor-not-allowed text-[#086788]' : 'bg-white border-[#d6d2d2] hover:border-[#06aed5] hover:bg-[#06aed5]/5 text-[#086788]'
+                }`}>
+                <span className="w-full text-center">{option}</span>
               </button>
             )
           })}
         </div>
       </div>
 
-      <div className="mt-10 flex justify-between items-center">
-        <button 
-          onClick={handleBack} 
-          disabled={currentIndex === 0 || isAnimating || selectedAnswer !== null}
-          className={`text-sm font-extrabold flex items-center gap-2 px-5 py-2.5 rounded-[12px] border-[2px] transition-all bg-white
-            ${currentIndex === 0 || isAnimating || selectedAnswer !== null ? 'opacity-0 pointer-events-none' : colors.btnBack}`}
-        >
-          <span>←</span> Back
+      <div className="mt-12 flex justify-between items-center border-t border-[#d6d2d2] pt-6">
+        <button onClick={handleGodMode} type="button" className={`min-h-[48px] text-xs font-bold transition-all px-4 text-[#086788]/40 hover:text-[#086788] ml-auto`}>
+          ⚡ Skip
         </button>
       </div>
     </div>

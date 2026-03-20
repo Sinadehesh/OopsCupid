@@ -27,7 +27,8 @@ import { generateInfidelityProfile } from "@/lib/psychometrics/infidelity/scorin
 import { generateFriendRoleProfile } from "@/lib/psychometrics/friend-role/scoring";
 import { generateFriendUsedProfile } from "@/lib/psychometrics/friend-used/scoring";
 
-import { Lock, Mail, ArrowRight, ShieldCheck } from "lucide-react";
+// FIX: Added CheckCircle2 to the imports here!
+import { Lock, Mail, ArrowRight, ShieldCheck, CheckCircle2 } from "lucide-react";
 
 export default function QuizWidget({ quizName }: { quizName: string }) {
   const [currentIndex, setCurrentIndex]     = useState(0);
@@ -100,7 +101,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     }
   };
 
-  // STEP 1: FORCE THE LOADING SCREEN AND OPEN EMAIL GATE
   const handleCompile = () => {
     setIsScoring(true);
     if (topRef.current) topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -110,7 +110,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     }, 2000);
   };
 
-  // STEP 2: HANDLE EMAIL SUBMIT, COMPILE RESULTS, AND PASS RAW ANSWERS DOWN
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !agreed) return;
@@ -122,8 +121,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         const isSingle = answers["demo_1"] === "Single" || answers["demo_1"] === "It's complicated";
         const gender = answers["demo_3"] ?? "Non-binary";
         const profile = generatePsychologicalProfile(answers, hasChildren);
-        
-        // WE MUST PASS rawAnswers DOWN SO THE AI CAN READ THEM!
         setResultData({ profile, demographics: { isSingle, gender, hasChildren }, rawAnswers: answers, type: "attachment", email });
       } else if (quizName === "attraction-patterns") {
         setResultData({ profile: generateAttractionProfile(answers), type: "attraction" });
@@ -208,7 +205,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
   if (showResult && resultData) {
     if (resultData.type === "error") return <div className="text-center py-20 font-black text-[#dd1c1a]">Analysis Failed. Please refresh.</div>;
-    // VERY IMPORTANT: PASS rawAnswers PROP DOWN TO THE ATTACHMENT REPORT!
     if (resultData.type === "attachment") return <div ref={topRef} className="w-full animate-in fade-in duration-500"><AttachmentReport profile={resultData.profile} demographics={resultData.demographics} rawAnswers={resultData.rawAnswers} /></div>;
     if (resultData.type === "attraction") return <div ref={topRef} className="w-full animate-in fade-in"><AttractionMasterReport profile={resultData.profile} /></div>;
     if (resultData.type === "attractor") return <div ref={topRef} className="w-full animate-in fade-in"><AttractorMasterReport profile={resultData.profile} /></div>;
