@@ -1,0 +1,18 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+}
+
+model Lead {
+  id               String   @id @default(cuid())
+  email            String   @unique
+  quizType         String
+  rawAnswers       Json?    
+  profileData      Json?    
+  coachingClaimed  Boolean  @default(false)
+  createdAt        DateTime @default(now())
+}
