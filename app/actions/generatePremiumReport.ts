@@ -6,18 +6,18 @@ export async function generatePremiumReport(profile: any, demographics: any, raw
   try {
     const openai = new OpenAI();
     
-    const status = demographics?.isSingle ? "Single" : "In a relationship / Married";
+    const isSingle = demographics?.isSingle || false;
+    const status = isSingle ? "Single" : "In a relationship / Married";
     const kids = demographics?.hasChildren ? "Has children" : "No children";
     const gender = demographics?.gender || "Unknown";
 
-    const systemPrompt = `You are a world-class relational psychologist and behavioral threat analyst. You do not just give attachment theory—you expose the toxic behaviors, manipulation, and red flags of the partners this user dates.
+    const systemPrompt = `You are a world-class behavioral profiler and relational coach. You use "hot reading" techniques—you look at their raw quiz answers and tell them exactly how they feel, what they fear, and how they act, making them feel completely exposed but deeply understood.
 
 STRICT WRITING RULES:
-1. Write strictly at a 3rd-grade reading level. Use short, punchy sentences. Use simple words.
-2. NEVER use em dashes. Use periods or commas.
-3. BE BRUTALLY HONEST. If their answers indicate a highly anxious/avoidant state, tell them exactly how manipulative and dangerous their partners are.
-4. Format using HTML tags (<p>, <b>, <ul>, <li>). Do NOT use markdown.
-5. Output strictly as JSON.`;
+1. Write at a 3rd-grade reading level. Extremely simple, punchy, direct sentences.
+2. NEVER use AI jargon ("delve", "tapestry", "navigate", "foster").
+3. NO GENERIC ADVICE. Never tell them to "meditate", "journal", or "go to therapy". Give them hardcore psychological behavioral shifts (e.g., distinguishing a thought from a physical nervous system response, taking a 90-second physical space break, setting a 1-sentence boundary).
+4. Output strictly as JSON. Use basic HTML tags (<p>, <b>) for text formatting. Do NOT use markdown.`;
     
     const userPrompt = `USER DEMOGRAPHICS:
     Status: ${status}
@@ -25,28 +25,42 @@ STRICT WRITING RULES:
     Gender: ${gender}
     
     USER ATTACHMENT SCORES:
-    General: ${profile?.general?.classification}
-    Romantic: ${profile?.romantic?.classification}
+    Mother: Anx ${profile?.mother?.anxietyScore}, Avo ${profile?.mother?.avoidanceScore}
+    Father: Anx ${profile?.father?.anxietyScore}, Avo ${profile?.father?.avoidanceScore}
+    Romantic: Anx ${profile?.romantic?.anxietyScore}, Avo ${profile?.romantic?.avoidanceScore}
+    Work: Anx ${profile?.work?.anxietyScore}, Avo ${profile?.work?.avoidanceScore}
     
-    USER'S RAW QUIZ ANSWERS (Direct quotes from their test):
+    USER'S RAW QUIZ ANSWERS:
     ${JSON.stringify(rawAnswers, null, 2)}
 
-    YOUR MISSION:
-    Read ALL of the user's specific answers above. Build a comprehensive profile of the kind of guy they attract (or are currently dating). Provide his playbook and the threats he poses.
+    MISSION:
+    Create a deeply personal profile and a tailored playbook for each area of their life based on their exact answers.
 
-    RETURN STRICTLY AS JSON matching this schema:
+    JSON SCHEMA TO RETURN:
     {
-      "partnerDangerScore": <Integer 0-100. 100 means highly dangerous/toxic to stay with. Score this based on how bad her attachment anxiety/avoidance answers are.>,
-      "manipulationPercentile": <Integer 1-99. How manipulative is her typical partner compared to average guys? If she is insecure, this should be high (75-95).>,
-      "deepValidation": "<p>3 paragraphs. Connect her specific quiz answers to her reality. Tell her why she feels crazy in love.</p>",
-      "boyfriendProfile": "<p>2 paragraphs. Based on her raw answers, describe the exact profile of her boyfriend or the men she naturally attracts. What do they act like?</p>",
-      "hisPlaybook": "<p>3 paragraphs. What is his playbook? What manipulative tactics does he use against her specific attachment triggers?</p>",
-      "relationshipThreats": "<p>2 paragraphs. How dangerous is it to stay in this dynamic? What are the specific emotional or psychological threats he can cause to her life?</p>",
-      "masterActionPlan": "<p>A massive, step-by-step timeline. Format as an HTML list. Tell her exactly what she needs to be careful about today, tomorrow, and this week.</p>",
-      "recommendedNextTest": {
-        "testId": "is-he-manipulative",
-        "testName": "Is He Manipulative?",
-        "psychologicalPitch": "<1 paragraph. Tell her why she needs to take this specific test next based on her partner's profile.>"
+      "populationPercentile": <Integer 10-50. Place them realistically in the insecure majority based on their scores. Do not exceed 50 unless they are highly secure.>,
+      "unifiedProfile": "<p>3 paragraphs. The 'Hot Read'. Synthesize their demographics and raw answers. Tell them exactly what their core fear is, how it makes them behave, and the exhaustion it causes. Make it insanely accurate.</p>",
+      "subcategories": {
+        "mother": {
+          "threat": "<p>1-2 paragraphs on how their mother dynamic is secretly causing a specific threat in their life right now.</p>",
+          "playbook": {
+            "immediate": "One specific behavioral action to take right now for an emotional win.",
+            "oneWeek": "One specific boundary to set or pattern to interrupt this week.",
+            "oneMonth": "One major psychological shift to complete over the next 30 days."
+          }
+        },
+        "father": {
+          "threat": "<p>1-2 paragraphs on the specific threat their father dynamic causes.</p>",
+          "playbook": { "immediate": "...", "oneWeek": "...", "oneMonth": "..." }
+        },
+        "romantic": {
+          "threat": "<p>1-2 paragraphs on the lethal threat to their romantic life (tailored to if they are single or taken).</p>",
+          "playbook": { "immediate": "...", "oneWeek": "...", "oneMonth": "..." }
+        },
+        "work": {
+          "threat": "<p>1-2 paragraphs on how this causes burnout, people-pleasing, or isolation at work.</p>",
+          "playbook": { "immediate": "...", "oneWeek": "...", "oneMonth": "..." }
+        }
       }
     }`;
 
@@ -54,7 +68,7 @@ STRICT WRITING RULES:
       model: "gpt-4o",
       messages: [{ role: "system", content: systemPrompt }, { role: "user", content: userPrompt }],
       response_format: { type: "json_object" },
-      temperature: 0.75, 
+      temperature: 0.7, 
     });
 
     const aiContent = response.choices[0].message.content;
