@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ShieldCheck, Loader2, CheckCircle2, Star, Zap, Lock, BookOpen } from "lucide-react";
+import { ShieldCheck, Loader2, CheckCircle2, Star, Zap, Lock, BookOpen, ArrowRight } from "lucide-react";
 
 interface PremiumCheckoutProps {
   onUnlock: () => void;
