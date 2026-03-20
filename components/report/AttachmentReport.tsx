@@ -13,19 +13,12 @@ import PremiumCheckout from "./PremiumCheckout";
 interface AttachmentReportProps {
   profile: PsychologicalProfile;
   demographics: any;
-  isDarkTheme?: boolean;
 }
 
-export default function AttachmentReport({ profile, demographics, isDarkTheme = false }: AttachmentReportProps) {
+export default function AttachmentReport({ profile, demographics }: AttachmentReportProps) {
   const [isPremium, setIsPremium] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [premiumData, setPremiumData] = useState<any>(null);
-
-  // Phase 1 High Contrast Palette
-  const bgPage = "bg-[#fff1d0]";
-  const textPrimary = "text-[#086788]";
-  const textSecondary = "text-[#086788]/80";
-  const bgCard = "bg-white border-[#d6d2d2]";
 
   const relationshipStatus = demographics?.isSingle ? "Single" : "In a relationship";
 
@@ -55,8 +48,8 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
     }
   };
 
-  const renderDomainScores = (title: string, data: any, colorCode: string) => (
-    <div className={`p-4 rounded-xl border border-[#d6d2d2] bg-white`}>
+  const renderDomainScores = (title: string, data: any, colorCode: string, bgClass: string, borderClass: string) => (
+    <div className={`p-5 rounded-2xl border ${bgClass} ${borderClass}`}>
       <h4 className={`text-sm font-black uppercase tracking-wider mb-4 text-[#086788]`}>{title}</h4>
       <div className="space-y-4">
         <ScoreBar label="Anxiety" value={data.anxietyScore} color={`bg-[${colorCode}]`} />
@@ -66,12 +59,12 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
   );
 
   return (
-    <div className={`w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] ${bgPage} py-12 border-t border-[#d6d2d2]`}>
+    <div className={`w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-white py-12`}>
       <div className="max-w-4xl mx-auto px-4 md:px-8 py-4">
 
         {isPremium && (
-          <div className="mb-10 p-5 bg-white border-2 border-[#06aed5] text-[#06aed5] rounded-2xl shadow-lg flex items-center justify-center gap-4 animate-in zoom-in duration-500">
-            <CheckCircle2 className="w-8 h-8 shrink-0" />
+          <div className="mb-10 p-5 bg-[#06aed5]/10 border-2 border-[#06aed5] rounded-2xl shadow-sm flex items-center justify-center gap-4 animate-in zoom-in duration-500">
+            <CheckCircle2 className="w-8 h-8 shrink-0 text-[#06aed5]" />
             <div>
               <p className="font-black text-xl text-[#086788]">THE MASTER AUDIT UNLOCKED</p>
               <p className="text-sm font-bold uppercase tracking-widest text-[#086788]/60">Full Clinical Synthesis Complete</p>
@@ -81,58 +74,56 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
 
         {/* Free Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-stretch mb-12">
-          <div className={`rounded-3xl border p-8 md:p-10 flex flex-col h-full shadow-sm ${bgCard}`}>
-             <div className="flex items-center gap-2 mb-6 text-[#06aed5] font-black uppercase text-xs tracking-tighter">
-               <Activity className="w-5 h-5 text-[#f0c808]" /> Clinical Baseline Found
+          <div className={`rounded-3xl p-8 md:p-10 flex flex-col h-full bg-[#fff1d0] border border-[#f0c808]/40 shadow-sm`}>
+             <div className="flex items-center gap-2 mb-6 text-[#086788] font-black uppercase text-xs tracking-tighter bg-white px-3 py-1.5 rounded-full w-max shadow-sm">
+               <Activity className="w-4 h-4 text-[#f0c808]" /> Clinical Baseline Found
              </div>
             <h4 className="text-sm font-extrabold uppercase tracking-widest text-[#086788]/50 mb-2">Primary Archetype</h4>
-            <h2 className={`text-4xl md:text-5xl font-black mb-6 leading-tight tracking-tight ${textPrimary}`}>
+            <h2 className={`text-4xl md:text-5xl font-black mb-6 leading-tight tracking-tight text-[#086788]`}>
               {profile.attachment.general.classification}
             </h2>
-            <p className={`text-lg font-medium leading-relaxed ${textSecondary}`}>
+            <p className={`text-lg font-medium leading-relaxed text-[#086788]/80`}>
               Your psychological blueprint has been mapped. See exactly how your nervous system responds to closeness, stress, and abandonment below.
             </p>
           </div>
           <div className="flex flex-col w-full h-full justify-center">
-            <AttachmentQuadrant domains={quadrantDomains} isDarkTheme={isDarkTheme} />
+            <AttachmentQuadrant domains={quadrantDomains} />
           </div>
         </div>
 
         {!isPremium && (
-          <div className={`rounded-3xl border p-8 md:p-10 mb-12 shadow-sm animate-in fade-in duration-700 ${bgCard}`}>
-             <h3 className={`text-2xl font-black mb-6 flex items-center gap-3 ${textPrimary}`}>
+          <div className={`rounded-3xl p-8 md:p-10 mb-12 animate-in fade-in duration-700 bg-white border border-[#d6d2d2] shadow-xl`}>
+             <h3 className={`text-2xl font-black mb-6 flex items-center gap-3 text-[#086788]`}>
                <ShieldCheck className="w-6 h-6 text-[#06aed5]" /> Granular Subconscious Mapping
              </h3>
-             <p className={`mb-8 font-medium ${textSecondary}`}>
+             <p className={`mb-8 font-medium text-[#086788]/80`}>
                Attachment isn't one-size-fits-all. Our AI has isolated exactly how your triggers change depending on who you are dealing with.
              </p>
              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-               {renderDomainScores("General Baseline", profile.attachment.general, "#06aed5")}
-               {renderDomainScores("Romantic Partners", profile.attachment.romantic, "#dd1c1a")}
-               {renderDomainScores("Maternal Figure", profile.attachment.mother, "#f686bd")}
-               {renderDomainScores("Paternal Figure", profile.attachment.father, "#fe5d9f")}
+               {renderDomainScores("General Baseline", profile.attachment.general, "#06aed5", "bg-[#06aed5]/5", "border-[#06aed5]/20")}
+               {renderDomainScores("Romantic Partners", profile.attachment.romantic, "#dd1c1a", "bg-[#dd1c1a]/5", "border-[#dd1c1a]/20")}
+               {renderDomainScores("Maternal Figure", profile.attachment.mother, "#f686bd", "bg-[#f686bd]/10", "border-[#f686bd]/30")}
+               {renderDomainScores("Paternal Figure", profile.attachment.father, "#fe5d9f", "bg-[#fe5d9f]/10", "border-[#fe5d9f]/30")}
              </div>
           </div>
         )}
 
         {/* Premium Section */}
         {isPremium && premiumData ? (
-          <div className="space-y-10 animate-in fade-in slide-in-from-bottom-10 duration-1000">
+          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-10 duration-1000">
             
-            {/* 1. Deep Validation */}
             <div className="bg-[#086788] text-white p-8 md:p-12 rounded-3xl shadow-xl relative overflow-hidden">
               <Sparkles className="absolute top-4 right-4 w-32 h-32 text-white/5 rotate-12 pointer-events-none" />
               <h2 className="text-3xl font-black mb-6 text-[#f0c808]">The Truth About You</h2>
               <div className="text-lg md:text-xl font-medium leading-relaxed opacity-95 space-y-6" dangerouslySetInnerHTML={{ __html: premiumData.deepValidation }}></div>
             </div>
 
-            {/* 2. The Bell Curve Graphic */}
-            <div className={`p-8 md:p-10 rounded-3xl border shadow-sm ${bgCard} overflow-hidden relative`}>
+            <div className={`p-8 md:p-10 rounded-3xl bg-white border border-[#d6d2d2] shadow-sm overflow-hidden relative`}>
               <div className="flex items-center gap-3 mb-8">
                 <LineChart className="w-8 h-8 text-[#06aed5]" />
-                <h2 className={`text-2xl font-black ${textPrimary}`}>The Normalcy Curve</h2>
+                <h2 className={`text-2xl font-black text-[#086788]`}>The Normalcy Curve</h2>
               </div>
-              <p className={`text-base font-medium mb-8 ${textSecondary}`}>
+              <p className={`text-base font-medium mb-8 text-[#086788]/80`}>
                 You are not broken. Look at the chart below. Most humans operate with some level of insecurity or trauma. You score in the <b>{premiumData.populationPercentile}th percentile</b> for attachment security.
               </p>
               
@@ -160,36 +151,33 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
               </div>
             </div>
 
-            {/* 3. The Details (Childhood, Romantic, Work) */}
             <div className="space-y-6">
-              <div className={`p-8 md:p-10 rounded-3xl border-l-8 border-l-[#f686bd] ${bgCard}`}>
-                <div className="flex items-center gap-4 mb-6"><Users className="w-8 h-8 text-[#f686bd]" /><h3 className={`text-2xl font-black ${textPrimary}`}>The Origin Print</h3></div>
-                <div className={`text-lg leading-relaxed space-y-4 font-medium ${textSecondary}`} dangerouslySetInnerHTML={{ __html: premiumData.childhoodPrint }}></div>
+              <div className={`p-8 md:p-10 rounded-3xl bg-[#f686bd]/10 border border-[#f686bd]/30`}>
+                <div className="flex items-center gap-4 mb-6"><Users className="w-8 h-8 text-[#f686bd]" /><h3 className={`text-2xl font-black text-[#086788]`}>The Origin Print</h3></div>
+                <div className={`text-lg leading-relaxed space-y-4 font-medium text-[#086788]/90`} dangerouslySetInnerHTML={{ __html: premiumData.childhoodPrint }}></div>
               </div>
 
-              <div className={`p-8 md:p-10 rounded-3xl border-l-8 border-l-[#dd1c1a] ${bgCard}`}>
-                <div className="flex items-center gap-4 mb-6"><Heart className="w-8 h-8 text-[#dd1c1a]" /><h3 className={`text-2xl font-black ${textPrimary}`}>The Romantic Threat</h3></div>
-                <div className={`text-lg leading-relaxed space-y-4 font-medium ${textSecondary}`} dangerouslySetInnerHTML={{ __html: premiumData.romanticDanger }}></div>
+              <div className={`p-8 md:p-10 rounded-3xl bg-[#dd1c1a]/5 border border-[#dd1c1a]/20`}>
+                <div className="flex items-center gap-4 mb-6"><Heart className="w-8 h-8 text-[#dd1c1a]" /><h3 className={`text-2xl font-black text-[#086788]`}>The Romantic Threat</h3></div>
+                <div className={`text-lg leading-relaxed space-y-4 font-medium text-[#086788]/90`} dangerouslySetInnerHTML={{ __html: premiumData.romanticDanger }}></div>
               </div>
 
-              <div className={`p-8 md:p-10 rounded-3xl border-l-8 border-l-[#06aed5] ${bgCard}`}>
-                <div className="flex items-center gap-4 mb-6"><Briefcase className="w-8 h-8 text-[#06aed5]" /><h3 className={`text-2xl font-black ${textPrimary}`}>The Workplace Threat</h3></div>
-                <div className={`text-lg leading-relaxed space-y-4 font-medium ${textSecondary}`} dangerouslySetInnerHTML={{ __html: premiumData.workplaceDanger }}></div>
+              <div className={`p-8 md:p-10 rounded-3xl bg-[#06aed5]/10 border border-[#06aed5]/30`}>
+                <div className="flex items-center gap-4 mb-6"><Briefcase className="w-8 h-8 text-[#06aed5]" /><h3 className={`text-2xl font-black text-[#086788]`}>The Workplace Threat</h3></div>
+                <div className={`text-lg leading-relaxed space-y-4 font-medium text-[#086788]/90`} dangerouslySetInnerHTML={{ __html: premiumData.workplaceDanger }}></div>
               </div>
             </div>
 
-            {/* 4. Action Plan */}
-            <div className={`p-8 md:p-12 rounded-3xl border-2 border-[#086788] bg-white shadow-xl`}>
+            <div className={`p-8 md:p-12 rounded-3xl border-2 border-[#086788] bg-[#fff1d0] shadow-xl`}>
               <h2 className="text-3xl font-black mb-6 flex items-center gap-3 text-[#086788]"><Target className="w-8 h-8 text-[#06aed5]" /> The Master Action Plan</h2>
-              <div className={`text-lg leading-relaxed font-medium ${textSecondary} [&>ol]:space-y-6 [&>ol]:list-none [&>ol]:p-0 [&>ol>li>b]:text-[#086788] [&>ol>li>b]:uppercase [&>ol>li>b]:text-sm [&>ol>li>b]:tracking-widest [&>ol>li>b]:block [&>ol>li>b]:mb-2 [&>ol>li]:bg-[#fff1d0]/50 [&>ol>li]:p-6 [&>ol>li]:rounded-2xl [&>ol>li]:border [&>ol>li]:border-[#d6d2d2]`} dangerouslySetInnerHTML={{ __html: premiumData.masterActionPlan }}></div>
+              <div className={`text-lg leading-relaxed font-medium text-[#086788] [&>ol]:space-y-6 [&>ol]:list-none [&>ol]:p-0 [&>ol>li>b]:text-[#086788] [&>ol>li>b]:uppercase [&>ol>li>b]:text-sm [&>ol>li>b]:tracking-widest [&>ol>li>b]:block [&>ol>li>b]:mb-2 [&>ol>li]:bg-white [&>ol>li]:p-6 [&>ol>li]:rounded-2xl [&>ol>li]:border [&>ol>li]:border-[#d6d2d2] [&>ol>li]:shadow-sm`} dangerouslySetInnerHTML={{ __html: premiumData.masterActionPlan }}></div>
             </div>
 
-            {/* 5. The Cross-Sell Push (Urgency/Red) */}
-            <div className="bg-[#dd1c1a] p-1 rounded-3xl shadow-xl">
+            <div className="bg-[#dd1c1a] p-1 rounded-3xl shadow-xl mt-12">
               <div className="bg-white p-8 md:p-10 rounded-[22px] text-center">
                 <span className="inline-block py-1 px-4 rounded-full bg-red-100 text-[#dd1c1a] font-black text-xs tracking-widest uppercase mb-6">Critical Vulnerability Detected</span>
-                <h3 className={`text-3xl font-black mb-4 ${textPrimary}`}>Take The "{premiumData.recommendedNextTest?.testName}" Test</h3>
-                <p className={`text-lg font-medium max-w-2xl mx-auto mb-8 ${textSecondary}`}>
+                <h3 className={`text-3xl font-black mb-4 text-[#086788]`}>Take The "{premiumData.recommendedNextTest?.testName}" Test</h3>
+                <p className={`text-lg font-medium max-w-2xl mx-auto mb-8 text-[#086788]/80`}>
                   {premiumData.recommendedNextTest?.psychologicalPitch}
                 </p>
                 <Link href={`/${premiumData.recommendedNextTest?.testId}`} className="inline-flex items-center justify-center gap-3 py-4 px-8 bg-[#dd1c1a] hover:bg-[#b10f2e] text-white rounded-full font-black text-lg transition-transform hover:-translate-y-1 shadow-lg">
@@ -206,7 +194,6 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
             isGenerating={isGenerating} 
             archetype={profile.attachment.general.classification}
             relationshipStatus={relationshipStatus}
-            isDarkTheme={isDarkTheme} 
           />
         )}
       </div>
