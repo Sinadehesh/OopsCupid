@@ -27,7 +27,6 @@ import { generateInfidelityProfile } from "@/lib/psychometrics/infidelity/scorin
 import { generateFriendRoleProfile } from "@/lib/psychometrics/friend-role/scoring";
 import { generateFriendUsedProfile } from "@/lib/psychometrics/friend-used/scoring";
 
-// FIX: Added CheckCircle2 to the imports here!
 import { Lock, Mail, ArrowRight, ShieldCheck, CheckCircle2 } from "lucide-react";
 
 export default function QuizWidget({ quizName }: { quizName: string }) {
@@ -110,10 +109,13 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     }, 2000);
   };
 
+  // THIS IS THE MAGIC CONNECTION TO YOUR DATABASE
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !agreed) return;
     setIsSubmitting(true);
+
+    let tempResultData: any = null;
 
     try {
       if (isAttachment) {
@@ -121,34 +123,43 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         const isSingle = answers["demo_1"] === "Single" || answers["demo_1"] === "It's complicated";
         const gender = answers["demo_3"] ?? "Non-binary";
         const profile = generatePsychologicalProfile(answers, hasChildren);
-        setResultData({ profile, demographics: { isSingle, gender, hasChildren }, rawAnswers: answers, type: "attachment", email });
+        tempResultData = { profile, demographics: { isSingle, gender, hasChildren }, rawAnswers: answers, type: "attachment", email };
       } else if (quizName === "attraction-patterns") {
-        setResultData({ profile: generateAttractionProfile(answers), type: "attraction" });
+        tempResultData = { profile: generateAttractionProfile(answers), type: "attraction" };
       } else if (quizName === "who-is-attracted-to-me") {
-        setResultData({ profile: generateAttractorProfile(answers), type: "attractor" });
+        tempResultData = { profile: generateAttractorProfile(answers), type: "attractor" };
       } else if (quizName === "partners-attachment-style") {
-        setResultData({ profile: generatePartnerAttachmentProfile(answers), type: "partner" });
+        tempResultData = { profile: generatePartnerAttachmentProfile(answers), type: "partner" };
       } else if (quizName === "is-he-cheating") {
-        setResultData({ profile: generateInfidelityProfile(answers), type: "infidelity" });
+        tempResultData = { profile: generateInfidelityProfile(answers), type: "infidelity" };
       } else if (quizName === "friend-group-role") {
-        setResultData({ profile: generateFriendRoleProfile(answers), type: "friendrole" });
+        tempResultData = { profile: generateFriendRoleProfile(answers), type: "friendrole" };
       } else if (quizName === "are-your-friends-using-you") {
-        setResultData({ profile: generateFriendUsedProfile(answers), type: "friendused" });
+        tempResultData = { profile: generateFriendUsedProfile(answers), type: "friendused" };
       } else {
-        setResultData({ ...computeLegacyResult(answers, quizName), type: "legacy" });
+        tempResultData = { ...computeLegacyResult(answers, quizName), type: "legacy" };
       }
+      setResultData(tempResultData);
     } catch (err) {
       console.error(err);
       setResultData({ type: "error" });
     }
 
+    // THE REAL API CALL TO NEON POSTGRES!
     try {
       await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, quizType: quizName, rawAnswers: answers })
-      }).catch(() => console.log("API not mapped yet. Proceeding."));
-    } catch(err) {}
+        body: JSON.stringify({ 
+          email: email, 
+          quizType: quizName, 
+          rawAnswers: answers,
+          profile: tempResultData?.profile || null 
+        })
+      });
+    } catch(err) {
+      console.error("Failed to save to database:", err);
+    }
 
     setShowEmailGate(false);
     setShowResult(true);
