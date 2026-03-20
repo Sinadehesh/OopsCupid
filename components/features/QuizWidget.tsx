@@ -109,7 +109,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     }, 2000);
   };
 
-  // THIS IS THE MAGIC CONNECTION TO YOUR DATABASE
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !agreed) return;
@@ -145,7 +144,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       setResultData({ type: "error" });
     }
 
-    // THE REAL API CALL TO NEON POSTGRES!
     try {
       await fetch('/api/leads', {
         method: 'POST',
@@ -216,7 +214,10 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
   if (showResult && resultData) {
     if (resultData.type === "error") return <div className="text-center py-20 font-black text-[#dd1c1a]">Analysis Failed. Please refresh.</div>;
-    if (resultData.type === "attachment") return <div ref={topRef} className="w-full animate-in fade-in duration-500"><AttachmentReport profile={resultData.profile} demographics={resultData.demographics} rawAnswers={resultData.rawAnswers} /></div>;
+    
+    // FIX: email={resultData.email} is now explicitly passed down!
+    if (resultData.type === "attachment") return <div ref={topRef} className="w-full animate-in fade-in duration-500"><AttachmentReport profile={resultData.profile} demographics={resultData.demographics} rawAnswers={resultData.rawAnswers} email={resultData.email} /></div>;
+    
     if (resultData.type === "attraction") return <div ref={topRef} className="w-full animate-in fade-in"><AttractionMasterReport profile={resultData.profile} /></div>;
     if (resultData.type === "attractor") return <div ref={topRef} className="w-full animate-in fade-in"><AttractorMasterReport profile={resultData.profile} /></div>;
     if (resultData.type === "partner") return <div ref={topRef} className="w-full animate-in fade-in"><PartnerAttachmentReport profile={resultData.profile} /></div>;

@@ -11,10 +11,11 @@ import PremiumCheckout from "./PremiumCheckout";
 interface AttachmentReportProps {
   profile: PsychologicalProfile;
   demographics: any;
-  rawAnswers?: any; // Received from QuizWidget
+  rawAnswers?: any;
+  email?: string; // FIX: Added email prop!
 }
 
-export default function AttachmentReport({ profile, demographics, rawAnswers }: AttachmentReportProps) {
+export default function AttachmentReport({ profile, demographics, rawAnswers, email }: AttachmentReportProps) {
   const router = useRouter();
   const [isRouting, setIsRouting] = useState(false);
 
@@ -25,11 +26,11 @@ export default function AttachmentReport({ profile, demographics, rawAnswers }: 
     return { name: nameMap[key] || "Other", anxiety: data?.anxietyScore || 0, avoidance: data?.avoidanceScore || 0 };
   });
 
-  // EXACT REDIRECT LOGIC
   const handleRouteToPremium = () => {
     setIsRouting(true);
     if (typeof window !== 'undefined') {
-      localStorage.setItem('oc_saved_profile', JSON.stringify({ profile, demographics, rawAnswers }));
+      // FIX: Email is now permanently stored in their profile payload!
+      localStorage.setItem('oc_saved_profile', JSON.stringify({ profile, demographics, rawAnswers, email }));
     }
     router.push(`/attachment-style-quiz/premium?style=${encodeURIComponent(generalProfile.classification)}`);
   };
@@ -72,7 +73,6 @@ export default function AttachmentReport({ profile, demographics, rawAnswers }: 
            <p className={`text-lg mt-8 font-bold text-[#086788]`}>If you want real clarity, not just a label, unlock your full Love Pattern Breakdown below.</p>
         </div>
 
-        {/* Bind the router push to the unlock button! */}
         <PremiumCheckout 
           onUnlock={handleRouteToPremium} 
           isGenerating={isRouting} 
