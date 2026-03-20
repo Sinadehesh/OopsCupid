@@ -5,8 +5,30 @@ import SharePrintButtons from "@/components/ui/SharePrintButtons";
 import { generatePsychologicalProfile, computeLegacyResult } from "@/lib/psychometrics/classification";
 import AttachmentReport from "@/components/report/AttachmentReport";
 
+// ALL QUESTION VAULTS
 import { attachmentQuestions, Question } from "@/lib/psychometrics/attachment/questions";
 import { attractionQuestions } from "@/lib/psychometrics/attraction/questions";
+import { attractorQuestions } from "@/lib/psychometrics/attractor/questions";
+import { partnerAttachmentQuestions } from "@/lib/psychometrics/partner-attachment/questions";
+import { infidelityQuestions } from "@/lib/psychometrics/infidelity/questions";
+import { friendRoleQuestions } from "@/lib/psychometrics/friend-role/questions";
+import { friendUsedQuestions } from "@/lib/psychometrics/friend-used/questions";
+
+// ALL REPORT IMPORTS
+import AttractionMasterReport from "@/components/report/AttractionMasterReport";
+import AttractorMasterReport from "@/components/report/AttractorMasterReport";
+import PartnerAttachmentReport from "@/components/report/PartnerAttachmentReport";
+import InfidelityMasterReport from "@/components/report/InfidelityMasterReport";
+import FriendRoleMasterReport from "@/components/report/FriendRoleMasterReport";
+import FriendUsedMasterReport from "@/components/report/FriendUsedMasterReport";
+
+// ALL SCORING IMPORTS
+import { generateAttractionProfile } from "@/lib/psychometrics/attraction/scoring";
+import { generateAttractorProfile } from "@/lib/psychometrics/attractor/scoring";
+import { generatePartnerAttachmentProfile } from "@/lib/psychometrics/partner-attachment/scoring";
+import { generateInfidelityProfile } from "@/lib/psychometrics/infidelity/scoring";
+import { generateFriendRoleProfile } from "@/lib/psychometrics/friend-role/scoring";
+import { generateFriendUsedProfile } from "@/lib/psychometrics/friend-used/scoring";
 
 const legacyBanks: Record<string, Question[]> = {
   "default": [
@@ -30,12 +52,25 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const [slideDirection, setSlideDirection] = useState<"forward" | "backward">("forward");
 
   const topRef = useRef<HTMLDivElement>(null);
+  
   const isAttachment = quizName === "attachment-style";
+  const isAttraction = quizName === "attraction-patterns";
+  const isAttractor = quizName === "who-is-attracted-to-me";
+  const isPartnerAttachment = quizName === "partners-attachment-style";
+  const isCheating = quizName === "is-he-cheating";
+  const isFriendRole = quizName === "friend-group-role";
+  const isFriendUsed = quizName === "are-your-friends-using-you";
   
   const activeQuestions = useMemo(() => {
     if (isAttachment) return attachmentQuestions; 
-    return legacyBanks["default"];
-  }, [quizName, isAttachment]);
+    if (isAttraction) return attractionQuestions;
+    if (isAttractor) return attractorQuestions; 
+    if (isPartnerAttachment) return partnerAttachmentQuestions;
+    if (isCheating) return infidelityQuestions;
+    if (isFriendRole) return friendRoleQuestions;
+    if (isFriendUsed) return friendUsedQuestions;
+    return legacyBanks[quizName] || legacyBanks["default"];
+  }, [quizName, isAttachment, isAttraction, isAttractor, isPartnerAttachment, isCheating, isFriendRole, isFriendUsed]);
 
   const isFinished = currentIndex >= activeQuestions.length;
   const progress   = Math.round((currentIndex / activeQuestions.length) * 100);
@@ -86,18 +121,36 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const handleSubmit = () => {
     setLoading(true);
     setTimeout(() => {
-      if (isAttachment) {
-        const hasChildren = answers["demo_2"] === "Yes";
-        const isSingle = answers["demo_1"] === "Single" || answers["demo_1"] === "It's complicated";
-        const gender = answers["demo_3"] ?? "Non-binary";
-        const profile = generatePsychologicalProfile(answers, hasChildren);
-        setResultData({ profile, demographics: { isSingle, gender, hasChildren }, type: "attachment" });
-      } else {
-        setResultData({ ...computeLegacyResult(answers, quizName), type: "legacy" });
+      try {
+        if (isAttachment) {
+          const hasChildren = answers["demo_2"] === "Yes";
+          const isSingle = answers["demo_1"] === "Single" || answers["demo_1"] === "It's complicated";
+          const gender = answers["demo_3"] ?? "Non-binary";
+          const profile = generatePsychologicalProfile(answers, hasChildren);
+          setResultData({ profile, demographics: { isSingle, gender, hasChildren }, type: "attachment" });
+        } else if (isAttraction) {
+          setResultData({ profile: generateAttractionProfile(answers), type: "attraction" });
+        } else if (isAttractor) {
+          setResultData({ profile: generateAttractorProfile(answers), type: "attractor" });
+        } else if (isPartnerAttachment) {
+          setResultData({ profile: generatePartnerAttachmentProfile(answers), type: "partner" });
+        } else if (isCheating) {
+          setResultData({ profile: generateInfidelityProfile(answers), type: "infidelity" });
+        } else if (isFriendRole) {
+          setResultData({ profile: generateFriendRoleProfile(answers), type: "friendrole" });
+        } else if (isFriendUsed) {
+          setResultData({ profile: generateFriendUsedProfile(answers), type: "friendused" });
+        } else {
+          setResultData({ ...computeLegacyResult(answers, quizName), type: "legacy" });
+        }
+      } catch (err) {
+        console.error("Scoring Error:", err);
+        setResultData({ type: "error" });
+      } finally {
+        setShowResult(true);
+        setLoading(false);
+        if (topRef.current) topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
       }
-      setShowResult(true);
-      setLoading(false);
-      if (topRef.current) topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 2000);
   };
 
@@ -113,10 +166,33 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   }
 
   if (showResult && resultData) {
-    if (resultData.type === "attachment") {
-      return <div ref={topRef} className="w-full animate-in fade-in duration-500"><AttachmentReport profile={resultData.profile} demographics={resultData.demographics} /></div>;
+    if (resultData.type === "error") {
+      return (
+        <div ref={topRef} className="w-full max-w-3xl mx-auto text-center py-20 bg-white rounded-2xl shadow-sm border border-[#dd1c1a] animate-in fade-in">
+           <h3 className="text-3xl font-black text-[#dd1c1a] mb-4">Analysis Failed</h3>
+           <p className="text-lg font-medium text-[#086788]">We couldn't compile your profile based on those answers. Please try refreshing.</p>
+        </div>
+      );
     }
-    return null;
+    
+    // Safely route to the correct report component
+    if (resultData.type === "attachment") return <div ref={topRef} className="w-full animate-in fade-in duration-500"><AttachmentReport profile={resultData.profile} demographics={resultData.demographics} /></div>;
+    if (resultData.type === "attraction") return <div ref={topRef} className="w-full animate-in fade-in"><AttractionMasterReport profile={resultData.profile} /></div>;
+    if (resultData.type === "attractor") return <div ref={topRef} className="w-full animate-in fade-in"><AttractorMasterReport profile={resultData.profile} /></div>;
+    if (resultData.type === "partner") return <div ref={topRef} className="w-full animate-in fade-in"><PartnerAttachmentReport profile={resultData.profile} /></div>;
+    if (resultData.type === "infidelity") return <div ref={topRef} className="w-full animate-in fade-in"><InfidelityMasterReport profile={resultData.profile} /></div>;
+    if (resultData.type === "friendrole") return <div ref={topRef} className="w-full animate-in fade-in"><FriendRoleMasterReport profile={resultData.profile} /></div>;
+    if (resultData.type === "friendused") return <div ref={topRef} className="w-full animate-in fade-in"><FriendUsedMasterReport profile={resultData.profile} /></div>;
+
+    return (
+      <div ref={topRef} className="w-full max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-[#d6d2d2] p-8 md:p-12 animate-in fade-in">
+        <h3 className="text-3xl md:text-4xl font-black text-[#086788] mb-8 text-center">{resultData.title || "Your Result"}</h3>
+        <div className="bg-[#fff1d0]/50 p-6 md:p-8 border border-[#d6d2d2] rounded-xl mb-8">
+          <p className="text-[#086788] font-medium text-lg whitespace-pre-wrap">{resultData.description}</p>
+        </div>
+        <SharePrintButtons />
+      </div>
+    );
   }
 
   if (isFinished) {

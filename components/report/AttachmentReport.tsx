@@ -20,11 +20,17 @@ export default function AttachmentReport({ profile, demographics }: AttachmentRe
   const [isGenerating, setIsGenerating] = useState(false);
   const [premiumData, setPremiumData] = useState<any>(null);
 
+  // Fallbacks to prevent undefined crashes
   const relationshipStatus = demographics?.isSingle ? "Single" : "In a relationship";
+  
+  const generalProfile = profile?.attachment?.general || { classification: "Unknown", anxietyScore: 0, avoidanceScore: 0 };
+  const romanticProfile = profile?.attachment?.romantic || { classification: "Unknown", anxietyScore: 0, avoidanceScore: 0 };
+  const motherProfile = profile?.attachment?.mother || { classification: "Unknown", anxietyScore: 0, avoidanceScore: 0 };
+  const fatherProfile = profile?.attachment?.father || { classification: "Unknown", anxietyScore: 0, avoidanceScore: 0 };
 
-  const quadrantDomains: DomainPoint[] = Object.entries(profile.attachment).map(([key, data]) => {
+  const quadrantDomains: DomainPoint[] = Object.entries(profile?.attachment || {}).map(([key, data]: [string, any]) => {
     const nameMap: Record<string, string> = { general: "General", romantic: "Romantic", mother: "Mother", father: "Father", work: "Work" };
-    return { name: nameMap[key], anxiety: data.anxietyScore, avoidance: data.avoidanceScore };
+    return { name: nameMap[key] || "Other", anxiety: data?.anxietyScore || 0, avoidance: data?.avoidanceScore || 0 };
   });
 
   const handleUnlockEverything = async () => {
@@ -48,6 +54,16 @@ export default function AttachmentReport({ profile, demographics }: AttachmentRe
     }
   };
 
+  const renderDomainScores = (title: string, data: any, colorClass: string) => (
+    <div className={`p-6 rounded-xl bg-white border border-[#d6d2d2] shadow-sm`}>
+      <h4 className={`text-sm font-black uppercase tracking-wider mb-5 text-[#086788]`}>{title}</h4>
+      <div className="space-y-5">
+        <ScoreBar label="Anxiety" value={data?.anxietyScore || 0} color={colorClass} />
+        <ScoreBar label="Avoidance" value={data?.avoidanceScore || 0} color={`bg-[#086788]`} />
+      </div>
+    </div>
+  );
+
   return (
     <div className={`w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-[#fff1d0] py-12 md:py-20 border-t border-[#d6d2d2]`}>
       <div className="max-w-6xl mx-auto px-4 md:px-8">
@@ -67,14 +83,14 @@ export default function AttachmentReport({ profile, demographics }: AttachmentRe
           <div className={`rounded-2xl p-8 md:p-12 flex flex-col justify-center bg-white border border-[#d6d2d2] shadow-sm`}>
             <h4 className="text-sm font-black uppercase tracking-widest text-[#086788]/50 mb-3">Your Free Result</h4>
             <h2 className={`text-5xl md:text-6xl font-black mb-6 leading-tight tracking-tight text-[#086788]`}>
-              {profile.attachment.general.classification}
+              {generalProfile.classification}
             </h2>
             <p className={`text-xl font-medium leading-relaxed text-[#086788]/80`}>
               Based on your answers, this is your primary attachment style. This is the label for how you naturally respond to closeness, stress, and connection.
             </p>
           </div>
           <div className="flex flex-col w-full h-full justify-center min-h-[400px] bg-white rounded-2xl border border-[#d6d2d2] p-4 md:p-8 shadow-sm">
-            <AttachmentQuadrant domains={[quadrantDomains[0]]} />
+            <AttachmentQuadrant domains={quadrantDomains} />
           </div>
         </div>
 
@@ -123,7 +139,7 @@ export default function AttachmentReport({ profile, demographics }: AttachmentRe
                 <h2 className={`text-3xl font-black text-[#086788]`}>The Normalcy Curve</h2>
               </div>
               <p className={`text-xl font-medium mb-12 text-[#086788]/80 max-w-3xl`}>
-                You are not broken. Look at the chart below. Most humans operate with some level of insecurity or trauma. You score in the <b>{premiumData.populationPercentile}th percentile</b> for attachment security.
+                You are not broken. Look at the chart below. Most humans operate with some level of insecurity or trauma. You score in the <b>{premiumData.populationPercentile || 50}th percentile</b> for attachment security.
               </p>
               <div className="relative w-full h-56 md:h-72 mt-4 mb-4">
                 <svg viewBox="0 0 1000 200" className="w-full h-full preserve-3d overflow-visible">
@@ -137,10 +153,10 @@ export default function AttachmentReport({ profile, demographics }: AttachmentRe
                   <path d="M 0 200 C 300 200, 400 20, 500 20 C 600 20, 700 200, 1000 200" fill="none" stroke="#06aed5" strokeWidth="4" strokeLinecap="round"/>
                   <line x1="500" y1="20" x2="500" y2="200" stroke="#086788" strokeWidth="2" strokeDasharray="6 6" opacity="0.3"/>
                   <text x="500" y="15" textAnchor="middle" fill="#086788" fontSize="14" fontWeight="bold">Average (50)</text>
-                  <g style={{ transform: `translateX(${premiumData.populationPercentile * 10 - 500}px)`, transition: 'transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1)' }}>
+                  <g style={{ transform: `translateX(${(premiumData.populationPercentile || 50) * 10 - 500}px)`, transition: 'transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1)' }}>
                     <line x1="500" y1="20" x2="500" y2="200" stroke="#dd1c1a" strokeWidth="4" />
                     <circle cx="500" cy="20" r="8" fill="#dd1c1a" />
-                    <text x="500" y="0" textAnchor="middle" fill="#dd1c1a" fontSize="18" fontWeight="900">YOU ({premiumData.populationPercentile})</text>
+                    <text x="500" y="0" textAnchor="middle" fill="#dd1c1a" fontSize="18" fontWeight="900">YOU ({premiumData.populationPercentile || 50})</text>
                   </g>
                 </svg>
               </div>
@@ -170,11 +186,11 @@ export default function AttachmentReport({ profile, demographics }: AttachmentRe
 
             <div className="bg-white border-2 border-[#dd1c1a] p-8 md:p-12 rounded-2xl shadow-md mt-12 text-center">
               <span className="inline-block py-1.5 px-4 rounded bg-[#dd1c1a]/10 text-[#dd1c1a] font-black text-sm tracking-widest uppercase mb-6">Your Next Step</span>
-              <h3 className={`text-3xl md:text-4xl font-black mb-6 text-[#086788]`}>Take The "{premiumData.recommendedNextTest?.testName}" Test</h3>
+              <h3 className={`text-3xl md:text-4xl font-black mb-6 text-[#086788]`}>Take The "{premiumData.recommendedNextTest?.testName || 'Attraction Patterns'}" Test</h3>
               <p className={`text-xl font-medium max-w-3xl mx-auto mb-10 text-[#086788]/80`}>
-                {premiumData.recommendedNextTest?.psychologicalPitch}
+                {premiumData.recommendedNextTest?.psychologicalPitch || "Identify the exact traits you are secretly attracted to and why."}
               </p>
-              <Link href={`/${premiumData.recommendedNextTest?.testId}`} className="inline-flex items-center justify-center gap-3 py-5 px-10 min-h-[64px] bg-[#dd1c1a] hover:bg-[#b10f2e] text-white rounded-xl font-black text-xl transition-transform hover:-translate-y-1 shadow-md">
+              <Link href={`/${premiumData.recommendedNextTest?.testId || 'attraction-patterns'}`} className="inline-flex items-center justify-center gap-3 py-5 px-10 min-h-[64px] bg-[#dd1c1a] hover:bg-[#b10f2e] text-white rounded-xl font-black text-xl transition-transform hover:-translate-y-1 shadow-md">
                 Start This Diagnostic Now <ArrowRight className="w-6 h-6" />
               </Link>
             </div>
@@ -185,7 +201,7 @@ export default function AttachmentReport({ profile, demographics }: AttachmentRe
           <PremiumCheckout 
             onUnlock={handleUnlockEverything} 
             isGenerating={isGenerating} 
-            archetype={profile.attachment.general.classification}
+            archetype={generalProfile.classification}
             relationshipStatus={relationshipStatus}
           />
         )}
