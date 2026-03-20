@@ -25,7 +25,7 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
   const cardClass = isDarkTheme ? "bg-[#14213d] border-[#000000] shadow-lg" : "bg-[#ffffff] border-[#e5e5e5] shadow-md";
   const pageBg = isDarkTheme ? "bg-[#000000]" : "bg-[#e5e5e5]";
 
-  const relationshipStatus = demographics?.relationshipStatus || "Unknown";
+  const relationshipStatus = demographics?.isSingle ? "Single" : "In a relationship";
 
   const quadrantDomains: DomainPoint[] = Object.entries(profile.attachment).map(([key, data]) => {
     const nameMap: Record<string, string> = { general: "General", romantic: "Romantic", mother: "Mother", father: "Father", work: "Work" };
@@ -37,8 +37,8 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
     await new Promise(resolve => setTimeout(resolve, 1500)); 
     
     try {
-      // Pass the ENTIRE profile and relationship status for deep synthesis
-      const data = await generatePremiumReport(profile.attachment, relationshipStatus);
+      // FIX: Pass BOTH the full profile AND the full demographics answers to the AI
+      const data = await generatePremiumReport(profile.attachment, demographics);
       
       if (data && data.success && data.report) {
         setPremiumData(data.report);
@@ -126,7 +126,6 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
             {/* Grid for Domain Connections */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               
-              {/* Maternal */}
               <div className={`p-8 rounded-3xl border-t-4 border-t-[#d81159] ${cardClass}`}>
                 <div className="w-14 h-14 rounded-full bg-[#d81159]/10 flex items-center justify-center mb-6">
                   <Baby className="w-7 h-7 text-[#d81159]" />
@@ -135,7 +134,6 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
                 <div className={`text-base font-medium leading-relaxed ${tText}`} dangerouslySetInnerHTML={{ __html: premiumData.motherAnalysis }}></div>
               </div>
 
-              {/* Paternal */}
               <div className={`p-8 rounded-3xl border-t-4 border-t-[#8f2d56] ${cardClass}`}>
                 <div className="w-14 h-14 rounded-full bg-[#8f2d56]/10 flex items-center justify-center mb-6">
                   <UserCircle className="w-7 h-7 text-[#8f2d56]" />
@@ -144,7 +142,6 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
                 <div className={`text-base font-medium leading-relaxed ${tText}`} dangerouslySetInnerHTML={{ __html: premiumData.fatherAnalysis }}></div>
               </div>
 
-              {/* Romantic */}
               <div className={`p-8 rounded-3xl border-t-4 border-t-[#FFB400] ${cardClass}`}>
                 <div className="w-14 h-14 rounded-full bg-[#FFB400]/10 flex items-center justify-center mb-6">
                   <Heart className="w-7 h-7 text-[#D97706]" />
@@ -153,7 +150,6 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
                 <div className={`text-base font-medium leading-relaxed ${tText}`} dangerouslySetInnerHTML={{ __html: premiumData.romanticAnalysis }}></div>
               </div>
 
-              {/* Work */}
               <div className={`p-8 rounded-3xl border-t-4 border-t-[#00A6ED] ${cardClass}`}>
                 <div className="w-14 h-14 rounded-full bg-[#00A6ED]/10 flex items-center justify-center mb-6">
                   <Briefcase className="w-7 h-7 text-[#00A6ED]" />
@@ -166,8 +162,8 @@ export default function AttachmentReport({ profile, demographics, isDarkTheme = 
 
             {/* The Action Plan */}
             <div className={`p-8 md:p-12 rounded-3xl border-2 border-[#D97706] bg-[#FFB400]/5`}>
-              <h2 className="text-3xl font-black mb-6 flex items-center gap-3 text-[#D97706]"><Target className="w-8 h-8" /> Your 24-Hour Action Plan</h2>
-              <div className={`text-lg leading-relaxed space-y-6 font-medium ${tText} [&>ul]:space-y-4 [&>ul]:list-disc [&>ul]:pl-5 [&>ul>li>b]:text-[#D97706]`} dangerouslySetInnerHTML={{ __html: premiumData.actionablePlan }}></div>
+              <h2 className="text-3xl font-black mb-6 flex items-center gap-3 text-[#D97706]"><Target className="w-8 h-8" /> Your 80/20 Action Plan</h2>
+              <div className={`text-lg leading-relaxed space-y-6 font-medium ${tText} [&>ol]:space-y-4 [&>ol]:list-none [&>ol]:p-0 [&>ol>li>b]:text-[#D97706] [&>ol>li>b]:uppercase [&>ol>li>b]:tracking-wide [&>ol>li>b]:block [&>ol>li>b]:mb-1 [&>ol>li]:bg-white [&>ol>li]:dark:bg-[#000000] [&>ol>li]:p-4 [&>ol>li]:rounded-xl [&>ol>li]:border [&>ol>li]:border-[#D97706]/20`} dangerouslySetInnerHTML={{ __html: premiumData.actionablePlan }}></div>
             </div>
 
             <div className="pt-8"><SharePrintButtons /></div>
