@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState, useMemo, useRef } from "react";
-import { manipulationQuestions } from "@/lib/psychometrics/manipulation/questions";
+import React, { useState, useRef } from "react";
+import { MANIPULATION_QUESTIONS } from "@/lib/psychometrics/manipulation/questions";
 import { generateManipulationProfile } from "@/lib/psychometrics/manipulation/scoring";
 import ManipulationMasterReport from "@/components/report/ManipulationMasterReport";
 
-// FIX: Added CheckCircle2 to the imports here!
 import { Lock, Mail, ArrowRight, ShieldCheck, CheckCircle2 } from "lucide-react";
 
 export default function ManipulationQuizWidget() {
@@ -26,13 +25,13 @@ export default function ManipulationQuizWidget() {
   const [slideDirection, setSlideDirection] = useState<"forward" | "backward">("forward");
 
   const topRef = useRef<HTMLDivElement>(null);
-  const isFinished = currentIndex >= manipulationQuestions.length;
-  const progress = Math.round((currentIndex / manipulationQuestions.length) * 100);
+  const isFinished = currentIndex >= MANIPULATION_QUESTIONS.length;
+  const progress = Math.round((currentIndex / MANIPULATION_QUESTIONS.length) * 100);
 
   const handleOptionClick = (option: string) => {
     if (isAnimating || selectedAnswer !== null) return; 
     setSelectedAnswer(option);
-    const q = manipulationQuestions[currentIndex];
+    const q = MANIPULATION_QUESTIONS[currentIndex];
     setAnswers(prev => ({ ...prev, [q.id]: option }));
     
     setTimeout(() => {
@@ -82,11 +81,11 @@ export default function ManipulationQuizWidget() {
 
   const handleGodMode = () => {
     const fakeAnswers = { ...answers };
-    manipulationQuestions.forEach((q) => {
+    MANIPULATION_QUESTIONS.forEach((q) => {
       if (!fakeAnswers[q.id]) fakeAnswers[q.id] = q.options[Math.floor(Math.random() * q.options.length)];
     });
     setAnswers(fakeAnswers);
-    setCurrentIndex(manipulationQuestions.length);
+    setCurrentIndex(MANIPULATION_QUESTIONS.length);
   };
 
   if (isScoring) {
@@ -169,14 +168,14 @@ export default function ManipulationQuizWidget() {
     );
   }
 
-  const q = manipulationQuestions[currentIndex];
+  const q = MANIPULATION_QUESTIONS[currentIndex];
 
   return (
     <div ref={topRef} className={`w-full max-w-5xl mx-auto bg-white rounded-2xl shadow-sm border border-[#d6d2d2] flex flex-col justify-center min-h-[400px] p-6 md:p-12`}>
       <div className="mb-10">
         <div className="flex justify-between items-end mb-4">
           <div><span className={`text-xs md:text-sm font-bold px-3 py-1.5 rounded bg-[#fff1d0] text-[#086788]`}>{q.category}</span></div>
-          <div className={`text-sm md:text-base font-black tracking-wide text-[#086788]`}>QUESTION {currentIndex + 1} / {manipulationQuestions.length}</div>
+          <div className={`text-sm md:text-base font-black tracking-wide text-[#086788]`}>QUESTION {currentIndex + 1} / {MANIPULATION_QUESTIONS.length}</div>
         </div>
         <div className={`w-full h-2 rounded-full bg-[#d6d2d2] overflow-hidden`}><div className={`h-full rounded-full transition-all duration-500 ease-out bg-[#dd1c1a]`} style={{ width: `${progress}%` }} /></div>
       </div>
