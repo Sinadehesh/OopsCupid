@@ -5,13 +5,13 @@ import { useRouter } from "next/navigation";
 import { PsychologicalProfile } from "@/lib/psychometrics/classification";
 import AttachmentQuadrant, { DomainPoint } from "./AttachmentQuadrant";
 import { ScoreBar } from "./ScoreBars";
-import { ShieldCheck, Activity, Lock } from "lucide-react";
+import { Activity, Lock } from "lucide-react";
 import PremiumCheckout from "./PremiumCheckout";
 
 interface AttachmentReportProps {
   profile: PsychologicalProfile;
   demographics: any;
-  rawAnswers?: any; // We receive this from the QuizWidget now!
+  rawAnswers?: any; // Received from QuizWidget
 }
 
 export default function AttachmentReport({ profile, demographics, rawAnswers }: AttachmentReportProps) {
@@ -25,7 +25,7 @@ export default function AttachmentReport({ profile, demographics, rawAnswers }: 
     return { name: nameMap[key] || "Other", anxiety: data?.anxietyScore || 0, avoidance: data?.avoidanceScore || 0 };
   });
 
-  // THE MAGIC ROUTER: Save their raw data so the Premium Page can read it, then send them there!
+  // EXACT REDIRECT LOGIC
   const handleRouteToPremium = () => {
     setIsRouting(true);
     if (typeof window !== 'undefined') {
@@ -34,19 +34,11 @@ export default function AttachmentReport({ profile, demographics, rawAnswers }: 
     router.push(`/attachment-style-quiz/premium?style=${encodeURIComponent(generalProfile.classification)}`);
   };
 
-  const renderDomainScores = (title: string, data: any, colorCode: string) => (
-    <div className={`p-6 rounded-xl bg-white border border-[#d6d2d2] shadow-sm`}>
-      <h4 className={`text-sm font-black uppercase tracking-wider mb-5 text-[#086788]`}>{title}</h4>
-      <div className="space-y-5">
-        <ScoreBar label="Anxiety" value={data?.anxietyScore || 0} color={`bg-[${colorCode}]`} />
-        <ScoreBar label="Avoidance" value={data?.avoidanceScore || 0} color={`bg-[#086788]`} />
-      </div>
-    </div>
-  );
-
   return (
     <div className={`w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-[#fff1d0] py-12 md:py-20 border-t border-[#d6d2d2]`}>
       <div className="max-w-6xl mx-auto px-4 md:px-8">
+        
+        {/* Free Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-stretch mb-12">
           <div className={`rounded-2xl p-8 md:p-12 flex flex-col justify-center bg-white border border-[#d6d2d2] shadow-sm`}>
             <h4 className="text-sm font-black uppercase tracking-widest text-[#086788]/50 mb-3">Your Free Result</h4>
@@ -80,6 +72,7 @@ export default function AttachmentReport({ profile, demographics, rawAnswers }: 
            <p className={`text-lg mt-8 font-bold text-[#086788]`}>If you want real clarity, not just a label, unlock your full Love Pattern Breakdown below.</p>
         </div>
 
+        {/* Bind the router push to the unlock button! */}
         <PremiumCheckout 
           onUnlock={handleRouteToPremium} 
           isGenerating={isRouting} 

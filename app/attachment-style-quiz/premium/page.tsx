@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { generatePremiumReport } from "@/app/actions/generatePremiumReport";
-import { AlertTriangle, BrainCircuit, Activity, ShieldCheck, Target, ArrowRight, LineChart, Users, Heart, Ghost } from "lucide-react";
+import { AlertTriangle, Users, Ghost, Target, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import SharePrintButtons from "@/components/ui/SharePrintButtons";
 
@@ -24,7 +24,6 @@ export default function PremiumAttachmentReportPage() {
         }
 
         const parsedData = JSON.parse(savedData);
-        // Fallback for missing rawAnswers if they got here unexpectedly
         const rawAnswers = parsedData.rawAnswers || {}; 
         
         // Pass the rawAnswers straight into the AI!
@@ -89,12 +88,10 @@ export default function PremiumAttachmentReportPage() {
 
           {/* Visual Data Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            
             {/* Danger Meter */}
             <div className={`p-8 md:p-12 rounded-2xl bg-white border border-[#d6d2d2] shadow-sm text-center`}>
               <h2 className={`text-3xl font-black text-[#086788] mb-4`}>Relationship Danger Score</h2>
               <p className={`text-lg font-medium text-[#086788]/80 mb-8`}>Based on your answers, how dangerous is it to stay in this dynamic?</p>
-              
               <div className="relative w-full aspect-[2/1] overflow-hidden mb-6 flex justify-center mt-8">
                 <div className="absolute top-0 w-64 h-64 md:w-80 md:h-80 rounded-full border-[30px] border-[#d6d2d2] border-b-transparent border-l-transparent -rotate-45"></div>
                 <div className="absolute top-0 w-64 h-64 md:w-80 md:h-80 rounded-full border-[30px] border-[#dd1c1a] border-b-transparent border-l-transparent transition-transform duration-1000 ease-out" style={{ transform: `rotate(${-45 + ((premiumData.partnerDangerScore || 0) / 100) * 180}deg)` }}></div>
@@ -133,12 +130,10 @@ export default function PremiumAttachmentReportPage() {
               <div className="flex items-center gap-4 mb-6"><Users className="w-8 h-8 text-[#06aed5]" /><h3 className={`text-2xl font-black text-[#086788]`}>Profile of Your Partner</h3></div>
               <div className={`text-base md:text-lg leading-relaxed space-y-4 font-medium text-[#086788]/90`} dangerouslySetInnerHTML={{ __html: premiumData.boyfriendProfile }}></div>
             </div>
-
             <div className={`p-8 md:p-10 rounded-2xl bg-white border border-[#d6d2d2] shadow-sm`}>
               <div className="flex items-center gap-4 mb-6"><Ghost className="w-8 h-8 text-[#f0c808]" /><h3 className={`text-2xl font-black text-[#086788]`}>His Playbook</h3></div>
               <div className={`text-base md:text-lg leading-relaxed space-y-4 font-medium text-[#086788]/90`} dangerouslySetInnerHTML={{ __html: premiumData.hisPlaybook }}></div>
             </div>
-
             <div className={`p-8 md:p-10 rounded-2xl bg-white border border-[#d6d2d2] shadow-sm`}>
               <div className="flex items-center gap-4 mb-6"><AlertTriangle className="w-8 h-8 text-[#dd1c1a]" /><h3 className={`text-2xl font-black text-[#086788]`}>Relationship Threats</h3></div>
               <div className={`text-base md:text-lg leading-relaxed space-y-4 font-medium text-[#086788]/90`} dangerouslySetInnerHTML={{ __html: premiumData.relationshipThreats }}></div>
@@ -162,12 +157,10 @@ export default function PremiumAttachmentReportPage() {
               Start This Diagnostic Now <ArrowRight className="w-6 h-6" />
             </Link>
           </div>
-
           <div className="pt-8 pb-12"><SharePrintButtons /></div>
         </div>
       </div>
     );
   }
-
   return null;
 }
