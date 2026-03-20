@@ -2,7 +2,8 @@
 
 import React, { useState, useRef } from "react";
 import { MANIPULATION_QUESTIONS } from "@/lib/psychometrics/manipulation/questions";
-import { generateManipulationProfile } from "@/lib/psychometrics/manipulation/scoring";
+// FIX: Imported the correct function name based on your scoring.ts file
+import { calculateManipulationScore } from "@/lib/psychometrics/manipulation/scoring";
 import ManipulationMasterReport from "@/components/report/ManipulationMasterReport";
 
 import { Lock, Mail, ArrowRight, ShieldCheck, CheckCircle2 } from "lucide-react";
@@ -50,7 +51,8 @@ export default function ManipulationQuizWidget() {
     if (topRef.current) topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     
     setTimeout(() => {
-      const profile = generateManipulationProfile(answers);
+      // FIX: Used the correct function name here!
+      const profile = calculateManipulationScore(answers);
       setResultData(profile);
       setIsScoring(false);
       setShowEmailGate(true);
