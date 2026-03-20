@@ -2,11 +2,20 @@
 
 import React, { useState, useRef } from "react";
 import { MANIPULATION_QUESTIONS } from "@/lib/psychometrics/manipulation/questions";
-// FIX: Imported the correct function name based on your scoring.ts file
 import { calculateManipulationScore } from "@/lib/psychometrics/manipulation/scoring";
 import ManipulationMasterReport from "@/components/report/ManipulationMasterReport";
 
 import { Lock, Mail, ArrowRight, ShieldCheck, CheckCircle2 } from "lucide-react";
+
+// Helper to translate responseType into actual buttons
+const getOptionsForQuestion = (q: any) => {
+  if (q.options) return q.options;
+  if (q.responseType === "impact_0_4") {
+    return ["Not at all", "A little", "Moderately", "Quite a bit", "Extremely"];
+  }
+  // Default to frequency_0_5
+  return ["Never", "Rarely", "Sometimes", "Often", "Very Often", "Always"];
+};
 
 export default function ManipulationQuizWidget() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -51,7 +60,6 @@ export default function ManipulationQuizWidget() {
     if (topRef.current) topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     
     setTimeout(() => {
-      // FIX: Used the correct function name here!
       const profile = calculateManipulationScore(answers);
       setResultData(profile);
       setIsScoring(false);
@@ -84,7 +92,8 @@ export default function ManipulationQuizWidget() {
   const handleGodMode = () => {
     const fakeAnswers = { ...answers };
     MANIPULATION_QUESTIONS.forEach((q) => {
-      if (!fakeAnswers[q.id]) fakeAnswers[q.id] = q.options[Math.floor(Math.random() * q.options.length)];
+      const opts = getOptionsForQuestion(q);
+      if (!fakeAnswers[q.id]) fakeAnswers[q.id] = opts[Math.floor(Math.random() * opts.length)];
     });
     setAnswers(fakeAnswers);
     setCurrentIndex(MANIPULATION_QUESTIONS.length);
@@ -171,26 +180,28 @@ export default function ManipulationQuizWidget() {
   }
 
   const q = MANIPULATION_QUESTIONS[currentIndex];
+  // Calculate options based on the helper
+  const currentOptions = getOptionsForQuestion(q);
 
   return (
     <div ref={topRef} className={`w-full max-w-5xl mx-auto bg-white rounded-2xl shadow-sm border border-[#d6d2d2] flex flex-col justify-center min-h-[400px] p-6 md:p-12`}>
       <div className="mb-10">
         <div className="flex justify-between items-end mb-4">
-          <div><span className={`text-xs md:text-sm font-bold px-3 py-1.5 rounded bg-[#fff1d0] text-[#086788]`}>{q.category}</span></div>
+          <div><span className={`text-xs md:text-sm font-bold px-3 py-1.5 rounded bg-[#fff1d0] text-[#086788]`}>{q.subscale?.replace(/_/g, ' ') || 'Assessment'}</span></div>
           <div className={`text-sm md:text-base font-black tracking-wide text-[#086788]`}>QUESTION {currentIndex + 1} / {MANIPULATION_QUESTIONS.length}</div>
         </div>
         <div className={`w-full h-2 rounded-full bg-[#d6d2d2] overflow-hidden`}><div className={`h-full rounded-full transition-all duration-500 ease-out bg-[#dd1c1a]`} style={{ width: `${progress}%` }} /></div>
       </div>
 
       <div className={`transition-all duration-250 ease-in-out transform ${isAnimating ? 'opacity-0 -translate-y-4 scale-[0.99]' : 'opacity-100 translate-y-0 scale-100'}`}>
-        <h3 className={`text-2xl md:text-4xl font-black text-[#086788] mb-10 leading-tight text-center max-w-3xl mx-auto`}>{q.text}</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 w-full max-w-3xl mx-auto">
-          {q.options.map((option: string, idx: number) => {
+        <h3 className={`text-2xl md:text-4xl font-black text-[#086788] mb-10 leading-tight text-center max-w-3xl mx-auto`}>{q.stem || q.text}</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 w-full max-w-4xl mx-auto">
+          {currentOptions.map((option: string, idx: number) => {
             const isSelected = selectedAnswer === option;
             const isDisabled = selectedAnswer !== null && !isSelected;
             return (
               <button key={idx} onClick={() => handleOptionClick(option)} disabled={isDisabled}
-                className={`w-full min-h-[64px] flex-col justify-center py-4 px-6 rounded-xl border-[2px] font-black text-base md:text-lg transition-all duration-200 flex items-center ${
+                className={`w-full min-h-[64px] flex-col justify-center py-4 px-6 rounded-xl border-[2px] font-black text-base transition-all duration-200 flex items-center ${
                   isSelected ? 'bg-[#086788] border-[#086788] text-white shadow-md' : isDisabled ? 'bg-white border-[#d6d2d2] opacity-40 cursor-not-allowed text-[#086788]' : 'bg-white border-[#d6d2d2] hover:border-[#06aed5] hover:bg-[#06aed5]/5 text-[#086788]'
                 }`}>
                 <span className="w-full text-center">{option}</span>
