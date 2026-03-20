@@ -21,8 +21,6 @@ import InfidelityMasterReport from "@/components/report/InfidelityMasterReport";
 import FriendRoleMasterReport from "@/components/report/FriendRoleMasterReport";
 import FriendUsedMasterReport from "@/components/report/FriendUsedMasterReport";
 
-import { generateAttractionProfile } from "@/lib/psychometrics/attraction/scoring";
-
 const legacyBanks: Record<string, Question[]> = {
   "default": [
     { id: "1", text: "How often do they text you first?", options: ["Every day", "Usually", "Rarely", "Never"] }
@@ -45,7 +43,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const [slideDirection, setSlideDirection] = useState<"forward" | "backward">("forward");
 
   const topRef = useRef<HTMLDivElement>(null);
-
   const isAttachment = quizName === "attachment-style";
   
   const activeQuestions = useMemo(() => {
@@ -119,9 +116,9 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
   if (loading) {
     return (
-      <div ref={topRef} className={`w-full text-center py-24 bg-gradient-to-br from-[#fff1d0] to-white rounded-[24px] shadow-xl border border-[#d6d2d2] animate-in fade-in`}>
+      <div ref={topRef} className={`w-full text-center py-24 bg-white rounded-[24px] shadow-lg border border-[#d6d2d2] animate-in fade-in`}>
         <div className="flex flex-col items-center justify-center">
-          <div className={`w-16 h-16 border-4 border-[#06aed5]/30 border-t-[#06aed5] rounded-full animate-spin mb-6`}></div>
+          <div className={`w-16 h-16 border-4 border-[#d6d2d2] border-t-[#06aed5] rounded-full animate-spin mb-6`}></div>
           <h3 className={`text-2xl font-black text-[#086788] mb-2 animate-pulse`}>Analyzing Profile...</h3>
         </div>
       </div>
@@ -137,13 +134,13 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
   if (isFinished) {
     return (
-      <div ref={topRef} className={`w-full max-w-3xl mx-auto bg-gradient-to-br from-[#086788] to-[#06aed5] rounded-[24px] shadow-2xl text-center py-16 px-6 animate-in fade-in zoom-in`}>
-        <div className={`w-24 h-24 mx-auto bg-[#f0c808] rounded-full flex items-center justify-center mb-6 shadow-lg`}>
+      <div ref={topRef} className={`w-full max-w-3xl mx-auto bg-white border border-[#d6d2d2] rounded-[24px] shadow-lg text-center py-16 px-6 animate-in fade-in zoom-in`}>
+        <div className={`w-24 h-24 mx-auto bg-[#fff1d0] border border-[#f0c808]/30 rounded-full flex items-center justify-center mb-6`}>
           <span className="text-4xl">🧠</span>
         </div>
-        <h3 className={`text-3xl font-black text-white mb-4`}>Assessment Complete</h3>
-        <p className={`text-lg mb-10 max-w-md mx-auto font-medium text-white/80`}>All data captured. We are ready to compile your specific psychological profile.</p>
-        <button onClick={handleSubmit} className={`w-full max-w-sm mx-auto block bg-[#dd1c1a] text-white font-black py-4 rounded-[14px] transform hover:-translate-y-1 transition-all duration-300 shadow-xl shadow-[#dd1c1a]/30`}>
+        <h3 className={`text-3xl font-black text-[#086788] mb-4`}>Assessment Complete</h3>
+        <p className={`text-lg mb-10 max-w-md mx-auto font-medium text-[#086788]/80`}>All data captured. We are ready to compile your specific psychological profile.</p>
+        <button onClick={handleSubmit} className={`w-full max-w-sm mx-auto block bg-[#086788] hover:bg-[#06aed5] text-white font-black py-4 rounded-[14px] transform hover:-translate-y-1 transition-all duration-300 shadow-md`}>
           Reveal Profile
         </button>
       </div>
@@ -155,17 +152,17 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const useKeypad = isAttachment && !String(q.id).startsWith("demo");
 
   return (
-    <div ref={topRef} className={`w-full max-w-3xl mx-auto bg-[#fff1d0] rounded-[24px] shadow-lg border border-[#f0c808]/40 flex flex-col justify-center min-h-[320px] p-5 md:p-8`}>
+    <div ref={topRef} className={`w-full max-w-3xl mx-auto bg-white rounded-[24px] shadow-lg border border-[#d6d2d2] flex flex-col justify-center min-h-[320px] p-6 md:p-8`}>
       <div className="mb-8">
         <div className="flex justify-between items-end mb-4">
           <div>
-            <span className={`text-[11px] font-black uppercase tracking-widest text-[#086788]/60 block mb-2`}>Section</span>
-            <span className={`text-xs md:text-sm font-black px-3.5 py-1.5 rounded-md bg-[#086788] text-white shadow-sm`}>{sectionName}</span>
+            <span className={`text-[11px] font-black uppercase tracking-widest text-[#086788]/50 block mb-2`}>Section</span>
+            <span className={`text-xs md:text-sm font-black px-3.5 py-1.5 rounded-md bg-[#fff1d0] text-[#086788]`}>{sectionName}</span>
           </div>
           <div className={`text-sm md:text-base font-black tracking-wide text-[#086788]`}>QUESTION {currentIndex + 1} / {activeQuestions.length}</div>
         </div>
-        <div className={`w-full h-3 rounded-full bg-[#086788]/10 overflow-hidden shadow-inner`}>
-          <div className={`h-full rounded-full transition-all duration-500 ease-out bg-gradient-to-r from-[#06aed5] to-[#f0c808]`} style={{ width: `${progress}%` }} />
+        <div className={`w-full h-2 rounded-full bg-[#d6d2d2] overflow-hidden`}>
+          <div className={`h-full rounded-full transition-all duration-500 ease-out bg-[#06aed5]`} style={{ width: `${progress}%` }} />
         </div>
       </div>
 
@@ -183,18 +180,18 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
                   key={idx}
                   onClick={() => handleOptionClick(option)}
                   disabled={isDisabled}
-                  className={`group flex flex-col items-center justify-center w-[30%] aspect-square rounded-[24px] transition-all focus:outline-none active:scale-95 ${
+                  className={`group flex flex-col items-center justify-center w-[30%] aspect-square rounded-[24px] border-2 transition-all focus:outline-none active:scale-95 ${
                     isSelected 
-                      ? 'bg-[#06aed5] border-transparent shadow-[0_8px_20px_rgba(6,174,213,0.4)] ring-4 ring-[#06aed5]/30 text-white translate-y-[-4px]' 
+                      ? 'bg-[#086788] border-[#086788] shadow-md text-white' 
                       : isDisabled
-                        ? 'bg-white/40 border-[#d6d2d2] opacity-40 cursor-not-allowed text-[#086788]'
-                        : 'bg-white border-2 border-[#06aed5]/20 hover:border-[#06aed5] hover:bg-[#06aed5]/5 hover:-translate-y-1 hover:shadow-lg cursor-pointer text-[#086788]'
+                        ? 'bg-white border-[#d6d2d2] opacity-40 cursor-not-allowed text-[#086788]'
+                        : 'bg-white border-[#d6d2d2] hover:border-[#06aed5] hover:bg-[#06aed5]/5 hover:-translate-y-1 hover:shadow-md cursor-pointer text-[#086788]'
                   }`}
                 >
                   <span className={`text-3xl md:text-4xl font-black mb-1 ${isSelected ? 'text-white' : 'text-[#06aed5]'}`}>
                     {idx + 1}
                   </span>
-                  <span className={`text-[10px] md:text-xs font-black uppercase tracking-wider text-center px-1 leading-tight ${isSelected ? 'text-white/90' : 'text-[#086788]/70 group-hover:text-[#086788]'}`}>
+                  <span className={`text-[10px] md:text-xs font-black uppercase tracking-wider text-center px-1 leading-tight ${isSelected ? 'text-white' : 'text-[#086788] group-hover:text-[#086788]'}`}>
                     {option}
                   </span>
                 </button>
@@ -210,10 +207,10 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
                 <button key={idx} onClick={() => handleOptionClick(option)} disabled={isDisabled}
                   className={`w-full md:w-[45%] flex-grow text-center flex-col justify-center py-4 px-5 rounded-[16px] border-[2px] font-black text-sm md:text-base transition-all duration-200 flex items-center ${
                     isSelected 
-                      ? 'bg-[#086788] border-[#086788] text-white shadow-lg' 
+                      ? 'bg-[#086788] border-[#086788] text-white shadow-md' 
                       : isDisabled 
-                        ? 'bg-white/50 border-[#d6d2d2] opacity-40 cursor-not-allowed text-[#086788]' 
-                        : 'bg-white border-[#086788]/20 hover:border-[#086788] hover:bg-[#086788]/5 text-[#086788]'
+                        ? 'bg-white border-[#d6d2d2] opacity-40 cursor-not-allowed text-[#086788]' 
+                        : 'bg-white border-[#d6d2d2] hover:border-[#06aed5] hover:bg-[#06aed5]/5 text-[#086788]'
                   }`}>
                   <span className="w-full text-center">{option}</span>
                 </button>
@@ -223,12 +220,12 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         )}
       </div>
 
-      <div className="mt-10 flex justify-between items-center border-t border-[#086788]/10 pt-6">
+      <div className="mt-10 flex justify-between items-center border-t border-[#d6d2d2] pt-6">
         <button onClick={handleBack} disabled={currentIndex === 0 || isAnimating || selectedAnswer !== null}
           className={`text-sm font-black flex items-center gap-2 px-5 py-2.5 rounded-[12px] transition-all bg-white text-[#086788] border border-[#d6d2d2] hover:bg-slate-50 ${currentIndex === 0 || isAnimating || selectedAnswer !== null ? 'opacity-0 pointer-events-none' : ''}`}>
           <span>←</span> Back
         </button>
-        <button onClick={handleGodMode} type="button" className={`text-[10px] md:text-xs font-bold transition-all border rounded-lg px-3 py-1.5 shadow-sm text-[#086788]/40 hover:text-[#086788] border-[#d6d2d2] bg-white`}>
+        <button onClick={handleGodMode} type="button" className={`text-[10px] md:text-xs font-bold transition-all border rounded-lg px-3 py-1.5 shadow-sm text-[#086788]/50 hover:text-[#086788] border-[#d6d2d2] bg-white`}>
           ⚡ God Mode
         </button>
       </div>

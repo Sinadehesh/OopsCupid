@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ShieldCheck, BrainCircuit, HeartHandshake, Zap, Loader2, Lock, Clock, ArrowRight } from "lucide-react";
+import { ShieldCheck, BrainCircuit, HeartHandshake, Zap, Loader2, Clock, ArrowRight } from "lucide-react";
 
 interface PremiumCheckoutProps {
   onUnlock: () => void;
@@ -14,16 +14,16 @@ export default function PremiumCheckout({ onUnlock, isGenerating, archetype, rel
   const displayStatus = relationshipStatus === 'Single' ? 'Singles' : 'Couples';
 
   return (
-    <div className={`relative p-1 bg-gradient-to-br from-[#f0c808] to-[#06aed5] rounded-3xl shadow-2xl mt-12`}>
+    <div className={`relative p-1 bg-white border border-[#d6d2d2] rounded-3xl shadow-lg mt-12`}>
       
-      <div className="bg-[#086788] text-white text-center py-3 rounded-t-3xl flex items-center justify-center gap-2 font-bold text-sm tracking-wide">
-        <Clock className="w-4 h-4 text-[#f0c808]" /> 
+      <div className="bg-[#f0c808] text-[#086788] text-center py-3 rounded-t-3xl flex items-center justify-center gap-2 font-black text-sm tracking-wide">
+        <Clock className="w-4 h-4" /> 
         AI Server Allocation Secured For The Next 15 Minutes
       </div>
 
-      <div className={`relative z-10 rounded-b-3xl overflow-hidden max-w-4xl mx-auto bg-[#fff1d0]`}>
-        <div className="p-8 md:p-12 text-center bg-white border-b border-[#086788]/10">
-          <span className="inline-block py-1.5 px-4 rounded-full bg-[#f0c808] text-[#086788] font-black text-sm tracking-widest uppercase mb-4 shadow-sm">
+      <div className={`relative z-10 rounded-b-3xl overflow-hidden max-w-4xl mx-auto bg-white`}>
+        <div className="p-8 md:p-12 text-center border-b border-[#d6d2d2]">
+          <span className="inline-block py-1.5 px-4 rounded-full bg-[#fff1d0] text-[#086788] font-black text-sm tracking-widest uppercase mb-4 border border-[#f0c808]/50">
             The {archetype} Blueprint
           </span>
           <h2 className={`text-4xl md:text-5xl font-black mb-6 tracking-tight text-[#086788]`}>
@@ -34,13 +34,13 @@ export default function PremiumCheckout({ onUnlock, isGenerating, archetype, rel
           </p>
         </div>
 
-        <div className="p-8 md:p-12 grid grid-cols-1 lg:grid-cols-5 gap-8 bg-gradient-to-b from-white to-[#fff1d0]/50">
+        <div className="p-8 md:p-12 grid grid-cols-1 lg:grid-cols-5 gap-8">
           
           <div className="lg:col-span-3 space-y-4">
             <h3 className={`text-2xl font-black mb-6 text-[#086788]`}>The Clarity Bundle Stack:</h3>
             
-            <div className={`flex gap-5 p-6 rounded-2xl bg-[#f686bd]/10 border border-[#f686bd]/30 shadow-sm`}>
-              <div className="shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-[#f686bd] text-white shadow-md"><BrainCircuit className="w-6 h-6" /></div>
+            <div className={`flex gap-5 p-6 rounded-2xl bg-white border border-[#d6d2d2] shadow-sm`}>
+              <div className="shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-[#fff1d0] text-[#f686bd] border border-[#f686bd]/30"><BrainCircuit className="w-6 h-6" /></div>
               <div>
                 <div className="flex justify-between items-start mb-1">
                   <h4 className={`text-lg font-black text-[#086788]`}>1. The Origin Deconstruction</h4>
@@ -50,8 +50,8 @@ export default function PremiumCheckout({ onUnlock, isGenerating, archetype, rel
               </div>
             </div>
 
-            <div className={`flex gap-5 p-6 rounded-2xl bg-[#06aed5]/10 border border-[#06aed5]/30 shadow-sm`}>
-              <div className="shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-[#06aed5] text-white shadow-md"><HeartHandshake className="w-6 h-6" /></div>
+            <div className={`flex gap-5 p-6 rounded-2xl bg-white border border-[#d6d2d2] shadow-sm`}>
+              <div className="shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-[#fff1d0] text-[#06aed5] border border-[#06aed5]/30"><HeartHandshake className="w-6 h-6" /></div>
               <div>
                 <div className="flex justify-between items-start mb-1">
                   <h4 className={`text-lg font-black text-[#086788]`}>2. Romantic & Professional Synthesis</h4>
@@ -61,39 +61,39 @@ export default function PremiumCheckout({ onUnlock, isGenerating, archetype, rel
               </div>
             </div>
 
-            <div className={`flex gap-5 p-6 rounded-2xl bg-[#f0c808] border border-[#f0c808] shadow-lg relative overflow-hidden`}>
-              <div className="absolute top-0 right-0 bg-[#086788] text-white text-[10px] font-black px-3 py-1 uppercase tracking-widest rounded-bl-lg">Core Offer</div>
-              <div className="shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-white text-[#086788] shadow-sm"><Zap className="w-6 h-6 fill-current" /></div>
+            <div className={`flex gap-5 p-6 rounded-2xl bg-white border border-[#f0c808] shadow-md relative overflow-hidden`}>
+              <div className="absolute top-0 right-0 bg-[#f0c808] text-[#086788] text-[10px] font-black px-3 py-1 uppercase tracking-widest rounded-bl-lg">Core Offer</div>
+              <div className="shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-[#f0c808]/20 text-[#f0c808]"><Zap className="w-6 h-6 fill-current" /></div>
               <div>
                 <div className="flex justify-between items-start mb-1">
-                  <h4 className={`text-lg font-black text-[#086788]`}>3. The {displayStatus} Master Action Plan</h4>
+                  <h4 className={`text-lg font-black text-[#086788]`}>3. The {displayStatus} Action Plan</h4>
                   <span className="text-sm font-bold text-[#086788]/60 line-through">$147 Value</span>
                 </div>
-                <p className={`text-sm md:text-base font-bold text-[#086788]/90`}>A ruthless, actionable guide on the immediate threats to your relationship status, and exactly how to fix it.</p>
+                <p className={`text-sm md:text-base font-medium text-[#086788]/80`}>A ruthless, actionable guide on the immediate threats to your relationship status, and exactly how to fix it.</p>
               </div>
             </div>
           </div>
 
           <div className="lg:col-span-2 flex flex-col justify-center">
-            {/* The Huge Deep Teal Price Box */}
-            <div className={`p-8 rounded-3xl bg-[#086788] text-center shadow-2xl relative border-4 border-[#06aed5]/30`}>
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#dd1c1a] text-white text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full whitespace-nowrap shadow-lg">
+            {/* The Price Box - Dark Anchor */}
+            <div className={`p-8 rounded-3xl bg-[#086788] text-center shadow-lg relative`}>
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#f0c808] text-[#086788] text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">
                 Save 94% Today
               </div>
               
               <div className="space-y-1 mb-8 mt-4">
-                <p className="text-sm font-bold text-white/50">Therapy: <span className="line-through">$1,200+ & 6 Months</span></p>
-                <p className="text-sm font-bold text-white/50">Total Value: <span className="line-through">$341</span></p>
+                <p className="text-sm font-bold text-white/60">Therapy: <span className="line-through">$1,200+ & 6 Months</span></p>
+                <p className="text-sm font-bold text-white/60">Total Value: <span className="line-through">$341</span></p>
                 <div className="flex items-baseline justify-center gap-2 pt-4">
-                  <span className={`text-2xl font-black text-[#f0c808]`}>Today:</span>
-                  <span className="text-7xl font-black text-white">$19</span>
+                  <span className={`text-2xl font-black text-white`}>Today:</span>
+                  <span className="text-7xl font-black text-[#06aed5]">$19</span>
                 </div>
               </div>
 
               <button 
                 onClick={onUnlock} 
                 disabled={isGenerating} 
-                className="w-full py-5 bg-[#dd1c1a] hover:bg-[#b10f2e] text-white rounded-2xl font-black text-xl transition-all shadow-[0_10px_30px_rgba(221,28,26,0.4)] hover:-translate-y-1 flex items-center justify-center gap-3 disabled:opacity-80 disabled:hover:translate-y-0 cursor-pointer group"
+                className="w-full py-5 bg-[#dd1c1a] hover:bg-[#b10f2e] text-white rounded-2xl font-black text-xl transition-all shadow-md hover:-translate-y-1 flex items-center justify-center gap-3 disabled:opacity-80 disabled:hover:translate-y-0 cursor-pointer group"
               >
                 {isGenerating ? (
                   <><Loader2 className="w-6 h-6 animate-spin text-white" /> Compiling Matrix...</>
@@ -105,10 +105,10 @@ export default function PremiumCheckout({ onUnlock, isGenerating, archetype, rel
           </div>
         </div>
 
-        <div className={`p-6 border-t border-[#086788]/10 bg-white`}>
+        <div className={`p-6 border-t border-[#d6d2d2] bg-[#fff1d0]/30`}>
           <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
-            <div className="w-16 h-16 shrink-0 bg-[#086788] rounded-full flex items-center justify-center shadow-inner">
-              <ShieldCheck className="w-8 h-8 text-[#f0c808]" />
+            <div className="w-16 h-16 shrink-0 bg-white border border-[#d6d2d2] rounded-full flex items-center justify-center">
+              <ShieldCheck className="w-8 h-8 text-[#06aed5]" />
             </div>
             <div>
               <h4 className={`text-lg font-black mb-1 text-[#086788]`}>The "Diary Reader" Guarantee</h4>
