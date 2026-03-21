@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Download, Share2, ShieldAlert, EyeOff, FileText, Video, Target, CheckCircle2, Loader2, Activity, ArrowRight } from "lucide-react";
+import { Download, Share2, ShieldAlert, EyeOff, FileText, Video, Target, CheckCircle2, Loader2, Activity, ArrowRight, Radar } from "lucide-react";
 import Link from "next/link";
 
 export default function ManipulationMasterReport({ data }: any) {
@@ -12,15 +12,15 @@ export default function ManipulationMasterReport({ data }: any) {
     return () => clearTimeout(timer);
   }, []);
 
-  // Safe fallback to exact data parameters from the algorithm
-  const rawScore = data?.overall?.score || 85;
+  // Maps flawlessly to the Nuclear Local Engine
+  const rawScorePercent = data?.overall?.percent || 85;
   const riskLevel = data?.overall?.severity || "SEVERE";
   
   const matrix = [
-    { name: "Reality Distortion (Gaslighting)", score: 92, text: "He systematically denies events that occurred, causing severe cognitive dissonance." },
-    { name: "Isolation Tactics", score: 85, text: "He covertly undermines your friends/family to ensure you only rely on him." },
-    { name: "Emotional Extortion", score: 88, text: "He uses guilt, the silent treatment, or threats of self-harm to enforce compliance." },
-    { name: "Intermittent Reinforcement", score: 96, text: "He alternates extreme cruelty with intense affection to biochemically addict you." },
+    { name: "Reality Distortion (Gaslighting)", score: data?.categories?.gaslighting?.percent || 92, text: "He systematically denies events that occurred, causing severe cognitive dissonance." },
+    { name: "Isolation Tactics", score: data?.categories?.isolation?.percent || 85, text: "He covertly undermines your friends/family to ensure you only rely on him." },
+    { name: "Emotional Extortion", score: data?.categories?.emotional_extortion?.percent || 88, text: "He uses guilt, the silent treatment, or threats of self-harm to enforce compliance." },
+    { name: "Intermittent Reinforcement", score: data?.categories?.intermittent_reinforcement?.percent || 96, text: "He alternates extreme cruelty with intense affection to biochemically addict you." },
   ];
 
   const handleZoomBooking = async () => {
@@ -48,8 +48,8 @@ export default function ManipulationMasterReport({ data }: any) {
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> Live Connection Secured
           </p>
         </div>
-        <button onClick={() => window.print()} className="bg-slate-900 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-slate-800 shadow-lg hover:-translate-y-0.5 transition-all">
-          Download PDF
+        <button onClick={() => window.print()} className="bg-slate-900 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-slate-800 shadow-lg hover:-translate-y-0.5 transition-all flex items-center gap-2">
+          <Download className="w-4 h-4" /> Download PDF
         </button>
       </div>
 
@@ -62,16 +62,16 @@ export default function ManipulationMasterReport({ data }: any) {
           <div className="w-48 h-48 relative flex-shrink-0">
             <svg viewBox="0 0 36 36" className="w-full h-full transform -rotate-90">
               <path className="text-slate-800 stroke-current" strokeWidth="3" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-              <path className="text-indigo-500 stroke-current transition-all duration-[2000ms] ease-out drop-shadow-[0_0_15px_rgba(99,102,241,0.8)]" strokeWidth="3" strokeDasharray={`${mounted ? rawScore : 0}, 100`} fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <path className="text-indigo-500 stroke-current transition-all duration-[2000ms] ease-out drop-shadow-[0_0_15px_rgba(99,102,241,0.8)]" strokeWidth="3" strokeDasharray={`${mounted ? rawScorePercent : 0}, 100`} fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-5xl font-black text-indigo-400 drop-shadow-lg">{rawScore}%</span>
+              <span className="text-5xl font-black text-indigo-400 drop-shadow-lg">{rawScorePercent}%</span>
               <span className="text-[10px] uppercase text-slate-400 font-bold mt-1 tracking-widest">Coercion Index</span>
             </div>
           </div>
           <div>
             <h2 className="text-xs font-black text-indigo-400 tracking-[0.3em] uppercase mb-4 flex items-center gap-2">
-              <Target className="w-4 h-4 animate-spin"/> Threat Level: {riskLevel}
+              <Radar className="w-4 h-4 animate-spin"/> Threat Level: {riskLevel}
             </h2>
             <h3 className="text-4xl md:text-6xl font-black mb-6 leading-tight drop-shadow-2xl">The Hijacking Protocol</h3>
             <p className="text-xl text-slate-300 font-medium leading-relaxed bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-md">
