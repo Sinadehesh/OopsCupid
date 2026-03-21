@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-// Fix: Corrected import name to match your file
 import { infidelityQuestions } from "@/lib/psychometrics/infidelity/questions";
 import InfidelityFreeResult from "./InfidelityFreeResult";
 import { ShieldAlert, ArrowRight, Zap, Lock } from "lucide-react";
@@ -50,7 +49,6 @@ export default function InfidelityQuizEngine() {
 
   const handleGodMode = () => {
     const fakeAnswers: Record<string, number> = {};
-    // Fix: Added explicit 'any' type to bypass strict TS error
     infidelityQuestions.forEach((q: any) => { 
       fakeAnswers[q.id] = Math.floor(Math.random() * 5) + 1; 
     });
@@ -145,7 +143,8 @@ export default function InfidelityQuizEngine() {
         <div className="w-full bg-slate-200 h-2.5 rounded-full"><div className="bg-slate-900 h-full rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div></div>
       </div>
       <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-xl border border-slate-100 text-center mb-10 min-h-[200px] flex items-center justify-center">
-        <h2 className="text-2xl md:text-3xl font-extrabold text-slate-800 leading-tight">"{question?.text || question?.stem}"</h2>
+        {/* THE FIX: Exclusively checking for question?.text to satisfy strict TypeScript rules */}
+        <h2 className="text-2xl md:text-3xl font-extrabold text-slate-800 leading-tight">"{question?.text}"</h2>
       </div>
       <div className="flex flex-wrap justify-center gap-3 max-w-md mx-auto">
         {[ { text: "Never", val: 1 }, { text: "Rarely", val: 2 }, { text: "Sometimes", val: 3 }, { text: "Often", val: 4 }, { text: "Always", val: 5 } ].map(opt => (
