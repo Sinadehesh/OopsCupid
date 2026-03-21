@@ -25,13 +25,20 @@ export default function ManipulationQuizEngine() {
     const fakeAnswers: Record<string, number> = {};
     MANIPULATION_QUESTIONS.forEach(q => { fakeAnswers[q.id] = Math.floor(Math.random() * 5) + 1; });
     setAnswers(fakeAnswers);
-    setStarted(true); setIsProcessing(true);
+    setStarted(true); 
+    setIsProcessing(true);
     
     setTimeout(() => {
-      // THE CRASH FIX: Maps dictionary to the exact Array format required by your psychometrics
-      const formattedAnswers = Object.entries(fakeAnswers).map(([id, score]) => ({ questionId: id, score }));
-      setResult(calculateManipulationScore(formattedAnswers, MANIPULATION_QUESTIONS));
-      setIsProcessing(false); setStep("email");
+      try {
+        // THE FIX: Passing the standard Record dictionary as expected by your algorithm
+        const scoreResult = calculateManipulationScore(fakeAnswers);
+        setResult(scoreResult);
+        setIsProcessing(false); 
+        setStep("email");
+      } catch (error) {
+        console.error("Scoring Algorithm Error:", error);
+        setIsProcessing(false); // Prevents infinite loading if algorithm fails
+      }
     }, 1500);
   };
 
@@ -44,10 +51,16 @@ export default function ManipulationQuizEngine() {
     } else {
       setIsProcessing(true);
       setTimeout(() => {
-        // THE CRASH FIX FOR REGULAR CLICKS
-        const formattedAnswers = Object.entries(nextAnswers).map(([id, s]) => ({ questionId: id, score: s }));
-        setResult(calculateManipulationScore(formattedAnswers, MANIPULATION_QUESTIONS));
-        setIsProcessing(false); setStep("email");
+        try {
+          // THE FIX FOR REGULAR CLICKS
+          const scoreResult = calculateManipulationScore(nextAnswers);
+          setResult(scoreResult);
+          setIsProcessing(false); 
+          setStep("email");
+        } catch (error) {
+          console.error("Scoring Algorithm Error:", error);
+          setIsProcessing(false);
+        }
       }, 1500);
     }
   };

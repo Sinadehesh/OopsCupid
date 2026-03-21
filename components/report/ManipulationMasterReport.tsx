@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Download, Share2, ShieldAlert, EyeOff, FileText, Video, Target, CheckCircle2, Loader2, Activity, Zap, Crosshair } from "lucide-react";
+import { Download, Share2, ShieldAlert, EyeOff, FileText, Video, Target, CheckCircle2, Loader2, Activity, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export default function ManipulationMasterReport({ data }: any) {
@@ -12,10 +12,10 @@ export default function ManipulationMasterReport({ data }: any) {
     return () => clearTimeout(timer);
   }, []);
 
+  // Safe fallback to exact data parameters from the algorithm
   const rawScore = data?.overall?.score || 85;
   const riskLevel = data?.overall?.severity || "SEVERE";
   
-  // Maps directly to your clinical sub-modules
   const matrix = [
     { name: "Reality Distortion (Gaslighting)", score: 92, text: "He systematically denies events that occurred, causing severe cognitive dissonance." },
     { name: "Isolation Tactics", score: 85, text: "He covertly undermines your friends/family to ensure you only rely on him." },
@@ -127,7 +127,7 @@ export default function ManipulationMasterReport({ data }: any) {
       </div>
 
       {/* ========================================================= */}
-      {/* ACV MAXIMIZERS (THE $9.99 AND €50 OFFERS) */}
+      {/* GRAND SLAM UPSELLS (THE $9.99 AND €50 OFFERS) */}
       {/* ========================================================= */}
       <div className="border-t-4 border-slate-200 pt-20 pb-10 print:hidden">
         <h3 className="text-4xl md:text-5xl font-black text-center text-slate-900 mb-6 tracking-tight">Extract Yourself Safely.</h3>
@@ -170,12 +170,12 @@ export default function ManipulationMasterReport({ data }: any) {
               </div>
               {zoomStatus === "booked" ? (
                 <div className="w-full bg-emerald-50 border-2 border-emerald-500 text-emerald-700 font-black text-xl py-5 rounded-2xl flex flex-col items-center justify-center gap-2 animate-in zoom-in">
-                  <div className="flex items-center gap-2"><CheckCircle2 className="w-6 h-6" /> Audit Reserved!</div>
+                  <div className="flex items-center gap-2"><CheckCircle2 className="w-6 h-6" /> Test Reserved!</div>
                   <span className="text-xs font-bold text-emerald-600">Details sent to your secure file.</span>
                 </div>
               ) : (
                 <button onClick={handleZoomBooking} disabled={zoomStatus === "loading"} className="w-full flex items-center justify-center gap-3 bg-slate-900 hover:bg-slate-800 text-white font-black text-xl py-5 rounded-2xl transition-all shadow-[0_10px_20px_rgba(0,0,0,0.15)] hover:-translate-y-1">
-                  {zoomStatus === "loading" ? <Loader2 className="w-6 h-6 animate-spin" /> : "Book Live Audit Call"}
+                  {zoomStatus === "loading" ? <Loader2 className="w-6 h-6 animate-spin" /> : "Book Live Audit Test"}
                 </button>
               )}
             </div>
