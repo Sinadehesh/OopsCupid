@@ -9,6 +9,7 @@ export const metadata: Metadata = {
 export default function IsHeManipulativePage() {
   return (
     <main className="bg-[#fafafa] min-h-screen">
+      {/* This renders our brand new, crash-proof engine */}
       <ManipulationQuizEngine />
     </main>
   );
