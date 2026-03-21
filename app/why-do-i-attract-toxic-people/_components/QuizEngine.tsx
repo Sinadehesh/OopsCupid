@@ -17,11 +17,11 @@ export default function QuizEngine() {
 
   const handleStart = () => setStarted(true);
 
-  // GOD MODE: Instantly fills random answers for all questions
+  // GOD MODE: Instantly fills random answers
   const handleGodMode = () => {
     const fakeAnswers: Record<number, number> = {};
     BAD_GUYS_QUESTIONS.forEach(q => {
-      fakeAnswers[q.id] = Math.floor(Math.random() * 5) + 1; // Random 1-5
+      fakeAnswers[q.id] = Math.floor(Math.random() * 5) + 1; 
     });
     setAnswers(fakeAnswers);
     setStarted(true);
@@ -60,13 +60,11 @@ export default function QuizEngine() {
     if (typeof window !== 'undefined') {
       localStorage.setItem('toxic_attraction_result', JSON.stringify(result));
     }
-    
-    // Route to the premium delivery page with their specific archetype
     const style = result?.top1 || "The Hyper-Empathetic Rescuer";
     router.push(`/why-do-i-attract-toxic-people/premium?style=${encodeURIComponent(style)}`);
   };
 
-  // Safe handoff to FreeResult with all required props to prevent crashes
+  // Safe handoff
   if (result) return <FreeResult data={result} onUnlock={handleUnlock} isGenerating={isGenerating} />;
 
   if (isProcessing) {
@@ -82,13 +80,11 @@ export default function QuizEngine() {
   if (!started) {
     return (
       <div className="max-w-3xl mx-auto py-20 px-6 text-center animate-in fade-in duration-700 relative">
-        
-        {/* GOD MODE BUTTON */}
         <button 
           onClick={handleGodMode} 
-          className="absolute top-0 right-6 flex items-center gap-1 text-xs font-bold text-slate-300 hover:text-rose-500 transition-colors"
+          className="absolute top-0 right-6 flex items-center gap-2 px-4 py-2 bg-rose-100 rounded-full text-sm font-bold text-rose-600 hover:bg-rose-200 transition-colors shadow-sm"
         >
-          <Zap className="w-3 h-3" /> God Mode
+          <Zap className="w-4 h-4" /> GOD MODE
         </button>
 
         <div className="inline-flex items-center justify-center w-20 h-20 bg-rose-100 text-rose-600 rounded-full mb-8 shadow-sm">
@@ -110,11 +106,9 @@ export default function QuizEngine() {
 
   return (
     <div className="max-w-2xl mx-auto py-12 px-6 relative">
-      
-      {/* IN-QUIZ GOD MODE BUTTON */}
       <button 
         onClick={handleGodMode} 
-        className="absolute -top-6 right-6 flex items-center gap-1 text-xs font-bold text-slate-300 hover:text-rose-500 transition-colors"
+        className="absolute -top-6 right-6 flex items-center gap-2 px-3 py-1.5 bg-rose-100 rounded-full text-xs font-bold text-rose-600 hover:bg-rose-200 transition-colors shadow-sm"
       >
         <Zap className="w-3 h-3" /> Auto-Complete
       </button>
@@ -146,12 +140,8 @@ export default function QuizEngine() {
             onClick={() => handleAnswer(opt.val)}
             className="group flex flex-col items-center justify-center w-[30%] aspect-square bg-white border-2 border-slate-100 rounded-[24px] shadow-[0_4px_10px_rgba(0,0,0,0.03)] hover:border-rose-500 hover:bg-rose-50 hover:-translate-y-1 hover:shadow-lg transition-all focus:outline-none focus:ring-4 focus:ring-rose-200 active:scale-95"
           >
-            <span className="text-3xl md:text-4xl font-extrabold text-slate-300 group-hover:text-rose-600 transition-colors mb-1">
-              {opt.val}
-            </span>
-            <span className="text-[11px] md:text-sm font-extrabold text-slate-600 uppercase tracking-wider text-center">
-              {opt.text}
-            </span>
+            <span className="text-3xl md:text-4xl font-extrabold text-slate-300 group-hover:text-rose-600 transition-colors mb-1">{opt.val}</span>
+            <span className="text-[11px] md:text-sm font-extrabold text-slate-600 uppercase tracking-wider text-center">{opt.text}</span>
           </button>
         ))}
       </div>
