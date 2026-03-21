@@ -14,5 +14,6 @@ model Lead {
   rawAnswers       Json?    
   profileData      Json?    
   coachingClaimed  Boolean  @default(false)
+  premiumClicked   Boolean  @default(false)
   createdAt        DateTime @default(now())
 }

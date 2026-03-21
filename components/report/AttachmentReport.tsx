@@ -12,7 +12,7 @@ interface AttachmentReportProps {
   profile: PsychologicalProfile;
   demographics: any;
   rawAnswers?: any;
-  email?: string; // FIX: Added email prop!
+  email?: string;
 }
 
 export default function AttachmentReport({ profile, demographics, rawAnswers, email }: AttachmentReportProps) {
@@ -26,12 +26,25 @@ export default function AttachmentReport({ profile, demographics, rawAnswers, em
     return { name: nameMap[key] || "Other", anxiety: data?.anxietyScore || 0, avoidance: data?.avoidanceScore || 0 };
   });
 
-  const handleRouteToPremium = () => {
+  const handleRouteToPremium = async () => {
     setIsRouting(true);
     if (typeof window !== 'undefined') {
-      // FIX: Email is now permanently stored in their profile payload!
       localStorage.setItem('oc_saved_profile', JSON.stringify({ profile, demographics, rawAnswers, email }));
     }
+
+    // NEW: Tell the database they clicked Unlock!
+    if (email) {
+      try {
+        await fetch('/api/leads/unlock', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+      } catch (err) {
+        console.error("Failed to track unlock click", err);
+      }
+    }
+
     router.push(`/attachment-style-quiz/premium?style=${encodeURIComponent(generalProfile.classification)}`);
   };
 
