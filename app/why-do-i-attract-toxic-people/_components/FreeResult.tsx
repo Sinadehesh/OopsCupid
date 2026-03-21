@@ -100,6 +100,7 @@ export default function FreeResult({ data, onUnlock, isGenerating }: { data: any
               onUnlock={onUnlock} 
               isGenerating={isGenerating} 
               archetype={topTrait}
+              relationshipStatus="Single"
             />
             
             <div className="mt-6 text-center text-sm font-bold text-slate-500 flex items-center justify-center gap-2">
