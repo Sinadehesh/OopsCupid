@@ -4,7 +4,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  // url is removed here for Prisma 7 compatibility
 }
 
 model Lead {
