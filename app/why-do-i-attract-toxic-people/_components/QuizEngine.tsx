@@ -1,38 +1,73 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { BAD_GUYS_QUESTIONS } from "../_data/questions";
 import { calculateBadGuysScore } from "../_lib/scoring";
 import FreeResult from "./FreeResult";
-import { ShieldAlert, ArrowRight } from "lucide-react";
+import { ShieldAlert, ArrowRight, Zap } from "lucide-react";
 
 export default function QuizEngine() {
+  const router = useRouter();
   const [started, setStarted] = useState(false);
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState<any>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const handleStart = () => setStarted(true);
 
+  // GOD MODE: Instantly fills random answers for all questions
+  const handleGodMode = () => {
+    const fakeAnswers: Record<number, number> = {};
+    BAD_GUYS_QUESTIONS.forEach(q => {
+      fakeAnswers[q.id] = Math.floor(Math.random() * 5) + 1; // Random 1-5
+    });
+    setAnswers(fakeAnswers);
+    setStarted(true);
+    setIsProcessing(true);
+    setTimeout(() => {
+      try {
+        setResult(calculateBadGuysScore(fakeAnswers));
+      } catch (e) {
+        console.error("Scoring error:", e);
+      }
+      setIsProcessing(false);
+    }, 1500);
+  };
+
   const handleAnswer = (score: number) => {
-    // Save the answer
     const nextAnswers = { ...answers, [BAD_GUYS_QUESTIONS[currentQ].id]: score };
     setAnswers(nextAnswers);
 
-    // Progress logic using robust prev state to avoid race conditions
     if (currentQ < BAD_GUYS_QUESTIONS.length - 1) {
       setCurrentQ((prev) => prev + 1);
     } else {
-      // End of quiz
       setIsProcessing(true);
       setTimeout(() => {
-        setResult(calculateBadGuysScore(nextAnswers));
+        try {
+          setResult(calculateBadGuysScore(nextAnswers));
+        } catch (e) {
+          console.error("Scoring error:", e);
+        }
         setIsProcessing(false);
       }, 1500);
     }
   };
 
-  if (result) return <FreeResult data={result} />;
+  const handleUnlock = async () => {
+    setIsGenerating(true);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('toxic_attraction_result', JSON.stringify(result));
+    }
+    
+    // Route to the premium delivery page with their specific archetype
+    const style = result?.top1 || "The Hyper-Empathetic Rescuer";
+    router.push(`/why-do-i-attract-toxic-people/premium?style=${encodeURIComponent(style)}`);
+  };
+
+  // Safe handoff to FreeResult with all required props to prevent crashes
+  if (result) return <FreeResult data={result} onUnlock={handleUnlock} isGenerating={isGenerating} />;
 
   if (isProcessing) {
     return (
@@ -46,7 +81,16 @@ export default function QuizEngine() {
 
   if (!started) {
     return (
-      <div className="max-w-3xl mx-auto py-20 px-6 text-center animate-in fade-in duration-700">
+      <div className="max-w-3xl mx-auto py-20 px-6 text-center animate-in fade-in duration-700 relative">
+        
+        {/* GOD MODE BUTTON */}
+        <button 
+          onClick={handleGodMode} 
+          className="absolute top-0 right-6 flex items-center gap-1 text-xs font-bold text-slate-300 hover:text-rose-500 transition-colors"
+        >
+          <Zap className="w-3 h-3" /> God Mode
+        </button>
+
         <div className="inline-flex items-center justify-center w-20 h-20 bg-rose-100 text-rose-600 rounded-full mb-8 shadow-sm">
           <ShieldAlert className="w-10 h-10" />
         </div>
@@ -65,8 +109,17 @@ export default function QuizEngine() {
   const progress = ((currentQ) / BAD_GUYS_QUESTIONS.length) * 100;
 
   return (
-    <div className="max-w-2xl mx-auto py-12 px-6">
-      <div className="mb-10">
+    <div className="max-w-2xl mx-auto py-12 px-6 relative">
+      
+      {/* IN-QUIZ GOD MODE BUTTON */}
+      <button 
+        onClick={handleGodMode} 
+        className="absolute -top-6 right-6 flex items-center gap-1 text-xs font-bold text-slate-300 hover:text-rose-500 transition-colors"
+      >
+        <Zap className="w-3 h-3" /> Auto-Complete
+      </button>
+
+      <div className="mb-10 mt-6">
         <div className="flex justify-between text-sm font-bold text-slate-400 mb-3 uppercase tracking-wider">
           <span>Question {currentQ + 1} of {BAD_GUYS_QUESTIONS.length}</span>
           <span>{Math.round(progress)}%</span>
@@ -80,7 +133,6 @@ export default function QuizEngine() {
         <h2 className="text-2xl md:text-3xl font-extrabold text-slate-800 leading-tight">"{question.text}"</h2>
       </div>
 
-      {/* KEYPAD LAYOUT: 3 on top, 2 wrapped and centered on bottom */}
       <div className="flex flex-wrap justify-center gap-3 md:gap-4 max-w-md mx-auto">
         {[
           { text: "Never", val: 1 },
