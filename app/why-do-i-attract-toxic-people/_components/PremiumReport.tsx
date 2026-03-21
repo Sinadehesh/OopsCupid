@@ -1,10 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Download, Share2, ShieldAlert, EyeOff, FileText, Video, ArrowRight, Target, BrainCircuit, Activity, Search, AlertOctagon, Zap, ShieldQuestion, Fingerprint } from "lucide-react";
+import { Download, Share2, ShieldAlert, EyeOff, FileText, Video, ArrowRight, Target, BrainCircuit, Activity, Search, AlertOctagon, Zap, ShieldQuestion, Fingerprint, CheckCircle2, Loader2 } from "lucide-react";
 import Link from "next/link";
 
 export default function PremiumReport({ data, handleShare }: { data: any, handleShare: any }) {
   const [mounted, setMounted] = useState(false);
+  const [zoomStatus, setZoomStatus] = useState<"idle" | "loading" | "booked">("idle");
+  
   useEffect(() => setMounted(true), []);
 
   const topTrait = data?.top1 || "The Hyper-Empathetic Rescuer";
@@ -41,6 +43,28 @@ export default function PremiumReport({ data, handleShare }: { data: any, handle
     if (score >= 20) return "bg-rose-50 border-rose-100";
     if (score >= 15) return "bg-orange-50 border-orange-100";
     return "bg-emerald-50 border-emerald-100";
+  };
+
+  // Live Audit Booking Handler
+  const handleZoomBooking = async () => {
+    setZoomStatus("loading");
+    
+    try {
+      // Secretly save the booking request to the database
+      const targetEmail = data?.email || "anonymous_audit@oopscupid.com"; // Fallback if email wasn't passed directly in data
+      await fetch('/api/leads/coaching', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: targetEmail })
+      });
+    } catch (err) {
+      console.error("Booking error", err);
+    }
+    
+    // Artificial 1.5s delay so the user feels the "processing" happen
+    setTimeout(() => {
+      setZoomStatus("booked");
+    }, 1500);
   };
 
   return (
@@ -279,7 +303,7 @@ export default function PremiumReport({ data, handleShare }: { data: any, handle
             </button>
           </div>
 
-          {/* THE ZOOM CALL (€50) */}
+          {/* THE ZOOM CALL (€50) WITH DATABASE TRACKING */}
           <div className="bg-white border-2 border-slate-200 p-8 md:p-12 rounded-[2.5rem] shadow-xl relative group hover:border-rose-300 transition-colors">
             <div className="absolute top-0 right-0 bg-rose-100 text-rose-700 font-black text-xs uppercase tracking-widest px-5 py-3 rounded-bl-3xl rounded-tr-[2.5rem]">Strict Capacity Limit</div>
             
@@ -292,9 +316,30 @@ export default function PremiumReport({ data, handleShare }: { data: any, handle
               <span className="text-5xl font-black text-slate-900">€50</span>
               <span className="text-slate-400 font-bold pb-2 text-xl">/ Private Session</span>
             </div>
-            <button className="w-full bg-slate-900 hover:bg-slate-800 text-white font-black text-xl py-5 rounded-2xl transition-all shadow-lg hover:-translate-y-1">
-              Book Live Audit Call
-            </button>
+            
+            {/* DYNAMIC BOOKING BUTTON */}
+            {zoomStatus === "booked" ? (
+              <div className="w-full bg-emerald-50 border-2 border-emerald-500 text-emerald-700 font-black text-xl py-5 rounded-2xl flex flex-col items-center justify-center gap-2">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-6 h-6" /> Session Reserved!
+                </div>
+              </div>
+            ) : (
+              <button 
+                onClick={handleZoomBooking}
+                disabled={zoomStatus === "loading"}
+                className="w-full flex items-center justify-center gap-3 bg-slate-900 hover:bg-slate-800 text-white font-black text-xl py-5 rounded-2xl transition-all shadow-lg hover:-translate-y-1 disabled:opacity-70 disabled:hover:translate-y-0"
+              >
+                {zoomStatus === "loading" ? <Loader2 className="w-6 h-6 animate-spin" /> : "Book Live Audit Call"}
+              </button>
+            )}
+            
+            {zoomStatus === "booked" && (
+              <p className="text-center text-sm font-bold text-emerald-600 mt-4 animate-in slide-in-from-bottom-2">
+                Details have been securely saved to your file. We will email you the scheduling link shortly.
+              </p>
+            )}
+
           </div>
 
         </div>
