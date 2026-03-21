@@ -1,33 +1,32 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { email, quizType, rawAnswers, profile } = body;
+    console.log("🚨 ATTEMPTING TO SAVE LEAD:", body.email);
 
-    if (!email) return NextResponse.json({ error: "Email is required" }, { status: 400 });
+    if (!body.email) return NextResponse.json({ error: "Email is required" }, { status: 400 });
 
     const lead = await prisma.lead.upsert({
-      where: { email },
+      where: { email: body.email },
       update: {
-        quizType: quizType || "unknown",
-        rawAnswers: rawAnswers || null,
-        profileData: profile || null,
+        quizType: body.quizType || "unknown",
+        rawAnswers: body.rawAnswers || null,
+        profileData: body.profile || null,
       },
       create: {
-        email,
-        quizType: quizType || "unknown",
-        rawAnswers: rawAnswers || null,
-        profileData: profile || null,
+        email: body.email,
+        quizType: body.quizType || "unknown",
+        rawAnswers: body.rawAnswers || null,
+        profileData: body.profile || null,
       }
     });
 
+    console.log("✅ SUCCESSFULLY SAVED:", lead.email);
     return NextResponse.json({ success: true, lead });
-  } catch (error) {
-    console.error("Database Error:", error);
-    return NextResponse.json({ error: "Failed to save lead" }, { status: 500 });
+  } catch (error: any) {
+    console.error("❌ DATABASE ERROR:", error.message || error);
+    return NextResponse.json({ error: "Failed to save lead", details: error.message }, { status: 500 });
   }
 }
