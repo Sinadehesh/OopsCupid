@@ -20,13 +20,17 @@ export default function ManipulationQuizEngine() {
 
   const handleStart = () => setStarted(true);
 
+  // GOD MODE: Generates answers and securely formats them for your clinical algorithm
   const handleGodMode = () => {
     const fakeAnswers: Record<string, number> = {};
     MANIPULATION_QUESTIONS.forEach(q => { fakeAnswers[q.id] = Math.floor(Math.random() * 5) + 1; });
     setAnswers(fakeAnswers);
     setStarted(true); setIsProcessing(true);
+    
     setTimeout(() => {
-      setResult(calculateManipulationScore(fakeAnswers));
+      // THE CRASH FIX: Maps dictionary to the exact Array format required by your psychometrics
+      const formattedAnswers = Object.entries(fakeAnswers).map(([id, score]) => ({ questionId: id, score }));
+      setResult(calculateManipulationScore(formattedAnswers, MANIPULATION_QUESTIONS));
       setIsProcessing(false); setStep("email");
     }, 1500);
   };
@@ -34,12 +38,15 @@ export default function ManipulationQuizEngine() {
   const handleAnswer = (score: number) => {
     const nextAnswers = { ...answers, [MANIPULATION_QUESTIONS[currentQ].id]: score };
     setAnswers(nextAnswers);
+    
     if (currentQ < MANIPULATION_QUESTIONS.length - 1) {
       setCurrentQ(prev => prev + 1);
     } else {
       setIsProcessing(true);
       setTimeout(() => {
-        setResult(calculateManipulationScore(nextAnswers));
+        // THE CRASH FIX FOR REGULAR CLICKS
+        const formattedAnswers = Object.entries(nextAnswers).map(([id, s]) => ({ questionId: id, score: s }));
+        setResult(calculateManipulationScore(formattedAnswers, MANIPULATION_QUESTIONS));
         setIsProcessing(false); setStep("email");
       }, 1500);
     }
@@ -75,7 +82,7 @@ export default function ManipulationQuizEngine() {
 
   if (isProcessing) return (
     <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4 bg-[#fafafa]">
-      <div className="w-20 h-20 border-4 border-slate-200 border-t-slate-900 rounded-full animate-spin mb-8"></div>
+      <div className="w-20 h-20 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mb-8 shadow-[0_0_15px_rgba(79,70,229,0.3)]"></div>
       <h2 className="text-3xl font-extrabold text-slate-800 mb-4">Compiling Red Flags...</h2>
       <p className="text-slate-500 font-medium text-lg">Cross-referencing his behavior with clinical coercion markers.</p>
     </div>
@@ -83,15 +90,16 @@ export default function ManipulationQuizEngine() {
 
   if (step === "email") return (
     <div className="max-w-xl mx-auto py-20 px-6 text-center animate-in zoom-in duration-500">
-      <div className="inline-flex items-center justify-center w-20 h-20 bg-slate-900 text-white rounded-full mb-8 shadow-xl">
-        <Lock className="w-10 h-10" />
+      <div className="inline-flex items-center justify-center w-20 h-20 bg-slate-900 text-white rounded-full mb-8 shadow-xl relative overflow-hidden">
+        <div className="absolute inset-0 bg-indigo-500/20 blur-xl animate-pulse"></div>
+        <Lock className="w-10 h-10 relative z-10" />
       </div>
       <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">Analysis Complete.</h2>
       <p className="text-lg text-slate-600 mb-10 font-medium">We have detected specific behavioral patterns consistent with psychological manipulation. Enter your email to reveal his threat profile.</p>
       <form onSubmit={handleEmailSubmit} className="space-y-4">
-        <input type="email" required placeholder="Enter your best email..." value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-6 py-5 rounded-2xl border-2 border-slate-200 text-lg focus:border-slate-900 outline-none text-center font-medium" />
-        <button type="submit" className="w-full bg-slate-900 text-white font-extrabold text-xl py-5 rounded-2xl shadow-lg hover:bg-slate-800 transition-all flex items-center justify-center gap-3">
-          Reveal My Report <ArrowRight className="w-6 h-6" />
+        <input type="email" required placeholder="Enter your best email..." value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-6 py-5 rounded-2xl border-2 border-slate-200 text-lg focus:border-indigo-600 outline-none text-center font-medium shadow-inner" />
+        <button type="submit" className="w-full bg-slate-900 hover:bg-indigo-600 text-white font-extrabold text-xl py-5 rounded-2xl shadow-[0_10px_20px_rgba(0,0,0,0.2)] transition-all flex items-center justify-center gap-3 group">
+          Reveal My Report <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
         </button>
       </form>
     </div>
@@ -101,11 +109,11 @@ export default function ManipulationQuizEngine() {
 
   if (!started) return (
     <div className="max-w-3xl mx-auto py-20 px-6 text-center relative">
-      <button onClick={handleGodMode} className="absolute top-0 right-6 flex items-center gap-2 px-4 py-2 bg-slate-100 rounded-full text-sm font-bold text-slate-600 hover:bg-slate-200 transition-colors shadow-sm"><Zap className="w-4 h-4" /> GOD MODE</button>
-      <div className="inline-flex items-center justify-center w-20 h-20 bg-indigo-100 text-indigo-600 rounded-full mb-8 shadow-sm"><ShieldAlert className="w-10 h-10" /></div>
-      <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 mb-6 tracking-tight">Is He Manipulative?</h1>
-      <p className="text-lg md:text-2xl text-slate-600 mb-10 font-medium leading-relaxed">Take this brutally honest diagnostic. Uncover if his confusing behavior is just "bad communication" or a calculated system of coercive control.</p>
-      <button onClick={handleStart} className="bg-indigo-600 text-white font-extrabold text-xl py-5 px-12 rounded-full shadow-lg hover:bg-indigo-700 hover:-translate-y-1 transition-all">Start Clinical Scan <ArrowRight className="inline ml-2" /></button>
+      <button onClick={handleGodMode} className="absolute top-0 right-6 flex items-center gap-2 px-4 py-2 bg-slate-100 rounded-full text-sm font-bold text-slate-600 hover:bg-slate-200 transition-colors shadow-sm"><Zap className="w-4 h-4 text-indigo-500" /> GOD MODE</button>
+      <div className="inline-flex items-center justify-center w-24 h-24 bg-indigo-100 text-indigo-600 rounded-full mb-8 shadow-sm border border-indigo-200"><ShieldAlert className="w-12 h-12" /></div>
+      <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 mb-6 tracking-tight leading-tight">Is He Manipulative?</h1>
+      <p className="text-lg md:text-2xl text-slate-600 mb-10 font-medium leading-relaxed max-w-2xl mx-auto">Take this brutally honest diagnostic. Uncover if his confusing behavior is just "bad communication" or a calculated system of coercive control.</p>
+      <button onClick={handleStart} className="bg-indigo-600 text-white font-extrabold text-xl py-5 px-12 rounded-full shadow-[0_10px_30px_rgba(79,70,229,0.3)] hover:bg-indigo-700 hover:-translate-y-1 transition-all group">Start Clinical Scan <ArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" /></button>
     </div>
   );
 
@@ -113,20 +121,23 @@ export default function ManipulationQuizEngine() {
   const progress = (currentQ / MANIPULATION_QUESTIONS.length) * 100;
 
   return (
-    <div className="max-w-2xl mx-auto py-12 px-6 relative">
-      <button onClick={handleGodMode} className="absolute -top-6 right-6 flex items-center gap-2 px-3 py-1.5 bg-slate-100 rounded-full text-xs font-bold text-slate-600"><Zap className="w-3 h-3" /> Auto</button>
+    <div className="max-w-2xl mx-auto py-12 px-6 relative animate-in fade-in duration-500">
+      <button onClick={handleGodMode} className="absolute -top-6 right-6 flex items-center gap-2 px-3 py-1.5 bg-slate-100 rounded-full text-xs font-bold text-slate-600 hover:bg-slate-200 transition-colors shadow-sm"><Zap className="w-3 h-3 text-indigo-500" /> Auto</button>
+      
       <div className="mb-10 mt-6">
-        <div className="flex justify-between text-sm font-bold text-slate-400 mb-3 uppercase tracking-wider"><span>Question {currentQ + 1} of {MANIPULATION_QUESTIONS.length}</span><span>{Math.round(progress)}%</span></div>
-        <div className="w-full bg-slate-200 h-2.5 rounded-full"><div className="bg-indigo-600 h-full rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div></div>
+        <div className="flex justify-between text-sm font-bold text-slate-400 mb-3 uppercase tracking-wider"><span>Question {currentQ + 1} of {MANIPULATION_QUESTIONS.length}</span><span className="text-indigo-600">{Math.round(progress)}%</span></div>
+        <div className="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden"><div className="bg-indigo-600 h-full rounded-full transition-all duration-500 ease-out" style={{ width: `${progress}%` }}></div></div>
       </div>
+      
       <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-xl border border-slate-100 text-center mb-10 min-h-[200px] flex items-center justify-center">
         <h2 className="text-2xl md:text-3xl font-extrabold text-slate-800 leading-tight">"{question.text}"</h2>
       </div>
-      <div className="flex flex-wrap justify-center gap-3 max-w-md mx-auto">
+      
+      <div className="flex flex-wrap justify-center gap-3 md:gap-4 max-w-md mx-auto">
         {[ { text: "Never", val: 1 }, { text: "Rarely", val: 2 }, { text: "Sometimes", val: 3 }, { text: "Often", val: 4 }, { text: "Always", val: 5 } ].map(opt => (
-          <button key={opt.val} onClick={() => handleAnswer(opt.val)} className="group flex flex-col items-center justify-center w-[30%] aspect-square bg-white border-2 border-slate-100 rounded-[24px] hover:border-indigo-600 hover:bg-indigo-50 hover:-translate-y-1 transition-all">
-            <span className="text-3xl md:text-4xl font-extrabold text-slate-300 group-hover:text-indigo-600 mb-1">{opt.val}</span>
-            <span className="text-[11px] md:text-sm font-extrabold text-slate-600 uppercase">{opt.text}</span>
+          <button key={opt.val} onClick={() => handleAnswer(opt.val)} className="group flex flex-col items-center justify-center w-[30%] aspect-square bg-white border-2 border-slate-100 rounded-[24px] hover:border-indigo-600 hover:bg-indigo-50 hover:-translate-y-1 hover:shadow-lg transition-all focus:outline-none focus:ring-4 focus:ring-indigo-100">
+            <span className="text-3xl md:text-4xl font-extrabold text-slate-300 group-hover:text-indigo-600 mb-1 transition-colors">{opt.val}</span>
+            <span className="text-[11px] md:text-sm font-extrabold text-slate-600 uppercase tracking-wider">{opt.text}</span>
           </button>
         ))}
       </div>
