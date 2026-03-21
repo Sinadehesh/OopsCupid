@@ -10,7 +10,10 @@ export default function ManipulationQuizEngine() {
   const router = useRouter();
   const [started, setStarted] = useState(false);
   const [currentQ, setCurrentQ] = useState(0);
-  const [answers, setAnswers] = useState<Record<string, number>>({});
+  
+  // Natively using an Array to perfectly match calculateManipulationScore's expected input
+  const [answers, setAnswers] = useState<Array<{questionId: string, score: number}>>([]);
+  
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState<any>(null);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -20,30 +23,32 @@ export default function ManipulationQuizEngine() {
 
   const handleStart = () => setStarted(true);
 
-  // GOD MODE: Generates answers and securely formats them for your clinical algorithm
   const handleGodMode = () => {
-    const fakeAnswers: Record<string, number> = {};
-    MANIPULATION_QUESTIONS.forEach(q => { fakeAnswers[q.id] = Math.floor(Math.random() * 5) + 1; });
+    const fakeAnswers = MANIPULATION_QUESTIONS.map(q => ({
+      questionId: q.id,
+      score: Math.floor(Math.random() * 5) + 1
+    }));
+    
     setAnswers(fakeAnswers);
     setStarted(true); 
     setIsProcessing(true);
     
     setTimeout(() => {
       try {
-        // THE FIX: Passing the standard Record dictionary as expected by your algorithm
-        const scoreResult = calculateManipulationScore(fakeAnswers);
+        // THE FIX: We are now correctly passing BOTH parameters (Answers + Master Questions)
+        const scoreResult = calculateManipulationScore(fakeAnswers, MANIPULATION_QUESTIONS);
         setResult(scoreResult);
-        setIsProcessing(false); 
         setStep("email");
       } catch (error) {
         console.error("Scoring Algorithm Error:", error);
-        setIsProcessing(false); // Prevents infinite loading if algorithm fails
+      } finally {
+        setIsProcessing(false);
       }
     }, 1500);
   };
 
   const handleAnswer = (score: number) => {
-    const nextAnswers = { ...answers, [MANIPULATION_QUESTIONS[currentQ].id]: score };
+    const nextAnswers = [...answers, { questionId: MANIPULATION_QUESTIONS[currentQ].id, score }];
     setAnswers(nextAnswers);
     
     if (currentQ < MANIPULATION_QUESTIONS.length - 1) {
@@ -52,13 +57,13 @@ export default function ManipulationQuizEngine() {
       setIsProcessing(true);
       setTimeout(() => {
         try {
-          // THE FIX FOR REGULAR CLICKS
-          const scoreResult = calculateManipulationScore(nextAnswers);
+          // THE FIX: Correctly passing BOTH parameters here as well
+          const scoreResult = calculateManipulationScore(nextAnswers, MANIPULATION_QUESTIONS);
           setResult(scoreResult);
-          setIsProcessing(false); 
           setStep("email");
         } catch (error) {
           console.error("Scoring Algorithm Error:", error);
+        } finally {
           setIsProcessing(false);
         }
       }, 1500);
