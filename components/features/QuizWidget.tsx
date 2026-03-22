@@ -13,6 +13,7 @@ import { infidelityQuestions } from "@/lib/psychometrics/infidelity/questions";
 import { friendRoleQuestions } from "@/lib/psychometrics/friend-role/questions";
 import { friendUsedQuestions } from "@/lib/psychometrics/friend-used/questions";
 
+import AttractionFreeResult from "@/app/attraction-patterns/_components/AttractionFreeResult";
 import AttractionMasterReport from "@/components/report/AttractionMasterReport";
 import AttractorMasterReport from "@/components/report/AttractorMasterReport";
 import PartnerAttachmentReport from "@/components/report/PartnerAttachmentReport";
@@ -36,6 +37,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const [isScoring, setIsScoring]           = useState(false);
   const [showEmailGate, setShowEmailGate]   = useState(false);
   const [showResult, setShowResult]         = useState(false);
+  const [isPremiumUnlocked, setIsPremiumUnlocked] = useState(false);
   const [resultData, setResultData]         = useState<any>(null);
   
   const [email, setEmail]                   = useState("");
@@ -218,7 +220,24 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     // FIX: email={resultData.email} is now explicitly passed down!
     if (resultData.type === "attachment") return <div ref={topRef} className="w-full animate-in fade-in duration-500"><AttachmentReport profile={resultData.profile} demographics={resultData.demographics} rawAnswers={resultData.rawAnswers} email={resultData.email} /></div>;
     
-    if (resultData.type === "attraction") return <div ref={topRef} className="w-full animate-in fade-in"><AttractionMasterReport profile={resultData.profile} /></div>;
+    if (resultData.type === "attraction") {
+      if (!isPremiumUnlocked) {
+        return (
+          <div ref={topRef} className="w-full animate-in fade-in">
+            <AttractionFreeResult 
+              profile={resultData.profile} 
+              onUnlock={() => setIsPremiumUnlocked(true)} 
+              isGenerating={isScoring} 
+            />
+          </div>
+        );
+      }
+      return (
+        <div ref={topRef} className="w-full animate-in fade-in">
+          <AttractionMasterReport profile={resultData.profile} email={email} />
+        </div>
+      );
+    }
     if (resultData.type === "attractor") return <div ref={topRef} className="w-full animate-in fade-in"><AttractorMasterReport profile={resultData.profile} /></div>;
     if (resultData.type === "partner") return <div ref={topRef} className="w-full animate-in fade-in"><PartnerAttachmentReport profile={resultData.profile} /></div>;
     if (resultData.type === "infidelity") return <div ref={topRef} className="w-full animate-in fade-in"><InfidelityMasterReport profile={resultData.profile} /></div>;

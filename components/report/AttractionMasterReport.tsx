@@ -308,12 +308,13 @@ export default function AttractionMasterReport({ profile, demographics, email, i
         <div className="bg-rose-50 border-2 border-rose-100 rounded-[2.5rem] p-12 text-center relative overflow-hidden group">
           <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-40 transition-opacity duration-500"></div>
           <Search className="w-14 h-14 text-rose-400 mx-auto mb-6 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500" />
+          <h4 className="text-sm font-black text-rose-600 uppercase tracking-widest mb-3 relative z-10">Step 2 of Your Journey</h4>
           <h4 className="text-3xl md:text-4xl font-black text-rose-950 mb-4 tracking-tight relative z-10">Is He Manipulating You Right Now?</h4>
           <p className="text-rose-800 font-medium max-w-2xl mx-auto mb-10 text-xl relative z-10">
-            Don't guess. Put his behavior through our advanced clinical diagnostic to find out if you are being love-bombed or gaslit.
+            Now that you know exactly *why* you attract them, let's look at the men currently in your life. Put his text messages and behavior through our advanced clinical diagnostic to find out if you are being love-bombed, gaslit, or used.
           </p>
           <Link href="/is-he-manipulative" className="inline-flex items-center justify-center gap-3 bg-rose-600 hover:bg-rose-700 text-white px-10 py-5 rounded-2xl font-black text-xl transition-all shadow-xl hover:shadow-rose-600/30 hover:-translate-y-1 w-full sm:w-auto relative z-10">
-            Test Your Partner Now <ArrowRight className="w-6 h-6" />
+            Take The Next Test Now <ArrowRight className="w-6 h-6" />
           </Link>
         </div>
       </div>
