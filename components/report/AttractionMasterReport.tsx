@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { ShieldAlert, Brain, Activity, Heart, EyeOff, ChevronRight, CheckCircle2, Flame, Sparkles, PhoneCall, ArrowRight, Star, Crosshair, AlertTriangle, ShieldCheck, Zap, Target, Eye, Fingerprint, MessageSquare, Shield, ChevronDown } from "lucide-react";
+import { ShieldAlert, Brain, Activity, Heart, EyeOff, ChevronRight, CheckCircle2, Flame, Sparkles, PhoneCall, ArrowRight, Star, Crosshair, AlertTriangle, ShieldCheck, Zap, Target, Eye, Fingerprint, MessageSquare, Shield, ChevronDown, Lock } from "lucide-react";
 
 export default function AttractionMasterReport({ profile, email }: { profile: any, email?: string }) {
   const [activeToxicTab, setActiveToxicTab] = useState(0);
@@ -362,14 +362,14 @@ export default function AttractionMasterReport({ profile, email }: { profile: an
             </div>
 
             <div className="grid md:grid-cols-2 gap-8 mb-10">
-              {/* Playbook 1 */}
-              <label className={`cursor-pointer group relative p-10 rounded-[2.5rem] border-4 transition-all duration-300 flex flex-col ${
+              {/* Playbook 1 (Replaced <label> with <div onClick> to fix React Synthetic Event Replay bug!) */}
+              <div 
+                onClick={() => setBundleSelected({...bundleSelected, playbook1: !bundleSelected.playbook1})}
+                className={`cursor-pointer group relative p-10 rounded-[2.5rem] border-4 transition-all duration-300 flex flex-col ${
                 bundleSelected.playbook1 
                 ? 'bg-white border-[#1d3557] shadow-2xl transform -translate-y-2' 
                 : 'bg-white/50 border-gray-200 hover:border-[#a8dadc] hover:bg-white'
               }`}>
-                <input type="checkbox" className="sr-only" checked={bundleSelected.playbook1} onChange={(e) => setBundleSelected({...bundleSelected, playbook1: e.target.checked})} />
-                
                 <div className="flex justify-between items-start mb-8">
                   <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-colors ${bundleSelected.playbook1 ? 'bg-[#1d3557] text-[#a8dadc]' : 'bg-gray-100 text-gray-400'}`}>
                     <MessageSquare className="w-7 h-7" />
@@ -387,16 +387,16 @@ export default function AttractionMasterReport({ profile, email }: { profile: an
                 <div className="mt-8 pt-6 border-t border-gray-100">
                   <span className="text-3xl font-black text-[#1d3557]">$10.99</span>
                 </div>
-              </label>
+              </div>
 
-              {/* Playbook 2 */}
-              <label className={`cursor-pointer group relative p-10 rounded-[2.5rem] border-4 transition-all duration-300 flex flex-col ${
+              {/* Playbook 2 (Replaced <label> with <div onClick> to fix React Synthetic Event Replay bug!) */}
+              <div 
+                onClick={() => setBundleSelected({...bundleSelected, playbook2: !bundleSelected.playbook2})}
+                className={`cursor-pointer group relative p-10 rounded-[2.5rem] border-4 transition-all duration-300 flex flex-col ${
                 bundleSelected.playbook2 
                 ? 'bg-white border-[#1d3557] shadow-2xl transform -translate-y-2' 
                 : 'bg-white/50 border-gray-200 hover:border-[#a8dadc] hover:bg-white'
               }`}>
-                <input type="checkbox" className="sr-only" checked={bundleSelected.playbook2} onChange={(e) => setBundleSelected({...bundleSelected, playbook2: e.target.checked})} />
-                
                 <div className="flex justify-between items-start mb-8">
                   <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-colors ${bundleSelected.playbook2 ? 'bg-[#1d3557] text-[#a8dadc]' : 'bg-gray-100 text-gray-400'}`}>
                     <Shield className="w-7 h-7" />
@@ -414,7 +414,7 @@ export default function AttractionMasterReport({ profile, email }: { profile: an
                 <div className="mt-8 pt-6 border-t border-gray-100">
                   <span className="text-3xl font-black text-[#1d3557]">$10.99</span>
                 </div>
-              </label>
+              </div>
             </div>
 
             {/* Checkout Strip */}
