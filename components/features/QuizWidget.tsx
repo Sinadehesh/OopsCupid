@@ -234,7 +234,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       }
       return (
         <div ref={topRef} className="w-full animate-in fade-in">
-          <AttractionMasterReport profile={resultData.profile} email={email} />
+        <AttractionMasterReport profile={resultData.profile} />
         </div>
       );
     }
