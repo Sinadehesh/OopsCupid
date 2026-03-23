@@ -96,17 +96,68 @@ export default function SabotageReport({ result }: { result: any }) {
         <HeartCrack className="w-10 h-10 text-rose-500 mx-auto mb-4" />
         <h4 className="font-bold text-slate-800 mb-4 text-xl">The Bottom Line</h4>
         <p className="text-slate-600 text-lg leading-relaxed">
-          The strongest signal in your results is not that you simply "don't care." Your primary triggers are <strong>{result.topDrivers[0].label.toLowerCase()}</strong> and <strong>{result.topDrivers[1].label.toLowerCase()}</strong>. You sabotage when closeness or uncertainty starts to feel fundamentally unsafe.
+          The strongest signal in your results is not that you simply "don't care." Your primary triggers are <strong>{result.topDrivers?.[0]?.label?.toLowerCase() || "fear"}</strong> and <strong>{result.topDrivers?.[1]?.label?.toLowerCase() || "abandonment"}</strong>. You sabotage when closeness or uncertainty starts to feel fundamentally unsafe.
         </p>
-        <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/attachment-style-quiz" className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-rose-600 text-white font-bold hover:bg-rose-700 transition-colors">
-              Find Your Attachment Style
-            </Link>
-            <Link href="/articles" className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-white text-slate-700 font-bold border border-slate-200 hover:bg-slate-50 transition-colors">
-              Read Sabotage Resources
-            </Link>
+      </div>
+
+      {/* --- BEGIN SECOND-STAGE UPSELL FUNNEL --- */}
+      <div className="mt-16 pt-16 border-t-2 border-slate-200/60 max-w-3xl mx-auto">
+        <div className="text-center mb-10">
+          <h3 className="text-3xl font-extrabold text-slate-900 mb-4 tracking-tight">Stop Reading. Start Rewiring.</h3>
+          <p className="text-slate-600 text-lg">Insight without action is just entertainment. Your nervous system took years to wire this defense mechanism. Here is how we dismantle it.</p>
+        </div>
+
+        {/* The Bundle (Primary CTA) */}
+        <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-8 md:p-10 mb-8 shadow-2xl relative overflow-hidden text-center border border-slate-700">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-rose-500/20 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2"></div>
+          <div className="relative z-10">
+            <span className="inline-block px-3 py-1 bg-rose-500/20 text-rose-300 font-bold text-xs uppercase tracking-widest rounded-full mb-4 border border-rose-500/30">
+              Highly Recommended
+            </span>
+            <h4 className="text-3xl font-black text-white mb-3">The Complete Nervous System Rewire Bundle</h4>
+            <p className="text-slate-300 mb-8 max-w-xl mx-auto">Get both the clinical Playbook and the 60-Day Shadow Work Journal. Learn the theory, then do the daily exercises to physically rewrite your automatic responses.</p>
+            <div className="flex items-center justify-center gap-4 mb-8">
+              <span className="text-slate-400 line-through font-bold text-lg">$46</span>
+              <span className="text-4xl font-black text-rose-400">$37</span>
+            </div>
+            <button className="w-full md:w-auto px-10 py-4 bg-rose-600 hover:bg-rose-500 text-white font-black text-lg rounded-xl transition-all shadow-lg shadow-rose-600/30 active:scale-95">
+              Unlock the Complete Bundle
+            </button>
+          </div>
+        </div>
+
+        {/* Individual Books */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+          <div className="bg-white rounded-3xl p-8 border border-slate-200 hover:border-slate-300 transition-colors shadow-sm flex flex-col justify-between">
+            <div>
+              <h5 className="font-extrabold text-xl text-slate-900 mb-2">The Secure Attachment Playbook</h5>
+              <p className="text-sm text-slate-500 mb-6">120 pages of clinical frameworks and nervous system regulation techniques. Learn how to fix your pattern.</p>
+            </div>
+            <button className="w-full py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl transition-colors">
+              Download Playbook ($27)
+            </button>
+          </div>
+          <div className="bg-white rounded-3xl p-8 border border-slate-200 hover:border-slate-300 transition-colors shadow-sm flex flex-col justify-between">
+            <div>
+              <h5 className="font-extrabold text-xl text-slate-900 mb-2">Shadow Work Integration Journal</h5>
+              <p className="text-sm text-slate-500 mb-6">60 days of guided prompts to confront core wounds and map your bodily triggers.</p>
+            </div>
+            <button className="w-full py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl transition-colors">
+              Get the Workbook ($19)
+            </button>
+          </div>
+        </div>
+
+        {/* 1:1 Session (Tertiary) */}
+        <div className="bg-[#FAF9F6] border border-[#E5E5E0] rounded-2xl p-6 text-center shadow-sm">
+          <h6 className="font-bold text-slate-800 mb-2">Need private help?</h6>
+          <p className="text-sm text-slate-500 mb-4 max-w-md mx-auto">Book a private, 45-minute clinical audit with an attachment specialist to review your data profile together.</p>
+          <button className="text-rose-600 font-bold text-sm hover:underline underline-offset-4">
+            Inquire About Private Availability →
+          </button>
         </div>
       </div>
+      {/* --- END SECOND-STAGE UPSELL FUNNEL --- */}
 
     </div>
   );
