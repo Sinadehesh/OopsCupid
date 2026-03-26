@@ -9,7 +9,6 @@ export default function GaslightingQuizEngine() {
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
   const [isFinished, setIsFinished] = useState(false);
-  // Email gate state
   const [showEmailGate, setShowEmailGate] = useState(false);
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -39,23 +38,17 @@ export default function GaslightingQuizEngine() {
       await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          quizType: "gaslighting",
-          rawAnswers: finalAnswers,
-        }),
+        body: JSON.stringify({ email, quizType: "gaslighting", rawAnswers: finalAnswers }),
       });
     } catch {
-      // silently continue — never block the user
+      // silently continue
     } finally {
       setEmailSubmitting(false);
       setIsFinished(true);
     }
   };
 
-  const handleSkip = () => {
-    setIsFinished(true);
-  };
+  const handleSkip = () => setIsFinished(true);
 
   if (isFinished) {
     const result = calculateGaslightingScore(finalAnswers);
@@ -64,7 +57,6 @@ export default function GaslightingQuizEngine() {
 
   const progress = (currentQ / gaslightingQuestions.length) * 100;
 
-  // ── EMAIL GATE ──
   if (showEmailGate) {
     return (
       <div className="max-w-lg mx-auto w-full pt-10 px-4">
@@ -93,26 +85,24 @@ export default function GaslightingQuizEngine() {
                 value={email}
                 onChange={(e) => { setEmail(e.target.value); setEmailError(""); }}
                 placeholder="your@email.com"
-                className="w-full px-5 py-4 rounded-xl bg-white/8 border border-white/15 text-white placeholder-white/30
-                  font-bold text-lg focus:outline-none focus:border-indigo-400 focus:bg-white/12 transition-all"
+                className="w-full px-5 py-4 rounded-xl bg-white/8 border border-white/15 text-white placeholder-white/30 font-bold text-lg focus:outline-none focus:border-indigo-400 transition-all"
               />
               {emailError && <p className="text-rose-400 text-sm font-bold">{emailError}</p>}
               <button
                 type="submit"
                 disabled={emailSubmitting}
-                className="w-full py-5 rounded-xl font-black text-xl text-white
-                  bg-gradient-to-r from-indigo-600 to-violet-600
-                  hover:from-violet-600 hover:to-indigo-600
-                  transition-all duration-300 shadow-lg shadow-indigo-500/20
-                  flex items-center justify-center gap-3 disabled:opacity-60">
+                className="w-full py-5 rounded-xl font-black text-xl text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-violet-600 hover:to-indigo-600 transition-all duration-300 shadow-lg shadow-indigo-500/20 flex items-center justify-center gap-3 disabled:opacity-60"
+              >
                 {emailSubmitting
                   ? <><Loader2 className="w-5 h-5 animate-spin" /> Unlocking…</>
-                  : <>See My Results <ArrowRight className="w-5 h-5" />}</>
-              }
+                  : <>See My Results <ArrowRight className="w-5 h-5" /></>
+                }
               </button>
             </form>
-            <button onClick={handleSkip}
-              className="mt-4 text-white/25 hover:text-white/50 text-sm font-bold transition-colors">
+            <button
+              onClick={handleSkip}
+              className="mt-4 text-white/25 hover:text-white/50 text-sm font-bold transition-colors"
+            >
               Skip for now →
             </button>
             <p className="text-white/20 text-xs font-bold uppercase tracking-widest mt-6">
@@ -150,8 +140,8 @@ export default function GaslightingQuizEngine() {
             <button
               key={option.value}
               onClick={() => handleAnswer(option.value)}
-              className="w-full text-left px-6 py-4 rounded-2xl border-2 border-slate-100 text-slate-600 font-bold
-                hover:border-indigo-600 hover:bg-indigo-50 hover:text-indigo-700 transition-all text-lg">
+              className="w-full text-left px-6 py-4 rounded-2xl border-2 border-slate-100 text-slate-600 font-bold hover:border-indigo-600 hover:bg-indigo-50 hover:text-indigo-700 transition-all text-lg"
+            >
               {option.label}
             </button>
           ))}
