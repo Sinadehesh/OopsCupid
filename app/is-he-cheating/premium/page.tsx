@@ -1,15 +1,25 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import InfidelityMasterReport from "@/components/report/InfidelityMasterReport";
+import InfidelityPremiumReport from "../_components/InfidelityPremiumReport";
 
-/** Ensures whatever shape came out of localStorage is safe to render */
-function normalize(raw: any) {
+interface ReportData {
+  score: number;
+  riskLevel: "SEVERE" | "ELEVATED" | "MODERATE";
+  email: string;
+  vectors: {
+    digital: number;
+    chronological: number;
+    intimacy: number;
+    micro: number;
+  };
+}
+
+function normalize(raw: any): ReportData {
   const score = typeof raw?.score === "number" ? raw.score : 65;
-  const riskLevel =
-    raw?.riskLevel === "SEVERE" || raw?.riskLevel === "MODERATE"
-      ? raw.riskLevel
-      : "ELEVATED";
+  const rl = raw?.riskLevel;
+  const riskLevel: ReportData["riskLevel"] =
+    rl === "SEVERE" || rl === "ELEVATED" || rl === "MODERATE" ? rl : "ELEVATED";
   const v = raw?.vectors ?? {};
   return {
     score,
@@ -26,14 +36,14 @@ function normalize(raw: any) {
 
 export default function CheatingPremiumPage() {
   const router = useRouter();
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<ReportData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     try {
       const stored = localStorage.getItem("infidelity_result");
       if (stored) setData(normalize(JSON.parse(stored)));
-    } catch (e) {
+    } catch {
       // malformed JSON — fall through to "no data" state
     }
     setLoading(false);
@@ -64,5 +74,5 @@ export default function CheatingPremiumPage() {
     );
   }
 
-  return <InfidelityMasterReport data={data} />;
+  return <InfidelityPremiumReport data={data} />;
 }
