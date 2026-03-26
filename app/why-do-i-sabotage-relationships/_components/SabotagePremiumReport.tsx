@@ -4,46 +4,65 @@ import React, { useEffect, useState, useRef } from "react";
 import {
   AlertTriangle, Flame, ShieldOff, Brain, HeartCrack,
   ArrowRight, CheckCircle2, Zap, Sparkles, TrendingUp,
-  Lock, BookOpen, Star, Target, Clock, ChevronDown, Activity, ShieldAlert
+  Lock, BookOpen, Star, Target, Clock, ChevronDown, Activity,
+  ShieldAlert, Lightbulb, MessageCircle, Loader2
 } from "lucide-react";
 import Link from "next/link";
 
-// ── Types matching calculateSabotageScore output exactly ──────────────────────
-interface Subscale {
-  key: string;
-  label: string;
-  score: number;
-  max: number;
-  pct: number;
-}
-
+// ── Types ────────────────────────────────────────────────────────────────────
+interface Subscale { key: string; label: string; score: number; max: number; pct: number; }
 interface Composites {
-  anxiousPattern: number;
-  avoidantPattern: number;
-  selfWorthCore: number;
-  vulnerabilityScore: number;
-  defenseScore: number;
+  anxiousPattern: number; avoidantPattern: number; selfWorthCore: number;
+  vulnerabilityScore: number; defenseScore: number;
 }
-
-interface LevelData {
-  title: string;
-  subtitle: string;
-  advice: string;
-}
-
+interface LevelData { title: string; subtitle: string; advice: string; }
 export interface SabotageResult {
-  totalScore: number;
-  maxScore: number;
-  level: number;
-  levelData: LevelData;
-  archetype: string;
-  subscales: Subscale[];
-  composites: Composites;
-  criticalFlags: number;
-  topDrivers: Subscale[];
+  totalScore: number; maxScore: number; level: number; levelData: LevelData;
+  archetype: string; subscales: Subscale[]; composites: Composites;
+  criticalFlags: number; topDrivers: Subscale[];
+}
+interface AIInsights {
+  archetypeInsight: string;
+  subscaleInsight: string;
+  anxiousAvoidantInsight: string;
+  populationInsight: string;
+  topDriversInsight: string;
+  coreWoundInsight: string;
+  actionInsight: string;
 }
 
-// ── Animated Counter ──────────────────────────────────────────────────────────
+// ── AI Insight Block ─────────────────────────────────────────────────────────
+function AIBlock({ text, label, loading }: { text?: string; label: string; loading: boolean }) {
+  if (loading) {
+    return (
+      <div className="rounded-2xl bg-[#e8f4f8] border border-[#06aed5]/20 p-6 flex items-start gap-4 animate-pulse">
+        <div className="w-9 h-9 rounded-xl bg-[#06aed5]/20 shrink-0" />
+        <div className="flex-1 space-y-2">
+          <div className="h-3 bg-[#086788]/15 rounded-full w-1/3" />
+          <div className="h-3 bg-[#086788]/10 rounded-full w-full" />
+          <div className="h-3 bg-[#086788]/10 rounded-full w-5/6" />
+          <div className="h-3 bg-[#086788]/10 rounded-full w-4/5" />
+        </div>
+      </div>
+    );
+  }
+  if (!text) return null;
+  return (
+    <div className="rounded-2xl bg-gradient-to-br from-[#e8f4f8] to-[#fff1d0]/60 border border-[#06aed5]/25 p-6 flex items-start gap-4 shadow-sm">
+      <div className="w-9 h-9 rounded-xl bg-[#086788] flex items-center justify-center shrink-0 shadow">
+        <Lightbulb className="w-5 h-5 text-[#f0c808]" />
+      </div>
+      <div>
+        <p className="text-xs font-black uppercase tracking-widest text-[#06aed5] mb-2 flex items-center gap-1.5">
+          <MessageCircle className="w-3.5 h-3.5" /> {label}
+        </p>
+        <p className="text-[#086788]/90 font-medium text-base leading-relaxed">{text}</p>
+      </div>
+    </div>
+  );
+}
+
+// ── Animated Counter ─────────────────────────────────────────────────────────
 function AnimatedNumber({ target, duration = 1200 }: { target: number; duration?: number }) {
   const [val, setVal] = useState(0);
   const iv = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -60,7 +79,7 @@ function AnimatedNumber({ target, duration = 1200 }: { target: number; duration?
   return <>{val}</>;
 }
 
-// ── Animated Progress Bar ─────────────────────────────────────────────────────
+// ── Animated Bar ─────────────────────────────────────────────────────────────
 function AnimatedBar({ value, color, delay = 0 }: { value: number; color: string; delay?: number }) {
   const [w, setW] = useState(0);
   useEffect(() => {
@@ -75,7 +94,7 @@ function AnimatedBar({ value, color, delay = 0 }: { value: number; color: string
   );
 }
 
-// ── Radar / Spider SVG ────────────────────────────────────────────────────────
+// ── Radar Chart ───────────────────────────────────────────────────────────────
 function RadarChart({ subscales }: { subscales: Subscale[] }) {
   const cx = 150, cy = 155, r = 105;
   const n = subscales.length;
@@ -87,7 +106,6 @@ function RadarChart({ subscales }: { subscales: Subscale[] }) {
   const dataPoints = subscales.map((s, i) => pt(i, s.pct / 100));
   const outerPoints = subscales.map((_, i) => pt(i, 1));
   const poly = dataPoints.map((p, i) => `${i === 0 ? "M" : "L"}${p.x},${p.y}`).join(" ") + "Z";
-
   return (
     <svg viewBox="0 0 300 310" className="w-full max-w-[280px] mx-auto">
       {[0.25, 0.5, 0.75, 1].map((s) => (
@@ -140,7 +158,6 @@ function BellCurve({ pct }: { pct: number }) {
         fill="none" stroke="#06aed5" strokeWidth="3.5" strokeLinecap="round" />
       <line x1="820" y1="14" x2="820" y2="210" stroke="#086788" strokeWidth="1.5" strokeDasharray="5 4" opacity="0.5" />
       <text x="820" y="9" textAnchor="middle" fill="#086788" fontSize="11" fontWeight="800">Secure Top 10%</text>
-      {/* animated marker */}
       <g style={{ transform: `translateX(${mx - 500}px)`, transition: "transform 1.3s cubic-bezier(0.2,0.8,0.2,1)" }}>
         <line x1="500" y1="14" x2="500" y2="210" stroke="#dd1c1a" strokeWidth="3" />
         <circle cx="500" cy="14" r="7" fill="#dd1c1a">
@@ -200,8 +217,7 @@ function BundleBanner() {
   const [open, setOpen] = useState(false);
   return (
     <div className="rounded-3xl border-2 border-[#dd1c1a] bg-white shadow-xl overflow-hidden">
-      <button
-        className="w-full bg-[#dd1c1a] px-8 py-5 flex items-center justify-between cursor-pointer"
+      <button className="w-full bg-[#dd1c1a] px-8 py-5 flex items-center justify-between cursor-pointer"
         onClick={() => setOpen(!open)}>
         <div className="flex items-center gap-3">
           <Flame className="w-6 h-6 text-white animate-pulse" />
@@ -212,7 +228,7 @@ function BundleBanner() {
       {open && (
         <div className="p-8 md:p-10 space-y-5">
           <p className="text-[#086788]/80 font-medium text-lg leading-relaxed">
-            Get <strong>both playbooks</strong> — the Attachment Style Workbook <em>and</em> the Trauma Style Playbook — at one combined price. Together they cover the full root-cause picture of your self-sabotage pattern.
+            Get <strong>both playbooks</strong> — the Attachment Style Workbook <em>and</em> the Trauma Style Playbook — at one combined price.
           </p>
           <ul className="space-y-2">
             {[
@@ -233,8 +249,7 @@ function BundleBanner() {
               <span className="text-xs font-black text-[#dd1c1a] uppercase tracking-widest">You save €3.99</span>
             </div>
           </div>
-          <a href="https://sinadehesh.gumroad.com/l/sabotage-bundle"
-            target="_blank" rel="noopener noreferrer"
+          <a href="https://sinadehesh.gumroad.com/l/sabotage-bundle" target="_blank" rel="noopener noreferrer"
             className="w-full py-5 bg-[#dd1c1a] text-white rounded-xl font-black text-xl flex items-center justify-center gap-3 hover:bg-[#b10f2e] transition-all shadow-lg">
             Get The Bundle Now <Zap className="w-6 h-6" />
           </a>
@@ -247,20 +262,61 @@ function BundleBanner() {
   );
 }
 
-// ── MAIN EXPORT — receives the same `result` prop as SabotageReport ───────────
+// ── MAIN EXPORT ───────────────────────────────────────────────────────────────
 export default function SabotagePremiumReport({ result }: { result: SabotageResult }) {
-  const overallPct = Math.round((result.totalScore / result.maxScore) * 100);
-  // Population percentile: higher score = higher percentile
-  const populationPercentile = Math.min(99, Math.round(overallPct * 0.9 + 5));
+  const [aiInsights, setAiInsights] = useState<AIInsights | null>(null);
+  const [aiLoading, setAiLoading] = useState(true);
+  const [aiError, setAiError] = useState(false);
 
+  // Fetch AI insights on mount
+  useEffect(() => {
+    const fetchInsights = async () => {
+      try {
+        const res = await fetch("/api/sabotage-ai-report", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ result }),
+        });
+        const data = await res.json();
+        if (data.success && data.insights) {
+          setAiInsights(data.insights);
+        } else {
+          setAiError(true);
+        }
+      } catch {
+        setAiError(true);
+      } finally {
+        setAiLoading(false);
+      }
+    };
+    fetchInsights();
+  }, [result]);
+
+  const overallPct = Math.round((result.totalScore / result.maxScore) * 100);
+  const populationPercentile = Math.min(99, Math.round(overallPct * 0.9 + 5));
   const severityLabel =
     overallPct >= 75 ? { text: "Extreme Sabotage Pattern", color: "#dd1c1a" } :
     overallPct >= 50 ? { text: "Moderate Sabotage Pattern", color: "#f0c808" } :
     { text: "Mild Sabotage Tendencies", color: "#06aed5" };
 
+  // AI loading/error banner
+  const AIStatusBanner = aiLoading ? (
+    <div className="flex items-center gap-3 px-5 py-3 bg-[#086788]/10 rounded-2xl border border-[#086788]/20 text-[#086788] text-sm font-bold">
+      <Loader2 className="w-4 h-4 animate-spin shrink-0" />
+      Your personalized AI analysis is being written…
+    </div>
+  ) : aiError ? (
+    <div className="px-5 py-3 bg-[#dd1c1a]/10 rounded-2xl border border-[#dd1c1a]/20 text-[#dd1c1a] text-sm font-bold">
+      AI analysis temporarily unavailable. All charts and data below are still fully accurate.
+    </div>
+  ) : null;
+
   return (
     <div className="min-h-screen bg-[#fff1d0] py-12 md:py-20">
       <div className="max-w-4xl mx-auto px-4 md:px-8 space-y-10">
+
+        {/* AI STATUS */}
+        {AIStatusBanner && <div>{AIStatusBanner}</div>}
 
         {/* ── HERO ── */}
         <div className="bg-[#086788] rounded-3xl p-8 md:p-14 text-center relative overflow-hidden shadow-2xl">
@@ -274,7 +330,7 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
             Your Sabotage<br /><span className="text-[#f0c808]">Blueprint</span>
           </h1>
           <p className="text-[#06aed5] text-xl font-medium max-w-lg mx-auto">
-            We mapped every pattern. Here's exactly why you self-destruct in relationships — and the precise steps to stop.
+            We mapped every pattern. Here’s exactly why you self-destruct in relationships — and the precise steps to stop.
           </p>
         </div>
 
@@ -283,19 +339,24 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
           <p className="text-xs font-black uppercase tracking-widest text-[#dd1c1a] mb-2 flex items-center gap-2">
             <HeartCrack className="w-4 h-4" /> Your Sabotage Archetype
           </p>
-          <h2 className="text-3xl md:text-4xl font-black text-[#086788] mb-3">"{result.archetype}"</h2>
+          <h2 className="text-3xl md:text-4xl font-black text-[#086788] mb-3">“{result.archetype}”</h2>
           <p className="text-lg font-black text-[#086788]/50 mb-6">Level {result.level}: {result.levelData.title}</p>
-          <p className="text-lg font-medium text-[#086788]/85 leading-relaxed mb-6">
-            {result.levelData.subtitle}
-          </p>
-          <div className="bg-[#fff1d0] border border-[#e8d8a0] rounded-2xl p-5">
+          <p className="text-lg font-medium text-[#086788]/85 leading-relaxed mb-6">{result.levelData.subtitle}</p>
+          <div className="bg-[#fff1d0] border border-[#e8d8a0] rounded-2xl p-5 mb-6">
             <p className="text-base font-medium text-[#086788]/80 leading-relaxed">{result.levelData.advice}</p>
           </div>
-          <div className="mt-6 inline-flex items-center gap-2 rounded-full px-5 py-2 font-black text-sm"
+          <div className="mt-2 inline-flex items-center gap-2 rounded-full px-5 py-2 font-black text-sm"
             style={{ backgroundColor: severityLabel.color + "18", color: severityLabel.color, border: `1.5px solid ${severityLabel.color}40` }}>
             <AlertTriangle className="w-4 h-4" /> {severityLabel.text}
           </div>
         </div>
+
+        {/* AI — archetype insight */}
+        <AIBlock
+          label="What your archetype really means for you"
+          text={aiInsights?.archetypeInsight}
+          loading={aiLoading}
+        />
 
         {/* ── SCORE DASHBOARD ── */}
         <div className="bg-white rounded-3xl border border-[#d6d2d2] p-8 md:p-12 shadow-sm">
@@ -323,6 +384,13 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
             <RadarChart subscales={result.subscales} />
           </div>
         </div>
+
+        {/* AI — subscale insight */}
+        <AIBlock
+          label="What the shape of your radar reveals"
+          text={aiInsights?.subscaleInsight}
+          loading={aiLoading}
+        />
 
         {/* ── COMPOSITES ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -352,6 +420,13 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
           </div>
         </div>
 
+        {/* AI — anxious/avoidant insight */}
+        <AIBlock
+          label="Your anxious vs avoidant balance — what it means daily"
+          text={aiInsights?.anxiousAvoidantInsight}
+          loading={aiLoading}
+        />
+
         {/* ── BELL CURVE ── */}
         <div className="bg-white rounded-3xl border border-[#d6d2d2] p-8 md:p-12 shadow-sm">
           <div className="flex items-center gap-3 mb-4">
@@ -361,7 +436,7 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
           <p className="text-[#086788]/75 font-medium text-lg mb-8 leading-relaxed">
             <strong>You are not broken.</strong> You measure in the{" "}
             <span className="text-[#dd1c1a] font-black">{populationPercentile}th percentile</span>{" "}
-            for self-sabotage intensity. The chart shows where you land across the full population distribution.
+            for self-sabotage intensity.
           </p>
           <BellCurve pct={populationPercentile} />
           <div className="grid grid-cols-3 gap-4 mt-8">
@@ -379,6 +454,13 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
             ))}
           </div>
         </div>
+
+        {/* AI — population insight */}
+        <AIBlock
+          label="What your percentile position actually means"
+          text={aiInsights?.populationInsight}
+          loading={aiLoading}
+        />
 
         {/* ── TOP DRIVERS ── */}
         <div className="grid md:grid-cols-2 gap-6">
@@ -400,7 +482,66 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
           </div>
         </div>
 
-        {/* ── VALUE STACK BRIDGE ── */}
+        {/* AI — top drivers compound insight */}
+        <AIBlock
+          label="How your two drivers amplify each other"
+          text={aiInsights?.topDriversInsight}
+          loading={aiLoading}
+        />
+
+        {/* ── CORE WOUND ── */}
+        <div className="bg-[#0F172A] rounded-3xl p-8 md:p-12 shadow-xl relative overflow-hidden">
+          <Sparkles className="absolute top-4 right-4 w-32 h-32 text-white/5 pointer-events-none" />
+          <div className="relative z-10">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-[#dd1c1a]/20 flex items-center justify-center">
+                <HeartCrack className="w-5 h-5 text-[#dd1c1a]" />
+              </div>
+              <h2 className="text-2xl font-black text-white">Your Core Wound</h2>
+            </div>
+            <p className="text-slate-300 font-medium text-base leading-relaxed mb-4">
+              Based on the combination of your subscale scores and composite patterns, your sabotage behavior is most
+              likely rooted in early experiences of inconsistent care, betrayal of trust, or environments where closeness
+              felt dangerous. Your nervous system learned to protect you by keeping others at a calculated distance —
+              or by testing their commitment until they eventually left.
+            </p>
+            <p className="text-slate-400 text-sm font-medium leading-relaxed">
+              This is not a character flaw. It is an adaptive survival strategy that once made complete sense. The problem
+              is that your adult relationships are suffering from a program that was written in childhood.
+            </p>
+          </div>
+        </div>
+
+        {/* AI — core wound personalized */}
+        <AIBlock
+          label="The likely root of your specific pattern"
+          text={aiInsights?.coreWoundInsight}
+          loading={aiLoading}
+        />
+
+        {/* ── ACTION PLAN ── */}
+        <div className="bg-gradient-to-br from-[#086788] to-[#06aed5] rounded-3xl p-8 md:p-12 shadow-xl">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
+              <Zap className="w-5 h-5 text-[#f0c808]" />
+            </div>
+            <h2 className="text-2xl font-black text-white">Your Personal Action Plan</h2>
+          </div>
+          <p className="text-white/80 font-medium text-base leading-relaxed">
+            The most effective first step for your archetype (“{result.archetype}”) is not to “think” your way out of this pattern.
+            It is to <strong className="text-white">interrupt the automatic behavioral sequence</strong> before the sabotage act completes.
+            Your critical intervention window is the moment before you respond to perceived threat of closeness or abandonment.
+          </p>
+        </div>
+
+        {/* AI — action plan personalized */}
+        <AIBlock
+          label="Your exact action plan — written for you specifically"
+          text={aiInsights?.actionInsight}
+          loading={aiLoading}
+        />
+
+        {/* ── VALUE BRIDGE ── */}
         <div className="bg-[#086788] rounded-3xl p-8 md:p-12 text-center shadow-xl relative overflow-hidden">
           <Sparkles className="absolute bottom-4 left-4 w-28 h-28 text-white/5 pointer-events-none" />
           <span className="inline-block bg-[#f0c808] text-[#086788] text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-widest mb-6">
@@ -408,18 +549,18 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
           </span>
           <h2 className="text-3xl md:text-5xl font-black text-white mb-4 leading-tight">
             You Now Have the Diagnosis.<br />
-            <span className="text-[#f0c808]">Here's the Treatment.</span>
+            <span className="text-[#f0c808]">Here’s the Treatment.</span>
           </h2>
           <p className="text-[#06aed5] font-medium text-xl max-w-2xl mx-auto">
-            Most people read their result and do nothing. The ones who change, use a system. We built two — hyper-specific to what your data revealed.
+            Most people read their result and do nothing. The ones who change, use a system.
           </p>
         </div>
 
-        {/* ── HORMOZI VALUE STACK ── */}
+        {/* ── VALUE STACK ── */}
         <div className="bg-white rounded-3xl border border-[#d6d2d2] p-8 md:p-12 shadow-sm">
           <div className="flex items-center gap-3 mb-8">
             <Star className="w-7 h-7 text-[#f0c808]" />
-            <h2 className="text-3xl font-black text-[#086788]">Everything You're Getting</h2>
+            <h2 className="text-3xl font-black text-[#086788]">Everything You’re Getting</h2>
           </div>
           <div className="space-y-1">
             {[
@@ -456,10 +597,8 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
           <h2 className="text-3xl font-black text-[#086788] mb-8 text-center">Choose Your Playbook</h2>
           <div className="grid md:grid-cols-2 gap-8">
             <PlaybookCard
-              title="Attachment Style Workbook"
-              subtitle="Rewire your bonding patterns from the root"
-              price={9.99} strikePrice={19.99}
-              badge="Workbook" highlight={false}
+              title="Attachment Style Workbook" subtitle="Rewire your bonding patterns from the root"
+              price={9.99} strikePrice={19.99} badge="Workbook" highlight={false}
               icon={<BookOpen className="w-6 h-6" />}
               gumroadUrl="https://sinadehesh.gumroad.com/l/attachment-workbook"
               cta="Get This Workbook"
@@ -472,10 +611,8 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
               ]}
             />
             <PlaybookCard
-              title="Trauma Style Playbook"
-              subtitle="Understand your trauma response in relationships"
-              price={9.99} strikePrice={19.99}
-              badge="Playbook" highlight={true}
+              title="Trauma Style Playbook" subtitle="Understand your trauma response in relationships"
+              price={9.99} strikePrice={19.99} badge="Playbook" highlight={true}
               icon={<Brain className="w-6 h-6" />}
               gumroadUrl="https://sinadehesh.gumroad.com/l/trauma-playbook"
               cta="Get This Playbook"
@@ -502,7 +639,7 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
           ].map((t, i) => (
             <div key={i} className="bg-white rounded-2xl p-6 border border-[#d6d2d2] shadow-sm flex flex-col gap-4">
               <div className="flex gap-1">{[...Array(5)].map((_, j) => <Star key={j} className="w-4 h-4 text-[#f0c808] fill-[#f0c808]" />)}</div>
-              <p className="text-[#086788]/80 font-medium text-sm leading-relaxed italic">"{t.quote}"</p>
+              <p className="text-[#086788]/80 font-medium text-sm leading-relaxed italic">“{t.quote}”</p>
               <p className="text-xs font-black text-[#086788]/45 uppercase tracking-widest mt-auto">— {t.name}</p>
             </div>
           ))}
@@ -512,7 +649,7 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
         <div className="bg-[#dd1c1a] rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 shadow-lg">
           <div className="flex items-center gap-3">
             <Clock className="w-6 h-6 text-white shrink-0 animate-pulse" />
-            <p className="font-black text-white text-lg">Introductory pricing — once it's gone, it's gone.</p>
+            <p className="font-black text-white text-lg">Introductory pricing — once it’s gone, it’s gone.</p>
           </div>
           <a href="https://sinadehesh.gumroad.com/l/sabotage-bundle" target="_blank" rel="noopener noreferrer"
             className="shrink-0 px-8 py-3 bg-white text-[#dd1c1a] rounded-xl font-black text-lg hover:bg-[#fff1d0] transition-all">
@@ -525,9 +662,7 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
           <span className="inline-block py-1.5 px-4 rounded-full bg-[#086788]/10 text-[#086788] font-black text-xs tracking-widest uppercase mb-6">
             Your Next Diagnosis
           </span>
-          <h3 className="text-3xl md:text-4xl font-black text-[#086788] mb-4">
-            What's Your Attachment Style?
-          </h3>
+          <h3 className="text-3xl md:text-4xl font-black text-[#086788] mb-4">What’s Your Attachment Style?</h3>
           <p className="text-xl font-medium text-[#086788]/70 mb-8 max-w-lg mx-auto">
             Your sabotage score links directly to your attachment wiring. Take the 12-minute clinical attachment quiz to complete your full picture.
           </p>
@@ -537,7 +672,7 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
           </Link>
         </div>
 
-        {/* ── FOOTER NOTE ── */}
+        {/* FOOTER */}
         <div className="flex items-center gap-3 justify-center pb-4 opacity-40">
           <p className="text-xs font-black uppercase tracking-widest text-[#086788]">
             Instant PDF delivery · No subscription · Secure checkout via Gumroad
