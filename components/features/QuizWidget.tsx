@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useRef } from "react";
+import { useRouter } from "next/navigation";
 import SharePrintButtons from "@/components/ui/SharePrintButtons";
 import { generatePsychologicalProfile, computeLegacyResult } from "@/lib/psychometrics/classification";
 import AttachmentReport from "@/components/report/AttachmentReport";
@@ -14,10 +15,10 @@ import { friendRoleQuestions } from "@/lib/psychometrics/friend-role/questions";
 import { friendUsedQuestions } from "@/lib/psychometrics/friend-used/questions";
 
 import AttractionFreeResult from "@/app/attraction-patterns/_components/AttractionFreeResult";
+import InfidelityFreeResult from "@/app/is-he-cheating/_components/InfidelityFreeResult";
 import AttractionMasterReport from "@/components/report/AttractionMasterReport";
 import AttractorMasterReport from "@/components/report/AttractorMasterReport";
 import PartnerAttachmentReport from "@/components/report/PartnerAttachmentReport";
-import InfidelityMasterReport from "@/components/report/InfidelityMasterReport";
 import FriendRoleMasterReport from "@/components/report/FriendRoleMasterReport";
 import FriendUsedMasterReport from "@/components/report/FriendUsedMasterReport";
 
@@ -28,9 +29,30 @@ import { generateInfidelityProfile } from "@/lib/psychometrics/infidelity/scorin
 import { generateFriendRoleProfile } from "@/lib/psychometrics/friend-role/scoring";
 import { generateFriendUsedProfile } from "@/lib/psychometrics/friend-used/scoring";
 
-import { Lock, Mail, ArrowRight, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { Lock, Mail, ArrowRight, CheckCircle2 } from "lucide-react";
+
+/** Maps the infidelity scoring output into the shape InfidelityFreeResult expects */
+function toFreeResultData(profile: ReturnType<typeof generateInfidelityProfile>, email: string) {
+  const s = profile.normalizedScores;
+  const score = profile.suspicionIndex;
+  const riskLevel: "SEVERE" | "ELEVATED" | "MODERATE" =
+    score >= 75 ? "SEVERE" : score >= 50 ? "ELEVATED" : "MODERATE";
+  return {
+    score,
+    riskLevel,
+    email,
+    vectors: {
+      digital:       s.Digital       ?? score,
+      chronological: s.Schedule      ?? score,
+      intimacy:      s.Emotion       ?? score,
+      micro:         s.Defensive     ?? score,
+    },
+  };
+}
 
 export default function QuizWidget({ quizName }: { quizName: string }) {
+  const router = useRouter();
+
   const [currentIndex, setCurrentIndex]     = useState(0);
   const [answers, setAnswers]               = useState<Record<string, string>>({});
   
@@ -38,6 +60,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const [showEmailGate, setShowEmailGate]   = useState(false);
   const [showResult, setShowResult]         = useState(false);
   const [isPremiumUnlocked, setIsPremiumUnlocked] = useState(false);
+  const [isGenerating, setIsGenerating]     = useState(false);
   const [resultData, setResultData]         = useState<any>(null);
   
   const [email, setEmail]                   = useState("");
@@ -50,6 +73,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
   const topRef = useRef<HTMLDivElement>(null);
   const isAttachment = quizName === "attachment-style";
+  const isInfidelity = quizName === "is-he-cheating";
   
   const activeQuestions = useMemo(() => {
     if (isAttachment) return attachmentQuestions; 
@@ -111,6 +135,23 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     }, 2000);
   };
 
+  /** Infidelity-specific unlock: save to localStorage then navigate to /premium page */
+  const handleInfidelityUnlock = async () => {
+    setIsGenerating(true);
+    const freeData = toFreeResultData(resultData.profile, email);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("infidelity_result", JSON.stringify(freeData));
+    }
+    try {
+      await fetch("/api/leads/unlock", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, quizType: "infidelity" }),
+      });
+    } catch (_) {}
+    router.push("/is-he-cheating/premium");
+  };
+
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !agreed) return;
@@ -132,7 +173,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       } else if (quizName === "partners-attachment-style") {
         tempResultData = { profile: generatePartnerAttachmentProfile(answers), type: "partner" };
       } else if (quizName === "is-he-cheating") {
-        tempResultData = { profile: generateInfidelityProfile(answers), type: "infidelity" };
+        tempResultData = { profile: generateInfidelityProfile(answers), type: "infidelity", email };
       } else if (quizName === "friend-group-role") {
         tempResultData = { profile: generateFriendRoleProfile(answers), type: "friendrole" };
       } else if (quizName === "are-your-friends-using-you") {
@@ -217,7 +258,6 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   if (showResult && resultData) {
     if (resultData.type === "error") return <div className="text-center py-20 font-black text-[#dd1c1a]">Analysis Failed. Please refresh.</div>;
     
-    // FIX: email={resultData.email} is now explicitly passed down!
     if (resultData.type === "attachment") return <div ref={topRef} className="w-full animate-in fade-in duration-500"><AttachmentReport profile={resultData.profile} demographics={resultData.demographics} rawAnswers={resultData.rawAnswers} email={resultData.email} /></div>;
     
     if (resultData.type === "attraction") {
@@ -234,13 +274,27 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       }
       return (
         <div ref={topRef} className="w-full animate-in fade-in">
-        <AttractionMasterReport profile={resultData.profile} />
+          <AttractionMasterReport profile={resultData.profile} />
         </div>
       );
     }
+
+    // INFIDELITY: show free teaser result with paywall — unlock redirects to /is-he-cheating/premium
+    if (resultData.type === "infidelity") {
+      const freeData = toFreeResultData(resultData.profile, resultData.email ?? email);
+      return (
+        <div ref={topRef} className="w-full animate-in fade-in">
+          <InfidelityFreeResult
+            data={freeData}
+            onUnlock={handleInfidelityUnlock}
+            isGenerating={isGenerating}
+          />
+        </div>
+      );
+    }
+
     if (resultData.type === "attractor") return <div ref={topRef} className="w-full animate-in fade-in"><AttractorMasterReport profile={resultData.profile} /></div>;
     if (resultData.type === "partner") return <div ref={topRef} className="w-full animate-in fade-in"><PartnerAttachmentReport profile={resultData.profile} /></div>;
-    if (resultData.type === "infidelity") return <div ref={topRef} className="w-full animate-in fade-in"><InfidelityMasterReport profile={resultData.profile} /></div>;
     if (resultData.type === "friendrole") return <div ref={topRef} className="w-full animate-in fade-in"><FriendRoleMasterReport profile={resultData.profile} /></div>;
     if (resultData.type === "friendused") return <div ref={topRef} className="w-full animate-in fade-in"><FriendUsedMasterReport profile={resultData.profile} /></div>;
     return <div ref={topRef} className="w-full max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-[#d6d2d2] p-8 md:p-12 text-center"><h3 className="text-3xl font-black text-[#086788] mb-8">{resultData.title || "Result"}</h3><SharePrintButtons /></div>;
