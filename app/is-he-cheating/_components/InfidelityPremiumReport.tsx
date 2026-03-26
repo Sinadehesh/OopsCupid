@@ -1,9 +1,9 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
-  ShieldAlert, Lock, Smartphone, Clock, Heart, Search,
-  Eye, Zap, AlertTriangle, Brain, MessageSquare, Target,
-  TrendingUp, ChevronDown, Star, ArrowRight, CheckCircle2
+  ShieldAlert, Smartphone, Clock, Heart, Search,
+  Eye, AlertTriangle, Brain, MessageSquare, Target,
+  TrendingUp, ChevronDown, Star, CheckCircle2,
 } from "lucide-react";
 
 interface ReportData {
@@ -21,38 +21,32 @@ interface ReportData {
 const RISK_CFG = {
   SEVERE: {
     label: "High-Risk — Active Concealment",
-    color: "rose",
     accent: "#f43f5e",
     bg: "bg-[#1a0608]",
     border: "border-rose-500/30",
     badge: "bg-rose-500/20 border-rose-500/40 text-rose-300",
     bar: "bg-rose-500",
-    gradient: "from-rose-600 to-pink-600",
-    verdict: "The behavioral fingerprint you've submitted is consistent with active concealment. Multiple deception vectors are operating simultaneously — digital withdrawal, schedule evasion, and intimacy suppression rarely co-occur without a coordinating cause.",
+    verdict: "The behavioral fingerprint you have submitted is consistent with active concealment. Multiple deception vectors are operating simultaneously — digital withdrawal, schedule evasion, and intimacy suppression rarely co-occur without a coordinating cause.",
     urgency: "Act within the next 7 days. Patterns this dense typically accelerate.",
   },
   ELEVATED: {
     label: "Elevated Risk — Suspicious Pattern",
-    color: "amber",
     accent: "#f59e0b",
     bg: "bg-[#110e02]",
     border: "border-amber-500/30",
     badge: "bg-amber-500/20 border-amber-500/40 text-amber-300",
     bar: "bg-amber-500",
-    gradient: "from-amber-500 to-orange-600",
     verdict: "Several behavioral markers in your responses align with concealment patterns. While no single signal is conclusive, their overlap crosses the threshold of coincidence. Trust the pattern, not each isolated event.",
     urgency: "Patterns at this level tend to escalate if not addressed directly.",
   },
   MODERATE: {
     label: "Moderate Signals — Gray Zone",
-    color: "indigo",
     accent: "#6366f1",
     bg: "bg-[#060818]",
     border: "border-indigo-500/30",
     badge: "bg-indigo-500/20 border-indigo-500/40 text-indigo-300",
     bar: "bg-indigo-500",
-    gradient: "from-indigo-500 to-violet-600",
-    verdict: "The signals you've reported are real but exist in ambiguous territory. Stress, life transitions, or emotional withdrawal can mimic infidelity signals. The critical question: are these a change from his baseline behavior? A shift matters far more than the absolute level.",
+    verdict: "The signals you have reported are real but exist in ambiguous territory. Stress, life transitions, or emotional withdrawal can mimic infidelity signals. The critical question: are these a change from his baseline behavior? A shift matters far more than the absolute level.",
     urgency: "Monitor over 30 days and compare against his prior baseline.",
   },
 };
@@ -97,7 +91,7 @@ const VECTORS = [
     label: "Micro-Deceptions",
     desc: "Small inconsistencies, story drift, over-explaining, defensiveness",
     insight: {
-      high: "Micro-deceptions compound. Each small lie requires maintenance — over time the story drifts. The defensiveness you're triggering by asking normal questions is itself a signal: innocent people don't experience ordinary questions as attacks.",
+      high: "Micro-deceptions compound. Each small lie requires maintenance — over time the story drifts. The defensiveness you are triggering by asking normal questions is itself a signal: innocent people do not experience ordinary questions as attacks.",
       mid: "Some story inconsistencies noted. Pay attention to whether explanations expand or contract when questioned directly.",
       low: "Narrative consistency appears mostly intact.",
     },
@@ -112,17 +106,17 @@ function getInsight(score: number, insight: { high: string; mid: string; low: st
 
 const CONFRONTATION_SCRIPTS: Record<"SEVERE" | "ELEVATED" | "MODERATE", string[]> = {
   SEVERE: [
-    '"I need to talk to you about something that has been clear to me for a while. I'm not here to argue. I'm here because I deserve honesty, and I'm going to ask you directly: what have you been hiding from me?"',
-    '"The changes in your behavior — the phone, the schedule, the distance — I've been watching and documenting. I'm not asking you to confess. I'm telling you that I already know something is wrong, and I need you to be honest with me right now."',
-    '"If there's nothing happening, you will be able to answer my questions calmly and openly. I need you to prove that to me, not just tell me."',
+    "\"I need to talk to you about something that has been clear to me for a while. I am not here to argue. I am here because I deserve honesty, and I am going to ask you directly: what have you been hiding from me?\"",
+    "\"The changes in your behavior — the phone, the schedule, the distance — I have been watching and documenting. I am not asking you to confess. I am telling you that I already know something is wrong, and I need you to be honest with me right now.\"",
+    "\"If there is nothing happening, you will be able to answer my questions calmly and openly. I need you to prove that to me, not just tell me.\"",
   ],
   ELEVATED: [
-    '"I've noticed changes in how you've been acting over the past few weeks. I'm not trying to start a fight — I'm trying to understand. Can we have an honest conversation about where you're at?"',
-    '"I feel like there's distance between us that wasn't there before. I need to know if something is going on, because your behavior has changed and I can't pretend I haven't noticed."',
+    "\"I have noticed changes in how you have been acting over the past few weeks. I am not trying to start a fight — I am trying to understand. Can we have an honest conversation about where you are at?\"",
+    "\"I feel like there is distance between us that was not there before. I need to know if something is going on, because your behavior has changed and I cannot pretend I have not noticed.\"",
   ],
   MODERATE: [
-    '"Something feels different between us lately. I'm not accusing you of anything. I just want to check in honestly — are you okay? Is there anything you've been holding back from me?"',
-    '"I've been feeling some uncertainty about us. I'd rather bring it up and be wrong than stay silent and wonder. Can we be real with each other tonight?"',
+    "\"Something feels different between us lately. I am not accusing you of anything. I just want to check in honestly — are you okay? Is there anything you have been holding back from me?\"",
+    "\"I have been feeling some uncertainty about us. I would rather bring it up and be wrong than stay silent and wonder. Can we be real with each other tonight?\"",
   ],
 };
 
@@ -136,15 +130,15 @@ const ACTION_PROTOCOL: Record<"SEVERE" | "ELEVATED" | "MODERATE", { day: string;
   ],
   ELEVATED: [
     { day: "Day 1", action: "Track for 5 days silently.", why: "Before confronting, gather 5 days of specific observations. Vague accusations are easily dismissed." },
-    { day: "Day 2", action: "Reduce your over-explaining.", why: "If you're apologizing or justifying your own feelings, stop. Your concerns are valid without a defense." },
-    { day: "Day 3", action: "Initiate a low-stakes honest check-in.", why: "Create a relaxed, non-confrontational opening. Ask if he's been feeling distant. His reaction to this question matters." },
-    { day: "Day 4", action: "Assess his response pattern.", why: "Did he get defensive? Did he turn it back on you? Healthy people don't feel attacked by 'are you okay?'" },
+    { day: "Day 2", action: "Reduce your over-explaining.", why: "If you are apologizing or justifying your own feelings, stop. Your concerns are valid without a defense." },
+    { day: "Day 3", action: "Initiate a low-stakes honest check-in.", why: "Create a relaxed, non-confrontational opening. Ask if he has been feeling distant. His reaction to this question matters." },
+    { day: "Day 4", action: "Assess his response pattern.", why: "Did he get defensive? Did he turn it back on you? Healthy people do not feel attacked by \"are you okay?\"" },
     { day: "Day 5", action: "Decide next step based on data.", why: "You now have 5 days of fresh data. Either the concern resolves or it compounds. Act accordingly." },
   ],
   MODERATE: [
-    { day: "Day 1", action: "Establish a behavior baseline.", why: "Write down what his 'normal' looks like — this is your reference point for measuring change." },
+    { day: "Day 1", action: "Establish a behavior baseline.", why: "Write down what his normal looks like — this is your reference point for measuring change." },
     { day: "Day 2", action: "Identify the change trigger.", why: "When did the shift begin? A specific date, event, or conversation often anchors the cause." },
-    { day: "Day 3", action: "Open a genuine check-in conversation.", why: "Come from curiosity, not accusation. 'You've seemed different — is everything okay?' is enough." },
+    { day: "Day 3", action: "Open a genuine check-in conversation.", why: "Come from curiosity, not accusation. Saying \"You have seemed different — is everything okay?\" is enough." },
     { day: "Day 4", action: "Evaluate his willingness to engage.", why: "A partner with nothing to hide will meet curiosity with openness, not defensiveness." },
     { day: "Day 5", action: "Re-run the assessment in 30 days.", why: "At this level, time and pattern repetition are your best diagnostic tools." },
   ],
@@ -191,7 +185,7 @@ export default function InfidelityPremiumReport({ data }: { data: ReportData }) 
             <ScoreRing score={data.score} accent={cfg.accent} />
             <h1 className="text-3xl md:text-5xl font-black mt-6 mb-3 leading-tight">{cfg.label}</h1>
             <p className="text-white/50 text-base mb-8">Threat Level: <span className="text-white font-black">{data.riskLevel}</span></p>
-            <div className="bg-white/6 border border-white/8 rounded-2xl p-6 text-left max-w-2xl mx-auto">
+            <div className="bg-white/5 border border-white/8 rounded-2xl p-6 text-left max-w-2xl mx-auto">
               <p className="text-white/30 text-xs font-black uppercase tracking-widest mb-3">AI Verdict</p>
               <p className="text-white/85 leading-relaxed text-base">{cfg.verdict}</p>
               <p className="mt-4 text-sm font-black" style={{ color: cfg.accent }}>{cfg.urgency}</p>
@@ -234,15 +228,15 @@ export default function InfidelityPremiumReport({ data }: { data: ReportData }) 
         {/* ── DIGITAL BEHAVIOR DEEP DIVE ── */}
         <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
           <h2 className="text-2xl font-black text-slate-800 mb-2 flex items-center gap-3">
-            <Smartphone className="w-6 h-6 text-rose-500" /> What He's Doing on His Phone
+            <Smartphone className="w-6 h-6 text-rose-500" /> What He Is Doing on His Phone
           </h2>
           <p className="text-slate-400 text-sm mb-6">Based on your digital behavior score of <strong>{data.vectors.digital}%</strong></p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
-              { icon: "🔒", title: "Passcode & Screen Behavior", body: data.vectors.digital >= 65 ? "High-alert: sudden passcode changes or refusing to use the phone around you are deliberate perimeter-building behaviors. He knows exactly what's there." : "Some guardedness present — watch for escalation." },
+              { icon: "🔒", title: "Passcode & Screen Behavior", body: data.vectors.digital >= 65 ? "Sudden passcode changes or refusing to use the phone around you are deliberate perimeter-building behaviors. He knows exactly what is there." : "Some guardedness present — watch for escalation." },
               { icon: "📲", title: "App & Notification Patterns", body: data.vectors.digital >= 65 ? "Notification suppression, switching apps mid-conversation, or face-down placement are automated evasion responses. This behavior becomes habitual fast." : "Digital patterns are moderately guarded." },
               { icon: "🕵️", title: "Deletion Habits", body: data.vectors.digital >= 65 ? "Regular deletion of messages, call logs, or browser history is a maintenance behavior. It is not done once — it is done consistently, which means there is something consistent to hide." : "No strong deletion signals detected." },
-              { icon: "⚡", title: "Reaction to Being Seen", body: data.vectors.digital >= 50 ? "Does he change position, go silent, or become tense when you're nearby while he's on his phone? That startle-and-cover response is involuntary and highly diagnostic." : "Phone reactions appear within normal range." },
+              { icon: "⚡", title: "Reaction to Being Seen", body: data.vectors.digital >= 50 ? "Does he change position, go silent, or become tense when you are nearby while he is on his phone? That startle-and-cover response is involuntary and highly diagnostic." : "Phone reactions appear within normal range." },
             ].map((item, i) => (
               <div key={i} className="bg-slate-50 rounded-2xl p-5 border border-slate-100">
                 <p className="text-2xl mb-2">{item.icon}</p>
@@ -261,7 +255,7 @@ export default function InfidelityPremiumReport({ data }: { data: ReportData }) 
           <div className="space-y-4">
             {[
               { label: "DARVO", full: "Deny, Attack, Reverse Victim and Offender", body: "When you raise a concern and he turns it into an attack on your mental stability or trustworthiness, this is DARVO. It is a documented manipulation tactic, not a natural response. Healthy people do not feel attacked by being asked direct questions." },
-              { label: "Gaslight Loop", full: "Weaponizing your perception", body: "If you have started to doubt your own memory of events, question whether your concerns are 'crazy', or apologize for noticing something was wrong — you have been gaslighted. This is not an accident. It is a strategy that keeps you focused on defending your own sanity rather than his behavior." },
+              { label: "Gaslight Loop", full: "Weaponizing your perception", body: "If you have started to doubt your own memory of events, question whether your concerns are irrational, or apologize for noticing something was wrong — you have been gaslighted. This is not an accident. It is a strategy that keeps you focused on defending your own sanity rather than his behavior." },
               { label: "Emotional Debt", full: "The empathy inversion", body: "When he becomes the victim of your suspicion, you end up managing his feelings while yours go unaddressed. The relationship dynamic inverts: you comfort the person causing your pain. This is not love — it is leverage." },
             ].map((item, i) => (
               <div key={i} className="border border-slate-200 rounded-2xl overflow-hidden">
@@ -329,7 +323,7 @@ export default function InfidelityPremiumReport({ data }: { data: ReportData }) 
           </div>
         </div>
 
-        {/* ── PROGRESS METER ── */}
+        {/* ── SILENCE COST METER ── */}
         <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
           <h2 className="text-2xl font-black text-slate-800 mb-2 flex items-center gap-3">
             <TrendingUp className="w-6 h-6 text-rose-500" /> What Happens If You Stay Silent
