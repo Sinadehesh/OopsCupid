@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import {
   ShieldAlert, Smartphone, Clock, Heart, Search,
   Eye, AlertTriangle, Brain, MessageSquare, Target,
-  TrendingUp, ChevronDown, Star, CheckCircle2,
+  TrendingUp, ChevronDown, Star, CheckCircle2, BookOpen, Zap, Lock,
 } from "lucide-react";
 
 interface ReportData {
@@ -132,13 +132,13 @@ const ACTION_PROTOCOL: Record<"SEVERE" | "ELEVATED" | "MODERATE", { day: string;
     { day: "Day 1", action: "Track for 5 days silently.", why: "Before confronting, gather 5 days of specific observations. Vague accusations are easily dismissed." },
     { day: "Day 2", action: "Reduce your over-explaining.", why: "If you are apologizing or justifying your own feelings, stop. Your concerns are valid without a defense." },
     { day: "Day 3", action: "Initiate a low-stakes honest check-in.", why: "Create a relaxed, non-confrontational opening. Ask if he has been feeling distant. His reaction to this question matters." },
-    { day: "Day 4", action: "Assess his response pattern.", why: "Did he get defensive? Did he turn it back on you? Healthy people do not feel attacked by \"are you okay?\"" },
+    { day: "Day 4", action: "Assess his response pattern.", why: "Did he get defensive? Did he turn it back on you? Healthy people do not feel attacked by being asked are you okay." },
     { day: "Day 5", action: "Decide next step based on data.", why: "You now have 5 days of fresh data. Either the concern resolves or it compounds. Act accordingly." },
   ],
   MODERATE: [
     { day: "Day 1", action: "Establish a behavior baseline.", why: "Write down what his normal looks like — this is your reference point for measuring change." },
     { day: "Day 2", action: "Identify the change trigger.", why: "When did the shift begin? A specific date, event, or conversation often anchors the cause." },
-    { day: "Day 3", action: "Open a genuine check-in conversation.", why: "Come from curiosity, not accusation. Saying \"You have seemed different — is everything okay?\" is enough." },
+    { day: "Day 3", action: "Open a genuine check-in conversation.", why: "Come from curiosity, not accusation. Saying you have seemed different — is everything okay is enough." },
     { day: "Day 4", action: "Evaluate his willingness to engage.", why: "A partner with nothing to hide will meet curiosity with openness, not defensiveness." },
     { day: "Day 5", action: "Re-run the assessment in 30 days.", why: "At this level, time and pattern repetition are your best diagnostic tools." },
   ],
@@ -163,6 +163,200 @@ function ScoreRing({ score, accent }: { score: number; accent: string }) {
     </div>
   );
 }
+
+// ─── PLAYBOOKS UPSELL ───────────────────────────────────────────────────────
+// Replace these with your real Gumroad links before going live
+const PLAYBOOK_GASLIGHT_URL = "https://oopscupid.gumroad.com/l/gaslight-survival-kit";
+const PLAYBOOK_HEALTHY_URL  = "https://oopscupid.gumroad.com/l/love-that-doesnt-break";
+const PLAYBOOK_BUNDLE_URL   = "https://oopscupid.gumroad.com/l/relationship-truth-bundle";
+
+function PlaybooksUpsell({ accent }: { accent: string }) {
+  const [hovered, setHovered] = useState<"gaslight" | "healthy" | null>(null);
+
+  return (
+    <div className="bg-white rounded-[32px] border border-slate-200 shadow-sm overflow-hidden">
+      {/* Header */}
+      <div className="bg-slate-900 px-8 py-7 text-center">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-white/70 text-xs font-black uppercase tracking-widest mb-4">
+          <BookOpen className="w-3.5 h-3.5" /> Recommended For You
+        </div>
+        <h2 className="text-2xl md:text-3xl font-black text-white mb-2">Now That You Know — What Do You Do?</h2>
+        <p className="text-white/50 text-sm max-w-lg mx-auto leading-relaxed">
+          Your diagnosis is complete. These two playbooks give you the exact psychological tools to either survive what is happening — or build the kind of relationship where it never could.
+        </p>
+      </div>
+
+      <div className="p-6 md:p-8 space-y-5">
+
+        {/* ── PLAYBOOK 1: Gaslight Survival Kit ── */}
+        <div
+          className={`relative rounded-3xl border-2 transition-all duration-200 overflow-hidden ${
+            hovered === "gaslight" ? "border-rose-400 shadow-lg shadow-rose-100" : "border-slate-200"
+          }`}
+          onMouseEnter={() => setHovered("gaslight")}
+          onMouseLeave={() => setHovered(null)}
+        >
+          <div className="absolute top-0 right-0 bg-rose-600 text-white text-xs font-black px-4 py-2 rounded-bl-2xl uppercase tracking-widest">
+            Most Urgent
+          </div>
+          <div className="p-7 md:p-8">
+            <div className="flex items-start gap-5 mb-6">
+              <div className="shrink-0 w-14 h-14 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center text-2xl">
+                &#129405;
+              </div>
+              <div>
+                <h3 className="text-xl md:text-2xl font-black text-slate-900 leading-tight">
+                  The Gaslight Survival Kit
+                </h3>
+                <p className="text-rose-600 font-bold text-sm mt-1">How to stay sane when someone is rewriting your reality</p>
+              </div>
+            </div>
+
+            <p className="text-slate-600 text-sm leading-relaxed mb-6">
+              Gaslighting works because it is invisible. This playbook makes it visible. You will learn to identify every manipulation tactic by name, rebuild your perception of reality in real time, and stop explaining yourself to someone who profits from your confusion.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-7">
+              {[
+                { icon: "🧠", text: "The 7 gaslighting scripts and their exact counter-moves" },
+                { icon: "📋", text: "The Reality Anchor — a daily log template to document what actually happened" },
+                { icon: "🔇", text: "The Grey Rock Protocol — how to stop feeding a manipulator" },
+                { icon: "💬", text: "Word-for-word phrases that neutralize DARVO in real time" },
+                { icon: "📍", text: "The Sanity Checklist — 12 questions to ask yourself after every fight" },
+                { icon: "🚪", text: "How to exit the conversation without escalating or collapsing" },
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-2.5 bg-slate-50 rounded-xl p-3.5 border border-slate-100">
+                  <span className="text-lg shrink-0">{item.icon}</span>
+                  <span className="text-slate-700 text-xs font-semibold leading-snug">{item.text}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="text-3xl font-black text-slate-900">$9.99</span>
+                <span className="text-slate-400 text-sm ml-2">one-time</span>
+              </div>
+              <a
+                href={PLAYBOOK_GASLIGHT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-rose-600 hover:bg-rose-500 text-white font-black text-sm px-7 py-3.5 rounded-2xl shadow-md hover:-translate-y-0.5 transition-all flex items-center gap-2"
+              >
+                <Zap className="w-4 h-4" /> Get This Playbook
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* ── PLAYBOOK 2: Love That Doesn't Break ── */}
+        <div
+          className={`relative rounded-3xl border-2 transition-all duration-200 overflow-hidden ${
+            hovered === "healthy" ? "border-emerald-400 shadow-lg shadow-emerald-100" : "border-slate-200"
+          }`}
+          onMouseEnter={() => setHovered("healthy")}
+          onMouseLeave={() => setHovered(null)}
+        >
+          <div className="absolute top-0 right-0 bg-emerald-600 text-white text-xs font-black px-4 py-2 rounded-bl-2xl uppercase tracking-widest">
+            For After
+          </div>
+          <div className="p-7 md:p-8">
+            <div className="flex items-start gap-5 mb-6">
+              <div className="shrink-0 w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-2xl">
+                &#128144;
+              </div>
+              <div>
+                <h3 className="text-xl md:text-2xl font-black text-slate-900 leading-tight">
+                  Love That Does Not Break
+                </h3>
+                <p className="text-emerald-600 font-bold text-sm mt-1">What healthy love actually looks like — and how to recognize it (or build it)</p>
+              </div>
+            </div>
+
+            <p className="text-slate-600 text-sm leading-relaxed mb-6">
+              Most women who have been in a deceptive relationship no longer know what normal looks like. This playbook rebuilds that internal compass — what a healthy disagreement sounds like, what real repair looks like after conflict, and the specific behaviors that signal genuine security vs. performed affection.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-7">
+              {[
+                { icon: "⚖\ufe0f", text: "The Healthy vs. Toxic Disagreement Blueprint — side-by-side comparison" },
+                { icon: "🔁", text: "The Repair Cycle — what emotional recovery looks like in a safe relationship" },
+                { icon: "🪞", text: "The 5 signs he is being defensive vs. the 5 signs he is being honest" },
+                { icon: "📡", text: "How to calibrate your nervous system to stop expecting betrayal" },
+                { icon: "💡", text: "The Baseline Test — 10 behaviors every secure partner consistently does" },
+                { icon: "❤\ufe0f", text: "The Intimacy Ladder — how to rebuild trust after it has been broken" },
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-2.5 bg-slate-50 rounded-xl p-3.5 border border-slate-100">
+                  <span className="text-lg shrink-0">{item.icon}</span>
+                  <span className="text-slate-700 text-xs font-semibold leading-snug">{item.text}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="text-3xl font-black text-slate-900">$9.99</span>
+                <span className="text-slate-400 text-sm ml-2">one-time</span>
+              </div>
+              <a
+                href={PLAYBOOK_HEALTHY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm px-7 py-3.5 rounded-2xl shadow-md hover:-translate-y-0.5 transition-all flex items-center gap-2"
+              >
+                <Zap className="w-4 h-4" /> Get This Playbook
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* ── BUNDLE DEAL ── */}
+        <div className="relative rounded-3xl bg-slate-900 overflow-hidden">
+          <div className="absolute inset-0 pointer-events-none"
+            style={{ background: "radial-gradient(ellipse at 60% 0%, #f43f5e18 0%, transparent 60%), radial-gradient(ellipse at 10% 100%, #10b98118 0%, transparent 60%)" }}
+          />
+          <div className="relative z-10 p-7 md:p-8">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+              <div className="flex-1">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white/60 text-xs font-black uppercase tracking-widest mb-4">
+                  <Lock className="w-3 h-3" /> Bundle & Save
+                </div>
+                <h3 className="text-2xl font-black text-white mb-2">Both Playbooks Together</h3>
+                <p className="text-white/50 text-sm leading-relaxed max-w-md">
+                  One covers how to survive what is happening. The other shows you what you actually deserve. Together, they are the complete roadmap from this moment to something better.
+                </p>
+                <div className="flex flex-wrap gap-3 mt-5">
+                  {["The Gaslight Survival Kit", "Love That Does Not Break", "Lifetime Access", "Instant Download"].map((item, i) => (
+                    <div key={i} className="flex items-center gap-1.5 text-white/60 text-xs font-bold">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="shrink-0 text-center">
+                <div className="mb-1">
+                  <span className="text-white/30 line-through text-lg font-black">$19.98</span>
+                </div>
+                <div className="text-4xl font-black text-white">$15.99</div>
+                <div className="text-emerald-400 text-xs font-black uppercase tracking-wider mb-4">Save $4 — Today Only</div>
+                <a
+                  href={PLAYBOOK_BUNDLE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-white text-slate-900 font-black text-sm px-8 py-4 rounded-2xl shadow-xl hover:bg-slate-100 hover:-translate-y-0.5 transition-all"
+                >
+                  <Star className="w-4 h-4 fill-amber-400 text-amber-400" /> Get Both — $15.99
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+// ────────────────────────────────────────────────────────────────────────────
 
 export default function InfidelityPremiumReport({ data }: { data: ReportData }) {
   const cfg = RISK_CFG[data.riskLevel];
@@ -233,10 +427,10 @@ export default function InfidelityPremiumReport({ data }: { data: ReportData }) 
           <p className="text-slate-400 text-sm mb-6">Based on your digital behavior score of <strong>{data.vectors.digital}%</strong></p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
-              { icon: "🔒", title: "Passcode & Screen Behavior", body: data.vectors.digital >= 65 ? "Sudden passcode changes or refusing to use the phone around you are deliberate perimeter-building behaviors. He knows exactly what is there." : "Some guardedness present — watch for escalation." },
-              { icon: "📲", title: "App & Notification Patterns", body: data.vectors.digital >= 65 ? "Notification suppression, switching apps mid-conversation, or face-down placement are automated evasion responses. This behavior becomes habitual fast." : "Digital patterns are moderately guarded." },
-              { icon: "🕵️", title: "Deletion Habits", body: data.vectors.digital >= 65 ? "Regular deletion of messages, call logs, or browser history is a maintenance behavior. It is not done once — it is done consistently, which means there is something consistent to hide." : "No strong deletion signals detected." },
-              { icon: "⚡", title: "Reaction to Being Seen", body: data.vectors.digital >= 50 ? "Does he change position, go silent, or become tense when you are nearby while he is on his phone? That startle-and-cover response is involuntary and highly diagnostic." : "Phone reactions appear within normal range." },
+              { icon: "\uD83D\uDD12", title: "Passcode & Screen Behavior", body: data.vectors.digital >= 65 ? "Sudden passcode changes or refusing to use the phone around you are deliberate perimeter-building behaviors. He knows exactly what is there." : "Some guardedness present — watch for escalation." },
+              { icon: "\uD83D\uDCF2", title: "App & Notification Patterns", body: data.vectors.digital >= 65 ? "Notification suppression, switching apps mid-conversation, or face-down placement are automated evasion responses. This behavior becomes habitual fast." : "Digital patterns are moderately guarded." },
+              { icon: "\uD83D\uDD75\uFE0F", title: "Deletion Habits", body: data.vectors.digital >= 65 ? "Regular deletion of messages, call logs, or browser history is a maintenance behavior. It is not done once — it is done consistently, which means there is something consistent to hide." : "No strong deletion signals detected." },
+              { icon: "\u26A1", title: "Reaction to Being Seen", body: data.vectors.digital >= 50 ? "Does he change position, go silent, or become tense when you are nearby while he is on his phone? That startle-and-cover response is involuntary and highly diagnostic." : "Phone reactions appear within normal range." },
             ].map((item, i) => (
               <div key={i} className="bg-slate-50 rounded-2xl p-5 border border-slate-100">
                 <p className="text-2xl mb-2">{item.icon}</p>
@@ -350,6 +544,9 @@ export default function InfidelityPremiumReport({ data }: { data: ReportData }) 
             ))}
           </div>
         </div>
+
+        {/* ── PLAYBOOKS UPSELL ── */}
+        <PlaybooksUpsell accent={cfg.accent} />
 
         {/* ── CLOSING SEAL ── */}
         <div className={`${cfg.bg} rounded-[32px] p-8 text-center border ${cfg.border} relative overflow-hidden`}>
