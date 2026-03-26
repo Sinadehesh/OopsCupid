@@ -1,153 +1,234 @@
-import React from "react";
-import { CloudFog, ShieldAlert, Activity, BrainCircuit, Info, Lock, FileText, MessageSquare } from "lucide-react";
+"use client";
+import React, { useState } from "react";
+import { CloudFog, ShieldAlert, Activity, BrainCircuit, Lock, Zap, ArrowRight, Sparkles } from "lucide-react";
+import GaslightingPremiumReport from "./GaslightingPremiumReport";
 
 export default function GaslightingReport({ result }: { result: any }) {
+  const [isPremiumUnlocked, setIsPremiumUnlocked] = useState(false);
+
   return (
     <div className="max-w-4xl mx-auto w-full animate-in fade-in slide-in-from-bottom-8 duration-700">
-      
-      {/* Hero Result Card (The Dream Outcome / Reality Check) */}
+
+      {/* ── FREE HERO ── */}
       <div className="bg-[#312E81] text-white rounded-[32px] p-8 md:p-12 mb-8 text-center shadow-2xl relative overflow-hidden border border-[#4F46E5]/30">
-         <div className="absolute top-0 right-0 w-64 h-64 bg-[#4F46E5]/20 rounded-full blur-3xl -z-0"></div>
-         <div className="relative z-10">
-           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-extrabold tracking-widest mb-6 bg-rose-500/20 backdrop-blur-sm border border-rose-500/30 uppercase text-rose-300">
-             <CloudFog className="w-4 h-4" /> Instant Reality Check: Level {result.level}
-           </div>
-           
-           <h2 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">Stop Doubting Yourself.</h2>
-           <h3 className="text-2xl md:text-3xl font-bold text-indigo-300 mb-6">{result.levelData.title}</h3>
-           
-           <p className="text-xl md:text-2xl italic text-indigo-200 font-medium mb-8 leading-snug">
-             "{result.levelData.subtitle.split('|')[1]?.trim() || result.levelData.subtitle}"
-           </p>
-           
-           <div className="text-lg text-indigo-100 max-w-2xl mx-auto leading-relaxed bg-white/5 p-6 rounded-2xl border border-white/10 text-left">
-             <p className="font-extrabold text-white mb-2 uppercase tracking-wide text-sm">The Brutal Truth:</p>
-             {result.levelData.advice}
-           </div>
-         </div>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#4F46E5]/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-rose-500/10 rounded-full blur-3xl" />
+        <div className="relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-extrabold tracking-widest mb-6 bg-rose-500/20 border border-rose-500/30 uppercase text-rose-300">
+            <CloudFog className="w-4 h-4" /> Reality Check · Level {result.level}
+          </div>
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">Stop Doubting Yourself.</h2>
+          <h3 className="text-2xl md:text-3xl font-bold text-indigo-300 mb-6">{result.levelData.title}</h3>
+          <p className="text-xl md:text-2xl italic text-indigo-200 font-medium mb-8 leading-snug">
+            &quot;{result.levelData.subtitle.split("|")[1]?.trim() || result.levelData.subtitle}&quot;
+          </p>
+          <div className="text-lg text-indigo-100 max-w-2xl mx-auto leading-relaxed bg-white/5 p-6 rounded-2xl border border-white/10 text-left">
+            <p className="font-extrabold text-white mb-2 uppercase tracking-wide text-sm">The Brutal Truth:</p>
+            {result.levelData.advice}
+          </div>
+        </div>
       </div>
 
-      {/* Split Bars: Tactics vs Impact (Translated to low-effort terms) */}
+      {/* ── FREE BARS ── */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col">
           <div className="flex items-center justify-between mb-4">
             <h4 className="font-extrabold text-xl text-slate-800 flex items-center gap-2"><BrainCircuit className="text-indigo-600" /> The Mind Games</h4>
             <span className="text-sm font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">{result.tacticsScore} / 160</span>
           </div>
-          <p className="text-slate-500 text-sm mb-6 flex-grow">This measures how often he denies facts, invalidates your feelings, and twists the story so it is always your fault.</p>
+          <p className="text-slate-500 text-sm mb-6 flex-grow">How often he denies facts, invalidates your feelings, and twists the story so it is always your fault.</p>
           <div className="w-full bg-slate-100 rounded-full h-4 overflow-hidden mt-auto">
-             <div className="bg-indigo-600 h-full rounded-full transition-all duration-1000" style={{ width: `${(result.tacticsScore/160)*100}%` }}></div>
+            <div className="bg-indigo-600 h-full rounded-full transition-all duration-1000" style={{ width: `${(result.tacticsScore / 160) * 100}%` }} />
           </div>
         </div>
-        
         <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col">
           <div className="flex items-center justify-between mb-4">
             <h4 className="font-extrabold text-xl text-slate-800 flex items-center gap-2"><Activity className="text-violet-600" /> The Mental Erosion</h4>
             <span className="text-sm font-bold text-violet-600 bg-violet-50 px-3 py-1 rounded-full">{result.impactScore} / 40</span>
           </div>
-          <p className="text-slate-500 text-sm mb-6 flex-grow">This measures the damage done to your confidence. A high score means you are constantly walking on eggshells and feeling like you are losing your mind.</p>
+          <p className="text-slate-500 text-sm mb-6 flex-grow">Damage done to your confidence. A high score means constantly walking on eggshells and feeling like you are losing your mind.</p>
           <div className="w-full bg-slate-100 rounded-full h-4 overflow-hidden mt-auto">
-             <div className="bg-violet-600 h-full rounded-full transition-all duration-1000" style={{ width: `${(result.impactScore/40)*100}%` }}></div>
+            <div className="bg-violet-600 h-full rounded-full transition-all duration-1000" style={{ width: `${(result.impactScore / 40) * 100}%` }} />
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        {/* Subscales Bar Chart */}
-        <div className="lg:col-span-2 bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
-          <h4 className="font-extrabold text-2xl text-slate-800 mb-2">Specific Manipulation Tactics</h4>
-          <p className="text-slate-500 text-sm mb-8">These are the exact methods he is using to control the narrative right now.</p>
-          
-          <div className="space-y-6">
-            {result.subscales.map((s: any) => (
-              <div key={s.key}>
-                 <div className="flex justify-between text-sm mb-2">
-                   <span className="font-bold text-slate-700">{s.label}</span>
-                   <span className="text-slate-500 font-extrabold">{Math.round(s.pct)}% Risk</span>
-                 </div>
-                 <div className="w-full bg-slate-100 rounded-full h-3">
-                   <div className="bg-indigo-500 h-full rounded-full transition-all duration-1000 delay-300" style={{ width: `${s.pct}%` }}></div>
-                 </div>
+      {/* ── FREE SUBSCALES ── */}
+      <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm mb-8">
+        <h4 className="font-extrabold text-2xl text-slate-800 mb-2">Specific Manipulation Tactics</h4>
+        <p className="text-slate-500 text-sm mb-8">The exact methods detected in your responses.</p>
+        <div className="space-y-6">
+          {result.subscales.map((s: any) => (
+            <div key={s.key}>
+              <div className="flex justify-between text-sm mb-2">
+                <span className="font-bold text-slate-700">{s.label}</span>
+                <span className="text-slate-500 font-extrabold">{Math.round(s.pct)}% Risk</span>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Critical Flags Gauge */}
-        <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col items-center justify-center text-center">
-          <div className="w-16 h-16 bg-rose-100 rounded-2xl flex items-center justify-center mb-6 text-rose-600 shadow-inner">
-            <ShieldAlert className="w-8 h-8" />
-          </div>
-          <h4 className="font-extrabold text-xl text-slate-800 mb-2">Danger Zone Markers</h4>
-          <p className="text-slate-500 text-sm mb-6">If these blocks are red, it means he is exhibiting severe reality-denial.</p>
-          
-          <div className="flex flex-wrap justify-center gap-1.5 mb-6">
-             {[...Array(10)].map((_, i) => (
-               <div key={i} className={`w-5 h-12 rounded-[4px] ${i < result.criticalFlags ? 'bg-rose-500 shadow-sm' : 'bg-slate-100'}`}></div>
-             ))}
-          </div>
-          <p className="text-sm font-extrabold text-rose-600 bg-rose-50 px-4 py-2 rounded-full">{result.criticalFlags} out of 10 red flags detected</p>
-        </div>
-      </div>
-
-      {/* Top Drivers Chips */}
-      <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm text-center mb-12">
-        <h4 className="font-bold text-slate-800 mb-4">Your Top 3 Behavioral Blind Spots</h4>
-        <div className="flex flex-wrap justify-center gap-3">
-           {result.topDrivers.map((driver: any, i: number) => (
-             <div key={i} className="px-5 py-2 bg-indigo-50 text-indigo-700 border border-indigo-100 rounded-full font-bold text-sm">
-               {i + 1}. {driver.label}
-             </div>
-           ))}
-        </div>
-        <div className="bg-slate-50 p-4 rounded-xl mt-6 border border-slate-100">
-           <p className="text-slate-600 text-sm font-medium">The data is clear. What you are experiencing is not normal relationship conflict. It is <strong>{result.topDrivers[0].label}</strong>.</p>
-        </div>
-      </div>
-
-      {/* HORMOZI GRAND SLAM OFFER UPSELL */}
-      <div className="bg-[#0f172a] rounded-[32px] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden border border-rose-500/30">
-        <div className="absolute top-0 right-0 -mt-20 -mr-20 w-64 h-64 bg-rose-500 opacity-20 rounded-full blur-[80px] pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-64 h-64 bg-indigo-500 opacity-10 rounded-full blur-[80px] pointer-events-none"></div>
-
-        <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold tracking-widest mb-6 bg-white/10 text-white border border-white/20 uppercase">
-            <Lock className="w-4 h-4" /> Premium Action Plan
-          </div>
-
-          <h3 className="text-3xl md:text-5xl font-extrabold mb-6 text-center leading-tight tracking-tight">
-            Stop Feeling Crazy.<br/>
-            <span className="text-[#ffbc42]">Get The Reality-Defense Playbook.</span>
-          </h3>
-          
-          <p className="text-lg md:text-xl font-medium text-slate-300 mb-10 text-center leading-relaxed">
-            You know the truth now. The next step is protecting yourself. Do not try to argue with him using logic—it will not work. Unlock the exact, step-by-step extraction plan right now.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mb-10">
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-left backdrop-blur-sm">
-              <FileText className="w-8 h-8 text-rose-400 mb-4" />
-              <h4 className="text-lg font-bold text-white mb-2">The Defense Strategy</h4>
-              <p className="text-sm text-slate-400 font-medium">A tactical, step-by-step guide on how to stop the mental erosion and safely anchor yourself in reality.</p>
+              <div className="w-full bg-slate-100 rounded-full h-3">
+                <div className="bg-indigo-500 h-full rounded-full transition-all duration-1000 delay-300" style={{ width: `${s.pct}%` }} />
+              </div>
             </div>
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-left backdrop-blur-sm relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-[#ffbc42] text-black text-[10px] font-bold px-2 py-1 rounded-bl-lg">HIGHEST VALUE</div>
-              <MessageSquare className="w-8 h-8 text-[#ffbc42] mb-4" />
-              <h4 className="text-lg font-bold text-white mb-2">"Shut It Down" Texts</h4>
-              <p className="text-sm text-slate-400 font-medium">Get polite, lethal, copy-paste text scripts that shut down his gaslighting instantly. Impossible to argue with.</p>
-            </div>
-          </div>
-
-          <button className="w-full md:w-auto bg-[#ffbc42] text-black text-xl font-extrabold py-5 px-12 rounded-xl shadow-[0_0_30px_rgba(255,188,66,0.3)] hover:bg-[#e5a93c] hover:scale-105 transition-all">
-            Unlock My Playbook & Scripts
-          </button>
-          
-          <p className="text-slate-400 text-sm mt-6 font-medium">
-            Backed by our 7-Day "Mind-Reader" Money-Back Guarantee.
-          </p>
+          ))}
         </div>
       </div>
 
+      {/* ── FREE RED FLAGS ── */}
+      <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm mb-8 text-center">
+        <div className="w-16 h-16 bg-rose-100 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+          <ShieldAlert className="w-8 h-8 text-rose-600" />
+        </div>
+        <h4 className="font-extrabold text-xl text-slate-800 mb-2">Danger Zone Markers</h4>
+        <p className="text-slate-500 text-sm mb-6">Red blocks = severe reality-denial detected.</p>
+        <div className="flex flex-wrap justify-center gap-1.5 mb-4">
+          {[...Array(10)].map((_, i) => (
+            <div key={i} className={`w-5 h-12 rounded-[4px] ${i < result.criticalFlags ? "bg-rose-500 shadow-sm" : "bg-slate-100"}`} />
+          ))}
+        </div>
+        <p className="text-sm font-extrabold text-rose-600 bg-rose-50 px-4 py-2 rounded-full inline-block">{result.criticalFlags} out of 10 red flags detected</p>
+      </div>
+
+      {/* ── PREMIUM SECTION ── */}
+      {isPremiumUnlocked ? (
+        <GaslightingPremiumReport result={result} />
+      ) : (
+        /* ── PAYWALL GATE ── */
+        <div className="relative rounded-[32px] overflow-hidden shadow-2xl">
+          {/* Ghost content */}
+          <div className="pointer-events-none select-none blur-[6px] opacity-25 p-10 bg-[#0c1120] space-y-5">
+            <div className="h-8 bg-white/20 rounded-xl w-1/2" />
+            <div className="h-40 bg-white/10 rounded-2xl" />
+            <div className="h-5 bg-white/15 rounded-lg w-full" />
+            <div className="h-5 bg-white/10 rounded-lg w-4/5" />
+            <div className="grid grid-cols-2 gap-4">
+              <div className="h-32 bg-white/10 rounded-2xl" />
+              <div className="h-32 bg-white/10 rounded-2xl" />
+            </div>
+            <div className="h-5 bg-white/15 rounded-lg w-full" />
+            <div className="h-5 bg-white/10 rounded-lg w-5/6" />
+            <div className="h-20 bg-white/8 rounded-2xl" />
+          </div>
+
+          {/* Dark overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0c1120]/70 via-[#0c1120]/92 to-[#0c1120]" />
+
+          {/* CTA CARD */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center px-4 py-12">
+            <div className="relative w-full max-w-lg">
+              {/* Glow ring */}
+              <div className="absolute -inset-1 bg-gradient-to-br from-indigo-500 via-violet-600 to-rose-500 rounded-[36px] blur-xl opacity-40" />
+              <div className="relative bg-[#0c1120] border border-white/10 rounded-[28px] p-8 md:p-10 text-center overflow-hidden">
+                <Sparkles className="absolute top-3 right-4 w-24 h-24 text-white/4 pointer-events-none" />
+
+                {/* Icon */}
+                <div className="relative inline-flex items-center justify-center mb-6">
+                  <div className="absolute w-16 h-16 rounded-full bg-indigo-500/20 blur-xl" />
+                  <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center shadow-lg">
+                    <Lock className="w-8 h-8 text-white" />
+                  </div>
+                </div>
+
+                {/* Badge */}
+                <div className="inline-flex items-center gap-2 bg-rose-500/20 border border-rose-500/30 text-rose-300 text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-5">
+                  <Zap className="w-3.5 h-3.5" /> Full Reality Defense Report
+                </div>
+
+                {/* Headline */}
+                <h3 className="text-3xl md:text-4xl font-black text-white mb-3 leading-tight">
+                  You Deserve The Full<br />
+                  <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
+                    Truth About What&apos;s Happening
+                  </span>
+                </h3>
+                <p className="text-white/50 font-medium text-sm md:text-base mb-7 leading-relaxed max-w-sm mx-auto">
+                  AI-powered personalized analysis of every tactic used on you, your erosion profile, exact scripts to shut it down, and a complete escape plan.
+                </p>
+
+                {/* Feature pills */}
+                <div className="flex flex-wrap justify-center gap-2 mb-7">
+                  {[
+                    "AI breakdown of every tactic",
+                    "Your erosion severity profile",
+                    "Population percentile context",
+                    "Personalized escape roadmap",
+                    "\"Shut It Down\" script templates",
+                    "Healthy relationship benchmark",
+                  ].map((item, i) => (
+                    <span key={i} className="inline-flex items-center gap-1.5 bg-white/8 border border-white/10 text-white/75 text-xs font-bold px-3 py-1.5 rounded-full">
+                      <span className="w-3.5 h-3.5 rounded-full bg-indigo-400/40 text-indigo-300 flex items-center justify-center text-[9px] font-black shrink-0">✓</span>
+                      {item}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="border-t border-white/8 mb-7" />
+
+                {/* Value stack teaser */}
+                <p className="text-white/30 text-xs font-black uppercase tracking-widest mb-3">What you&apos;re unlocking — total value</p>
+                <div className="space-y-1.5 text-left mb-6">
+                  {[
+                    ["AI Reality Defense Report", "€40"],
+                    ["Gaslighting Playbook PDF", "€30"],
+                    ["\"Shut It Down\" Script Pack", "€20"],
+                    ["Healthy Man Benchmark Guide", "€25"],
+                    ["7-Day Clarity Protocol", "€15"],
+                  ].map(([item, val], i) => (
+                    <div key={i} className="flex items-center justify-between">
+                      <span className="text-white/60 text-xs font-bold flex items-center gap-1.5">
+                        <span className="text-indigo-400 text-[10px]">✓</span> {item}
+                      </span>
+                      <span className="text-white/30 text-xs font-black line-through">{val}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Price */}
+                <div className="flex items-center justify-center gap-4 mb-7">
+                  <div className="text-right">
+                    <p className="text-xs font-black text-white/25 line-through">€130+ value</p>
+                    <p className="text-xs font-black text-[#ffbc42] uppercase tracking-widest">One-time only</p>
+                  </div>
+                  <div className="text-6xl font-black text-white leading-none">
+                    €12<span className="text-indigo-400">.99</span>
+                  </div>
+                  <div className="bg-rose-500 text-white text-xs font-black px-3 py-1.5 rounded-full uppercase tracking-widest">
+                    90% off
+                  </div>
+                </div>
+
+                {/* CTA */}
+                <button
+                  onClick={() => setIsPremiumUnlocked(true)}
+                  className="group relative w-full py-5 rounded-2xl font-black text-xl text-white overflow-hidden
+                    bg-gradient-to-r from-indigo-600 to-violet-600
+                    hover:from-violet-600 hover:to-indigo-600
+                    transition-all duration-300 shadow-lg shadow-indigo-500/25
+                    flex items-center justify-center gap-3">
+                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent
+                    translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+                  <Lock className="w-5 h-5 opacity-70" />
+                  Unlock My Full Report
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </button>
+
+                {/* Social proof */}
+                <div className="flex items-center justify-center gap-3 mt-5">
+                  <div className="flex -space-x-2">
+                    {["#4F46E5","#7C3AED","#db2777"].map((c, i) => (
+                      <div key={i} className="w-6 h-6 rounded-full border-2 border-[#0c1120] flex items-center justify-center text-[9px] font-black text-white"
+                        style={{ backgroundColor: c }}>★</div>
+                    ))}
+                  </div>
+                  <p className="text-white/35 text-xs font-bold">3,100+ women got clarity this month</p>
+                </div>
+
+                <p className="text-white/20 text-xs font-bold uppercase tracking-widest mt-4">
+                  Instant access · No subscription · Secure checkout
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
