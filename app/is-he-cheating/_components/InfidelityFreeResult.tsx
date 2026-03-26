@@ -26,7 +26,6 @@ const RISK_CONFIG = {
     heroBorder: "border-rose-500/30",
     badgeColor: "bg-rose-500/20 border-rose-500/40 text-rose-300",
     barColor: "bg-rose-500",
-    glowColor: "bg-rose-600/15",
   },
   ELEVATED: {
     label: "Suspicious Pattern Detected",
@@ -36,7 +35,6 @@ const RISK_CONFIG = {
     heroBorder: "border-amber-500/30",
     badgeColor: "bg-amber-500/20 border-amber-500/40 text-amber-300",
     barColor: "bg-amber-500",
-    glowColor: "bg-amber-500/15",
   },
   MODERATE: {
     label: "Low-Level Signals Present",
@@ -46,7 +44,6 @@ const RISK_CONFIG = {
     heroBorder: "border-indigo-500/30",
     badgeColor: "bg-indigo-500/20 border-indigo-500/40 text-indigo-300",
     barColor: "bg-indigo-500",
-    glowColor: "bg-indigo-600/15",
   },
 };
 
@@ -190,7 +187,7 @@ export default function InfidelityFreeResult({ data, onUnlock, isGenerating }: P
 
             {/* Badge */}
             <div className="inline-flex items-center gap-2 bg-rose-500/20 border border-rose-500/40 text-rose-300 text-xs font-black uppercase tracking-widest px-5 py-2 rounded-full mb-6">
-              <Zap className="w-3.5 h-3.5" /> Full Infidelity Investigation Report
+              <Zap className="w-3.5 h-3.5" /> Full AI Investigation Report
             </div>
 
             {/* Headline */}
@@ -202,18 +199,18 @@ export default function InfidelityFreeResult({ data, onUnlock, isGenerating }: P
             </h3>
 
             <p className="text-white/55 font-medium text-base md:text-lg mb-10 leading-relaxed">
-              A full AI-powered breakdown of every deception signal we detected. His behavioral risk profile, the exact confrontation script to use, and a complete action plan — personalized to your specific situation.
+              Our AI generates a full investigation using your exact behavioral scores — his digital patterns, the confrontation script you should use today, and a 5-day action protocol written just for your situation.
             </p>
 
             {/* Feature grid */}
             <div className="grid grid-cols-2 gap-3 mb-10 text-left">
               {[
-                { icon: "🔍", text: "Deep-dive on every deception signal" },
-                { icon: "🧠", text: "AI behavioral risk profile" },
-                { icon: "📱", text: "Digital footprint analysis" },
-                { icon: "💬", text: "Exact confrontation scripts" },
-                { icon: "📊", text: "Compared to 4,800+ relationship profiles" },
-                { icon: "🗺️", text: "Your personalized action plan" },
+                { icon: "🔍", text: "AI verdict: paranoia or proof?" },
+                { icon: "📱", text: "What he's doing on his phone" },
+                { icon: "🕐", text: "His schedule anomalies decoded" },
+                { icon: "💬", text: "Word-for-word confrontation script" },
+                { icon: "🧠", text: "Why you feel like the problem" },
+                { icon: "🗺️", text: "Your 5-day action protocol" },
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-3 bg-white/5 border border-white/8 rounded-2xl p-4">
                   <span className="text-lg shrink-0">{item.icon}</span>
@@ -226,14 +223,14 @@ export default function InfidelityFreeResult({ data, onUnlock, isGenerating }: P
             <div className="border-t border-white/8 mb-8" />
 
             {/* Value stack */}
-            <p className="text-white/30 text-xs font-black uppercase tracking-widest mb-4">Everything you&apos;re unlocking</p>
+            <p className="text-white/30 text-xs font-black uppercase tracking-widest mb-4">Everything inside</p>
             <div className="space-y-2 mb-8">
               {[
                 ["Full AI Infidelity Investigation Report", "€45"],
                 ["Deception Signal Breakdown (12 markers)", "€30"],
-                ["Confrontation Script Pack (8 scenarios)", "€25"],
-                ["Evidence Documentation Guide", "€20"],
-                ["What To Do Next: 7-Day Protocol", "€15"],
+                ["Word-for-word Confrontation Script", "€25"],
+                ["His Digital Behavior Deep-Dive", "€20"],
+                ["5-Day Action Protocol", "€15"],
               ].map(([item, val], i) => (
                 <div key={i} className="flex items-center justify-between py-2 border-b border-white/5 last:border-0">
                   <span className="text-white/65 text-sm font-medium flex items-center gap-2">
@@ -246,17 +243,17 @@ export default function InfidelityFreeResult({ data, onUnlock, isGenerating }: P
 
             {/* Price block */}
             <div className="bg-white/5 border border-white/10 rounded-3xl p-6 mb-8">
-              <p className="text-white/35 text-xs font-black uppercase tracking-widest mb-3">Total value: <span className="line-through">€135+</span></p>
+              <p className="text-white/35 text-xs font-black uppercase tracking-widest mb-4">Total value: <span className="line-through">€135+</span></p>
               <div className="flex items-center justify-center gap-5">
                 <div className="text-left">
                   <p className="text-white/30 text-sm font-black line-through">€135+</p>
-                  <p className="text-[#ffbc42] text-xs font-black uppercase tracking-widest">One-time only</p>
+                  <p className="text-[#ffbc42] text-xs font-black uppercase tracking-widest mt-1">One-time only</p>
                 </div>
                 <div className="text-6xl md:text-7xl font-black text-white leading-none">
-                  €12<span className="text-rose-400">.99</span>
+                  €9<span className="text-rose-400">.99</span>
                 </div>
                 <div className="bg-rose-500 text-white text-sm font-black px-4 py-2 rounded-xl uppercase tracking-wider">
-                  90%<br />OFF
+                  92%<br />OFF
                 </div>
               </div>
             </div>
@@ -273,7 +270,7 @@ export default function InfidelityFreeResult({ data, onUnlock, isGenerating }: P
                 disabled:opacity-70 active:scale-[0.98]"
             >
               {isGenerating ? (
-                <><div className="w-6 h-6 border-3 border-white/30 border-t-white rounded-full animate-spin" /> Generating Your Report…</>
+                <><div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Generating Your Report…</>
               ) : (
                 <><Lock className="w-6 h-6 opacity-60" /> Reveal The Full Investigation <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform duration-200" /></>
               )}
