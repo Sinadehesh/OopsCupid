@@ -1,24 +1,22 @@
 import React from "react";
 import { ScoreBar } from "./ScoreBars";
-import UnlockBanner from "./UnlockBanner";
 import { ShieldCheck, Lock, Sparkles, Navigation } from "lucide-react";
+import Link from "next/link";
 
 export default function FriendRoleMasterReport({ profile }: any) {
   const isPremium = profile.premiumUnlocked;
 
-  // Vibrant Happy Palette
   const colors = {
-    bgMain: "bg-[#fafafa]", 
-    bgCard: "bg-white",     
-    borderCard: "border-[#0D2C54]/10", 
-    textPrimary: "text-[#0D2C54]",  
+    bgMain: "bg-[#fafafa]",
+    bgCard: "bg-white",
+    borderCard: "border-[#0D2C54]/10",
+    textPrimary: "text-[#0D2C54]",
     textSecondary: "text-[#0D2C54]/70",
     accentMain: "#00A6ED",
     accentWarm: "#FFB400",
     accentRed: "#FF495C"
   };
 
-  // 12-ARCHETYPE DICTIONARY EXPANDED FOR VIRALITY
   const ARCHETYPES: Record<string, { subtitle: string, prediction: string, strengths: string, downsides: string, experience: string }> = {
     "The Leader": {
         subtitle: "You give the group shape and momentum.",
@@ -108,6 +106,11 @@ export default function FriendRoleMasterReport({ profile }: any) {
 
   const currentArchetype = ARCHETYPES[profile.primaryArchetype] || ARCHETYPES["The Leader"];
 
+  // Save to localStorage so the premium page can read it
+  if (typeof window !== "undefined") {
+    localStorage.setItem("friend_role_result", JSON.stringify(profile));
+  }
+
   const CustomLockedCard = ({ title, teaser, iconBg }: any) => {
     if (isPremium) {
       return (
@@ -119,7 +122,10 @@ export default function FriendRoleMasterReport({ profile }: any) {
       );
     }
     return (
-      <div className={`relative rounded-[32px] border p-8 md:p-10 flex flex-col h-full overflow-hidden ${colors.bgCard} ${colors.borderCard} group shadow-lg hover:shadow-xl transition-all duration-300`}>
+      <Link
+        href="/friend-group-role/premium"
+        className={`relative rounded-[32px] border p-8 md:p-10 flex flex-col h-full overflow-hidden ${colors.bgCard} ${colors.borderCard} group shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer`}
+      >
         <div className="filter blur-[6px] opacity-40 select-none">
           <h3 className={`text-2xl font-extrabold ${colors.textPrimary} mb-4`}>{title}</h3>
           <p className={`${colors.textSecondary} leading-relaxed mb-4`}>This section contains deep clinical analysis.</p>
@@ -133,19 +139,19 @@ export default function FriendRoleMasterReport({ profile }: any) {
           </div>
           <h4 className={`text-xl font-extrabold ${colors.textPrimary} mb-2`}>{title}</h4>
           <p className={`text-sm ${colors.textSecondary} mb-6 max-w-sm`}>{teaser}</p>
-          <button className={`px-6 py-3 rounded-full font-bold text-sm bg-[#00A6ED] text-white shadow-lg hover:bg-[#008cc9] transition-colors`}>
-            Unlock Full Analysis
-          </button>
+          <span className={`px-6 py-3 rounded-full font-bold text-sm bg-[#00A6ED] text-white shadow-lg group-hover:bg-[#008cc9] transition-colors`}>
+            Unlock Full Analysis →
+          </span>
         </div>
-      </div>
+      </Link>
     );
   };
 
   return (
     <div className={`py-8 md:py-12 w-full ${colors.bgMain}`}>
       <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
-        
-        {/* WIDESCREEN HERO SECTION */}
+
+        {/* HERO */}
         <div className={`rounded-[32px] border p-10 md:p-16 flex flex-col justify-center bg-[#FFB400] border-transparent shadow-xl relative overflow-hidden mb-8`}>
           <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#0D2C54] via-transparent to-transparent"></div>
           <div className="relative z-10 text-center max-w-4xl mx-auto">
@@ -157,7 +163,6 @@ export default function FriendRoleMasterReport({ profile }: any) {
               You Are:<br/>
               <span className="text-white drop-shadow-md mt-2 block">{profile.primaryArchetype || "Analyzing..."}</span>
             </h2>
-            
             {profile.secondaryArchetype && (
               <div className="inline-block bg-white/20 backdrop-blur-sm border border-white/40 px-6 py-2 rounded-full mt-4 shadow-sm">
                 <p className="text-sm font-extrabold text-[#0D2C54] uppercase tracking-wide">
@@ -180,8 +185,6 @@ export default function FriendRoleMasterReport({ profile }: any) {
             <p className={`text-lg md:text-xl leading-relaxed ${colors.textSecondary} mb-8`}>
               {currentArchetype.prediction}
             </p>
-
-            {/* NEW EXPERIENTIAL INSIGHT */}
             <div className="mt-auto bg-[#fafafa] border border-[#0D2C54]/10 rounded-2xl p-6">
                <h4 className="text-xs font-bold uppercase tracking-widest text-[#00A6ED] mb-2">How Friends Experience You</h4>
                <p className="text-base text-[#0D2C54] font-medium leading-relaxed italic">"{currentArchetype.experience}"</p>
@@ -190,12 +193,10 @@ export default function FriendRoleMasterReport({ profile }: any) {
 
           <div className={`lg:col-span-1 rounded-[32px] border p-8 md:p-10 flex flex-col h-full ${colors.bgCard} ${colors.borderCard} shadow-lg`}>
              <h3 className={`text-xl font-extrabold ${colors.textPrimary} mb-6 border-b pb-4`}>Your Trait Breakdown</h3>
-             
              <div className="mb-6">
                <h4 className="text-xs font-bold uppercase tracking-widest text-[#43B929] mb-2">Your Superpowers</h4>
                <p className="text-sm text-[#0D2C54]/80 font-medium leading-relaxed">{currentArchetype.strengths}</p>
              </div>
-
              <div>
                <h4 className="text-xs font-bold uppercase tracking-widest text-[#FF495C] mb-2">Your Blind Spots</h4>
                <p className="text-sm text-[#0D2C54]/80 font-medium leading-relaxed">{currentArchetype.downsides}</p>
@@ -206,7 +207,7 @@ export default function FriendRoleMasterReport({ profile }: any) {
         <h3 className={`text-2xl md:text-3xl font-extrabold ${colors.textPrimary} mb-8 border-b ${colors.borderCard} pb-3`}>
           Your Top 3 Dominant Behaviors
         </h3>
-        
+
         <div className="space-y-12 md:space-y-16 w-full">
           <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
             <div className={`rounded-[32px] border p-8 md:p-10 flex flex-col h-full ${colors.bgCard} ${colors.borderCard} shadow-lg`}>
@@ -215,7 +216,7 @@ export default function FriendRoleMasterReport({ profile }: any) {
                    const colorsArr = ["bg-[#00A6ED]", "bg-[#FFB400]", "bg-[#FF495C]"];
                    return (
                      <ScoreBar key={trait.name} label={trait.name} value={trait.score} color={colorsArr[i]} />
-                   )
+                   );
                 })}
               </div>
             </div>
@@ -223,14 +224,63 @@ export default function FriendRoleMasterReport({ profile }: any) {
           </div>
 
           <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
-             <CustomLockedCard title="How Others Secretly View You"  teaser="Unlock the unfiltered reality of how your friends interpret your actions when you aren't in the room." iconBg="bg-[#00A6ED]" />
-             <CustomLockedCard title="The Evolution Blueprint"  teaser="Concrete steps to step out of the box they put you in, set boundaries, and redefine your role without losing your friends." iconBg="bg-[#FFB400]" />
+            <CustomLockedCard title="How Others Secretly View You" teaser="Unlock the unfiltered reality of how your friends interpret your actions when you aren't in the room." iconBg="bg-[#00A6ED]" />
+            <CustomLockedCard title="The Evolution Blueprint" teaser="Concrete steps to step out of the box they put you in, set boundaries, and redefine your role without losing your friends." iconBg="bg-[#FFB400]" />
           </div>
         </div>
 
+        {/* UNLOCK BANNER */}
         {!isPremium && (
           <div className="mt-20">
-            <UnlockBanner />
+            <div className="bg-gradient-to-br from-[#0f172a] to-[#1e293b] rounded-[32px] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-700/50">
+              <div className="absolute top-0 right-0 -mt-20 -mr-20 w-64 h-64 bg-blue-500 opacity-20 rounded-full blur-[80px] pointer-events-none"></div>
+              <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-64 h-64 bg-yellow-400 opacity-10 rounded-full blur-[80px] pointer-events-none"></div>
+              <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold tracking-widest mb-6 bg-yellow-400/20 text-yellow-300 border border-yellow-400/30 uppercase">
+                  <Sparkles className="w-4 h-4" /> Premium Deep Analysis
+                </div>
+                <h3 className="text-3xl md:text-5xl font-extrabold mb-6 text-center leading-tight tracking-tight">
+                  Know Exactly Why Your Group<br/>
+                  <span className="text-[#FFB400]">Treats You the Way They Do.</span>
+                </h3>
+                <p className="text-lg font-medium text-slate-300 mb-10 text-center max-w-2xl leading-relaxed">
+                  The free result shows your archetype. The premium result explains your resentment trap, how your friends secretly see you, and gives you a step-by-step evolution blueprint to change it.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mb-10">
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-left">
+                    <h4 className="text-lg font-bold text-white mb-2">1. The Resentment Trap</h4>
+                    <p className="text-sm text-slate-400">Why your role secretly drains you and what builds the quiet resentment inside.</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-left">
+                    <h4 className="text-lg font-bold text-white mb-2">2. The Hidden View</h4>
+                    <p className="text-sm text-slate-400">Exactly how your friends see you when you're not in the room — including the uncomfortable truth.</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-left relative overflow-hidden">
+                    <div className="absolute top-0 right-0 bg-[#FFB400] text-black text-[10px] font-bold px-2 py-1 rounded-bl-lg">HIGHEST VALUE</div>
+                    <h4 className="text-lg font-bold text-white mb-2">3. The Blueprint</h4>
+                    <p className="text-sm text-slate-400">Actionable steps to redefine your role — right now, this week, this month.</p>
+                  </div>
+                </div>
+                <div className="flex flex-col md:flex-row items-center justify-center gap-6 w-full max-w-2xl bg-black/30 p-4 rounded-2xl border border-white/5 mb-8">
+                  <Link
+                    href="/friend-group-role/premium"
+                    className="w-full md:w-auto text-center bg-[#FFB400] text-black text-xl font-extrabold py-5 px-10 rounded-xl shadow-[0_0_30px_rgba(255,180,0,0.3)] hover:bg-[#e5a300] hover:scale-105 transition-all"
+                  >
+                    Unlock Full Analysis
+                  </Link>
+                  <div className="text-center">
+                    <div className="text-white text-3xl font-extrabold">$19.99</div>
+                    <div className="text-slate-400 text-sm font-bold uppercase tracking-widest mt-1">One-Time Payment</div>
+                  </div>
+                </div>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-slate-400 font-medium">
+                  <div className="flex items-center gap-2">
+                    <ShieldCheck className="w-5 h-5 text-green-400" />
+                    <span><strong>7-Day Guarantee:</strong> 100% money back if it's not accurate.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </div>
