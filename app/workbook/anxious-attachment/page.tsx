@@ -1,362 +1,492 @@
-import React from 'react';
-import { 
-  Heart, 
-  ShieldCheck, 
-  MessageCircle, 
-  Anchor, 
-  BrainCircuit, 
-  BookOpen, 
-  Clock, 
-  ImageIcon, 
-  PenTool, 
-  UserCircle2,
+'use client';
+
+import React, { useEffect, useMemo, useState } from 'react';
+import {
   ArrowRight,
-  Leaf
+  BrainCircuit,
+  CheckCircle2,
+  ChevronRight,
+  Clock3,
+  Heart,
+  MoonStar,
+  PenTool,
+  ShieldCheck,
+  Sparkles,
+  Waves,
+  Wind,
 } from 'lucide-react';
 
+const modules = [
+  {
+    id: 'regulate',
+    eyebrow: 'Step 1',
+    title: 'Regulate your body before you read your fears as facts',
+    description:
+      'Anxious attachment often begins in the nervous system. This first practice helps you notice your baseline, slow it down, and feel the shift in your body in real time.',
+    color: 'from-cyan-500 to-blue-600',
+    bg: 'bg-cyan-50',
+    border: 'border-cyan-200',
+    icon: Wind,
+  },
+  {
+    id: 'understand',
+    eyebrow: 'Step 2',
+    title: 'Understand what anxious attachment is actually doing',
+    description:
+      'Learn why overthinking, protest behaviors, checking, reassurance-seeking, and panic after distance happen — and why they are not proof that something is wrong with you.',
+    color: 'from-violet-500 to-fuchsia-600',
+    bg: 'bg-violet-50',
+    border: 'border-violet-200',
+    icon: BrainCircuit,
+  },
+  {
+    id: 'journal',
+    eyebrow: 'Step 3',
+    title: 'Turn spirals into insight with guided reflection',
+    description:
+      'Instead of staying inside the spiral, move it onto the page. This section makes your emotions feel easier to understand, organize, and respond to with compassion.',
+    color: 'from-amber-500 to-orange-500',
+    bg: 'bg-amber-50',
+    border: 'border-amber-200',
+    icon: PenTool,
+  },
+  {
+    id: 'secure',
+    eyebrow: 'Step 4',
+    title: 'Practice the habits of earned security',
+    description:
+      'Finish with small daily practices that make secure attachment feel lived, not theoretical: boundaries, self-soothing, repair, and self-trust.',
+    color: 'from-emerald-500 to-teal-600',
+    bg: 'bg-emerald-50',
+    border: 'border-emerald-200',
+    icon: ShieldCheck,
+  },
+];
 
-export const metadata = {
-  title: 'The Earned Security Workbook | OopsCupid',
-  description: 'A 6-Week Actionable Guide to Cultivating Inner Peace and Healthy Relationships.',
-};
+function BreathingOrb({ bpm, phase }: { bpm: number; phase: 'inhale' | 'hold' | 'exhale' }) {
+  const duration = 60 / bpm;
 
-
-export default function AnxiousAttachmentWorkbook() {
   return (
-    <main className="min-h-screen bg-slate-50 font-sans text-slate-800 selection:bg-indigo-100">
-      {/* Hero Section */}
-      <section className="relative pt-24 pb-20 px-6 lg:px-8 overflow-hidden bg-white">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=2500&auto=format&fit=crop" 
-            alt="Calm morning ocean waves" 
-            className="w-full h-full object-cover opacity-10"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-white/40 to-white/95"></div>
+    <div className="relative flex items-center justify-center">
+      <div className="absolute h-72 w-72 rounded-full bg-cyan-300/20 blur-3xl" />
+      <div
+        className="relative flex h-64 w-64 items-center justify-center rounded-full border border-white/60 bg-white/70 shadow-2xl backdrop-blur-xl"
+        style={{
+          animation: `breathe ${Math.max(duration * 2, 4)}s ease-in-out infinite`,
+        }}
+      >
+        <div className="absolute inset-5 rounded-full border border-cyan-200/80" />
+        <div className="absolute inset-10 rounded-full border border-cyan-300/70" />
+        <div className="absolute inset-16 rounded-full border border-cyan-400/60" />
+        <div className="text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Current phase</p>
+          <p className="mt-3 text-3xl font-semibold text-slate-900">{phase}</p>
+          <p className="mt-3 text-sm text-slate-500">Follow the circle and soften the exhale</p>
         </div>
-        
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
-          <span className="inline-block py-1 px-3 rounded-full bg-indigo-50 text-indigo-700 text-sm font-semibold tracking-wider mb-6">
-            A 6-WEEK ACTIONABLE GUIDE
-          </span>
-          <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6">
-            The Earned Security <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Workbook</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-slate-600 mb-10 font-light max-w-2xl mx-auto leading-relaxed">
-            Healing Anxious Attachment: Cultivating Inner Peace and Healthy Relationships.
-          </p>
-          <a href="#day-1" className="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-full shadow-sm hover:bg-indigo-700 transition-all hover:scale-105 duration-200">
-            Start Day 1 Now
-            <ArrowRight className="ml-2 w-5 h-5" />
-          </a>
-        </div>
-      </section>
+      </div>
+    </div>
+  );
+}
 
+export default function AnxiousAttachmentWorkbookPage() {
+  const [activeModule, setActiveModule] = useState('regulate');
+  const [breathsPerMinute, setBreathsPerMinute] = useState(16);
+  const [phase, setPhase] = useState<'inhale' | 'hold' | 'exhale'>('inhale');
+  const [started, setStarted] = useState(false);
 
-      {/* Introduction & Foundation */}
-      <section className="py-20 px-6 lg:px-8 bg-slate-50">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+  const breathLabel = useMemo(() => {
+    if (breathsPerMinute >= 16) return 'This feels close to anxious / activated breathing';
+    if (breathsPerMinute >= 12) return 'This is becoming steadier and more grounded';
+    if (breathsPerMinute >= 8) return 'This is a calm, regulated pace';
+    return 'This is very slow — soft, safe, and restorative';
+  }, [breathsPerMinute]);
+
+  useEffect(() => {
+    if (!started) return;
+
+    const cycle = Math.max((60 / breathsPerMinute) * 1000, 2200);
+    const inhale = cycle * 0.38;
+    const hold = cycle * 0.14;
+    const exhale = cycle * 0.48;
+
+    setPhase('inhale');
+    const holdTimer = window.setTimeout(() => setPhase('hold'), inhale);
+    const exhaleTimer = window.setTimeout(() => setPhase('exhale'), inhale + hold);
+    const restartTimer = window.setTimeout(() => setPhase('inhale'), inhale + hold + exhale);
+
+    return () => {
+      window.clearTimeout(holdTimer);
+      window.clearTimeout(exhaleTimer);
+      window.clearTimeout(restartTimer);
+    };
+  }, [breathsPerMinute, phase, started]);
+
+  const active = modules.find((m) => m.id === activeModule) ?? modules[0];
+
+  return (
+    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#ecfeff,_#ffffff_40%,_#f8fafc_100%)] text-slate-900">
+      <style jsx global>{`
+        @keyframes breathe {
+          0% { transform: scale(0.84); box-shadow: 0 0 0 0 rgba(34,211,238,0.12); }
+          38% { transform: scale(1.04); box-shadow: 0 0 0 24px rgba(34,211,238,0.08); }
+          52% { transform: scale(1.04); box-shadow: 0 0 0 28px rgba(34,211,238,0.06); }
+          100% { transform: scale(0.84); box-shadow: 0 0 0 0 rgba(34,211,238,0.04); }
+        }
+        @keyframes floatCard {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-8px); }
+        }
+        @keyframes shimmer {
+          0% { background-position: 0% 50%; }
+          100% { background-position: 100% 50%; }
+        }
+      `}</style>
+
+      <section className="relative overflow-hidden px-6 pb-16 pt-20 lg:px-8">
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_20%_20%,rgba(34,211,238,0.16),transparent_28%),radial-gradient(circle_at_80%_10%,rgba(168,85,247,0.16),transparent_26%),radial-gradient(circle_at_50%_80%,rgba(45,212,191,0.12),transparent_30%)]" />
+        <div className="mx-auto max-w-6xl">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
             <div>
-              <h2 className="text-3xl font-bold text-slate-900 mb-6 flex items-center">
-                <Leaf className="w-8 h-8 text-emerald-500 mr-3" />
-                Understanding Anxious Attachment
-              </h2>
-              <div className="space-y-6 text-lg text-slate-600 leading-relaxed">
-                <p>
-                  If you constantly wonder, <em>"Did I do something wrong?"</em> or feel a rush of panic when a text goes unanswered, you are not alone. Anxious attachment typically stems from early childhood experiences where caregiving was inconsistent. 
-                </p>
-                <p>
-                  As a result, your nervous system learned to be on high alert for abandonment, leading you to seek constant reassurance and validation.
-                </p>
-                <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                  <h3 className="text-xl font-semibold text-indigo-700 mb-2">The Goal: Earned Secure Attachment</h3>
-                  <p className="text-base">
-                    You are not destined to repeat these patterns forever. Neuroscience shows that the brain remains plastic throughout our lifespan. By integrating new tools, you can develop <strong>Earned Secure Attachment</strong>. You can learn to feel safe with closeness, handle conflict without panic, and trust your own needs.
-                  </p>
-                </div>
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white/80 px-4 py-2 text-sm font-medium text-cyan-800 backdrop-blur">
+                <Sparkles className="h-4 w-4" />
+                Interactive daily practices for anxious attachment
+              </div>
+              <h1 className="max-w-3xl text-5xl font-semibold tracking-tight text-slate-950 md:text-7xl">
+                A workbook that feels like an experience, not just a page.
+              </h1>
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 md:text-xl">
+                Start with the explanation, then click into the exercise. Learn what your anxiety is doing,
+                slow your body down visually, and practice secure attachment in a way that feels beautiful,
+                informative, and actually engaging.
+              </p>
+
+              <div className="mt-10 flex flex-wrap gap-4">
+                <a
+                  href="#experience"
+                  className="inline-flex items-center justify-center rounded-full bg-slate-950 px-7 py-4 text-sm font-semibold text-white transition hover:scale-[1.02] hover:bg-slate-800"
+                >
+                  Explore the interactive practice
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setActiveModule('regulate')}
+                  className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-7 py-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-300 hover:text-slate-950"
+                >
+                  Open the breathing module
+                </button>
+              </div>
+
+              <div className="mt-10 grid gap-4 sm:grid-cols-3">
+                {[
+                  { label: 'First experience', value: 'Explain → click → practice' },
+                  { label: 'Interactive tool', value: 'Breathing rhythm you can slow down' },
+                  { label: 'Emotional tone', value: 'Grounding, playful, premium' },
+                ].map((item) => (
+                  <div key={item.label} className="rounded-3xl border border-white/70 bg-white/70 p-5 shadow-lg shadow-cyan-100/40 backdrop-blur">
+                    <p className="text-sm text-slate-500">{item.label}</p>
+                    <p className="mt-2 font-semibold text-slate-900">{item.value}</p>
+                  </div>
+                ))}
               </div>
             </div>
+
             <div className="relative">
-              <div className="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
-                <img 
-                  src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1200&auto=format&fit=crop" 
-                  alt="Person journaling thoughtfully" 
-                  className="w-full h-full object-cover"
-                />
+              <div
+                className="rounded-[2rem] border border-white/70 bg-white/70 p-6 shadow-2xl shadow-cyan-100/50 backdrop-blur-xl"
+                style={{ animation: 'floatCard 7s ease-in-out infinite' }}
+              >
+                <div className="rounded-[1.5rem] bg-[linear-gradient(135deg,#0f172a,#164e63,#0f766e)] p-7 text-white">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm uppercase tracking-[0.28em] text-cyan-100/80">Preview</p>
+                      <p className="mt-2 text-2xl font-semibold">Day 1: Regulate before you spiral</p>
+                    </div>
+                    <MoonStar className="h-8 w-8 text-cyan-200" />
+                  </div>
+
+                  <div className="mt-8 rounded-[1.5rem] bg-white/10 p-5 backdrop-blur-sm">
+                    <div className="flex items-center justify-between text-sm text-cyan-50/90">
+                      <span>Guided breathing</span>
+                      <span>{breathsPerMinute} bpm</span>
+                    </div>
+                    <div className="mt-5 h-3 overflow-hidden rounded-full bg-white/10">
+                      <div
+                        className="h-full rounded-full bg-[linear-gradient(90deg,#67e8f9,#a78bfa,#2dd4bf)] bg-[length:200%_200%]"
+                        style={{ width: `${((18 - breathsPerMinute) / 12) * 100}%`, animation: 'shimmer 4s linear infinite' }}
+                      />
+                    </div>
+                    <p className="mt-4 text-sm leading-6 text-cyan-50/80">
+                      Users start at their current breath pace, then slowly drag toward a calmer rhythm while the visual guide responds live.
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div className="absolute -bottom-6 -left-6 bg-white p-5 rounded-2xl shadow-lg border border-slate-100 max-w-xs">
-                <p className="text-sm font-medium text-slate-800">
-                  "This is a 6-week, step-by-step program. Each week builds upon the last, focusing on your nervous system, your inner child, your boundaries, and your communication skills."
-                </p>
+              <div className="absolute -bottom-5 -left-5 rounded-2xl border border-cyan-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 shadow-lg">
+                Beautiful + educational + tactile
               </div>
             </div>
           </div>
         </div>
       </section>
 
-
-      {/* Weekly Curriculum Overview */}
-      <section className="py-20 px-6 lg:px-8 bg-white border-y border-slate-200">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">Your 6-Week Journey</h2>
-            <p className="text-lg text-slate-500 max-w-2xl mx-auto">A structured path to reparenting yourself and rewriting your relationship blueprint.</p>
+      <section id="experience" className="px-6 py-20 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-12 max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-700">How it should work</p>
+            <h2 className="mt-4 text-4xl font-semibold tracking-tight text-slate-950 md:text-5xl">
+              First they understand it. Then they click into it. Then they feel it.
+            </h2>
+            <p className="mt-5 text-lg leading-8 text-slate-600">
+              Instead of dumping all the content at once, the page becomes a guided experience. Each card explains what the exercise is for, and opening it reveals something tactile, visual, and emotionally regulating.
+            </p>
           </div>
 
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Week 1 */}
-            <div className="bg-slate-50 p-8 rounded-3xl hover:shadow-md transition-shadow duration-300">
-              <div className="w-14 h-14 bg-indigo-100 rounded-2xl flex items-center justify-center mb-6">
-                <BrainCircuit className="w-7 h-7 text-indigo-600" />
-              </div>
-              <h3 className="text-sm font-bold text-indigo-600 tracking-wider mb-2">WEEK 1</h3>
-              <h4 className="text-xl font-bold text-slate-900 mb-3">Befriending Your Nervous System</h4>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Before changing thoughts, we must calm the body. Learn the 30-Second Reset and 5-4-3-2-1 Grounding Method to exit "fight or flight" mode.
-              </p>
-            </div>
-
-
-            {/* Week 2 */}
-            <div className="bg-slate-50 p-8 rounded-3xl hover:shadow-md transition-shadow duration-300">
-              <div className="w-14 h-14 bg-rose-100 rounded-2xl flex items-center justify-center mb-6">
-                <Heart className="w-7 h-7 text-rose-600" />
-              </div>
-              <h3 className="text-sm font-bold text-rose-600 tracking-wider mb-2">WEEK 2</h3>
-              <h4 className="text-xl font-bold text-slate-900 mb-3">Healing the Inner Child</h4>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Explore the 7-Day Inner Child Practice. Learn to reparent yourself and provide the emotional response your younger self needed.
-              </p>
-            </div>
-
-
-            {/* Week 3 */}
-            <div className="bg-slate-50 p-8 rounded-3xl hover:shadow-md transition-shadow duration-300">
-              <div className="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center mb-6">
-                <ShieldCheck className="w-7 h-7 text-emerald-600" />
-              </div>
-              <h3 className="text-sm font-bold text-emerald-600 tracking-wider mb-2">WEEK 3</h3>
-              <h4 className="text-xl font-bold text-slate-900 mb-3">Setting Boundaries Without Guilt</h4>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Dismantle the belief that boundaries make you "mean." Master the S.A.F.E. Method and practice scripts to protect your energy.
-              </p>
-            </div>
-
-
-            {/* Week 4 */}
-            <div className="bg-slate-50 p-8 rounded-3xl hover:shadow-md transition-shadow duration-300">
-              <div className="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mb-6">
-                <BookOpen className="w-7 h-7 text-blue-600" />
-              </div>
-              <h3 className="text-sm font-bold text-blue-600 tracking-wider mb-2">WEEK 4</h3>
-              <h4 className="text-xl font-bold text-slate-900 mb-3">Rewriting the Narrative</h4>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Move out of reactive mode. Use daily journaling prompts to externalize fears and evaluate anxious stories rationally.
-              </p>
-            </div>
-
-
-            {/* Week 5 */}
-            <div className="bg-slate-50 p-8 rounded-3xl hover:shadow-md transition-shadow duration-300">
-              <div className="w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center mb-6">
-                <MessageCircle className="w-7 h-7 text-amber-600" />
-              </div>
-              <h3 className="text-sm font-bold text-amber-600 tracking-wider mb-2">WEEK 5</h3>
-              <h4 className="text-xl font-bold text-slate-900 mb-3">Communication & Conflict Repair</h4>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Break the anxious-avoidant cycle. Learn the "Observation-Meaning-Ask" template and the 3 R's of healthy relationship repair.
-              </p>
-            </div>
-
-
-            {/* Week 6 */}
-            <div className="bg-slate-50 p-8 rounded-3xl hover:shadow-md transition-shadow duration-300">
-              <div className="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center mb-6">
-                <Anchor className="w-7 h-7 text-purple-600" />
-              </div>
-              <h3 className="text-sm font-bold text-purple-600 tracking-wider mb-2">WEEK 6</h3>
-              <h4 className="text-xl font-bold text-slate-900 mb-3">Cultivating Earned Security</h4>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Step out of isolation. Seek secure connections, track your self-soothing progress, and accept that you deserve love without earning it.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      {/* Interactive Day 1 Section */}
-      <section id="day-1" className="py-24 px-6 lg:px-8 bg-indigo-50 scroll-mt-10">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-[2.5rem] shadow-xl overflow-hidden border border-indigo-100">
-            {/* Header */}
-            <div className="bg-indigo-600 p-10 text-white text-center relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-full opacity-10">
-                <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-                  <path fill="#ffffff" d="M38.1,-48.5C49.9,-37.8,60.2,-25.4,65.3,-11.1C70.4,3.2,70.2,19.4,62.8,32.3C55.4,45.2,40.7,54.8,24.8,61.1C8.9,67.4,-8.2,70.3,-23.4,65.8C-38.6,61.3,-51.9,49.3,-60.8,34.8C-69.7,20.3,-74.2,3.3,-70.6,-11.6C-67,-26.5,-55.4,-39.3,-41.8,-49.7C-28.2,-60.1,-14.1,-68.2,-0.2,-67.9C13.6,-67.7,27.3,-59.2,38.1,-48.5Z" transform="translate(200 200) scale(1.1)" />
-                </svg>
-              </div>
-              <div className="relative z-10">
-                <h2 className="text-indigo-100 font-bold tracking-widest text-sm mb-2 uppercase">Your Journey Begins Here</h2>
-                <h3 className="text-3xl md:text-5xl font-extrabold mb-4">DAY 1: Meeting Your Inner Child & Finding Safety</h3>
-                <div className="flex items-center justify-center space-x-2 text-indigo-50 font-medium">
-                  <Clock className="w-5 h-5" />
-                  <span>Total Time Commitment: ~30 Minutes</span>
-                </div>
-              </div>
-            </div>
-
-
-            {/* Intro Text */}
-            <div className="p-8 md:p-12">
-              <p className="text-lg text-slate-600 mb-10 leading-relaxed text-center max-w-2xl mx-auto">
-                Healing anxious attachment requires unlearning past behaviors and replacing them with new coping skills. Because your attachment style is heavily encoded in your nervous system, looking backward requires establishing a foundation of physical safety first. Today, you will combine somatic (body-based) grounding with your first inner child exercise.
-              </p>
-
-
-              <div className="space-y-12">
-                {/* Step 1 */}
-                <div className="relative pl-8 md:pl-0">
-                  <div className="hidden md:block absolute left-8 top-0 bottom-0 w-0.5 bg-indigo-100"></div>
-                  <div className="md:flex gap-8 relative">
-                    <div className="absolute -left-8 md:relative md:left-0 z-10">
-                      <div className="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center text-white shadow-lg border-4 border-white">
-                        <BrainCircuit className="w-7 h-7" />
+          <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+            <div className="space-y-4">
+              {modules.map((module) => {
+                const Icon = module.icon;
+                const isActive = activeModule === module.id;
+                return (
+                  <button
+                    key={module.id}
+                    type="button"
+                    onClick={() => setActiveModule(module.id)}
+                    className={`w-full rounded-[1.75rem] border p-6 text-left transition-all duration-300 ${
+                      isActive
+                        ? `scale-[1.01] ${module.bg} ${module.border} shadow-xl`
+                        : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-lg'
+                    }`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className={`rounded-2xl bg-gradient-to-br ${module.color} p-3 text-white shadow-lg`}>
+                        <Icon className="h-6 w-6" />
                       </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">{module.eyebrow}</p>
+                        <h3 className="mt-2 text-xl font-semibold text-slate-950">{module.title}</h3>
+                        <p className="mt-3 text-sm leading-6 text-slate-600">{module.description}</p>
+                      </div>
+                      <ChevronRight className={`mt-1 h-5 w-5 transition ${isActive ? 'translate-x-1 text-slate-900' : 'text-slate-400'}`} />
                     </div>
-                    <div className="flex-1 bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-indigo-200 transition-colors">
-                      <div className="flex items-center justify-between mb-4">
-                        <h4 className="text-xl font-bold text-slate-900">Step 1: The 30-Second Nervous System Reset</h4>
-                        <span className="text-sm font-bold text-indigo-500 bg-indigo-50 px-3 py-1 rounded-full">2 Mins</span>
-                      </div>
-                      <p className="text-slate-600 mb-4">Before you begin exploring your past, you must teach your body that stillness does not equal danger. When you feel the panic of relationship anxiety, your body often shifts into a "fight or flight" sympathetic state. Practice this reset to signal safety to your brain:</p>
-                      <ul className="space-y-3">
-                        <li className="flex items-start">
-                          <span className="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-200 text-indigo-700 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">1</span>
-                          <span className="text-slate-700">Let your eyes wander until they land on one <strong>neutral object</strong> in the room.</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-200 text-indigo-700 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">2</span>
-                          <span className="text-slate-700">Take a breath, and <strong>exhale slightly longer</strong> than you inhaled.</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-200 text-indigo-700 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">3</span>
-                          <span className="text-slate-700">Feel <strong>one spot of physical support</strong>, like your feet planted firmly on the floor or your back resting against your chair.</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+                  </button>
+                );
+              })}
+            </div>
 
-
-                {/* Step 2 */}
-                <div className="relative pl-8 md:pl-0">
-                  <div className="hidden md:block absolute left-8 top-0 bottom-0 w-0.5 bg-indigo-100"></div>
-                  <div className="md:flex gap-8 relative">
-                    <div className="absolute -left-8 md:relative md:left-0 z-10">
-                      <div className="w-16 h-16 bg-rose-500 rounded-full flex items-center justify-center text-white shadow-lg border-4 border-white">
-                        <ImageIcon className="w-7 h-7" />
-                      </div>
+            <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-2xl shadow-slate-200/70 md:p-8">
+              {activeModule === 'regulate' && (
+                <div className="grid gap-8 xl:grid-cols-[0.9fr_1.1fr]">
+                  <div>
+                    <div className="inline-flex items-center gap-2 rounded-full bg-cyan-50 px-3 py-1 text-sm font-medium text-cyan-700">
+                      <Waves className="h-4 w-4" />
+                      Interactive breathing practice
                     </div>
-                    <div className="flex-1 bg-rose-50/50 p-8 rounded-3xl border border-rose-100 hover:border-rose-200 transition-colors">
-                      <div className="flex items-center justify-between mb-4">
-                        <h4 className="text-xl font-bold text-slate-900">Step 2: The Inner Child Photo Exercise</h4>
-                        <span className="text-sm font-bold text-rose-500 bg-rose-100 px-3 py-1 rounded-full">10 Mins</span>
-                      </div>
-                      <p className="text-slate-600 mb-4">Your inner child holds the memories, emotions, and beliefs from when you were little, and this part of you still heavily influences how you react to relationship stress today.</p>
-                      <div className="bg-white p-5 rounded-2xl space-y-3 shadow-sm border border-rose-50">
-                        <p className="flex items-start text-slate-700"><ArrowRight className="w-5 h-5 text-rose-400 mr-2 flex-shrink-0 mt-0.5"/> Find one to three photographs of yourself between the ages of 4 and 10.</p>
-                        <p className="flex items-start text-slate-700"><ArrowRight className="w-5 h-5 text-rose-400 mr-2 flex-shrink-0 mt-0.5"/> Really look at the child in the pictures and ask yourself: <em>What emotion do you see in your eyes?</em></p>
-                        <p className="flex items-start text-slate-700"><ArrowRight className="w-5 h-5 text-rose-400 mr-2 flex-shrink-0 mt-0.5"/> If you find yourself thinking critical thoughts about the child in the photo, gently notice that judgment.</p>
-                        <p className="flex items-start text-slate-700"><ArrowRight className="w-5 h-5 text-rose-400 mr-2 flex-shrink-0 mt-0.5"/> Write down the emotions you observe. Do not edit or analyze them—just let the words flow.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                    <h3 className="mt-4 text-3xl font-semibold text-slate-950">A breathing guide that responds to the user</h3>
+                    <p className="mt-4 text-base leading-7 text-slate-600">
+                      The user first matches the slider to their real breathing speed. That makes the experience feel honest and personal. Then they gently drag it slower, watching the visual rhythm shift from activated to regulated.
+                    </p>
 
-
-                {/* Step 3 */}
-                <div className="relative pl-8 md:pl-0">
-                  <div className="hidden md:block absolute left-8 top-0 bottom-0 w-0.5 bg-indigo-100"></div>
-                  <div className="md:flex gap-8 relative">
-                    <div className="absolute -left-8 md:relative md:left-0 z-10">
-                      <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white shadow-lg border-4 border-white">
-                        <PenTool className="w-7 h-7" />
-                      </div>
-                    </div>
-                    <div className="flex-1 bg-blue-50/50 p-8 rounded-3xl border border-blue-100 hover:border-blue-200 transition-colors">
-                      <div className="flex items-center justify-between mb-4">
-                        <h4 className="text-xl font-bold text-slate-900">Step 3: Attachment Awareness Journaling</h4>
-                        <span className="text-sm font-bold text-blue-500 bg-blue-100 px-3 py-1 rounded-full">15 Mins</span>
-                      </div>
-                      <p className="text-slate-600 mb-5">Journaling is a powerful tool to interrupt an anxious spiral, moving you out of reactive mode and into a space where you can self-reflect and self-soothe. Spend 15 minutes writing honest, uncensored answers to the following prompts:</p>
-                      
-                      <div className="space-y-4">
-                        <div className="bg-white p-4 rounded-xl border-l-4 border-blue-400 shadow-sm">
-                          <p className="text-slate-800 font-medium italic">"What did I learn as a child about asking for what I needed, and was I allowed to want what I wanted?"</p>
+                    <div className="mt-6 space-y-4 rounded-[1.5rem] bg-slate-50 p-5">
+                      <div>
+                        <div className="flex items-center justify-between">
+                          <label htmlFor="breath-rate" className="text-sm font-semibold text-slate-700">
+                            Set your current breathing speed
+                          </label>
+                          <span className="rounded-full bg-white px-3 py-1 text-sm font-semibold text-slate-900 shadow-sm">
+                            {breathsPerMinute} bpm
+                          </span>
                         </div>
-                        <div className="bg-white p-4 rounded-xl border-l-4 border-blue-400 shadow-sm">
-                          <p className="text-slate-800 font-medium italic">"When my partner or a friend is distant, what story does my mind immediately tell me? Is that story usually accurate?"</p>
-                        </div>
-                        <div className="bg-white p-4 rounded-xl border-l-4 border-blue-400 shadow-sm">
-                          <p className="text-slate-800 font-medium italic">"What are the early signs in my body (like a tight chest, churning stomach, or clenched jaw) that I am becoming anxious about a relationship?"</p>
+                        <input
+                          id="breath-rate"
+                          type="range"
+                          min={6}
+                          max={18}
+                          value={breathsPerMinute}
+                          onChange={(e) => setBreathsPerMinute(Number(e.target.value))}
+                          className="mt-4 h-2 w-full cursor-pointer appearance-none rounded-full bg-gradient-to-r from-emerald-300 via-cyan-300 to-violet-300"
+                        />
+                        <div className="mt-3 flex justify-between text-xs text-slate-500">
+                          <span>Slower / calmer</span>
+                          <span>Faster / anxious</span>
                         </div>
                       </div>
+
+                      <div className="rounded-2xl border border-cyan-100 bg-white p-4">
+                        <p className="text-sm font-medium text-slate-800">What this pace means</p>
+                        <p className="mt-2 text-sm leading-6 text-slate-600">{breathLabel}</p>
+                      </div>
+
+                      <div className="flex flex-wrap gap-3">
+                        <button
+                          type="button"
+                          onClick={() => setStarted((v) => !v)}
+                          className="inline-flex items-center rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+                        >
+                          {started ? 'Pause rhythm' : 'Start rhythm'}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setBreathsPerMinute(16);
+                            setStarted(true);
+                          }}
+                          className="inline-flex items-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-cyan-300"
+                        >
+                          Start at anxious baseline
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setBreathsPerMinute(8);
+                            setStarted(true);
+                          }}
+                          className="inline-flex items-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-emerald-300"
+                        >
+                          Move to calmer pace
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="mt-6 grid gap-3">
+                      {[
+                        'First, match the slider to how your breath feels right now.',
+                        'Then begin the animation so the visual guide mirrors your body.',
+                        'Now drag gradually toward a slower pace and notice whether your shoulders, chest, and jaw soften.',
+                      ].map((tip) => (
+                        <div key={tip} className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-4">
+                          <CheckCircle2 className="mt-0.5 h-5 w-5 text-emerald-500" />
+                          <p className="text-sm leading-6 text-slate-600">{tip}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="rounded-[1.75rem] bg-[linear-gradient(180deg,#ecfeff,#ffffff)] p-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-700">Live visual</p>
+                        <h4 className="mt-2 text-2xl font-semibold text-slate-950">Follow the rhythm</h4>
+                      </div>
+                      <div className="rounded-full bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm">
+                        <Clock3 className="mr-2 inline h-4 w-4" />
+                        {started ? 'Running' : 'Paused'}
+                      </div>
+                    </div>
+
+                    <div className="mt-8">
+                      <BreathingOrb bpm={breathsPerMinute} phase={phase} />
+                    </div>
+
+                    <div className="mt-8 rounded-[1.5rem] border border-cyan-100 bg-white/80 p-5 backdrop-blur">
+                      <p className="text-sm font-semibold text-slate-800">Why this works</p>
+                      <p className="mt-2 text-sm leading-6 text-slate-600">
+                        An anxious state usually speeds the breath up and keeps the exhale short. This tool makes regulation visible. The user isn’t just reading advice — they are watching their body learn safety.
+                      </p>
                     </div>
                   </div>
                 </div>
+              )}
 
-
-                {/* Step 4 */}
-                <div className="relative pl-8 md:pl-0">
-                  <div className="md:flex gap-8 relative">
-                    <div className="absolute -left-8 md:relative md:left-0 z-10">
-                      <div className="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center text-white shadow-lg border-4 border-white">
-                        <UserCircle2 className="w-7 h-7" />
-                      </div>
-                    </div>
-                    <div className="flex-1 bg-emerald-50/50 p-8 rounded-3xl border border-emerald-100 hover:border-emerald-200 transition-colors">
-                      <div className="flex items-center justify-between mb-4">
-                        <h4 className="text-xl font-bold text-slate-900">Step 4: The Mirror Motive & Integration</h4>
-                        <span className="text-sm font-bold text-emerald-600 bg-emerald-100 px-3 py-1 rounded-full">3 Mins</span>
-                      </div>
-                      <p className="text-slate-600 mb-4">Developing "earned secure attachment" means building a coherent narrative where you can acknowledge difficult past experiences without being overwhelmed by them. You can begin to heal your inner child by stepping into the role of a nurturing caregiver for yourself.</p>
-                      <div className="bg-white p-6 rounded-2xl text-center border border-emerald-100 shadow-sm">
-                        <p className="text-slate-700 mb-4">Step in front of a mirror and look directly at your reflection. Practice reparenting by saying out loud:</p>
-                        <blockquote className="text-2xl font-serif text-emerald-700 mb-4">"I see you and I hear you."</blockquote>
-                        <p className="text-slate-600 text-sm">Tell yourself that you are worthy and that you are good enough to reshape your automatic beliefs.</p>
-                      </div>
-                    </div>
+              {activeModule === 'understand' && (
+                <div>
+                  <div className="inline-flex items-center gap-2 rounded-full bg-violet-50 px-3 py-1 text-sm font-medium text-violet-700">
+                    <BrainCircuit className="h-4 w-4" />
+                    Make the explanation feel intelligent and emotionally validating
                   </div>
-                </div>
-              </div>
-
-
-              {/* Day 1 Wrap Up */}
-              <div className="mt-16 bg-slate-900 rounded-3xl p-8 md:p-12 text-center relative overflow-hidden">
-                <div className="relative z-10">
-                  <h4 className="text-2xl font-bold text-white mb-4">Day 1 Wrap-Up</h4>
-                  <p className="text-slate-300 text-lg leading-relaxed max-w-2xl mx-auto">
-                    You do not need to fix everything today. Your attachment patterns took years to form and were survival strategies that worked for you in your original environment. Congratulate yourself for taking this first step; by noticing your body and acknowledging your younger self, you are already laying the foundation for secure, healthy relationships.
+                  <h3 className="mt-4 text-3xl font-semibold text-slate-950">Teach before asking them to do the exercise</h3>
+                  <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600">
+                    This section should explain anxious attachment in a way that feels warm and premium — not clinical and dry. Use interactive reveal cards for things like: why delayed texts feel so intense, what protest behaviors are, how anxious stories get formed, and why the body reacts before logic catches up.
                   </p>
+                  <div className="mt-8 grid gap-4 md:grid-cols-2">
+                    {[
+                      ['What your body is doing', 'Your nervous system treats distance like danger and starts chasing certainty.'],
+                      ['What your mind is doing', 'It rushes to create a story that explains the disconnection quickly.'],
+                      ['What this workbook changes', 'It helps you slow the body first, then question the story, then choose a secure response.'],
+                      ['How to present it', 'Short visual cards, hover depth, click-to-open details, soft gradients, and tiny guided moments.'],
+                    ].map(([title, text]) => (
+                      <div key={title} className="rounded-[1.5rem] border border-violet-100 bg-violet-50/60 p-5 shadow-sm">
+                        <h4 className="text-lg font-semibold text-slate-900">{title}</h4>
+                        <p className="mt-3 text-sm leading-6 text-slate-600">{text}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-              
+              )}
+
+              {activeModule === 'journal' && (
+                <div>
+                  <div className="inline-flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1 text-sm font-medium text-amber-700">
+                    <PenTool className="h-4 w-4" />
+                    Reflection should feel guided, not heavy
+                  </div>
+                  <h3 className="mt-4 text-3xl font-semibold text-slate-950">Turn journaling into a sequence of small wins</h3>
+                  <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600">
+                    Instead of a big block of questions, reveal one prompt at a time with progress feedback, gentle transitions, and optional examples. That makes reflection feel less intimidating and much more likely to be completed.
+                  </p>
+                  <div className="mt-8 rounded-[1.75rem] border border-amber-100 bg-amber-50/60 p-6">
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm font-semibold text-slate-800">Prompt sequence</p>
+                      <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-slate-600">1 of 3</span>
+                    </div>
+                    <blockquote className="mt-5 text-2xl font-medium leading-10 text-slate-900">
+                      “When someone I care about pulls away, what story does my mind tell me immediately?”
+                    </blockquote>
+                    <p className="mt-4 text-sm leading-6 text-slate-600">
+                      Then offer a tap target like: “Show me an example answer” or “Give me a secure reframe.” That makes the workbook feel alive.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {activeModule === 'secure' && (
+                <div>
+                  <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-700">
+                    <Heart className="h-4 w-4" />
+                    Make secure attachment feel reachable
+                  </div>
+                  <h3 className="mt-4 text-3xl font-semibold text-slate-950">End with daily practices that feel hopeful and embodied</h3>
+                  <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600">
+                    This part can feel like a progress ritual: a calming checklist, a self-trust tracker, and micro-practices for boundaries, reassurance, and repair. The visual language should feel lighter here — more spacious, more earned, more confident.
+                  </p>
+                  <div className="mt-8 grid gap-4 md:grid-cols-3">
+                    {['Name the trigger', 'Regulate the body', 'Choose the secure response'].map((item, index) => (
+                      <div key={item} className="rounded-[1.5rem] border border-emerald-100 bg-emerald-50/60 p-5">
+                        <p className="text-sm font-semibold text-emerald-700">Practice {index + 1}</p>
+                        <h4 className="mt-2 text-lg font-semibold text-slate-900">{item}</h4>
+                        <p className="mt-3 text-sm leading-6 text-slate-600">
+                          A small repeated action that makes secure attachment feel behavioral, not abstract.
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </section>
 
-
-      {/* Footer / CTA */}
-      <footer className="bg-white py-12 text-center border-t border-slate-200">
-        <p className="text-slate-500 mb-4 font-medium">Ready to continue your healing journey?</p>
-        <button className="px-8 py-3 bg-slate-900 text-white rounded-full font-medium hover:bg-slate-800 transition-colors">
-          Unlock Full 6-Week Workbook
-        </button>
-      </footer>
+      <section className="px-6 pb-24 lg:px-8">
+        <div className="mx-auto max-w-6xl rounded-[2.5rem] border border-slate-200 bg-slate-950 px-8 py-12 text-white shadow-2xl shadow-slate-300/30 md:px-12">
+          <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">Design direction</p>
+              <h2 className="mt-4 text-4xl font-semibold tracking-tight">This should feel premium, alive, and emotionally intelligent.</h2>
+              <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-300">
+                So the fix is not just “add more copy.” It is a redesigned product experience: beautiful cards, progressive disclosure, interactive tools, and exercise mechanics that visually teach regulation.
+              </p>
+            </div>
+            <a
+              href="#experience"
+              className="inline-flex items-center justify-center rounded-full bg-white px-7 py-4 text-sm font-semibold text-slate-950 transition hover:scale-[1.02]"
+            >
+              Open the interactive concept
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
