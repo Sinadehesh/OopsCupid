@@ -19,10 +19,10 @@ import {
 const modules = [
   {
     id: 'regulate',
-    eyebrow: 'Step 1',
-    title: 'Regulate your body before you read your fears as facts',
+    eyebrow: 'Day 1 · Practice 1',
+    title: 'The 30-Second Reset: calm the body before the spiral starts',
     description:
-      'Anxious attachment often begins in the nervous system. This first practice helps you notice your baseline, slow it down, and feel the shift in your body in real time.',
+      'When anxious attachment gets activated, your body often reacts before your mind can think clearly. This practice helps you interrupt panic, come back into the room, and teach your nervous system that this moment is survivable.',
     color: 'from-cyan-500 to-blue-600',
     bg: 'bg-cyan-50',
     border: 'border-cyan-200',
@@ -30,10 +30,10 @@ const modules = [
   },
   {
     id: 'understand',
-    eyebrow: 'Step 2',
-    title: 'Understand what anxious attachment is actually doing',
+    eyebrow: 'Day 1 · Practice 2',
+    title: 'Meet your anxious attachment with clarity, not shame',
     description:
-      'Learn why overthinking, protest behaviors, checking, reassurance-seeking, and panic after distance happen — and why they are not proof that something is wrong with you.',
+      'This explanation section helps you understand why unanswered texts, distance, or mixed signals can feel overwhelming. The goal is not to judge your reactions, but to understand what your system learned to fear.',
     color: 'from-violet-500 to-fuchsia-600',
     bg: 'bg-violet-50',
     border: 'border-violet-200',
@@ -41,10 +41,10 @@ const modules = [
   },
   {
     id: 'journal',
-    eyebrow: 'Step 3',
-    title: 'Turn spirals into insight with guided reflection',
+    eyebrow: 'Day 1 · Practice 3',
+    title: 'Attachment awareness journaling: name the story your mind tells',
     description:
-      'Instead of staying inside the spiral, move it onto the page. This section makes your emotions feel easier to understand, organize, and respond to with compassion.',
+      'Instead of letting the spiral stay vague and all-powerful, write it down. These prompts help you spot the stories, body signals, and childhood beliefs that keep anxious attachment alive.',
     color: 'from-amber-500 to-orange-500',
     bg: 'bg-amber-50',
     border: 'border-amber-200',
@@ -52,10 +52,10 @@ const modules = [
   },
   {
     id: 'secure',
-    eyebrow: 'Step 4',
-    title: 'Practice the habits of earned security',
+    eyebrow: 'Day 1 · Practice 4',
+    title: 'Begin earned security by becoming a safe person to yourself',
     description:
-      'Finish with small daily practices that make secure attachment feel lived, not theoretical: boundaries, self-soothing, repair, and self-trust.',
+      'Healing anxious attachment is not about becoming cold or independent in a defensive way. It is about learning how to stay with yourself, soothe yourself, and relate from stability instead of panic.',
     color: 'from-emerald-500 to-teal-600',
     bg: 'bg-emerald-50',
     border: 'border-emerald-200',
@@ -80,8 +80,8 @@ function BreathingOrb({ bpm, phase }: { bpm: number; phase: 'inhale' | 'hold' | 
         <div className="absolute inset-16 rounded-full border border-cyan-400/60" />
         <div className="text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Current phase</p>
-          <p className="mt-3 text-3xl font-semibold text-slate-900">{phase}</p>
-          <p className="mt-3 text-sm text-slate-500">Follow the circle and soften the exhale</p>
+          <p className="mt-3 text-3xl font-semibold capitalize text-slate-900">{phase}</p>
+          <p className="mt-3 text-sm text-slate-500">Inhale softly. Hold gently. Exhale longer.</p>
         </div>
       </div>
     </div>
@@ -95,10 +95,10 @@ export default function AnxiousAttachmentWorkbookPage() {
   const [started, setStarted] = useState(false);
 
   const breathLabel = useMemo(() => {
-    if (breathsPerMinute >= 16) return 'This feels close to anxious / activated breathing';
-    if (breathsPerMinute >= 12) return 'This is becoming steadier and more grounded';
-    if (breathsPerMinute >= 8) return 'This is a calm, regulated pace';
-    return 'This is very slow — soft, safe, and restorative';
+    if (breathsPerMinute >= 16) return 'This pace often feels like an activated body: shallow, quick, and watchful.';
+    if (breathsPerMinute >= 12) return 'This pace is more settled. You may notice your chest and jaw beginning to soften.';
+    if (breathsPerMinute >= 8) return 'This is a calm, regulated pace. The exhale has more space, and the body gets the message that it is safe enough to come down.';
+    return 'This is a very slow restorative rhythm. Go only as slow as feels kind and natural to your body.';
   }, [breathsPerMinute]);
 
   useEffect(() => {
@@ -120,8 +120,6 @@ export default function AnxiousAttachmentWorkbookPage() {
       window.clearTimeout(restartTimer);
     };
   }, [breathsPerMinute, phase, started]);
-
-  const active = modules.find((m) => m.id === activeModule) ?? modules[0];
 
   return (
     <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#ecfeff,_#ffffff_40%,_#f8fafc_100%)] text-slate-900">
@@ -149,15 +147,13 @@ export default function AnxiousAttachmentWorkbookPage() {
             <div>
               <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white/80 px-4 py-2 text-sm font-medium text-cyan-800 backdrop-blur">
                 <Sparkles className="h-4 w-4" />
-                Interactive daily practices for anxious attachment
+                Day 1 of the Anxious Attachment Daily Practices
               </div>
               <h1 className="max-w-3xl text-5xl font-semibold tracking-tight text-slate-950 md:text-7xl">
-                A workbook that feels like an experience, not just a page.
+                Meet your anxiety gently, then guide your body back to safety.
               </h1>
               <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 md:text-xl">
-                Start with the explanation, then click into the exercise. Learn what your anxiety is doing,
-                slow your body down visually, and practice secure attachment in a way that feels beautiful,
-                informative, and actually engaging.
+                This page is designed to help you do what anxious attachment makes difficult: pause, understand what is happening, and respond with steadiness instead of panic. Start with the explanation cards, then open each practice when you are ready.
               </p>
 
               <div className="mt-10 flex flex-wrap gap-4">
@@ -165,7 +161,7 @@ export default function AnxiousAttachmentWorkbookPage() {
                   href="#experience"
                   className="inline-flex items-center justify-center rounded-full bg-slate-950 px-7 py-4 text-sm font-semibold text-white transition hover:scale-[1.02] hover:bg-slate-800"
                 >
-                  Explore the interactive practice
+                  Start Day 1
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
                 <button
@@ -173,15 +169,15 @@ export default function AnxiousAttachmentWorkbookPage() {
                   onClick={() => setActiveModule('regulate')}
                   className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-7 py-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-300 hover:text-slate-950"
                 >
-                  Open the breathing module
+                  Open the breathing reset
                 </button>
               </div>
 
               <div className="mt-10 grid gap-4 sm:grid-cols-3">
                 {[
-                  { label: 'First experience', value: 'Explain → click → practice' },
-                  { label: 'Interactive tool', value: 'Breathing rhythm you can slow down' },
-                  { label: 'Emotional tone', value: 'Grounding, playful, premium' },
+                  { label: 'Today you will', value: 'Regulate, understand, journal, and re-anchor' },
+                  { label: 'Core skill', value: 'Learning to slow down before reacting' },
+                  { label: 'Time needed', value: 'About 30 minutes' },
                 ].map((item) => (
                   <div key={item.label} className="rounded-3xl border border-white/70 bg-white/70 p-5 shadow-lg shadow-cyan-100/40 backdrop-blur">
                     <p className="text-sm text-slate-500">{item.label}</p>
@@ -199,15 +195,15 @@ export default function AnxiousAttachmentWorkbookPage() {
                 <div className="rounded-[1.5rem] bg-[linear-gradient(135deg,#0f172a,#164e63,#0f766e)] p-7 text-white">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm uppercase tracking-[0.28em] text-cyan-100/80">Preview</p>
-                      <p className="mt-2 text-2xl font-semibold">Day 1: Regulate before you spiral</p>
+                      <p className="text-sm uppercase tracking-[0.28em] text-cyan-100/80">Today’s focus</p>
+                      <p className="mt-2 text-2xl font-semibold">From panic to presence</p>
                     </div>
                     <MoonStar className="h-8 w-8 text-cyan-200" />
                   </div>
 
                   <div className="mt-8 rounded-[1.5rem] bg-white/10 p-5 backdrop-blur-sm">
                     <div className="flex items-center justify-between text-sm text-cyan-50/90">
-                      <span>Guided breathing</span>
+                      <span>Breathing reset</span>
                       <span>{breathsPerMinute} bpm</span>
                     </div>
                     <div className="mt-5 h-3 overflow-hidden rounded-full bg-white/10">
@@ -217,13 +213,13 @@ export default function AnxiousAttachmentWorkbookPage() {
                       />
                     </div>
                     <p className="mt-4 text-sm leading-6 text-cyan-50/80">
-                      Users start at their current breath pace, then slowly drag toward a calmer rhythm while the visual guide responds live.
+                      First notice how quickly you are breathing right now. Then begin to lower the pace slowly and let your exhale become longer than your inhale.
                     </p>
                   </div>
                 </div>
               </div>
               <div className="absolute -bottom-5 -left-5 rounded-2xl border border-cyan-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 shadow-lg">
-                Beautiful + educational + tactile
+                Explanation first, then practice
               </div>
             </div>
           </div>
@@ -233,12 +229,12 @@ export default function AnxiousAttachmentWorkbookPage() {
       <section id="experience" className="px-6 py-20 lg:px-8">
         <div className="mx-auto max-w-6xl">
           <div className="mb-12 max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-700">How it should work</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-700">Day 1 sequence</p>
             <h2 className="mt-4 text-4xl font-semibold tracking-tight text-slate-950 md:text-5xl">
-              First they understand it. Then they click into it. Then they feel it.
+              Understand what is happening. Then move through the practices in order.
             </h2>
             <p className="mt-5 text-lg leading-8 text-slate-600">
-              Instead of dumping all the content at once, the page becomes a guided experience. Each card explains what the exercise is for, and opening it reveals something tactile, visual, and emotionally regulating.
+              Anxious attachment becomes easier to work with when you stop treating every wave of fear as an emergency. These four practices help you ground the body, understand the pattern, give language to the spiral, and end the session with self-trust.
             </p>
           </div>
 
@@ -280,18 +276,34 @@ export default function AnxiousAttachmentWorkbookPage() {
                   <div>
                     <div className="inline-flex items-center gap-2 rounded-full bg-cyan-50 px-3 py-1 text-sm font-medium text-cyan-700">
                       <Waves className="h-4 w-4" />
-                      Interactive breathing practice
+                      Practice 1 · The 30-Second Reset
                     </div>
-                    <h3 className="mt-4 text-3xl font-semibold text-slate-950">A breathing guide that responds to the user</h3>
+                    <h3 className="mt-4 text-3xl font-semibold text-slate-950">Calm the body before you try to calm the mind</h3>
                     <p className="mt-4 text-base leading-7 text-slate-600">
-                      The user first matches the slider to their real breathing speed. That makes the experience feel honest and personal. Then they gently drag it slower, watching the visual rhythm shift from activated to regulated.
+                      Before you look at your thoughts, come back to your body. When anxious attachment is activated, your system can interpret distance, silence, or uncertainty as danger. This short reset interrupts that alarm.
                     </p>
+
+                    <div className="mt-6 rounded-[1.5rem] border border-cyan-100 bg-cyan-50/60 p-5">
+                      <p className="text-sm font-semibold uppercase tracking-[0.22em] text-cyan-700">How to do it</p>
+                      <div className="mt-4 grid gap-3">
+                        {[
+                          'Let your eyes move around the room until they land on one neutral object.',
+                          'Take one slow breath in, then let the exhale last slightly longer than the inhale.',
+                          'Notice one point of support: your feet on the floor, your back in the chair, or your hand resting on your chest.',
+                        ].map((tip) => (
+                          <div key={tip} className="flex items-start gap-3 rounded-2xl border border-white/80 bg-white px-4 py-4">
+                            <CheckCircle2 className="mt-0.5 h-5 w-5 text-emerald-500" />
+                            <p className="text-sm leading-6 text-slate-700">{tip}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
 
                     <div className="mt-6 space-y-4 rounded-[1.5rem] bg-slate-50 p-5">
                       <div>
                         <div className="flex items-center justify-between">
                           <label htmlFor="breath-rate" className="text-sm font-semibold text-slate-700">
-                            Set your current breathing speed
+                            Match your breathing to how it feels right now
                           </label>
                           <span className="rounded-full bg-white px-3 py-1 text-sm font-semibold text-slate-900 shadow-sm">
                             {breathsPerMinute} bpm
@@ -308,7 +320,7 @@ export default function AnxiousAttachmentWorkbookPage() {
                         />
                         <div className="mt-3 flex justify-between text-xs text-slate-500">
                           <span>Slower / calmer</span>
-                          <span>Faster / anxious</span>
+                          <span>Faster / activated</span>
                         </div>
                       </div>
 
@@ -333,7 +345,7 @@ export default function AnxiousAttachmentWorkbookPage() {
                           }}
                           className="inline-flex items-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-cyan-300"
                         >
-                          Start at anxious baseline
+                          Start where anxiety often lives
                         </button>
                         <button
                           type="button"
@@ -343,22 +355,16 @@ export default function AnxiousAttachmentWorkbookPage() {
                           }}
                           className="inline-flex items-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-emerald-300"
                         >
-                          Move to calmer pace
+                          Move toward a calmer pace
                         </button>
                       </div>
                     </div>
 
-                    <div className="mt-6 grid gap-3">
-                      {[
-                        'First, match the slider to how your breath feels right now.',
-                        'Then begin the animation so the visual guide mirrors your body.',
-                        'Now drag gradually toward a slower pace and notice whether your shoulders, chest, and jaw soften.',
-                      ].map((tip) => (
-                        <div key={tip} className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-4">
-                          <CheckCircle2 className="mt-0.5 h-5 w-5 text-emerald-500" />
-                          <p className="text-sm leading-6 text-slate-600">{tip}</p>
-                        </div>
-                      ))}
+                    <div className="mt-6 rounded-[1.5rem] border border-slate-200 bg-white p-5">
+                      <p className="text-sm font-semibold text-slate-800">What to notice</p>
+                      <p className="mt-3 text-sm leading-6 text-slate-600">
+                        As you slow the breath, notice whether your shoulders lower, your jaw unclenches, or your chest softens even a little. You are not trying to force calm. You are giving your body a new experience of safety.
+                      </p>
                     </div>
                   </div>
 
@@ -379,9 +385,9 @@ export default function AnxiousAttachmentWorkbookPage() {
                     </div>
 
                     <div className="mt-8 rounded-[1.5rem] border border-cyan-100 bg-white/80 p-5 backdrop-blur">
-                      <p className="text-sm font-semibold text-slate-800">Why this works</p>
+                      <p className="text-sm font-semibold text-slate-800">Why this helps anxious attachment</p>
                       <p className="mt-2 text-sm leading-6 text-slate-600">
-                        An anxious state usually speeds the breath up and keeps the exhale short. This tool makes regulation visible. The user isn’t just reading advice — they are watching their body learn safety.
+                        An anxious state usually speeds the breath up and makes the body feel urgent. By lengthening the exhale and tracking the rhythm visually, you teach your system that uncertainty does not automatically mean danger.
                       </p>
                     </div>
                   </div>
@@ -392,24 +398,30 @@ export default function AnxiousAttachmentWorkbookPage() {
                 <div>
                   <div className="inline-flex items-center gap-2 rounded-full bg-violet-50 px-3 py-1 text-sm font-medium text-violet-700">
                     <BrainCircuit className="h-4 w-4" />
-                    Make the explanation feel intelligent and emotionally validating
+                    Practice 2 · Understanding the pattern
                   </div>
-                  <h3 className="mt-4 text-3xl font-semibold text-slate-950">Teach before asking them to do the exercise</h3>
+                  <h3 className="mt-4 text-3xl font-semibold text-slate-950">Why anxious attachment can feel so intense</h3>
                   <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600">
-                    This section should explain anxious attachment in a way that feels warm and premium — not clinical and dry. Use interactive reveal cards for things like: why delayed texts feel so intense, what protest behaviors are, how anxious stories get formed, and why the body reacts before logic catches up.
+                    If you panic when someone is distant, takes hours to reply, or suddenly feels harder to read, it does not mean you are weak or “too much.” It often means your nervous system learned early that connection was inconsistent, and now it scans for signs of abandonment before your rational mind has time to step in.
                   </p>
                   <div className="mt-8 grid gap-4 md:grid-cols-2">
                     {[
-                      ['What your body is doing', 'Your nervous system treats distance like danger and starts chasing certainty.'],
-                      ['What your mind is doing', 'It rushes to create a story that explains the disconnection quickly.'],
-                      ['What this workbook changes', 'It helps you slow the body first, then question the story, then choose a secure response.'],
-                      ['How to present it', 'Short visual cards, hover depth, click-to-open details, soft gradients, and tiny guided moments.'],
+                      ['What your body may do', 'You may feel a tight chest, shallow breathing, a drop in the stomach, restlessness, or the urge to act immediately.'],
+                      ['What your mind may do', 'You may start replaying messages, searching for reassurance, assuming rejection, or trying to close the distance fast.'],
+                      ['What anxious attachment is trying to do', 'It is trying to protect connection. The problem is that the strategies it learned often create more fear instead of more safety.'],
+                      ['What healing looks like', 'Healing means learning to stay present with the activation, question the fearful story, and choose a steadier response.'],
                     ].map(([title, text]) => (
                       <div key={title} className="rounded-[1.5rem] border border-violet-100 bg-violet-50/60 p-5 shadow-sm">
                         <h4 className="text-lg font-semibold text-slate-900">{title}</h4>
                         <p className="mt-3 text-sm leading-6 text-slate-600">{text}</p>
                       </div>
                     ))}
+                  </div>
+                  <div className="mt-8 rounded-[1.75rem] border border-violet-100 bg-white p-6">
+                    <p className="text-sm font-semibold text-slate-800">A grounding reframe</p>
+                    <p className="mt-3 text-lg leading-8 text-slate-700">
+                      “My nervous system is reacting to a cue of possible loss. That reaction is real, but it is not always accurate. I can slow down before I decide what this means.”
+                    </p>
                   </div>
                 </div>
               )}
@@ -418,22 +430,34 @@ export default function AnxiousAttachmentWorkbookPage() {
                 <div>
                   <div className="inline-flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1 text-sm font-medium text-amber-700">
                     <PenTool className="h-4 w-4" />
-                    Reflection should feel guided, not heavy
+                    Practice 3 · Attachment awareness journaling
                   </div>
-                  <h3 className="mt-4 text-3xl font-semibold text-slate-950">Turn journaling into a sequence of small wins</h3>
+                  <h3 className="mt-4 text-3xl font-semibold text-slate-950">Write the spiral down so you can actually see it</h3>
                   <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600">
-                    Instead of a big block of questions, reveal one prompt at a time with progress feedback, gentle transitions, and optional examples. That makes reflection feel less intimidating and much more likely to be completed.
+                    Journaling helps move you out of reactive mode and into observation. You are not writing to be polished. You are writing to name what your body feels, what your mind assumes, and what your younger self may have learned about closeness.
                   </p>
-                  <div className="mt-8 rounded-[1.75rem] border border-amber-100 bg-amber-50/60 p-6">
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm font-semibold text-slate-800">Prompt sequence</p>
-                      <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-slate-600">1 of 3</span>
+                  <div className="mt-8 grid gap-4">
+                    {[
+                      'When someone I care about pulls away, what story does my mind tell me immediately?',
+                      'What signs do I notice first in my body when I start feeling anxious about a relationship?',
+                      'What did I learn as a child about asking for reassurance, comfort, or closeness?',
+                    ].map((prompt, index) => (
+                      <div key={prompt} className="rounded-[1.5rem] border border-amber-100 bg-amber-50/60 p-5">
+                        <p className="text-sm font-semibold text-amber-700">Prompt {index + 1}</p>
+                        <blockquote className="mt-3 text-xl font-medium leading-9 text-slate-900">
+                          “{prompt}”
+                        </blockquote>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-8 rounded-[1.75rem] border border-slate-200 bg-white p-6">
+                    <p className="text-sm font-semibold text-slate-800">After writing, add these two lines</p>
+                    <div className="mt-4 space-y-3 text-sm leading-6 text-slate-700">
+                      <p>1. “What I am afraid of is…”</p>
+                      <p>2. “What I know for sure, right now, is…”</p>
                     </div>
-                    <blockquote className="mt-5 text-2xl font-medium leading-10 text-slate-900">
-                      “When someone I care about pulls away, what story does my mind tell me immediately?”
-                    </blockquote>
                     <p className="mt-4 text-sm leading-6 text-slate-600">
-                      Then offer a tap target like: “Show me an example answer” or “Give me a secure reframe.” That makes the workbook feel alive.
+                      This helps separate fear from fact — one of the core skills of earned secure attachment.
                     </p>
                   </div>
                 </div>
@@ -443,22 +467,30 @@ export default function AnxiousAttachmentWorkbookPage() {
                 <div>
                   <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-700">
                     <Heart className="h-4 w-4" />
-                    Make secure attachment feel reachable
+                    Practice 4 · Re-anchoring in earned security
                   </div>
-                  <h3 className="mt-4 text-3xl font-semibold text-slate-950">End with daily practices that feel hopeful and embodied</h3>
+                  <h3 className="mt-4 text-3xl font-semibold text-slate-950">End today by becoming a safer home for yourself</h3>
                   <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600">
-                    This part can feel like a progress ritual: a calming checklist, a self-trust tracker, and micro-practices for boundaries, reassurance, and repair. The visual language should feel lighter here — more spacious, more earned, more confident.
+                    The goal is not to stop needing people. The goal is to stop abandoning yourself when fear appears. This final practice helps you leave Day 1 feeling steadier, kinder, and more rooted in your own presence.
                   </p>
                   <div className="mt-8 grid gap-4 md:grid-cols-3">
-                    {['Name the trigger', 'Regulate the body', 'Choose the secure response'].map((item, index) => (
-                      <div key={item} className="rounded-[1.5rem] border border-emerald-100 bg-emerald-50/60 p-5">
-                        <p className="text-sm font-semibold text-emerald-700">Practice {index + 1}</p>
-                        <h4 className="mt-2 text-lg font-semibold text-slate-900">{item}</h4>
-                        <p className="mt-3 text-sm leading-6 text-slate-600">
-                          A small repeated action that makes secure attachment feel behavioral, not abstract.
-                        </p>
+                    {[
+                      ['Step 1', 'Name the trigger', 'Say out loud what activated you: “I felt anxious when the distance showed up.”'],
+                      ['Step 2', 'Offer reassurance inward', 'Place a hand on your chest and say: “I am here. I do not have to solve this instantly to be safe.”'],
+                      ['Step 3', 'Choose the secure next move', 'Wait, breathe, and ask what action would feel respectful, grounded, and self-honoring.'],
+                    ].map(([step, title, text]) => (
+                      <div key={step} className="rounded-[1.5rem] border border-emerald-100 bg-emerald-50/60 p-5">
+                        <p className="text-sm font-semibold text-emerald-700">{step}</p>
+                        <h4 className="mt-2 text-lg font-semibold text-slate-900">{title}</h4>
+                        <p className="mt-3 text-sm leading-6 text-slate-600">{text}</p>
                       </div>
                     ))}
+                  </div>
+                  <div className="mt-8 rounded-[1.75rem] border border-emerald-100 bg-white p-6">
+                    <p className="text-sm font-semibold text-slate-800">Closing reflection</p>
+                    <p className="mt-3 text-lg leading-8 text-slate-700">
+                      “My attachment patterns were survival strategies. I can honor why they formed and still choose something gentler now.”
+                    </p>
                   </div>
                 </div>
               )}
@@ -471,17 +503,17 @@ export default function AnxiousAttachmentWorkbookPage() {
         <div className="mx-auto max-w-6xl rounded-[2.5rem] border border-slate-200 bg-slate-950 px-8 py-12 text-white shadow-2xl shadow-slate-300/30 md:px-12">
           <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">Design direction</p>
-              <h2 className="mt-4 text-4xl font-semibold tracking-tight">This should feel premium, alive, and emotionally intelligent.</h2>
+              <p className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">Day 1 wrap-up</p>
+              <h2 className="mt-4 text-4xl font-semibold tracking-tight">You do not need to heal everything today.</h2>
               <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-300">
-                So the fix is not just “add more copy.” It is a redesigned product experience: beautiful cards, progressive disclosure, interactive tools, and exercise mechanics that visually teach regulation.
+                Today’s work is about noticing, slowing down, and relating to yourself differently. Even a small pause before panic is progress. Even one slower breath is progress. This is how earned security begins.
               </p>
             </div>
             <a
               href="#experience"
               className="inline-flex items-center justify-center rounded-full bg-white px-7 py-4 text-sm font-semibold text-slate-950 transition hover:scale-[1.02]"
             >
-              Open the interactive concept
+              Revisit today’s practices
               <ArrowRight className="ml-2 h-4 w-4" />
             </a>
           </div>
