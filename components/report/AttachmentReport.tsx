@@ -64,6 +64,28 @@ export default function AttachmentReport({ profile, demographics, rawAnswers, em
           </div>
         </div>
 
+        {/* Anxious Attachment Workbook Card — only shown for Anxious result */}
+        {generalProfile.classification.toLowerCase().includes("anxious") && (
+          <div className="rounded-2xl p-8 md:p-10 mb-12 bg-white border border-[#d6d2d2] shadow-sm max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
+            <div className="flex-1">
+              <h4 className="text-sm font-black uppercase tracking-widest text-[#086788]/50 mb-3">Recommended For You</h4>
+              <h3 className="text-2xl md:text-3xl font-black text-[#086788] mb-3">The Anxious Attachment Workbook</h3>
+              <p className="text-lg font-medium text-[#086788]/80 mb-6">A step-by-step guide to understanding your patterns, calming your nervous system, and building more secure relationships — starting today.</p>
+              <a
+                href="https://oopscupid.com/workbook/anxious-attachment"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-[#086788] hover:bg-[#06aed5] text-white font-black text-lg px-8 py-4 rounded-xl transition-all shadow-md hover:-translate-y-1"
+              >
+                Get the Workbook →
+              </a>
+            </div>
+            <div className="w-32 h-32 md:w-40 md:h-40 flex-shrink-0 bg-[#fff1d0] rounded-2xl flex items-center justify-center border border-[#f0c808]/40">
+              <span className="text-6xl">📓</span>
+            </div>
+          </div>
+        )}
+
         <div className={`rounded-2xl p-8 md:p-12 mb-12 bg-white border border-[#d6d2d2] shadow-sm max-w-4xl mx-auto text-center`}>
            <h3 className={`text-3xl md:text-4xl font-black mb-6 text-[#086788]`}>This is only the surface.</h3>
            <p className={`text-lg md:text-xl mb-8 font-medium text-[#086788]/80 leading-relaxed`}>
