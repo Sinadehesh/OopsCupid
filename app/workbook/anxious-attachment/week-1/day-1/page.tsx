@@ -5,6 +5,7 @@ import {
   BellRing, ArrowRight, Brain, Flame, Anchor,
   RefreshCcw, Play, Square, Info, ShieldCheck,
 } from 'lucide-react';
+import { saveWorkbookEntry } from '@/app/actions/saveWorkbookEntry';
 
 /* ─────────────────────────────────────────────
    Design-system constants
@@ -35,6 +36,7 @@ const dangers = [
 export default function Day1() {
   // Threat decoder
   const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({});
+  const [threatSaved, setThreatSaved] = useState(false);
 
   // Breathing anchor
   const [isBreathing, setIsBreathing] = useState(false);
@@ -46,6 +48,22 @@ export default function Day1() {
   // Reflection
   const [reflection, setReflection] = useState('');
   const [isSaved, setIsSaved] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
+  // Auto-save Threat Decoder when all cards flipped
+  useEffect(() => {
+    const allFlipped = dangers.every((_, i) => flippedCards[i]);
+    if (allFlipped && !threatSaved) {
+      setThreatSaved(true);
+      saveWorkbookEntry({
+        workbook: 'anxious-attachment',
+        week: 1,
+        day: 1,
+        exerciseKey: 'threat-decoder',
+        content: { completed: true, allCardsFlipped: true },
+      });
+    }
+  }, [flippedCards, threatSaved]);
 
   // Breathing countdown
   useEffect(() => {
@@ -70,6 +88,23 @@ export default function Day1() {
     setBreathPhase('Inhale');
     setTimeLeft(inhaleTime);
     setIsBreathing(true);
+  };
+
+  const handleSaveReflection = async () => {
+    if (!reflection.trim()) return;
+    setIsSaving(true);
+    const result = await saveWorkbookEntry({
+      workbook: 'anxious-attachment',
+      week: 1,
+      day: 1,
+      exerciseKey: 'integration-reflection',
+      content: { reflection },
+    });
+    setIsSaving(false);
+    if (result.success) {
+      setIsSaved(true);
+      setTimeout(() => setIsSaved(false), 2500);
+    }
   };
 
   const bubbleScale = isBreathing && breathPhase === 'Inhale' ? 1.2 : 1;
@@ -118,7 +153,7 @@ export default function Day1() {
             <div className="md:w-2/3">
               <h2 className="text-2xl font-bold mb-4 flex items-center gap-3 text-slate-900">
                 <BellRing className="w-7 h-7 text-rose-500 shrink-0" />
-                The "Burnt Toast" Metaphor
+                The &quot;Burnt Toast&quot; Metaphor
               </h2>
               <div className="space-y-4 text-base text-slate-600 leading-relaxed">
                 <p>
@@ -129,7 +164,7 @@ export default function Day1() {
                 <p>
                   With <strong>Anxious Attachment</strong>, your smoke detector is overly
                   sensitive. When your partner is quiet or pulls away, your brain reacts as if a
-                  tiger is in the room. But there is no tiger. It's just burnt toast.
+                  tiger is in the room. But there is no tiger. It&apos;s just burnt toast.
                 </p>
               </div>
 
@@ -137,7 +172,7 @@ export default function Day1() {
                 <Info className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
                 <p className="text-sm text-rose-900 leading-relaxed">
                   <strong>The Golden Rule:</strong> You cannot use logic to turn off a fire alarm.
-                  Telling yourself to "calm down" doesn't work. You must use your{' '}
+                  Telling yourself to &quot;calm down&quot; doesn&apos;t work. You must use your{' '}
                   <em>physical body</em> to manually switch the alarm off.
                 </p>
               </div>
@@ -211,6 +246,12 @@ export default function Day1() {
               </button>
             ))}
           </div>
+
+          {threatSaved && (
+            <p className="mt-4 text-sm text-emerald-600 font-semibold flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4" /> Practice saved!
+            </p>
+          )}
         </section>
 
         {/* ── 3. Practice 2: Breathing Anchor ── */}
@@ -310,11 +351,13 @@ export default function Day1() {
           />
           <div className="flex justify-end mt-4">
             <button
-              onClick={() => { setIsSaved(true); setTimeout(() => setIsSaved(false), 2500); }}
-              disabled={!reflection.trim()}
+              onClick={handleSaveReflection}
+              disabled={!reflection.trim() || isSaving}
               className="inline-flex items-center gap-2 px-7 py-3 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-white rounded-full font-bold text-sm transition-all shadow-md"
             >
-              {isSaved ? (
+              {isSaving ? (
+                'Saving…'
+              ) : isSaved ? (
                 <><ShieldCheck className="w-5 h-5" /> Saved!</>
               ) : (
                 'Save Entry'
