@@ -17,3 +17,14 @@ model Lead {
   premiumClicked   Boolean  @default(false)
   createdAt        DateTime @default(now())
 }
+
+model WorkbookEntry {
+  id          String   @id @default(cuid())
+  workbook    String   // e.g. "anxious-attachment"
+  week        Int
+  day         Int
+  exerciseKey String   // e.g. "integration-reflection", "threat-decoder"
+  content     Json     // flexible: text, flipped cards, slider values etc.
+  sessionId   String?  // anonymous session identifier
+  createdAt   DateTime @default(now())
+}
