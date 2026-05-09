@@ -5,6 +5,7 @@ import {
   Activity, ArrowRight, ShieldAlert, CheckCircle2,
   Flame, Snowflake, Crosshair, AlertTriangle, Brain, Play, Square,
 } from 'lucide-react';
+import { saveWorkbookEntry } from '@/app/actions/saveWorkbookEntry';
 
 const CARD =
   'rounded-[2rem] bg-white/70 backdrop-blur-xl shadow-lg shadow-indigo-100/40 border border-white/60 p-8 md:p-10';
@@ -28,6 +29,7 @@ export default function Day2() {
   const [timeLeft, setTimeLeft] = useState(4);
   const [reflection, setReflection] = useState('');
   const [isSaved, setIsSaved] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (!isBreathing) {
@@ -81,6 +83,27 @@ export default function Day2() {
   const glowScale  = isBreathing && breathPhase === 'Inhale' ? 1.5 : 1;
   const dur = isBreathing ? `${breathPhase === 'Inhale' ? 4 : 6}s` : '1s';
 
+  const handleSave = async () => {
+    if (!reflection.trim()) return;
+    setIsSaving(true);
+    const selectedBehaviors = protestBehaviors.filter((_, i) => behaviors[i]);
+    await saveWorkbookEntry({
+      workbook: 'anxious-attachment',
+      week: 1,
+      day: 2,
+      exerciseKey: 'integration-reflection',
+      content: {
+        reflection,
+        zone,
+        zoneLabel: info.title,
+        selectedBehaviors,
+      },
+    });
+    setIsSaving(false);
+    setIsSaved(true);
+    setTimeout(() => setIsSaved(false), 2500);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50/30 to-slate-50 text-slate-800 font-sans pb-24">
 
@@ -88,7 +111,6 @@ export default function Day2() {
       <header className="relative overflow-hidden pt-20 pb-20 px-6">
         <div className="pointer-events-none absolute -top-32 -left-32 w-[480px] h-[480px] rounded-full bg-indigo-400/20 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-16 right-0 w-[360px] h-[360px] rounded-full bg-purple-400/20 blur-3xl" />
-
         <div className="max-w-4xl mx-auto relative z-10">
           <div className="flex items-center gap-3 mb-5">
             <span className="px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold tracking-widest uppercase border border-indigo-200">
@@ -98,218 +120,124 @@ export default function Day2() {
               The Earned Security Workbook
             </span>
           </div>
-
           <h1 className="text-4xl md:text-5xl font-extrabold leading-tight tracking-tight text-slate-900 mb-5">
             The{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500">
               Thermostat
             </span>
           </h1>
-
           <p className="text-lg md:text-xl text-slate-600 max-w-2xl leading-relaxed">
-            Understanding the Window of Tolerance and why you act out when anxious.
+            Understanding your nervous system's temperature — and learning to stay in the Window of Tolerance.
           </p>
         </div>
       </header>
 
       <main className="max-w-4xl mx-auto px-6 space-y-10">
 
-        {/* ── 1. The Psychology ── */}
+        {/* ── Protest Behaviors ── */}
         <section className={CARD}>
-          <div className="flex flex-col md:flex-row gap-8 items-center">
-            <div className="md:w-2/3">
-              <h2 className="text-2xl font-bold mb-4 flex items-center gap-3 text-slate-900">
-                <Activity className="w-7 h-7 text-indigo-500 shrink-0" />
-                The Nervous System Thermostat
-              </h2>
-              <div className="space-y-4 text-base text-slate-600 leading-relaxed">
-                <p>
-                  Your nervous system has a perfect 72° zone called the{' '}
-                  <strong>Window of Tolerance</strong>. Here, you feel safe and can handle
-                  relationship bumps smoothly.
-                </p>
-                <p>
-                  But when triggered, Anxious Attachment cranks the heat to 100°. This is{' '}
-                  <strong>Hyperarousal</strong>. You feel unbearable pressure to cool the room.
-                  Because you don't know how to cool <em>yourself</em> down, you try to control
-                  your partner to fix the temperature for you.
-                </p>
-              </div>
-
-              <div className="mt-6 bg-amber-50/80 border border-amber-200 rounded-2xl p-5 flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-                <p className="text-sm text-amber-900 leading-relaxed">
-                  These attempts to force your partner to regulate you are called{' '}
-                  <strong>Protest Behaviors</strong>. They are desperate bids for connection, but
-                  they often push partners further away.
-                </p>
-              </div>
-            </div>
-
-            <div className="md:w-1/3 shrink-0">
-              <img
-                src="https://images.unsplash.com/photo-1584985552317-a06f477ca36b?q=80&w=600&auto=format&fit=crop"
-                alt="Thermostat dial"
-                width={300} height={200}
-                loading="lazy"
-                className="w-full h-48 object-cover rounded-2xl shadow-md"
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* ── 2. Practice 1: Name Your Protest Behaviors ── */}
-        <section className={CARD.replace('bg-white/70', 'bg-rose-50/60').replace('shadow-indigo-100/40', 'shadow-rose-100/40')}>
-          <h2 className="text-2xl font-bold mb-2 flex items-center gap-3 text-slate-900">
+          <h2 className="text-2xl font-bold mb-4 flex items-center gap-3 text-slate-900">
             <ShieldAlert className="w-7 h-7 text-rose-500 shrink-0" />
-            Practice 1: Name Your Protest Behaviors
+            Protest Behaviors
           </h2>
-          <p className="text-slate-500 mb-8 text-base leading-relaxed">
-            Awareness is the first step. Which of these do you use when you're in the "Too Hot"
-            Hyperarousal zone?
+          <p className="text-slate-500 mb-6 text-base leading-relaxed">
+            Tick any that feel familiar — no judgment here.
           </p>
-
-          <div className="space-y-4">
-            {protestBehaviors.map((beh, i) => (
-              <label
+          <div className="space-y-3">
+            {protestBehaviors.map((b, i) => (
+              <button
                 key={i}
-                className={`flex items-center p-5 rounded-2xl border-2 cursor-pointer transition-all duration-200 shadow-sm ${
+                onClick={() => setBehaviors((prev) => ({ ...prev, [i]: !prev[i] }))}
+                className={`w-full text-left p-5 rounded-2xl border-2 transition-all flex items-center gap-4 ${
                   behaviors[i]
-                    ? 'bg-rose-50 border-rose-400'
-                    : 'bg-white/80 border-slate-200 hover:border-rose-300'
+                    ? 'bg-rose-50 border-rose-400 text-rose-900'
+                    : 'bg-white/80 border-slate-200 text-slate-700 hover:border-rose-300'
                 }`}
               >
-                <input
-                  type="checkbox"
-                  className="sr-only"
-                  checked={behaviors[i] || false}
-                  onChange={() => setBehaviors((p) => ({ ...p, [i]: !p[i] }))}
-                />
-                <div
-                  className={`w-8 h-8 rounded-lg border-2 flex items-center justify-center mr-4 shrink-0 transition-colors ${
-                    behaviors[i] ? 'bg-rose-500 border-rose-500' : 'border-slate-300 bg-white'
-                  }`}
-                >
-                  {behaviors[i] && <CheckCircle2 className="w-5 h-5 text-white" />}
+                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                  behaviors[i] ? 'bg-rose-500 border-rose-500' : 'border-slate-300'
+                }`}>
+                  {behaviors[i] && <CheckCircle2 className="w-4 h-4 text-white" />}
                 </div>
-                <span
-                  className={`text-base ${
-                    behaviors[i] ? 'text-rose-900 font-semibold' : 'text-slate-600 font-medium'
-                  }`}
-                >
-                  {beh}
-                </span>
-              </label>
+                <span className="text-sm font-medium">{b}</span>
+              </button>
             ))}
           </div>
         </section>
 
-        {/* ── 3. Practice 2: Interactive Thermostat ── */}
-        <section className="rounded-[2rem] bg-slate-950 text-white shadow-2xl border border-slate-800/60 p-8 md:p-10 relative overflow-hidden">
-          <div className="pointer-events-none absolute -top-24 -right-24 w-80 h-80 rounded-full bg-indigo-500/10 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-24 -left-24 w-64 h-64 rounded-full bg-purple-500/10 blur-3xl" />
-
-          <div className="relative z-10">
-            <h2 className="text-2xl font-bold mb-2 flex items-center gap-3">
-              <Activity className="w-7 h-7 text-indigo-400 shrink-0" />
-              Practice 2: The Interactive Thermostat
-            </h2>
-            <p className="text-slate-400 mb-8 text-base leading-relaxed max-w-xl">
-              Drag the slider to explore each zone and its physical symptoms. The goal is to
-              catch yourself <em>before</em> you leave the window.
-            </p>
-
-            {/* Thermostat zones */}
-            <div className="flex gap-6 items-stretch mb-8">
-              {/* Zone bars */}
-              <div className="flex-1 flex flex-col gap-3">
-                <div className="flex-1 bg-rose-500/20 rounded-2xl border border-rose-500/40 flex items-center justify-center p-4 text-rose-300 font-bold uppercase tracking-wider text-sm text-center">
-                  <Flame className="w-5 h-5 mr-2 shrink-0" /> Hyperarousal (Too Hot)
-                </div>
-                <div className="flex-1 bg-emerald-500/20 rounded-2xl border-2 border-emerald-500/60 flex items-center justify-center p-4 text-emerald-400 font-bold uppercase tracking-wider text-sm text-center shadow-[0_0_20px_rgba(16,185,129,0.15)]">
-                  <Crosshair className="w-5 h-5 mr-2 shrink-0" /> Window of Tolerance (72°)
-                </div>
-                <div className="flex-1 bg-blue-500/20 rounded-2xl border border-blue-500/40 flex items-center justify-center p-4 text-blue-300 font-bold uppercase tracking-wider text-sm text-center">
-                  <Snowflake className="w-5 h-5 mr-2 shrink-0" /> Hypoarousal (Too Cold)
-                </div>
-              </div>
-
-              {/* Vertical slider */}
-              <div className="flex flex-col items-center justify-center w-16">
-                <input
-                  type="range" min="0" max="100" value={zone}
-                  onChange={(e) => setZone(Number(e.target.value))}
-                  className="h-56 cursor-pointer accent-white"
-                  style={{ writingMode: 'vertical-lr', direction: 'rtl', appearance: 'slider-vertical', WebkitAppearance: 'slider-vertical' }}
-                />
-                {/* Indicator dot */}
-                <div className={`mt-3 w-5 h-5 rounded-full border-2 border-white shadow-lg transition-colors duration-300 ${info.color}`} />
-              </div>
-            </div>
-
-            {/* Zone description card */}
-            <div className={`p-6 rounded-2xl border-2 bg-slate-900/60 transition-all duration-500 ${info.borderColor}`}>
-              <h3 className={`font-bold text-xl mb-3 flex items-center gap-3 ${info.textColor}`}>
-                {info.icon}
-                {info.title}
-              </h3>
-              <p className="text-slate-300 text-base leading-relaxed">{info.desc}</p>
+        {/* ── Thermostat Slider ── */}
+        <section className={CARD.replace('bg-white/70', 'bg-indigo-50/80')}>
+          <h2 className="text-2xl font-bold mb-2 flex items-center gap-3 text-indigo-900">
+            <Activity className="w-7 h-7 text-indigo-500 shrink-0" />
+            Your Nervous System Thermostat
+          </h2>
+          <p className="text-indigo-700 mb-8 text-base leading-relaxed">
+            Drag the slider to where your nervous system feels right now.
+          </p>
+          <input
+            type="range" min={0} max={100} value={zone}
+            onChange={(e) => setZone(Number(e.target.value))}
+            className="w-full accent-indigo-500 mb-6"
+          />
+          <div className={`rounded-2xl border-2 p-5 flex items-start gap-4 ${info.borderColor} bg-white/60`}>
+            <div className={`${info.color} text-white p-2 rounded-xl shrink-0`}>{info.icon}</div>
+            <div>
+              <p className={`font-bold text-base ${info.textColor}`}>{info.title}</p>
+              <p className="text-slate-600 text-sm mt-1 leading-relaxed">{info.desc}</p>
             </div>
           </div>
         </section>
 
-        {/* ── 4. Drop the Anchor ── */}
-        <section className={CARD}>
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="md:flex-1">
-              <h3 className="font-bold text-slate-900 text-xl mb-2">Drop Your Anchor</h3>
-              <p className="text-slate-500 text-base leading-relaxed">
-                Whenever you feel yourself leaving the Window of Tolerance, use your 4-6 breathing
-                anchor for 30 seconds.
-              </p>
-              {isBreathing && (
-                <div className="mt-4 flex items-center gap-4">
-                  {/* Mini bubble */}
-                  <div className="relative w-16 h-16 flex items-center justify-center">
-                    <div
-                      className="absolute inset-0 bg-indigo-400/20 rounded-full blur-md"
-                      style={{ transform: `scale(${glowScale})`, transitionDuration: dur, transition: 'transform' }}
-                    />
-                    <div
-                      className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex flex-col items-center justify-center z-10 border border-indigo-400/50"
-                      style={{ transform: `scale(${bubbleScale})`, transitionDuration: dur, transition: 'transform' }}
-                    >
-                      <span className="text-white text-[10px] font-bold uppercase">{breathPhase}</span>
-                      <span className="text-white text-sm font-light">{timeLeft}</span>
-                    </div>
-                  </div>
-                  <span className="text-slate-500 text-sm">{breathPhase === 'Inhale' ? 'Breathe in slowly…' : 'Blow out slowly…'}</span>
-                </div>
-              )}
+        {/* ── Breathing ── */}
+        <section className="rounded-[2rem] bg-slate-950 text-white p-8 md:p-10 shadow-2xl border border-slate-800/60 relative overflow-hidden">
+          <div className="pointer-events-none absolute top-0 right-0 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl" />
+          <h2 className="text-2xl font-bold mb-2 flex items-center gap-3 relative z-10">
+            <AlertTriangle className="w-7 h-7 text-indigo-400 shrink-0" />
+            Breathing Anchor
+          </h2>
+          <p className="text-slate-400 mb-8 text-base relative z-10">
+            4-second inhale · 6-second exhale. Use this when you feel the thermostat rising.
+          </p>
+          <div className="flex flex-col items-center relative z-10">
+            <div className="relative w-48 h-48 flex items-center justify-center mb-8">
+              <div
+                className="absolute inset-0 bg-indigo-500/30 rounded-full blur-xl transition-all ease-in-out"
+                style={{ transform: `scale(${glowScale})`, transitionDuration: dur }}
+              />
+              <div
+                className="w-32 h-32 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex flex-col items-center justify-center z-10 shadow-[0_0_30px_rgba(99,102,241,0.5)] transition-transform ease-in-out border-2 border-indigo-400/50"
+                style={{ transform: `scale(${bubbleScale})`, transitionDuration: dur }}
+              >
+                <span className="font-bold text-lg uppercase tracking-wider text-white">
+                  {isBreathing ? breathPhase : 'Ready'}
+                </span>
+                {isBreathing && <span className="text-3xl font-light mt-1">{timeLeft}</span>}
+              </div>
             </div>
-
             <button
-              onClick={() => setIsBreathing(!isBreathing)}
-              className={`inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-sm transition-all shrink-0 ${
+              onClick={() => {
+                if (!isBreathing) { setBreathPhase('Inhale'); setTimeLeft(4); }
+                setIsBreathing(!isBreathing);
+              }}
+              className={`px-10 py-4 rounded-full font-bold text-base transition-all flex items-center gap-2 ${
                 isBreathing
-                  ? 'bg-rose-50 text-rose-600 border border-rose-200 hover:bg-rose-100'
-                  : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-md shadow-indigo-600/20 hover:scale-105'
+                  ? 'bg-rose-500/20 text-rose-300 border border-rose-500/50 hover:bg-rose-500/30'
+                  : 'bg-white text-indigo-900 hover:bg-indigo-50 hover:scale-105 shadow-xl'
               }`}
             >
-              {isBreathing ? <><Square className="w-5 h-5" /> Stop Anchor</> : <><Play className="w-5 h-5" /> Start Anchor</>}
+              {isBreathing ? <><Square className="w-5 h-5" /> Stop</> : <><Play className="w-5 h-5" /> Start Anchor</>}
             </button>
           </div>
         </section>
 
-        {/* ── 5. Integration Reflection ── */}
+        {/* ── Integration Reflection ── */}
         <section className={CARD.replace('bg-white/70', 'bg-indigo-50/80')}>
           <h2 className="text-xl font-bold mb-3 flex items-center gap-3 text-indigo-900">
-            <Brain className="w-6 h-6 text-indigo-500 shrink-0" />
+            <Brain className="w-6 h-6 text-indigo-600 shrink-0" />
             Integration
           </h2>
-          <p className="text-indigo-700 text-base leading-relaxed mb-5">
-            What does your body physically feel like right <em>before</em> you engage in a protest
-            behavior?
+          <p className="text-indigo-800 mb-5 text-base leading-relaxed">
+            What does your body physically feel like right before you engage in a protest behavior?
           </p>
           <textarea
             value={reflection}
@@ -319,32 +247,22 @@ export default function Day2() {
           />
           <div className="flex justify-end mt-4">
             <button
-              onClick={() => { setIsSaved(true); setTimeout(() => setIsSaved(false), 2500); }}
-              disabled={!reflection.trim()}
+              onClick={handleSave}
+              disabled={!reflection.trim() || isSaving}
               className="inline-flex items-center gap-2 px-7 py-3 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-white rounded-full font-bold text-sm transition-all shadow-md"
             >
-              {isSaved ? '✓ Saved!' : 'Save Entry'}
+              {isSaved ? <><CheckCircle2 className="w-5 h-5" /> Saved!</> : isSaving ? 'Saving…' : 'Save Entry'}
             </button>
           </div>
         </section>
 
         {/* ── Navigation ── */}
         <section className="flex flex-col sm:flex-row justify-between items-center pt-8 border-t border-slate-200 gap-4">
-          <a
-            href="/workbook/anxious-attachment/week-1/day-1"
-            className="text-slate-500 font-medium hover:text-slate-800 transition-colors text-sm"
-          >
-            ← Back to Day 1
-          </a>
-          <a
-            href="/workbook/anxious-attachment/week-1/day-3"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 text-white font-bold rounded-full hover:bg-indigo-700 transition-all group shadow-lg shadow-indigo-600/20 text-sm"
-          >
-            Continue to Day 3
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          <a href="/workbook/anxious-attachment/week-1/day-1" className="text-slate-500 font-medium hover:text-slate-800 transition-colors text-sm">← Back to Day 1</a>
+          <a href="/workbook/anxious-attachment/week-1/day-3" className="inline-flex items-center px-8 py-4 bg-indigo-600 text-white font-bold rounded-full hover:bg-indigo-700 transition-colors shadow-lg text-sm">
+            Continue to Day 3 <ArrowRight className="w-5 h-5 ml-2" />
           </a>
         </section>
-
       </main>
     </div>
   );
