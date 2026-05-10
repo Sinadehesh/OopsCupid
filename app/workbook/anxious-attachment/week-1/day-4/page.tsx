@@ -115,9 +115,9 @@ export default function Day4() {
             </div>
             <div className="min-h-[180px] flex items-center justify-center text-center">
               {radarDirection === 'Outward' ? (
-                <div className="w-full"><Radar className="w-16 h-16 text-rose-400 mx-auto mb-5" /><p className="text-rose-100 text-xl font-medium mb-4 max-w-lg mx-auto leading-relaxed">"Why haven't they replied? Are they mad? Did I do something wrong?"</p><span className="inline-block bg-rose-900/40 text-rose-300 px-4 py-2 rounded-full text-xs uppercase tracking-widest font-bold border border-rose-500/30">Result: High Anxiety &amp; Exhaustion</span></div>
+                <div className="w-full"><Radar className="w-16 h-16 text-rose-400 mx-auto mb-5" /><p className="text-rose-100 text-xl font-medium mb-4 max-w-lg mx-auto leading-relaxed">&quot;Why haven&apos;t they replied? Are they mad? Did I do something wrong?&quot;</p><span className="inline-block bg-rose-900/40 text-rose-300 px-4 py-2 rounded-full text-xs uppercase tracking-widest font-bold border border-rose-500/30">Result: High Anxiety &amp; Exhaustion</span></div>
               ) : (
-                <div className="w-full"><Heart className="w-16 h-16 text-emerald-400 mx-auto mb-5 animate-pulse" /><p className="text-emerald-100 text-xl font-medium mb-4 max-w-lg mx-auto leading-relaxed">"My chest feels tight right now. I need to take a deep breath for myself."</p><span className="inline-block bg-emerald-900/40 text-emerald-300 px-4 py-2 rounded-full text-xs uppercase tracking-widest font-bold border border-emerald-500/30">Result: Emotional Regulation &amp; Control</span></div>
+                <div className="w-full"><Heart className="w-16 h-16 text-emerald-400 mx-auto mb-5 animate-pulse" /><p className="text-emerald-100 text-xl font-medium mb-4 max-w-lg mx-auto leading-relaxed">&quot;My chest feels tight right now. I need to take a deep breath for myself.&quot;</p><span className="inline-block bg-emerald-900/40 text-emerald-300 px-4 py-2 rounded-full text-xs uppercase tracking-widest font-bold border border-emerald-500/30">Result: Emotional Regulation &amp; Control</span></div>
               )}
             </div>
           </div>
@@ -138,4 +138,84 @@ export default function Day4() {
                       <span className="text-white text-sm font-light">{timeLeft}</span>
                     </div>
                   </div>
-                  <span 
+                  <span className="text-indigo-700 font-semibold text-sm">{breathPhase === 'Inhale' ? 'Breathe in slowly...' : 'Let it all out...'}</span>
+                </div>
+              )}
+            </div>
+            <button
+              onClick={() => setIsBreathing(!isBreathing)}
+              className={`shrink-0 px-6 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2 ${
+                isBreathing
+                  ? 'bg-rose-100 text-rose-700 border border-rose-200 hover:bg-rose-200'
+                  : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-md'
+              }`}
+            >
+              {isBreathing ? <><Square className="w-4 h-4" /> Stop Anchor</> : <><Play className="w-4 h-4" /> Start Anchor Breath</>}
+            </button>
+          </div>
+
+          <div>
+            <h3 className="font-bold text-slate-900 text-lg mb-2">Step B: Map Your Body</h3>
+            <p className="text-slate-500 text-sm mb-6 leading-relaxed">Tap each body area and select what you feel right now. There are no wrong answers.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {parts.map((part) => (
+                <div key={part.id} className={`p-5 rounded-2xl border-2 transition-all cursor-pointer ${selectedBodyPart === part.id ? 'border-indigo-400 bg-indigo-50' : sensations[part.id] ? 'border-emerald-300 bg-emerald-50/60' : 'border-slate-200 bg-white hover:border-indigo-300'}`} onClick={() => setSelectedBodyPart(selectedBodyPart === part.id ? null : part.id)}>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="font-bold text-slate-800 text-sm">{part.label}</span>
+                    {sensations[part.id] && <span className="text-xs text-emerald-600 font-semibold bg-emerald-100 px-2 py-0.5 rounded-full">{sensations[part.id]}</span>}
+                  </div>
+                  {selectedBodyPart === part.id && (
+                    <div className="grid grid-cols-2 gap-2 mt-2">
+                      {part.options.map((opt) => (
+                        <button key={opt} onClick={(e) => { e.stopPropagation(); handleSelectSensation(opt); }} className={`text-xs py-2 px-3 rounded-xl font-medium transition-all ${sensations[part.id] === opt ? 'bg-indigo-600 text-white' : 'bg-white border border-slate-200 text-slate-600 hover:border-indigo-300 hover:text-indigo-700'}`}>{opt}</button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {Object.keys(sensations).length === parts.length && (
+              <div className="mt-6 bg-emerald-50 border border-emerald-200 rounded-2xl p-5 flex items-center gap-3">
+                <CheckCircle2 className="w-6 h-6 text-emerald-500 shrink-0" />
+                <p className="text-emerald-800 text-sm font-medium">Full body scan complete. You are now fully present in your own body.</p>
+              </div>
+            )}
+          </div>
+        </section>
+
+        <section className={CARD.replace('bg-white/70', 'bg-slate-50/80')}>
+          <h2 className="text-xl font-bold mb-4 flex items-center gap-3 text-slate-900">
+            <Brain className="w-6 h-6 text-indigo-600 shrink-0" />
+            Final Reflection
+          </h2>
+          <p className="text-slate-600 mb-4 text-sm leading-relaxed">After turning the radar inward, finish this sentence:</p>
+          <div className="bg-white p-4 rounded-2xl border border-indigo-200 shadow-sm flex flex-col md:flex-row gap-4 items-center mb-6">
+            <span className="font-bold text-base text-indigo-900 whitespace-nowrap">Right now, I notice in my body...</span>
+            <input
+              type="text"
+              className="flex-1 w-full outline-none text-base text-slate-700 border-b border-dashed border-indigo-300 focus:border-indigo-600 pb-1 bg-transparent"
+              placeholder="e.g. tension in my chest, warmth in my stomach"
+              value={reflection}
+              onChange={(e) => setReflection(e.target.value)}
+            />
+          </div>
+          <div className="flex justify-end">
+            <button
+              onClick={handleSave}
+              disabled={!reflection.trim() || isSaving}
+              className="px-6 py-3 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 disabled:opacity-50 transition-colors"
+            >
+              {isSaved ? 'Saved!' : isSaving ? 'Saving…' : 'Save Reflection'}
+            </button>
+          </div>
+        </section>
+
+        <section className="flex flex-col sm:flex-row justify-between items-center pt-8 border-t border-slate-200 gap-4">
+          <a href="/workbook/anxious-attachment/week-1/day-3" className="text-slate-500 font-medium hover:text-slate-800 transition-colors text-sm">← Back to Day 3</a>
+          <a href="/workbook/anxious-attachment/week-1/day-5" className="inline-flex items-center px-8 py-4 bg-slate-900 text-white font-bold rounded-full hover:bg-slate-800 transition-colors shadow-lg text-sm">Continue to Day 5 <ArrowRight className="w-5 h-5 ml-2" /></a>
+        </section>
+      </main>
+    </div>
+  );
+}
