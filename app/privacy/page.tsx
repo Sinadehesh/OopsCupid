@@ -87,7 +87,7 @@ export default function PrivacyPage() {
           <p>
             We retain your personal information for as long as your account is active or as needed to provide the
             Service. You may delete your account at any time by contacting us at{" "}
-            <a href="mailto:privacy@oopscupid.com">privacy@oopscupid.com</a>, and we will delete your data within
+            <a href="mailto:Sinadehesh@gmail.com">Sinadehesh@gmail.com</a>, and we will delete your data within
             30 days, except where retention is required by law.
           </p>
         </section>
@@ -113,7 +113,7 @@ export default function PrivacyPage() {
           </ul>
           <p>
             To exercise any of these rights, contact us at{" "}
-            <a href="mailto:privacy@oopscupid.com">privacy@oopscupid.com</a>.
+            <a href="mailto:Sinadehesh@gmail.com">Sinadehesh@gmail.com</a>.
           </p>
         </section>
 
@@ -155,7 +155,7 @@ export default function PrivacyPage() {
           <h2>13. Contact Us</h2>
           <p>If you have any questions about this Privacy Policy, please contact us:</p>
           <ul>
-            <li>Email: <a href="mailto:privacy@oopscupid.com">privacy@oopscupid.com</a></li>
+            <li>Email: <a href="mailto:Sinadehesh@gmail.com">Sinadehesh@gmail.com</a></li>
             <li>Website: <a href="https://oopscupid.com">oopscupid.com</a></li>
           </ul>
         </section>

@@ -107,7 +107,7 @@ export default function TermsPage() {
           </p>
           <ul>
             <li>The refund request is submitted within 14 days of the original purchase date.</li>
-            <li>You contact us at <a href="mailto:support@oopscupid.com">support@oopscupid.com</a> with your order details and reason for the refund.</li>
+            <li>You contact us at <a href="mailto:Sinadehesh@gmail.com">Sinadehesh@gmail.com</a> with your order details and reason for the refund.</li>
             <li>The workbook has not been substantially downloaded, shared, or redistributed.</li>
           </ul>
           <p>
@@ -115,7 +115,16 @@ export default function TermsPage() {
             5&ndash;10 business days of approval. Requests submitted after the 14-day window will not be honored.
           </p>
 
-          <h3>7.3 General</h3>
+          <h3>7.3 Payment Processing Fees &mdash; Non-Refundable</h3>
+          <p>
+            All transactions made through OopsCupid are subject to payment processing fees charged by our
+            third-party payment provider (e.g., Stripe). These fees are incurred at the time of purchase and
+            are <strong>non-refundable under any circumstances</strong>, including in cases where a refund is
+            approved for the underlying product. Any approved refund will be issued for the product amount only,
+            excluding the original payment processing fee.
+          </p>
+
+          <h3>7.4 General</h3>
           <p>
             OopsCupid reserves the right to refuse a refund if there is evidence of abuse, fraud, or violation
             of these Terms. All pricing is displayed in USD unless otherwise stated and may be subject to
@@ -195,7 +204,7 @@ export default function TermsPage() {
           <h2>15. Contact Us</h2>
           <p>If you have any questions about these Terms, please contact us:</p>
           <ul>
-            <li>Email: <a href="mailto:legal@oopscupid.com">legal@oopscupid.com</a></li>
+            <li>Email: <a href="mailto:Sinadehesh@gmail.com">Sinadehesh@gmail.com</a></li>
             <li>Website: <a href="https://oopscupid.com">oopscupid.com</a></li>
           </ul>
         </section>
