@@ -77,7 +77,54 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2>7. Intellectual Property</h2>
+          <h2>7. Payments, Refunds, and Returns</h2>
+
+          <h3>7.1 AI-Powered Analysis Features &mdash; No Refund Policy</h3>
+          <p>
+            Certain features on OopsCupid (including but not limited to chat analysis, dating profile analysis,
+            and any AI-generated reports or results) are powered by large language models that consume
+            computational resources (tokens) at the moment your request is processed.
+          </p>
+          <p>
+            <strong>
+              Because AI analysis results are generated and delivered instantly upon purchase, and because the
+              underlying computational resources (tokens) are irrevocably consumed in producing those results,
+              all purchases of AI-powered features are final and non-refundable.
+            </strong>{" "}
+            By completing the purchase of any AI-powered feature, you acknowledge that the product has been
+            fully delivered and used at the time of purchase, and you waive any right to a refund or chargeback
+            for that transaction.
+          </p>
+          <p>
+            This policy applies regardless of your satisfaction with the result, including cases where the output
+            is not what you expected, as the computational cost has already been incurred.
+          </p>
+
+          <h3>7.2 Digital Workbooks &mdash; 14-Day Refund Policy</h3>
+          <p>
+            Digital workbooks sold through OopsCupid are eligible for a full refund within{" "}
+            <strong>14 calendar days from the date of purchase</strong>, provided that:
+          </p>
+          <ul>
+            <li>The refund request is submitted within 14 days of the original purchase date.</li>
+            <li>You contact us at <a href="mailto:support@oopscupid.com">support@oopscupid.com</a> with your order details and reason for the refund.</li>
+            <li>The workbook has not been substantially downloaded, shared, or redistributed.</li>
+          </ul>
+          <p>
+            Refunds for eligible workbook purchases will be processed to the original payment method within
+            5&ndash;10 business days of approval. Requests submitted after the 14-day window will not be honored.
+          </p>
+
+          <h3>7.3 General</h3>
+          <p>
+            OopsCupid reserves the right to refuse a refund if there is evidence of abuse, fraud, or violation
+            of these Terms. All pricing is displayed in USD unless otherwise stated and may be subject to
+            applicable taxes.
+          </p>
+        </section>
+
+        <section>
+          <h2>8. Intellectual Property</h2>
           <p>
             All content on OopsCupid, including but not limited to text, quizzes, graphics, logos, and software,
             is the property of OopsCupid or its licensors and is protected by applicable intellectual property laws.
@@ -86,7 +133,7 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2>8. Disclaimer of Warranties</h2>
+          <h2>9. Disclaimer of Warranties</h2>
           <p>
             The Service is provided on an <strong>&ldquo;as is&rdquo; and &ldquo;as available&rdquo;</strong> basis without warranties
             of any kind, either express or implied. OopsCupid does not warrant that the Service will be
@@ -99,7 +146,7 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2>9. Limitation of Liability</h2>
+          <h2>10. Limitation of Liability</h2>
           <p>
             To the fullest extent permitted by law, OopsCupid and its operators shall not be liable for any
             indirect, incidental, special, consequential, or punitive damages arising from your use of, or
@@ -109,7 +156,7 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2>10. Third-Party Services</h2>
+          <h2>11. Third-Party Services</h2>
           <p>
             The Service integrates with third-party services such as Google (for authentication) and AI providers
             (for analysis features). Your use of those services is governed by their respective terms and privacy
@@ -118,7 +165,7 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2>11. Termination</h2>
+          <h2>12. Termination</h2>
           <p>
             We reserve the right to suspend or terminate your access to the Service at any time, with or without
             notice, if you violate these Terms or for any other reason at our discretion. You may stop using the
@@ -127,7 +174,7 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2>12. Modifications to Terms</h2>
+          <h2>13. Modifications to Terms</h2>
           <p>
             We may update these Terms from time to time. Continued use of the Service after changes are posted
             constitutes your acceptance of the revised Terms. We will indicate the date of the last update at
@@ -136,7 +183,7 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2>13. Governing Law</h2>
+          <h2>14. Governing Law</h2>
           <p>
             These Terms shall be governed by and construed in accordance with applicable laws, without regard
             to conflict of law principles. Any disputes shall be resolved through good-faith negotiation, and
@@ -145,7 +192,7 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2>14. Contact Us</h2>
+          <h2>15. Contact Us</h2>
           <p>If you have any questions about these Terms, please contact us:</p>
           <ul>
             <li>Email: <a href="mailto:legal@oopscupid.com">legal@oopscupid.com</a></li>
