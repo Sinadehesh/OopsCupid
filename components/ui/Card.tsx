@@ -29,7 +29,7 @@ export default function Card({
 }: CardProps) {
   if (variant === "tool") {
     return (
-      <div className="flex flex-col rounded-[18px] bg-white p-8 md:p-10 shadow-sm border border-[rgba(51,75,99,0.05)] h-full">
+      <div className="flex flex-col rounded-[20px] bg-white p-8 md:p-10 shadow-[0_6px_24px_rgba(58,85,108,0.07)] ring-1 ring-black/5 h-full transition-shadow duration-300 hover:shadow-[0_12px_34px_rgba(58,85,108,0.11)]">
         <h3 className="text-[24px] font-semibold leading-tight text-[#334B63] mb-4">
           {title}
         </h3>
@@ -39,7 +39,7 @@ export default function Card({
         {href && buttonText && (
           <Link
             href={href}
-            className="inline-block w-fit bg-[#FFB8A1] text-black rounded-full px-8 py-3 font-semibold hover:bg-[#F0A090] transition-colors duration-200"
+            className="inline-block w-fit bg-[#EC8A66] text-white rounded-full px-8 py-3 font-semibold shadow-[0_4px_14px_rgba(224,120,80,0.28)] hover:bg-[#E07850] hover:-translate-y-0.5 transition-all duration-300"
           >
             {buttonText}
           </Link>
@@ -52,7 +52,7 @@ export default function Card({
     return (
       <Link
         href={href ?? "#"}
-        className={`group flex flex-col overflow-hidden rounded-[16px] ${accentColor} transition-transform duration-200 hover:-translate-y-1 h-full border border-[rgba(51,75,99,0.05)]`}
+        className={`group flex flex-col overflow-hidden rounded-[16px] ${accentColor} transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_36px_rgba(58,85,108,0.12)] h-full ring-1 ring-black/5 shadow-[0_4px_18px_rgba(58,85,108,0.06)]`}
       >
         {imageUrl && (
           <div className="h-48 w-full overflow-hidden">
@@ -93,7 +93,7 @@ export default function Card({
       <article className="h-full">
         <Link
           href={href ?? "#"}
-          className="group flex flex-col rounded-[16px] bg-white p-6 md:p-8 shadow-sm border border-[rgba(51,75,99,0.05)] transition-shadow hover:shadow-md h-full"
+          className="group flex flex-col rounded-[18px] bg-white p-6 md:p-8 shadow-[0_4px_18px_rgba(58,85,108,0.06)] ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(58,85,108,0.11)] h-full"
         >
           {tag && (
             <span className="mb-4 inline-block text-[13px] font-semibold tracking-wide uppercase text-[#8A6D85]">

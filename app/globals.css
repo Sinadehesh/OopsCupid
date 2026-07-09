@@ -1,33 +1,43 @@
 @import "tailwindcss";
 
 :root {
-  /* Backgrounds */
-  --background: #F9F4F4;
-  --background-secondary: #F3ECEB;
+  /*
+   * DESIGN TOKENS — extracted from the design-inspiration set
+   * (Gottman Institute): warm paper surfaces, deep slate ink,
+   * a single confident coral accent, airy editorial spacing.
+   */
 
-  /* Text */
-  --foreground: #334B63;
-  --foreground-secondary: #5E6E79;
-  --foreground-muted: #8A6D85;
+  /* Backgrounds — warm paper, not pink */
+  --background: #F7F4ED;
+  --background-secondary: #EFEBE1;
+
+  /* Text — deep slate ink */
+  --foreground: #3A556C;
+  --foreground-secondary: #5E7183;
+  --foreground-muted: #8B93A1;
 
   /* Surfaces */
-  --surface: #FFFDFC;
-  --surface-elevated: #F3ECEB;
-  --border: rgba(51, 75, 99, 0.10);
+  --surface: #FFFFFF;
+  --surface-elevated: #FDFBF7;
+  --border: rgba(58, 85, 108, 0.10);
 
-  /* Primary Accent — Coral */
-  --primary-base: #FFB8A1;
-  --primary-hover: #F0A090;
+  /* Dark editorial surface — footers, testimonial band, report heroes */
+  --ink-surface: #3D5A6C;
+  --ink-surface-deep: #32485A;
+
+  /* Primary Accent — confident coral (solid, white text) */
+  --primary-base: #EC8A66;
+  --primary-hover: #E07850;
 
   /* Secondary Accent — Trust Blue */
   --secondary-base: #5A7492;
-  --secondary-hover: #334B63;
+  --secondary-hover: #3A556C;
 
-  /* Hero Card Colors */
-  --card-1: #F1A08B;
-  --card-2: #9ED0CB;
-  --card-3: #EAD882;
-  --card-4: #425E76;
+  /* Category Card Colors — muted institute palette */
+  --card-1: #EF9B7E; /* coral */
+  --card-2: #93CCBB; /* sage */
+  --card-3: #F5DD90; /* soft gold */
+  --card-4: #3D5A6C; /* slate */
 
   /* Typography */
   --font-sans: var(--font-nunito), system-ui, sans-serif;
@@ -43,12 +53,82 @@
   --color-surface: var(--surface);
   --color-surface-elevated: var(--surface-elevated);
   --color-border: var(--border);
+  --color-ink-surface: var(--ink-surface);
+  --color-ink-surface-deep: var(--ink-surface-deep);
   --color-primary-base: var(--primary-base);
   --color-primary-hover: var(--primary-hover);
   --color-secondary-base: var(--secondary-base);
   --color-secondary-hover: var(--secondary-hover);
   --font-sans: var(--font-sans);
   --font-serif: var(--font-serif);
+}
+
+/*
+ * EDITORIAL TYPOGRAPHY
+ * Display headings wear the serif; UI and body copy stay in the sans.
+ * Opt out on any element with Tailwind's `font-sans`.
+ */
+h1, h2 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.12;
+}
+
+h3, h4, h5, h6 {
+  letter-spacing: -0.01em;
+}
+
+p {
+  letter-spacing: 0.002em;
+}
+
+::selection {
+  background: var(--primary-base);
+  color: #ffffff;
+}
+
+/* Buttery default transitions on interactive elements */
+a, button {
+  transition: color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary-base);
+  outline-offset: 2px;
+}
+
+/* Glass surfaces for dark editorial bands */
+.glass-dark {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Testimonial marquee — GPU-composited, pauses on hover & reduced motion */
+@keyframes marquee-x {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-x 90s linear infinite;
+  will-change: transform;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
 }
 
 body {

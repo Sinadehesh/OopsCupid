@@ -27,8 +27,8 @@ const defaultCards: MainHeroCard[] = [
     imageAlt: "woman reflecting on her relationship patterns",
     title: "Me",
     description: "Why do I pick bad guys? Fix your dating habits fast.",
-    bgColor: "#00A6ED", // New Blue
-    textColor: "#FFFFFF",
+    bgColor: "#93CCBB", // sage
+    textColor: "#2E4A5C",
     href: "/me",
   },
   {
@@ -36,8 +36,8 @@ const defaultCards: MainHeroCard[] = [
     imageAlt: "handsome young man in a thoughtful pose",
     title: "Him",
     description: "Is he lying? Spot the red flags and get the exact text to send him.",
-    bgColor: "#DD1C1A", // Red moved from 'Me'
-    textColor: "#FFFFFF",
+    bgColor: "#EF9B7E", // coral
+    textColor: "#4A2A1D",
     href: "/him",
   },
   {
@@ -45,8 +45,8 @@ const defaultCards: MainHeroCard[] = [
     imageAlt: "friends together but one looks uncomfortable",
     title: "My Friends",
     description: "Are they using you? Spot fake friends before you get hurt.",
-    bgColor: "#7FB800", // New Green
-    textColor: "#FFFFFF", // Changed from Teal to White
+    bgColor: "#F5DD90", // soft gold
+    textColor: "#5A4A1E",
     href: "/friends",
   },
   {
@@ -54,7 +54,7 @@ const defaultCards: MainHeroCard[] = [
     imageAlt: "two people walking on a beach representing relationship tools",
     title: "Clarity Hub",
     description: "Instant Answers. Quick tests and chat readers.",
-    bgColor: "#086788", // Kept same
+    bgColor: "#3D5A6C", // slate
     textColor: "#FFFFFF",
     href: "/articles",
   },
@@ -87,7 +87,7 @@ function HeroCard({ card }: { card: MainHeroCard }) {
     </div>
   );
 
-  const wrapperClass = "group flex flex-col h-full overflow-hidden rounded-[24px] shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5";
+  const wrapperClass = "group flex flex-col h-full overflow-hidden rounded-[22px] ring-1 ring-black/5 shadow-[0_8px_30px_rgba(58,85,108,0.10)] hover:shadow-[0_18px_44px_rgba(58,85,108,0.16)] transition-all duration-300 hover:-translate-y-1.5";
   
   if (card.href) {
     return <Link href={card.href} className={wrapperClass} style={{ backgroundColor: card.bgColor, color: textColor }}>{CardContent}</Link>;
@@ -105,21 +105,21 @@ export default function MainHero(props: MainHeroProps) {
   const displayQuestion = question || subheadline || "Take a quick 3-minute test. Find out if he is playing you, and get the exact copy-paste texts to take your power back. No more waiting by the phone.";
 
   return (
-    <section className="relative overflow-hidden bg-white pt-12 md:pt-16 lg:pt-20 pb-16 md:pb-20">
+    <section className="relative overflow-hidden bg-[#F7F4ED] pt-14 md:pt-20 lg:pt-24 pb-16 md:pb-20">
       <div className="relative z-10 mx-auto max-w-[1500px] px-4 sm:px-6 md:px-10 lg:px-14">
         
         {/* SHORTER, PUNCHIER HERO TEXT TO KEEP CARDS ABOVE THE FOLD */}
         <div className="mx-auto max-w-4xl text-center mb-10 md:mb-14">
           {topSubheading && (
-            <p className="mb-4 text-sm md:text-base font-extrabold tracking-[0.2em] text-[#DD1C1A]">
+            <p className="mb-4 text-sm md:text-base font-extrabold tracking-[0.28em] uppercase text-[#E07850]">
               {topSubheading}
             </p>
           )}
-          <h1 className="text-[38px] leading-[1.1] tracking-tight font-extrabold text-[#086788] sm:text-[46px] md:text-[56px] lg:text-[64px]">
+          <h1 className="text-[38px] leading-[1.1] font-bold text-[#3A556C] sm:text-[46px] md:text-[56px] lg:text-[64px]">
             {headline}
           </h1>
           {displayQuestion && (
-            <p className="mx-auto mt-6 max-w-[700px] text-[18px] md:text-[20px] font-medium leading-[1.6] text-[#086788]/70">
+            <p className="mx-auto mt-6 max-w-[700px] text-[18px] md:text-[20px] font-medium leading-[1.65] text-[#5E7183]">
               {displayQuestion}
             </p>
           )}
@@ -141,7 +141,7 @@ export default function MainHero(props: MainHeroProps) {
       {/* WAVE DIVIDER CONNECTING TO THE CREAM BACKGROUND BELOW */}
       <div className="absolute bottom-0 left-0 w-full z-0 h-[40px] md:h-[80px]">
         <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="block h-full w-full" aria-hidden="true">
-          <path fill="#FFF1D0" d="M0,100 L1440,100 L1440,80 C1160,20 920,0 720,40 C520,80 280,20 0,60 Z" />
+          <path fill="#EFEBE1" d="M0,100 L1440,100 L1440,80 C1160,20 920,0 720,40 C520,80 280,20 0,60 Z" />
         </svg>
       </div>
     </section>

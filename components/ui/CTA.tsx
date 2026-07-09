@@ -28,9 +28,9 @@ export default function CTA({
 
   const variants = {
     primary:
-      "bg-[#FFB8A1] text-black hover:bg-[#F0A090] focus-visible:outline-[#FFB8A1]",
+      "bg-[#EC8A66] text-white shadow-[0_4px_16px_rgba(224,120,80,0.30)] hover:bg-[#E07850] hover:shadow-[0_8px_24px_rgba(224,120,80,0.38)] hover:-translate-y-0.5 focus-visible:outline-[#EC8A66]",
     secondary:
-      "border border-[#5A7492] text-[#5A7492] hover:bg-[#5A7492] hover:text-white focus-visible:outline-[#5A7492]",
+      "border-[1.5px] border-[#3A556C]/25 text-[#3A556C] bg-white/60 backdrop-blur-sm hover:border-[#3A556C] hover:bg-[#3A556C] hover:text-white focus-visible:outline-[#5A7492]",
     text:
       "bg-transparent text-[#5A7492] hover:underline underline-offset-4 px-0 py-0 rounded-none font-medium",
   };
