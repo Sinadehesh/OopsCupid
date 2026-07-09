@@ -19,7 +19,41 @@ const getQuestions = (): any[] => {
   return [];
 };
 
-const qList = getQuestions();
+// Free quiz = the 20 core (non-premium) items; the premium-only bank stays
+// reserved for a future deep-audit tier. Shorter quiz, far less drop-off.
+const qList = getQuestions().filter((q: any) => !q.premiumOnly);
+
+/**
+ * Deterministic subscale scoring: answers are 1-5 per item; each displayed
+ * category maps to the real subscales measuring it. Identical answers
+ * always produce identical results.
+ */
+function scoreCategories(rawAnswers: Record<string, number>) {
+  const CATEGORY_MAP: Record<string, string[]> = {
+    gaslighting: ["coercive_emotional", "reality_distortion", "self_doubt_induction"],
+    isolation: ["restrictive_isolating", "isolation_dependency", "surveillance"],
+    emotional_extortion: ["severe_psych_abuse", "threats", "intimidation", "financial_abuse"],
+    intermittent_reinforcement: ["blame_minimization", "confusion_dependency", "emotional_exhaustion"],
+  };
+  const pct = (ids: any[]) => {
+    let sum = 0, denom = 0;
+    ids.forEach((q: any) => {
+      const v = rawAnswers[q.id];
+      if (v === undefined) return;
+      sum += v - 1; // options are 1-5 → 0-4
+      denom += 4;
+    });
+    return denom > 0 ? Math.round((sum / denom) * 100) : null;
+  };
+  const all = getQuestions();
+  const overall = pct(all.filter((q: any) => rawAnswers[q.id] !== undefined)) ?? 0;
+  const out: Record<string, number> = {};
+  for (const [cat, subs] of Object.entries(CATEGORY_MAP)) {
+    const items = all.filter((q: any) => subs.includes(q.subscale));
+    out[cat] = pct(items) ?? overall;
+  }
+  return { overall, categories: out };
+}
 
 export default function ManipulationQuizEngine() {
   const router = useRouter();
@@ -39,24 +73,19 @@ export default function ManipulationQuizEngine() {
     
     setTimeout(() => {
       try {
-        const scores = Object.values(rawAnswers);
-        const totalScore = scores.reduce((sum, val) => sum + val, 0);
-        const maxPossible = (scores.length || 1) * 5;
-        
-        const basePercent = Math.round((totalScore / maxPossible) * 100);
-        const getVar = () => Math.floor(Math.random() * 15) - 5; 
+        const { overall, categories } = scoreCategories(rawAnswers);
 
         const finalResult = {
           overall: {
-            score: basePercent,
-            percent: basePercent,
-            severity: basePercent >= 80 ? "SEVERE" : basePercent >= 60 ? "ELEVATED" : "MODERATE"
+            score: overall,
+            percent: overall,
+            severity: overall >= 70 ? "SEVERE" : overall >= 45 ? "ELEVATED" : "MODERATE"
           },
           categories: {
-            gaslighting: { percent: Math.min(100, Math.max(0, basePercent + getVar())) },
-            isolation: { percent: Math.min(100, Math.max(0, basePercent + getVar())) },
-            emotional_extortion: { percent: Math.min(100, Math.max(0, basePercent + getVar())) },
-            intermittent_reinforcement: { percent: Math.min(100, Math.max(0, basePercent + getVar())) }
+            gaslighting: { percent: categories.gaslighting },
+            isolation: { percent: categories.isolation },
+            emotional_extortion: { percent: categories.emotional_extortion },
+            intermittent_reinforcement: { percent: categories.intermittent_reinforcement }
           }
         };
 

@@ -6,6 +6,9 @@ interface Props {
   data: {
     score: number;
     riskLevel: "SEVERE" | "ELEVATED" | "MODERATE";
+    archetype?: string;
+    flaggedCount?: number;
+    answeredCount?: number;
     vectors: {
       digital: number;
       chronological: number;
@@ -94,7 +97,15 @@ export default function InfidelityFreeResult({ data, onUnlock, isGenerating }: P
           </div>
 
           <h2 className="text-3xl md:text-5xl font-black mb-3 leading-tight">{cfg.label}</h2>
-          <p className="text-white/60 text-lg font-medium mb-8">{cfg.subtitle}</p>
+          <p className="text-white/60 text-lg font-medium mb-4">{cfg.subtitle}</p>
+
+          {data.archetype && (
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-6 py-2.5 mb-8">
+              <Search className="w-4 h-4 text-white/50" />
+              <span className="text-white/50 text-xs font-black uppercase tracking-widest">Pattern Match:</span>
+              <span className="text-white font-black text-sm md:text-base">{data.archetype}</span>
+            </div>
+          )}
 
           <div className="text-base text-white/80 max-w-2xl mx-auto leading-relaxed bg-white/5 p-6 rounded-2xl border border-white/8 text-left">
             <p className="font-black text-white mb-2 uppercase tracking-wide text-xs">What This Means For You:</p>
@@ -129,28 +140,33 @@ export default function InfidelityFreeResult({ data, onUnlock, isGenerating }: P
           <Eye className="w-8 h-8 text-rose-600" />
         </div>
         <h4 className="font-extrabold text-xl text-slate-800 mb-2">Cheating Signals Flagged</h4>
-        <p className="text-slate-400 text-sm mb-7">Red blocks = confirmed behavioral anomaly in your responses. The full breakdown is in the premium report.</p>
-        <div className="flex flex-wrap justify-center gap-2 mb-5">
-          {[...Array(12)].map((_, i) => {
-            const flagCount = Math.round((data.score / 100) * 12);
-            return (
-              <div key={i} className={`w-6 h-14 rounded-lg transition-all duration-300 ${
-                i < flagCount
-                  ? data.riskLevel === "SEVERE" ? "bg-rose-500 shadow-sm shadow-rose-200"
-                  : data.riskLevel === "ELEVATED" ? "bg-amber-500 shadow-sm shadow-amber-200"
-                  : "bg-indigo-500 shadow-sm shadow-indigo-200"
-                  : "bg-slate-100"
-              }`} />
-            );
-          })}
-        </div>
-        <p className={`text-sm font-black px-5 py-2 rounded-full inline-block ${
-          data.riskLevel === "SEVERE" ? "text-rose-600 bg-rose-50"
-          : data.riskLevel === "ELEVATED" ? "text-amber-600 bg-amber-50"
-          : "text-indigo-600 bg-indigo-50"
-        }`}>
-          {Math.round((data.score / 100) * 12)} out of 12 cheating signals flagged
-        </p>
+        <p className="text-slate-400 text-sm mb-7">Each block is one question you answered. Colored blocks = behaviors you rated in the danger zone. The full breakdown of each is in the premium report.</p>
+        {(() => {
+          const total = data.answeredCount ?? 20;
+          const flagCount = data.flaggedCount ?? Math.round((data.score / 100) * total);
+          return (
+            <>
+              <div className="flex flex-wrap justify-center gap-1.5 mb-5 max-w-md mx-auto">
+                {[...Array(total)].map((_, i) => (
+                  <div key={i} className={`w-4 h-12 rounded-md transition-all duration-300 ${
+                    i < flagCount
+                      ? data.riskLevel === "SEVERE" ? "bg-rose-500 shadow-sm shadow-rose-200"
+                      : data.riskLevel === "ELEVATED" ? "bg-amber-500 shadow-sm shadow-amber-200"
+                      : "bg-indigo-500 shadow-sm shadow-indigo-200"
+                      : "bg-slate-100"
+                  }`} />
+                ))}
+              </div>
+              <p className={`text-sm font-black px-5 py-2 rounded-full inline-block ${
+                data.riskLevel === "SEVERE" ? "text-rose-600 bg-rose-50"
+                : data.riskLevel === "ELEVATED" ? "text-amber-600 bg-amber-50"
+                : "text-indigo-600 bg-indigo-50"
+              }`}>
+                {flagCount} out of {total} answers flagged as danger-zone behavior
+              </p>
+            </>
+          );
+        })()}
       </div>
 
       {/* PAYWALL */}
