@@ -54,6 +54,12 @@ existing products):
 | Boundaries Course | €24 | `oopscupid.gumroad.com/l/boundaries-course` |
 | Red Flag Decoder | €12 | `oopscupid.gumroad.com/l/red-flag-decoder` |
 | Smart Screening Course | €24 | `oopscupid.gumroad.com/l/smart-screening` |
+| Report + Workbook Bundle (decoy tier) | €49 | `oopscupid.gumroad.com/l/report-workbook-bundle` |
+| Ultimate Bundle (report + workbook + 60-min session) | €59 | `oopscupid.gumroad.com/l/ultimate-bundle` |
+
+Also create a Gumroad **discount code `RESULTS15` (15% off)** — the
+PremiumCheckout banner advertises it as a first-purchase offer. The banner
+is honest only while the code actually works.
 
 For coaching products on Gumroad: create a product whose deliverable is
 a scheduling link (Calendly/Cal.com) in the receipt. Gumroad is the

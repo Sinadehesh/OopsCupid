@@ -1,6 +1,6 @@
 import React from "react";
 import { BookOpen, GraduationCap, PhoneCall, Check, ArrowRight } from "lucide-react";
-import { getOfferStack, scoreToSeverity, type Severity } from "@/lib/offers/catalog";
+import { getDecoyTiers, scoreToSeverity, type Severity } from "@/lib/offers/catalog";
 import type { QuizTopic } from "@/lib/quizzes/registry";
 
 const KIND_ICON = {
@@ -12,16 +12,21 @@ const KIND_ICON = {
 
 const KIND_LABEL = {
   playbook: "Instant PDF",
-  course: "Full Course",
+  course: "Course + Workbook",
   coaching: "1:1 Session",
-  program: "Program",
+  program: "Everything",
 } as const;
 
 /**
- * Three-rung offer ladder rendered after a report. The featured rung is
- * chosen by result severity (see getOfferStack) — decoy pricing does the
- * rest: the playbook makes the course look complete, the course makes
- * coaching look personal.
+ * DECOY-PRICED 3-TIER LADDER (see lib/offers/catalog.ts getDecoyTiers).
+ *
+ * Psychology at work:
+ * - ANCHORING: the €98 "bought separately" figure and the €14 base tier
+ *   frame €59 as mid-priced, not expensive.
+ * - DECOY EFFECT: Tier 2 at €49 exists to be compared away — Tier 3 adds
+ *   a €49 coaching session for €10 more, making it the obvious pick.
+ * - SEVERITY FRAMING: a small "matched to your score" tag personalizes
+ *   the recommendation without changing the honest default (best value).
  */
 export default function OfferLadder({
   topic,
@@ -37,11 +42,10 @@ export default function OfferLadder({
   subheading?: string;
 }) {
   const sev = severity ?? scoreToSeverity(score ?? 50);
-  const stack = getOfferStack(topic, sev);
-  const offers = [stack.playbook, stack.course, stack.coaching] as const;
+  const tiers = getDecoyTiers(topic);
 
   return (
-    <section className="w-full max-w-6xl mx-auto my-16 px-4">
+    <section id="unlock-offer" className="w-full max-w-6xl mx-auto my-16 px-4 scroll-mt-8">
       <div className="text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-3">
           {heading}
@@ -50,11 +54,8 @@ export default function OfferLadder({
       </div>
 
       <div className="grid md:grid-cols-3 gap-6 items-stretch">
-        {offers.map((offer) => {
-          const featured =
-            (stack.featured === "playbook" && offer.kind === "playbook") ||
-            (stack.featured === "course" && offer.kind === "course") ||
-            (stack.featured === "coaching" && offer.kind === "coaching");
+        {tiers.map(({ offer, role, badge }) => {
+          const featured = role === "best";
           const Icon = KIND_ICON[offer.kind];
 
           return (
@@ -62,13 +63,20 @@ export default function OfferLadder({
               key={offer.id}
               className={`relative flex flex-col rounded-3xl border-2 p-8 bg-white transition-all ${
                 featured
-                  ? "border-rose-500 shadow-2xl md:-translate-y-2"
+                  ? "border-rose-500 shadow-2xl md:-translate-y-3 ring-4 ring-rose-100"
+                  : role === "decoy"
+                  ? "border-slate-200 shadow-sm"
                   : "border-slate-200 shadow-sm"
               }`}
             >
               {featured && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-rose-500 text-white text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full whitespace-nowrap">
-                  Recommended for your score
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-rose-500 text-white text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full whitespace-nowrap animate-pulse">
+                  {badge ?? "Best Value"}
+                </div>
+              )}
+              {role === "decoy" && sev === "moderate" && (
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-slate-700 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full whitespace-nowrap">
+                  Matched to your score
                 </div>
               )}
 
@@ -91,7 +99,7 @@ export default function OfferLadder({
               <ul className="space-y-3 mb-8 flex-1">
                 {offer.bullets.map((b) => (
                   <li key={b} className="flex items-start gap-2.5">
-                    <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-1" />
+                    <Check className={`w-4 h-4 shrink-0 mt-1 ${featured ? "text-rose-500" : "text-emerald-500"}`} />
                     <span className="text-sm font-medium text-slate-600">{b}</span>
                   </li>
                 ))}
@@ -112,7 +120,7 @@ export default function OfferLadder({
                 rel="noopener noreferrer"
                 className={`inline-flex items-center justify-center gap-2 w-full py-4 rounded-2xl font-black text-base transition-all ${
                   featured
-                    ? "bg-rose-500 hover:bg-rose-400 text-white shadow-lg"
+                    ? "bg-rose-500 hover:bg-rose-400 text-white shadow-lg hover:-translate-y-0.5"
                     : "bg-slate-900 hover:bg-slate-700 text-white"
                 }`}
               >
@@ -124,7 +132,7 @@ export default function OfferLadder({
       </div>
 
       <p className="text-center text-sm font-bold text-slate-400 mt-8">
-        7-day money-back guarantee on every digital product. No questions asked.
+        7-day money-back guarantee on every tier. No questions asked.
       </p>
     </section>
   );

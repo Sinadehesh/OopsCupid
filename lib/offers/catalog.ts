@@ -346,3 +346,59 @@ export function scoreToSeverity(score: number): Severity {
   if (score >= 45) return "moderate";
   return "low";
 }
+
+// ── DECOY-PRICED 3-TIER LADDER ──────────────────────────────────────────────
+//
+// Tier 1 anchors the low end. Tier 2 (report + workbook) is the DECOY:
+// priced deliberately close to Tier 3 so that Tier 3 — which adds a €49
+// coaching session for €10 more — reads as the obvious best value.
+// The decoy isn't a trick offer: it's real and buyable; it just makes the
+// comparison easy. One Gumroad product per tier (see docs/MONETIZATION.md).
+
+export interface DecoyTier {
+  offer: Offer;
+  role: "base" | "decoy" | "best";
+  badge?: string;
+}
+
+export function getDecoyTiers(topic: QuizTopic): DecoyTier[] {
+  const { playbook, course } = ladders[topic];
+
+  const tier2: Offer = {
+    ...course,
+    id: `${course.id}-workbook`,
+    name: `${course.name} + 6-Week Workbook`,
+    tagline: "The full course plus the guided daily workbook.",
+    price: "€49",
+    url: "https://oopscupid.gumroad.com/l/report-workbook-bundle",
+    bullets: [
+      ...course.bullets.slice(0, 2),
+      "The 6-week guided workbook: one 10-minute exercise per day",
+      "Printable progress tracker",
+    ],
+    cta: "Get Report + Workbook",
+  };
+
+  const tier3: Offer = {
+    id: `ultimate-${topic}`,
+    kind: "program",
+    name: "The Ultimate Bundle",
+    tagline: "Everything in Tier 2, plus a live 1:1 session on YOUR results.",
+    price: "€59",
+    anchorPrice: "€98 bought separately",
+    url: "https://oopscupid.gumroad.com/l/ultimate-bundle",
+    bullets: [
+      "Everything in the Report + Workbook tier",
+      `A 60-minute 1:1 Clarity Session (${CLARITY_CALL.price} alone)`,
+      "A written 14-day action plan you keep",
+      "Priority email access for follow-up questions",
+    ],
+    cta: "Get Everything + Coaching",
+  };
+
+  return [
+    { offer: playbook, role: "base" },
+    { offer: tier2, role: "decoy" },
+    { offer: tier3, role: "best", badge: "Best Value — coaching for €10 more" },
+  ];
+}
