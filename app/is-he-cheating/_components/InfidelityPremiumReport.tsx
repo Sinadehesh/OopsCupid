@@ -1,23 +1,74 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ShieldAlert, Smartphone, Clock, Heart, Search,
   Eye, AlertTriangle, Brain, MessageSquare, Target,
   TrendingUp, ChevronDown, Star, CheckCircle2, BookOpen, Zap, Lock,
+  BarChart3, Fingerprint, ClipboardCheck,
 } from "lucide-react";
 import CoachingUpsell from "@/components/offers/CoachingUpsell";
 import { scoreToSeverity } from "@/lib/offers/catalog";
+import RiskGauge from "@/components/report/charts/RiskGauge";
+import SubscaleRadar from "@/components/report/charts/SubscaleRadar";
+import SignalFrequency from "@/components/report/charts/SignalFrequency";
 
 interface ReportData {
   score: number;
   riskLevel: "SEVERE" | "ELEVATED" | "MODERATE";
   email: string;
+  archetype?: string;
+  flaggedCount?: number;
+  answeredCount?: number;
   vectors: {
     digital: number;
     chronological: number;
     intimacy: number;
     micro: number;
   };
+}
+
+/** Numbered section header — gives the report its "clinical dossier" spine. */
+function SectionHeader({ no, kicker, title, icon: Icon }: { no: string; kicker: string; title: string; icon: any }) {
+  return (
+    <div className="mb-6">
+      <div className="flex items-center gap-3 mb-1.5">
+        <span className="text-[11px] font-black uppercase tracking-[0.2em] text-rose-500">Section {no}</span>
+        <span className="h-px flex-1 bg-slate-200" />
+        <span className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-300">{kicker}</span>
+      </div>
+      <h2 className="text-2xl md:text-3xl font-black text-slate-800 flex items-center gap-3">
+        <Icon className="w-6 h-6 text-rose-500" /> {title}
+      </h2>
+    </div>
+  );
+}
+
+/** "Compiling your blueprint" state — a paid report should feel assembled, not pasted. */
+function ReportAssembling({ accent }: { accent: string }) {
+  const steps = ["Decrypting your response data", "Scoring 5 behavioral vectors", "Matching deception archetypes", "Compiling your action protocol"];
+  const [step, setStep] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setStep((s) => Math.min(s + 1, steps.length - 1)), 420);
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <div className="min-h-[70vh] flex flex-col items-center justify-center px-6 text-center">
+      <div className="relative w-24 h-24 mb-10">
+        <div className="absolute inset-0 rounded-full border-4 border-slate-200" />
+        <div className="absolute inset-0 rounded-full border-4 border-transparent animate-spin" style={{ borderTopColor: accent }} />
+        <Fingerprint className="absolute inset-0 m-auto w-10 h-10 text-slate-400" />
+      </div>
+      <h2 className="text-2xl md:text-3xl font-black text-slate-800 mb-8">Building Your Psychological Blueprint…</h2>
+      <div className="space-y-3 text-left">
+        {steps.map((s, i) => (
+          <div key={s} className={`flex items-center gap-3 transition-opacity duration-300 ${i <= step ? "opacity-100" : "opacity-30"}`}>
+            {i < step ? <CheckCircle2 className="w-5 h-5 text-emerald-500" /> : <div className="w-5 h-5 rounded-full border-2 border-slate-300 border-t-slate-500 animate-spin" />}
+            <span className="text-slate-600 font-bold text-sm">{s}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 const RISK_CFG = {
@@ -336,35 +387,118 @@ function PlaybooksUpsell({ accent }: { accent: string }) {
 export default function InfidelityPremiumReport({ data }: { data: ReportData }) {
   const cfg = RISK_CFG[data.riskLevel];
   const [open, setOpen] = useState<number | null>(null);
+  const [assembling, setAssembling] = useState(true);
+  const [checkedDays, setCheckedDays] = useState<Record<number, boolean>>({});
+
+  useEffect(() => {
+    const t = setTimeout(() => setAssembling(false), 1900);
+    return () => clearTimeout(t);
+  }, []);
+
+  if (assembling) return <ReportAssembling accent={cfg.accent} />;
+
+  // short axis names so radar labels never clip; full context lives in the tooltip
+  const RADAR_SHORT: Record<string, string> = {
+    digital: "Digital",
+    chronological: "Schedule",
+    intimacy: "Emotional",
+    micro: "Stories",
+  };
+  const radarData = VECTORS.map((v) => ({
+    axis: RADAR_SHORT[v.key],
+    value: data.vectors[v.key],
+    description: `${v.label}: ${v.desc}`,
+  }));
+
+  const doneCount = Object.values(checkedDays).filter(Boolean).length;
 
   return (
     <div className="min-h-screen bg-[#f8fafc]">
-      <div className="max-w-4xl mx-auto px-4 py-10 pb-24 space-y-8">
+      <div className="max-w-4xl mx-auto px-4 py-10 pb-24 space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
 
-        {/* HEADER HERO */}
-        <div className={`${cfg.bg} text-white rounded-[32px] p-8 md:p-12 shadow-2xl border ${cfg.border} relative overflow-hidden text-center`}>
-          <div className="absolute top-0 right-0 w-80 h-80 rounded-full blur-3xl pointer-events-none" style={{ background: `${cfg.accent}18` }} />
-          <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-3xl pointer-events-none" style={{ background: `${cfg.accent}0c` }} />
+        {/* ── SECTION 01 · EXECUTIVE SUMMARY ─────────────────────────────── */}
+        <div className={`${cfg.bg} text-white rounded-[32px] p-8 md:p-12 shadow-2xl border ${cfg.border} relative overflow-hidden`}>
+          <div className="absolute top-0 right-0 w-80 h-80 rounded-full blur-3xl pointer-events-none" style={{ background: `${cfg.accent}22` }} />
+          <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-3xl pointer-events-none" style={{ background: `${cfg.accent}10` }} />
           <div className="relative z-10">
-            <div className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest mb-8 border ${cfg.badge}`}>
-              <ShieldAlert className="w-4 h-4" /> Full Cheating Investigation Report
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-10">
+              <div className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest border ${cfg.badge}`}>
+                <ShieldAlert className="w-4 h-4" /> Full Cheating Investigation Report
+              </div>
+              <span className="text-white/30 text-[11px] font-black uppercase tracking-[0.2em]">Section 01 · Executive Summary</span>
             </div>
-            <ScoreRing score={data.score} accent={cfg.accent} />
-            <h1 className="text-3xl md:text-5xl font-black mt-6 mb-3 leading-tight">{cfg.label}</h1>
-            <p className="text-white/50 text-base mb-8">Infidelity Risk Index: <span className="text-white font-black">{data.riskLevel}</span></p>
-            <div className="bg-white/5 border border-white/8 rounded-2xl p-6 text-left max-w-2xl mx-auto">
-              <p className="text-white/30 text-xs font-black uppercase tracking-widest mb-3">Verdict</p>
-              <p className="text-white/85 leading-relaxed text-base">{cfg.verdict}</p>
-              <p className="mt-4 text-sm font-black" style={{ color: cfg.accent }}>{cfg.urgency}</p>
+
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div className="text-center">
+                <RiskGauge value={data.score} accent={cfg.accent} label="Suspicion Index" />
+                {typeof data.flaggedCount === "number" && (
+                  <p className="text-white/40 text-sm font-bold mt-6">
+                    <span className="text-white font-black">{data.flaggedCount}</span> of {data.answeredCount ?? 20} answers flagged as danger-zone behavior
+                  </p>
+                )}
+              </div>
+              <div>
+                <h1 className="text-3xl md:text-4xl font-black mb-3 leading-tight">{cfg.label}</h1>
+                {data.archetype && (
+                  <div className="inline-flex items-center gap-2 backdrop-blur-md bg-white/10 border border-white/15 rounded-full px-5 py-2 mb-5">
+                    <Fingerprint className="w-4 h-4 text-white/50" />
+                    <span className="text-white/50 text-[11px] font-black uppercase tracking-widest">Pattern Match:</span>
+                    <span className="text-white font-black text-sm">{data.archetype}</span>
+                  </div>
+                )}
+                <div className="backdrop-blur-md bg-white/[0.06] border border-white/10 rounded-2xl p-6 shadow-xl">
+                  <p className="text-white/30 text-xs font-black uppercase tracking-widest mb-3">Verdict</p>
+                  <p className="text-white/85 leading-relaxed text-base">{cfg.verdict}</p>
+                  <p className="mt-4 text-sm font-black" style={{ color: cfg.accent }}>{cfg.urgency}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* report contents strip */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 mt-10">
+              {[
+                { icon: BarChart3, label: "Data Breakdown" },
+                { icon: Brain, label: "Psychological Deep Dive" },
+                { icon: MessageSquare, label: "Confrontation Scripts" },
+                { icon: ClipboardCheck, label: "5-Day Protocol" },
+              ].map(({ icon: Icon, label }) => (
+                <div key={label} className="backdrop-blur-md bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 flex items-center gap-2.5">
+                  <Icon className="w-4 h-4 shrink-0" style={{ color: cfg.accent }} />
+                  <span className="text-white/70 text-xs font-black leading-tight">{label}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* VECTOR DEEP DIVE */}
+        {/* ── SECTION 02 · THE DATA BREAKDOWN ────────────────────────────── */}
         <div>
-          <h2 className="text-2xl font-black text-slate-800 mb-5 flex items-center gap-3">
-            <Eye className="w-6 h-6 text-rose-500" /> Cheating Signal Breakdown
-          </h2>
+          <SectionHeader no="02" kicker="Measured, not guessed" title="Your Behavioral Data" icon={BarChart3} />
+          <div className="grid md:grid-cols-2 gap-5">
+            <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
+              <h4 className="font-extrabold text-slate-800 mb-1">Deception Vector Profile</h4>
+              <p className="text-slate-400 text-xs font-medium mb-2">The shape matters: a spike on one axis has innocent explanations — a filled shape rarely does. Hover any point.</p>
+              <SubscaleRadar data={radarData} accent={cfg.accent} />
+            </div>
+            <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm flex flex-col">
+              <h4 className="font-extrabold text-slate-800 mb-1">Signal Intensity Ranking</h4>
+              <p className="text-slate-400 text-xs font-medium mb-6">Where his concealment effort is concentrated, strongest first.</p>
+              <div className="flex-1 flex flex-col justify-center">
+                <SignalFrequency
+                  data={[...radarData].sort((a, b) => b.value - a.value).map((r) => ({ label: r.axis, value: r.value, description: r.description }))}
+                  accent={cfg.accent}
+                />
+              </div>
+              <p className="text-slate-400 text-xs font-medium mt-4 border-t border-slate-100 pt-4">
+                Reading it: scores above 65 indicate deliberate, maintained behavior. Scores between 40–65 are ambiguous alone — their overlap is what raises the index.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* ── SECTION 03 · SIGNAL-BY-SIGNAL ANALYSIS ─────────────────────── */}
+        <div>
+          <SectionHeader no="03" kicker="What each score means" title="Cheating Signal Breakdown" icon={Eye} />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {VECTORS.map(({ key, icon: Icon, label, desc, insight }) => {
               const val = data.vectors[key];
@@ -389,12 +523,10 @@ export default function InfidelityPremiumReport({ data }: { data: ReportData }) 
           </div>
         </div>
 
-        {/* DIGITAL DEEP DIVE */}
+        {/* ── SECTION 04 · PSYCHOLOGICAL DEEP DIVE ───────────────────────── */}
         <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
-          <h2 className="text-2xl font-black text-slate-800 mb-2 flex items-center gap-3">
-            <Smartphone className="w-6 h-6 text-rose-500" /> What He Is Doing On His Phone
-          </h2>
-          <p className="text-slate-400 text-sm mb-6">Based on your digital behavior score of <strong>{data.vectors.digital}%</strong></p>
+          <SectionHeader no="04" kicker="Psychological deep dive" title="What He Is Doing On His Phone" icon={Smartphone} />
+          <p className="text-slate-400 text-sm mb-6 -mt-2">Based on your digital behavior score of <strong>{data.vectors.digital}%</strong></p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
               { icon: "\uD83D\uDD12", title: "Passcode & Screen Behavior", body: data.vectors.digital >= 65 ? "Sudden passcode changes or refusing to use his phone around you are deliberate perimeter-building behaviors. He knows exactly what is on there." : "Some guardedness present — watch for escalation alongside other signals." },
@@ -413,9 +545,10 @@ export default function InfidelityPremiumReport({ data }: { data: ReportData }) 
 
         {/* WHY YOU FEEL LIKE THE PROBLEM */}
         <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
-          <h2 className="text-2xl font-black text-slate-800 mb-6 flex items-center gap-3">
-            <Brain className="w-6 h-6 text-rose-500" /> Why You Feel Like the Problem
-          </h2>
+          <SectionHeader no="05" kicker="The mechanics of doubt" title="Why You Feel Like the Problem" icon={Brain} />
+          <blockquote className="border-l-4 rounded-r-2xl bg-slate-50 p-5 mb-6 text-slate-700 font-bold italic leading-relaxed" style={{ borderColor: cfg.accent }}>
+            &ldquo;If you leave a confrontation apologizing for something he did, the conversation was engineered — not had.&rdquo;
+          </blockquote>
           <div className="space-y-4">
             {[
               { label: "DARVO", full: "Deny, Attack, Reverse Victim and Offender", body: "When you raise a concern and he reacts by attacking your mental stability or trustworthiness, that is DARVO — a documented defense mechanism used to shift focus from his behavior to your reaction. A person with nothing to hide does not feel attacked by being asked a direct question." },
@@ -443,10 +576,8 @@ export default function InfidelityPremiumReport({ data }: { data: ReportData }) 
 
         {/* CONFRONTATION SCRIPTS */}
         <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
-          <h2 className="text-2xl font-black text-slate-800 mb-2 flex items-center gap-3">
-            <MessageSquare className="w-6 h-6 text-rose-500" /> Word-for-Word Confrontation Script
-          </h2>
-          <p className="text-slate-400 text-sm mb-6">
+          <SectionHeader no="06" kicker="Say this, then go silent" title="Word-for-Word Confrontation Script" icon={MessageSquare} />
+          <p className="text-slate-400 text-sm mb-6 -mt-2">
             Written for your {data.riskLevel.toLowerCase()} risk profile. These phrases are designed to prevent the standard deflection patterns cheaters use.
           </p>
           <div className="space-y-4">
@@ -464,45 +595,57 @@ export default function InfidelityPremiumReport({ data }: { data: ReportData }) 
           </div>
         </div>
 
-        {/* 5-DAY PROTOCOL */}
+        {/* ── SECTION 07 · ACTIONABLE NEXT STEPS ─────────────────────────── */}
         <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
-          <h2 className="text-2xl font-black text-slate-800 mb-6 flex items-center gap-3">
-            <Target className="w-6 h-6 text-rose-500" /> Your 5-Day Action Protocol
-          </h2>
-          <div className="space-y-4">
-            {ACTION_PROTOCOL[data.riskLevel].map((step, i) => (
-              <div key={i} className="flex gap-4 items-start">
-                <div className="shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center font-black text-sm text-white shadow-sm" style={{ background: cfg.accent }}>
-                  {step.day.replace("Day ", "D")}
-                </div>
-                <div className="bg-slate-50 rounded-2xl p-5 flex-1 border border-slate-100">
-                  <p className="font-extrabold text-slate-800 mb-1">{step.action}</p>
-                  <p className="text-slate-500 text-sm leading-relaxed">{step.why}</p>
-                </div>
-              </div>
-            ))}
+          <SectionHeader no="07" kicker="Your roadmap" title="Your 5-Day Action Protocol" icon={Target} />
+          <div className="flex items-center gap-3 mb-6 -mt-1">
+            <div className="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden">
+              <div className="h-full rounded-full transition-all duration-500" style={{ width: `${(doneCount / 5) * 100}%`, background: cfg.accent }} />
+            </div>
+            <span className="text-xs font-black text-slate-500 whitespace-nowrap">{doneCount} of 5 done</span>
           </div>
+          <div className="space-y-4">
+            {ACTION_PROTOCOL[data.riskLevel].map((step, i) => {
+              const done = !!checkedDays[i];
+              return (
+                <button
+                  key={i}
+                  onClick={() => setCheckedDays((c) => ({ ...c, [i]: !c[i] }))}
+                  className={`w-full text-left flex gap-4 items-start rounded-2xl transition-all ${done ? "opacity-60" : ""}`}
+                >
+                  <div className={`shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center font-black text-sm text-white shadow-sm transition-colors`} style={{ background: done ? "#10b981" : cfg.accent }}>
+                    {done ? <CheckCircle2 className="w-6 h-6" /> : step.day.replace("Day ", "D")}
+                  </div>
+                  <div className={`bg-slate-50 rounded-2xl p-5 flex-1 border transition-colors ${done ? "border-emerald-200 bg-emerald-50/50" : "border-slate-100"}`}>
+                    <p className={`font-extrabold mb-1 ${done ? "text-slate-500 line-through" : "text-slate-800"}`}>{step.action}</p>
+                    <p className="text-slate-500 text-sm leading-relaxed">{step.why}</p>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+          <p className="text-slate-400 text-xs font-bold mt-5">Tap each step as you complete it. Progress isn&apos;t saved between visits — do it in the 5 days.</p>
         </div>
 
-        {/* SILENCE COST */}
+        {/* TRAJECTORY IF UNADDRESSED */}
         <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
           <h2 className="text-2xl font-black text-slate-800 mb-2 flex items-center gap-3">
             <TrendingUp className="w-6 h-6 text-rose-500" /> What Happens If You Stay Silent
           </h2>
-          <p className="text-slate-500 text-sm mb-7">Research on concealment behavior shows these patterns compound over time without intervention.</p>
-          <div className="space-y-5">
+          <p className="text-slate-500 text-sm mb-7">
+            Concealment patterns are self-reinforcing: every week they go unchallenged, they get easier for him to maintain and harder for you to raise. At your risk level, the clinical consensus points one direction:
+          </p>
+          <div className="space-y-4">
             {[
-              { label: "Cheating behavior escalates", pct: data.riskLevel === "SEVERE" ? 89 : data.riskLevel === "ELEVATED" ? 72 : 48 },
-              { label: "Emotional self-doubt increases", pct: data.riskLevel === "SEVERE" ? 94 : data.riskLevel === "ELEVATED" ? 78 : 55 },
-              { label: "Confrontation becomes harder", pct: data.riskLevel === "SEVERE" ? 91 : data.riskLevel === "ELEVATED" ? 74 : 52 },
-            ].map((row, i) => (
-              <div key={i}>
-                <div className="flex justify-between mb-2">
-                  <span className="text-slate-700 font-bold text-sm">{row.label}</span>
-                  <span className="text-slate-500 text-sm font-black">{row.pct}%</span>
-                </div>
-                <div className="w-full bg-slate-100 rounded-full h-2.5">
-                  <div className={`${cfg.bar} h-full rounded-full transition-all duration-1000`} style={{ width: `${row.pct}%` }} />
+              { label: "His behavior", trend: data.riskLevel === "MODERATE" ? "Ambiguous — the next 30 days of baseline comparison decide it" : "Escalates — successful concealment teaches him it works" },
+              { label: "Your self-trust", trend: "Erodes — unresolved suspicion turns inward as self-doubt" },
+              { label: "The confrontation", trend: "Gets harder — every silent week raises the cost of speaking up" },
+            ].map((row) => (
+              <div key={row.label} className="flex items-start gap-4 bg-slate-50 border border-slate-100 rounded-2xl p-5">
+                <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" style={{ color: cfg.accent }} />
+                <div>
+                  <p className="font-extrabold text-slate-800 text-sm mb-0.5">{row.label}</p>
+                  <p className="text-slate-500 text-sm leading-relaxed">{row.trend}</p>
                 </div>
               </div>
             ))}

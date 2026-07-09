@@ -7,6 +7,9 @@ interface ReportData {
   score: number;
   riskLevel: "SEVERE" | "ELEVATED" | "MODERATE";
   email: string;
+  archetype?: string;
+  flaggedCount?: number;
+  answeredCount?: number;
   vectors: {
     digital: number;
     chronological: number;
@@ -25,6 +28,9 @@ function normalize(raw: any): ReportData {
     score,
     riskLevel,
     email: raw?.email ?? "",
+    archetype: typeof raw?.archetype === "string" ? raw.archetype : undefined,
+    flaggedCount: typeof raw?.flaggedCount === "number" ? raw.flaggedCount : undefined,
+    answeredCount: typeof raw?.answeredCount === "number" ? raw.answeredCount : undefined,
     vectors: {
       digital:       typeof v.digital       === "number" ? v.digital       : score,
       chronological: typeof v.chronological === "number" ? v.chronological : score,
