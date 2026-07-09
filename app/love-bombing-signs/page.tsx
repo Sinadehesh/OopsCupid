@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowLeft, HeartCrack, Flame, ShieldAlert, BookOpen, Clock, Activity, MessageCircle } from "lucide-react";
+import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata = {
   title: "Love Bombing vs. Genuine Affection | OopsCupid",
@@ -325,6 +326,7 @@ export default function LoveBombingArticle() {
 
         </div>
       </section>
+    <QuizSeoFooter slug="/love-bombing-signs" />
     </main>
   );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import SabotageQuizEngine from "./_components/SabotageQuizEngine";
+import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata = {
   title: "Why Do I Sabotage Relationships? | Clinical Quiz",
@@ -14,6 +15,7 @@ export default function SabotagePage() {
         <p className="text-slate-500 text-lg">Stop guessing. Start measuring. Run a 50-point clinical screening on your attachment anxiety, fear of rejection, and protective instincts.</p>
       </div>
       <SabotageQuizEngine />
+    <QuizSeoFooter slug="/why-do-i-sabotage-relationships" />
     </main>
   );
 }

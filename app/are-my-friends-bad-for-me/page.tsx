@@ -1,5 +1,6 @@
 import React from "react";
 import QuizEngine from "./_components/QuizEngine";
+import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata = {
   title: "Are My Friends Bad For Me? | Diagnostic Audit",
@@ -10,6 +11,7 @@ export default function AreMyFriendsBadPage() {
   return (
     <main className="min-h-screen bg-[#fafafa]">
       <QuizEngine />
+    <QuizSeoFooter slug="/are-my-friends-bad-for-me" />
     </main>
   );
 }

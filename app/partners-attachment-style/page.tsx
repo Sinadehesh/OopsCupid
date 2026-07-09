@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import QuizWidget from '@/components/features/QuizWidget';
 import { HeartHandshake, ShieldAlert, UserMinus, ShieldCheck } from 'lucide-react';
+import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata: Metadata = {
   title: "What Is His Attachment Style? Partner Test | OopsCupid",
@@ -104,6 +105,7 @@ export default function PartnerAttachmentQuizPage() {
         </div>
       </section>
 
+    <QuizSeoFooter slug="/partners-attachment-style" />
     </main>
   );
 }

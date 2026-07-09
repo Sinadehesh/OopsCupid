@@ -2,6 +2,7 @@ import MainHero from "@/components/ui/MainHero";
 import Card from "@/components/ui/Card";
 import Link from "next/link";
 import { Metadata } from "next";
+import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata: Metadata = {
   title: "Relationship Red Flags | OopsCupid",
@@ -49,6 +50,7 @@ export default function RedFlagsHub() {
           <Card href="/trauma-bonding-signs" title="Understanding Trauma Bonding" description="Why it's so incredibly hard to leave a toxic relationship once you're in it." category="Article" />
         </div>
       </div>
+    <QuizSeoFooter slug="/relationship-red-flags" />
     </>
   );
 }

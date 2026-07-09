@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import QuizWidget from '@/components/features/QuizWidget';
 import { Magnet, Sparkles, HeartCrack, Layers } from 'lucide-react';
+import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata: Metadata = {
   title: "Ultimate Who Am I Attracted To Quiz | Psychological Personality Test",
@@ -111,6 +112,7 @@ export default function AttractionPatternsPage() {
         </div>
       </section>
 
+    <QuizSeoFooter slug="/attraction-patterns" />
     </main>
   );
 }

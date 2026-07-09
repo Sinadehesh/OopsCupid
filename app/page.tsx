@@ -287,6 +287,45 @@ export default function Home() {
         </div>
       </section>
 
+      {/* COACHING — 1:1 OFFER */}
+      <section className="bg-[#0b2530] py-20 md:py-28 text-white">
+        <div className="container mx-auto px-6 md:px-10 lg:px-14 max-w-5xl">
+          <div className="flex flex-col lg:flex-row items-center gap-12">
+            <div className="lg:w-3/5">
+              <span className="inline-block py-1.5 px-4 rounded-full bg-[#F0C808]/20 text-[#F0C808] font-extrabold text-xs tracking-widest uppercase mb-6">
+                New: 1:1 Private Coaching
+              </span>
+              <h2 className="text-[32px] md:text-[42px] font-extrabold mb-6 leading-tight">
+                A Quiz Tells You What&apos;s Wrong.
+                <br />
+                <span className="text-[#F0C808]">A Coach Tells You What To Do Tonight.</span>
+              </h2>
+              <p className="text-[18px] md:text-[20px] font-medium text-white/80 leading-relaxed mb-8">
+                Book a private 60-minute clarity session. We go through your results together and
+                you leave with a written 14-day plan — exact scripts, boundaries, and the decision
+                point ahead. Video or voice-only. Fully private.
+              </p>
+              <Link
+                href="/coaching"
+                className="inline-block bg-[#F0C808] text-[#086788] rounded-full px-10 py-5 text-[20px] font-extrabold hover:bg-[#e5be00] hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(240,200,8,0.4)] transition-all"
+              >
+                See Coaching Options →
+              </Link>
+            </div>
+            <div className="lg:w-2/5 w-full">
+              <div className="bg-white/5 border border-white/15 rounded-3xl p-8 backdrop-blur-sm">
+                <ul className="space-y-5 text-[17px] font-medium text-white/90">
+                  <li className="flex items-start gap-3"><span className="text-[#F0C808] font-extrabold">✓</span> Your exact quiz results, decoded live</li>
+                  <li className="flex items-start gap-3"><span className="text-[#F0C808] font-extrabold">✓</span> A written 14-day action plan to keep</li>
+                  <li className="flex items-start gap-3"><span className="text-[#F0C808] font-extrabold">✓</span> Word-for-word scripts for your situation</li>
+                  <li className="flex items-start gap-3"><span className="text-[#F0C808] font-extrabold">✓</span> Not useful in 15 minutes? Full refund.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* NEW SECTION 5 — GUARANTEE & URGENCY */}
       <section className="bg-[#FFF1D0]/80 py-24">
         <div className="container mx-auto px-6 md:px-10 lg:px-14 max-w-4xl text-center">
@@ -321,8 +360,8 @@ export default function Home() {
             AI Relationship Analysis Tools
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <Card variant="tool" title="Chat Analyzer (Coming Soon)" description="Paste any conversation and get a psychology-backed breakdown of his texting behavior, interest level, and red flags — in plain English." href="/tools/chat-analyzer" buttonText="Try Chat Analyzer" />
-            <Card variant="tool" title="Dating Profile Analyzer (Coming Soon)" description="Share his profile and get a clear read on what his bio, word choices, and photos are really signaling before you swipe right." href="/tools/profile-analyzer" buttonText="Try Profile Analyzer" />
+            <Card variant="tool" title="Chat Analyzer" description="Paste any conversation and get a psychology-backed breakdown of his texting behavior, interest level, and red flags — in plain English." href="/chat-analyzer" buttonText="Try Chat Analyzer" />
+            <Card variant="tool" title="Dating Profile Analyzer" description="Share his profile and get a clear read on what his bio, word choices, and photos are really signaling before you swipe right." href="/dating-profile-analyzer" buttonText="Try Profile Analyzer" />
           </div>
         </div>
       </section>

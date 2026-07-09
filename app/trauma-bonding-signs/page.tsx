@@ -1,6 +1,7 @@
 import MainHero from "@/components/ui/MainHero";
 import Link from "next/link";
 import { Metadata } from "next";
+import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata: Metadata = {
   title: "Signs of Trauma Bonding | OopsCupid Guide",
@@ -32,6 +33,7 @@ export default function ArticlePage() {
             </ul>
         </article>
       </div>
+    <QuizSeoFooter slug="/trauma-bonding-signs" />
     </>
   );
 }

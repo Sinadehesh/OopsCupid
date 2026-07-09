@@ -2,6 +2,7 @@ import MainHero from "@/components/ui/MainHero";
 import Card from "@/components/ui/Card";
 import Link from "next/link";
 import { Metadata } from "next";
+import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata: Metadata = {
   title: "Toxic Friendships Analysis | OopsCupid",
@@ -39,6 +40,7 @@ export default function ToxicFriendshipsHub() {
           <Card href="/toxic-friendships#boundary" title="Setting Boundaries with Friends" description="How to say 'no' without ending the friendship (if you don't want to)." category="Guide" />
         </div>
       </div>
+    <QuizSeoFooter slug="/toxic-friendships" />
     </>
   );
 }

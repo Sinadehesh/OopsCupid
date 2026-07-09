@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import QuizWidget from '@/components/features/QuizWidget';
 import { Sparkles, Eye, Target, Magnet } from 'lucide-react';
+import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata: Metadata = {
   title: "Who Finds Me Attractive Quiz | Psychological Magnet Test",
@@ -110,6 +111,7 @@ export default function MagnetPatternsPage() {
         </div>
       </section>
 
+    <QuizSeoFooter slug="/who-is-attracted-to-me" />
     </main>
   );
 }

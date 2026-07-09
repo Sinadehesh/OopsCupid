@@ -1,4 +1,5 @@
 import QuizWidget from "@/components/features/QuizWidget";
+import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata = {
   title: "What Role Do You Play In Your Friend Group? | OopsCupid",
@@ -16,6 +17,7 @@ export default function FriendRolePage() {
       </div>
       
       <QuizWidget quizName="friend-group-role" />
+    <QuizSeoFooter slug="/friend-group-role" />
     </main>
   );
 }

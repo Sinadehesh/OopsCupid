@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export default function AttachmentStyleEssay() {
   return (
@@ -143,6 +144,7 @@ export default function AttachmentStyleEssay() {
           </div>
         </section>
       </div>
+    <QuizSeoFooter slug="/understanding-attachment-styles" />
     </article>
   );
 }

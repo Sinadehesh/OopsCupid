@@ -2,6 +2,7 @@ import MainHero from "@/components/ui/MainHero";
 import QuizWidget from "@/components/features/QuizWidget";
 import Link from "next/link";
 import { Metadata } from "next";
+import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata: Metadata = {
   title: "What Kind of Person Do I Attract? | OopsCupid Quiz",
@@ -23,6 +24,7 @@ export default function QuizPage() {
         </div>
         <QuizWidget quizName="What Kind of Person Do I Attract?" />
       </div>
+    <QuizSeoFooter slug="/what-kind-of-person-do-i-attract" />
     </>
   );
 }

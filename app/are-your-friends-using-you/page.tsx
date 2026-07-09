@@ -1,4 +1,5 @@
 import QuizWidget from "@/components/features/QuizWidget";
+import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata = {
   title: "Are Your Friends Using You? | OopsCupid",
@@ -16,6 +17,7 @@ export default function FriendsUsedPage() {
       </div>
       
       <QuizWidget quizName="are-your-friends-using-you" />
+    <QuizSeoFooter slug="/are-your-friends-using-you" />
     </main>
   );
 }

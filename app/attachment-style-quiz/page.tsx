@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import QuizWidget from '@/components/features/QuizWidget';
 import { ShieldCheck, Target, Heart, BrainCircuit } from 'lucide-react';
+import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata: Metadata = {
   title: "The Master Psychological Battery | Attachment, Emotion, Self-Esteem",
@@ -66,6 +67,7 @@ export default function MegaBatteryPage() {
           </div>
         </div>
       </section>
+    <QuizSeoFooter slug="/attachment-style-quiz" />
     </main>
   );
 }

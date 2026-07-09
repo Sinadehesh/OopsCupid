@@ -2,6 +2,7 @@ import MainHero from "@/components/ui/MainHero";
 import QuizWidget from "@/components/features/QuizWidget";
 import Link from "next/link";
 import { Metadata } from "next";
+import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata: Metadata = {
   title: "Is My Best Friend Toxic? | OopsCupid Quiz",
@@ -23,6 +24,7 @@ export default function QuizPage() {
         </div>
         <QuizWidget quizName="Is My Best Friend Toxic?" />
       </div>
+    <QuizSeoFooter slug="/is-my-best-friend-toxic" />
     </>
   );
 }
