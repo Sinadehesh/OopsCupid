@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import PremiumReport from "../_components/PremiumReport";
+import OfferLadder from "@/components/offers/OfferLadder";
 import { ShieldAlert } from "lucide-react";
 
 export default function PremiumToxicAttractionPage() {
@@ -62,6 +63,12 @@ export default function PremiumToxicAttractionPage() {
   return (
     <div className="min-h-screen bg-[#fafafa]">
       <PremiumReport data={data} handleShare={handleShare} />
+      <OfferLadder
+        topic="attraction-patterns"
+        score={typeof data?.score === "number" ? data.score : 55}
+        heading="Break The Pattern, Three Ways"
+        subheading="Pick the level of support that fits. One-time payments, instant access via Gumroad."
+      />
     </div>
   );
 }

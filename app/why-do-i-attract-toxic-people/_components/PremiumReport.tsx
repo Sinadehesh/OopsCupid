@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Download, Share2, ShieldAlert, EyeOff, FileText, Video, ArrowRight, Target, BrainCircuit, Activity, Search, AlertOctagon, Zap, ShieldQuestion, Fingerprint, CheckCircle2, Loader2 } from "lucide-react";
 import Link from "next/link";
+import CoachingUpsell from "@/components/offers/CoachingUpsell";
 
 export default function PremiumReport({ data, handleShare }: { data: any, handleShare: any }) {
   const [mounted, setMounted] = useState(false);
@@ -343,6 +344,9 @@ export default function PremiumReport({ data, handleShare }: { data: any, handle
           </div>
 
         </div>
+
+        {/* COACHING UPSELL — highest rung of the ladder */}
+        <CoachingUpsell topicLabel="your attraction pattern" />
 
         {/* ECOSYSTEM LOOP */}
         <div className="bg-rose-50 border-2 border-rose-100 rounded-[2.5rem] p-12 text-center relative overflow-hidden">

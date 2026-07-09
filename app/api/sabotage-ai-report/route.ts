@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
 export async function POST(req: Request) {
   try {
+    // Instantiate lazily so builds/environments without the key don't crash at import time
+    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     const { result } = await req.json();
     if (!result) return NextResponse.json({ error: 'No result provided' }, { status: 400 });
 

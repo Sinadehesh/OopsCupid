@@ -147,13 +147,6 @@ export default function QuizEngine() {
   if (!started) {
     return (
       <div className="max-w-3xl mx-auto py-20 px-6 text-center animate-in fade-in duration-700 relative">
-        <button 
-          onClick={handleGodMode} 
-          className="absolute top-0 right-6 flex items-center gap-2 px-4 py-2 bg-rose-100 rounded-full text-sm font-bold text-rose-600 hover:bg-rose-200 transition-colors shadow-sm"
-        >
-          <Zap className="w-4 h-4" /> GOD MODE
-        </button>
-
         <div className="inline-flex items-center justify-center w-20 h-20 bg-rose-100 text-rose-600 rounded-full mb-8 shadow-sm">
           <ShieldAlert className="w-10 h-10" />
         </div>
@@ -173,13 +166,6 @@ export default function QuizEngine() {
 
   return (
     <div className="max-w-2xl mx-auto py-12 px-6 relative">
-      <button 
-        onClick={handleGodMode} 
-        className="absolute -top-6 right-6 flex items-center gap-2 px-3 py-1.5 bg-rose-100 rounded-full text-xs font-bold text-rose-600 hover:bg-rose-200 transition-colors shadow-sm"
-      >
-        <Zap className="w-3 h-3" /> Auto-Complete
-      </button>
-
       <div className="mb-10 mt-6">
         <div className="flex justify-between text-sm font-bold text-slate-400 mb-3 uppercase tracking-wider">
           <span>Question {currentQ + 1} of {BAD_GUYS_QUESTIONS.length}</span>

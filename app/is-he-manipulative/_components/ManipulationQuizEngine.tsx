@@ -158,7 +158,6 @@ export default function ManipulationQuizEngine() {
 
   if (!started) return (
     <div className="max-w-3xl mx-auto py-20 px-6 text-center relative">
-      <button onClick={handleGodMode} className="absolute top-0 right-6 flex items-center gap-2 px-4 py-2 bg-slate-100 rounded-full text-sm font-bold text-slate-600 hover:bg-slate-200 transition-colors shadow-sm"><Zap className="w-4 h-4 text-indigo-500" /> GOD MODE</button>
       <div className="inline-flex items-center justify-center w-24 h-24 bg-indigo-100 text-indigo-600 rounded-full mb-8 shadow-sm border border-indigo-200"><ShieldAlert className="w-12 h-12" /></div>
       <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 mb-6 tracking-tight leading-tight">Is He Manipulative?</h1>
       <p className="text-lg md:text-2xl text-slate-600 mb-10 font-medium leading-relaxed max-w-2xl mx-auto">Take this brutally honest diagnostic. Uncover if his confusing behavior is just "bad communication" or a calculated system of coercive control.</p>
@@ -171,7 +170,6 @@ export default function ManipulationQuizEngine() {
 
   return (
     <div className="max-w-2xl mx-auto py-12 px-6 relative animate-in fade-in duration-500">
-      <button onClick={handleGodMode} className="absolute -top-6 right-6 flex items-center gap-2 px-3 py-1.5 bg-slate-100 rounded-full text-xs font-bold text-slate-600 hover:bg-slate-200 transition-colors shadow-sm"><Zap className="w-3 h-3 text-indigo-500" /> Auto</button>
       
       <div className="mb-10 mt-6">
         <div className="flex justify-between text-sm font-bold text-slate-400 mb-3 uppercase tracking-wider"><span>Question {currentQ + 1} of {qList.length}</span><span className="text-indigo-600">{Math.round(progress)}%</span></div>

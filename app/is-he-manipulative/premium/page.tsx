@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ManipulationMasterReport from "@/components/report/ManipulationMasterReport";
+import OfferLadder from "@/components/offers/OfferLadder";
+import CoachingUpsell from "@/components/offers/CoachingUpsell";
+import { scoreToSeverity } from "@/lib/offers/catalog";
 
 export default function ManipulationPremiumPage() {
   const router = useRouter();
@@ -19,5 +22,21 @@ export default function ManipulationPremiumPage() {
   if (loading) return <div className="min-h-screen flex items-center justify-center bg-[#f8fafc]"><div className="w-16 h-16 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div></div>;
   if (!data) return <div className="min-h-screen flex flex-col items-center justify-center bg-[#f8fafc]"><h2 className="text-2xl font-bold mb-4">No Data Found</h2><button onClick={() => router.push('/is-he-manipulative')} className="bg-slate-900 text-white px-6 py-3 rounded-lg">Retake Diagnostic</button></div>;
 
-  return <ManipulationMasterReport data={data} />;
+  const score: number = typeof data?.score === "number" ? data.score : 55;
+
+  return (
+    <>
+      <ManipulationMasterReport data={data} />
+      <OfferLadder
+        topic="manipulation"
+        score={score}
+        heading="Your Next Move, Three Ways"
+        subheading="Pick the level of support that matches how serious your results are. One-time payments, instant access via Gumroad."
+      />
+      <CoachingUpsell
+        severity={scoreToSeverity(score)}
+        topicLabel="the tactics being used on you"
+      />
+    </>
+  );
 }

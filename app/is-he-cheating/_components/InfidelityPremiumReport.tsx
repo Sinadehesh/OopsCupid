@@ -5,6 +5,8 @@ import {
   Eye, AlertTriangle, Brain, MessageSquare, Target,
   TrendingUp, ChevronDown, Star, CheckCircle2, BookOpen, Zap, Lock,
 } from "lucide-react";
+import CoachingUpsell from "@/components/offers/CoachingUpsell";
+import { scoreToSeverity } from "@/lib/offers/catalog";
 
 interface ReportData {
   score: number;
@@ -509,6 +511,12 @@ export default function InfidelityPremiumReport({ data }: { data: ReportData }) 
 
         {/* PLAYBOOKS UPSELL */}
         <PlaybooksUpsell accent={cfg.accent} />
+
+        {/* COACHING UPSELL — highest-margin rung of the ladder */}
+        <CoachingUpsell
+          severity={scoreToSeverity(data.score)}
+          topicLabel="his behavior and your options"
+        />
 
         {/* CLOSING SEAL */}
         <div className={`${cfg.bg} rounded-[32px] p-8 text-center border ${cfg.border} relative overflow-hidden`}>
