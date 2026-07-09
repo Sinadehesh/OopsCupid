@@ -5,6 +5,7 @@ import {
   Sparkles, Lightbulb, MessageCircle, Loader2, Star, CheckCircle2,
   BookOpen, Heart, Flame, ChevronDown, Clock, Brain, Target
 } from "lucide-react";
+import CoachingUpsell from "@/components/offers/CoachingUpsell";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 interface Subscale { key: string; label: string; score: number; max: number; pct: number; }
@@ -508,6 +509,9 @@ export default function GaslightingPremiumReport({ result }: { result: Gaslighti
             Lock In €15.99 Bundle Now
           </a>
         </div>
+
+        {/* COACHING UPSELL — highest rung of the ladder */}
+        <CoachingUpsell severity="moderate" topicLabel="what he's doing and how to respond" />
 
         {/* ── CROSS-SELL ── */}
         <div className="bg-white rounded-3xl border-2 border-indigo-200 p-8 md:p-12 text-center shadow-md">

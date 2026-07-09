@@ -8,6 +8,7 @@ import {
   ShieldAlert, Lightbulb, MessageCircle, Loader2
 } from "lucide-react";
 import Link from "next/link";
+import CoachingUpsell from "@/components/offers/CoachingUpsell";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 interface Subscale { key: string; label: string; score: number; max: number; pct: number; }
@@ -656,6 +657,9 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
             Lock In €15.99 Now
           </a>
         </div>
+
+        {/* COACHING UPSELL — highest rung of the ladder */}
+        <CoachingUpsell severity="moderate" topicLabel="your sabotage pattern" />
 
         {/* ── CROSS-SELL ── */}
         <div className="bg-white rounded-3xl border-2 border-[#086788] p-8 md:p-12 text-center shadow-md">

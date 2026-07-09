@@ -124,7 +124,6 @@ export default function InfidelityQuizEngine() {
 
   if (!started) return (
     <div className="max-w-3xl mx-auto py-20 px-6 text-center relative">
-      <button onClick={handleGodMode} className="absolute top-0 right-6 flex items-center gap-2 px-4 py-2 bg-slate-100 rounded-full text-sm font-bold text-slate-600 hover:bg-slate-200 transition-colors shadow-sm"><Zap className="w-4 h-4" /> GOD MODE</button>
       <div className="inline-flex items-center justify-center w-20 h-20 bg-rose-100 text-rose-600 rounded-full mb-8 shadow-sm"><ShieldAlert className="w-10 h-10" /></div>
       <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 mb-6 tracking-tight">Is He Cheating On You?</h1>
       <p className="text-lg md:text-2xl text-slate-600 mb-10 font-medium leading-relaxed">Take this brutally honest diagnostic. We will analyze his digital footprint, schedule shifts, and defensive behaviors to determine if he is hiding something.</p>
@@ -137,7 +136,6 @@ export default function InfidelityQuizEngine() {
 
   return (
     <div className="max-w-2xl mx-auto py-12 px-6 relative">
-      <button onClick={handleGodMode} className="absolute -top-6 right-6 flex items-center gap-2 px-3 py-1.5 bg-slate-100 rounded-full text-xs font-bold text-slate-600"><Zap className="w-3 h-3" /> Auto</button>
       <div className="mb-10 mt-6">
         <div className="flex justify-between text-sm font-bold text-slate-400 mb-3 uppercase tracking-wider"><span>Question {currentQ + 1} of {infidelityQuestions.length}</span><span>{Math.round(progress)}%</span></div>
         <div className="w-full bg-slate-200 h-2.5 rounded-full"><div className="bg-slate-900 h-full rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div></div>

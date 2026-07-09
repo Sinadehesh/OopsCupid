@@ -1,48 +1,43 @@
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from "next";
+import { quizRegistry } from "@/lib/quizzes/registry";
 
 // FORCES NEXT.JS TO GENERATE THIS AT BUILD TIME FOR STATIC EXPORTS
-export const dynamic = 'force-static'
+export const dynamic = "force-static";
+
+const baseUrl = "https://oopscupid.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://oopscupid.com'
+  // Hub / static pages not in the quiz registry
+  const staticRoutes = [
+    "",
+    "/quizzes",
+    "/him",
+    "/me",
+    "/friends",
+    "/articles",
+    "/coaching",
+    "/articles/manipulation-science",
+    "/articles/is-my-friend-toxic",
+    "/why-do-i-attract-toxic-people-article",
+    "/privacy",
+    "/terms",
+  ];
 
-  // List of all your important routes
-  const routes = [
-    '',
-    '/quizzes',
-    '/him',
-    '/me',
-    '/friends',
-    '/articles',
-    // Dating & Him Tools
-    '/is-he-manipulative',
-    '/is-he-gaslighting-me',
-    '/is-he-cheating',
-    '/dating-texting-analysis',
-    '/partners-attachment-style',
-    // Me & Self Reflection
-    '/attachment-style-quiz',
-    '/why-do-i-attract-toxic-people',
-    '/attraction-patterns',
-    '/why-do-i-sabotage-relationships',
-    // Friendships
-    '/friend-group-role',
-    '/toxic-friend-test',
-    '/are-my-friends-bad-for-me',
-    '/are-your-friends-using-you',
-    // Articles
-    '/articles/manipulation-science',
-    '/articles/is-my-friend-toxic',
-    '/love-bombing-signs',
-    '/trauma-bonding-signs',
-    '/understanding-attachment-styles',
-    '/signs-of-a-toxic-friend'
-  ]
-
-  return routes.map((route) => ({
+  const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: route === '' ? 1 : 0.8, // Homepage is highest priority
-  }))
+    changeFrequency: "weekly" as const,
+    priority: route === "" ? 1 : route === "/coaching" ? 0.9 : 0.7,
+  }));
+
+  // Every quiz & article funnel comes from the registry — adding a quiz
+  // there automatically adds it here.
+  const registryEntries: MetadataRoute.Sitemap = quizRegistry.map((q) => ({
+    url: `${baseUrl}${q.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: q.isQuiz ? 0.9 : 0.8,
+  }));
+
+  return [...staticEntries, ...registryEntries];
 }

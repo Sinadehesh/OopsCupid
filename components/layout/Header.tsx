@@ -13,6 +13,7 @@ const navLinks = [
   { label: "Me", href: "/me", title: "Me Hub" },
   { label: "Him", href: "/him", title: "Him Hub" },
   { label: "Friends", href: "/friends", title: "Friends Hub" },
+  { label: "Coaching", href: "/coaching", title: "1:1 Clarity Coaching" },
 ];
 
 export default function Header() {
