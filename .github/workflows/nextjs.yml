@@ -38,8 +38,12 @@ jobs:
           key: ${{ runner.os }}-nextjs-force-mjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
       - name: Install dependencies
         run: npm ci
+      - name: Prepare static export (strip server-only code)
+        run: node scripts/prepare-pages-build.mjs
       - name: Build with Next.js
         run: npx --no-install next build
+        env:
+          GITHUB_PAGES: "true"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
