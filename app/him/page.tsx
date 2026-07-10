@@ -101,19 +101,19 @@ export default function HimHub() {
             </div>
           </Link>
 
-          <Link href="/dating-texting-analysis" className="group block h-full md:col-span-2 max-w-3xl mx-auto w-full">
-            <div className="bg-[#EF4444] rounded-[32px] p-8 md:p-10 shadow-[0_10px_30px_rgba(239,68,68,0.3)] hover:shadow-[0_15px_40px_rgba(239,68,68,0.4)] transition-all duration-300 hover:-translate-y-2 h-full flex flex-col md:flex-row items-center gap-8 relative overflow-hidden text-white">
+          <Link href="/is-he-cheating" className="group block h-full md:col-span-2 max-w-3xl mx-auto w-full">
+            <div className="bg-[#3D5A6C] rounded-[32px] p-8 md:p-10 shadow-[0_10px_30px_rgba(61,90,108,0.3)] hover:shadow-[0_15px_40px_rgba(61,90,108,0.4)] transition-all duration-300 hover:-translate-y-2 h-full flex flex-col md:flex-row items-center gap-8 relative overflow-hidden text-white">
               <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-bl-full -z-0 transition-transform group-hover:scale-110"></div>
               <div className="w-20 h-20 bg-white rounded-2xl flex flex-shrink-0 items-center justify-center shadow-lg z-10">
-                <MessageCircle className="w-10 h-10 text-[#EF4444]" />
+                <MessageCircle className="w-10 h-10 text-[#3D5A6C]" />
               </div>
               <div className="z-10 text-center md:text-left">
-                <h2 className="text-2xl md:text-3xl font-extrabold mb-3 text-white">What Does His Text Mean? <span className="text-sm font-bold text-[#EF4444] bg-[#FDE047] px-3 py-1 rounded-full ml-2 align-middle whitespace-nowrap tracking-wide uppercase">Coming Soon</span></h2>
+                <h2 className="text-2xl md:text-3xl font-extrabold mb-3 text-white">Is He Cheating? Take The Behavioral Test</h2>
                 <p className="text-white/90 mb-6 leading-relaxed font-medium text-lg">
-                  Paste a screenshot of your chat. Our smart tool will translate his confusing texts into plain English. Never overthink a message again.
+                  20 research-informed questions across his phone habits, schedule, and defensiveness. Get a scored answer in 3 minutes instead of another sleepless night.
                 </p>
-                <div className="inline-flex items-center text-black bg-[#FDE047] px-6 py-3 rounded-full font-extrabold uppercase text-sm tracking-wide">
-                  Join AI Waitlist <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+                <div className="inline-flex items-center text-[#3D5A6C] bg-[#F5DD90] px-6 py-3 rounded-full font-extrabold uppercase text-sm tracking-wide">
+                  Start The Test <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
                 </div>
               </div>
             </div>

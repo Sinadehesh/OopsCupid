@@ -18,19 +18,19 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "OopsCupid | Relationship Red Flags, Texting Analysis & Dating Quizzes",
+  title: "OopsCupid | Free Relationship Quizzes, Tests & Red Flag Checks",
   description:
-    "Not sure if he likes you or just likes the attention? OopsCupid helps women spot relationship red flags, decode mixed signals, analyze texts, and understand toxic patterns with free quizzes and tools.",
+    "Free, research-informed relationship quizzes for women: is he cheating, is he manipulative, attachment style tests, toxic friend tests, and attraction pattern diagnostics — with instant scored results.",
   keywords: [
-    "relationship red flags",
-    "is he a red flag",
-    "mixed signals from a guy",
-    "how to tell if he likes you",
-    "toxic friendship quiz",
-    "why do I attract toxic people",
-    "chat analyzer relationship",
-    "is he breadcrumbing me",
-    "is he gaslighting me",
+    "relationship quiz",
+    "is he cheating quiz",
+    "is he manipulative test",
+    "attachment style quiz",
+    "toxic friend test",
+    "why do I attract toxic people quiz",
+    "relationship red flags test",
+    "is he gaslighting me quiz",
+    "self sabotage relationship quiz",
     "dating patterns quiz",
   ],
   icons: {
@@ -39,9 +39,9 @@ export const metadata: Metadata = {
     apple: "/logo.png",
   },
   openGraph: {
-    title: "OopsCupid | Relationship Red Flags, Texting Analysis & Dating Quizzes",
+    title: "OopsCupid | Free Relationship Quizzes, Tests & Red Flag Checks",
     description:
-      "Free quizzes and tools to spot red flags, decode texts, and understand toxic patterns. No sign-up required.",
+      "Free relationship quizzes with instant scored results: cheating, manipulation, attachment styles, toxic friends, and attraction patterns. No sign-up required.",
     url: "https://oopscupid.com",
     siteName: "OopsCupid",
     type: "website",
@@ -49,9 +49,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "OopsCupid | Relationship Red Flags & Dating Quizzes",
+    title: "OopsCupid | Free Relationship Quizzes & Tests",
     description:
-      "Spot red flags, decode mixed signals, and understand your dating patterns. Free quizzes for women.",
+      "Spot red flags and understand your dating patterns with free, research-informed quizzes for women.",
   },
   alternates: {
     canonical: "https://oopscupid.com",

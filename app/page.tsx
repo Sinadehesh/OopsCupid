@@ -2,13 +2,14 @@ import MainHero from "@/components/ui/MainHero";
 import Card from "@/components/ui/Card";
 import { Metadata } from "next";
 import Link from "next/link";
+import { allQuizzes } from "@/lib/quizzes/registry";
 
 export const metadata: Metadata = {
-  title: "OopsCupid | Relationship Red Flags, Texting Analysis & Dating Quizzes",
-  description: "Spot relationship red flags, decode mixed signals, analyze texts, and understand dating patterns with free quizzes and clarity tools.",
+  title: "OopsCupid | Free Relationship Quizzes, Tests & Red Flag Checks",
+  description: "Free, research-informed relationship quizzes with instant scored results: cheating, manipulation, attachment styles, toxic friends, and attraction patterns.",
   openGraph: {
-    title: "OopsCupid | Relationship Red Flags, Texting Analysis & Dating Quizzes",
-    description: "Spot relationship red flags, decode mixed signals, analyze texts, and understand dating patterns with free quizzes and clarity tools.",
+    title: "OopsCupid | Free Relationship Quizzes, Tests & Red Flag Checks",
+    description: "Free, research-informed relationship quizzes with instant scored results: cheating, manipulation, attachment styles, toxic friends, and attraction patterns.",
     url: "https://oopscupid.com",
     siteName: "OopsCupid",
     images: [
@@ -24,8 +25,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "OopsCupid | Relationship Red Flags, Texting Analysis & Dating Quizzes",
-    description: "Spot relationship red flags, decode mixed signals, analyze texts, and understand dating patterns with free quizzes and clarity tools.",
+    title: "OopsCupid | Free Relationship Quizzes, Tests & Red Flag Checks",
+    description: "Free, research-informed relationship quizzes with instant scored results: cheating, manipulation, attachment styles, toxic friends, and attraction patterns.",
     images: ["https://oopscupid.com/logo.png"],
   },
 };
@@ -69,14 +70,25 @@ export default function Home() {
         }
       },
       {
+        "@type": "ItemList",
+        "@id": "https://oopscupid.com/#quizlist",
+        "name": "Free Relationship Quizzes & Tests",
+        "itemListElement": allQuizzes.map((q, i) => ({
+          "@type": "ListItem",
+          "position": i + 1,
+          "name": q.seoTitle,
+          "url": `https://oopscupid.com${q.slug}`,
+        })),
+      },
+      {
         "@type": "CollectionPage",
         "@id": "https://oopscupid.com/#webpage",
         "url": "https://oopscupid.com/",
-        "name": "OopsCupid | Relationship Red Flags, Texting Analysis & Dating Quizzes",
+        "name": "OopsCupid | Free Relationship Quizzes, Tests & Red Flag Checks",
         "isPartOf": {
           "@id": "https://oopscupid.com/#website"
         },
-        "description": "Spot relationship red flags, decode mixed signals, analyze texts, and understand dating patterns with free quizzes and clarity tools."
+        "description": "Free, research-informed relationship quizzes with instant scored results: cheating, manipulation, attachment styles, toxic friends, and attraction patterns."
       }
     ]
   };
@@ -306,15 +318,34 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PRESERVED SECTION — FEATURED TOOLS */}
+      {/* QUIZ DIRECTORY — every funnel, crawlable from the homepage */}
       <section className="bg-white py-20">
-        <div className="container mx-auto px-6 md:px-10 lg:px-14">
-          <h2 className="text-[28px] md:text-[36px] font-extrabold text-[#3A556C] mb-10 text-center">
-            AI Relationship Analysis Tools
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <Card variant="tool" title="Chat Analyzer" description="Paste any conversation and get a psychology-backed breakdown of his texting behavior, interest level, and red flags — in plain English." href="/chat-analyzer" buttonText="Try Chat Analyzer" />
-            <Card variant="tool" title="Dating Profile Analyzer" description="Share his profile and get a clear read on what his bio, word choices, and photos are really signaling before you swipe right." href="/dating-profile-analyzer" buttonText="Try Profile Analyzer" />
+        <div className="container mx-auto px-6 md:px-10 lg:px-14 max-w-6xl">
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <h2 className="text-[32px] md:text-[42px] font-bold text-[#3A556C] mb-5">
+              Every Free Relationship Test We Offer
+            </h2>
+            <p className="text-[18px] md:text-[20px] font-medium leading-relaxed text-[#5E7183]">
+              Research-informed quizzes with instant scored results. Pick the question keeping you up at night.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {allQuizzes.map((q) => (
+              <Link
+                key={q.slug}
+                href={q.slug}
+                className="group flex flex-col bg-[#FDFBF7] hover:bg-white ring-1 ring-black/5 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(58,85,108,0.10)]"
+              >
+                <span className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#E07850] mb-2">
+                  {q.hub === "him" ? "His Behavior" : q.hub === "me" ? "Your Patterns" : "Friendships"}
+                  {q.minutes ? ` · ${q.minutes} min` : ""}
+                </span>
+                <h3 className="text-[19px] font-extrabold text-[#3A556C] leading-snug mb-2 group-hover:text-[#E07850] transition-colors">
+                  {q.title}
+                </h3>
+                <p className="text-[15px] text-[#5E7183] font-medium leading-relaxed line-clamp-2">{q.description}</p>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

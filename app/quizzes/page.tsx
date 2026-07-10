@@ -43,8 +43,6 @@ const quizCategories = [
     title: "AI Analysis Tools",
     description: "Let our clinical AI review your real-life data for objective, unfiltered insights.",
     quizzes: [
-      { title: "Chat & Text Analyzer", path: "/chat-analyzer", desc: "Let our AI analyze his actual text messages.", icon: MessageCircle, bgClass: "bg-[#14B8A6]", bgLightClass: "bg-[#14B8A6]/10", textClass: "text-[#14B8A6]" },
-      { title: "Dating Profile Analyzer", path: "/dating-profile-analyzer", desc: "Optimize your dating profile with AI feedback.", icon: ScanFace, bgClass: "bg-[#D946EF]", bgLightClass: "bg-[#D946EF]/10", textClass: "text-[#D946EF]" }
     ]
   }
 ];

@@ -1,0 +1,41 @@
+# OopsCupid
+
+> OopsCupid offers free, research-informed relationship quizzes and tests for women, with instant scored results: infidelity risk ("is he cheating"), manipulation and gaslighting screening, adult attachment styles, toxic-friendship audits, attraction-pattern diagnostics, and relationship self-sabotage. Each quiz produces a per-subscale behavioral score and a written interpretation; premium reports, playbooks, and 1:1 clarity coaching are available after the free result.
+
+Quizzes are self-assessment tools, not clinical diagnoses. All quizzes are free, take about 3 minutes, and require no sign-up.
+
+## Partner Behavior Tests
+
+- [Is He Cheating? Behavioral Test](https://oopscupid.com/is-he-cheating): 20 questions scoring digital secrecy, schedule changes, emotional distance, defensiveness, and physical evidence into a suspicion index with a behavioral archetype.
+- [Is He Manipulative? Test](https://oopscupid.com/is-he-manipulative): screens for gaslighting, isolation, emotional extortion, and intermittent reinforcement tactics.
+- [Is He Gaslighting Me? Test](https://oopscupid.com/is-he-gaslighting-me): measures reality denial, invalidation, and self-trust erosion.
+- [Partner Attachment Style Quiz](https://oopscupid.com/partners-attachment-style): identifies whether a partner is avoidant, anxious, or secure.
+
+## Self-Pattern Tests
+
+- [Attachment Style Quiz](https://oopscupid.com/attachment-style-quiz): anxious, avoidant, fearful-avoidant, or secure — with what it means for dating.
+- [Why Do I Attract Toxic People? Quiz](https://oopscupid.com/why-do-i-attract-toxic-people): maps attachment templates and boundary gaps behind repeat toxic relationships.
+- [Why Do I Sabotage Relationships? Quiz](https://oopscupid.com/why-do-i-sabotage-relationships): identifies sabotage signatures like testing, fight-picking, and pre-emptive exits.
+- [Attraction Patterns Quiz](https://oopscupid.com/attraction-patterns): the hidden template deciding who you fall for.
+- [Why Do I Pick Bad Guys? Quiz](https://oopscupid.com/why-do-i-pick-bad-guys): why chaos reads as chemistry.
+- [What Kind of Person Do I Attract?](https://oopscupid.com/what-kind-of-person-do-i-attract): the personality types your signals select for.
+- [Who Is Attracted To Me?](https://oopscupid.com/who-is-attracted-to-me): your attraction profile.
+
+## Friendship Tests
+
+- [Toxic Friend Test](https://oopscupid.com/toxic-friend-test): scores control, competition, and energy drain in a friendship.
+- [Are My Friends Bad For Me?](https://oopscupid.com/are-my-friends-bad-for-me): audits a whole friend group's effect on confidence and stress.
+- [Are Your Friends Using You?](https://oopscupid.com/are-your-friends-using-you): measures the give-take reciprocity gap.
+- [Friend Group Role Quiz](https://oopscupid.com/friend-group-role): fixer, entertainer, organizer, peacekeeper, or afterthought.
+
+## Guides
+
+- [Relationship Red Flags](https://oopscupid.com/relationship-red-flags): red flags ranked by escalation risk.
+- [Gaslighting Signs](https://oopscupid.com/gaslighting-signs): the phrases and behaviors that define gaslighting.
+- [Love Bombing Signs](https://oopscupid.com/love-bombing-signs): intense romance vs. a manipulation on-ramp.
+- [Trauma Bonding Signs](https://oopscupid.com/trauma-bonding-signs): why the worst relationships are hardest to leave.
+- [Attachment Styles Explained](https://oopscupid.com/understanding-attachment-styles): plain-language attachment theory for dating.
+
+## Services
+
+- [1:1 Clarity Coaching](https://oopscupid.com/coaching): private 60-minute sessions that turn quiz results into a written 14-day action plan.

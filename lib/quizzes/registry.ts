@@ -83,16 +83,6 @@ export const quizRegistry: QuizEntry[] = [
     minutes: 4,
     isQuiz: true,
   },
-  {
-    slug: "/dating-texting-analysis",
-    title: "Texting & Mixed Signals Hub",
-    seoTitle: "Dating & Texting Analysis — Decode His Messages",
-    description:
-      "Tools and guides to decode mixed signals, dry texting, and breadcrumbing.",
-    topic: "red-flags",
-    hub: "him",
-    isQuiz: false,
-  },
 
   // ── ME: own patterns ─────────────────────────────────────────────────────
   {
