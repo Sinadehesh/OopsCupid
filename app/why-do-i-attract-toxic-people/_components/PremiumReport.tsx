@@ -3,6 +3,80 @@ import React, { useEffect, useState } from "react";
 import { Download, Share2, ShieldAlert, EyeOff, FileText, Video, ArrowRight, Target, BrainCircuit, Activity, Search, AlertOctagon, Zap, ShieldQuestion, Fingerprint, CheckCircle2, Loader2 } from "lucide-react";
 import Link from "next/link";
 import CoachingUpsell from "@/components/offers/CoachingUpsell";
+import SignalFrequency from "@/components/report/charts/SignalFrequency";
+
+/**
+ * Per-trait insight library — each of the 10 vulnerability zones gets its
+ * own mechanism, exploit pattern, and counter-move. No two cards share a
+ * sentence. Severity only changes the framing, never the substance.
+ */
+const TRAIT_INSIGHTS: Record<string, { mechanism: string; exploit: string; counter: string }> = {
+  "Intensity Bias": {
+    mechanism: "You read emotional intensity as emotional depth. Fast escalation, grand declarations, and consuming attention register as 'real love' while steady warmth reads as flat.",
+    exploit: "Love-bombers open with maximum intensity precisely because it short-circuits evaluation — by week two you're attached to the feeling, not the person.",
+    counter: "Institute a personal speed limit: no exclusivity talk before you've seen him bored, frustrated, and told 'no' at least once each.",
+  },
+  "Potential Projection": {
+    mechanism: "You date the man he could become, not the man in front of you. Every red flag gets filed under 'he's still growing.'",
+    exploit: "Manipulators feed you the redemption arc on purpose — a hard childhood, an almost-finished project, a version of himself that's always six months away.",
+    counter: "Write down what he does this week, not what he promises for next year. Judge the file, not the trailer.",
+  },
+  "Red-Flag Minimizing": {
+    mechanism: "You see the flag — then immediately produce his defense for him. 'He was stressed.' 'His ex made him like this.' The alarm works; the response is disabled.",
+    exploit: "A tester will do something small and rude early — cancel late, mock you 'jokingly' — purely to watch you excuse it. Your excuse is his green light.",
+    counter: "New rule: you're allowed to name a flag out loud without deciding anything. Naming it kills the auto-excuse reflex.",
+  },
+  "Rescuer Drive": {
+    mechanism: "Being needed feels safer to you than being wanted. A man with a problem gives you a role; a healthy man leaves you unsure what you're for.",
+    exploit: "Exploiters arrive pre-broken. They hand you a crisis on date two because they know the crisis — not chemistry — is what bonds you.",
+    counter: "Before investing, ask: if he never needed rescuing again, would I still choose him? If the answer wobbles, that's the wound talking.",
+  },
+  "Boundary Slippage": {
+    mechanism: "Your boundaries are stated but not enforced — each 'last time' quietly becomes the new baseline, and you renegotiate with yourself instead of with him.",
+    exploit: "Boundary-testers escalate on a schedule: small violation, apology, bigger violation. They're not losing control — they're measuring how much you'll absorb.",
+    counter: "Attach one pre-decided consequence to one boundary and execute it once. A single kept consequence teaches more than fifty warnings.",
+  },
+  "Validation Hunger": {
+    mechanism: "His opinion of you sets your opinion of you. A compliment can carry a bad week; a cold text can sink a good one.",
+    exploit: "Intermittent validation is the cheapest control tool there is — he praises just often enough to keep you auditioning for the next hit.",
+    counter: "Track the ratio: how much of your self-esteem this week came from inside versus from him? Rebuild the internal supply before the next relationship.",
+  },
+  "Chaos Familiarity": {
+    mechanism: "Volatility feels like home. Calm reads as boredom because your nervous system learned early that love and adrenaline arrive together.",
+    exploit: "Chaotic partners don't need to trick you — you volunteer. The fights feel like passion and the reconciliations feel like proof.",
+    counter: "Give calm ninety days before you call it boring. Chemistry you feel in your stomach on day one is usually threat-recognition, not fate.",
+  },
+  "Breadcrumb Addiction": {
+    mechanism: "You can survive on scraps — a like, a 'thinking of you,' a 2 a.m. text — because hope is doing the work the relationship should be doing.",
+    exploit: "Breadcrumbers portion attention deliberately: enough to keep you on the line, never enough to cost them anything.",
+    counter: "Measure investment in calendar time and plans made, not messages. If he can't spend hours, stop spending months.",
+  },
+  "Self-Trust Erosion": {
+    mechanism: "You outsource reality-checks. When your gut and his explanation disagree, his explanation wins — and each override makes the next one easier.",
+    exploit: "This is the soil gaslighting grows in. A distorter doesn't have to beat your judgment; you'll set it aside for him voluntarily.",
+    counter: "Keep a private log of gut feelings and outcomes. Watching your own accuracy in writing is the fastest way to re-hire your instincts.",
+  },
+  "Scarcity Mindset": {
+    mechanism: "Part of you believes this level of connection may not come again — so you hold on tighter as the reasons to leave stack up.",
+    exploit: "Manipulators cultivate scarcity openly: 'no one will love you like I do' isn't a compliment, it's a fence.",
+    counter: "The antidote is evidence, not affirmations: rebuild the full life — friends, projects, momentum — that makes walking away a real option.",
+  },
+};
+
+const GENERIC_INSIGHT = {
+  mechanism: "This trait sits outside your core pattern but still shapes who feels 'right' to you.",
+  exploit: "Manipulative partners probe secondary traits like this one when the primary approaches fail.",
+  counter: "Awareness is most of the fix here — note when this trait activates and what triggered it.",
+};
+
+const SEVERITY = (score: number) =>
+  score >= 20
+    ? { label: "High Alert", chip: "bg-rose-600 text-white", frame: "This is your most exposed surface — treat it as the priority.", }
+    : score >= 15
+    ? { label: "Elevated", chip: "bg-amber-500 text-white", frame: "Meaningful exposure — a skilled manipulator will find and test this.", }
+    : score >= 10
+    ? { label: "Moderate", chip: "bg-slate-500 text-white", frame: "Baseline defenses hold, but this slips when you're tired or lonely.", }
+    : { label: "Stronghold", chip: "bg-emerald-600 text-white", frame: "This is a genuine strength — manipulation attempts through this angle tend to fail.", };
 
 export default function PremiumReport({ data, handleShare }: { data: any, handleShare: any }) {
   const [mounted, setMounted] = useState(false);
@@ -17,22 +91,15 @@ export default function PremiumReport({ data, handleShare }: { data: any, handle
   const displaySubs = [...subs];
   const fallbackNames = ["Boundary Collapse", "Trauma-Bond Susceptibility", "Gaslighting Receptivity", "Conflict Avoidance", "Validation Seeking", "Hyper-Forgiveness", "Sunk-Cost Fallacy", "Red-Flag Rationalization", "Fear of Abandonment", "Emotional Absorption"];
   while (displaySubs.length < 10) {
-    displaySubs.push({ 
-      name: fallbackNames[displaySubs.length] || `Latent Trait ${displaySubs.length + 1}`, 
-      score: Math.floor(Math.random() * 12) + 10 
+    displaySubs.push({
+      name: fallbackNames[displaySubs.length] || `Latent Trait ${displaySubs.length + 1}`,
+      // deterministic filler — identical data must always render identically
+      score: 12,
     });
   }
 
   const curveball = displaySubs[displaySubs.length - 1];
   const matrixItems = displaySubs.slice(0, 9);
-
-  // Dynamic AI Text Generator based on specific score thresholds
-  const generateAnalysis = (name: string, score: number) => {
-    if (score >= 20) return `CRITICAL VULNERABILITY: Your score of ${score}/25 indicates a severe subconscious blind spot. Predators actively scan for this exact frequency. You are highly likely to rationalize toxic behavior in this area as "passion" or "complexity," allowing manipulators to cross your boundaries with zero consequences. Immediate rewiring required.`;
-    if (score >= 15) return `ELEVATED RISK: At ${score}/25, you show significant susceptibility here. While you might spot the red flags eventually, a skilled manipulator will use this trait to test your limits early on. You often give people the benefit of the doubt exactly when you should be pulling away.`;
-    if (score >= 10) return `MODERATE EXPOSURE: A score of ${score}/25 means you have baseline defenses, but a highly covert narcissist can still bypass them if they catch you in a vulnerable emotional state. Stay vigilant when you feel tired or lonely.`;
-    return `SECURE ZONE: At ${score}/25, this is actually a psychological stronghold for you. Toxic individuals will hit a brick wall if they try to manipulate you using this specific angle.`;
-  };
 
   const getRingColor = (score: number) => {
     if (score >= 20) return "text-rose-600";
@@ -116,39 +183,62 @@ export default function PremiumReport({ data, handleShare }: { data: any, handle
           </div>
         </div>
 
-        <div className="space-y-6">
+        {/* VULNERABILITY MAP — ranked overview before the per-trait detail */}
+        <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200 shadow-sm mb-8">
+          <h4 className="font-extrabold text-slate-800 mb-1">Your Vulnerability Map</h4>
+          <p className="text-slate-400 text-sm font-medium mb-5">All ten zones ranked by exposure. Hover any bar; the detailed breakdown of each zone follows below.</p>
+          <SignalFrequency
+            data={[...displaySubs]
+              .sort((a: any, b: any) => b.score - a.score)
+              .map((s: any) => ({
+                label: s.name,
+                value: Math.round((s.score / 25) * 100),
+                description: TRAIT_INSIGHTS[s.name]?.mechanism ?? GENERIC_INSIGHT.mechanism,
+              }))}
+            accent="#e11d48"
+          />
+        </div>
+
+        <div className="space-y-5">
           {matrixItems.map((sub: any, i: number) => {
             const scorePercent = mounted ? (sub.score / 25) * 100 : 0;
+            const sev = SEVERITY(sub.score);
+            const insight = TRAIT_INSIGHTS[sub.name] ?? GENERIC_INSIGHT;
             return (
-              <div key={i} className={`flex flex-col md:flex-row gap-6 p-6 md:p-8 rounded-[2rem] border transition-all duration-500 hover:shadow-xl hover:-translate-y-1 ${getBgColor(sub.score)}`}>
-                
-                {/* Animated Circular Biometric Ring */}
-                <div className="relative w-24 h-24 md:w-32 md:h-32 flex-shrink-0 mx-auto md:mx-0">
-                  <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                    <path className="text-slate-200 stroke-current" strokeWidth="3" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                    <path 
-                      className={`${getRingColor(sub.score)} stroke-current transition-all duration-1500 ease-out`} 
-                      strokeWidth="3" 
-                      strokeDasharray={`${scorePercent}, 100`} 
-                      fill="none" 
-                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" 
-                    />
-                  </svg>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className={`text-2xl md:text-3xl font-black ${getRingColor(sub.score)}`}>{sub.score}</span>
-                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">/ 25</span>
+              <div key={i} className={`p-6 md:p-8 rounded-[2rem] border transition-all duration-500 hover:shadow-lg ${getBgColor(sub.score)}`}>
+                <div className="flex items-start gap-5">
+                  {/* Compact score ring */}
+                  <div className="relative w-16 h-16 md:w-20 md:h-20 flex-shrink-0">
+                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                      <path className="text-slate-200 stroke-current" strokeWidth="3.5" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                      <path
+                        className={`${getRingColor(sub.score)} stroke-current transition-all duration-1500 ease-out`}
+                        strokeWidth="3.5"
+                        strokeDasharray={`${scorePercent}, 100`}
+                        strokeLinecap="round"
+                        fill="none"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className={`text-xl md:text-2xl font-black ${getRingColor(sub.score)}`}>{sub.score}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-2.5 mb-1.5">
+                      <h4 className="text-xl md:text-2xl font-black text-slate-900">{sub.name}</h4>
+                      <span className={`${sev.chip} text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full`}>{sev.label}</span>
+                    </div>
+                    <p className="text-slate-500 text-sm font-bold mb-3">{sev.frame}</p>
+                    <p className="text-slate-700 font-medium leading-relaxed">
+                      {insight.mechanism} {insight.exploit}
+                    </p>
                   </div>
                 </div>
-
-                {/* AI Text Analysis */}
-                <div className="flex-1">
-                  <div className="flex flex-wrap items-center gap-3 mb-3">
-                    <h4 className="text-2xl font-black text-slate-900">{sub.name}</h4>
-                    {sub.score >= 20 && <span className="bg-rose-600 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full animate-pulse">High Alert</span>}
-                  </div>
-                  <p className="text-slate-700 font-medium leading-relaxed text-lg">
-                    {generateAnalysis(sub.name, sub.score)}
-                  </p>
+                <div className="mt-4 md:ml-[100px] flex items-start gap-3 bg-white/70 border border-slate-200/80 rounded-xl px-4 py-3">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  <p className="text-slate-600 text-sm font-semibold leading-snug"><span className="uppercase tracking-wider text-[11px] font-black text-slate-400 mr-1.5">Counter-move</span>{insight.counter}</p>
                 </div>
               </div>
             );
