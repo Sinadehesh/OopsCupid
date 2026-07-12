@@ -33,10 +33,11 @@ export const metadata: Metadata = {
     "self sabotage relationship quiz",
     "dating patterns quiz",
   ],
+  manifest: "/manifest.webmanifest",
   icons: {
     icon: "/logo.png",
     shortcut: "/logo.png",
-    apple: "/logo.png",
+    apple: "/icon-192.png",
   },
   openGraph: {
     title: "OopsCupid | Free Relationship Quizzes, Tests & Red Flag Checks",

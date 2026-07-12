@@ -14,6 +14,9 @@ const nextConfig = {
     ? {
         output: "export",
         images: { unoptimized: true },
+        // directory-style URLs so static hosts and the Capacitor WebView
+        // resolve /quiz-name/ to /quiz-name/index.html
+        trailingSlash: true,
       }
     : {}),
 };
