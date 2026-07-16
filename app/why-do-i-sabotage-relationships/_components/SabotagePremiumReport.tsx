@@ -10,6 +10,35 @@ import {
 import Link from "next/link";
 import CoachingUpsell from "@/components/offers/CoachingUpsell";
 
+/** Per-axis explanations at each band — every bar carries its own interpretation. */
+const SUBSCALE_INSIGHTS: Record<string, { high: string; mid: string; low: string }> = {
+  fear_of_closeness: {
+    high: "Intimacy itself is your trigger: your answers show the alarm going off precisely when things get good. You likely engineer distance right after your closest moments — the classic sabotage timestamp. Expect the urge to pull away roughly 24-72 hours after real vulnerability, and name it when it comes.",
+    mid: "Closeness is manageable until it deepens past a certain point — then the exits start looking attractive. Notice your personal depth-limit; sabotage usually begins one step past it.",
+    low: "Depth of connection doesn't appear to set off your alarms. Whatever sabotage you do runs through other channels — closeness itself is safe territory for you.",
+  },
+  rejection_alarm: {
+    high: "Your rejection radar is running so hot it produces false positives: delayed texts read as goodbyes, a flat tone reads as the end. The sabotage sequence starts with a misread — you defend against abandonments that weren't happening until you defended against them.",
+    mid: "You catch real signals but amplify them. The skill to build: hold the alarm for 24 hours before acting on it. Most of what it screams about resolves itself by morning.",
+    low: "Your rejection alarm sits near baseline — you can tolerate ambiguity without treating it as evidence. That stability is rare and worth knowing you have.",
+  },
+  worthiness_wounds: {
+    high: "The deepest driver in your profile: a running suspicion that being fully known means being eventually left. Sabotage becomes mercy-killing — ending it before they discover the flaw. Until this belief is challenged directly, every healthy relationship will feel like a countdown.",
+    mid: "The worth question surfaces under stress: compliments get audited, love gets means-tested. You don't live in the wound, but you visit it — and your sabotage dates usually coincide with those visits.",
+    low: "Your sense of deserving love appears fundamentally intact. Whatever patterns you run, they aren't powered by the belief that you're the defective one — which makes them much easier to unwind.",
+  },
+  protest_testing: {
+    high: "You test instead of ask: picking fights to measure devotion, withdrawing to see who follows, manufacturing jealousy to check the temperature. Every test teaches your partner that peace is temporary — and the tests get harder to pass until failing them becomes the proof you feared.",
+    mid: "Testing shows up when reassurance runs low. The upgrade path is direct: replace one test a week with the actual question underneath it. 'Do you still want this?' outperforms every trap ever set.",
+    low: "You mostly ask rather than test. Protest behavior isn't a major feature of your pattern — conflicts in your relationships are more likely genuine than engineered.",
+  },
+  withdrawal_exit: {
+    high: "Your signature move is the pre-emptive exit: emotionally packing your bags at the first sign of trouble, keeping one foot out the door so no one can close it on you. Partners feel this as a draft in the room — present, but provisional. Committing to stay through one uncomfortable conversation is the rep that rewires this.",
+    mid: "You keep exit routes mapped even in good times — not fleeing, but always knowing where the door is. Watch whether 'independence' is doing quiet double-duty as insurance against being left.",
+    low: "Staying is your default. When things get hard you tend to remain in the room — which means whatever else your pattern does, it isn't running the escape-hatch play.",
+  },
+};
+
 // ── Types ────────────────────────────────────────────────────────────────────
 interface Subscale { key: string; label: string; score: number; max: number; pct: number; }
 interface Composites {
@@ -378,6 +407,11 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
                       </span>
                     </div>
                     <AnimatedBar value={s.pct} color={barColor} delay={i * 120} />
+                    {SUBSCALE_INSIGHTS[s.key] && (
+                      <p className="text-[#086788]/80 text-sm font-medium leading-relaxed mt-2.5 bg-white border border-[#086788]/10 rounded-xl px-4 py-3">
+                        {SUBSCALE_INSIGHTS[s.key][s.pct >= 65 ? "high" : s.pct >= 40 ? "mid" : "low"]}
+                      </p>
+                    )}
                   </div>
                 );
               })}
@@ -631,20 +665,7 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
         {/* ── BUNDLE ── */}
         <BundleBanner />
 
-        {/* ── SOCIAL PROOF ── */}
-        <div className="grid md:grid-cols-3 gap-5">
-          {[
-            { quote: "I finally understood WHY I kept pushing people away. The playbook gave me 3 habits I use every single day.", name: "Sara M., 28" },
-            { quote: "The radar chart alone was worth it. I could see my control needs were off the charts. Life-changing clarity.", name: "Jade T., 34" },
-            { quote: "I bought both books. The bundle price is insane value. Therapist-quality content for less than a coffee.", name: "Priya R., 31" },
-          ].map((t, i) => (
-            <div key={i} className="bg-white rounded-2xl p-6 border border-[#d6d2d2] shadow-sm flex flex-col gap-4">
-              <div className="flex gap-1">{[...Array(5)].map((_, j) => <Star key={j} className="w-4 h-4 text-[#f0c808] fill-[#f0c808]" />)}</div>
-              <p className="text-[#086788]/80 font-medium text-sm leading-relaxed italic">“{t.quote}”</p>
-              <p className="text-xs font-black text-[#086788]/45 uppercase tracking-widest mt-auto">— {t.name}</p>
-            </div>
-          ))}
-        </div>
+        
 
         {/* ── URGENCY STRIP ── */}
         <div className="bg-[#dd1c1a] rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 shadow-lg">

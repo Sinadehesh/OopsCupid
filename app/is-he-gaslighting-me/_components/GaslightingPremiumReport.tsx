@@ -7,6 +7,43 @@ import {
 } from "lucide-react";
 import CoachingUpsell from "@/components/offers/CoachingUpsell";
 
+/**
+ * Per-tactic explanations at each severity band. Every subscale gets its
+ * own text — the bars never stand alone without an interpretation.
+ */
+const SUBSCALE_INSIGHTS: Record<string, { high: string; mid: string; low: string }> = {
+  reality_denial: {
+    high: "He reliably denies things you both witnessed. At this level it isn't forgetfulness — repeated, confident denial of shared events is the core gaslighting maneuver, and it's working exactly as designed if you've noticed yourself trusting your own recall less.",
+    mid: "Denial shows up at meaningful moments — usually when accountability is on the table. Watch whether it clusters around his mistakes; selective amnesia is a strategy, not a memory problem.",
+    low: "Outright denial of shared reality isn't a significant pattern in your answers. Your disagreements appear to stay about the topic, not about whether the topic happened.",
+  },
+  invalidation: {
+    high: "Your feelings are being routinely reclassified as defects — 'dramatic,' 'too sensitive,' 'crazy.' Done this consistently, invalidation trains you to pre-dismiss your own reactions before he even has to.",
+    mid: "Your reactions get downgraded often enough to notice. The test: does he engage with WHAT you feel, or only with whether you should feel it? Only the second one erodes you.",
+    low: "Invalidation isn't a strong signal here — your emotional reactions appear to be treated as information rather than as malfunctions.",
+  },
+  blame_reversal: {
+    high: "Conversations about his behavior reliably end with you apologizing. That inversion — complainant becomes defendant — is DARVO running at full strength, and it's why you leave arguments feeling more guilty than heard.",
+    mid: "The reversal appears under pressure: when cornered, he redirects to your tone, your timing, your past. Note the pattern — accountability deflected sideways is still accountability avoided.",
+    low: "Blame appears to stay roughly where it belongs in your answers. When something is his fault, the conversation is allowed to be about that.",
+  },
+  confusion_tactics: {
+    high: "Moving targets, rewritten histories, contradictory rules — your answers describe engineered confusion. A person who keeps you disoriented never has to keep you convinced; exhaustion does the agreeing for you.",
+    mid: "There's enough inconsistency to keep you off balance, though not a total fog. Keep a simple rule: if you consistently leave conversations less clear than you entered them, the confusion is a feature.",
+    low: "You don't report significant engineered confusion. Whatever conflicts exist, the ground rules seem to hold still while you argue on them.",
+  },
+  isolation_control: {
+    high: "The pattern points to shrinking territory: friction around friends and family, monitoring, and penalties for independence. Isolation is what turns gaslighting from an argument tactic into a closed system — no outside witness left to check reality against.",
+    mid: "Some pull toward isolation registers — discomfort when you're unreachable, subtle downgrading of people close to you. Guard your outside relationships now; they are the reality-checks he would have to beat later.",
+    low: "Your access to your own people and life appears intact. This is a genuine protective factor — outside witnesses make sustained gaslighting much harder to run.",
+  },
+  self_trust_erosion: {
+    high: "This is the damage meter, and it's high: second-guessing your memory, outsourcing your judgment, feeling 'crazy' around one specific person. The repair starts with evidence — a private dated log will show you within weeks that your recall was never the problem.",
+    mid: "Your self-trust is taking real hits but hasn't collapsed. You still catch the distortions — later, at 2 a.m. Shortening that delay from hours to minutes is the skill to build now.",
+    low: "Your self-trust is holding. You can disagree with him without doubting your own mind afterward — keep treating that as non-negotiable, because it is the exact asset gaslighting exists to take.",
+  },
+};
+
 // ── Types ──────────────────────────────────────────────────────────────────
 interface Subscale { key: string; label: string; score: number; max: number; pct: number; }
 export interface GaslightingResult {
@@ -318,6 +355,11 @@ export default function GaslightingPremiumReport({ result }: { result: Gaslighti
                     <span className="font-black text-sm" style={{ color: col }}>{Math.round(s.pct)}% Risk</span>
                   </div>
                   <AnimatedBar value={s.pct} color={col} delay={i * 100} />
+                  {SUBSCALE_INSIGHTS[s.key] && (
+                    <p className="text-slate-600 text-sm font-medium leading-relaxed mt-2.5 mb-1 bg-slate-50 border border-slate-100 rounded-xl px-4 py-3">
+                      {SUBSCALE_INSIGHTS[s.key][s.pct >= 65 ? "high" : s.pct >= 40 ? "mid" : "low"]}
+                    </p>
+                  )}
                 </div>
               );
             })}
@@ -483,22 +525,7 @@ export default function GaslightingPremiumReport({ result }: { result: Gaslighti
         {/* ── BUNDLE ── */}
         <BundleBanner />
 
-        {/* ── SOCIAL PROOF ── */}
-        <div className="grid md:grid-cols-3 gap-5">
-          {[
-            { quote: "The 'Shut It Down' scripts alone were worth 10x the price. I finally stopped JADE-ing and started using the grey rock. He had nothing left to feed on.", name: "Alessia R., 29" },
-            { quote: "I cried reading the erosion profile. It described exactly how I felt for 2 years. Just knowing it has a name made me feel less insane.", name: "Priya M., 33" },
-            { quote: "The healthy man playbook reset my baseline completely. I didn't realize how low my standards had fallen until I read what normal actually looks like.", name: "Sofia K., 27" },
-          ].map((t, i) => (
-            <div key={i} className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col gap-4">
-              <div className="flex gap-1">{[...Array(5)].map((_, j) => <Star key={j} className="w-4 h-4 text-[#ffbc42] fill-[#ffbc42]" />)}</div>
-              <p className="text-slate-700 font-medium text-sm leading-relaxed italic">&quot;{t.quote}&quot;</p>
-              <p className="text-xs font-black text-slate-400 uppercase tracking-widest mt-auto">— {t.name}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* ── URGENCY STRIP ── */}
+                 {/* ── URGENCY STRIP ── */}
         <div className="bg-rose-600 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 shadow-lg">
           <div className="flex items-center gap-3">
             <Clock className="w-6 h-6 text-white shrink-0 animate-pulse" />

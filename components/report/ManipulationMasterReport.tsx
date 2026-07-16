@@ -1,68 +1,98 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Download, Share2, ShieldAlert, EyeOff, FileText, Video, Target, CheckCircle2, Loader2, Activity, ArrowRight, Radar } from "lucide-react";
-import Link from "next/link";
+import { Download, ShieldAlert, EyeOff, Activity, AlertTriangle, CheckCircle2 } from "lucide-react";
+
+/**
+ * Score-aware, per-tactic analysis. Each of the four control tactics has
+ * its own explanation at each severity band — no shared sentences, and
+ * the verdict never asserts more than the scores support.
+ */
+const CATEGORY_INSIGHTS: Record<string, { name: string; high: string; mid: string; low: string }> = {
+  gaslighting: {
+    name: "Reality Distortion (Gaslighting)",
+    high: "Your answers show a consistent pattern of him denying events, rewriting arguments, and treating your memory as the problem. This is the tactic doing the most damage: it converts every disagreement about his behavior into a debate about your sanity. Start a private, dated log of key conversations — not to confront him with, but to protect your own reality from revision.",
+    mid: "You reported meaningful reality-bending — occasional flat denials or 'that never happened' moments — but not yet a wall-to-wall pattern. Watch one thing: does he distort under pressure (bad sign, defensive habit) or systematically, even about trivial things (worse sign, control strategy)?",
+    low: "Reality distortion is not a significant feature of your answers. Disagreements about what happened appear to stay disagreements — your memory itself isn't being put on trial.",
+  },
+  isolation: {
+    name: "Isolation Tactics",
+    high: "The pattern here is strong: your answers describe steady pressure that shrinks your world — friction about friends, family cast as intruders, guilt attached to time spent away from him. Isolation is the load-bearing wall of control; every other tactic gets stronger as your outside witnesses disappear. Reconnect with one person this week, before it feels even harder.",
+    mid: "There's real pull toward isolation in your answers — perhaps discomfort or sulking when you prioritize others — though you still have your own orbit. The test: announce a plan with friends and observe the cost he attaches to it. Punishment-by-mood after independent plans is the tell.",
+    low: "Your answers don't show meaningful isolation pressure. Your access to friends, family, and your own life appears intact — protect that; it's the immune system of a relationship.",
+  },
+  emotional_extortion: {
+    name: "Emotional Extortion",
+    high: "You scored high on compliance-through-fear: guilt campaigns, the silent treatment as punishment, or threats designed to make 'no' too expensive. Notice what this has trained you to do — you likely pre-edit requests and confess to things you didn't do just to end the tension. That reflex is the measurable cost of this tactic.",
+    mid: "There's a visible lever here — guilt or withdrawal shows up when he doesn't get his way — but it isn't yet the primary currency of the relationship. Track whether apologies flow one direction only; one-way apology traffic is how extortion becomes routine.",
+    low: "Emotional extortion doesn't register strongly in your answers. Conflict seems to end in resolution rather than in punishment, which is the single healthiest signal in this report.",
+  },
+  intermittent_reinforcement: {
+    name: "Intermittent Reinforcement",
+    high: "This is your highest-risk finding: your answers describe a cruelty-then-affection cycle. Unpredictable reward is the most addictive schedule known to behavioral science — the lows make the highs feel like rescue, and the person hurting you becomes the person soothing you. If leaving feels chemically impossible, this cycle, not love, is usually why.",
+    mid: "Your answers show some hot-and-cold cycling — enough to keep you guessing, not yet a full addiction loop. The diagnostic question: do you feel relief when he's kind, or joy? Relief means the kindness is functioning as the end of a punishment.",
+    low: "The affection in this relationship appears consistent rather than cyclical. Whatever else is going on, you don't seem to be on the slot-machine schedule that makes toxic bonds so hard to break.",
+  },
+};
+
+const VERDICTS: Record<string, string> = {
+  SEVERE: "Your combined scores sit in the range where these behaviors stop looking like moods and start looking like a system. You cannot 'communicate' your way out of a system — the tactics below explain what each part of it is doing, and the decoder shows you the scripts it runs on.",
+  ELEVATED: "Several control tactics register clearly in your answers. No single one is conclusive, but their overlap is what deserves your attention — coincidences don't usually coordinate. The breakdown below shows exactly where the pressure concentrates.",
+  MODERATE: "Your scores land in ambiguous territory: real friction, some concerning moments, but not a consistent control pattern. The most useful thing you can do is compare this snapshot against his baseline — a recent shift matters far more than the absolute numbers.",
+};
+
+const band = (pct: number) => (pct >= 65 ? "high" : pct >= 40 ? "mid" : "low") as "high" | "mid" | "low";
+
+const BAND_CHIP = {
+  high: { label: "Active pattern", cls: "bg-rose-600 text-white", icon: AlertTriangle },
+  mid: { label: "Emerging pattern", cls: "bg-amber-500 text-white", icon: Activity },
+  low: { label: "Low signal", cls: "bg-emerald-600 text-white", icon: CheckCircle2 },
+};
 
 export default function ManipulationMasterReport({ data }: any) {
   const [mounted, setMounted] = useState(false);
-  const [zoomStatus, setZoomStatus] = useState<"idle" | "loading" | "booked">("idle");
-  
-  useEffect(() => { 
+
+  useEffect(() => {
     const timer = setTimeout(() => setMounted(true), 300);
     return () => clearTimeout(timer);
   }, []);
 
-  // Maps flawlessly to the Nuclear Local Engine
-  const rawScorePercent = data?.overall?.percent || 85;
-  const riskLevel = data?.overall?.severity || "SEVERE";
-  
-  const matrix = [
-    { name: "Reality Distortion (Gaslighting)", score: data?.categories?.gaslighting?.percent || 92, text: "He systematically denies events that occurred, causing severe cognitive dissonance." },
-    { name: "Isolation Tactics", score: data?.categories?.isolation?.percent || 85, text: "He covertly undermines your friends/family to ensure you only rely on him." },
-    { name: "Emotional Extortion", score: data?.categories?.emotional_extortion?.percent || 88, text: "He uses guilt, the silent treatment, or threats of self-harm to enforce compliance." },
-    { name: "Intermittent Reinforcement", score: data?.categories?.intermittent_reinforcement?.percent || 96, text: "He alternates extreme cruelty with intense affection to biochemically addict you." },
-  ];
+  const rawScorePercent = data?.overall?.percent ?? 50;
+  const riskLevel: string = data?.overall?.severity ?? "MODERATE";
 
-  const handleZoomBooking = async () => {
-    setZoomStatus("loading");
-    try { 
-      await fetch('/api/leads/coaching', { 
-        method: 'POST', 
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: data?.email || "anonymous", quizType: "manipulation" }) 
-      }); 
-    } catch(e) {}
-    setTimeout(() => setZoomStatus("booked"), 1500);
-  };
+  const matrix = (["gaslighting", "isolation", "emotional_extortion", "intermittent_reinforcement"] as const).map(
+    (key) => {
+      const score = data?.categories?.[key]?.percent ?? 0;
+      const insight = CATEGORY_INSIGHTS[key];
+      const b = band(score);
+      return { key, score, b, name: insight.name, text: insight[b] };
+    }
+  );
 
   return (
     <div className="max-w-5xl mx-auto py-12 px-4 md:px-8 font-sans bg-[#f8fafc] overflow-hidden">
-      
+
       {/* HEADER */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 print:hidden animate-in fade-in slide-in-from-top-8 duration-700">
         <div>
           <h1 className="text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
-            <Activity className="w-8 h-8 text-indigo-600 animate-pulse" /> Hijacking Dossier
+            <Activity className="w-8 h-8 text-indigo-600" /> Manipulation Dossier
           </h1>
-          <p className="text-slate-500 font-medium ml-11 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> Live Connection Secured
-          </p>
+          <p className="text-slate-500 font-medium ml-11">Full tactical breakdown of your screening results</p>
         </div>
         <button onClick={() => window.print()} className="bg-slate-900 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-slate-800 shadow-lg hover:-translate-y-0.5 transition-all flex items-center gap-2">
           <Download className="w-4 h-4" /> Download PDF
         </button>
       </div>
 
-      {/* HERO: COERCION GAUGE WITH MOTION GLOW */}
-      <div className="bg-[#0f172a] text-white rounded-[2.5rem] p-8 md:p-16 mb-16 shadow-[0_20px_50px_rgba(15,23,42,0.4)] relative overflow-hidden group animate-in zoom-in-95 duration-1000">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-20 group-hover:scale-105 transition-transform duration-700"></div>
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600 opacity-20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 animate-[pulse_4s_ease-in-out_infinite]"></div>
-        
+      {/* HERO: COERCION GAUGE */}
+      <div className="bg-[#0f172a] text-white rounded-[2.5rem] p-8 md:p-16 mb-16 shadow-[0_20px_50px_rgba(15,23,42,0.4)] relative overflow-hidden animate-in zoom-in-95 duration-1000">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600 opacity-20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3"></div>
+
         <div className="flex flex-col md:flex-row items-center gap-12 relative z-10">
           <div className="w-48 h-48 relative flex-shrink-0">
             <svg viewBox="0 0 36 36" className="w-full h-full transform -rotate-90">
               <path className="text-slate-800 stroke-current" strokeWidth="3" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-              <path className="text-indigo-500 stroke-current transition-all duration-[2000ms] ease-out drop-shadow-[0_0_15px_rgba(99,102,241,0.8)]" strokeWidth="3" strokeDasharray={`${mounted ? rawScorePercent : 0}, 100`} fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <path className="text-indigo-500 stroke-current transition-all duration-[2000ms] ease-out drop-shadow-[0_0_15px_rgba(99,102,241,0.8)]" strokeWidth="3" strokeLinecap="round" strokeDasharray={`${mounted ? rawScorePercent : 0}, 100`} fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <span className="text-5xl font-black text-indigo-400 drop-shadow-lg">{rawScorePercent}%</span>
@@ -71,54 +101,68 @@ export default function ManipulationMasterReport({ data }: any) {
           </div>
           <div>
             <h2 className="text-xs font-black text-indigo-400 tracking-[0.3em] uppercase mb-4 flex items-center gap-2">
-              <Radar className="w-4 h-4 animate-spin"/> Threat Level: {riskLevel}
+              <ShieldAlert className="w-4 h-4" /> Risk Level: {riskLevel}
             </h2>
-            <h3 className="text-4xl md:text-6xl font-black mb-6 leading-tight drop-shadow-2xl">The Hijacking Protocol</h3>
+            <h3 className="text-4xl md:text-6xl font-black mb-6 leading-tight drop-shadow-2xl">What Your Scores Mean</h3>
             <p className="text-xl text-slate-300 font-medium leading-relaxed bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-md">
-              You cannot "communicate" your way out of manipulation. His shifting moods and explosive anger are not an accident; they are a calculated, clinical mechanism designed to paralyze your nervous system and hijack your reality.
+              {VERDICTS[riskLevel] ?? VERDICTS.MODERATE}
             </p>
           </div>
         </div>
       </div>
 
-      {/* THE CONTROL MATRIX */}
+      {/* THE CONTROL MATRIX — score-aware, tactic-specific */}
       <div className="mb-20 animate-in slide-in-from-bottom-10 fade-in duration-1000 delay-100">
-        <h3 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-8 flex items-center gap-3">
+        <h3 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-3 flex items-center gap-3">
           <ShieldAlert className="w-8 h-8 text-indigo-600" /> The 4-Point Control Matrix
         </h3>
+        <p className="text-lg text-slate-500 font-medium mb-8 max-w-3xl">
+          Each tactic is scored from your answers and explained at YOUR level — not a generic warning. Green means genuinely low signal; that finding matters as much as the red ones.
+        </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {matrix.map((vec, i) => (
-            <div key={i} className="bg-white p-8 rounded-[2rem] border border-slate-200 shadow-xl group hover:border-indigo-400 transition-colors overflow-hidden relative hover:-translate-y-1">
-              <div className="absolute right-0 top-0 w-32 h-32 bg-indigo-50 blur-3xl rounded-full group-hover:scale-150 transition-transform duration-700"></div>
-              <h4 className="font-black text-xl text-slate-800 mb-4 relative z-10">{vec.name}</h4>
-              <div className="w-full bg-slate-100 rounded-full h-3 mb-4 shadow-inner relative z-10 overflow-hidden">
-                <div className="bg-gradient-to-r from-indigo-500 to-indigo-600 h-full rounded-full transition-all duration-[2000ms] ease-out relative" style={{ width: mounted ? `${vec.score}%` : '0%' }}>
-                  <div className="absolute inset-0 bg-white/20 w-full h-full animate-[pulse_2s_infinite]"></div>
+          {matrix.map((vec) => {
+            const chip = BAND_CHIP[vec.b];
+            const ChipIcon = chip.icon;
+            return (
+              <div key={vec.key} className="bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm hover:shadow-lg transition-all hover:-translate-y-0.5">
+                <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+                  <h4 className="font-black text-xl text-slate-800">{vec.name}</h4>
+                  <span className={`${chip.cls} inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full`}>
+                    <ChipIcon className="w-3.5 h-3.5" /> {chip.label}
+                  </span>
                 </div>
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="flex-1 bg-slate-100 rounded-full h-3 shadow-inner overflow-hidden">
+                    <div
+                      className={`h-full rounded-full transition-all duration-[2000ms] ease-out ${vec.b === "high" ? "bg-rose-500" : vec.b === "mid" ? "bg-amber-500" : "bg-emerald-500"}`}
+                      style={{ width: mounted ? `${vec.score}%` : "0%" }}
+                    />
+                  </div>
+                  <span className="text-sm font-black text-slate-600 tabular-nums w-11 text-right">{vec.score}%</span>
+                </div>
+                <p className="text-slate-600 font-medium leading-relaxed">{vec.text}</p>
               </div>
-              <div className="inline-block bg-indigo-100 text-indigo-700 text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full mb-3 relative z-10">ACTIVE TACTIC DETECTED</div>
-              <p className="text-slate-600 font-medium leading-relaxed relative z-10">{vec.text}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
       {/* THE SANITY-THEFT DECODER */}
-      <div className="mb-24">
+      <div className="mb-10">
         <div className="text-center mb-12">
           <h3 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-4 flex justify-center items-center gap-3">
-            <EyeOff className="w-10 h-10 text-slate-900" /> The "Sanity-Theft" Decoder
+            <EyeOff className="w-10 h-10 text-slate-900" /> The &ldquo;Sanity-Theft&rdquo; Decoder
           </h3>
-          <p className="text-xl text-slate-600 font-medium max-w-2xl mx-auto">Word-for-word translations of his exact phrases, proving once and for all that you aren't crazy.</p>
+          <p className="text-xl text-slate-600 font-medium max-w-2xl mx-auto">Word-for-word translations of the three most common control phrases — so you can hear what they actually do.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {[
-            { num: 1, title: '"You are too sensitive"', desc: 'Translation: "I am going to condition you to accept my cruelty by convincing you that your totally normal reaction is a mental illness."' },
-            { num: 2, title: '"I never said that"', desc: 'Translation: "I know exactly what I said. But if I say it confidently enough, you will doubt your own memory. This is called Gaslighting."' },
-            { num: 3, title: '"After everything I do for you"', desc: 'Translation: "I am using a single past favor to emotionally extort you into tolerating my current unacceptable behavior."' }
-          ].map((step, i) => (
-            <div key={i} className="bg-white p-8 rounded-[2rem] border border-slate-200 shadow-xl group hover:border-slate-900 hover:-translate-y-2 transition-all">
-              <div className="w-14 h-14 bg-slate-900 text-white rounded-full flex items-center justify-center font-black text-2xl mb-6 shadow-lg group-hover:bg-indigo-600 group-hover:scale-110 transition-all">{step.num}</div>
+            { num: 1, title: '"You are too sensitive"', desc: 'Translation: "I am going to condition you to accept my behavior by convincing you that your completely normal reaction is a character flaw." Your sensitivity is the alarm system — this phrase exists to unplug it.' },
+            { num: 2, title: '"I never said that"', desc: 'Translation: "If I deny it confidently enough, you will doubt your own memory instead of my honesty." Said occasionally, it’s defensiveness. Said reliably whenever you raise something, it’s gaslighting.' },
+            { num: 3, title: '"After everything I do for you"', desc: 'Translation: "I am converting past favors into current debt so that your no becomes too expensive." Generosity with a ledger attached was never generosity — it was a down payment on compliance.' },
+          ].map((step) => (
+            <div key={step.num} className="bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm hover:border-slate-900 hover:-translate-y-1 transition-all">
+              <div className="w-14 h-14 bg-slate-900 text-white rounded-full flex items-center justify-center font-black text-2xl mb-6 shadow-lg">{step.num}</div>
               <h4 className="font-black text-xl text-slate-900 mb-3">{step.title}</h4>
               <p className="text-slate-600 font-medium leading-relaxed">{step.desc}</p>
             </div>
@@ -126,63 +170,7 @@ export default function ManipulationMasterReport({ data }: any) {
         </div>
       </div>
 
-      {/* ========================================================= */}
-      {/* GRAND SLAM UPSELLS (THE $9.99 AND €50 OFFERS) */}
-      {/* ========================================================= */}
-      <div className="border-t-4 border-slate-200 pt-20 pb-10 print:hidden">
-        <h3 className="text-4xl md:text-5xl font-black text-center text-slate-900 mb-6 tracking-tight">Extract Yourself Safely.</h3>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-          
-          {/* THE PLAYBOOK ($9.99) */}
-          <div className="bg-gradient-to-br from-slate-900 to-indigo-950 p-8 md:p-12 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
-            <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-20 group-hover:scale-110 transition-transform duration-1000"></div>
-            <FileText className="w-12 h-12 text-indigo-400 mb-6 relative z-10 drop-shadow-[0_0_15px_rgba(99,102,241,0.5)]" />
-            <h4 className="text-3xl font-black text-white mb-4 relative z-10 leading-tight">The "Grey Rock" Disengagement Playbook</h4>
-            <p className="text-indigo-100/80 font-medium mb-8 relative z-10 leading-relaxed text-lg">
-              You cannot just dump a manipulator; he will rage or guilt-trip you into returning. You need to become completely boring. Get the exact text scripts and psychological shields to force him to discard you peacefully.
-            </p>
-            <div className="flex items-end gap-4 mb-10 relative z-10">
-              <span className="text-5xl font-black text-indigo-400">$9.99</span>
-              <span className="text-indigo-100/40 line-through font-bold pb-2 text-xl">$39.00</span>
-            </div>
-            <button className="w-full bg-indigo-500 hover:bg-indigo-400 text-white font-black text-xl py-5 rounded-2xl transition-all shadow-[0_0_30px_rgba(99,102,241,0.4)] hover:-translate-y-1 relative z-10 flex items-center justify-center gap-3">
-              Unlock Escape Playbook <ArrowRight className="w-6 h-6" />
-            </button>
-          </div>
-
-          {/* THE ZOOM CALL (€50) */}
-          <div className="bg-white border-2 border-slate-200 p-8 md:p-12 rounded-[2.5rem] shadow-xl relative group hover:border-slate-900 transition-colors flex flex-col justify-between">
-            <div>
-              <div className="absolute top-0 right-0 bg-slate-900 text-white font-black text-xs uppercase tracking-widest px-4 py-3 rounded-bl-3xl rounded-tr-[2.5rem] flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span> Strict Capacity
-              </div>
-              <Video className="w-12 h-12 text-slate-900 mb-6 group-hover:scale-110 transition-transform" />
-              <h4 className="text-3xl font-black text-slate-900 mb-4 leading-tight">Live Forensic Text Audit</h4>
-              <p className="text-slate-600 font-medium mb-8 leading-relaxed text-lg">
-                Show us your screenshots. Get on a private 30-minute Zoom call with our behavioral experts. We will review your last argument, examine his texts, and decode his manipulation tactics live on screen. 
-              </p>
-            </div>
-            <div>
-              <div className="flex items-end gap-3 mb-8">
-                <span className="text-5xl font-black text-slate-900">€50</span>
-                <span className="text-slate-400 font-bold pb-2 text-xl">/ 30-Min Session</span>
-              </div>
-              {zoomStatus === "booked" ? (
-                <div className="w-full bg-emerald-50 border-2 border-emerald-500 text-emerald-700 font-black text-xl py-5 rounded-2xl flex flex-col items-center justify-center gap-2 animate-in zoom-in">
-                  <div className="flex items-center gap-2"><CheckCircle2 className="w-6 h-6" /> Test Reserved!</div>
-                  <span className="text-xs font-bold text-emerald-600">Details sent to your secure file.</span>
-                </div>
-              ) : (
-                <button onClick={handleZoomBooking} disabled={zoomStatus === "loading"} className="w-full flex items-center justify-center gap-3 bg-slate-900 hover:bg-slate-800 text-white font-black text-xl py-5 rounded-2xl transition-all shadow-[0_10px_20px_rgba(0,0,0,0.15)] hover:-translate-y-1">
-                  {zoomStatus === "loading" ? <Loader2 className="w-6 h-6 animate-spin" /> : "Book Live Audit Test"}
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-
+      {/* Offer ladder + coaching are appended by the premium page itself. */}
     </div>
   );
 }
