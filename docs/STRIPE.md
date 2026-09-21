@@ -21,13 +21,19 @@ Stripe → Developers → Webhooks → **Add endpoint**
 - Events: `checkout.session.completed`, `charge.refunded`, `charge.dispute.created`
 - Copy the signing secret into `STRIPE_WEBHOOK_SECRET`, then redeploy.
 
-## 3. Run the database migration
+## 3. Database — already done ✅
 
-The `Purchase` model is new:
+The `Purchase` table was created directly on the Neon project
+**oopscupid-celeste-house** (`raspy-field-98840356`) on 2026-09-21, with
+indexes named to match Prisma's conventions. Verified: the unique
+constraint on `stripeSessionId` makes the webhook idempotent, so Stripe's
+retries update rather than duplicate.
 
-```bash
-npx prisma migrate deploy      # or: npx prisma db push
-```
+Nothing to run. The exact SQL is kept in `prisma/sql/001_purchase.sql` if
+the table ever needs recreating (e.g. on a new branch or database).
+
+> Note: this Neon database is shared with another application's tables.
+> Only `Purchase` was added; nothing else was touched.
 
 ## 4. Test before announcing
 
@@ -95,3 +101,59 @@ product, then add its `sku` and price ID to `lib/stripe/products.ts`.
 - **No customer login.** Access lives in a per-device cookie. A buyer who
   switches devices must re-open their receipt link. Add accounts
   (NextAuth is already installed) if this becomes a support burden.
+
+---
+
+## Account health check (2026-09-21)
+
+Read from the live account `acct_1Tuq5BLxuKpAU8j4`. Payments are
+**enabled** (`charges_enabled: true`, `payouts_enabled: true`) and a
+BPER bank account is attached. Four things need your attention in the
+Stripe Dashboard — none of them are code.
+
+### 1. Card statements say "RESULT FEE" — fix this first
+
+`settings.card_payments.statement_descriptor_prefix` is **`RESULT FEE`**,
+and the Checkout page shows the business as "Result fee". A buyer who
+sees an unrecognised name on their bank statement disputes the charge —
+this is the single most common cause of avoidable chargebacks, and
+Stripe counts disputes against the account.
+
+**Fix:** Dashboard → Settings → Business → *Public details* → set the
+statement descriptor prefix to `OOPSCUPID`. (The base descriptor is
+already `OOPSCUPID`; only the prefix is wrong.) This cannot be changed
+through the API for a Standard account.
+
+### 2. Payouts are on a MANUAL schedule
+
+`settings.payouts.schedule.interval: "manual"` — money accumulates in the
+Stripe balance and **never reaches your bank on its own**. Set it to
+daily/weekly under Settings → Payouts, or remember to pay yourself out.
+
+### 3. Identity verification did not pass
+
+`individual.verification.status: "unverified"`, reason
+`failed_keyed_identity` ("provided identity information could not be
+verified"). Documents are uploaded and nothing is `currently_due`, so
+charges and payouts still work — but this can escalate into a payout
+hold. Worth resolving while there is no money at stake.
+
+### 4. `company.vat_id` is eventually due
+
+Not blocking today. Stripe accepts `company.registration_number` as an
+alternative.
+
+### Also worth doing
+
+- **Support email** is empty (`business_profile.support_email: null`).
+  It appears on receipts and is the first thing a confused buyer uses
+  instead of opening a dispute.
+- **No logo or brand colour** is set, so Stripe Checkout renders
+  generically. Settings → Branding; the checkout page is the least
+  trusted moment in the funnel and a logo measurably helps.
+
+### Enabled payment methods (verified)
+
+card, Link, Klarna, Bancontact, EPS, MB WAY, Amazon Pay, Satispay,
+Revolut Pay, BLIK, PIX, Samsung/Kakao/Naver Pay. Adaptive Pricing is on,
+so non-euro buyers see their own currency.
