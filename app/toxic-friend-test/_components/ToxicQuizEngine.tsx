@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { TOXIC_FRIEND_QUESTIONS, OPTIONS, Question } from "../_data/questions";
 import SafetyModal from "./SafetyModal";
 import FreeResult from "./FreeResult";
+import { saveQuizResult, loadQuizResult, QUIZ_KEYS } from "@/lib/quizResults";
 import { calculateToxicScores } from "../_lib/scoring";
 
 export default function ToxicQuizEngine() {
@@ -23,6 +24,12 @@ export default function ToxicQuizEngine() {
 
   useEffect(() => {
     setMounted(true);
+    // Returning from checkout lands on the result, not the start screen.
+    const saved = loadQuizResult(QUIZ_KEYS.toxicFriend);
+    if (saved) {
+      setResultsData(saved);
+      setIsFinished(true);
+    }
   }, []);
 
   if (!mounted) return <div className="min-h-[400px] flex items-center justify-center text-slate-500" aria-live="polite">Loading Engine...</div>;
@@ -65,6 +72,8 @@ export default function ToxicQuizEngine() {
         setIsCalculating(true);
         setTimeout(() => {
           const res = calculateToxicScores(newAnswers);
+          // Survives the Stripe redirect — see lib/quizResults.ts.
+          saveQuizResult(QUIZ_KEYS.toxicFriend, res);
           setResultsData(res);
           setIsCalculating(false);
           setIsFinished(true);

@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import PremiumReport from "./PremiumReport";
+import PremiumDossier from "@/components/report/premium/PremiumDossier";
+import { buildBadGuysDossier } from "../_lib/dossier";
 import { Target, Lock, Download, Share2, ArrowRight } from "lucide-react";
 import { usePremiumAccess } from "@/lib/usePremiumAccess";
 import CheckoutButton from "@/components/offers/CheckoutButton";
@@ -20,7 +21,9 @@ export default function FreeResult({ data }: { data: any }) {
     }
   };
 
-  if (granted) return <PremiumReport data={data} handleShare={handleShare} />;
+  // Already paid? Show the full dossier here rather than making them
+  // navigate — same content as /why-do-i-pick-bad-guys/premium.
+  if (granted) return <PremiumDossier dossier={buildBadGuysDossier(data)} />;
 
   return (
     <div className="max-w-3xl mx-auto py-12 px-6 animate-in fade-in duration-700">
@@ -70,7 +73,7 @@ export default function FreeResult({ data }: { data: any }) {
             Unlock your full 10-point psychological breakdown. We will expose exactly why you attract bad guys, and give you the copy-paste scripts to cut them off safely.
           </p>
           
-          <CheckoutButton sku="premium-report" returnTo="/why-do-i-pick-bad-guys" className="w-full bg-[#ffbc42] text-black font-extrabold text-xl py-5 rounded-2xl shadow-[0_0_30px_rgba(255,188,66,0.3)] hover:bg-[#e5a93c] hover:scale-105 transition-all inline-flex items-center justify-center gap-2 disabled:opacity-70">Unlock My Full Diagnosis</CheckoutButton>
+          <CheckoutButton sku="premium-report" returnTo="/why-do-i-pick-bad-guys/premium" className="w-full bg-[#ffbc42] text-black font-extrabold text-xl py-5 rounded-2xl shadow-[0_0_30px_rgba(255,188,66,0.3)] hover:bg-[#e5a93c] hover:scale-105 transition-all inline-flex items-center justify-center gap-2 disabled:opacity-70">Unlock My Full Diagnosis</CheckoutButton>
         </div>
       </div>
     </div>

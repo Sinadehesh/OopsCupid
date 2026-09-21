@@ -1,8 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { gaslightingQuestions } from "@/lib/psychometrics/gaslighting/questions";
 import { calculateGaslightingScore } from "@/lib/psychometrics/gaslighting/scoring";
 import GaslightingReport from "./GaslightingReport";
+import { saveQuizResult, loadQuizResult, QUIZ_KEYS } from "@/lib/quizResults";
 import { CloudFog, ArrowRight, Loader2, ShieldCheck } from "lucide-react";
 
 export default function GaslightingQuizEngine() {
@@ -14,6 +15,16 @@ export default function GaslightingQuizEngine() {
   const [emailError, setEmailError] = useState("");
   const [emailSubmitting, setEmailSubmitting] = useState(false);
   const [finalAnswers, setFinalAnswers] = useState<number[]>([]);
+  const [restored, setRestored] = useState<any>(null);
+
+  // Returning from checkout lands on the result, not question one.
+  useEffect(() => {
+    const saved = loadQuizResult(QUIZ_KEYS.gaslighting);
+    if (saved) {
+      setRestored(saved);
+      setIsFinished(true);
+    }
+  }, []);
 
   const handleAnswer = (score: number) => {
     const newAnswers = [...answers, score];
@@ -43,15 +54,21 @@ export default function GaslightingQuizEngine() {
     } catch {
       // silently continue
     } finally {
+      // Persist before the report renders — the buyer leaves for Stripe
+      // from there and comes back to a fresh page.
+      saveQuizResult(QUIZ_KEYS.gaslighting, calculateGaslightingScore(finalAnswers));
       setEmailSubmitting(false);
       setIsFinished(true);
     }
   };
 
-  const handleSkip = () => setIsFinished(true);
+  const handleSkip = () => {
+    saveQuizResult(QUIZ_KEYS.gaslighting, calculateGaslightingScore(finalAnswers));
+    setIsFinished(true);
+  };
 
   if (isFinished) {
-    const result = calculateGaslightingScore(finalAnswers);
+    const result = restored ?? calculateGaslightingScore(finalAnswers);
     return <GaslightingReport result={result} />;
   }
 

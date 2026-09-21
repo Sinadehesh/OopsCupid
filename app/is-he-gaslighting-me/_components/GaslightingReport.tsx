@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { CloudFog, ShieldAlert, Activity, BrainCircuit, Lock, Zap, ArrowRight, Sparkles, Star } from "lucide-react";
-import GaslightingPremiumReport from "./GaslightingPremiumReport";
+import PremiumDossier from "@/components/report/premium/PremiumDossier";
+import { buildGaslightingDossier } from "../_lib/dossier";
 import { usePremiumAccess } from "@/lib/usePremiumAccess";
 import CheckoutButton from "@/components/offers/CheckoutButton";
 
@@ -103,7 +104,7 @@ export default function GaslightingReport({ result }: { result: any }) {
 
       {/* ── PREMIUM SECTION ── */}
       {isPremiumUnlocked ? (
-        <GaslightingPremiumReport result={result} />
+        <PremiumDossier dossier={buildGaslightingDossier(result)} />
       ) : (
         <div ref={paywallRef} className="scroll-mt-8">
 
@@ -205,7 +206,7 @@ export default function GaslightingReport({ result }: { result: any }) {
               {/* CTA Button */}
               <CheckoutButton
                 sku="premium-report"
-                returnTo="/is-he-gaslighting-me"
+                returnTo="/is-he-gaslighting-me/premium"
                 className="group w-full py-6 rounded-2xl font-black text-xl md:text-2xl text-white
                   bg-gradient-to-r from-indigo-600 to-violet-600
                   hover:from-indigo-500 hover:to-violet-500

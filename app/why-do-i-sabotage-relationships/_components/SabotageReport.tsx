@@ -230,7 +230,9 @@ export default function SabotageReport({ result }: { result: any }) {
                     bg-gradient-to-r from-[#086788] to-[#06aed5]
                     hover:from-[#06aed5] hover:to-[#086788]
                     transition-all duration-300 shadow-lg shadow-[#06aed5]/20
-                    flex items-center justify-center gap-3 disabled:opacity-70">{/* Shimmer sweep */}</CheckoutButton>
+                    flex items-center justify-center gap-3 disabled:opacity-70">
+                  Unlock My Full Report
+                </CheckoutButton>
 
                 {/* Social proof mini row */}
                 <div className="flex items-center justify-center gap-3 mt-5">

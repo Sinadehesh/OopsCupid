@@ -54,6 +54,17 @@ export default function SabotageQuizEngine() {
     }
 
     const computed = calculateSabotageScore(answers);
+
+    // Persist so /premium can render the paid report after a Stripe
+    // round-trip — the buyer leaves this page and comes back to a fresh
+    // React tree with no state.
+    try {
+      localStorage.setItem("oc_sabotage_result", JSON.stringify({ ...computed, email: trimmed }));
+      localStorage.setItem("oc_sabotage_answers", JSON.stringify(answers));
+    } catch (_) {
+      // private mode / quota — the report still renders in this session
+    }
+
     setResult(computed);
     setIsSaving(false);
     setStage("result");

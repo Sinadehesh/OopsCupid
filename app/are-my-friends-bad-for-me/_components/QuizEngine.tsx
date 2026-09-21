@@ -1,8 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TOXIC_FRIENDS_QUESTIONS } from "../_data/questions";
 import { calculateFriendScore } from "../_lib/scoring";
 import FreeResult from "./FreeResult";
+import { saveQuizResult, loadQuizResult, QUIZ_KEYS } from "@/lib/quizResults";
 import { Users, ArrowRight } from "lucide-react";
 
 export default function QuizEngine() {
@@ -11,6 +12,12 @@ export default function QuizEngine() {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState<any>(null);
+
+  // Returning from checkout lands on the result, not the start screen.
+  useEffect(() => {
+    const saved = loadQuizResult(QUIZ_KEYS.friendsBad);
+    if (saved) setResult(saved);
+  }, []);
 
   const handleStart = () => setStarted(true);
 
@@ -23,7 +30,10 @@ export default function QuizEngine() {
     } else {
       setIsProcessing(true);
       setTimeout(() => {
-        setResult(calculateFriendScore(nextAnswers));
+        const computed = calculateFriendScore(nextAnswers);
+        // Survives the Stripe redirect — see lib/quizResults.ts.
+        saveQuizResult(QUIZ_KEYS.friendsBad, computed);
+        setResult(computed);
         setIsProcessing(false);
       }, 1500);
     }

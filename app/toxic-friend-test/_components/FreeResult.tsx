@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import PremiumReport from "./PremiumReport";
+import PremiumDossier from "@/components/report/premium/PremiumDossier";
+import { buildToxicFriendDossier } from "../_lib/dossier";
 import { MessageSquare, ShieldCheck } from "lucide-react";
 import { usePremiumAccess } from "@/lib/usePremiumAccess";
 import CheckoutButton from "@/components/offers/CheckoutButton";
@@ -45,7 +46,8 @@ export default function FreeResult({ data, rawAnswers }: { data: any, rawAnswers
   };
 
   if (isUnlocked) {
-    return <PremiumReport data={data} rawAnswers={rawAnswers} />;
+    // Already paid? Show the full dossier — same content as /premium.
+    return <PremiumDossier dossier={buildToxicFriendDossier(data)} />;
   }
 
   return (
@@ -127,7 +129,7 @@ export default function FreeResult({ data, rawAnswers }: { data: any, rawAnswers
         <div className="w-full md:w-auto z-10 shrink-0">
           <CheckoutButton
             sku="premium-report"
-            returnTo="/toxic-friend-test"
+            returnTo="/toxic-friend-test/premium"
             className="w-full bg-[#ffbc42] hover:bg-[#e5a93c] hover:scale-105 text-black font-extrabold text-lg py-5 px-8 rounded-2xl transition-all shadow-[0_0_20px_rgba(255,188,66,0.3)] inline-flex items-center justify-center gap-2 disabled:opacity-70"
           >
             Unlock Playbook

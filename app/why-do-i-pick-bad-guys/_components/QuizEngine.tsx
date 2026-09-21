@@ -1,8 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BAD_GUYS_QUESTIONS } from "../_data/questions";
 import { calculateBadGuysScore } from "../_lib/scoring";
 import FreeResult from "./FreeResult";
+import { saveQuizResult, loadQuizResult, QUIZ_KEYS } from "@/lib/quizResults";
 import { ShieldAlert, ArrowRight } from "lucide-react";
 
 export default function QuizEngine() {
@@ -11,6 +12,13 @@ export default function QuizEngine() {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState<any>(null);
+
+  // Coming back from checkout (or just reloading) should land on the
+  // result, not on the start screen.
+  useEffect(() => {
+    const saved = loadQuizResult(QUIZ_KEYS.badGuys);
+    if (saved) setResult(saved);
+  }, []);
 
   const handleStart = () => setStarted(true);
 
@@ -23,7 +31,11 @@ export default function QuizEngine() {
     } else {
       setIsProcessing(true);
       setTimeout(() => {
-        setResult(calculateBadGuysScore(newAnswers));
+        const computed = calculateBadGuysScore(newAnswers);
+        // Persist before any checkout link is shown: the buyer leaves for
+        // Stripe and returns to a fresh page with no React state.
+        saveQuizResult(QUIZ_KEYS.badGuys, computed);
+        setResult(computed);
         setIsProcessing(false);
       }, 2000);
     }
