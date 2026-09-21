@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import PremiumReport from "./PremiumReport";
 import { MessageSquare, ShieldCheck } from "lucide-react";
+import { usePremiumAccess } from "@/lib/usePremiumAccess";
+import CheckoutButton from "@/components/offers/CheckoutButton";
 
 // Reusable Bar Component for the Dimensions
 function DimensionBar({ label, score, color }: { label: string, score: number, color: string }) {
@@ -19,7 +21,7 @@ function DimensionBar({ label, score, color }: { label: string, score: number, c
 }
 
 export default function FreeResult({ data, rawAnswers }: { data: any, rawAnswers: Record<string, string> }) {
-  const [isUnlocked, setIsUnlocked] = useState(false);
+  const { granted: isUnlocked } = usePremiumAccess();
 
   const radius = 50;
   const circumference = 2 * Math.PI * radius;
@@ -123,12 +125,13 @@ export default function FreeResult({ data, rawAnswers }: { data: any, rawAnswers
         </div>
 
         <div className="w-full md:w-auto z-10 shrink-0">
-          <button 
-            onClick={() => setIsUnlocked(true)}
-            className="w-full bg-[#ffbc42] hover:bg-[#e5a93c] hover:scale-105 text-black font-extrabold text-lg py-5 px-8 rounded-2xl transition-all shadow-[0_0_20px_rgba(255,188,66,0.3)]"
+          <CheckoutButton
+            sku="premium-report"
+            returnTo="/toxic-friend-test"
+            className="w-full bg-[#ffbc42] hover:bg-[#e5a93c] hover:scale-105 text-black font-extrabold text-lg py-5 px-8 rounded-2xl transition-all shadow-[0_0_20px_rgba(255,188,66,0.3)] inline-flex items-center justify-center gap-2 disabled:opacity-70"
           >
             Unlock Playbook
-          </button>
+          </CheckoutButton>
         </div>
       </div>
 

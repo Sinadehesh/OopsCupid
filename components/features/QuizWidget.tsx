@@ -30,6 +30,7 @@ import { generateFriendRoleProfile } from "@/lib/psychometrics/friend-role/scori
 import { generateFriendUsedProfile } from "@/lib/psychometrics/friend-used/scoring";
 
 import { Lock, Mail, ArrowRight, CheckCircle2 } from "lucide-react";
+import { usePremiumAccess } from "@/lib/usePremiumAccess";
 
 /** Maps the infidelity scoring output into the shape InfidelityFreeResult expects */
 function toFreeResultData(profile: ReturnType<typeof generateInfidelityProfile>, email: string) {
@@ -59,7 +60,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const [isScoring, setIsScoring]           = useState(false);
   const [showEmailGate, setShowEmailGate]   = useState(false);
   const [showResult, setShowResult]         = useState(false);
-  const [isPremiumUnlocked, setIsPremiumUnlocked] = useState(false);
+  const { granted: isPremiumUnlocked } = usePremiumAccess();
   const [isGenerating, setIsGenerating]     = useState(false);
   const [resultData, setResultData]         = useState<any>(null);
   
@@ -266,7 +267,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
           <div ref={topRef} className="w-full animate-in fade-in">
             <AttractionFreeResult 
               profile={resultData.profile} 
-              onUnlock={() => setIsPremiumUnlocked(true)} 
+              onUnlock={() => { window.location.href = "#unlock-offer"; }} 
               isGenerating={isScoring} 
             />
           </div>

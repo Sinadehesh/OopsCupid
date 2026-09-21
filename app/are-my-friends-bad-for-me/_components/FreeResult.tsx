@@ -2,9 +2,11 @@
 import React, { useState } from "react";
 import PremiumReport from "./PremiumReport";
 import { Lock, Download, Share2, ArrowRight, ShieldCheck } from "lucide-react";
+import { usePremiumAccess } from "@/lib/usePremiumAccess";
+import CheckoutButton from "@/components/offers/CheckoutButton";
 
 export default function FreeResult({ data }: { data: any }) {
-  const [unlocked, setUnlocked] = useState(false);
+  const { granted } = usePremiumAccess();
 
   const handleShare = async () => {
     const text = `I just took the 'Are My Friends Bad For Me?' diagnostic. My friendship circle was rated: ${data.tier}. Take the test here:`;
@@ -18,7 +20,7 @@ export default function FreeResult({ data }: { data: any }) {
     }
   };
 
-  if (unlocked) return <PremiumReport data={data} handleShare={handleShare} />;
+  if (granted) return <PremiumReport data={data} handleShare={handleShare} />;
 
   return (
     <div className="max-w-3xl mx-auto py-12 px-6 animate-in fade-in duration-700">
@@ -69,9 +71,7 @@ export default function FreeResult({ data }: { data: any }) {
             Unlock your full 10-point toxic friendship breakdown. We will give you the exact copy-paste text scripts to set boundaries and take your power back today.
           </p>
           
-          <button onClick={() => setUnlocked(true)} className="w-full bg-[#10b981] text-white font-extrabold text-xl py-5 rounded-2xl shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:bg-[#059669] hover:scale-105 transition-all">
-            Unlock My Playbook & Scripts <ArrowRight className="inline ml-2" />
-          </button>
+          <CheckoutButton sku="premium-report" returnTo="/are-my-friends-bad-for-me" className="w-full bg-[#10b981] text-white font-extrabold text-xl py-5 rounded-2xl shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:bg-[#059669] hover:scale-105 transition-all inline-flex items-center justify-center gap-2 disabled:opacity-70">Unlock My Playbook & Scripts</CheckoutButton>
         </div>
       </div>
     </div>

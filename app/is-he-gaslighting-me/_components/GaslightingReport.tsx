@@ -2,9 +2,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { CloudFog, ShieldAlert, Activity, BrainCircuit, Lock, Zap, ArrowRight, Sparkles, Star } from "lucide-react";
 import GaslightingPremiumReport from "./GaslightingPremiumReport";
+import { usePremiumAccess } from "@/lib/usePremiumAccess";
+import CheckoutButton from "@/components/offers/CheckoutButton";
 
 export default function GaslightingReport({ result }: { result: any }) {
-  const [isPremiumUnlocked, setIsPremiumUnlocked] = useState(false);
+  const { granted: isPremiumUnlocked } = usePremiumAccess();
   const paywallRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to paywall when it mounts
@@ -201,19 +203,18 @@ export default function GaslightingReport({ result }: { result: any }) {
               </div>
 
               {/* CTA Button */}
-              <button
-                onClick={() => setIsPremiumUnlocked(true)}
+              <CheckoutButton
+                sku="premium-report"
+                returnTo="/is-he-gaslighting-me"
                 className="group w-full py-6 rounded-2xl font-black text-xl md:text-2xl text-white
                   bg-gradient-to-r from-indigo-600 to-violet-600
                   hover:from-indigo-500 hover:to-violet-500
                   transition-all duration-200 shadow-xl shadow-indigo-500/30
                   flex items-center justify-center gap-3 mb-6
-                  active:scale-[0.98]"
+                  active:scale-[0.98] disabled:opacity-70"
               >
-                <Lock className="w-6 h-6 opacity-60" />
                 Unlock My Full Report
-                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform duration-200" />
-              </button>
+              </CheckoutButton>
 
               {/* Social proof */}
               <div className="flex items-center justify-center gap-3 mb-4">

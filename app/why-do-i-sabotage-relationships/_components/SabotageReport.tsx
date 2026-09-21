@@ -3,9 +3,11 @@ import React, { useState } from "react";
 import { Bomb, ShieldAlert, Activity, HeartCrack, Lock, Zap, ArrowRight, Sparkles, Brain, Star } from "lucide-react";
 import Link from "next/link";
 import SabotagePremiumReport from "./SabotagePremiumReport";
+import { usePremiumAccess } from "@/lib/usePremiumAccess";
+import CheckoutButton from "@/components/offers/CheckoutButton";
 
 export default function SabotageReport({ result }: { result: any }) {
-  const [isPremiumUnlocked, setIsPremiumUnlocked] = useState(false);
+  const { granted: isPremiumUnlocked } = usePremiumAccess();
 
   return (
     <div className="max-w-4xl mx-auto w-full animate-in fade-in slide-in-from-bottom-8 duration-700">
@@ -224,20 +226,11 @@ export default function SabotageReport({ result }: { result: any }) {
                 </div>
 
                 {/* CTA Button */}
-                <button
-                  onClick={() => setIsPremiumUnlocked(true)}
-                  className="group relative w-full py-5 rounded-2xl font-black text-xl text-white overflow-hidden
+                <CheckoutButton sku="premium-report" returnTo="/why-do-i-sabotage-relationships" className="group relative w-full py-5 rounded-2xl font-black text-xl text-white overflow-hidden
                     bg-gradient-to-r from-[#086788] to-[#06aed5]
                     hover:from-[#06aed5] hover:to-[#086788]
                     transition-all duration-300 shadow-lg shadow-[#06aed5]/20
-                    flex items-center justify-center gap-3">
-                  {/* Shimmer sweep */}
-                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent
-                    translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-                  <Lock className="w-5 h-5 opacity-70" />
-                  Unlock Full Report
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </button>
+                    flex items-center justify-center gap-3 disabled:opacity-70">{/* Shimmer sweep */}</CheckoutButton>
 
                 {/* Social proof mini row */}
                 <div className="flex items-center justify-center gap-3 mt-5">

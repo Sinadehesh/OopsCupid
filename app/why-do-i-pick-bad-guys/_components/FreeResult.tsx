@@ -2,9 +2,11 @@
 import React, { useState } from "react";
 import PremiumReport from "./PremiumReport";
 import { Target, Lock, Download, Share2, ArrowRight } from "lucide-react";
+import { usePremiumAccess } from "@/lib/usePremiumAccess";
+import CheckoutButton from "@/components/offers/CheckoutButton";
 
 export default function FreeResult({ data }: { data: any }) {
-  const [unlocked, setUnlocked] = useState(false);
+  const { granted } = usePremiumAccess();
 
   const handleShare = async () => {
     const text = `I just took the 'Why Do I Pick Bad Guys?' diagnostic. My dominant vulnerability is ${data.top1} (${data.tier}). Take the test here:`;
@@ -18,7 +20,7 @@ export default function FreeResult({ data }: { data: any }) {
     }
   };
 
-  if (unlocked) return <PremiumReport data={data} handleShare={handleShare} />;
+  if (granted) return <PremiumReport data={data} handleShare={handleShare} />;
 
   return (
     <div className="max-w-3xl mx-auto py-12 px-6 animate-in fade-in duration-700">
@@ -68,9 +70,7 @@ export default function FreeResult({ data }: { data: any }) {
             Unlock your full 10-point psychological breakdown. We will expose exactly why you attract bad guys, and give you the copy-paste scripts to cut them off safely.
           </p>
           
-          <button onClick={() => setUnlocked(true)} className="w-full bg-[#ffbc42] text-black font-extrabold text-xl py-5 rounded-2xl shadow-[0_0_30px_rgba(255,188,66,0.3)] hover:bg-[#e5a93c] hover:scale-105 transition-all">
-            Unlock My Full Diagnosis <ArrowRight className="inline ml-2" />
-          </button>
+          <CheckoutButton sku="premium-report" returnTo="/why-do-i-pick-bad-guys" className="w-full bg-[#ffbc42] text-black font-extrabold text-xl py-5 rounded-2xl shadow-[0_0_30px_rgba(255,188,66,0.3)] hover:bg-[#e5a93c] hover:scale-105 transition-all inline-flex items-center justify-center gap-2 disabled:opacity-70">Unlock My Full Diagnosis</CheckoutButton>
         </div>
       </div>
     </div>
