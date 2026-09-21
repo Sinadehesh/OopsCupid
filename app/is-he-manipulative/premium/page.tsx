@@ -5,6 +5,7 @@ import ManipulationMasterReport from "@/components/report/ManipulationMasterRepo
 import OfferLadder from "@/components/offers/OfferLadder";
 import CoachingUpsell from "@/components/offers/CoachingUpsell";
 import { scoreToSeverity } from "@/lib/offers/catalog";
+import PremiumGate from "@/components/report/PremiumGate";
 
 export default function ManipulationPremiumPage() {
   const router = useRouter();
@@ -25,18 +26,20 @@ export default function ManipulationPremiumPage() {
   const score: number = typeof data?.score === "number" ? data.score : 55;
 
   return (
-    <>
-      <ManipulationMasterReport data={data} />
-      <OfferLadder
-        topic="manipulation"
-        score={score}
-        heading="Your Next Move, Three Ways"
-        subheading="Pick the level of support that matches how serious your results are. One-time payments, instant access via Gumroad."
-      />
-      <CoachingUpsell
-        severity={scoreToSeverity(score)}
-        topicLabel="the tactics being used on you"
-      />
-    </>
+    <PremiumGate returnTo="/is-he-manipulative/premium">
+      <>
+        <ManipulationMasterReport data={data} />
+        <OfferLadder
+          topic="manipulation"
+          score={score}
+          heading="Your Next Move, Three Ways"
+          subheading="Pick the level of support that matches how serious your results are. One-time payments, instant access via Gumroad."
+        />
+        <CoachingUpsell
+          severity={scoreToSeverity(score)}
+          topicLabel="the tactics being used on you"
+        />
+      </>
+    </PremiumGate>
   );
 }

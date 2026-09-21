@@ -1,4 +1,5 @@
 import type { QuizTopic } from "@/lib/quizzes/registry";
+import type { Sku } from "@/lib/stripe/products";
 
 /**
  * CENTRAL OFFER CATALOG — the value ladder behind every funnel.
@@ -19,12 +20,20 @@ import type { QuizTopic } from "@/lib/quizzes/registry";
 
 export interface Offer {
   id: string;
+  /**
+   * Stripe SKU. Offers WITH a sku are sold through Stripe Checkout.
+   * Offers WITHOUT one are not yet deliverable and must not be sold —
+   * the UI hides their buy button rather than taking money for a
+   * product that does not exist.
+   */
+  sku?: Sku;
   kind: "playbook" | "course" | "coaching" | "program";
   name: string;
   tagline: string;
   price: string; // display only — Gumroad charges the real price
   anchorPrice?: string; // honest comparison anchor (e.g. typical session cost)
-  url: string;
+  /** Legacy external link. Unset for Stripe-sold offers. */
+  url?: string;
   bullets: string[];
   cta: string;
 }
@@ -33,12 +42,12 @@ export interface Offer {
 
 export const CLARITY_CALL: Offer = {
   id: "clarity-call",
+  sku: "clarity-call",
   kind: "coaching",
   name: "60-Minute Clarity Session",
   tagline: "Your results, decoded live — with a plan you leave with.",
   price: "€49",
   anchorPrice: "€120+ typical coaching rate",
-  url: "https://oopscupid.gumroad.com/l/clarity-session",
   bullets: [
     "We walk through your exact quiz results together — no generic advice",
     "You leave with a written 14-day action plan for your situation",
@@ -50,12 +59,12 @@ export const CLARITY_CALL: Offer = {
 
 export const RESET_PROGRAM: Offer = {
   id: "reset-program",
+  sku: "reset-program",
   kind: "program",
   name: "The 4-Week Pattern Reset",
   tagline: "Four weekly 1:1 sessions to break the cycle for good.",
   price: "€179",
   anchorPrice: "€480 if booked as single sessions",
-  url: "https://oopscupid.gumroad.com/l/pattern-reset",
   bullets: [
     "Week 1: map your pattern and its triggers",
     "Week 2: boundary scripts and live practice",
@@ -362,34 +371,53 @@ export interface DecoyTier {
 }
 
 export function getDecoyTiers(topic: QuizTopic): DecoyTier[] {
-  const { playbook, course } = ladders[topic];
+  // Every tier here is a REAL, deliverable product backed by a Stripe
+  // price. The topic playbooks/courses in `ladders` are intentionally
+  // absent: those PDFs do not exist yet, and selling them would be
+  // taking money for something we cannot ship.
+  const tier1: Offer = {
+    id: "premium-report",
+    sku: "premium-report",
+    kind: "playbook",
+    name: "Your Premium Report",
+    tagline: "The full analysis behind the free summary you just read.",
+    price: "€9.99",
+    bullets: [
+      "Every subscale scored and explained in plain language",
+      "What each score means for your specific situation",
+      "Word-for-word scripts for the conversations ahead",
+      "Your day-by-day action protocol",
+    ],
+    cta: "Unlock My Report",
+  };
 
   const tier2: Offer = {
-    ...course,
-    id: `${course.id}-workbook`,
-    name: `${course.name} + 6-Week Workbook`,
-    tagline: "The full course plus the guided daily workbook.",
+    id: "report-workbook-bundle",
+    sku: "report-workbook-bundle",
+    kind: "course",
+    name: "Report + 6-Week Workbook",
+    tagline: "The full report plus the guided workbook that rewires the pattern.",
     price: "€49",
-    url: "https://oopscupid.gumroad.com/l/report-workbook-bundle",
     bullets: [
-      ...course.bullets.slice(0, 2),
-      "The 6-week guided workbook: one 10-minute exercise per day",
+      "Everything in the Premium Report",
+      "The 6-week guided workbook: one 10-minute exercise a day",
       "Printable progress tracker",
+      "Lifetime access — work through it at your pace",
     ],
     cta: "Get Report + Workbook",
   };
 
   const tier3: Offer = {
-    id: `ultimate-${topic}`,
+    id: "ultimate-bundle",
+    sku: "ultimate-bundle",
     kind: "program",
     name: "The Ultimate Bundle",
-    tagline: "Everything in Tier 2, plus a live 1:1 session on YOUR results.",
+    tagline: "Everything above, plus a live 1:1 session on YOUR results.",
     price: "€59",
     anchorPrice: "€98 bought separately",
-    url: "https://oopscupid.gumroad.com/l/ultimate-bundle",
     bullets: [
       "Everything in the Report + Workbook tier",
-      `A 60-minute 1:1 Clarity Session (${CLARITY_CALL.price} alone)`,
+      `A 60-minute 1:1 Clarity Session (${CLARITY_CALL.price} on its own)`,
       "A written 14-day action plan you keep",
       "Priority email access for follow-up questions",
     ],
@@ -397,8 +425,9 @@ export function getDecoyTiers(topic: QuizTopic): DecoyTier[] {
   };
 
   return [
-    { offer: playbook, role: "base" },
+    { offer: tier1, role: "base" },
     { offer: tier2, role: "decoy" },
     { offer: tier3, role: "best", badge: "Best Value — coaching for €10 more" },
   ];
 }
+

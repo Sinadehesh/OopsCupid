@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import CheckoutButton from "@/components/offers/CheckoutButton";
 import {
   ShieldCheck, BrainCircuit, HeartHandshake, Zap, Loader2,
   ArrowRight, CheckCircle2, Lock, FlaskConical, Quote, Tag,
@@ -16,6 +17,10 @@ interface PremiumCheckoutProps {
   isGenerating?: boolean;
   archetype: string;
   relationshipStatus: string;
+  /** Where to land after paying, e.g. "/is-he-cheating/premium". */
+  premiumPath?: string;
+  /** Prefills Stripe Checkout with the email the quiz captured. */
+  email?: string;
   /**
    * SOCIAL PROOF — intentionally empty by default. Only pass REAL quotes
    * (e.g. from Gumroad reviews or emails, with permission). Fabricated
@@ -62,6 +67,8 @@ export default function PremiumCheckout({
   isGenerating = false,
   archetype,
   relationshipStatus,
+  premiumPath,
+  email,
   testimonials = [],
 }: PremiumCheckoutProps) {
   return (
@@ -159,15 +166,15 @@ export default function PremiumCheckout({
               <p className="text-[11px] font-bold text-[#8B93A1] uppercase tracking-widest mt-2.5">No subscription · Instant access</p>
             </div>
 
-            <button
-              onClick={onUnlock}
-              disabled={isGenerating}
-              className="w-full min-h-[64px] bg-[#EC8A66] hover:bg-[#E07850] text-white rounded-xl font-extrabold text-xl transition-all shadow-md hover:-translate-y-1 flex items-center justify-center gap-3 disabled:opacity-80 disabled:hover:translate-y-0 cursor-pointer group"
+            <CheckoutButton
+              sku="premium-report"
+              email={email}
+              returnTo={premiumPath}
+              beforeCheckout={onUnlock}
+              className="w-full min-h-[64px] bg-[#EC8A66] hover:bg-[#E07850] text-white rounded-xl font-extrabold text-xl transition-all shadow-md hover:-translate-y-1 flex items-center justify-center gap-3 disabled:opacity-80 disabled:hover:translate-y-0 cursor-pointer"
             >
-              {isGenerating
-                ? <><Loader2 className="w-6 h-6 animate-spin text-white" /> Building Your Blueprint...</>
-                : <>Unlock My Playbook <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" /></>}
-            </button>
+              Unlock My Playbook
+            </CheckoutButton>
 
             {/* AUTHORITY / TRUST BADGES — every claim defensible */}
             <div className="grid grid-cols-2 gap-2 mt-7 text-left">

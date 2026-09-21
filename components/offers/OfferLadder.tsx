@@ -1,6 +1,7 @@
 import React from "react";
 import { BookOpen, GraduationCap, PhoneCall, Check, ArrowRight } from "lucide-react";
 import { getDecoyTiers, scoreToSeverity, type Severity } from "@/lib/offers/catalog";
+import CheckoutButton from "./CheckoutButton";
 import type { QuizTopic } from "@/lib/quizzes/registry";
 
 const KIND_ICON = {
@@ -114,18 +115,22 @@ export default function OfferLadder({
                 )}
               </div>
 
-              <a
-                href={offer.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`inline-flex items-center justify-center gap-2 w-full py-4 rounded-2xl font-black text-base transition-all ${
-                  featured
-                    ? "bg-rose-500 hover:bg-rose-400 text-white shadow-lg hover:-translate-y-0.5"
-                    : "bg-slate-900 hover:bg-slate-700 text-white"
-                }`}
-              >
-                {offer.cta} <ArrowRight className="w-4 h-4" />
-              </a>
+              {offer.sku ? (
+                <CheckoutButton
+                  sku={offer.sku}
+                  className={`inline-flex items-center justify-center gap-2 w-full py-4 rounded-2xl font-black text-base transition-all disabled:opacity-70 ${
+                    featured
+                      ? "bg-rose-500 hover:bg-rose-400 text-white shadow-lg hover:-translate-y-0.5"
+                      : "bg-slate-900 hover:bg-slate-700 text-white"
+                  }`}
+                >
+                  {offer.cta}
+                </CheckoutButton>
+              ) : (
+                <span className="inline-flex items-center justify-center w-full py-4 rounded-2xl font-black text-base bg-slate-100 text-slate-400">
+                  Coming soon
+                </span>
+              )}
             </div>
           );
         })}

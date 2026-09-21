@@ -135,7 +135,6 @@ export default function ManipulationQuizEngine() {
   };
 
   const handleUnlock = async () => {
-    setIsGenerating(true);
     if (typeof window !== 'undefined') localStorage.setItem('manipulation_result', JSON.stringify({ ...result, email, quizType: "manipulation" }));
     if (email) {
       try {
@@ -146,7 +145,6 @@ export default function ManipulationQuizEngine() {
         });
       } catch (err) {}
     }
-    router.push(`/is-he-manipulative/premium`);
   };
 
   // FAILSAFE: If the questions file is truly missing or empty

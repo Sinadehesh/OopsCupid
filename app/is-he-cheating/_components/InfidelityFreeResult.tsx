@@ -1,5 +1,6 @@
 "use client";
 import React, { useRef, useEffect } from "react";
+import CheckoutButton from "@/components/offers/CheckoutButton";
 import { ShieldAlert, Eye, Clock, Heart, Zap, Lock, ArrowRight, Star, Search, Smartphone } from "lucide-react";
 
 interface Props {
@@ -253,17 +254,14 @@ export default function InfidelityFreeResult({ data, onUnlock, isGenerating }: P
               </div>
             </div>
 
-            <button
-              onClick={onUnlock}
-              disabled={isGenerating}
+            <CheckoutButton
+              sku="premium-report"
+              returnTo="/is-he-cheating/premium"
+              beforeCheckout={onUnlock}
               className="group w-full py-6 rounded-2xl font-black text-xl md:text-2xl text-white bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 transition-all duration-200 shadow-xl shadow-rose-500/30 flex items-center justify-center gap-3 mb-6 disabled:opacity-70 active:scale-[0.98]"
             >
-              {isGenerating ? (
-                <><div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Generating Your Report&hellip;</>
-              ) : (
-                <><Lock className="w-6 h-6 opacity-60" /> Reveal The Full Investigation <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform duration-200" /></>
-              )}
-            </button>
+              Reveal The Full Investigation
+            </CheckoutButton>
 
             <div className="flex items-center justify-center gap-3 mb-4">
               <div className="flex -space-x-1.5">

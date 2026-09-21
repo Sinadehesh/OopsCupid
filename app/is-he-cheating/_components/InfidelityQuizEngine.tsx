@@ -97,7 +97,6 @@ export default function InfidelityQuizEngine() {
   };
 
   const handleUnlock = async () => {
-    setIsGenerating(true);
     if (typeof window !== 'undefined') localStorage.setItem('infidelity_result', JSON.stringify({ ...result, email, quizType: "infidelity" }));
     if (email) {
       try {
@@ -108,7 +107,6 @@ export default function InfidelityQuizEngine() {
         });
       } catch (err) {}
     }
-    router.push(`/is-he-cheating/premium`);
   };
 
   if (isProcessing) return (

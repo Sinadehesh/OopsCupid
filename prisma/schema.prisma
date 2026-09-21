@@ -28,3 +28,20 @@ model WorkbookEntry {
   sessionId   String?
   createdAt   DateTime @default(now())
 }
+
+model Purchase {
+  id               String   @id @default(cuid())
+  stripeSessionId  String   @unique
+  sku              String
+  email            String?
+  amountTotal      Int
+  currency         String   @default("eur")
+  status           String   @default("paid")
+  /// Human-delivered offers (coaching) stay unfulfilled until a
+  /// scheduling link is sent. Flip to false once delivered.
+  needsScheduling  Boolean  @default(false)
+  createdAt        DateTime @default(now())
+
+  @@index([email])
+  @@index([needsScheduling])
+}

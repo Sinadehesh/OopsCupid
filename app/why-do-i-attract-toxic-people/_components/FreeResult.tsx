@@ -97,6 +97,7 @@ export default function FreeResult({ data, onUnlock, isGenerating }: { data: any
 
           <div className="border-t border-slate-100 pt-10">
             <PremiumCheckout 
+              premiumPath="/why-do-i-attract-toxic-people/premium"
               onUnlock={onUnlock} 
               isGenerating={isGenerating} 
               archetype={topTrait}

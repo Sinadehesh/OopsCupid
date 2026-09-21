@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import InfidelityPremiumReport from "../_components/InfidelityPremiumReport";
+import PremiumGate from "@/components/report/PremiumGate";
 
 interface ReportData {
   score: number;
@@ -80,5 +81,9 @@ export default function CheatingPremiumPage() {
     );
   }
 
-  return <InfidelityPremiumReport data={data} />;
+  return (
+    <PremiumGate returnTo="/is-he-cheating/premium">
+      <InfidelityPremiumReport data={data} />
+    </PremiumGate>
+  );
 }

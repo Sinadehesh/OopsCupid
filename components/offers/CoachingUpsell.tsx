@@ -1,6 +1,7 @@
 import React from "react";
 import { PhoneCall, CheckCircle2, ShieldCheck, ArrowRight } from "lucide-react";
 import { CLARITY_CALL, type Severity } from "@/lib/offers/catalog";
+import CheckoutButton from "./CheckoutButton";
 
 /**
  * The coaching upsell block — the highest-margin rung of the ladder.
@@ -53,15 +54,12 @@ export default function CoachingUpsell({
         </div>
 
         <div className="flex flex-col sm:flex-row items-center gap-6">
-          <a
-            href={CLARITY_CALL.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-rose-500 hover:bg-rose-400 text-white font-black text-lg px-10 py-5 rounded-2xl transition-all shadow-lg hover:-translate-y-0.5"
+          <CheckoutButton
+            sku="clarity-call"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-rose-500 hover:bg-rose-400 text-white font-black text-lg px-10 py-5 rounded-2xl transition-all shadow-lg hover:-translate-y-0.5 disabled:opacity-70"
           >
             {CLARITY_CALL.cta} — {CLARITY_CALL.price}
-            <ArrowRight className="w-5 h-5" />
-          </a>
+          </CheckoutButton>
           {CLARITY_CALL.anchorPrice && (
             <div className="text-slate-400 text-sm font-bold">
               Independent coaches charge {CLARITY_CALL.anchorPrice.replace("€", "€")}

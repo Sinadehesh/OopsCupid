@@ -47,7 +47,7 @@ export default function ManipulationFreeResult({ data, onUnlock, isGenerating }:
           </div>
 
           <div className="border-t border-slate-100 pt-10">
-            <PremiumCheckout onUnlock={onUnlock} isGenerating={isGenerating} archetype="Manipulation Dossier" relationshipStatus="In a relationship" />
+            <PremiumCheckout onUnlock={onUnlock} isGenerating={isGenerating} archetype="Manipulation Dossier" relationshipStatus="In a relationship" premiumPath="/is-he-manipulative/premium" />
             <div className="mt-6 text-center text-sm font-bold text-slate-500 flex items-center justify-center gap-2"><ArrowRight className="w-4 h-4 text-indigo-600" /> On the next page, you can optionally add the Grey Rock Disengagement Playbook to your order.</div>
           </div>
         </div>

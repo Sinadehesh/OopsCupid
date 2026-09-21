@@ -94,7 +94,6 @@ export default function QuizEngine() {
     }
 
     const style = result?.top1 || "The Hyper-Empathetic Rescuer";
-    router.push(`/why-do-i-attract-toxic-people/premium?style=${encodeURIComponent(style)}`);
   };
 
   if (isProcessing) {
