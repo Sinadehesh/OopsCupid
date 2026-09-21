@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { AlertTriangle, ArrowRight, Sparkles, Target, Eye, Map, Users, ShieldCheck, Zap, CheckCircle2, Lock } from "lucide-react";
 import Link from "next/link";
 import SharePrintButtons from "@/components/ui/SharePrintButtons";
+import PremiumGate from "@/components/report/PremiumGate";
 
 // Deep per-archetype premium content
 const PREMIUM_CONTENT: Record<string, {
@@ -212,156 +213,158 @@ export default function FriendRolePremiumPage() {
   const secondary = profile.secondaryArchetype;
 
   return (
-    <div className="min-h-screen bg-[#fafafa] py-12 md:py-20 border-t border-[#d6d2d2]">
-      <div className="max-w-4xl mx-auto px-4 md:px-8 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <PremiumGate returnTo="/friend-group-role/premium">
+      <div className="min-h-screen bg-[#fafafa] py-12 md:py-20 border-t border-[#d6d2d2]">
+        <div className="max-w-4xl mx-auto px-4 md:px-8 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
 
-        {/* HERO */}
-        <div className="bg-[#FFB400] rounded-[32px] p-10 md:p-14 text-center relative overflow-hidden shadow-xl">
-          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_#0D2C54,_transparent)]"></div>
-          <div className="relative z-10">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold tracking-widest mb-6 bg-white/30 text-[#0D2C54] uppercase">
-              <Sparkles className="w-4 h-4" /> Full Analysis Unlocked
-            </div>
-            <h1 className="text-4xl md:text-6xl font-extrabold text-[#0D2C54] leading-none mb-3">
-              {archetype}
-            </h1>
-            {secondary && (
-              <div className="inline-block bg-white/20 border border-white/40 px-5 py-2 rounded-full mt-2">
-                <p className="text-sm font-extrabold text-[#0D2C54] uppercase tracking-wide">
-                  Secondary Role: <span className="text-white">{secondary}</span>
-                </p>
+          {/* HERO */}
+          <div className="bg-[#FFB400] rounded-[32px] p-10 md:p-14 text-center relative overflow-hidden shadow-xl">
+            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_#0D2C54,_transparent)]"></div>
+            <div className="relative z-10">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold tracking-widest mb-6 bg-white/30 text-[#0D2C54] uppercase">
+                <Sparkles className="w-4 h-4" /> Full Analysis Unlocked
               </div>
+              <h1 className="text-4xl md:text-6xl font-extrabold text-[#0D2C54] leading-none mb-3">
+                {archetype}
+              </h1>
+              {secondary && (
+                <div className="inline-block bg-white/20 border border-white/40 px-5 py-2 rounded-full mt-2">
+                  <p className="text-sm font-extrabold text-[#0D2C54] uppercase tracking-wide">
+                    Secondary Role: <span className="text-white">{secondary}</span>
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* DEEP PROFILE */}
+          <div className="bg-white border border-[#d6d2d2] border-l-8 border-l-[#00A6ED] rounded-2xl p-8 md:p-12 shadow-sm">
+            <div className="flex items-center gap-3 mb-6">
+              <Eye className="w-7 h-7 text-[#00A6ED]" />
+              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54]">The Deep Profile</h2>
+            </div>
+            <p className="text-lg md:text-xl font-medium leading-relaxed text-[#0D2C54]/85">
+              {content.deepProfile}
+            </p>
+          </div>
+
+          {/* THE RESENTMENT TRAP */}
+          <div className="bg-white border border-[#d6d2d2] border-l-8 border-l-[#FF495C] rounded-2xl p-8 md:p-12 shadow-sm">
+            <div className="flex items-center gap-3 mb-6">
+              <AlertTriangle className="w-7 h-7 text-[#FF495C]" />
+              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54]">The Resentment Trap</h2>
+            </div>
+            <p className="text-lg font-medium leading-relaxed text-[#0D2C54]/85">
+              {content.resentmentTrap}
+            </p>
+          </div>
+
+          {/* HOW OTHERS VIEW YOU */}
+          <div className="bg-white border border-[#d6d2d2] border-l-8 border-l-[#FFB400] rounded-2xl p-8 md:p-12 shadow-sm">
+            <div className="flex items-center gap-3 mb-6">
+              <Users className="w-7 h-7 text-[#FFB400]" />
+              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54]">How Others Secretly View You</h2>
+            </div>
+            <p className="text-lg font-medium leading-relaxed text-[#0D2C54]/85">
+              {content.othersView}
+            </p>
+          </div>
+
+          {/* THE EVOLUTION BLUEPRINT */}
+          <div className="bg-white border border-[#d6d2d2] rounded-2xl p-8 md:p-12 shadow-sm">
+            <div className="flex items-center gap-3 mb-8">
+              <Map className="w-7 h-7 text-[#00A6ED]" />
+              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54]">The Evolution Blueprint</h2>
+            </div>
+            <div className="space-y-4">
+              <div className="bg-[#fafafa] border border-[#d6d2d2] rounded-xl p-6">
+                <p className="text-xs font-black text-[#0D2C54]/40 uppercase tracking-widest mb-2">Right Now</p>
+                <p className="font-bold text-[#0D2C54] text-base leading-relaxed">{content.evolutionBlueprint.now}</p>
+              </div>
+              <div className="bg-[#fafafa] border border-[#d6d2d2] rounded-xl p-6">
+                <p className="text-xs font-black text-[#0D2C54]/40 uppercase tracking-widest mb-2">This Week</p>
+                <p className="font-bold text-[#0D2C54] text-base leading-relaxed">{content.evolutionBlueprint.week}</p>
+              </div>
+              <div className="bg-[#fafafa] border border-[#d6d2d2] rounded-xl p-6">
+                <p className="text-xs font-black text-[#0D2C54]/40 uppercase tracking-widest mb-2">This Month</p>
+                <p className="font-bold text-[#0D2C54] text-base leading-relaxed">{content.evolutionBlueprint.month}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* TRAIT SCORES */}
+          {profile.normalizedScores && (
+            <div className="bg-white border border-[#d6d2d2] rounded-2xl p-8 md:p-12 shadow-sm">
+              <h2 className="text-2xl font-extrabold text-[#0D2C54] mb-8">Your Full Trait Breakdown</h2>
+              <div className="space-y-5">
+                {Object.entries(profile.normalizedScores as Record<string, number>)
+                  .sort((a, b) => b[1] - a[1])
+                  .map(([key, val], i) => (
+                    <div key={key}>
+                      <div className="flex justify-between items-center mb-1.5">
+                        <span className="text-sm font-bold text-[#0D2C54]">{key}</span>
+                        <span className="text-sm font-black text-[#00A6ED]">{val}%</span>
+                      </div>
+                      <div className="w-full h-2.5 rounded-full bg-[#d6d2d2] overflow-hidden">
+                        <div
+                          className="h-full rounded-full transition-all duration-700"
+                          style={{
+                            width: `${val}%`,
+                            backgroundColor: i === 0 ? "#00A6ED" : i === 1 ? "#FFB400" : i === 2 ? "#FF495C" : "#0D2C54"
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
+
+          {/* COACHING OFFER */}
+          <div className="bg-white border-2 border-[#FFB400] rounded-3xl p-8 md:p-12 shadow-xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 bg-[#FFB400] text-[#0D2C54] text-[10px] font-black px-4 py-1.5 uppercase tracking-widest rounded-bl-lg">Limited Offer</div>
+            <h2 className="text-3xl font-extrabold mb-3 text-[#0D2C54]">Step Out of the Box They Put You In.</h2>
+            <p className="text-lg font-medium text-[#0D2C54]/75 mb-6">
+              You have the data. A 1-on-1 coaching session based on your exact profile will give you tactical steps to redefine your role, set boundaries, and change how your group relates to you — without losing anyone.
+            </p>
+            <div className="flex items-center gap-4 mb-8">
+              <span className="text-5xl font-black text-[#0D2C54]">Free</span>
+              <div>
+                <span className="text-sm font-bold text-[#0D2C54]/40 line-through block">Usually €50.00</span>
+                <span className="text-sm font-black text-[#FF495C] uppercase tracking-widest">Included With Premium</span>
+              </div>
+            </div>
+            {isClaimed ? (
+              <div className="bg-[#06aed5]/10 border border-[#06aed5]/30 p-6 rounded-xl flex items-center gap-4">
+                <CheckCircle2 className="w-8 h-8 text-[#06aed5] shrink-0" />
+                <div>
+                  <p className="font-black text-[#0D2C54] text-lg">Request Confirmed!</p>
+                  <p className="text-sm font-medium text-[#0D2C54]/70">Check your email shortly for scheduling.</p>
+                </div>
+              </div>
+            ) : (
+              <button onClick={handleClaimCoaching} disabled={isClaiming} className="w-full min-h-[64px] bg-[#FFB400] text-[#0D2C54] rounded-xl font-black text-xl transition-all shadow-md hover:-translate-y-1 flex items-center justify-center gap-3 disabled:opacity-50">
+                {isClaiming ? "Securing Spot..." : "Yes, I Want Coaching"} <Zap className="w-6 h-6" />
+              </button>
             )}
           </div>
-        </div>
 
-        {/* DEEP PROFILE */}
-        <div className="bg-white border border-[#d6d2d2] border-l-8 border-l-[#00A6ED] rounded-2xl p-8 md:p-12 shadow-sm">
-          <div className="flex items-center gap-3 mb-6">
-            <Eye className="w-7 h-7 text-[#00A6ED]" />
-            <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54]">The Deep Profile</h2>
+          {/* CROSS SELL */}
+          <div className="bg-white border-2 border-[#00A6ED] p-8 md:p-12 rounded-3xl shadow-md text-center">
+            <span className="inline-block py-1.5 px-4 rounded bg-[#00A6ED]/10 text-[#00A6ED] font-black text-xs tracking-widest uppercase mb-6">Recommended Next</span>
+            <h3 className="text-3xl font-extrabold mb-4 text-[#0D2C54]">"{content.crossSell.name}"</h3>
+            <p className="text-lg font-medium mb-8 text-[#0D2C54]/75 max-w-xl mx-auto">{content.crossSell.pitch}</p>
+            <Link
+              href={`/${content.crossSell.id}`}
+              className="inline-flex items-center justify-center gap-3 py-5 w-full md:w-auto px-10 min-h-[64px] bg-[#0D2C54] hover:bg-[#00A6ED] text-white rounded-xl font-black text-xl transition-all hover:-translate-y-1 shadow-md"
+            >
+              Start Now <ArrowRight className="w-6 h-6" />
+            </Link>
           </div>
-          <p className="text-lg md:text-xl font-medium leading-relaxed text-[#0D2C54]/85">
-            {content.deepProfile}
-          </p>
+
+          <div className="pt-4 pb-12"><SharePrintButtons /></div>
         </div>
-
-        {/* THE RESENTMENT TRAP */}
-        <div className="bg-white border border-[#d6d2d2] border-l-8 border-l-[#FF495C] rounded-2xl p-8 md:p-12 shadow-sm">
-          <div className="flex items-center gap-3 mb-6">
-            <AlertTriangle className="w-7 h-7 text-[#FF495C]" />
-            <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54]">The Resentment Trap</h2>
-          </div>
-          <p className="text-lg font-medium leading-relaxed text-[#0D2C54]/85">
-            {content.resentmentTrap}
-          </p>
-        </div>
-
-        {/* HOW OTHERS VIEW YOU */}
-        <div className="bg-white border border-[#d6d2d2] border-l-8 border-l-[#FFB400] rounded-2xl p-8 md:p-12 shadow-sm">
-          <div className="flex items-center gap-3 mb-6">
-            <Users className="w-7 h-7 text-[#FFB400]" />
-            <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54]">How Others Secretly View You</h2>
-          </div>
-          <p className="text-lg font-medium leading-relaxed text-[#0D2C54]/85">
-            {content.othersView}
-          </p>
-        </div>
-
-        {/* THE EVOLUTION BLUEPRINT */}
-        <div className="bg-white border border-[#d6d2d2] rounded-2xl p-8 md:p-12 shadow-sm">
-          <div className="flex items-center gap-3 mb-8">
-            <Map className="w-7 h-7 text-[#00A6ED]" />
-            <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54]">The Evolution Blueprint</h2>
-          </div>
-          <div className="space-y-4">
-            <div className="bg-[#fafafa] border border-[#d6d2d2] rounded-xl p-6">
-              <p className="text-xs font-black text-[#0D2C54]/40 uppercase tracking-widest mb-2">Right Now</p>
-              <p className="font-bold text-[#0D2C54] text-base leading-relaxed">{content.evolutionBlueprint.now}</p>
-            </div>
-            <div className="bg-[#fafafa] border border-[#d6d2d2] rounded-xl p-6">
-              <p className="text-xs font-black text-[#0D2C54]/40 uppercase tracking-widest mb-2">This Week</p>
-              <p className="font-bold text-[#0D2C54] text-base leading-relaxed">{content.evolutionBlueprint.week}</p>
-            </div>
-            <div className="bg-[#fafafa] border border-[#d6d2d2] rounded-xl p-6">
-              <p className="text-xs font-black text-[#0D2C54]/40 uppercase tracking-widest mb-2">This Month</p>
-              <p className="font-bold text-[#0D2C54] text-base leading-relaxed">{content.evolutionBlueprint.month}</p>
-            </div>
-          </div>
-        </div>
-
-        {/* TRAIT SCORES */}
-        {profile.normalizedScores && (
-          <div className="bg-white border border-[#d6d2d2] rounded-2xl p-8 md:p-12 shadow-sm">
-            <h2 className="text-2xl font-extrabold text-[#0D2C54] mb-8">Your Full Trait Breakdown</h2>
-            <div className="space-y-5">
-              {Object.entries(profile.normalizedScores as Record<string, number>)
-                .sort((a, b) => b[1] - a[1])
-                .map(([key, val], i) => (
-                  <div key={key}>
-                    <div className="flex justify-between items-center mb-1.5">
-                      <span className="text-sm font-bold text-[#0D2C54]">{key}</span>
-                      <span className="text-sm font-black text-[#00A6ED]">{val}%</span>
-                    </div>
-                    <div className="w-full h-2.5 rounded-full bg-[#d6d2d2] overflow-hidden">
-                      <div
-                        className="h-full rounded-full transition-all duration-700"
-                        style={{
-                          width: `${val}%`,
-                          backgroundColor: i === 0 ? "#00A6ED" : i === 1 ? "#FFB400" : i === 2 ? "#FF495C" : "#0D2C54"
-                        }}
-                      />
-                    </div>
-                  </div>
-                ))}
-            </div>
-          </div>
-        )}
-
-        {/* COACHING OFFER */}
-        <div className="bg-white border-2 border-[#FFB400] rounded-3xl p-8 md:p-12 shadow-xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 bg-[#FFB400] text-[#0D2C54] text-[10px] font-black px-4 py-1.5 uppercase tracking-widest rounded-bl-lg">Limited Offer</div>
-          <h2 className="text-3xl font-extrabold mb-3 text-[#0D2C54]">Step Out of the Box They Put You In.</h2>
-          <p className="text-lg font-medium text-[#0D2C54]/75 mb-6">
-            You have the data. A 1-on-1 coaching session based on your exact profile will give you tactical steps to redefine your role, set boundaries, and change how your group relates to you — without losing anyone.
-          </p>
-          <div className="flex items-center gap-4 mb-8">
-            <span className="text-5xl font-black text-[#0D2C54]">Free</span>
-            <div>
-              <span className="text-sm font-bold text-[#0D2C54]/40 line-through block">Usually €50.00</span>
-              <span className="text-sm font-black text-[#FF495C] uppercase tracking-widest">Included With Premium</span>
-            </div>
-          </div>
-          {isClaimed ? (
-            <div className="bg-[#06aed5]/10 border border-[#06aed5]/30 p-6 rounded-xl flex items-center gap-4">
-              <CheckCircle2 className="w-8 h-8 text-[#06aed5] shrink-0" />
-              <div>
-                <p className="font-black text-[#0D2C54] text-lg">Request Confirmed!</p>
-                <p className="text-sm font-medium text-[#0D2C54]/70">Check your email shortly for scheduling.</p>
-              </div>
-            </div>
-          ) : (
-            <button onClick={handleClaimCoaching} disabled={isClaiming} className="w-full min-h-[64px] bg-[#FFB400] text-[#0D2C54] rounded-xl font-black text-xl transition-all shadow-md hover:-translate-y-1 flex items-center justify-center gap-3 disabled:opacity-50">
-              {isClaiming ? "Securing Spot..." : "Yes, I Want Coaching"} <Zap className="w-6 h-6" />
-            </button>
-          )}
-        </div>
-
-        {/* CROSS SELL */}
-        <div className="bg-white border-2 border-[#00A6ED] p-8 md:p-12 rounded-3xl shadow-md text-center">
-          <span className="inline-block py-1.5 px-4 rounded bg-[#00A6ED]/10 text-[#00A6ED] font-black text-xs tracking-widest uppercase mb-6">Recommended Next</span>
-          <h3 className="text-3xl font-extrabold mb-4 text-[#0D2C54]">"{content.crossSell.name}"</h3>
-          <p className="text-lg font-medium mb-8 text-[#0D2C54]/75 max-w-xl mx-auto">{content.crossSell.pitch}</p>
-          <Link
-            href={`/${content.crossSell.id}`}
-            className="inline-flex items-center justify-center gap-3 py-5 w-full md:w-auto px-10 min-h-[64px] bg-[#0D2C54] hover:bg-[#00A6ED] text-white rounded-xl font-black text-xl transition-all hover:-translate-y-1 shadow-md"
-          >
-            Start Now <ArrowRight className="w-6 h-6" />
-          </Link>
-        </div>
-
-        <div className="pt-4 pb-12"><SharePrintButtons /></div>
       </div>
-    </div>
+    </PremiumGate>
   );
 }

@@ -11,6 +11,12 @@ export default function ToxicQuizEngine() {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showSafety, setShowSafety] = useState(false);
   
+  // Blocks a second tap while the 350ms advance animation is pending.
+  // Without it, two fast clicks queue two increments and walk the index
+  // past the end of the question bank (a double-tap crashed the quiz and
+  // lost every answer).
+  const [advancing, setAdvancing] = useState(false);
+
   const [isFinished, setIsFinished] = useState(false);
   const [isCalculating, setIsCalculating] = useState(false);
   const [resultsData, setResultsData] = useState<any>(null);
@@ -35,11 +41,14 @@ export default function ToxicQuizEngine() {
     );
   }
 
-  const question: Question = TOXIC_FRIEND_QUESTIONS[currentIndex];
-  const progressPercent = Math.round((currentIndex / TOXIC_FRIEND_QUESTIONS.length) * 100);
+  const safeIndex = Math.min(Math.max(currentIndex, 0), TOXIC_FRIEND_QUESTIONS.length - 1);
+  const question: Question = TOXIC_FRIEND_QUESTIONS[safeIndex];
+  const progressPercent = Math.round((safeIndex / TOXIC_FRIEND_QUESTIONS.length) * 100);
   const currentOptions = OPTIONS[question.responseType];
 
   const handleSelect = (option: string) => {
+    if (advancing) return;
+    setAdvancing(true);
     const newAnswers = { ...answers, [question.id]: option };
     setAnswers(newAnswers);
 
@@ -49,8 +58,9 @@ export default function ToxicQuizEngine() {
     }
 
     setTimeout(() => {
-      if (currentIndex < TOXIC_FRIEND_QUESTIONS.length - 1) {
-        setCurrentIndex(prev => prev + 1);
+      setAdvancing(false);
+      if (safeIndex < TOXIC_FRIEND_QUESTIONS.length - 1) {
+        setCurrentIndex(prev => Math.min(prev + 1, TOXIC_FRIEND_QUESTIONS.length - 1));
       } else {
         setIsCalculating(true);
         setTimeout(() => {
@@ -64,7 +74,8 @@ export default function ToxicQuizEngine() {
   };
 
   const handleBack = () => {
-    if (currentIndex > 0) setCurrentIndex(prev => prev - 1);
+    setAdvancing(false);
+    if (currentIndex > 0) setCurrentIndex(prev => Math.max(prev - 1, 0));
   };
 
   return (
@@ -78,7 +89,7 @@ export default function ToxicQuizEngine() {
           <span className="text-sm font-extrabold text-[#00A6ED]">{question.module} • {question.subscale}</span>
         </div>
         <div className="text-right text-sm font-bold text-slate-400">
-          {currentIndex + 1} / {TOXIC_FRIEND_QUESTIONS.length}
+          {safeIndex + 1} / {TOXIC_FRIEND_QUESTIONS.length}
         </div>
       </div>
 

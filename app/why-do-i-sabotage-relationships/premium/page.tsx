@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { AlertTriangle } from "lucide-react";
 import { calculateSabotageScore } from "@/lib/psychometrics/sabotage/scoring";
 import SabotagePremiumReport from "../_components/SabotagePremiumReport";
+import PremiumGate from "@/components/report/PremiumGate";
 
 export default function SabotagePremiumPage() {
   const router = useRouter();
@@ -64,8 +65,10 @@ export default function SabotagePremiumPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#fff1d0]">
-      <SabotagePremiumReport result={result} />
-    </main>
+    <PremiumGate returnTo="/why-do-i-sabotage-relationships/premium">
+      <main className="min-h-screen bg-[#fff1d0]">
+        <SabotagePremiumReport result={result} />
+      </main>
+    </PremiumGate>
   );
 }
