@@ -5,6 +5,8 @@ import PremiumReport from "../_components/PremiumReport";
 import OfferLadder from "@/components/offers/OfferLadder";
 import { ShieldAlert } from "lucide-react";
 import PremiumGate from "@/components/report/PremiumGate";
+import ScriptsAndPlan from "@/components/report/premium/ScriptsAndPlan";
+import { buildBadGuysDossier } from "@/app/why-do-i-pick-bad-guys/_lib/dossier";
 
 export default function PremiumToxicAttractionPage() {
   const router = useRouter();
@@ -60,16 +62,38 @@ export default function PremiumToxicAttractionPage() {
     );
   }
 
-  // Render the Phase 3 Premium Report Component
+  // Reuse the shared dossier writing for the two sections this report was
+  // missing. Guarded: a stored result from an older build may not have the
+  // shape the builder expects, and a paid page must not white-screen.
+  let scriptsAndPlan: { scripts: any[]; plan: any[] } | null = null;
+  try {
+    const d = buildBadGuysDossier(data);
+    scriptsAndPlan = { scripts: d.scripts, plan: d.plan };
+  } catch {
+    scriptsAndPlan = null;
+  }
+
   return (
     <PremiumGate returnTo="/why-do-i-attract-toxic-people/premium">
       <div className="min-h-screen bg-[#fafafa]">
         <PremiumReport data={data} handleShare={handleShare} />
+        {/* The checkout page promises scripts and an action plan; this
+            report had neither. This quiz runs the SAME scoring instrument
+            as /why-do-i-pick-bad-guys (calculateBadGuysScore), so its
+            dossier's scripts and plan are keyed to the same subscales —
+            they are not generic filler. */}
+        <ScriptsAndPlan
+          accent="#f43f5e"
+          scripts={scriptsAndPlan?.scripts ?? []}
+          plan={scriptsAndPlan?.plan ?? []}
+          scriptsNo="04"
+          planNo="05"
+        />
         <OfferLadder
           topic="attraction-patterns"
           score={typeof data?.score === "number" ? data.score : 55}
           heading="Break The Pattern, Three Ways"
-          subheading="Pick the level of support that fits. One-time payments, instant access via Gumroad."
+          subheading="Pick the level of support that fits. One-time payment, no subscription."
         />
       </div>
     </PremiumGate>

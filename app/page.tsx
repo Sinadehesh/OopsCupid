@@ -307,7 +307,7 @@ export default function Home() {
                <span className="text-4xl">🔒</span>
                <div>
                  <h4 className="font-extrabold text-[#3A556C] text-xl mb-2">Your Secrets Are Safe</h4>
-                 <p className="text-gray-700 text-[16px] leading-relaxed font-medium">Because these tests are highly personal, your answers are permanently deleted from our system in 24 hours.</p>
+                 <p className="text-gray-700 text-[16px] leading-relaxed font-medium">Because these tests are highly personal, the answers you give are erased from our servers within 24 hours — we keep only your email address and which quiz you took. Your results stay in your own browser so you can reopen them.</p>
                </div>
              </div>
           </div>

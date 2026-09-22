@@ -7,6 +7,7 @@ import { AlertTriangle, LineChart, Target, ArrowRight, Heart, Briefcase, Users, 
 import Link from "next/link";
 import SharePrintButtons from "@/components/ui/SharePrintButtons";
 import PremiumGate from "@/components/report/PremiumGate";
+import { buildAttachmentFallback } from "@/lib/report/attachmentFallback";
 
 export default function PremiumAttachmentReportPage() {
   const router = useRouter();
@@ -33,15 +34,22 @@ export default function PremiumAttachmentReportPage() {
         setUserData(parsedData);
         const rawAnswers = parsedData.rawAnswers || {}; 
         
-        const data = await generatePremiumReport(parsedData.profile?.attachment || {}, parsedData.demographics || {}, rawAnswers);
-        
-        if (data.success && data.report) {
-          setPremiumData(data.report);
-        } else {
-          setError(`Analysis Server Error: ${data.error || "Missing AI response."}`);
+        // The AI pass is an enhancement, not the product. A buyer has
+        // already paid by the time this runs — if OpenAI is down, rate
+        // limited or out of credit, they get the deterministic report
+        // rather than an error screen.
+        let report: any = null;
+        try {
+          const data = await generatePremiumReport(parsedData.profile?.attachment || {}, parsedData.demographics || {}, rawAnswers);
+          if (data.success && data.report) report = data.report;
+          else console.error("[attachment/premium] AI generation failed:", data.error);
+        } catch (aiErr) {
+          console.error("[attachment/premium] AI generation threw:", aiErr);
         }
+
+        setPremiumData(report ?? buildAttachmentFallback(parsedData.profile?.attachment));
       } catch (err: any) {
-        setError(`Unexpected System Error: ${err.message}`);
+        setError(`We couldn't read your saved profile. Please retake the assessment — your access is not affected.`);
       } finally {
         setIsLoading(false);
       }

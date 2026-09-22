@@ -108,11 +108,28 @@ export default function AttachmentReport({ profile, demographics, rawAnswers, em
            <p className={`text-lg mt-8 font-bold text-[#086788]`}>If you want real clarity, not just a label, unlock your full Love Pattern Breakdown below.</p>
         </div>
 
-        <PremiumCheckout 
-          onUnlock={handleRouteToPremium} 
-          isGenerating={isRouting} 
+        <PremiumCheckout
+          onUnlock={handleRouteToPremium}
+          isGenerating={isRouting}
           archetype={generalProfile.classification}
           relationshipStatus={relationshipStatus}
+          headline="You've seen your style."
+          headlineAccent="Here is where it came from."
+          pitch="The free result names your attachment style. The full report scores it separately across five domains — general, romantic, mother, father and work — and gives each one its own threat analysis and a three-stage playbook."
+          inclusions={[
+            {
+              title: "Five domains, scored separately",
+              body: "Your attachment does not behave the same way everywhere. This scores general, romantic, work and both childhood axes on their own, so you can see which domain is actually carrying the pattern.",
+            },
+            {
+              title: "Childhood roots: mother and father",
+              body: "Both parental axes scored and written up separately — the template each one set, and the specific adult behaviour it still produces. This is the section the free result does not touch at all.",
+            },
+            {
+              title: "A three-stage playbook per domain",
+              body: "For each domain: what to do today, what to change this week, and what to work on over a month. Concrete actions, not adjectives.",
+            },
+          ]}
         />
       </div>
     </div>

@@ -47,7 +47,30 @@ export default function ManipulationFreeResult({ data, onUnlock, isGenerating }:
           </div>
 
           <div className="border-t border-slate-100 pt-10">
-            <PremiumCheckout onUnlock={onUnlock} isGenerating={isGenerating} archetype="Manipulation Dossier" relationshipStatus="In a relationship" premiumPath="/is-he-manipulative/premium" />
+            <PremiumCheckout
+              onUnlock={onUnlock}
+              isGenerating={isGenerating}
+              archetype="Manipulation Dossier"
+              relationshipStatus="In a relationship"
+              premiumPath="/is-he-manipulative/premium"
+              headline="You've seen the score."
+              headlineAccent="Here is what is behind it."
+              pitch="The free result gives you a number. The full report scores each tactic separately, explains how it works on you specifically, and gives you the words to use the next time it happens."
+              inclusions={[
+                {
+                  title: "Word-for-word scripts",
+                  body: "Four situations you will actually face — a denial, a redirect onto your reaction, a circular argument, a broken limit — with the exact sentence to use and why it works. Matched to the pattern your answers show, not a generic list.",
+                },
+                {
+                  title: "The 4-point control matrix",
+                  body: "Each tactic scored from your answers and explained at your level. A low score is reported as a low score: knowing what he is NOT doing narrows the problem as much as knowing what he is.",
+                },
+                {
+                  title: "A 14-day plan",
+                  body: "Four dated steps, each one a change to what you do rather than a conversation to have. Every step is designed to work without his cooperation.",
+                },
+              ]}
+            />
             <div className="mt-6 text-center text-sm font-bold text-slate-500 flex items-center justify-center gap-2"><ArrowRight className="w-4 h-4 text-indigo-600" /> On the next page, you can optionally add the Grey Rock Disengagement Playbook to your order.</div>
           </div>
         </div>

@@ -96,12 +96,29 @@ export default function FreeResult({ data, onUnlock, isGenerating }: { data: any
           </div>
 
           <div className="border-t border-slate-100 pt-10">
-            <PremiumCheckout 
+            <PremiumCheckout
               premiumPath="/why-do-i-attract-toxic-people/premium"
-              onUnlock={onUnlock} 
-              isGenerating={isGenerating} 
+              onUnlock={onUnlock}
+              isGenerating={isGenerating}
               archetype={topTrait}
               relationshipStatus="Single"
+              headline="You've seen which trait scored highest."
+              headlineAccent="Here is what to do about it."
+              pitch="The free result names your top vulnerability. The full report scores all ten, explains the mechanism behind each one, and gives you a counter-move for the two that are actually driving your results."
+              inclusions={[
+                {
+                  title: "All ten vulnerabilities, scored and explained",
+                  body: "Each one gets its own writing at your score level, plus the mechanism behind it and one concrete counter-move. Two people in the same tier get different reports, because the writing is keyed to the dimension rather than the band.",
+                },
+                {
+                  title: "Your data as charts",
+                  body: "A risk gauge, a radar of your profile shape and ranked intensity bars — so you can see whether this is one spike carrying everything or a pattern spread across your whole style.",
+                },
+                {
+                  title: "Scripts and a 14-day plan",
+                  body: "Four word-for-word scripts for the situations this pattern produces, and four dated steps. Every step is a change to what you do, not a conversation you have to win.",
+                },
+              ]}
             />
             
             <div className="mt-6 text-center text-sm font-bold text-slate-500 flex items-center justify-center gap-2">

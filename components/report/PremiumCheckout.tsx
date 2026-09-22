@@ -7,9 +7,22 @@ import {
   ArrowRight, CheckCircle2, Lock, FlaskConical, Quote, Tag,
 } from "lucide-react";
 
+/**
+ * The promotion code advertised above the offer, or null for no banner.
+ * A 15%-off coupon exists in the live account (`gvHAwfM6`); it has no
+ * promotion code attached yet, so there is nothing for a buyer to type.
+ * Create one named RESULTS15 in Stripe, then set this to "RESULTS15".
+ */
+const PROMO_CODE: string | null = null;
+
 interface Testimonial {
   quote: string;
   name: string; // first name + initial only
+}
+
+export interface Inclusion {
+  title: string;
+  body: string;
 }
 
 interface PremiumCheckoutProps {
@@ -17,6 +30,19 @@ interface PremiumCheckoutProps {
   isGenerating?: boolean;
   archetype: string;
   relationshipStatus: string;
+  /**
+   * What THIS quiz's report actually contains, in the buyer's order of
+   * interest. Required on purpose: the list used to be hard-coded to the
+   * attachment quiz ("we synthesize your Mother and Father scores") and
+   * was rendered verbatim on quizzes that never ask about parents.
+   * Anything listed here must exist in the report the buyer lands on.
+   */
+  inclusions: Inclusion[];
+  /** One sentence: what the paid report adds over the free result. */
+  pitch: string;
+  /** Headline. Defaults to something true of every report. */
+  headline?: string;
+  headlineAccent?: string;
   /** Where to land after paying, e.g. "/is-he-cheating/premium". */
   premiumPath?: string;
   /** Prefills Stripe Checkout with the email the quiz captured. */
@@ -69,16 +95,27 @@ export default function PremiumCheckout({
   relationshipStatus,
   premiumPath,
   email,
+  inclusions,
+  pitch,
+  headline = "You've seen the summary.",
+  headlineAccent = "Here is the whole picture.",
   testimonials = [],
 }: PremiumCheckoutProps) {
   return (
     <div id="unlock-offer" className="relative w-full max-w-6xl mx-auto bg-white border border-[#d6d2d2] rounded-2xl shadow-md mt-12 overflow-hidden scroll-mt-8">
 
-      {/* HONEST URGENCY: a real first-purchase discount scoped to this page —
-          no fake countdowns, no fabricated server scarcity. */}
-      <div className="bg-[#F5DD90] text-[#3A556C] text-center py-3 px-4 flex items-center justify-center gap-2 font-bold text-sm tracking-wide">
-        <Tag className="w-5 h-5" /> New-reader offer: code <span className="bg-[#3A556C] text-[#F5DD90] px-2 py-0.5 rounded font-extrabold tracking-wider">RESULTS15</span> takes 15% off — valid on your first unlock
-      </div>
+      {/* HONEST URGENCY: a real first-purchase discount scoped to this page.
+          Do NOT set this to a string until a promotion code with exactly
+          that name exists in the live Stripe account — advertising a code
+          Stripe rejects is the worst possible moment to break trust.
+          See docs/STRIPE.md § Promotion code. */}
+      {PROMO_CODE && (
+        <div className="bg-[#F5DD90] text-[#3A556C] text-center py-3 px-4 flex items-center justify-center gap-2 font-bold text-sm tracking-wide">
+          <Tag className="w-5 h-5" /> New-reader offer: code{" "}
+          <span className="bg-[#3A556C] text-[#F5DD90] px-2 py-0.5 rounded font-extrabold tracking-wider">{PROMO_CODE}</span>{" "}
+          takes 15% off — valid on your first unlock
+        </div>
+      )}
 
       <div className="p-6 md:p-12 border-b border-[#d6d2d2] bg-white">
         <JourneyProgress />
@@ -87,57 +124,35 @@ export default function PremiumCheckout({
             The {archetype} Blueprint
           </span>
           <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight text-[#3A556C]">
-            We Found The Missing Link. <span className="text-[#5A7492]">Now Fix It.</span>
+            {headline} <span className="text-[#5A7492]">{headlineAccent}</span>
           </h2>
-          <p className="text-lg md:text-xl font-medium leading-relaxed text-[#3A556C]/80">
-            The free data shows <i>what</i> you are. The Master Audit connects your childhood data
-            to your current life to show you exactly <i>why</i> you self-sabotage, and gives you a
-            detailed {relationshipStatus.toLowerCase()} action plan to rewire it.
-          </p>
-          {/* LOSS AVERSION — true per our data policy */}
-          <p className="mt-4 text-sm font-bold text-[#E07850]">
-            Don&apos;t leave without your blind spots: your answers are deleted after 24 hours and
-            this analysis can&apos;t be rebuilt from scratch.
-          </p>
+          <p className="text-lg md:text-xl font-medium leading-relaxed text-[#3A556C]/80">{pitch}</p>
         </div>
       </div>
 
       <div className="p-6 md:p-12 grid grid-cols-1 lg:grid-cols-5 gap-8 bg-[#F7F4ED]/60">
         <div className="lg:col-span-3 space-y-4">
-          <h3 className="text-2xl font-black mb-6 text-[#3A556C]">The Clarity Bundle Stack:</h3>
+          <h3 className="text-2xl font-black mb-6 text-[#3A556C]">What is in your full report:</h3>
 
-          {[
-            {
-              icon: <BrainCircuit className="w-6 h-6" />, color: "text-[#f686bd]",
-              title: "1. The Origin Deconstruction",
-              body: "We synthesize your Mother and Father scores to reveal the exact childhood loops currently running your adult nervous system.",
-            },
-            {
-              icon: <HeartHandshake className="w-6 h-6" />, color: "text-[#5A7492]",
-              title: "2. Boyfriend & Partner Analysis",
-              body: "See the exact type of toxic behaviors you naturally attract, and how your current/past partners manipulate your triggers.",
-            },
-          ].map((item) => (
-            <div key={item.title} className="flex gap-5 p-6 rounded-xl bg-white border border-[#d6d2d2] shadow-sm">
-              <div className={`shrink-0 flex items-center justify-center w-12 h-12 rounded bg-[#F7F4ED] ${item.color}`}>{item.icon}</div>
+          {inclusions.map((item, i) => (
+            <div
+              key={item.title}
+              className={`flex gap-5 p-6 rounded-xl bg-white shadow-sm ${
+                i === 0 ? "border-2 border-[#EC8A66] shadow-md" : "border border-[#d6d2d2]"
+              }`}
+            >
+              <div className={`shrink-0 flex items-center justify-center w-12 h-12 rounded ${i === 0 ? "bg-[#EC8A66]/15 text-[#E07850]" : "bg-[#F7F4ED] text-[#5A7492]"}`}>
+                {i === 0 ? <Zap className="w-6 h-6 fill-current" /> : i === 1 ? <BrainCircuit className="w-6 h-6" /> : <HeartHandshake className="w-6 h-6" />}
+              </div>
               <div>
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2">
                   <h4 className="text-lg font-black text-[#3A556C]">{item.title}</h4>
-                  <span className="text-xs font-black uppercase tracking-widest text-[#E07850] bg-[#EC8A66]/10 px-2.5 py-1 rounded">Included</span>
+                  <span className="text-xs font-black uppercase tracking-widest text-[#E07850] bg-[#EC8A66]/10 px-2.5 py-1 rounded shrink-0">Included</span>
                 </div>
                 <p className="text-base font-medium text-[#3A556C]/80">{item.body}</p>
               </div>
             </div>
           ))}
-
-          <div className="flex gap-5 p-6 rounded-xl bg-white border-2 border-[#EC8A66] shadow-md relative overflow-hidden">
-            <div className="absolute top-0 right-0 bg-[#EC8A66] text-white text-[10px] font-black px-3 py-1 uppercase tracking-widest rounded-bl">Core Offer</div>
-            <div className="shrink-0 flex items-center justify-center w-12 h-12 rounded bg-[#EC8A66]/15 text-[#E07850]"><Zap className="w-6 h-6 fill-current" /></div>
-            <div>
-              <h4 className="text-lg font-black text-[#3A556C] mb-2">3. His Playbook &amp; Master Action Plan</h4>
-              <p className="text-base font-bold text-[#3A556C]/90">A ruthless guide exposing his manipulation tactics, the exact threat he poses, and the scripts to stop him today.</p>
-            </div>
-          </div>
 
           {/* SOCIAL PROOF — renders only when real quotes are supplied */}
           {testimonials.length > 0 && (
@@ -158,8 +173,9 @@ export default function PremiumCheckout({
             {/* ANCHORING — a real, defensible comparison, not a fabricated strike-price */}
             <div className="mb-8 mt-2">
               <p className="text-[13px] font-semibold text-[#5E7183] leading-snug">
-                A therapist covering the same ground:{" "}
-                <span className="whitespace-nowrap font-bold text-[#5E7183]/80 line-through decoration-[1.5px]">€1,200+ over 6 months</span>
+                For context, private therapy runs{" "}
+                <span className="whitespace-nowrap font-bold text-[#5E7183]/80">€60–120 an hour</span>.
+                This is a report, not therapy — it is a starting point, not a substitute.
               </p>
               <p className="mt-6 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#E07850]">Today, one-time</p>
               <p className="text-[56px] leading-none font-extrabold text-[#3A556C] tabular-nums mt-1">€9.99</p>
@@ -180,9 +196,9 @@ export default function PremiumCheckout({
             <div className="grid grid-cols-2 gap-2 mt-7 text-left">
               {[
                 { icon: FlaskConical, text: "Research-informed" },
-                { icon: Lock, text: "Gumroad checkout" },
+                { icon: Lock, text: "Stripe checkout" },
                 { icon: ShieldCheck, text: "7-day refund" },
-                { icon: CheckCircle2, text: "Answers auto-deleted" },
+                { icon: CheckCircle2, text: "No subscription" },
               ].map(({ icon: Icon, text }) => (
                 <div key={text} className="flex items-center gap-2 min-w-0 bg-[#F7F4ED] border border-[#3A556C]/10 rounded-lg px-3 py-2.5">
                   <Icon className="w-4 h-4 text-[#E07850] shrink-0" />
@@ -197,7 +213,8 @@ export default function PremiumCheckout({
       <div className="p-6 md:p-8 border-t border-[#d6d2d2] bg-white flex flex-col sm:flex-row items-center gap-4 justify-center">
         <ShieldCheck className="w-8 h-8 text-[#5A7492]" />
         <p className="text-sm md:text-base font-bold text-[#3A556C]/80">
-          7-Day &ldquo;Diary Reader&rdquo; Guarantee. Not accurate? Full refund. No questions asked.
+          7-day guarantee. If the report does not describe your situation, email
+          us within 7 days for a full refund — no questions asked.
         </p>
       </div>
     </div>

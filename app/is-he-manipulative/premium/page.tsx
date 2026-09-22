@@ -6,6 +6,8 @@ import OfferLadder from "@/components/offers/OfferLadder";
 import CoachingUpsell from "@/components/offers/CoachingUpsell";
 import { scoreToSeverity } from "@/lib/offers/catalog";
 import PremiumGate from "@/components/report/PremiumGate";
+import ScriptsAndPlan from "@/components/report/premium/ScriptsAndPlan";
+import { scriptsFor, planFor } from "../_lib/scriptsPlan";
 
 export default function ManipulationPremiumPage() {
   const router = useRouter();
@@ -29,11 +31,22 @@ export default function ManipulationPremiumPage() {
     <PremiumGate returnTo="/is-he-manipulative/premium">
       <>
         <ManipulationMasterReport data={data} />
+        {/* The checkout page promises "the scripts to stop him today" and an
+            action plan. This report had neither until now. Both are keyed to
+            the dominant pattern — a counter-move for gaslighting is the wrong
+            move for isolation. */}
+        <ScriptsAndPlan
+          accent="#4F46E5"
+          scripts={scriptsFor(data?.dominantPattern)}
+          plan={planFor(data?.dominantPattern)}
+          scriptsNo="03"
+          planNo="04"
+        />
         <OfferLadder
           topic="manipulation"
           score={score}
           heading="Your Next Move, Three Ways"
-          subheading="Pick the level of support that matches how serious your results are. One-time payments, instant access via Gumroad."
+          subheading="Pick the level of support that matches how serious your results are. One-time payment, no subscription."
         />
         <CoachingUpsell
           severity={scoreToSeverity(score)}
