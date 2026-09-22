@@ -75,6 +75,16 @@ Their buttons render as "Coming soon" instead of taking money for
 something that cannot be delivered. Create the PDF, add a Stripe
 product, then add its `sku` and price ID to `lib/stripe/products.ts`.
 
+Four premium reports used to bypass that rule with hard-coded Gumroad
+links (`caught-or-paranoid`, `clean-break-or-comeback`,
+`cheating-truth-bundle`, `sabotage-bundle`, `attachment-workbook`,
+`trauma-playbook`, `gaslighting-bundle`, `decode-his-attachment`,
+`reach-him-playbook`, `attachment-truth-bundle`). Those storefront pages
+do not exist, so buyers landed on a dead link after paying for the
+report. The links are gone; the cards now read "In production". The
+gaslighting report also advertised **€12.99** for the report and a
+**€15.99** bundle — neither is a price this account charges.
+
 ## How the money path works
 
 1. `CheckoutButton` posts **only a SKU** to `/api/checkout`.
@@ -157,3 +167,43 @@ alternative.
 card, Link, Klarna, Bancontact, EPS, MB WAY, Amazon Pay, Satispay,
 Revolut Pay, BLIK, PIX, Samsung/Kakao/Naver Pay. Adaptive Pricing is on,
 so non-euro buyers see their own currency.
+
+---
+
+## Premium reports (2026-09-22)
+
+Every one of the 15 quizzes now has a `/<quiz>/premium` route. They all
+render the same component, `components/report/premium/PremiumDossier.tsx`,
+from a per-quiz content file that satisfies the contract in
+`lib/report/dossier.ts`.
+
+### The contract exists to stop the reports going generic
+
+The old reports repeated themselves because the writing was keyed to the
+score band: everyone in "high risk" read the same three paragraphs. The
+`Dossier` type cannot be satisfied without a distinct `mechanism`, three
+score tiers and a counter-move for **every** subscale the quiz measures,
+so two people in the same band get different reports. When adding a
+quiz, fill the content file — do not widen the type.
+
+### The post-checkout return trip
+
+A buyer leaves for Stripe and comes back to a fresh React tree. Anything
+held only in component state is gone by then, which is how someone could
+pay and land back on question one. Every quiz therefore writes its result
+through `lib/quizResults.ts` before any checkout button is shown, and
+rehydrates from it on mount. `CheckoutButton` returns to
+`/<quiz>/premium`, not to the quiz root.
+
+**This store holds results, never entitlement.** Access is decided by the
+server-signed httpOnly cookie via `/api/access`. Editing localStorage
+unlocks nothing.
+
+### Charts
+
+`RiskGauge`, `SubscaleRadar` and `SignalFrequency` in
+`components/report/charts/`. Two quizzes score a long tail of
+one-question subscales; `lib/report/composites.ts` averages those into
+dimensions with enough items to be worth charting. Do not put a
+single-item subscale on a chart — a precise-looking number built from one
+answer is worse than no number.

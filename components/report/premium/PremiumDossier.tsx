@@ -89,9 +89,16 @@ function Assembling({ accent, steps }: { accent: string; steps: string[] }) {
 
 /** One measured dimension, expandable. Collapsed by default — the reader
  *  scans the bars first, then opens the two or three that stung. */
+const FALLBACK_INSIGHT = {
+  mechanism: "",
+  high: "", mid: "", low: "",
+  move: "",
+};
+
 function SubscaleCard({
-  d, insight, accent, defaultOpen,
+  d, insight: maybeInsight, accent, defaultOpen,
 }: { d: any; insight: any; accent: string; defaultOpen: boolean }) {
+  const insight = maybeInsight ?? FALLBACK_INSIGHT;
   const [open, setOpen] = useState(defaultOpen);
   const tier = tierOf(d.value);
   const tierStyle =
@@ -130,17 +137,23 @@ function SubscaleCard({
       {open && (
         <div className="px-5 md:px-6 pb-6 -mt-1 space-y-4 animate-in fade-in slide-in-from-top-1 duration-300">
           <div className="h-px bg-slate-100" />
-          <p className="text-slate-700 leading-relaxed font-medium">{insightFor(insight, d.value)}</p>
-          <div className="rounded-2xl bg-slate-50 border border-slate-200/70 p-4">
-            <p className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 mb-1.5">Why it works this way</p>
-            <p className="text-slate-600 text-sm leading-relaxed font-medium">{insight.mechanism}</p>
-          </div>
-          <div className="rounded-2xl p-4 border" style={{ backgroundColor: `${accent}0d`, borderColor: `${accent}33` }}>
-            <p className="text-[10px] font-black uppercase tracking-[0.15em] mb-1.5" style={{ color: accent }}>
-              Your counter-move
-            </p>
-            <p className="text-slate-800 text-sm leading-relaxed font-semibold">{insight.move}</p>
-          </div>
+          {insightFor(insight, d.value) && (
+            <p className="text-slate-700 leading-relaxed font-medium">{insightFor(insight, d.value)}</p>
+          )}
+          {insight.mechanism && (
+            <div className="rounded-2xl bg-slate-50 border border-slate-200/70 p-4">
+              <p className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 mb-1.5">Why it works this way</p>
+              <p className="text-slate-600 text-sm leading-relaxed font-medium">{insight.mechanism}</p>
+            </div>
+          )}
+          {insight.move && (
+            <div className="rounded-2xl p-4 border" style={{ backgroundColor: `${accent}0d`, borderColor: `${accent}33` }}>
+              <p className="text-[10px] font-black uppercase tracking-[0.15em] mb-1.5" style={{ color: accent }}>
+                Your counter-move
+              </p>
+              <p className="text-slate-800 text-sm leading-relaxed font-semibold">{insight.move}</p>
+            </div>
+          )}
         </div>
       )}
     </Card>
@@ -173,6 +186,18 @@ export default function PremiumDossier({
   if (!ready) return <Assembling accent={accent} steps={steps} />;
 
   const ranked = [...subscales].sort((a, b) => b.value - a.value);
+  if (!ranked.length) {
+    // No usable dimensions — show the verdict rather than crashing the
+    // page someone has paid for.
+    return (
+      <div className="bg-[#FAFAF7] min-h-screen px-6 py-20">
+        <div className="max-w-2xl mx-auto text-center">
+          <h1 className="text-3xl font-black text-slate-900 mb-4">{dossier.title}</h1>
+          <p className="text-slate-700 leading-relaxed font-medium">{band.verdict}</p>
+        </div>
+      </div>
+    );
+  }
   const top = ranked[0];
   const lowest = ranked[ranked.length - 1];
   const spread = top.value - lowest.value;
