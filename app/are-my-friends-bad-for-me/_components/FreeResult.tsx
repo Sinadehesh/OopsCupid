@@ -5,6 +5,7 @@ import { buildFriendsBadDossier } from "../_lib/dossier";
 import { Lock, Download, Share2, ArrowRight, ShieldCheck } from "lucide-react";
 import { usePremiumAccess } from "@/lib/usePremiumAccess";
 import CheckoutButton from "@/components/offers/CheckoutButton";
+import ResultShare from "@/components/share/ResultShare";
 
 export default function FreeResult({ data }: { data: any }) {
   const { granted } = usePremiumAccess();
@@ -26,6 +27,18 @@ export default function FreeResult({ data }: { data: any }) {
 
   return (
     <div className="max-w-3xl mx-auto py-12 px-6 animate-in fade-in duration-700">
+    {/* Free distribution: the /api/og card previews the verdict,
+        so a posted link advertises the quiz by itself. */}
+    <div className="flex justify-center mb-6">
+      <ResultShare
+        quiz="Are My Friends Bad For Me?"
+        quizPath="/are-my-friends-bad-for-me"
+        title={data.tier}
+        score={Math.round(((data.totalScore - 55) / 220) * 100)}
+        scoreLabel="Circle Cost Index"
+      />
+    </div>
+
       
       <div className="flex justify-end gap-3 mb-6">
         <button onClick={handleShare} className="flex items-center gap-2 bg-slate-100 text-slate-700 px-4 py-2 rounded-lg font-bold text-sm hover:bg-slate-200 transition-colors">

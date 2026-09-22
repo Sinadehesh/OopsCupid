@@ -2,12 +2,25 @@
 import React from "react";
 import { Lock, Database, EyeOff, UserX, FlaskConical, ShieldCheck, ArrowRight, AlertOctagon } from "lucide-react";
 import PremiumCheckout from "@/components/report/PremiumCheckout";
+import ResultShare from "@/components/share/ResultShare";
 
 export default function FreeResult({ data, onUnlock, isGenerating }: { data: any, onUnlock: any, isGenerating: boolean }) {
   const topTrait = data?.top1 || "The Hyper-Empathetic Rescuer";
 
   return (
     <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-[#f8fafc] py-12 md:py-20 border-t border-slate-200">
+    {/* Free distribution: the /api/og card previews the verdict,
+        so a posted link advertises the quiz by itself. */}
+    <div className="flex justify-center mb-6">
+      <ResultShare
+        quiz="Why Do I Attract Toxic People?"
+        quizPath="/why-do-i-attract-toxic-people"
+        title={data.tier}
+        score={Math.round(((data.totalScore - 50) / 200) * 100)}
+        scoreLabel="Pattern Index"
+      />
+    </div>
+
       <div className="max-w-4xl mx-auto px-6 animate-in fade-in slide-in-from-bottom-8 duration-1000">
         
         <div className="text-center mb-12">

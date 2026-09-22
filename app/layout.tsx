@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SessionProvider from "@/components/SessionProvider";
+import { Analytics } from "@vercel/analytics/next";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -81,6 +82,10 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
         </SessionProvider>
+        {/* Web Analytics. The site ran for five months with no measurement
+            of any kind — traffic, funnel drop-off and conversion were all
+            unknowable. Everything in lib/track.ts reports through this. */}
+        <Analytics />
       </body>
     </html>
   );

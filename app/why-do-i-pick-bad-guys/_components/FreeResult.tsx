@@ -2,24 +2,14 @@
 import React, { useState } from "react";
 import PremiumDossier from "@/components/report/premium/PremiumDossier";
 import { buildBadGuysDossier } from "../_lib/dossier";
-import { Target, Lock, Download, Share2, ArrowRight } from "lucide-react";
+import { Target, Lock, ArrowRight } from "lucide-react";
 import { usePremiumAccess } from "@/lib/usePremiumAccess";
 import CheckoutButton from "@/components/offers/CheckoutButton";
+import ResultShare from "@/components/share/ResultShare";
 
 export default function FreeResult({ data }: { data: any }) {
   const { granted } = usePremiumAccess();
 
-  const handleShare = async () => {
-    const text = `I just took the 'Why Do I Pick Bad Guys?' diagnostic. My dominant vulnerability is ${data.top1} (${data.tier}). Take the test here:`;
-    const url = "https://oopscupid.com/why-do-i-pick-bad-guys";
-    if (navigator.share) {
-      try { await navigator.share({ title: "My Dating Blindspots", text, url }); } 
-      catch (err) { console.log(err); }
-    } else {
-      navigator.clipboard.writeText(`${text} ${url}`);
-      alert("Link copied to clipboard!");
-    }
-  };
 
   // Already paid? Show the full dossier here rather than making them
   // navigate — same content as /why-do-i-pick-bad-guys/premium.
@@ -28,14 +18,16 @@ export default function FreeResult({ data }: { data: any }) {
   return (
     <div className="max-w-3xl mx-auto py-12 px-6 animate-in fade-in duration-700">
       
-      {/* Action Bar */}
-      <div className="flex justify-end gap-3 mb-6">
-        <button onClick={handleShare} className="flex items-center gap-2 bg-slate-100 text-slate-700 px-4 py-2 rounded-lg font-bold text-sm hover:bg-slate-200 transition-colors">
-          <Share2 className="w-4 h-4" /> Share
-        </button>
-        <button onClick={() => window.print()} className="flex items-center gap-2 bg-slate-100 text-slate-700 px-4 py-2 rounded-lg font-bold text-sm hover:bg-slate-200 transition-colors">
-          <Download className="w-4 h-4" /> Save PDF
-        </button>
+      {/* Share is the only free distribution this site has: the card at
+          /api/og previews the archetype, so a posted link is an ad. */}
+      <div className="flex justify-center md:justify-end mb-6">
+        <ResultShare
+          quiz="Why Do I Pick Bad Guys?"
+          quizPath="/why-do-i-pick-bad-guys"
+          title={data.tier}
+          score={Math.round(((data.totalScore - 50) / 200) * 100)}
+          scoreLabel="Pattern Index"
+        />
       </div>
 
       <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-2xl border-t-8 border-rose-500 text-center relative overflow-hidden mb-12">

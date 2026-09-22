@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { ArrowRight, Loader2 } from "lucide-react";
 import type { Sku } from "@/lib/stripe/products";
+import { trackCheckoutClick } from "@/lib/track";
 
 /**
  * The single entry point to payment across the whole site.
@@ -38,6 +39,13 @@ export default function CheckoutButton({
   const [error, setError] = useState<string | null>(null);
 
   const start = async () => {
+    // Fired before the network call so an abandoned checkout still shows
+    // intent in the funnel — the gap between this and `purchase` is the
+    // Stripe drop-off rate.
+    trackCheckoutClick(
+      typeof window !== "undefined" ? window.location.pathname : "unknown",
+      sku
+    );
     setLoading(true);
     setError(null);
     try {

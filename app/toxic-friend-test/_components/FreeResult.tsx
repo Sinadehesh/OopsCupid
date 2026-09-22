@@ -5,11 +5,13 @@ import { buildToxicFriendDossier } from "../_lib/dossier";
 import { MessageSquare, ShieldCheck } from "lucide-react";
 import { usePremiumAccess } from "@/lib/usePremiumAccess";
 import CheckoutButton from "@/components/offers/CheckoutButton";
+import ResultShare from "@/components/share/ResultShare";
 
 // Reusable Bar Component for the Dimensions
 function DimensionBar({ label, score, color }: { label: string, score: number, color: string }) {
   return (
     <div>
+
       <div className="flex justify-between items-end mb-2">
         <span className="font-extrabold text-[#0D2C54] text-sm md:text-base">{label}</span>
         <span className="font-bold text-slate-500 text-sm">{score}%</span>
@@ -52,7 +54,19 @@ export default function FreeResult({ data, rawAnswers }: { data: any, rawAnswers
 
   return (
     <div className="w-full max-w-3xl mx-auto space-y-8 animate-in fade-in duration-700">
-      
+
+      {/* Free distribution: the /api/og card previews the verdict, so a
+          posted link advertises the quiz by itself. */}
+      <div className="flex justify-center">
+        <ResultShare
+          quiz="Toxic Friend Test"
+          quizPath="/toxic-friend-test"
+          title={data.archetype}
+          score={Math.round(data.riskScore ?? 0)}
+          scoreLabel="Toxicity Index"
+        />
+      </div>
+
       {/* Overview Card */}
       <div className="bg-white rounded-[24px] shadow-[0_12px_40px_rgba(13,44,84,0.06)] border border-[#0D2C54]/10 p-8 md:p-12 flex flex-col md:flex-row items-center gap-8">
         <div className="relative flex items-center justify-center w-32 h-32 shrink-0">

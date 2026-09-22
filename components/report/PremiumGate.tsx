@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Lock, Loader2 } from "lucide-react";
 import CheckoutButton from "@/components/offers/CheckoutButton";
+import { trackPaywallView } from "@/lib/track";
 
 type Status = "checking" | "granted" | "denied";
 
@@ -30,6 +31,18 @@ export default function PremiumGate({
   blurb?: string;
 }) {
   const [status, setStatus] = useState<Status>("checking");
+
+  // Fire once, when the paywall is actually shown. Comparing this against
+  // checkout_click is what separates "nobody wants it" from "the price is
+  // wrong" — without it both look identical.
+  useEffect(() => {
+    if (status === "denied") {
+      trackPaywallView(
+        typeof window !== "undefined" ? window.location.pathname : "unknown",
+        "gate"
+      );
+    }
+  }, [status]);
 
   useEffect(() => {
     let cancelled = false;

@@ -4,6 +4,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CheckCircle2, Loader2, AlertTriangle, CalendarClock, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { trackPurchase } from "@/lib/track";
 
 /**
  * Where Stripe sends the buyer after a successful payment.
@@ -34,6 +35,9 @@ function UnlockedInner() {
         });
         const data = await res.json().catch(() => ({}));
         if (res.ok && data?.paid) {
+          // The only event that represents money. Fired here rather than
+          // on the button so it counts verified payments, not intents.
+          trackPurchase(data.sku ?? "unknown");
           setSku(data.sku ?? null);
           setState("ok");
           // Local hint for instant UI; the httpOnly cookie is what the
