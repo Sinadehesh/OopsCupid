@@ -22,7 +22,7 @@ export default function QuizPage() {
                 &larr; Back to Attraction Patterns Hub
             </Link>
         </div>
-        <QuizWidget quizName="What Kind of Person Do I Attract?" />
+        <QuizWidget quizName="what-kind-of-person-do-i-attract" />
       </div>
     <QuizSeoFooter slug="/what-kind-of-person-do-i-attract" />
     </>

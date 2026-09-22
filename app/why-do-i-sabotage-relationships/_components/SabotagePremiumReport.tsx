@@ -203,9 +203,9 @@ function BellCurve({ pct }: { pct: number }) {
 interface PlaybookCardProps {
   title: string; subtitle: string; price: number; strikePrice: number;
   badge: string; bullets: string[]; cta: string; highlight?: boolean;
-  gumroadUrl: string; icon: React.ReactNode;
+  icon: React.ReactNode;
 }
-function PlaybookCard({ title, subtitle, price, strikePrice, badge, bullets, cta, highlight, gumroadUrl, icon }: PlaybookCardProps) {
+function PlaybookCard({ title, subtitle, price, strikePrice, badge, bullets, cta, highlight, icon }: PlaybookCardProps) {
   return (
     <div className={`relative rounded-3xl p-8 md:p-10 border-2 flex flex-col gap-6 shadow-lg transition-transform hover:-translate-y-1
       ${highlight ? "border-[#f0c808] bg-white" : "border-[#d6d2d2] bg-[#fffdf5]"}`}>
@@ -229,15 +229,14 @@ function PlaybookCard({ title, subtitle, price, strikePrice, badge, bullets, cta
           </li>
         ))}
       </ul>
-      <div className="flex items-end gap-3 mt-auto">
-        <span className="text-4xl font-black text-[#086788]">€{price.toFixed(2)}</span>
-        <span className="text-sm font-bold text-[#086788]/30 line-through mb-1">€{strikePrice.toFixed(2)}</span>
+      <div className="mt-auto">
+        <div className="w-full py-4 rounded-xl font-black text-lg text-center flex items-center justify-center gap-2 bg-[#086788]/5 text-[#086788]/50 border border-[#086788]/10">
+          In production <ArrowRight className="w-5 h-5" />
+        </div>
+        <p className="text-center text-xs font-bold text-[#086788]/40 mt-3">
+          Not on sale yet — we will not charge for something we cannot send you today.
+        </p>
       </div>
-      <a href={gumroadUrl} target="_blank" rel="noopener noreferrer"
-        className={`w-full py-4 rounded-xl font-black text-lg text-center flex items-center justify-center gap-2 transition-all shadow
-          ${highlight ? "bg-[#f0c808] text-[#086788] hover:bg-[#e0b800]" : "bg-[#086788] text-white hover:bg-[#06aed5]"}`}>
-        {cta} <ArrowRight className="w-5 h-5" />
-      </a>
     </div>
   );
 }
@@ -272,19 +271,12 @@ function BundleBanner() {
               </li>
             ))}
           </ul>
-          <div className="flex items-end gap-4">
-            <span className="text-5xl font-black text-[#086788]">€15.99</span>
-            <div className="flex flex-col mb-1">
-              <span className="text-sm font-bold text-[#086788]/30 line-through">€19.98</span>
-              <span className="text-xs font-black text-[#dd1c1a] uppercase tracking-widest">You save €3.99</span>
-            </div>
+          <div className="w-full py-5 bg-[#086788]/5 text-[#086788]/50 border border-[#086788]/10 rounded-xl font-black text-xl flex items-center justify-center gap-3">
+            In production <Zap className="w-6 h-6" />
           </div>
-          <a href="https://sinadehesh.gumroad.com/l/sabotage-bundle" target="_blank" rel="noopener noreferrer"
-            className="w-full py-5 bg-[#dd1c1a] text-white rounded-xl font-black text-xl flex items-center justify-center gap-3 hover:bg-[#b10f2e] transition-all shadow-lg">
-            Get The Bundle Now <Zap className="w-6 h-6" />
-          </a>
-          <p className="text-center text-xs font-bold text-[#086788]/30 uppercase tracking-widest">
-            Instant PDF delivery · No subscription · Secure checkout via Gumroad
+          <p className="text-center text-xs font-bold text-[#086788]/40">
+            Both workbooks are written and not yet produced. Nothing here is for
+            sale until we can deliver it the moment you pay.
           </p>
         </div>
       )}
@@ -635,7 +627,6 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
               title="Attachment Style Workbook" subtitle="Rewire your bonding patterns from the root"
               price={9.99} strikePrice={19.99} badge="Workbook" highlight={false}
               icon={<BookOpen className="w-6 h-6" />}
-              gumroadUrl="https://sinadehesh.gumroad.com/l/attachment-workbook"
               cta="Get This Workbook"
               bullets={[
                 "50+ pages of guided exercises",
@@ -649,7 +640,6 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
               title="Trauma Style Playbook" subtitle="Understand your trauma response in relationships"
               price={9.99} strikePrice={19.99} badge="Playbook" highlight={true}
               icon={<Brain className="w-6 h-6" />}
-              gumroadUrl="https://sinadehesh.gumroad.com/l/trauma-playbook"
               cta="Get This Playbook"
               bullets={[
                 "40+ pages of trauma-informed exercises",
@@ -666,18 +656,6 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
         <BundleBanner />
 
         
-
-        {/* ── URGENCY STRIP ── */}
-        <div className="bg-[#dd1c1a] rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 shadow-lg">
-          <div className="flex items-center gap-3">
-            <Clock className="w-6 h-6 text-white shrink-0 animate-pulse" />
-            <p className="font-black text-white text-lg">Introductory pricing — once it’s gone, it’s gone.</p>
-          </div>
-          <a href="https://sinadehesh.gumroad.com/l/sabotage-bundle" target="_blank" rel="noopener noreferrer"
-            className="shrink-0 px-8 py-3 bg-white text-[#dd1c1a] rounded-xl font-black text-lg hover:bg-[#fff1d0] transition-all">
-            Lock In €15.99 Now
-          </a>
-        </div>
 
         {/* COACHING UPSELL — highest rung of the ladder */}
         <CoachingUpsell severity="moderate" topicLabel="your sabotage pattern" />
@@ -700,7 +678,7 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
         {/* FOOTER */}
         <div className="flex items-center gap-3 justify-center pb-4 opacity-40">
           <p className="text-xs font-black uppercase tracking-widest text-[#086788]">
-            Instant PDF delivery · No subscription · Secure checkout via Gumroad
+            Secure checkout by Stripe · 7-day money-back guarantee
           </p>
         </div>
 

@@ -214,9 +214,10 @@ function ScoreRing({ score, accent }: { score: number; accent: string }) {
 }
 
 // ── PLAYBOOKS ─────────────────────────────────────────────────────────────
-const PLAYBOOK_EVIDENCE_URL = "https://oopscupid.gumroad.com/l/caught-or-paranoid";
-const PLAYBOOK_REBUILD_URL  = "https://oopscupid.gumroad.com/l/clean-break-or-comeback";
-const PLAYBOOK_BUNDLE_URL   = "https://oopscupid.gumroad.com/l/cheating-truth-bundle";
+// The two playbooks are written but not yet produced as PDFs, so there is
+// nothing to deliver. Rather than link to a dead storefront, these render
+// as "in production" — the same policy lib/offers/catalog.ts applies to
+// every SKU without a Stripe price.
 
 function PlaybooksUpsell({ accent }: { accent: string }) {
   const [hovered, setHovered] = useState<"evidence" | "rebuild" | null>(null);
@@ -275,15 +276,13 @@ function PlaybooksUpsell({ accent }: { accent: string }) {
               ))}
             </div>
 
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="text-3xl font-black text-slate-900">$9.99</span>
-                <span className="text-slate-400 text-sm ml-2">one-time</span>
-              </div>
-              <a href={PLAYBOOK_EVIDENCE_URL} target="_blank" rel="noopener noreferrer"
-                className="bg-rose-600 hover:bg-rose-500 text-white font-black text-sm px-7 py-3.5 rounded-2xl shadow-md hover:-translate-y-0.5 transition-all flex items-center gap-2">
-                <Zap className="w-4 h-4" /> Get This Playbook
-              </a>
+            <div className="flex items-center justify-between gap-4">
+              <p className="text-slate-500 text-xs font-bold leading-snug">
+                Everything above is already covered in the report you are reading.
+              </p>
+              <span className="bg-slate-100 text-slate-500 font-black text-sm px-7 py-3.5 rounded-2xl flex items-center gap-2 shrink-0">
+                <Zap className="w-4 h-4" /> In production
+              </span>
             </div>
           </div>
         </div>
@@ -328,15 +327,13 @@ function PlaybooksUpsell({ accent }: { accent: string }) {
               ))}
             </div>
 
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="text-3xl font-black text-slate-900">$9.99</span>
-                <span className="text-slate-400 text-sm ml-2">one-time</span>
-              </div>
-              <a href={PLAYBOOK_REBUILD_URL} target="_blank" rel="noopener noreferrer"
-                className="bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm px-7 py-3.5 rounded-2xl shadow-md hover:-translate-y-0.5 transition-all flex items-center gap-2">
-                <Zap className="w-4 h-4" /> Get This Playbook
-              </a>
+            <div className="flex items-center justify-between gap-4">
+              <p className="text-slate-500 text-xs font-bold leading-snug">
+                Not on sale yet — we will not charge for something we cannot send you today.
+              </p>
+              <span className="bg-slate-100 text-slate-500 font-black text-sm px-7 py-3.5 rounded-2xl flex items-center gap-2 shrink-0">
+                <Zap className="w-4 h-4" /> In production
+              </span>
             </div>
           </div>
         </div>
@@ -364,15 +361,10 @@ function PlaybooksUpsell({ accent }: { accent: string }) {
                 </div>
               </div>
               <div className="shrink-0 text-center">
-                <div className="mb-1">
-                  <span className="text-white/30 line-through text-lg font-black">$19.98</span>
-                </div>
-                <div className="text-4xl font-black text-white">$15.99</div>
-                <div className="text-emerald-400 text-xs font-black uppercase tracking-wider mb-4">Save $4 — Today Only</div>
-                <a href={PLAYBOOK_BUNDLE_URL} target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-white text-slate-900 font-black text-sm px-8 py-4 rounded-2xl shadow-xl hover:bg-slate-100 hover:-translate-y-0.5 transition-all">
-                  <Star className="w-4 h-4 fill-amber-400 text-amber-400" /> Get Both &mdash; $15.99
-                </a>
+                <div className="text-white/40 text-xs font-black uppercase tracking-wider mb-4">Not yet available</div>
+                <span className="inline-flex items-center gap-2 bg-white/10 text-white/60 font-black text-sm px-8 py-4 rounded-2xl">
+                  <Star className="w-4 h-4 text-white/40" /> In production
+                </span>
               </div>
             </div>
           </div>

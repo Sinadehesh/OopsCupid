@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useRef } from "react";
+import React, { useState, useMemo, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import SharePrintButtons from "@/components/ui/SharePrintButtons";
 import { generatePsychologicalProfile, computeLegacyResult } from "@/lib/psychometrics/classification";
@@ -16,11 +16,12 @@ import { friendUsedQuestions } from "@/lib/psychometrics/friend-used/questions";
 
 import AttractionFreeResult from "@/app/attraction-patterns/_components/AttractionFreeResult";
 import InfidelityFreeResult from "@/app/is-he-cheating/_components/InfidelityFreeResult";
-import AttractionMasterReport from "@/components/report/AttractionMasterReport";
-import AttractorMasterReport from "@/components/report/AttractorMasterReport";
-import PartnerAttachmentReport from "@/components/report/PartnerAttachmentReport";
+import PremiumDossier from "@/components/report/premium/PremiumDossier";
+import { buildAttractionDossier } from "@/lib/report/quizzes/attraction";
+import { buildAttractorDossier } from "@/lib/report/quizzes/attractor";
+import { buildPartnerAttachmentDossier } from "@/lib/report/quizzes/partnerAttachment";
+import { buildFriendUsedDossier } from "@/lib/report/quizzes/friendUsed";
 import FriendRoleMasterReport from "@/components/report/FriendRoleMasterReport";
-import FriendUsedMasterReport from "@/components/report/FriendUsedMasterReport";
 
 import { generateAttractionProfile } from "@/lib/psychometrics/attraction/scoring";
 import { generateAttractorProfile } from "@/lib/psychometrics/attractor/scoring";
@@ -31,6 +32,7 @@ import { generateFriendUsedProfile } from "@/lib/psychometrics/friend-used/scori
 
 import { Lock, Mail, ArrowRight, CheckCircle2 } from "lucide-react";
 import { usePremiumAccess } from "@/lib/usePremiumAccess";
+import { saveQuizResult, loadQuizResult } from "@/lib/quizResults";
 
 /** Maps the infidelity scoring output into the shape InfidelityFreeResult expects */
 function toFreeResultData(profile: ReturnType<typeof generateInfidelityProfile>, email: string) {
@@ -50,6 +52,19 @@ function toFreeResultData(profile: ReturnType<typeof generateInfidelityProfile>,
     },
   };
 }
+
+/**
+ * Quiz slug → localStorage key. A quiz missing from this table simply does
+ * not persist, which is the old behaviour rather than a broken one.
+ */
+const STORAGE_KEYS: Record<string, string> = {
+  "attraction-patterns": "oc_attraction_result",
+  "who-is-attracted-to-me": "oc_attractor_result",
+  "what-kind-of-person-do-i-attract": "oc_attracted_type_result",
+  "partners-attachment-style": "oc_partner_attachment_result",
+  "friend-group-role": "friend_role_result",
+  "are-your-friends-using-you": "oc_friend_used_result",
+};
 
 export default function QuizWidget({ quizName }: { quizName: string }) {
   const router = useRouter();
@@ -73,13 +88,26 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const [slideDirection, setSlideDirection] = useState<"forward" | "backward">("forward");
 
   const topRef = useRef<HTMLDivElement>(null);
+
+  // Where this quiz's result is parked so it survives the Stripe redirect.
+  // The matching /premium route reads the same key.
+  const storageKey = STORAGE_KEYS[quizName];
+
+  useEffect(() => {
+    if (!storageKey) return;
+    const saved = loadQuizResult(storageKey);
+    if (saved) {
+      setResultData(saved);
+      setShowResult(true);
+    }
+  }, [storageKey]);
   const isAttachment = quizName === "attachment-style";
   const isInfidelity = quizName === "is-he-cheating";
   
   const activeQuestions = useMemo(() => {
     if (isAttachment) return attachmentQuestions; 
     if (quizName === "attraction-patterns") return attractionQuestions;
-    if (quizName === "who-is-attracted-to-me") return attractorQuestions;
+    if (quizName === "who-is-attracted-to-me" || quizName === "what-kind-of-person-do-i-attract") return attractorQuestions;
     if (quizName === "partners-attachment-style") return partnerAttachmentQuestions;
     if (quizName === "is-he-cheating") return infidelityQuestions;
     if (quizName === "friend-group-role") return friendRoleQuestions;
@@ -169,7 +197,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         tempResultData = { profile, demographics: { isSingle, gender, hasChildren }, rawAnswers: answers, type: "attachment", email };
       } else if (quizName === "attraction-patterns") {
         tempResultData = { profile: generateAttractionProfile(answers), type: "attraction" };
-      } else if (quizName === "who-is-attracted-to-me") {
+      } else if (quizName === "who-is-attracted-to-me" || quizName === "what-kind-of-person-do-i-attract") {
         tempResultData = { profile: generateAttractorProfile(answers), type: "attractor" };
       } else if (quizName === "partners-attachment-style") {
         tempResultData = { profile: generatePartnerAttachmentProfile(answers), type: "partner" };
@@ -182,6 +210,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       } else {
         tempResultData = { ...computeLegacyResult(answers, quizName), type: "legacy" };
       }
+      if (storageKey && tempResultData) saveQuizResult(storageKey, tempResultData);
       setResultData(tempResultData);
     } catch (err) {
       console.error(err);
@@ -275,7 +304,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       }
       return (
         <div ref={topRef} className="w-full animate-in fade-in">
-          <AttractionMasterReport profile={resultData.profile} />
+          <PremiumDossier dossier={buildAttractionDossier(resultData.profile)} />
         </div>
       );
     }
@@ -294,10 +323,10 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       );
     }
 
-    if (resultData.type === "attractor") return <div ref={topRef} className="w-full animate-in fade-in"><AttractorMasterReport profile={resultData.profile} /></div>;
-    if (resultData.type === "partner") return <div ref={topRef} className="w-full animate-in fade-in"><PartnerAttachmentReport profile={resultData.profile} /></div>;
+    if (resultData.type === "attractor") return <div ref={topRef} className="w-full animate-in fade-in"><PremiumDossier dossier={buildAttractorDossier(resultData.profile)} /></div>;
+    if (resultData.type === "partner") return <div ref={topRef} className="w-full animate-in fade-in"><PremiumDossier dossier={buildPartnerAttachmentDossier(resultData.profile)} /></div>;
     if (resultData.type === "friendrole") return <div ref={topRef} className="w-full animate-in fade-in"><FriendRoleMasterReport profile={resultData.profile} /></div>;
-    if (resultData.type === "friendused") return <div ref={topRef} className="w-full animate-in fade-in"><FriendUsedMasterReport profile={resultData.profile} /></div>;
+    if (resultData.type === "friendused") return <div ref={topRef} className="w-full animate-in fade-in"><PremiumDossier dossier={buildFriendUsedDossier(resultData.profile)} /></div>;
     return <div ref={topRef} className="w-full max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-[#d6d2d2] p-8 md:p-12 text-center"><h3 className="text-3xl font-black text-[#086788] mb-8">{resultData.title || "Result"}</h3><SharePrintButtons /></div>;
   }
 

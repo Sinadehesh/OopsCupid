@@ -26,6 +26,11 @@ export const QUIZ_KEYS = {
   toxicAttraction: "toxic_attraction_result",
   friendRole: "friend_role_result",
   attachment: "oc_saved_profile",
+  attraction: "oc_attraction_result",
+  attractor: "oc_attractor_result",
+  attractedType: "oc_attracted_type_result",
+  partnerAttachment: "oc_partner_attachment_result",
+  friendUsed: "oc_friend_used_result",
 } as const;
 
 export function saveQuizResult(key: string, value: unknown): void {
