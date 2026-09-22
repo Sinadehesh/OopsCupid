@@ -15,7 +15,7 @@ export default function TermsPage() {
           <h2>1. Acceptance of Terms</h2>
           <p>
             By accessing or using <strong>OopsCupid</strong> (available at{" "}
-            <a href="https://oopscupid.com">oopscupid.com</a>), you agree to be bound by these Terms of Service
+            <a href="https://www.oopscupid.com">oopscupid.com</a>), you agree to be bound by these Terms of Service
             (&ldquo;Terms&rdquo;). If you do not agree with any part of these Terms, you may not access the Service.
           </p>
         </section>
@@ -205,7 +205,7 @@ export default function TermsPage() {
           <p>If you have any questions about these Terms, please contact us:</p>
           <ul>
             <li>Email: <a href="mailto:Sinadehesh@gmail.com">Sinadehesh@gmail.com</a></li>
-            <li>Website: <a href="https://oopscupid.com">oopscupid.com</a></li>
+            <li>Website: <a href="https://www.oopscupid.com">oopscupid.com</a></li>
           </ul>
         </section>
 

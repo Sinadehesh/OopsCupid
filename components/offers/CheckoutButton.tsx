@@ -63,7 +63,7 @@ export default function CheckoutButton({
       // The static export (GitHub Pages / the Android app) has no API
       // routes — send those visitors to the website to complete payment.
       if (res.status === 404) {
-        window.location.href = `https://oopscupid.com${path}`;
+        window.location.href = `https://www.oopscupid.com${path}`;
         return;
       }
 

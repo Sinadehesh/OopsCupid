@@ -30,8 +30,8 @@ export async function generateMetadata({
   const page = SYMPTOM_PAGES.find((p) => p.slug === slug);
   if (!page) return {};
 
-  const url = `https://oopscupid.com/signs/${page.slug}`;
-  const og = `https://oopscupid.com/api/og?t=${encodeURIComponent(page.phrase)}&q=${encodeURIComponent("OopsCupid")}`;
+  const url = `https://www.oopscupid.com/signs/${page.slug}`;
+  const og = `https://www.oopscupid.com/api/og?t=${encodeURIComponent(page.phrase)}&q=${encodeURIComponent("OopsCupid")}`;
 
   return {
     title: page.seoTitle,
@@ -75,7 +75,7 @@ export default async function SignPage({
         headline: page.phrase,
         description: page.description,
         articleSection: "Relationships",
-        mainEntityOfPage: `https://oopscupid.com/signs/${page.slug}`,
+        mainEntityOfPage: `https://www.oopscupid.com/signs/${page.slug}`,
       },
       {
         "@type": "FAQPage",
@@ -88,8 +88,8 @@ export default async function SignPage({
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: "https://oopscupid.com" },
-          { "@type": "ListItem", position: 2, name: "Signs", item: "https://oopscupid.com/signs" },
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://www.oopscupid.com" },
+          { "@type": "ListItem", position: 2, name: "Signs", item: "https://www.oopscupid.com/signs" },
           { "@type": "ListItem", position: 3, name: page.phrase },
         ],
       },

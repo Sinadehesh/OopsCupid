@@ -33,7 +33,7 @@ export default function FreeResult({ data, rawAnswers }: { data: any, rawAnswers
 
   const handleShare = async () => {
     const text = `I just took the Toxic Friendship Diagnostics Battery. My risk score is ${data.riskScore}/100 (${data.archetype}). Find out your friendship risk score here:`;
-    const url = "https://oopscupid.com/toxic-friend-test";
+    const url = "https://www.oopscupid.com/toxic-friend-test";
     
     if (navigator.share) {
       try {

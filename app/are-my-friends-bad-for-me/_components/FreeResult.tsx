@@ -12,7 +12,7 @@ export default function FreeResult({ data }: { data: any }) {
 
   const handleShare = async () => {
     const text = `I just took the 'Are My Friends Bad For Me?' diagnostic. My friendship circle was rated: ${data.tier}. Take the test here:`;
-    const url = "https://oopscupid.com/are-my-friends-bad-for-me";
+    const url = "https://www.oopscupid.com/are-my-friends-bad-for-me";
     if (navigator.share) {
       try { await navigator.share({ title: "My Friendship Diagnosis", text, url }); } 
       catch (err) { console.log(err); }

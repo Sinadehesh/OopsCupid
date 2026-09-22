@@ -15,7 +15,7 @@ export default function PrivacyPage() {
           <h2>1. Introduction</h2>
           <p>
             Welcome to <strong>OopsCupid</strong> (&ldquo;we&rdquo;, &ldquo;our&rdquo;, or &ldquo;us&rdquo;). We operate the website{" "}
-            <a href="https://oopscupid.com">oopscupid.com</a> (the &ldquo;Service&rdquo;), a psychology-based platform
+            <a href="https://www.oopscupid.com">oopscupid.com</a> (the &ldquo;Service&rdquo;), a psychology-based platform
             offering relationship and self-awareness tools, quizzes, and assessments.
           </p>
           <p>
@@ -168,7 +168,7 @@ export default function PrivacyPage() {
           <p>If you have any questions about this Privacy Policy, please contact us:</p>
           <ul>
             <li>Email: <a href="mailto:Sinadehesh@gmail.com">Sinadehesh@gmail.com</a></li>
-            <li>Website: <a href="https://oopscupid.com">oopscupid.com</a></li>
+            <li>Website: <a href="https://www.oopscupid.com">oopscupid.com</a></li>
           </ul>
         </section>
 

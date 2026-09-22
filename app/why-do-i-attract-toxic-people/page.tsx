@@ -9,12 +9,12 @@ export const metadata = {
   title: "Why Do I Attract Toxic People? Free Pattern Quiz | OopsCupid",
   description:
     "Keep ending up with toxic partners? This free diagnostic maps the childhood loops and boundary gaps behind your pattern — and shows you how to break it.",
-  alternates: { canonical: "https://oopscupid.com/why-do-i-attract-toxic-people" },
+  alternates: { canonical: "https://www.oopscupid.com/why-do-i-attract-toxic-people" },
   openGraph: {
     title: "Why Do I Attract Toxic People? Pattern Diagnostic",
     description:
       "Map the hidden pattern that keeps picking toxic partners for you. Free, instant result.",
-    url: "https://oopscupid.com/why-do-i-attract-toxic-people",
+    url: "https://www.oopscupid.com/why-do-i-attract-toxic-people",
     type: "website",
   },
 };

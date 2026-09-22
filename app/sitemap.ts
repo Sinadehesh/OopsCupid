@@ -5,7 +5,7 @@ import { SYMPTOM_PAGES } from "@/lib/seo/symptoms";
 // FORCES NEXT.JS TO GENERATE THIS AT BUILD TIME FOR STATIC EXPORTS
 export const dynamic = "force-static";
 
-const baseUrl = "https://oopscupid.com";
+const baseUrl = "https://www.oopscupid.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Hub / static pages not in the quiz registry

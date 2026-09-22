@@ -11,12 +11,12 @@ export const metadata: Metadata = {
   title: "Is He Cheating? Take the 3-Minute Behavioral Test | OopsCupid",
   description:
     "Is he cheating or are you overthinking? This free 20-question behavioral test analyzes his phone habits, schedule changes, and emotional distance — with an instant result.",
-  alternates: { canonical: "https://oopscupid.com/is-he-cheating" },
+  alternates: { canonical: "https://www.oopscupid.com/is-he-cheating" },
   openGraph: {
     title: "Is He Cheating? Free Behavioral Diagnostic Test",
     description:
       "Analyze his phone habits, schedule shifts, and defensiveness in 3 minutes. Instant result, no sign-up required.",
-    url: "https://oopscupid.com/is-he-cheating",
+    url: "https://www.oopscupid.com/is-he-cheating",
     type: "website",
   },
 };

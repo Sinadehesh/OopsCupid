@@ -9,12 +9,12 @@ export const metadata: Metadata = {
   title: "Is He Manipulative? Free Manipulation Tactics Test | OopsCupid",
   description:
     "Is it manipulation or just conflict? This free screening test identifies the exact tactics being used on you — guilt trips, DARVO, silent treatment — with an instant result.",
-  alternates: { canonical: "https://oopscupid.com/is-he-manipulative" },
+  alternates: { canonical: "https://www.oopscupid.com/is-he-manipulative" },
   openGraph: {
     title: "Is He Manipulative? Manipulation Tactics Test",
     description:
       "Identify the exact manipulation tactics being used on you and get scripts to shut them down. Free, 3 minutes.",
-    url: "https://oopscupid.com/is-he-manipulative",
+    url: "https://www.oopscupid.com/is-he-manipulative",
     type: "website",
   },
 };

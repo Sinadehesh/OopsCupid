@@ -72,7 +72,7 @@ export default function AttachmentReport({ profile, demographics, rawAnswers, em
               <h3 className="text-2xl md:text-3xl font-black text-[#086788] mb-3">The Anxious Attachment Workbook</h3>
               <p className="text-lg font-medium text-[#086788]/80 mb-6">A step-by-step guide to understanding your patterns, calming your nervous system, and building more secure relationships — starting today.</p>
               <a
-                href="https://oopscupid.com/workbook/anxious-attachment"
+                href="https://www.oopscupid.com/workbook/anxious-attachment"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block bg-[#086788] hover:bg-[#06aed5] text-white font-black text-lg px-8 py-4 rounded-xl transition-all shadow-md hover:-translate-y-1"

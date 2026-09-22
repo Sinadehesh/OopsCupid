@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "Signs & Patterns — Plain Answers To The Things You're Noticing",
   description:
     "Straight answers to the specific things people notice in relationships and friendships — what each one usually means, when it does not, and what to do.",
-  alternates: { canonical: "https://oopscupid.com/signs" },
+  alternates: { canonical: "https://www.oopscupid.com/signs" },
 };
 
 /** Groups the long-tail pages by the quiz they feed, which is also how

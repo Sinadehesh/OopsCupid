@@ -32,7 +32,7 @@ Allow: /
 User-agent: cohere-ai
 Allow: /
 
-Sitemap: https://oopscupid.com/sitemap.xml
+Sitemap: https://www.oopscupid.com/sitemap.xml
 
 # Machine-readable site overview for LLMs
-# https://oopscupid.com/llms.txt
+# https://www.oopscupid.com/llms.txt

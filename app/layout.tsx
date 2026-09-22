@@ -19,6 +19,7 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.oopscupid.com"),
   title: "OopsCupid | Free Relationship Quizzes, Tests & Red Flag Checks",
   description:
     "Free, research-informed relationship quizzes for women: is he cheating, is he manipulative, attachment style tests, toxic friend tests, and attraction pattern diagnostics — with instant scored results.",
@@ -44,7 +45,7 @@ export const metadata: Metadata = {
     title: "OopsCupid | Free Relationship Quizzes, Tests & Red Flag Checks",
     description:
       "Free relationship quizzes with instant scored results: cheating, manipulation, attachment styles, toxic friends, and attraction patterns. No sign-up required.",
-    url: "https://oopscupid.com",
+    url: "https://www.oopscupid.com",
     siteName: "OopsCupid",
     type: "website",
     locale: "en_US",
@@ -56,7 +57,7 @@ export const metadata: Metadata = {
       "Spot red flags and understand your dating patterns with free, research-informed quizzes for women.",
   },
   alternates: {
-    canonical: "https://oopscupid.com",
+    canonical: "https://www.oopscupid.com",
   },
   robots: {
     index: true,

@@ -13,7 +13,7 @@ export default function SharePrintButtons({ url = "", title = "My Psychological 
   };
 
   const handleShare = async () => {
-    const shareUrl = url ? `https://oopscupid.com${url}` : currentUrl;
+    const shareUrl = url ? `https://www.oopscupid.com${url}` : currentUrl;
     const text = `I just unlocked my psychological profile on OopsCupid. Discover yours here:`;
     
     if (navigator.share) {

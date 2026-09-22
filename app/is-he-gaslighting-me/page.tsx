@@ -9,12 +9,12 @@ export const metadata = {
   title: "Is He Gaslighting Me? Free Reality-Check Test | OopsCupid",
   description:
     "Constantly doubting your own memory? This free 50-item audit measures reality denial, invalidation, and self-trust erosion — with an instant, private result.",
-  alternates: { canonical: "https://oopscupid.com/is-he-gaslighting-me" },
+  alternates: { canonical: "https://www.oopscupid.com/is-he-gaslighting-me" },
   openGraph: {
     title: "Is He Gaslighting Me? Reality-Check Test",
     description:
       "Stop asking yourself if you're crazy. Measure his behavior against the clinical gaslighting playbook.",
-    url: "https://oopscupid.com/is-he-gaslighting-me",
+    url: "https://www.oopscupid.com/is-he-gaslighting-me",
     type: "website",
   },
 };

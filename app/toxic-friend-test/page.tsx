@@ -9,12 +9,12 @@ export const metadata: Metadata = {
   title: "Toxic Friend Test — Is My Friend Toxic? Free Quiz | OopsCupid",
   description:
     "Is your friend toxic or just going through a rough patch? This free, research-inspired test scores control, competition, and energy drain — instant result, no sign-up.",
-  alternates: { canonical: "https://oopscupid.com/toxic-friend-test" },
+  alternates: { canonical: "https://www.oopscupid.com/toxic-friend-test" },
   openGraph: {
     title: "Toxic Friend Test — Is My Friend Toxic?",
     description:
       "Score your friendship across control, competition, and energy drain. Free and instant.",
-    url: "https://oopscupid.com/toxic-friend-test",
+    url: "https://www.oopscupid.com/toxic-friend-test",
     type: "website",
   },
 };

@@ -10,11 +10,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "OopsCupid | Free Relationship Quizzes, Tests & Red Flag Checks",
     description: "Free, research-informed relationship quizzes with instant scored results: cheating, manipulation, attachment styles, toxic friends, and attraction patterns.",
-    url: "https://oopscupid.com",
+    url: "https://www.oopscupid.com",
     siteName: "OopsCupid",
     images: [
       {
-        url: "https://oopscupid.com/logo.png",
+        url: "https://www.oopscupid.com/logo.png",
         width: 1200,
         height: 630,
         alt: "OopsCupid - Relationship Clarity Tools",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "OopsCupid | Free Relationship Quizzes, Tests & Red Flag Checks",
     description: "Free, research-informed relationship quizzes with instant scored results: cheating, manipulation, attachment styles, toxic friends, and attraction patterns.",
-    images: ["https://oopscupid.com/logo.png"],
+    images: ["https://www.oopscupid.com/logo.png"],
   },
 };
 
@@ -52,41 +52,41 @@ export default function Home() {
     "@graph": [
       {
         "@type": "Organization",
-        "@id": "https://oopscupid.com/#organization",
+        "@id": "https://www.oopscupid.com/#organization",
         "name": "OopsCupid",
-        "url": "https://oopscupid.com/",
+        "url": "https://www.oopscupid.com/",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://oopscupid.com/logo.png"
+          "url": "https://www.oopscupid.com/logo.png"
         }
       },
       {
         "@type": "WebSite",
-        "@id": "https://oopscupid.com/#website",
-        "url": "https://oopscupid.com/",
+        "@id": "https://www.oopscupid.com/#website",
+        "url": "https://www.oopscupid.com/",
         "name": "OopsCupid",
         "publisher": {
-          "@id": "https://oopscupid.com/#organization"
+          "@id": "https://www.oopscupid.com/#organization"
         }
       },
       {
         "@type": "ItemList",
-        "@id": "https://oopscupid.com/#quizlist",
+        "@id": "https://www.oopscupid.com/#quizlist",
         "name": "Free Relationship Quizzes & Tests",
         "itemListElement": allQuizzes.map((q, i) => ({
           "@type": "ListItem",
           "position": i + 1,
           "name": q.seoTitle,
-          "url": `https://oopscupid.com${q.slug}`,
+          "url": `https://www.oopscupid.com${q.slug}`,
         })),
       },
       {
         "@type": "CollectionPage",
-        "@id": "https://oopscupid.com/#webpage",
-        "url": "https://oopscupid.com/",
+        "@id": "https://www.oopscupid.com/#webpage",
+        "url": "https://www.oopscupid.com/",
         "name": "OopsCupid | Free Relationship Quizzes, Tests & Red Flag Checks",
         "isPartOf": {
-          "@id": "https://oopscupid.com/#website"
+          "@id": "https://www.oopscupid.com/#website"
         },
         "description": "Free, research-informed relationship quizzes with instant scored results: cheating, manipulation, attachment styles, toxic friends, and attraction patterns."
       }

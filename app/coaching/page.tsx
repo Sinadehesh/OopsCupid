@@ -18,12 +18,12 @@ export const metadata: Metadata = {
   title: "Relationship Clarity Coaching | 1:1 Sessions | OopsCupid",
   description:
     "Private 1:1 coaching sessions that turn your quiz results into a concrete plan. Decode his behavior, set boundaries, and decide your next move — with someone in your corner.",
-  alternates: { canonical: "https://oopscupid.com/coaching" },
+  alternates: { canonical: "https://www.oopscupid.com/coaching" },
   openGraph: {
     title: "Relationship Clarity Coaching | OopsCupid",
     description:
       "Your quiz told you what's happening. A clarity session tells you what to do about it — tonight.",
-    url: "https://oopscupid.com/coaching",
+    url: "https://www.oopscupid.com/coaching",
     type: "website",
   },
 };

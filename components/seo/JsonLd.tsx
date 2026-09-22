@@ -1,7 +1,7 @@
 import React from "react";
 import type { QuizEntry } from "@/lib/quizzes/registry";
 
-const SITE = "https://oopscupid.com";
+const SITE = "https://www.oopscupid.com";
 
 function Script({ data }: { data: object }) {
   return (

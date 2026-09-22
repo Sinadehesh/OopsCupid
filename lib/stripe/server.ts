@@ -23,7 +23,7 @@ export function getStripe(): Stripe {
     // underneath a running deployment.
     apiVersion: "2026-08-26.dahlia",
     typescript: true,
-    appInfo: { name: "OopsCupid", url: "https://oopscupid.com" },
+    appInfo: { name: "OopsCupid", url: "https://www.oopscupid.com" },
   });
   return cached;
 }
@@ -39,6 +39,6 @@ export function siteUrl(): string {
     process.env.NEXT_PUBLIC_SITE_URL ??
     (process.env.VERCEL_PROJECT_PRODUCTION_URL
       ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : "https://oopscupid.com")
+      : "https://www.oopscupid.com")
   );
 }

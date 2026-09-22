@@ -42,7 +42,7 @@ export default function ResultShare({
   const [copied, setCopied] = useState(false);
 
   const origin =
-    typeof window !== "undefined" ? window.location.origin : "https://oopscupid.com";
+    typeof window !== "undefined" ? window.location.origin : "https://www.oopscupid.com";
 
   const cardUrl =
     `${origin}/api/og?t=${encodeURIComponent(title)}` +
