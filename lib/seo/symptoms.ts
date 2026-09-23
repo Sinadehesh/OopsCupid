@@ -1017,4 +1017,153 @@ export const SYMPTOM_PAGES: SymptomPage[] = [
       "This behaviour sits on the anxiety axis, which the assessment scores separately across five domains — including work, where it often shows up more clearly than at home.",
     related: ["i-panic-when-he-doesnt-text-back", "i-push-people-away", "i-feel-crazy-around-him"],
   },
+
+  // ── PROVEN-DEMAND PAGES ───────────────────────────────────────────────
+  // Added from Search Console query data rather than guesswork: each of
+  // these is a phrase the site already receives impressions for, in the
+  // "attract" cluster where it averages position 43 against attachment's
+  // 87. Winnable ground, and under-exploited at 10% of impressions.
+  {
+    slug: "why-do-i-attract-the-wrong-guys",
+    phrase: "Why do I attract the wrong guys?",
+    seoTitle: "Why Do I Attract The Wrong Guys? The Actual Mechanism",
+    description:
+      "It is not luck and it is not your worth. Attracting the same kind of man repeatedly runs on a filter applied in the first three conversations.",
+    answer:
+      "Attracting the wrong men repeatedly is a filtering problem, not a luck problem, and the filter runs in the first three interactions — long before you know anything real about someone. What it screens for is familiarity rather than quality, which is why the wrong person reliably feels like recognition and the right one feels like nothing. Identifying what your filter selects for is most of the work.",
+    body: [
+      {
+        heading: "Why the wrong ones feel right",
+        text:
+          "The sense of instant recognition — that this one is different, that it is easy, that there is something there — is your nervous system reporting a match against a template. Templates are built from what was familiar early, and familiarity carries no quality judgement whatsoever. So the feeling is real, it is just not evidence about the person.",
+      },
+      {
+        heading: "Two failures, not one",
+        text:
+          "Selection decides who gets through the door; retention decides how long they stay after you know better. They fail for different reasons and need different fixes. Deciding to 'be pickier' only addresses the first — and by the time you are being picky, the filter already let them in during week one, when there was nothing to be picky about.",
+      },
+      {
+        heading: "What men who take advantage actually do",
+        text:
+          "Very little that is strategic. They make a small request early — a moved boundary, a cancelled plan, a late reply with no explanation — and read the response. Someone who enforces is expensive and gets dropped in a fortnight. Someone who accommodates is cheap and gets kept. Nothing in that requires you to be naive; it only requires your second no to be softer than your first.",
+      },
+    ],
+    notAlways:
+      "Sometimes it genuinely is a run of bad luck, particularly if the sample is small. Three relationships is a pattern; two is a coincidence. And having a type is normal — it only becomes worth addressing when the endings repeat as reliably as the type does.",
+    whatToDo: [
+      "Write down your last three significant attractions: what drew you in week one, how fast it moved, and how it ended. The pace usually predicts the ending better than the person does.",
+      "Write three screening criteria that have nothing to do with how someone makes you feel — how he handles being wrong, what he does when you are ill, whether his friendships last. Apply them before chemistry, not after.",
+      "When you feel instant certainty about someone, note the date and decide nothing for three weeks. Certainty in week one is a statement about you, not about him.",
+    ],
+    faq: [
+      {
+        q: "Is this saying it's my fault?",
+        a: "No. What someone chooses to do is entirely their responsibility. Your filter is simply the part of the system you can change, which is a statement about leverage rather than blame.",
+      },
+      {
+        q: "How long does it take to change?",
+        a: "The choices change within weeks once you screen differently. The feeling — that steady people are boring — takes two to three months of repeated exposure. Most people quit in week two, which is exactly when the discomfort peaks.",
+      },
+    ],
+    quiz: "/why-do-i-pick-bad-guys",
+    quizPitch:
+      "The assessment scores ten dimensions separately and names the two actually driving your results — because working on all ten at once is how people give up.",
+    related: ["i-keep-dating-the-same-type", "i-get-bored-when-someone-is-nice-to-me", "what-kind-of-person-am-i-attracting"],
+  },
+
+  {
+    slug: "what-kind-of-person-am-i-attracting",
+    phrase: "What kind of person am I attracting?",
+    seoTitle: "What Kind Of Person Am I Attracting? How To Tell",
+    description:
+      "The people who approach you are responding to signals you send in the first few minutes. Here is how to read which ones you are sending.",
+    answer:
+      "The kind of person you attract is set largely by three or four signals readable in the first few interactions — availability, distance, volatility and steadiness — long before anyone knows you. Those signals are not flaws: every one of them is attractive to good people too. The problem is that they are equally legible to someone looking for an easy arrangement, and legible far earlier than character is.",
+    body: [
+      {
+        heading: "What people actually read",
+        text:
+          "Response speed, agreement rate, how quickly you rearrange things, how much emotional weather you show, and how reliable you appear in small commitments. That is most of it. None of it requires anyone to be perceptive — these signals are loud, and they are visible in week one.",
+      },
+      {
+        heading: "Why the same signal attracts opposite people",
+        text:
+          "Warmth and availability read as relief to someone decent and as an opportunity to someone looking for low cost. The signal is identical; only the reader differs. This is why 'just be less nice' fails as advice — it loses you the first group faster than the second, because decent people are the ones who respond to warmth and stop when it disappears.",
+      },
+      {
+        heading: "The thing that actually filters",
+        text:
+          "Friction a good match does not notice and a bad one will not tolerate. One evening a week that does not move for anyone new. A two-week delay before anything hard to undo. One small early disagreement about something genuinely unimportant. Each costs a reasonable person nothing and costs someone counting on accommodation quite a lot.",
+      },
+    ],
+    notAlways:
+      "Plenty of people attract exactly the right people and simply have not met many of them yet. Volume and composition are different problems: if your issue is that nobody approaches you at all, nothing on this page applies — that is a reach problem, not a filter problem.",
+    whatToDo: [
+      "Look at the last three people who pursued you: how fast each moved in the first fortnight, what they wanted early, and how it ended. Three is enough for a pattern.",
+      "Add one fixed commitment a week that does not move for anyone new. Invisible to someone reasonable, immediately irritating to someone who needs you fully available.",
+      "Disagree once, early, about something that does not matter — and watch the next thirty seconds rather than whether they agree.",
+    ],
+    faq: [
+      {
+        q: "Should I change what I signal?",
+        a: "Mostly not. Every signal here is attractive to people worth attracting, and muting it costs you those people first. Add friction rather than subtracting warmth.",
+      },
+      {
+        q: "Why do I attract people I would never choose?",
+        a: "Because attraction to you and selection by you run on different timescales. They are reading signals in minutes; you are assessing character over months. The gap is where the mismatch lives.",
+      },
+    ],
+    quiz: "/who-is-attracted-to-me",
+    quizPitch:
+      "Seven signals scored separately, so you can see which one is loudest — and the ratio between availability and edge, which does more than any single number.",
+    related: ["why-do-i-attract-the-wrong-guys", "i-keep-dating-the-same-type", "i-push-people-away"],
+  },
+
+  {
+    slug: "am-i-sabotaging-my-relationship",
+    phrase: "Am I sabotaging my relationship?",
+    seoTitle: "Am I Sabotaging My Relationship? How To Tell The Difference",
+    description:
+      "There is a real difference between sabotaging something good and correctly noticing something wrong. Timing tells you which.",
+    answer:
+      "Self-sabotage and accurate judgement feel identical from inside, and the thing that separates them is timing. Doubt that arrives reliably after closeness — a good weekend, a plan made, something said out loud — is sabotage. Doubt that has been present since the beginning, and is about specific behaviour rather than a general feeling, is information.",
+    body: [
+      {
+        heading: "Why the reasons always sound good",
+        text:
+          "The withdrawal comes first and the reasons are generated afterwards to explain a state you are already in. That is why they feel so convincing and why they are suddenly so easy to list. Acting on reasons produced this way is how people end relationships they wanted.",
+      },
+      {
+        heading: "The pattern has a schedule",
+        text:
+          "Look at the 48 hours before the last three times you pulled back. Most people find something good sitting there — not a problem. Closeness raises exposure, exposure produces the need for distance, and the distance never presents itself as a response to anything.",
+      },
+      {
+        heading: "What it is actually protecting you from",
+        text:
+          "Usually an outcome that already happened, to a younger version of you, in a situation you could not control. The alarm is not irrational; it is out of date. This matters because you cannot argue an alarm out of existence, but you can decline to act on it for three days, which is all it usually takes.",
+      },
+    ],
+    notAlways:
+      "Sometimes the relationship is genuinely wrong, and 'self-sabotage' gets used as a reason to override your own judgement — which is its own trap. The distinguishing test is whether the doubt is about a specific repeated behaviour you could name to a friend, or a general feeling that arrived after things went well.",
+    whatToDo: [
+      "Track the 48 hours before your last three withdrawals. If closeness precedes them, you have your answer.",
+      "When the urge arrives, change nothing for 72 hours. No conversation, no distance, no decision. It passes, and it takes the reasons with it.",
+      "Write down the specific behaviour you would name to a friend. If you cannot fill the line, the doubt is about you rather than about them.",
+    ],
+    faq: [
+      {
+        q: "How do I stop doing it?",
+        a: "Not by feeling differently — that comes last. Name the pattern out loud when it starts, and refuse to make any decision inside the first 72 hours. That single rule defuses most of it.",
+      },
+      {
+        q: "What if I've already ended something good?",
+        a: "Common, and worth being honest about rather than reframing. Whether to reach out is a separate question from whether the pattern was real; the pattern being real does not oblige you to undo anything.",
+      },
+    ],
+    quiz: "/why-do-i-sabotage-relationships",
+    quizPitch:
+      "The assessment separates the trigger from the behaviour, which is the distinction that decides whether this is a pattern or an accurate read.",
+    related: ["i-push-people-away", "i-get-bored-when-someone-is-nice-to-me", "i-keep-dating-the-same-type"],
+  },
 ];

@@ -3,9 +3,25 @@ import QuizWidget from '@/components/features/QuizWidget';
 import { ShieldCheck, Target, Heart, BrainCircuit } from 'lucide-react';
 import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
+/**
+ * This page carries 63% of the site's search impressions — every variant of
+ * "attachment style test" — and ranked at position 87 under the title
+ * "The Master Psychological Battery", which nobody has ever typed into
+ * Google. 23% of those queries contain "free" and several spell out
+ * "no email", so both now appear in the title, the H1 and the first line.
+ */
 export const metadata: Metadata = {
-  title: "The Master Psychological Battery | Attachment, Emotion, Self-Esteem",
-  description: "A comprehensive 92-question clinical assessment combining ECR-RS, DERS-16, and Rosenberg scales to reveal your true relationship blueprint.",
+  title: "Free Attachment Style Test — No Email Required",
+  description:
+    "Find your attachment style free, with no sign-up and no email required. A 92-question assessment built on the ECR-RS, DERS-16 and Rosenberg scales — results shown instantly on screen.",
+  alternates: { canonical: "https://www.oopscupid.com/attachment-style-quiz" },
+  openGraph: {
+    title: "Free Attachment Style Test — No Email Required",
+    description:
+      "Anxious, avoidant, disorganised or secure — scored across five domains. Free, no sign-up, results on screen.",
+    url: "https://www.oopscupid.com/attachment-style-quiz",
+    type: "website",
+  },
 };
 
 export default function MegaBatteryPage() {
@@ -16,18 +32,25 @@ export default function MegaBatteryPage() {
       <section className="relative bg-[#00A6ED] pt-24 pb-48 px-6 md:px-10 lg:px-14 text-white text-center shadow-sm">
         <div className="max-w-4xl mx-auto">
           <span className="text-[#FFB400] font-bold uppercase tracking-widest text-sm mb-4 block drop-shadow-sm">
-            The Master Assessment
+            Free · No sign-up · No email
           </span>
           <h1 className="text-[40px] md:text-[56px] font-bold mb-6 leading-tight tracking-tight drop-shadow-sm">
-            Your Complete Clinical Profile
+            Free Attachment Style Test
           </h1>
-          <p className="text-[20px] md:text-[24px] font-medium mb-10 text-white/95 max-w-2xl mx-auto drop-shadow-sm">
-            This is our most advanced, 92-question clinical battery. It measures your core attachment style, global self-esteem, emotion regulation capacity, and romantic love style all in one test.
+          <p className="text-[20px] md:text-[24px] font-medium mb-4 text-white/95 max-w-2xl mx-auto drop-shadow-sm">
+            Find out whether you&rsquo;re anxious, avoidant, disorganised or secure &mdash;
+            and how that changes between your partner, your parents and your work.
           </p>
-          <div className="flex justify-center items-center gap-6 text-sm md:text-base font-semibold text-white">
-            <span className="flex items-center gap-2">✓ 4 Clinical Scales</span>
-            <span className="flex items-center gap-2">✓ 92 Deep Questions</span>
-            <span className="flex items-center gap-2">✓ Master Dashboard</span>
+          <p className="text-[16px] md:text-[18px] font-medium mb-10 text-white/80 max-w-2xl mx-auto">
+            Most attachment quizzes ask twenty questions and give you one word. This one
+            uses the ECR-RS, DERS-16 and Rosenberg scales, scores five domains separately,
+            and shows your results on screen the moment you finish.
+          </p>
+          <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-sm md:text-base font-semibold text-white">
+            <span className="flex items-center gap-2">✓ Completely free</span>
+            <span className="flex items-center gap-2">✓ No email needed</span>
+            <span className="flex items-center gap-2">✓ 92 questions &middot; ~12 min</span>
+            <span className="flex items-center gap-2">✓ Results on screen</span>
           </div>
         </div>
       </section>

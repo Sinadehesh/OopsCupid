@@ -5,11 +5,11 @@ import Link from "next/link";
 import { allQuizzes } from "@/lib/quizzes/registry";
 
 export const metadata: Metadata = {
-  title: "OopsCupid | Free Relationship Quizzes, Tests & Red Flag Checks",
-  description: "Free, research-informed relationship quizzes with instant scored results: cheating, manipulation, attachment styles, toxic friends, and attraction patterns.",
+  title: "Free Attachment Style Test & Relationship Quizzes — No Email",
+  description: "Find your attachment style, who you attract, and whether his behaviour is a red flag. 15 free research-informed tests — no sign-up, no email, results on screen.",
   openGraph: {
-    title: "OopsCupid | Free Relationship Quizzes, Tests & Red Flag Checks",
-    description: "Free, research-informed relationship quizzes with instant scored results: cheating, manipulation, attachment styles, toxic friends, and attraction patterns.",
+    title: "Free Attachment Style Test & Relationship Quizzes — No Email",
+    description: "Find your attachment style, who you attract, and whether his behaviour is a red flag. 15 free research-informed tests — no sign-up, no email, results on screen.",
     url: "https://www.oopscupid.com",
     siteName: "OopsCupid",
     images: [
@@ -25,26 +25,58 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "OopsCupid | Free Relationship Quizzes, Tests & Red Flag Checks",
-    description: "Free, research-informed relationship quizzes with instant scored results: cheating, manipulation, attachment styles, toxic friends, and attraction patterns.",
+    title: "Free Attachment Style Test & Relationship Quizzes — No Email",
+    description: "Find your attachment style, who you attract, and whether his behaviour is a red flag. 15 free research-informed tests — no sign-up, no email, results on screen.",
     images: ["https://www.oopscupid.com/logo.png"],
   },
 };
 
-const testimonies = [
-  "I finally found out why my boyfriend hates me. The quiz opened my eyes to our toxic dynamic.",
-  "I learned that my best friend is a narcissist thanks to this free test.",
-  "The attachment style quiz explained exactly why I keep attracting emotionally unavailable men.",
-  "Spotting relationship red flags is so much easier now. I avoided a toxic trap!",
-  "Is he gaslighting me? This site gave me the clarity I needed to leave a manipulative relationship.",
-  "I finally understand my anxious attachment style and how to heal.",
-  "The toxic friend test validated everything I was feeling. It wasn't just in my head.",
-  "Decoding mixed signals from guys used to drive me crazy. Now I see the truth immediately.",
-  "Why do I attract toxic people? The insights here completely changed my dating patterns.",
-  "I realized I was dealing with a covert narcissist. The signs were all there."
+/**
+ * This carousel used to hold ten invented testimonials, shown with
+ * five-star ratings and attributed to "Anonymous User". The site has
+ * never had a customer, so none of them could be real — and fabricated
+ * reviews are illegal under the EU Unfair Commercial Practices Directive
+ * and the FTC's 2024 Fake Reviews Rule, quite apart from what they do to
+ * trust when someone notices.
+ *
+ * Replaced with statements about the instruments that are checkable
+ * against the code. Put real quotes here only with permission, and only
+ * once they exist.
+ */
+const proofPoints: { stat: string; label: string; detail: string }[] = [
+  {
+    stat: "92",
+    label: "questions in the attachment test",
+    detail: "Built on the ECR-RS, DERS-16 and Rosenberg scales rather than invented for a quiz.",
+  },
+  {
+    stat: "5",
+    label: "domains scored separately",
+    detail: "General, romantic, work and both parental axes — because attachment rarely behaves the same everywhere.",
+  },
+  {
+    stat: "0",
+    label: "emails required",
+    detail: "Every result appears on screen. Give an address only if you want a copy sent to you.",
+  },
+  {
+    stat: "15",
+    label: "assessments, all free to take",
+    detail: "Scoring, bands and the free report cost nothing. Only the full written analysis is paid.",
+  },
+  {
+    stat: "48h",
+    label: "until your answers are deleted",
+    detail: "An automated job clears the answers you gave from our servers. We keep no record of them.",
+  },
+  {
+    stat: "7-day",
+    label: "refund, no questions asked",
+    detail: "If a paid report doesn't describe your situation, email us within a week.",
+  },
 ];
 
-const carouselItems = [...testimonies, ...testimonies];
+const carouselItems = [...proofPoints, ...proofPoints];
 
 export default function Home() {
   const jsonLd = {
@@ -84,11 +116,11 @@ export default function Home() {
         "@type": "CollectionPage",
         "@id": "https://www.oopscupid.com/#webpage",
         "url": "https://www.oopscupid.com/",
-        "name": "OopsCupid | Free Relationship Quizzes, Tests & Red Flag Checks",
+        "name": "Free Attachment Style Test & Relationship Quizzes — No Email",
         "isPartOf": {
           "@id": "https://www.oopscupid.com/#website"
         },
-        "description": "Free, research-informed relationship quizzes with instant scored results: cheating, manipulation, attachment styles, toxic friends, and attraction patterns."
+        "description": "Find your attachment style, who you attract, and whether his behaviour is a red flag. 15 free research-informed tests — no sign-up, no email, results on screen."
       }
     ]
   };
@@ -355,7 +387,7 @@ export default function Home() {
         <div className="container mx-auto px-6 md:px-10 lg:px-14 mb-12">
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="text-[32px] md:text-[44px] font-bold text-white mb-4">
-              Join Thousands Of Women Who Got Clarity
+              What Makes These Different
             </h2>
           </div>
         </div>
@@ -363,16 +395,11 @@ export default function Home() {
           <div className="absolute top-0 left-0 h-full w-12 md:w-32 bg-gradient-to-r from-[#32485A] to-transparent z-10 pointer-events-none"></div>
           <div className="absolute top-0 right-0 h-full w-12 md:w-32 bg-gradient-to-l from-[#32485A] to-transparent z-10 pointer-events-none"></div>
           <div className="marquee-track gap-6 px-6">
-            {carouselItems.map((testimony, index) => (
+            {carouselItems.map((item, index) => (
               <div key={index} className="flex-shrink-0 w-80 md:w-96 rounded-2xl p-6 glass-dark shadow-[0_8px_30px_rgba(0,0,0,0.18)]">
-                <div className="flex gap-1 mb-3">
-                  {[...Array(5)].map((_, i) => <svg key={i} className="w-5 h-5 text-[#F5DD90] fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>)}
-                </div>
-                <p className="text-white/90 font-medium text-[16px] md:text-[18px] leading-relaxed">"{testimony}"</p>
-                <div className="mt-4 flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#EC8A66] flex items-center justify-center text-white font-bold text-sm">{String.fromCharCode(65 + (index % 26))}</div>
-                  <span className="text-white/50 font-bold text-sm">— Anonymous User</span>
-                </div>
+                <p className="text-[#F5DD90] font-black text-4xl leading-none mb-2">{item.stat}</p>
+                <p className="text-white font-bold text-[17px] leading-snug mb-3">{item.label}</p>
+                <p className="text-white/60 font-medium text-[15px] leading-relaxed">{item.detail}</p>
               </div>
             ))}
           </div>

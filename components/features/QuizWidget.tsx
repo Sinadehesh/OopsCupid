@@ -33,6 +33,8 @@ import { generateFriendUsedProfile } from "@/lib/psychometrics/friend-used/scori
 import { Lock, Mail, ArrowRight, CheckCircle2 } from "lucide-react";
 import { usePremiumAccess } from "@/lib/usePremiumAccess";
 import { saveQuizResult, loadQuizResult } from "@/lib/quizResults";
+import { trackEmailSubmit, trackResultView } from "@/lib/track";
+import EmailResultOffer from "@/components/features/EmailResultOffer";
 
 /** Maps the infidelity scoring output into the shape InfidelityFreeResult expects */
 function toFreeResultData(profile: ReturnType<typeof generateInfidelityProfile>, email: string) {
@@ -82,6 +84,8 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const [email, setEmail]                   = useState("");
   const [agreed, setAgreed]                 = useState(false);
   const [isSubmitting, setIsSubmitting]     = useState(false);
+  const [savingEmail, setSavingEmail]       = useState(false);
+  const [emailSaved, setEmailSaved]         = useState(false);
   
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [isAnimating, setIsAnimating]       = useState(false);
@@ -160,8 +164,8 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     if (topRef.current) topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     setTimeout(() => {
       setIsScoring(false);
-      setShowEmailGate(true);
-    }, 2000);
+      revealResult();
+    }, 1200);
   };
 
   /** Infidelity-specific unlock: save to localStorage then navigate to /premium page */
@@ -181,9 +185,20 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     router.push("/is-he-cheating/premium");
   };
 
-  const handleEmailSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || !agreed) return;
+  /**
+   * Score the answers and show the result. Email is NOT required.
+   *
+   * Search Console shows 23% of the queries reaching this site contain
+   * "free", and several spell out "no email" / "no sign up" — people are
+   * explicitly looking for a test that does not demand an address, and
+   * this quiz was the one with a wall. The gate collected 4 addresses in
+   * five months, so it was protecting nothing and costing the exact
+   * audience Google was already sending.
+   *
+   * The email ask now comes AFTER the result, where it is an offer
+   * rather than a toll.
+   */
+  const revealResult = async (capturedEmail?: string) => {
     setIsSubmitting(true);
 
     let tempResultData: any = null;
@@ -217,25 +232,55 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       setResultData({ type: "error" });
     }
 
-    try {
-      await fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          email: email, 
-          quizType: quizName, 
-          rawAnswers: answers,
-          profile: tempResultData?.profile || null 
-        })
-      });
-    } catch(err) {
-      console.error("Failed to save to database:", err);
+    // Only record a lead when an address was actually volunteered.
+    if (capturedEmail) {
+      try {
+        await fetch('/api/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: capturedEmail,
+            quizType: quizName,
+            rawAnswers: answers,
+            profile: tempResultData?.profile || null
+          })
+        });
+      } catch(err) {
+        console.error("Failed to save to database:", err);
+      }
     }
 
     setShowEmailGate(false);
     setShowResult(true);
     setIsSubmitting(false);
+    trackResultView(quizName, tempResultData?.type ?? "unknown");
     if (topRef.current) topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  /** The optional email form under the result. */
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !agreed) return;
+    setSavingEmail(true);
+    try {
+      await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          quizType: quizName,
+          rawAnswers: answers,
+          profile: resultData?.profile || null
+        })
+      });
+      trackEmailSubmit(quizName);
+      setEmailSaved(true);
+    } catch (err) {
+      console.error("Failed to save to database:", err);
+      setEmailSaved(true); // never block the reader on our database
+    } finally {
+      setSavingEmail(false);
+    }
   };
 
   if (isScoring) {
@@ -249,62 +294,45 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     );
   }
 
-  if (showEmailGate) {
-    return (
-      <div ref={topRef} className="w-full max-w-3xl mx-auto bg-white border border-[#d6d2d2] rounded-2xl shadow-md p-8 md:p-12 animate-in zoom-in fade-in">
-        <div className="text-center max-w-xl mx-auto mb-8">
-          <div className="w-16 h-16 bg-[#fff1d0] rounded-full flex items-center justify-center mx-auto mb-6 border border-[#f0c808]/40">
-            <Lock className="w-8 h-8 text-[#086788]" />
-          </div>
-          <h3 className="text-3xl md:text-4xl font-black text-[#086788] mb-4">Your Master Audit is Ready.</h3>
-          <p className="text-lg font-medium text-[#086788]/80">We have securely mapped your psychological profile. Where should we send your results?</p>
-        </div>
+  // The old blocking email gate lived here. It is gone: the result is
+  // shown first and the address is asked for underneath it.
 
-        <form onSubmit={handleEmailSubmit} className="max-w-md mx-auto space-y-6">
-          <div>
-            <label className="block text-sm font-bold text-[#086788] mb-2">Email Address</label>
-            <div className="relative">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#086788]/40" />
-              <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="w-full pl-12 pr-4 py-4 bg-white border-2 border-[#d6d2d2] rounded-xl focus:border-[#06aed5] focus:ring-4 focus:ring-[#06aed5]/20 outline-none text-[#086788] font-medium transition-all" placeholder="Enter your best email..." />
-            </div>
-          </div>
-          <label className="flex items-start gap-3 cursor-pointer group">
-            <div className="relative flex items-center">
-              <input type="checkbox" required checked={agreed} onChange={(e) => setAgreed(e.target.checked)} className="peer sr-only" />
-              <div className="w-6 h-6 border-2 border-[#d6d2d2] rounded bg-white peer-checked:bg-[#06aed5] peer-checked:border-[#06aed5] transition-colors flex items-center justify-center group-hover:border-[#06aed5]">
-                {agreed && <CheckCircle2 className="w-4 h-4 text-white" />}
-              </div>
-            </div>
-            <span className="text-sm font-medium text-[#086788]/70 leading-snug pt-0.5">I agree to the Terms of Service & Privacy Policy, and consent to receive my results via email.</span>
-          </label>
-          <button type="submit" disabled={!email || !agreed || isSubmitting} className="w-full min-h-[64px] bg-[#086788] hover:bg-[#06aed5] text-white rounded-xl font-black text-xl transition-all shadow-md hover:-translate-y-1 flex items-center justify-center gap-3 disabled:opacity-50 disabled:hover:translate-y-0 cursor-pointer">
-            {isSubmitting ? "Saving..." : "Reveal My Profile"} <ArrowRight className="w-6 h-6" />
-          </button>
-        </form>
-      </div>
-    );
-  }
+  /** The optional email capture, rendered beneath whatever result shows. */
+  const emailOffer = (
+    <EmailResultOffer
+      className="px-6 pb-16"
+      onSubmit={handleEmailSubmit}
+      email={email}
+      setEmail={setEmail}
+      agreed={agreed}
+      setAgreed={setAgreed}
+      saving={savingEmail}
+      saved={emailSaved}
+    />
+  );
 
   if (showResult && resultData) {
     if (resultData.type === "error") return <div className="text-center py-20 font-black text-[#dd1c1a]">Analysis Failed. Please refresh.</div>;
     
-    if (resultData.type === "attachment") return <div ref={topRef} className="w-full animate-in fade-in duration-500"><AttachmentReport profile={resultData.profile} demographics={resultData.demographics} rawAnswers={resultData.rawAnswers} email={resultData.email} /></div>;
+    if (resultData.type === "attachment") return <div ref={topRef} className="w-full animate-in fade-in duration-500"><AttachmentReport profile={resultData.profile} demographics={resultData.demographics} rawAnswers={resultData.rawAnswers} email={resultData.email} />{emailOffer}</div>;
     
     if (resultData.type === "attraction") {
       if (!isPremiumUnlocked) {
         return (
           <div ref={topRef} className="w-full animate-in fade-in">
-            <AttractionFreeResult 
-              profile={resultData.profile} 
-              onUnlock={() => { window.location.href = "#unlock-offer"; }} 
-              isGenerating={isScoring} 
+            <AttractionFreeResult
+              profile={resultData.profile}
+              onUnlock={() => { window.location.href = "#unlock-offer"; }}
+              isGenerating={isScoring}
             />
+            {emailOffer}
           </div>
         );
       }
       return (
         <div ref={topRef} className="w-full animate-in fade-in">
           <PremiumDossier dossier={buildAttractionDossier(resultData.profile)} />
+          {emailOffer}
         </div>
       );
     }
@@ -323,10 +351,10 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       );
     }
 
-    if (resultData.type === "attractor") return <div ref={topRef} className="w-full animate-in fade-in"><PremiumDossier dossier={buildAttractorDossier(resultData.profile)} /></div>;
-    if (resultData.type === "partner") return <div ref={topRef} className="w-full animate-in fade-in"><PremiumDossier dossier={buildPartnerAttachmentDossier(resultData.profile)} /></div>;
-    if (resultData.type === "friendrole") return <div ref={topRef} className="w-full animate-in fade-in"><FriendRoleMasterReport profile={resultData.profile} /></div>;
-    if (resultData.type === "friendused") return <div ref={topRef} className="w-full animate-in fade-in"><PremiumDossier dossier={buildFriendUsedDossier(resultData.profile)} /></div>;
+    if (resultData.type === "attractor") return <div ref={topRef} className="w-full animate-in fade-in"><PremiumDossier dossier={buildAttractorDossier(resultData.profile)} />{emailOffer}</div>;
+    if (resultData.type === "partner") return <div ref={topRef} className="w-full animate-in fade-in"><PremiumDossier dossier={buildPartnerAttachmentDossier(resultData.profile)} />{emailOffer}</div>;
+    if (resultData.type === "friendrole") return <div ref={topRef} className="w-full animate-in fade-in"><FriendRoleMasterReport profile={resultData.profile} />{emailOffer}</div>;
+    if (resultData.type === "friendused") return <div ref={topRef} className="w-full animate-in fade-in"><PremiumDossier dossier={buildFriendUsedDossier(resultData.profile)} />{emailOffer}</div>;
     return <div ref={topRef} className="w-full max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-[#d6d2d2] p-8 md:p-12 text-center"><h3 className="text-3xl font-black text-[#086788] mb-8">{resultData.title || "Result"}</h3><SharePrintButtons /></div>;
   }
 
