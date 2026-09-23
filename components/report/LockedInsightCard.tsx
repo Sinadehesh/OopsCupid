@@ -91,7 +91,7 @@ export default function LockedInsightCard({
         </button>
         {/* LOSS AVERSION — and it's true: answers are purged after 24h */}
         <p className={`text-center text-[11px] font-bold mt-2.5 ${isDarkTheme ? 'text-white/40' : 'text-slate-400'}`}>
-          Your answers leave our servers within 24 hours. Your results stay on this
+          Your answers leave our servers within 48 hours. Your results stay on this
           device so you can reopen your report.
         </p>
       </div>

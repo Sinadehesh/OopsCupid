@@ -72,7 +72,7 @@ export default function UnlockBanner({ primaryStyle = "Anxious Preoccupied" }: U
           <div className="hidden sm:block w-1 h-1 bg-slate-600 rounded-full"></div>
           <div className="flex items-center gap-2">
             <Clock className="w-5 h-5 text-rose-400" />
-            <span><strong>Privacy:</strong> Your answers leave our servers in 24 hrs.</span>
+            <span><strong>Privacy:</strong> Your answers leave our servers in 48 hrs.</span>
           </div>
         </div>
 

@@ -91,9 +91,9 @@ export default function PrivacyPage() {
             30 days, except where retention is required by law.
           </p>
           <p>
-            <strong>Quiz answers are held for 24 hours.</strong> The individual answers you give
+            <strong>Quiz answers are held for up to 48 hours.</strong> The individual answers you give
             in an assessment, and the profile computed from them, are erased from our servers by an
-            automated job within 24 hours of submission. After that we retain only your email
+            automated job that runs daily, within 48 hours of submission. After that we retain only your email
             address, which quiz you took, and the date &mdash; not your answers.
           </p>
           <p>

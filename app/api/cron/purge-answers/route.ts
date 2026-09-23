@@ -18,7 +18,10 @@ export const runtime = "nodejs";
  * (email, quizType, timestamps) so the mailing list and the purchase
  * history still work — which is what the claim actually covers.
  *
- * Scheduled hourly by vercel.json. Protected by CRON_SECRET: Vercel sends
+ * Scheduled daily by vercel.json (03:00 UTC). Hobby plans allow one run
+ * per day — an hourly expression makes Vercel REJECT THE WHOLE BUILD with
+ * cron_jobs_limits_reached, which silently stops every deploy. Do not
+ * shorten this without checking the plan. Protected by CRON_SECRET: Vercel sends
  * it as a Bearer token, and without the variable set the route refuses
  * rather than allowing anyone to trigger a mass update.
  */
