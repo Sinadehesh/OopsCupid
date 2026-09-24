@@ -45,3 +45,68 @@ model Purchase {
   @@index([email])
   @@index([needsScheduling])
 }
+
+// ── NEXTAUTH / AUTH.JS ──────────────────────────────────────────────────
+//
+// These four models are required by @auth/prisma-adapter. They were never
+// added, so `prisma.account` was undefined and every sign-in attempt died
+// with `Cannot read properties of undefined (reading 'findUnique')` inside
+// getUserByAccount — an AdapterError on /api/auth/[...nextauth]. Login had
+// never worked.
+//
+// Shapes follow the Auth.js v5 Prisma schema exactly; the adapter selects
+// these field names literally, so renaming a column breaks sign-in rather
+// than causing a type error.
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts Account[]
+  sessions Session[]
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  // OAuth tokens can exceed varchar limits on Postgres — @db.Text is not
+  // optional here.
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
