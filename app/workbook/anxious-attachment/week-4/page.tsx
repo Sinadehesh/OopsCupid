@@ -15,6 +15,7 @@ import {
   Lightbulb,
   BookOpen,
 } from 'lucide-react';
+import WeekReview from "@/components/workbook/WeekReview";
 
 export default function Week4Narrative() {
   const [isAwarenessActive, setIsAwarenessActive] = useState(false);
@@ -366,6 +367,11 @@ export default function Week4Narrative() {
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
         </section>
+
+
+        {/* The end-of-week review: reads what they wrote across the
+            week and responds to it. This is what the bundle buys. */}
+        <WeekReview workbook="anxious-attachment" week={4} />
 
       </main>
     </div>

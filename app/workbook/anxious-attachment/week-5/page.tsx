@@ -14,6 +14,7 @@ import {
   PauseCircle,
   PenLine,
 } from 'lucide-react';
+import WeekReview from "@/components/workbook/WeekReview";
 
 /* ─────────────────────────────────────────────
    Design-system helpers
@@ -431,6 +432,11 @@ export default function Week5Communication() {
             <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
           </a>
         </section>
+
+
+        {/* The end-of-week review: reads what they wrote across the
+            week and responds to it. This is what the bundle buys. */}
+        <WeekReview workbook="anxious-attachment" week={5} />
 
       </main>
     </div>

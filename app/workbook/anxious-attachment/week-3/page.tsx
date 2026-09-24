@@ -15,6 +15,7 @@ import {
   PenTool,
   BookOpen,
 } from 'lucide-react';
+import WeekReview from "@/components/workbook/WeekReview";
 
 export default function Week3Boundaries() {
   const [boundaryLevel, setBoundaryLevel] = useState(50);
@@ -344,6 +345,11 @@ export default function Week3Boundaries() {
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
         </section>
+
+
+        {/* The end-of-week review: reads what they wrote across the
+            week and responds to it. This is what the bundle buys. */}
+        <WeekReview workbook="anxious-attachment" week={3} />
 
       </main>
     </div>

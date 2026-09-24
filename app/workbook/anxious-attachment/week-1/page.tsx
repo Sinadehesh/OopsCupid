@@ -13,6 +13,7 @@ import {
   BookOpen,
   ArrowRight
 } from 'lucide-react';
+import WeekReview from "@/components/workbook/WeekReview";
 
 export default function Week1NervousSystem() {
   const [isBreathing, setIsBreathing] = useState(false);
@@ -305,6 +306,11 @@ export default function Week1NervousSystem() {
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
         </section>
+
+
+        {/* The end-of-week review: reads what they wrote across the
+            week and responds to it. This is what the bundle buys. */}
+        <WeekReview workbook="anxious-attachment" week={1} />
 
       </main>
     </div>

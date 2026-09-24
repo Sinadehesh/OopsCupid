@@ -26,7 +26,14 @@ model WorkbookEntry {
   exerciseKey String
   content     Json
   sessionId   String?
+  // saveWorkbookEntry has always passed this, but the column did not
+  // exist — so Prisma rejected every write with "Unknown argument
+  // userId", the action swallowed it, and two entries were saved in five
+  // months while everyone's writing was silently discarded.
+  userId      String?
   createdAt   DateTime @default(now())
+
+  @@index([sessionId, workbook, week])
 }
 
 model Purchase {

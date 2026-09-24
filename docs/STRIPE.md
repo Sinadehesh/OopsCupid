@@ -207,3 +207,61 @@ one-question subscales; `lib/report/composites.ts` averages those into
 dimensions with enough items to be worth charting. Do not put a
 single-item subscale on a chart — a precise-looking number built from one
 answer is worse than no number.
+
+---
+
+## The workbook and the weekly review (2026-09-24)
+
+### What was wrong
+
+The €49 tier sold a "6-week workbook". Of its 49 pages, **48 had input
+boxes and 4 called the save action** — and that action passed a `userId`
+the `WorkbookEntry` table did not have, so Prisma rejected every write and
+the `catch` swallowed it silently. **Two entries were stored in five
+months.** Everything else anyone typed was gone on refresh.
+
+So the product was 42 pages of static text with decorative textareas. That
+does not justify €49, and no amount of better copy would have.
+
+### What makes it worth the price now
+
+`/api/workbook/review` reads a week of the buyer's **own writing** and
+responds to it — quoting their words back, naming what shifted between
+days, flagging where two entries contradict each other, and setting one
+concrete task. The prompt explicitly forbids encouragement and summary,
+because a model told to be supportive produces exactly the horoscope
+filler that made the old workbook feel cheap.
+
+It is gated on `workbook` entitlement, so it is what the bundle buys.
+
+### AI provider
+
+`lib/ai/client.ts` is provider-agnostic. DeepSeek, Moonshot (Kimi) and
+OpenAI share a wire format, so the model is configuration:
+
+| Variable | Values | Default |
+|---|---|---|
+| `AI_PROVIDER` | `deepseek` · `moonshot` · `openai` | `deepseek` |
+| `AI_API_KEY` | key for that provider | — |
+| `AI_MODEL` | override the default model | per provider |
+
+Provider-specific keys (`DEEPSEEK_API_KEY`, `MOONSHOT_API_KEY`,
+`OPENAI_API_KEY`) are also read, and `OPENAI_API_KEY` remains the final
+fallback so the existing attachment report is untouched.
+
+**Why not just OpenAI:** a review reads several hundred words and writes
+several hundred back. On DeepSeek that is a fraction of a cent; on GPT-4o
+it is real money per review. At €49 with unknown volume, being able to
+move providers without a deploy is worth the small abstraction.
+
+Moonshot: use `https://api.moonshot.cn/v1` instead of `.ai` for a
+mainland-China account — set `AI_MODEL` if that account offers different
+model names.
+
+### Persistence
+
+`WorkbookExercise` writes twice on purpose: localStorage synchronously (so
+a closed tab never costs someone their work even offline) and the database
+debounced (because the review reads across days and cannot see
+localStorage). Entries are grouped by a per-device `sessionId`, so the
+review works without an account — sign-in is optional.

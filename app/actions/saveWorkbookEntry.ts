@@ -1,5 +1,6 @@
 'use server';
 
+import type { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 import { auth } from '@/lib/auth';
 
@@ -14,8 +15,15 @@ interface WorkbookEntry {
 
 export async function saveWorkbookEntry(entry: WorkbookEntry) {
   try {
-    const session = await auth();
-    const userId = session?.user?.id ?? undefined;
+    // Signing in is optional, and auth() throws rather than returning null
+    // when it is misconfigured — which must not cost someone their work.
+    let userId: string | undefined;
+    try {
+      const session = await auth();
+      userId = session?.user?.id ?? undefined;
+    } catch {
+      userId = undefined;
+    }
 
     await prisma.workbookEntry.create({
       data: {
@@ -23,14 +31,16 @@ export async function saveWorkbookEntry(entry: WorkbookEntry) {
         week: entry.week,
         day: entry.day,
         exerciseKey: entry.exerciseKey,
-        content: entry.content,
+        content: entry.content as Prisma.InputJsonValue,
         sessionId: entry.sessionId,
         userId,
       },
     });
     return { success: true };
   } catch (error) {
-    console.error('WorkbookEntry save failed:', error);
+    // This used to fail on every call and say nothing. Loud now: losing
+    // someone's written work is the worst failure this product has.
+    console.error('[saveWorkbookEntry] FAILED — user work lost:', error);
     return { success: false };
   }
 }

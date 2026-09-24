@@ -13,6 +13,7 @@ import {
   MapPin,
   HeartHandshake,
 } from 'lucide-react';
+import WeekReview from "@/components/workbook/WeekReview";
 
 /* ─────────────────────────────────────────────
    Design-system constants
@@ -465,6 +466,11 @@ export default function Week6EarnedSecurity() {
             Complete Program
           </a>
         </section>
+
+
+        {/* The end-of-week review: reads what they wrote across the
+            week and responds to it. This is what the bundle buys. */}
+        <WeekReview workbook="anxious-attachment" week={6} />
 
       </main>
     </div>
