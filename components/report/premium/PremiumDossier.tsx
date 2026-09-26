@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import {
   Activity, BarChart3, Brain, MessageSquareQuote, ClipboardCheck,
-  ChevronDown, CheckCircle2, Fingerprint, HelpCircle, Sparkles,
+  ChevronDown, CheckCircle2, Fingerprint, HelpCircle, Sparkles, Quote,
 } from "lucide-react";
 import RiskGauge from "@/components/report/charts/RiskGauge";
 import SubscaleRadar from "@/components/report/charts/SubscaleRadar";
@@ -12,6 +12,8 @@ import CoachingUpsell from "@/components/offers/CoachingUpsell";
 import { scoreToSeverity } from "@/lib/offers/catalog";
 import type { Dossier } from "@/lib/report/dossier";
 import { insightFor, intensityLabel, tierOf } from "@/lib/report/dossier";
+import { hasEvidence } from "@/lib/report/evidence";
+import YourAnswers from "./YourAnswers";
 
 /**
  * PREMIUM DOSSIER
@@ -20,14 +22,18 @@ import { insightFor, intensityLabel, tierOf } from "@/lib/report/dossier";
  * lib/report/dossier.ts) and lays it out as five sections:
  *
  *   01 Executive summary — the verdict, as a gauge and three hero numbers
- *   02 Data breakdown    — radar + magnitude bars + per-dimension writing
- *   03 Deep dive         — why the pattern exists
- *   04 Scripts           — what to actually say
- *   05 Plan              — a dated fortnight, not a list of adjectives
+ *   02 Your own answers  — quoted back, with the contradictions in them
+ *   03 Data breakdown    — radar + magnitude bars + per-dimension writing
+ *   04 Deep dive         — why the pattern exists
+ *   05 Scripts           — what to actually say
+ *   06 Plan              — a dated fortnight, not a list of adjectives
  *
- * Charts do the comparing, prose does the explaining. Nothing here is
- * band-generic: every dimension carries its own mechanism and counter-move,
- * so two people in the same band read two different reports.
+ * Charts do the comparing, prose does the explaining, and section 02 does
+ * the proving. That section is the one that earns the price: the writing in
+ * every other section is chosen by her score from a shelf of prepared
+ * paragraphs, so a reader who answers differently but lands in the same
+ * band would otherwise get the same report and be right to resent it. What
+ * she wrote herself cannot be pre-written.
  */
 
 function SectionHeader({
@@ -277,9 +283,23 @@ export default function PremiumDossier({
           </div>
         </section>
 
-        {/* ── 02 DATA BREAKDOWN ──────────────────────────────────────── */}
+        {/* ── 02 YOUR OWN ANSWERS ────────────────────────────────────── */}
+        {hasEvidence(dossier.evidence) && (
+          <section>
+            <SectionHeader
+              no="02"
+              kicker="Your own words"
+              title="What you actually told us"
+              icon={Quote}
+              accent={accent}
+            />
+            <YourAnswers evidence={dossier.evidence} accent={accent} />
+          </section>
+        )}
+
+        {/* ── 03 DATA BREAKDOWN ──────────────────────────────────────── */}
         <section>
-          <SectionHeader no="02" kicker="The numbers" title="Your data, dimension by dimension" icon={BarChart3} accent={accent} />
+          <SectionHeader no="03" kicker="The numbers" title="Your data, dimension by dimension" icon={BarChart3} accent={accent} />
 
           <div className="grid lg:grid-cols-2 gap-4 mb-6">
             <Card className="p-6">
@@ -319,10 +339,10 @@ export default function PremiumDossier({
           </div>
         </section>
 
-        {/* ── 03 DEEP DIVE ───────────────────────────────────────────── */}
+        {/* ── 04 DEEP DIVE ───────────────────────────────────────────── */}
         {dossier.deepDive.length > 0 && (
           <section>
-            <SectionHeader no="03" kicker="The mechanism" title="Why this pattern exists" icon={Brain} accent={accent} />
+            <SectionHeader no="04" kicker="The mechanism" title="Why this pattern exists" icon={Brain} accent={accent} />
             <div className="space-y-4">
               {dossier.deepDive.map((d, i) => (
                 <Card key={d.heading} className="p-6 md:p-8">
@@ -339,10 +359,10 @@ export default function PremiumDossier({
           </section>
         )}
 
-        {/* ── 04 SCRIPTS ─────────────────────────────────────────────── */}
+        {/* ── 05 SCRIPTS ─────────────────────────────────────────────── */}
         {dossier.scripts.length > 0 && (
           <section>
-            <SectionHeader no="04" kicker="Word for word" title="What to actually say" icon={MessageSquareQuote} accent={accent} />
+            <SectionHeader no="05" kicker="Word for word" title="What to actually say" icon={MessageSquareQuote} accent={accent} />
             <div className="space-y-4">
               {dossier.scripts.map((s) => (
                 <Card key={s.situation} className="p-6 md:p-7">
@@ -362,10 +382,10 @@ export default function PremiumDossier({
           </section>
         )}
 
-        {/* ── 05 PLAN ────────────────────────────────────────────────── */}
+        {/* ── 06 PLAN ────────────────────────────────────────────────── */}
         {dossier.plan.length > 0 && (
           <section>
-            <SectionHeader no="05" kicker="Next 14 days" title="Your action plan" icon={ClipboardCheck} accent={accent} />
+            <SectionHeader no="06" kicker="Next 14 days" title="Your action plan" icon={ClipboardCheck} accent={accent} />
             <div className="relative pl-6 md:pl-8">
               <div className="absolute left-[7px] md:left-[11px] top-2 bottom-2 w-0.5 bg-slate-200" />
               <div className="space-y-6">
@@ -388,7 +408,7 @@ export default function PremiumDossier({
         {/* ── FAQ ────────────────────────────────────────────────────── */}
         {dossier.faq && dossier.faq.length > 0 && (
           <section>
-            <SectionHeader no="06" kicker="Loose ends" title="Questions this raises" icon={HelpCircle} accent={accent} />
+            <SectionHeader no="07" kicker="Loose ends" title="Questions this raises" icon={HelpCircle} accent={accent} />
             <div className="space-y-3">
               {dossier.faq.map((f) => (
                 <Card key={f.q} className="p-6">

@@ -1,4 +1,6 @@
 import type { Dossier, Subscale, SubscaleInsight } from "@/lib/report/dossier";
+import { buildEvidence } from "@/lib/report/evidence";
+import { TOXIC_FRIENDS_QUESTIONS } from "../_data/questions";
 
 /**
  * "Are my friends bad for me?" — paid report content.
@@ -116,6 +118,8 @@ const INSIGHTS: Record<string, SubscaleInsight> = {
 };
 
 interface FriendResult {
+  /** The raw answers, present on any result computed after this shipped. */
+  answers?: Record<number, number>;
   totalScore: number;
   tier: string;
   top1: string;
@@ -225,6 +229,9 @@ export function buildFriendsBadDossier(data: FriendResult): Dossier {
     topicLabel: `${top.label.toLowerCase()} in your circle`,
     subscales,
     insights: INSIGHTS,
+    // Absent on results saved before the scoring kept answers; the report
+    // then renders without section 02 rather than inventing one.
+    evidence: data.answers ? buildEvidence(TOXIC_FRIENDS_QUESTIONS, data.answers) : undefined,
     deepDive: [
       {
         heading: "Where the cost is actually concentrated",

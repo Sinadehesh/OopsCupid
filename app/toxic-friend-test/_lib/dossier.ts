@@ -1,4 +1,6 @@
 import type { Dossier, Subscale, SubscaleInsight } from "@/lib/report/dossier";
+import { buildEvidence, humanise } from "@/lib/report/evidence";
+import { TOXIC_FRIEND_QUESTIONS, OPTIONS } from "../_data/questions";
 
 /**
  * "Toxic friend test" — paid report content.
@@ -86,6 +88,8 @@ const INSIGHTS: Record<string, SubscaleInsight> = {
 };
 
 interface ToxicResult {
+  /** Raw answers, present on results computed after this shipped. */
+  answers?: Record<string, string>;
   riskScore: number;
   tier: number;
   archetype: string;
@@ -155,6 +159,21 @@ const BANDS: Record<number, { id: string; label: string; accent: string; verdict
 export function buildToxicFriendDossier(data: ToxicResult): Dossier {
   const band = BANDS[data.tier] ?? BANDS[1];
 
+  // Validity items are attention checks, not statements about her life;
+  // they are excluded from the score and have no business being quoted.
+  const evidence = data.answers
+    ? buildEvidence(
+        TOXIC_FRIEND_QUESTIONS.filter((q) => q.module !== "validity").map((q) => ({
+          id: q.id,
+          text: q.text,
+          category: humanise(q.subscale),
+          options: OPTIONS[q.responseType],
+          min: 0,
+        })),
+        data.answers
+      )
+    : undefined;
+
   const subscales: Subscale[] = Object.entries(MEASURES).map(([key, m]) => ({
     key,
     label: m.label,
@@ -208,6 +227,7 @@ export function buildToxicFriendDossier(data: ToxicResult): Dossier {
     archetypeLabel: "Closest pattern match",
     topicLabel: "this friendship",
     subscales,
+    evidence,
     insights: INSIGHTS,
     deepDive,
     scripts: [

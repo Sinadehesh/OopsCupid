@@ -1,4 +1,6 @@
 import type { Dossier, Subscale, SubscaleInsight } from "@/lib/report/dossier";
+import { buildEvidence, fromBattery } from "@/lib/report/evidence";
+import { friendUsedQuestions } from "@/lib/psychometrics/friend-used/questions";
 
 /**
  * "Are your friends using you?" — paid report content.
@@ -169,7 +171,7 @@ const BANDS = [
   },
 ];
 
-export function buildFriendUsedDossier(raw: { profile: FriendUsedProfile } | FriendUsedProfile): Dossier {
+export function buildFriendUsedDossier(raw: { rawAnswers?: Record<string, number | string>; profile: FriendUsedProfile } | FriendUsedProfile): Dossier {
   const profile: FriendUsedProfile = (raw as any).profile ?? raw;
   const n = profile.normalizedScores ?? {};
   const score = Math.max(0, Math.min(100, Math.round(profile.useRiskIndex ?? 0)));
@@ -199,6 +201,11 @@ export function buildFriendUsedDossier(raw: { profile: FriendUsedProfile } | Fri
     archetypeLabel: "Your role in this dynamic",
     topicLabel: "what this friendship is costing you",
     subscales,
+    // Quoted straight back to her. Missing on results saved before the
+    // widget kept the answers, and the section is then simply absent.
+    evidence: "rawAnswers" in raw && raw.rawAnswers
+      ? buildEvidence(fromBattery(friendUsedQuestions as any), raw.rawAnswers)
+      : undefined,
     insights: INSIGHTS,
     deepDive: [
       {

@@ -1,4 +1,6 @@
 import type { Dossier, Subscale, SubscaleInsight } from "@/lib/report/dossier";
+import { buildEvidence, humanise } from "@/lib/report/evidence";
+import { gaslightingQuestions } from "@/lib/psychometrics/gaslighting/questions";
 
 /**
  * "Is he gaslighting me?" — paid report content.
@@ -77,6 +79,8 @@ const INSIGHTS: Record<string, SubscaleInsight> = {
 
 interface Subscale_ { key: string; label: string; score: number; max: number; pct: number }
 interface GaslightingResult {
+  /** Raw answers, present on results computed after this shipped. */
+  answers?: Record<number, number>;
   totalScore: number; maxScore: number;
   tacticsScore: number; tacticsMax: number;
   impactScore: number; impactMax: number;
@@ -206,6 +210,20 @@ export function buildGaslightingDossier(result: GaslightingResult): Dossier {
     archetypeLabel: "Where this sits",
     topicLabel: "what he is doing and how to hold your ground",
     subscales,
+    // Her own answers, quoted. This battery is 0-based ("Never" is 0) and
+    // names its dimensions in snake_case, so both are mapped here.
+    evidence: result.answers
+      ? buildEvidence(
+          gaslightingQuestions.map((q) => ({
+            id: q.id,
+            text: q.text,
+            category: humanise(q.subscale),
+            options: ["Never", "Rarely", "Sometimes", "Often", "Very Often"],
+            min: 0,
+          })),
+          result.answers
+        )
+      : undefined,
     insights: INSIGHTS,
     deepDive,
     scripts: [

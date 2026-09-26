@@ -105,6 +105,8 @@ export function calculateToxicScores(answers: Record<string, string>) {
   }
 
   return {
+    // Kept so the paid report can quote her own answers back to her.
+    answers,
     riskScore,
     tier,
     archetype,

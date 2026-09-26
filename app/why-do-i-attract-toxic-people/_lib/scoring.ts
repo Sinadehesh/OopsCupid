@@ -57,5 +57,9 @@ export function calculateBadGuysScore(answers: Record<number, number>) {
     customHeadline = "You confuse rarity with value and adrenaline with destiny.";
   }
 
-  return { totalScore, tier, top1, sortedSubcategories, customHeadline };
+    // Keep the answers. Discarding them is what made the paid report
+  // impossible to justify: without them it can only print a paragraph
+  // chosen by band, identically for two people who answered oppositely.
+  // See lib/report/evidence.ts.
+  return { answers, totalScore, tier, top1, sortedSubcategories, customHeadline };
 }

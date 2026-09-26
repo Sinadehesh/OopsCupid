@@ -1,11 +1,19 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Lock, Loader2 } from "lucide-react";
+import { Lock, Loader2, Check } from "lucide-react";
 import CheckoutButton from "@/components/offers/CheckoutButton";
 import { trackPaywallView } from "@/lib/track";
 
 type Status = "checking" | "granted" | "denied";
+
+const DEFAULT_INCLUSIONS = [
+  "Every statement you marked strongest, quoted back with your own answer",
+  "The places your answers disagree with each other — and what that narrows it to",
+  "A written explanation of each dimension you scored on, not just the number",
+  "Word-for-word scripts for the conversations this raises",
+  "A dated 14-day plan, and answers to what it leaves open",
+];
 
 /**
  * PREMIUM GATE
@@ -23,12 +31,21 @@ export default function PremiumGate({
   children,
   returnTo,
   title = "Your full report is ready",
-  blurb = "You've seen the summary. The complete analysis — every score explained, the scripts, and your action plan — is one step away.",
+  blurb = "You've seen the summary. The full report reads your actual answers back to you — including the ones that contradict each other — and works out what to do about them.",
+  /**
+   * What is behind the paywall, in the buyer's terms. Listed because a card
+   * that says only "the complete analysis" asks somebody to pay for a
+   * surprise, and a surprise is what makes a report feel like a swindle
+   * even when it is good. Every line here has to be checkable against the
+   * report itself — see docs/PAID-CONTENT.md.
+   */
+  inclusions = DEFAULT_INCLUSIONS,
 }: {
   children: React.ReactNode;
   returnTo: string;
   title?: string;
   blurb?: string;
+  inclusions?: string[];
 }) {
   const [status, setStatus] = useState<Status>("checking");
 
@@ -90,7 +107,16 @@ export default function PremiumGate({
             <Lock className="w-7 h-7 text-[#E07850]" />
           </div>
           <h1 className="text-2xl md:text-3xl font-bold text-[#3A556C] mb-3">{title}</h1>
-          <p className="text-[#5E7183] font-medium leading-relaxed mb-8">{blurb}</p>
+          <p className="text-[#5E7183] font-medium leading-relaxed mb-7">{blurb}</p>
+
+          <ul className="text-left space-y-3 mb-8">
+            {inclusions.map((item) => (
+              <li key={item} className="flex gap-3">
+                <Check className="w-[18px] h-[18px] text-[#E07850] shrink-0 mt-[3px]" />
+                <span className="text-sm font-medium text-[#5E7183] leading-snug">{item}</span>
+              </li>
+            ))}
+          </ul>
 
           <CheckoutButton
             sku="premium-report"

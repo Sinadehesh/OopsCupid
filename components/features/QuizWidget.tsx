@@ -201,6 +201,10 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const revealResult = async (capturedEmail?: string) => {
     setIsSubmitting(true);
 
+    // rawAnswers travels with every result. The paid report quotes the
+    // buyer's own statements back to her, and it cannot do that from a
+    // score — which is precisely why the reports read like leaflets while
+    // these branches were throwing the answers away.
     let tempResultData: any = null;
 
     try {
@@ -211,19 +215,19 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
         const profile = generatePsychologicalProfile(answers, hasChildren);
         tempResultData = { profile, demographics: { isSingle, gender, hasChildren }, rawAnswers: answers, type: "attachment", email };
       } else if (quizName === "attraction-patterns") {
-        tempResultData = { profile: generateAttractionProfile(answers), type: "attraction" };
+        tempResultData = { profile: generateAttractionProfile(answers), rawAnswers: answers, type: "attraction" };
       } else if (quizName === "who-is-attracted-to-me" || quizName === "what-kind-of-person-do-i-attract") {
-        tempResultData = { profile: generateAttractorProfile(answers), type: "attractor" };
+        tempResultData = { profile: generateAttractorProfile(answers), rawAnswers: answers, type: "attractor" };
       } else if (quizName === "partners-attachment-style") {
-        tempResultData = { profile: generatePartnerAttachmentProfile(answers), type: "partner" };
+        tempResultData = { profile: generatePartnerAttachmentProfile(answers), rawAnswers: answers, type: "partner" };
       } else if (quizName === "is-he-cheating") {
-        tempResultData = { profile: generateInfidelityProfile(answers), type: "infidelity", email };
+        tempResultData = { profile: generateInfidelityProfile(answers), rawAnswers: answers, type: "infidelity", email };
       } else if (quizName === "friend-group-role") {
-        tempResultData = { profile: generateFriendRoleProfile(answers), type: "friendrole" };
+        tempResultData = { profile: generateFriendRoleProfile(answers), rawAnswers: answers, type: "friendrole" };
       } else if (quizName === "are-your-friends-using-you") {
-        tempResultData = { profile: generateFriendUsedProfile(answers), type: "friendused" };
+        tempResultData = { profile: generateFriendUsedProfile(answers), rawAnswers: answers, type: "friendused" };
       } else {
-        tempResultData = { ...computeLegacyResult(answers, quizName), type: "legacy" };
+        tempResultData = { ...computeLegacyResult(answers, quizName), rawAnswers: answers, type: "legacy" };
       }
       if (storageKey && tempResultData) saveQuizResult(storageKey, tempResultData);
       setResultData(tempResultData);

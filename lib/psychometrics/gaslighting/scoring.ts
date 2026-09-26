@@ -53,6 +53,9 @@ export function calculateGaslightingScore(answers: number[]) {
   ].sort((a, b) => b.pct - a.pct);
 
   return {
+    // Kept so the paid report can quote what she actually said. See
+    // docs/PAID-CONTENT.md.
+    answers,
     totalScore,
     maxScore: 200,
     tacticsScore,

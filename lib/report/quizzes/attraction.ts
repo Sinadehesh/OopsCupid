@@ -1,4 +1,6 @@
 import type { Dossier, Subscale, SubscaleInsight } from "@/lib/report/dossier";
+import { buildEvidence, fromBattery } from "@/lib/report/evidence";
+import { attractionQuestions } from "@/lib/psychometrics/attraction/questions";
 import { composite } from "@/lib/report/composites";
 
 /**
@@ -152,7 +154,7 @@ const BANDS = [
   },
 ];
 
-export function buildAttractionDossier(raw: { profile: AttractionProfile } | AttractionProfile): Dossier {
+export function buildAttractionDossier(raw: { rawAnswers?: Record<string, number | string>; profile: AttractionProfile } | AttractionProfile): Dossier {
   const profile: AttractionProfile = (raw as any).profile ?? raw;
   const scores = profile.normalizedScores ?? {};
   const score = Math.max(0, Math.min(100, Math.round(profile.riskIndex ?? 0)));
@@ -182,6 +184,11 @@ export function buildAttractionDossier(raw: { profile: AttractionProfile } | Att
     archetypeLabel: "Your dominant pattern",
     topicLabel: "the type you keep being drawn to",
     subscales,
+    // Quoted straight back to her. Missing on results saved before the
+    // widget kept the answers, and the section is then simply absent.
+    evidence: "rawAnswers" in raw && raw.rawAnswers
+      ? buildEvidence(fromBattery(attractionQuestions as any), raw.rawAnswers)
+      : undefined,
     insights: INSIGHTS,
     deepDive: [
       {

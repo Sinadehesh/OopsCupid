@@ -1,4 +1,6 @@
 import type { Dossier, Subscale, SubscaleInsight } from "@/lib/report/dossier";
+import { buildEvidence, fromBattery } from "@/lib/report/evidence";
+import { partnerAttachmentQuestions } from "@/lib/psychometrics/partner-attachment/questions";
 
 /**
  * "What's my partner's attachment style?" — paid report content.
@@ -89,7 +91,7 @@ const BANDS = [
   },
 ];
 
-export function buildPartnerAttachmentDossier(raw: { profile: PartnerProfile } | PartnerProfile): Dossier {
+export function buildPartnerAttachmentDossier(raw: { rawAnswers?: Record<string, number | string>; profile: PartnerProfile } | PartnerProfile): Dossier {
   const profile: PartnerProfile = (raw as any).profile ?? raw;
   const n = profile.normalizedScores ?? ({} as any);
   const score = Math.max(0, Math.min(100, Math.round(profile.volatilityIndex ?? 0)));
@@ -118,6 +120,11 @@ export function buildPartnerAttachmentDossier(raw: { profile: PartnerProfile } |
     archetypeLabel: "Closest attachment quadrant",
     topicLabel: "his attachment pattern and how to respond to it",
     subscales,
+    // Quoted straight back to her. Missing on results saved before the
+    // widget kept the answers, and the section is then simply absent.
+    evidence: "rawAnswers" in raw && raw.rawAnswers
+      ? buildEvidence(fromBattery(partnerAttachmentQuestions as any), raw.rawAnswers)
+      : undefined,
     insights: INSIGHTS,
     deepDive: [
       {

@@ -1,4 +1,6 @@
 import type { Dossier, Subscale, SubscaleInsight } from "@/lib/report/dossier";
+import { buildEvidence } from "@/lib/report/evidence";
+import { BAD_GUYS_QUESTIONS } from "../_data/questions";
 
 /**
  * "Why do I pick bad guys?" — paid report content.
@@ -118,6 +120,8 @@ const INSIGHTS: Record<string, SubscaleInsight> = {
 };
 
 interface BadGuysResult {
+  /** The raw answers, present on any result computed after this shipped. */
+  answers?: Record<number, number>;
   totalScore: number;
   tier: string;
   top1: string;
@@ -229,6 +233,9 @@ export function buildBadGuysDossier(data: BadGuysResult): Dossier {
     topicLabel: `your pull toward ${top.label.toLowerCase()}`,
     subscales,
     insights: INSIGHTS,
+    // Absent on results saved before the scoring kept answers; the report
+    // then renders without section 02 rather than inventing one.
+    evidence: data.answers ? buildEvidence(BAD_GUYS_QUESTIONS, data.answers) : undefined,
     deepDive: [
       {
         heading: "The two dimensions doing the most work",

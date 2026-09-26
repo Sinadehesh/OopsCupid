@@ -1,3 +1,5 @@
+import type { Evidence } from "./evidence";
+
 /**
  * PREMIUM DOSSIER — shared content contract
  *
@@ -90,6 +92,13 @@ export interface Dossier {
   faq?: { q: string; a: string }[];
   /** Phrase the coaching upsell uses, e.g. "his pattern of stonewalling". */
   topicLabel?: string;
+  /**
+   * The buyer's own answers, quoted back. Optional only because not every
+   * quiz has been migrated to keep them yet — but a report without this is
+   * a report that could have been written before she arrived, and it should
+   * not be charged for. See docs/PAID-CONTENT.md.
+   */
+  evidence?: Evidence;
 }
 
 /** Which tier of writing a subscale score falls into. */
