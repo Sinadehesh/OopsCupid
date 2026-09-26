@@ -95,6 +95,40 @@ function renderEntry(e: Entry): string {
  * was pasted into the wrong variable looks identical from the outside to a
  * model that refused — both are a 502 and a shrug.
  */
+/**
+ * Say what actually went wrong.
+ *
+ * "Could not be generated just now" covers a rejected key, an empty
+ * account balance, a model name that does not exist and a genuine outage
+ * with one sentence, which means nobody — buyer or owner — can tell a
+ * five-minute wait from a setting that will never work. None of this
+ * reveals the key; the reader is already a paying customer.
+ */
+function explain(err: any): string {
+  const status = err?.status ?? err?.response?.status;
+  const kept = " Your entries are saved.";
+
+  if (status === 401 || status === 403) {
+    return "The review service rejected our credentials, so this is our problem to fix, not something waiting will solve. Please let us know and we will sort it out." + kept;
+  }
+  if (status === 402) {
+    return "The review service is reporting an unpaid balance on our side. Again ours to fix — please tell us and we will." + kept;
+  }
+  if (status === 404) {
+    return "The review service does not recognise the model we asked for, which is a configuration mistake on our side." + kept;
+  }
+  if (status === 429) {
+    return "The review service is rate-limiting us. Give it a few minutes and try again." + kept;
+  }
+  if (status && status >= 500) {
+    return "The review service is having trouble at its end. Try again in a few minutes." + kept;
+  }
+  if (/timeout|aborted|ETIMEDOUT/i.test(String(err?.message ?? ""))) {
+    return "The review took too long to come back. Try again — a second attempt usually lands." + kept;
+  }
+  return "The review could not be generated just now. Try again shortly." + kept;
+}
+
 export async function GET() {
   return NextResponse.json({
     provider: aiProviderName(),
@@ -171,9 +205,17 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ review: JSON.parse(raw), days: entries.length });
   } catch (err: any) {
     // Never lose their work over a failed review.
-    console.error("[workbook/review] generation failed:", err?.message ?? err);
+    console.error(
+      `[workbook/review] generation failed (${aiProviderName()}/${aiModel()}):`,
+      err?.status ?? "",
+      err?.message ?? err
+    );
     return NextResponse.json(
-      { error: "The review could not be generated just now. Your entries are saved — try again shortly." },
+      {
+        error: "not-generated",
+        message: explain(err),
+        provider: aiProviderName(),
+      },
       { status: 502 }
     );
   }
