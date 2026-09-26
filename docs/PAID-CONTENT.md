@@ -80,6 +80,16 @@ Specifically banned, because we have shipped all of them:
 - **Clinical claims.** "Research-informed" is defensible. "Clinically
   validated" is not, for any instrument on this site.
 
+## Where it is wired
+
+All fifteen paid reports. Ten render through `PremiumDossier`, which places
+the section itself; the other five plus the toxic-attraction report are
+hand-built pages that drop in `YourAnswersSection`.
+
+A result saved on someone's device before this shipped has no answers in
+it. Those reports render with the section absent rather than faked, and the
+buyer sees it after retaking the quiz.
+
 ## Applying it to a new quiz
 
 1. Give the question bank `{ id, text, category }`, or map onto that with

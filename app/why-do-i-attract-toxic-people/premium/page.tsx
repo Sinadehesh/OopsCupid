@@ -5,6 +5,9 @@ import PremiumReport from "../_components/PremiumReport";
 import OfferLadder from "@/components/offers/OfferLadder";
 import { ShieldAlert } from "lucide-react";
 import PremiumGate from "@/components/report/PremiumGate";
+import YourAnswersSection from "@/components/report/premium/YourAnswersSection";
+import { buildEvidence } from "@/lib/report/evidence";
+import { BAD_GUYS_QUESTIONS } from "../_data/questions";
 import ScriptsAndPlan from "@/components/report/premium/ScriptsAndPlan";
 import { buildBadGuysDossier } from "@/app/why-do-i-pick-bad-guys/_lib/dossier";
 
@@ -77,6 +80,13 @@ export default function PremiumToxicAttractionPage() {
     <PremiumGate returnTo="/why-do-i-attract-toxic-people/premium">
       <div className="min-h-screen bg-[#fafafa]">
         <PremiumReport data={data} handleShare={handleShare} />
+        <YourAnswersSection
+          accent="#f43f5e"
+          evidence={
+            data?.answers ? buildEvidence(BAD_GUYS_QUESTIONS, data.answers) : undefined
+          }
+          no="03"
+        />
         {/* The checkout page promises scripts and an action plan; this
             report had neither. This quiz runs the SAME scoring instrument
             as /why-do-i-pick-bad-guys (calculateBadGuysScore), so its

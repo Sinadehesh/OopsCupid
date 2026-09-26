@@ -135,7 +135,7 @@ export default function ManipulationQuizEngine() {
   };
 
   const handleUnlock = async () => {
-    if (typeof window !== 'undefined') localStorage.setItem('manipulation_result', JSON.stringify({ ...result, email, quizType: "manipulation" }));
+    if (typeof window !== 'undefined') localStorage.setItem('manipulation_result', JSON.stringify({ ...result, rawAnswers: answers, email, quizType: "manipulation" }));
     if (email) {
       try {
         await fetch('/api/leads/unlock', { 

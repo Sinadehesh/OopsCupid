@@ -6,6 +6,9 @@ import { AlertTriangle, ArrowRight, Sparkles, Target, Eye, Map, Users, ShieldChe
 import Link from "next/link";
 import SharePrintButtons from "@/components/ui/SharePrintButtons";
 import PremiumGate from "@/components/report/PremiumGate";
+import YourAnswersSection from "@/components/report/premium/YourAnswersSection";
+import { buildEvidence, fromBattery } from "@/lib/report/evidence";
+import { friendRoleQuestions } from "@/lib/psychometrics/friend-role/questions";
 
 // Deep per-archetype premium content
 const PREMIUM_CONTENT: Record<string, {
@@ -361,6 +364,15 @@ export default function FriendRolePremiumPage() {
               Start Now <ArrowRight className="w-6 h-6" />
             </Link>
           </div>
+
+          <YourAnswersSection
+            accent="#00A6ED"
+            evidence={
+              profile?.rawAnswers
+                ? buildEvidence(fromBattery(friendRoleQuestions as any), profile.rawAnswers)
+                : undefined
+            }
+          />
 
           <div className="pt-4 pb-12"><SharePrintButtons /></div>
         </div>

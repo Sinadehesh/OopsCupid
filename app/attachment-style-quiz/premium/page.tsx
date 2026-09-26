@@ -7,7 +7,35 @@ import { AlertTriangle, LineChart, Target, ArrowRight, Heart, Briefcase, Users, 
 import Link from "next/link";
 import SharePrintButtons from "@/components/ui/SharePrintButtons";
 import PremiumGate from "@/components/report/PremiumGate";
+import YourAnswersSection from "@/components/report/premium/YourAnswersSection";
+import { buildEvidence } from "@/lib/report/evidence";
+import { attachmentQuestions } from "@/lib/psychometrics/attachment/questions";
 import { buildAttachmentFallback } from "@/lib/report/attachmentFallback";
+
+/**
+ * The ECR items run on a seven-point scale anchored only at its ends, so
+ * five of the seven choices are shown to the respondent as bare numbers.
+ * "You answered 6" tells her nothing, so the positions are named here —
+ * which is how an endpoint-anchored agreement scale is normally read. Every
+ * other scale in this battery is already worded, and is quoted untouched.
+ */
+const ECR_SCALE = [
+  "Strongly disagree", "Disagree", "Slightly disagree", "Neutral",
+  "Slightly agree", "Agree", "Strongly agree",
+];
+
+/** Demographics are not statements about her; they are not quoted back. */
+function attachmentEvidenceItems() {
+  return (attachmentQuestions as any[])
+    .filter((q) => q.section !== "demographics" && q.subscale)
+    .map((q) => ({
+      id: q.id,
+      text: q.text,
+      category: q.subscale,
+      options: q.options?.length === 7 ? ECR_SCALE : q.options,
+      min: 1,
+    }));
+}
 
 export default function PremiumAttachmentReportPage() {
   const router = useRouter();
@@ -242,6 +270,15 @@ export default function PremiumAttachmentReportPage() {
                 Start This Diagnostic Now <ArrowRight className="w-6 h-6" />
               </Link>
             </div>
+
+            <YourAnswersSection
+              accent="#086788"
+              evidence={
+                userData?.rawAnswers
+                  ? buildEvidence(attachmentEvidenceItems(), userData.rawAnswers)
+                  : undefined
+              }
+            />
 
             <div className="pt-8 pb-12"><SharePrintButtons /></div>
           </div>

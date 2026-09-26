@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import InfidelityPremiumReport from "../_components/InfidelityPremiumReport";
 import PremiumGate from "@/components/report/PremiumGate";
+import YourAnswersSection from "@/components/report/premium/YourAnswersSection";
+import { buildEvidence, fromBattery } from "@/lib/report/evidence";
+import { infidelityQuestions } from "@/lib/psychometrics/infidelity/questions";
 
 interface ReportData {
   score: number;
@@ -84,6 +87,14 @@ export default function CheatingPremiumPage() {
   return (
     <PremiumGate returnTo="/is-he-cheating/premium">
       <InfidelityPremiumReport data={data} />
+      <YourAnswersSection
+        accent="#dd1c1a"
+        evidence={
+          (data as any)?.rawAnswers
+            ? buildEvidence(fromBattery(infidelityQuestions as any), (data as any).rawAnswers)
+            : undefined
+        }
+      />
     </PremiumGate>
   );
 }
