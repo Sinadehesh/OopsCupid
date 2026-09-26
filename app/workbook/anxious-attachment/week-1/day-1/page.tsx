@@ -6,6 +6,7 @@ import {
   RefreshCcw, Play, Square, Info, ShieldCheck,
 } from 'lucide-react';
 import { saveWorkbookEntry } from '@/app/actions/saveWorkbookEntry';
+import { deviceSessionId } from '@/lib/workbook/session';
 
 /* ─────────────────────────────────────────────
    Design-system constants
@@ -57,6 +58,7 @@ export default function Day1() {
       setThreatSaved(true);
       saveWorkbookEntry({
         workbook: 'anxious-attachment',
+        sessionId: deviceSessionId(),
         week: 1,
         day: 1,
         exerciseKey: 'threat-decoder',
@@ -95,6 +97,7 @@ export default function Day1() {
     setIsSaving(true);
     const result = await saveWorkbookEntry({
       workbook: 'anxious-attachment',
+      sessionId: deviceSessionId(),
       week: 1,
       day: 1,
       exerciseKey: 'integration-reflection',

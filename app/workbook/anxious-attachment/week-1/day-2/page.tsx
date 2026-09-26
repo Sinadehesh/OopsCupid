@@ -6,6 +6,7 @@ import {
   Flame, Snowflake, Crosshair, AlertTriangle, Brain, Play, Square,
 } from 'lucide-react';
 import { saveWorkbookEntry } from '@/app/actions/saveWorkbookEntry';
+import { deviceSessionId } from '@/lib/workbook/session';
 
 const CARD =
   'rounded-[2rem] bg-white/70 backdrop-blur-xl shadow-lg shadow-indigo-100/40 border border-white/60 p-8 md:p-10';
@@ -89,6 +90,7 @@ export default function Day2() {
     const selectedBehaviors = protestBehaviors.filter((_, i) => behaviors[i]);
     await saveWorkbookEntry({
       workbook: 'anxious-attachment',
+      sessionId: deviceSessionId(),
       week: 1,
       day: 2,
       exerciseKey: 'integration-reflection',

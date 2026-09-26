@@ -44,3 +44,51 @@ export async function saveWorkbookEntry(entry: WorkbookEntry) {
     return { success: false };
   }
 }
+
+/**
+ * Save the answers on one workbook page, replacing what was there before.
+ *
+ * The autosave fires every time someone stops typing for a moment, so
+ * `create` would leave thirty rows for one paragraph and the weekly review
+ * would read the same half-finished sentence thirty times. One row per
+ * (person, workbook, week, day, exercise) is what the review expects.
+ *
+ * Replace rather than update because the set of keys changes as they fill
+ * the page in, and a partial update would leave stale answers behind.
+ */
+export async function saveWorkbookPage(entry: WorkbookEntry) {
+  if (!entry.sessionId) {
+    // Without a session id there is nothing to replace against, and
+    // appending would duplicate. Fall back to a plain insert.
+    return saveWorkbookEntry(entry);
+  }
+
+  try {
+    let userId: string | undefined;
+    try {
+      const session = await auth();
+      userId = session?.user?.id ?? undefined;
+    } catch {
+      userId = undefined;
+    }
+
+    const where = {
+      sessionId: entry.sessionId,
+      workbook: entry.workbook,
+      week: entry.week,
+      day: entry.day,
+      exerciseKey: entry.exerciseKey,
+    };
+
+    await prisma.$transaction([
+      prisma.workbookEntry.deleteMany({ where }),
+      prisma.workbookEntry.create({
+        data: { ...where, content: entry.content as Prisma.InputJsonValue, userId },
+      }),
+    ]);
+    return { success: true };
+  } catch (error) {
+    console.error('[saveWorkbookPage] FAILED — user work lost:', error);
+    return { success: false };
+  }
+}

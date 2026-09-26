@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Sparkles, Loader2, Quote, AlertTriangle, Target, GitCompareArrows } from "lucide-react";
+import { deviceSessionId } from "@/lib/workbook/session";
 
 /**
  * END-OF-WEEK REVIEW
@@ -39,10 +40,7 @@ export default function WeekReview({
   const run = async () => {
     setState("loading");
     setMessage("");
-    let sessionId = "anonymous";
-    try {
-      sessionId = localStorage.getItem("oc_workbook_session") ?? "anonymous";
-    } catch {}
+    const sessionId = deviceSessionId();
 
     try {
       const res = await fetch("/api/workbook/review", {

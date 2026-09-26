@@ -7,6 +7,7 @@ import {
   RefreshCcw, Play, Square, Info,
 } from 'lucide-react';
 import { saveWorkbookEntry } from '@/app/actions/saveWorkbookEntry';
+import { deviceSessionId } from '@/lib/workbook/session';
 
 const CARD =
   'rounded-[2rem] bg-white/70 backdrop-blur-xl shadow-lg shadow-indigo-100/40 border border-white/60 p-8 md:p-10';
@@ -62,6 +63,7 @@ export default function Day3() {
     const flippedCount = Object.values(flippedCards).filter(Boolean).length;
     await saveWorkbookEntry({
       workbook: 'anxious-attachment',
+      sessionId: deviceSessionId(),
       week: 1,
       day: 3,
       exerciseKey: 'somatic-grounding',
