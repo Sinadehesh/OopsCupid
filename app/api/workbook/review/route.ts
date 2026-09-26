@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getAI, aiModel, aiConfigured } from "@/lib/ai/client";
+import { getAI, aiModel, aiConfigured, aiProviderName } from "@/lib/ai/client";
 import { ACCESS_COOKIE, readAccessToken } from "@/lib/stripe/access";
 
 export const dynamic = "force-dynamic";
@@ -85,6 +85,22 @@ function renderEntry(e: Entry): string {
   }
   if (!parts.length) return "";
   return `--- Day ${e.day} (${e.exerciseKey})\n${parts.join("\n")}`;
+}
+
+/**
+ * Is the review actually wired up in this deployment?
+ *
+ * Deliberately says nothing secret: which provider is selected, which
+ * model, and whether a key is present. Without this, a provider key that
+ * was pasted into the wrong variable looks identical from the outside to a
+ * model that refused — both are a 502 and a shrug.
+ */
+export async function GET() {
+  return NextResponse.json({
+    provider: aiProviderName(),
+    model: aiModel(),
+    keyPresent: aiConfigured(),
+  });
 }
 
 export async function POST(req: NextRequest) {
