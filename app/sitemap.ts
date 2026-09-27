@@ -23,13 +23,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/privacy",
     "/terms",
     "/signs",
+    "/things-he-says",
   ];
 
   const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
-    priority: route === "" ? 1 : route === "/coaching" ? 0.9 : 0.7,
+    priority:
+      route === "" ? 1 : route === "/things-he-says" ? 0.9 : route === "/coaching" ? 0.9 : 0.7,
   }));
 
   // Every quiz & article funnel comes from the registry, adding a quiz

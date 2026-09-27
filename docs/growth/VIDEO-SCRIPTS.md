@@ -332,3 +332,79 @@ because nothing is.
 Expect: weeks 1–2 flat, week 3 one video does 10× the others for no
 discernible reason, weeks 4+ it starts compounding. If nothing has moved
 by day 30, change the hooks, not the topic.
+
+---
+
+# Ads for /things-he-says
+
+These point at the forty-second grid, not at a ninety-three item diagnostic.
+That distinction is the whole reason the page exists: a viewer who taps an
+advert has given you one scroll, and asking her for ninety-three answers
+spends it immediately.
+
+The phrases are the creative. Nothing needs acting, no claims are made about
+anyone, and the discomfort comes from recognition rather than from anything
+the video asserts. Read them flat. Every one of these is worse delivered
+with expression.
+
+## 1. The cold read (0:00 to 0:14)
+
+> "That never happened."
+> "You're remembering it wrong."
+> "I never said that."
+>
+> [beat]
+>
+> If you just felt something, it is because those three are the same
+> sentence. There are sixteen of them. Link in bio.
+
+Shoot as plain text on a plain background. No music with a drop, no
+trending audio that undercuts it. The pause after the third phrase does all
+the work, so leave it longer than feels comfortable.
+
+## 2. The correction (0:00 to 0:20)
+
+> People think gaslighting is somebody telling you that you are insane.
+>
+> It is mostly this: "You're too sensitive." And then the thing you
+> actually raised never gets answered. Not once, not ever.
+>
+> That is the whole mechanism. It works because each time is arguable.
+
+Ends on the mechanism, not on a call to action. The comments section
+supplies the demand.
+
+## 3. The count (0:00 to 0:15)
+
+> Sixteen sentences. Most people who take this recognise four.
+>
+> "Why do you turn everything into a fight?"
+> "After everything I've done for you."
+> "Nothing's wrong. I'm fine."
+>
+> How many did you get?
+
+Do not state a number the site cannot produce. Once there is real data on
+the page, replace "most people recognise four" with the measured figure and
+not before. An invented statistic is the fastest way to lose the only thing
+this site has, which is being accurate.
+
+## 4. The one that is not a red flag (0:00 to 0:18)
+
+> Not everything on this list is manipulation.
+>
+> "I can't keep doing this" said once, in a bad week, by somebody who comes
+> back and talks about it, is a person at the end of their rope.
+>
+> The same sentence every time you raise something is a different thing
+> entirely. The test is whether the subject ever gets answered.
+
+This one converts better than the alarming ones, and it is also the honest
+position. Being the account that says "this probably is not abuse" is worth
+more than being the account that says everything is.
+
+## 5. Comment reply format (evergreen)
+
+Screen-record the grid, tap the phrases a commenter listed, show the
+result. Ten seconds. It is the cheapest video on this list and it reuses a
+comment that already proved the demand exists.
