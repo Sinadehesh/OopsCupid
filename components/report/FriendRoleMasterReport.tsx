@@ -33,8 +33,8 @@ const ARCHETYPES: Record<string, {
 }> = {
   "The Leader": {
     subtitle: "You give the group shape and momentum.",
-    prediction: "You are the person who gives a group shape. When everyone is stuck in endless 'what should we do?' mode, you move things forward. You often become the unofficial planner, decision-maker, or stabilizer, especially in chaotic moments. Your presence makes the group feel more directed — people trust you to turn vague ideas into real plans.",
-    deepFreeInsight: "Here's what almost no one tells The Leader: the group depends on you so deeply that they've stopped asking if you're okay. You handle things so reliably that your own exhaustion becomes invisible. The friends who would drop everything for you in a crisis are often the exact ones who assume you never have a crisis. That quiet assumption — that you're always fine, always capable, always willing to take charge — is the thing that slowly drains you. Not the responsibility. The invisibility underneath it.",
+    prediction: "You are the person who gives a group shape. When everyone is stuck in endless 'what should we do?' mode, you move things forward. You often become the unofficial planner, decision-maker, or stabilizer, especially in chaotic moments. Your presence makes the group feel more directed, people trust you to turn vague ideas into real plans.",
+    deepFreeInsight: "Here's what almost no one tells The Leader: the group depends on you so deeply that they've stopped asking if you're okay. You handle things so reliably that your own exhaustion becomes invisible. The friends who would drop everything for you in a crisis are often the exact ones who assume you never have a crisis. That quiet assumption, that you're always fine, always capable, always willing to take charge, is the thing that slowly drains you. Not the responsibility. The invisibility underneath it.",
     strengths: ["Decisive and initiative-taking", "Calming in chaos", "Turns ideas into action", "People trust your judgment"],
     downsides: ["Can become bossy or overbearing", "Impatient with indecision", "Takes on too much responsibility", "Resents being under-appreciated"],
     experience: "Your friends look to you first when plans stall or decisions need to be made.",
@@ -45,7 +45,7 @@ const ARCHETYPES: Record<string, {
   "The Therapist": {
     subtitle: "You are the emotional anchor of the group.",
     prediction: "People tend to trust you with the deeper stuff, because you create a sense of safety without demanding attention for yourself. You listen closely, notice what people are feeling beneath the surface, and often know how to respond in a way that makes others feel seen rather than analyzed. You are the private support system behind the scenes.",
-    deepFreeInsight: "Here's what almost no one tells The Therapist: you have become so safe for everyone else that you've forgotten how to be unsafe yourself. You know how to hold someone else's fear. You don't always know how to let yours out. And so over time, a very specific kind of loneliness develops — not loneliness for company, but loneliness for reciprocity. For a person who listens to you the way you listen to them. Most of your friends don't even know that person is missing from your life.",
+    deepFreeInsight: "Here's what almost no one tells The Therapist: you have become so safe for everyone else that you've forgotten how to be unsafe yourself. You know how to hold someone else's fear. You don't always know how to let yours out. And so over time, a very specific kind of loneliness develops, not loneliness for company, but loneliness for reciprocity. For a person who listens to you the way you listen to them. Most of your friends don't even know that person is missing from your life.",
     strengths: ["Deeply empathetic listener", "Creates emotional safety", "Reliable in crises", "Sees beneath the surface"],
     downsides: ["Emotional exhaustion is constant", "Friends rely too heavily on you", "Difficulty setting boundaries", "Your own needs go unaddressed"],
     experience: "Your friends come to you first when something serious happens or they need to vent.",
@@ -67,7 +67,7 @@ const ARCHETYPES: Record<string, {
   "The Adventurer": {
     subtitle: "You are the spark that keeps the group from getting stale.",
     prediction: "You push people toward novelty, movement, and stories worth telling. You are often the first to suggest something spontaneous, unusual, or slightly chaotic, and your energy can pull more cautious friends out of autopilot. You help create memories by saying yes faster than most people do.",
-    deepFreeInsight: "Here's what almost no one tells The Adventurer: you move so fast and so enthusiastically through experiences that people rarely stop to ask why. The perpetual forward motion, the constant need for something new — underneath it, there is often something you are not quite ready to sit still with. The adventure is real, the joy is real. But so is the discomfort that arrives when everything stops and it's just you, quiet, alone with your own thoughts.",
+    deepFreeInsight: "Here's what almost no one tells The Adventurer: you move so fast and so enthusiastically through experiences that people rarely stop to ask why. The perpetual forward motion, the constant need for something new, underneath it, there is often something you are not quite ready to sit still with. The adventure is real, the joy is real. But so is the discomfort that arrives when everything stops and it's just you, quiet, alone with your own thoughts.",
     strengths: ["Bold and spontaneous", "Pulls others out of routine", "Energizing in slow moments", "Creates stories worth telling"],
     downsides: ["Impulsive with consequences", "Easily bored by routine", "Pushes limits others aren't ready for", "Can leave others feeling exhausted"],
     experience: "Your friends rely on you to get them out of their comfort zone.",
@@ -78,7 +78,7 @@ const ARCHETYPES: Record<string, {
   "The Peacekeeper": {
     subtitle: "You are the regulator of group tension.",
     prediction: "You notice when things are about to turn sour, and you often step in before conflict spreads through the whole group. Rather than choosing sides too quickly, you tend to understand emotional context, competing perspectives, and the hidden misunderstandings underneath arguments. You care more about repair than drama.",
-    deepFreeInsight: "Here's what almost no one tells The Peacekeeper: keeping the peace has a cost, and you are the only one paying it. Every time you soften your own opinion to avoid upsetting someone, every time you redirect a conflict before it escalates — you are doing emotional labor that goes completely unrecognized. And because you're so good at it, the group assumes the harmony is natural. They have no idea it's a service. You've quietly become the shock absorber for everyone else's unregulated behavior.",
+    deepFreeInsight: "Here's what almost no one tells The Peacekeeper: keeping the peace has a cost, and you are the only one paying it. Every time you soften your own opinion to avoid upsetting someone, every time you redirect a conflict before it escalates; you are doing emotional labor that goes completely unrecognized. And because you're so good at it, the group assumes the harmony is natural. They have no idea it's a service. You've quietly become the shock absorber for everyone else's unregulated behavior.",
     strengths: ["Fair-minded and diplomatic", "Calms group tension quickly", "Great at emotional repair", "Sees all perspectives"],
     downsides: ["Avoids necessary confrontation", "Suppresses your own needs", "Over-mediates minor issues", "Can seem passive"],
     experience: "Your friends trust you to mediate drama without taking sides.",
@@ -88,8 +88,8 @@ const ARCHETYPES: Record<string, {
   },
   "The Protector": {
     subtitle: "You are the friend people feel safe beside.",
-    prediction: "Loyalty is not abstract to you — it shows up in action. You notice disrespect quickly, you care about who is being left out or mistreated, and you are willing to step forward when someone in your circle needs backup. In many groups, this role becomes the line between 'friendly' and 'solid.'",
-    deepFreeInsight: "Here's what almost no one tells The Protector: the armor you wear for everyone else is the same armor that keeps people from getting close to you. You are fiercely loyal and genuinely brave in defending others — but because you default to strength, people rarely think to protect you back. And the few times you've been vulnerable, it probably didn't go the way you hoped. So you learned to handle things alone. What looks like toughness from the outside is, on the inside, a quiet decision that it's safer not to need anyone.",
+    prediction: "Loyalty is not abstract to you; it shows up in action. You notice disrespect quickly, you care about who is being left out or mistreated, and you are willing to step forward when someone in your circle needs backup. In many groups, this role becomes the line between 'friendly' and 'solid.'",
+    deepFreeInsight: "Here's what almost no one tells The Protector: the armor you wear for everyone else is the same armor that keeps people from getting close to you. You are fiercely loyal and genuinely brave in defending others, but because you default to strength, people rarely think to protect you back. And the few times you've been vulnerable, it probably didn't go the way you hoped. So you learned to handle things alone. What looks like toughness from the outside is, on the inside, a quiet decision that it's safer not to need anyone.",
     strengths: ["Fiercely loyal", "Defends the group publicly", "Deeply reliable in a crisis", "Notices who is excluded"],
     downsides: ["Defensiveness that escalates", "Territorial over people you love", "Overreacts to small slights", "Hard to back down from conflict"],
     experience: "Your friends know you have their back, no matter what.",
@@ -99,8 +99,8 @@ const ARCHETYPES: Record<string, {
   },
   "The Connector": {
     subtitle: "You are the social glue holding the web together.",
-    prediction: "You remember to reach out, you revive fading conversations, and you care about maintaining the web of friendship — not just your one-to-one bonds. You may be the one organizing reunions, including quieter people, remembering birthdays, or noticing when someone is slipping away.",
-    deepFreeInsight: "Here's what almost no one tells The Connector: you are why the group still exists, and almost nobody knows it. If you quietly stopped initiating for a month, three people would reach out. The rest would drift. The group would slowly dissolve. You carry the social infrastructure entirely on your own, and because it looks effortless — because you genuinely enjoy it — no one recognizes it as labor. The real cost isn't the energy. It's that you give so much relational warmth outward that almost none flows back to you.",
+    prediction: "You remember to reach out, you revive fading conversations, and you care about maintaining the web of friendship, not just your one-to-one bonds. You may be the one organizing reunions, including quieter people, remembering birthdays, or noticing when someone is slipping away.",
+    deepFreeInsight: "Here's what almost no one tells The Connector: you are why the group still exists, and almost nobody knows it. If you quietly stopped initiating for a month, three people would reach out. The rest would drift. The group would slowly dissolve. You carry the social infrastructure entirely on your own, and because it looks effortless, because you genuinely enjoy it, no one recognizes it as labor. The real cost isn't the energy. It's that you give so much relational warmth outward that almost none flows back to you.",
     strengths: ["Inclusive and thoughtful", "Maintains the whole friend web", "Revives fading connections", "Makes everyone feel seen"],
     downsides: ["Does everyone's emotional admin", "Takes distance personally", "Overextends and burns out", "Never gets that energy back"],
     experience: "Your friends count on you to keep the group alive and organized.",
@@ -122,7 +122,7 @@ const ARCHETYPES: Record<string, {
   "The Observer": {
     subtitle: "You are the quiet genius reading the room.",
     prediction: "You might not be the loudest person in the room, but you see absolutely everything. You pick up on shifting dynamics, hidden tensions, and unspoken feelings faster than anyone else. Because you spend more time watching than performing, your insights into the group are usually spot-on.",
-    deepFreeInsight: "Here's what almost no one tells The Observer: you are the most accurate person in the group and the least likely to be believed when you share what you see. You've noticed things about your friends that they haven't noticed about themselves. You've watched dynamics unfold in slow motion that everyone else only understood after the damage was done. And yet, because you deliver insights quietly — without theatrics, without demanding credit — people often discount you until, eventually, you stop offering what you see. That withdrawal is the real loss.",
+    deepFreeInsight: "Here's what almost no one tells The Observer: you are the most accurate person in the group and the least likely to be believed when you share what you see. You've noticed things about your friends that they haven't noticed about themselves. You've watched dynamics unfold in slow motion that everyone else only understood after the damage was done. And yet, because you deliver insights quietly, without theatrics, without demanding credit, people often discount you until, eventually, you stop offering what you see. That withdrawal is the real loss.",
     strengths: ["Reads people and rooms precisely", "Holds the most accurate view", "Deep insight when you speak", "Trusted with real secrets"],
     downsides: ["Can seem detached or cold", "Withholds insights to stay safe", "Underestimated constantly", "Lonely inside the group"],
     experience: "Your friends are stunned by the dynamics you notice that everyone else missed.",
@@ -133,7 +133,7 @@ const ARCHETYPES: Record<string, {
   "The Lone Wolf": {
     subtitle: "You are part of the group, but not absorbed by it.",
     prediction: "You value friendship, yet you also guard your space, autonomy, and inner world. You are less likely to rely heavily on group energy for your identity or emotional balance. You often prefer self-direction over constant closeness, and you may handle problems privately before letting anyone in.",
-    deepFreeInsight: "Here's what almost no one tells The Lone Wolf: your independence is real, but it's also become a habit so automatic that you sometimes can't tell the difference between choosing solitude and defaulting to it. The distance you maintain feels like freedom. But occasionally — in the quiet moments — it feels more like a default setting you didn't fully choose. The people who care about you often interpret your retreating as rejection. Most of them are wrong. But they don't know that, because you haven't told them.",
+    deepFreeInsight: "Here's what almost no one tells The Lone Wolf: your independence is real, but it's also become a habit so automatic that you sometimes can't tell the difference between choosing solitude and defaulting to it. The distance you maintain feels like freedom. But occasionally, in the quiet moments; it feels more like a default setting you didn't fully choose. The people who care about you often interpret your retreating as rejection. Most of them are wrong. But they don't know that, because you haven't told them.",
     strengths: ["Deeply self-contained", "Clear personal boundaries", "Steady under pressure", "Honest about your needs"],
     downsides: ["Emotional distance confuses people", "Disappears without warning", "Hard to read and reach", "Friends feel kept at arm's length"],
     experience: "Your friends love when you're present, but accept when you need to retreat.",
@@ -144,7 +144,7 @@ const ARCHETYPES: Record<string, {
   "The Chaos Friend": {
     subtitle: "A lovable tornado of fun and mild disaster.",
     prediction: "You prioritize the thrill of the moment over long-term logistics. You attract crazy situations, funny stories, and a bit of drama. You push boundaries and refuse to live a boring life, which makes you incredibly magnetic, even if you occasionally need your more responsible friends to help you navigate the fallout.",
-    deepFreeInsight: "Here's what almost no one tells The Chaos Friend: the wildness isn't random. It's a very specific kind of intelligence that refuses to accept that life has to be boring, predictable, or carefully managed at all times. But underneath the chaos is a person who feels things intensely — probably more intensely than most — and the noise and adventure and constant movement is partly a way of staying ahead of that intensity rather than sitting inside it.",
+    deepFreeInsight: "Here's what almost no one tells The Chaos Friend: the wildness isn't random. It's a very specific kind of intelligence that refuses to accept that life has to be boring, predictable, or carefully managed at all times. But underneath the chaos is a person who feels things intensely, probably more intensely than most, and the noise and adventure and constant movement is partly a way of staying ahead of that intensity rather than sitting inside it.",
     strengths: ["Zero judgment, maximum fun", "Up for absolutely anything", "Magnetic in a room", "Your stories are legendary"],
     downsides: ["Needs occasional 'babysitting'", "Low conflict-resolution skills", "Leaves messes behind", "Unreliable for serious moments"],
     experience: "Your friends love your stories, but sometimes feel like they have to keep you out of trouble.",
@@ -212,7 +212,7 @@ function EnergyMeter({ value }: { value: number }) {
   const label = value >= 80 ? "Extrovert" : value >= 55 ? "Ambivert" : value >= 35 ? "Social Introvert" : "Deep Introvert";
   const desc = value >= 80 ? "Groups energize you. You recharge through people."
     : value >= 55 ? "You enjoy groups but need periodic alone-time."
-    : value >= 35 ? "Selective — close friends only."
+: value >= 35 ? "Selective, close friends only."
     : "Solitude is your natural recharge mode.";
   const color = value >= 70 ? "#FFB400" : value >= 45 ? "#00A6ED" : "#9B59B6";
   return (
@@ -409,7 +409,7 @@ export default function FriendRoleMasterReport({ profile }: { profile: Profile }
                 </div>
               ))}
             </div>
-            <p className="text-xs text-[#0D2C54]/35 mt-4 font-medium">Not enemies — just roles that need intentional bridging.</p>
+            <p className="text-xs text-[#0D2C54]/35 mt-4 font-medium">Not enemies, just roles that need intentional bridging.</p>
           </div>
         </div>
 
@@ -425,7 +425,7 @@ export default function FriendRoleMasterReport({ profile }: { profile: Profile }
             </p>
             <div className="mt-8 flex items-center gap-3 text-white/40">
               <ArrowDown className="w-4 h-4 animate-bounce" />
-              <span className="text-xs font-bold uppercase tracking-widest">There's more below — the parts that go even deeper</span>
+              <span className="text-xs font-bold uppercase tracking-widest">There's more below, the parts that go even deeper</span>
             </div>
           </div>
         </div>
@@ -433,14 +433,14 @@ export default function FriendRoleMasterReport({ profile }: { profile: Profile }
         {/* ── LOCKED CARDS ─────────────────────────────────────── */}
         <div>
           <h2 className="text-2xl font-extrabold text-[#0D2C54] mb-1">Go Deeper</h2>
-          <p className="text-sm text-[#0D2C54]/45 mb-6">Six more layers — built specifically for {profile.primaryArchetype}.</p>
+          <p className="text-sm text-[#0D2C54]/45 mb-6">Six more layers, built specifically for {profile.primaryArchetype}.</p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            <LockedCard href="/friend-group-role/premium" title="The Resentment Trap" teaser="The exact way your role is secretly draining you — and why the resentment builds so invisibly." iconColor="#FF495C" />
+            <LockedCard href="/friend-group-role/premium" title="The Resentment Trap" teaser="The exact way your role is secretly draining you, and why the resentment builds so invisibly." iconColor="#FF495C" />
             <LockedCard href="/friend-group-role/premium" title="How Others See You" teaser="The unfiltered version of how your friends read your behavior when you're not in the room." iconColor="#00A6ED" />
-            <LockedCard href="/friend-group-role/premium" title="Your Aura Signature" teaser="The invisible social signal you project — and why people respond to you the way they do." iconColor="#9B59B6" />
-            <LockedCard href="/friend-group-role/premium" title="Your Evolution Blueprint" teaser="Concrete steps to redefine your role and set new standards in the group — in 3 stages." iconColor="#FFB400" />
+            <LockedCard href="/friend-group-role/premium" title="Your Aura Signature" teaser="The invisible social signal you project, and why people respond to you the way they do." iconColor="#9B59B6" />
+            <LockedCard href="/friend-group-role/premium" title="Your Evolution Blueprint" teaser="Concrete steps to redefine your role and set new standards in the group, in 3 stages." iconColor="#FFB400" />
             <LockedCard href="/friend-group-role/premium" title="The Power Move" teaser="The one behavioral shift that immediately changes how your entire group perceives you." iconColor="#43B929" />
-            <LockedCard href="/friend-group-role/premium" title="Your Friendship Pattern" teaser="The repeating dynamic you create in every friend group — and exactly how to break it." iconColor="#E74C3C" />
+            <LockedCard href="/friend-group-role/premium" title="Your Friendship Pattern" teaser="The repeating dynamic you create in every friend group, and exactly how to break it." iconColor="#E74C3C" />
           </div>
         </div>
 
@@ -486,7 +486,7 @@ export default function FriendRoleMasterReport({ profile }: { profile: Profile }
               {/* Bundle */}
               <div className="bg-[#FFB400] rounded-2xl p-7 flex flex-col relative shadow-[0_0_40px_rgba(255,180,0,0.25)]">
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="bg-white text-[#0D2C54] text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow">Best Value — Save 20%</span>
+                  <span className="bg-white text-[#0D2C54] text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow">Best Value: Save 20%</span>
                 </div>
                 <div className="flex items-center gap-3 mb-4 mt-3">
                   <div className="w-10 h-10 rounded-xl bg-black/15 flex items-center justify-center">
@@ -535,11 +535,11 @@ export default function FriendRoleMasterReport({ profile }: { profile: Profile }
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-slate-400">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-5 h-5 text-[#43B929]" />
-                <span><strong className="text-white">7-Day Money-Back</strong> — if it's not accurate, full refund.</span>
+                <span><strong className="text-white">7-Day Money-Back</strong>, if it's not accurate, full refund.</span>
               </div>
               <div className="flex items-center gap-2">
                 <Zap className="w-5 h-5 text-[#FFB400]" />
-                <span><strong className="text-white">Instant access</strong> — no waiting, no account needed.</span>
+                <span><strong className="text-white">Instant access</strong>, no waiting, no account needed.</span>
               </div>
             </div>
           </div>

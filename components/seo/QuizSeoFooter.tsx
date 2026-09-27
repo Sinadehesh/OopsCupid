@@ -10,7 +10,7 @@ const HUB_LABEL = { him: "His Behavior", me: "My Patterns", friends: "Friendship
 /**
  * Drop-in SEO block for the bottom of any quiz/article page:
  * Quiz + Breadcrumb structured data, visible FAQ (with FAQPage schema),
- * and related-quiz internal links — all driven by the registry, so a page
+ * and related-quiz internal links, all driven by the registry, so a page
  * needs exactly one line: <QuizSeoFooter slug="/its-slug" />
  */
 export default function QuizSeoFooter({ slug }: { slug: string }) {
@@ -30,7 +30,7 @@ export default function QuizSeoFooter({ slug }: { slug: string }) {
         />
       )}
       {faqs && faqs.length > 0 && (
-        <QuizFaq items={faqs} heading={`${entry?.title ?? "Quiz"} — Common Questions`} />
+        <QuizFaq items={faqs} heading={`${entry?.title ?? "Quiz"}, Common Questions`} />
       )}
       <RelatedQuizzes currentSlug={slug} />
     </>

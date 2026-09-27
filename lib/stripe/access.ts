@@ -7,7 +7,7 @@ import { STRIPE_PRODUCTS } from "./products";
  *
  * After Stripe confirms a payment we mint a signed token describing what
  * the buyer is allowed to see, and store it in an httpOnly cookie. The
- * premium pages ask the server what the cookie grants — so a visitor
+ * premium pages ask the server what the cookie grants, so a visitor
  * cannot unlock a paid report by editing localStorage or the DOM.
  *
  * The signing secret is separate from the Stripe keys so it can be
@@ -67,7 +67,7 @@ export function readAccessToken(token: string | undefined): Entitlements | null 
   // access", not as a 500 on every page view.
   let expected: string;
   try {
-    // Constant-time comparison below — a fast-exit string compare leaks
+    // Constant-time comparison below, a fast-exit string compare leaks
     // the signature one byte at a time.
     expected = sign(body);
   } catch {

@@ -158,7 +158,7 @@ export default function Day5() {
               Practice 1: The Vagal Toolkit
             </h2>
             <p className="text-slate-400 mb-8 text-base leading-relaxed">
-              Click a card to reveal a somatic exercise that directly stimulates the Vagus Nerve —
+              Click a card to reveal a somatic exercise that directly stimulates the Vagus Nerve, 
               these are emergency brakes for severe panic attacks.
             </p>
 

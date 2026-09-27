@@ -98,11 +98,11 @@ function HeroCard({ card }: { card: MainHeroCard }) {
 export default function MainHero(props: MainHeroProps) {
   const {
     topSubheading = "FREE RELATIONSHIP QUIZZES · INSTANT RESULTS",
-    headline = "Relationship Quizzes That Decode Him — and You.",
+    headline = "Relationship Quizzes That Decode Him, and You.",
     question, subheadline, children, cards = defaultCards,
   } = props;
 
-  const displayQuestion = question || subheadline || "Is he cheating? Is he manipulative? What's your attachment style, and why do you keep attracting the same type? Take a free, research-informed relationship test and get an honest, scored result in 3 minutes — no sign-up, no guessing.";
+  const displayQuestion = question || subheadline || "Is he cheating? Is he manipulative? What's your attachment style, and why do you keep attracting the same type? Take a free, research-informed relationship test and get an honest, scored result in 3 minutes, no sign-up, no guessing.";
 
   return (
     <section className="relative overflow-hidden bg-[#F7F4ED] pt-14 md:pt-20 lg:pt-24 pb-16 md:pb-20">

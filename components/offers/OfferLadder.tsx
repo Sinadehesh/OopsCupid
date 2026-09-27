@@ -24,7 +24,7 @@ const KIND_LABEL = {
  * Psychology at work:
  * - ANCHORING: the €98 "bought separately" figure and the €14 base tier
  *   frame €59 as mid-priced, not expensive.
- * - DECOY EFFECT: Tier 2 at €49 exists to be compared away — Tier 3 adds
+ * - DECOY EFFECT: Tier 2 at €49 exists to be compared away: Tier 3 adds
  *   a €49 coaching session for €10 more, making it the obvious pick.
  * - SEVERITY FRAMING: a small "matched to your score" tag personalizes
  *   the recommendation without changing the honest default (best value).

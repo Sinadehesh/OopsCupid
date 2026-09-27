@@ -72,7 +72,7 @@ export default function ToxicQuizEngine() {
         setIsCalculating(true);
         setTimeout(() => {
           const res = calculateToxicScores(newAnswers);
-          // Survives the Stripe redirect — see lib/quizResults.ts.
+          // Survives the Stripe redirect, see lib/quizResults.ts.
           saveQuizResult(QUIZ_KEYS.toxicFriend, res);
           setResultsData(res);
           setIsCalculating(false);

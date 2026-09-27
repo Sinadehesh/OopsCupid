@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
  * Creates a Stripe Checkout Session and returns its hosted URL.
  *
  * The client sends only { sku, email?, returnTo? }. The price is looked
- * up server-side from STRIPE_PRODUCTS — a tampered request can change
+ * up server-side from STRIPE_PRODUCTS, a tampered request can change
  * WHICH product is bought, never what it costs.
  */
 export async function POST(req: NextRequest) {
@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
     const product = STRIPE_PRODUCTS[sku];
     const origin = siteUrl();
 
-    // Only allow same-site return paths — an open redirect here would let
+    // Only allow same-site return paths, an open redirect here would let
     // someone send a "you paid" link that bounces to their own domain.
     const safeReturn =
       typeof returnTo === "string" && returnTo.startsWith("/") && !returnTo.startsWith("//")
@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ url: session.url });
   } catch (err: any) {
-    // Never echo the raw Stripe error to the browser — it can contain
+    // Never echo the raw Stripe error to the browser; it can contain
     // account and key details.
     console.error("[checkout]", err?.message ?? err);
     const configured = Boolean(process.env.STRIPE_SECRET_KEY);

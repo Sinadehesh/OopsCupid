@@ -165,13 +165,13 @@ export default function InfidelityMasterReport({ data }: { data?: ReportData }) 
               <span className="text-white/40">The numbers confirm it.</span>
             </h2>
             <p className="text-white/60 font-medium text-lg leading-relaxed">
-              Below is your full AI-generated investigation — built specifically from your answers.
+              Below is your full AI-generated investigation, built specifically from your answers.
             </p>
           </div>
         </div>
       </div>
 
-      {/* VECTOR BARS — uses safeVec, never crashes */}
+      {/* VECTOR BARS, uses safeVec, never crashes */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
         {VECTORS.map(({ key, label, icon: Icon, desc }) => (
           <div key={key} className="bg-white rounded-3xl p-7 border border-slate-200 shadow-sm">

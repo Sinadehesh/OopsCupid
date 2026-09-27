@@ -106,7 +106,7 @@ function UnlockedInner() {
             </div>
             <h1 className="text-3xl font-bold text-[#3A556C] mb-4">We couldn&apos;t confirm that payment</h1>
             <p className="text-[#5E7183] font-medium mb-8">
-              If you were charged, your access is safe — we have the record. Reply to your Stripe
+              If you were charged, your access is safe; we have the record. Reply to your Stripe
               receipt and we&apos;ll unlock it by hand, usually within the hour. You have not been
               charged twice.
             </p>

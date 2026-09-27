@@ -90,7 +90,7 @@ export default function PremiumToxicAttractionPage() {
         {/* The checkout page promises scripts and an action plan; this
             report had neither. This quiz runs the SAME scoring instrument
             as /why-do-i-pick-bad-guys (calculateBadGuysScore), so its
-            dossier's scripts and plan are keyed to the same subscales —
+            dossier's scripts and plan are keyed to the same subscales, 
             they are not generic filler. */}
         <ScriptsAndPlan
           accent="#f43f5e"

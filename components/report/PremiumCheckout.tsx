@@ -48,7 +48,7 @@ interface PremiumCheckoutProps {
   /** Prefills Stripe Checkout with the email the quiz captured. */
   email?: string;
   /**
-   * SOCIAL PROOF — intentionally empty by default. Only pass REAL quotes
+   * SOCIAL PROOF, intentionally empty by default. Only pass REAL quotes
    * (e.g. from Gumroad reviews or emails, with permission). Fabricated
    * testimonials are illegal in the EU/US and torch trust if discovered.
    * Example shape:
@@ -58,7 +58,7 @@ interface PremiumCheckoutProps {
 }
 
 /**
- * COMMITMENT & CONSISTENCY: she answered 20+ questions and gave an email —
+ * COMMITMENT & CONSISTENCY: she answered 20+ questions and gave an email, 
  * the progress bar frames the purchase as finishing something 90% done,
  * not starting something new. Abandoning near-complete progress hurts
  * (Zeigarnik + loss aversion working together).
@@ -106,14 +106,14 @@ export default function PremiumCheckout({
 
       {/* HONEST URGENCY: a real first-purchase discount scoped to this page.
           Do NOT set this to a string until a promotion code with exactly
-          that name exists in the live Stripe account — advertising a code
+          that name exists in the live Stripe account, advertising a code
           Stripe rejects is the worst possible moment to break trust.
           See docs/STRIPE.md § Promotion code. */}
       {PROMO_CODE && (
         <div className="bg-[#F5DD90] text-[#3A556C] text-center py-3 px-4 flex items-center justify-center gap-2 font-bold text-sm tracking-wide">
           <Tag className="w-5 h-5" /> New-reader offer: code{" "}
           <span className="bg-[#3A556C] text-[#F5DD90] px-2 py-0.5 rounded font-extrabold tracking-wider">{PROMO_CODE}</span>{" "}
-          takes 15% off — valid on your first unlock
+          takes 15% off, valid on your first unlock
         </div>
       )}
 
@@ -154,14 +154,14 @@ export default function PremiumCheckout({
             </div>
           ))}
 
-          {/* SOCIAL PROOF — renders only when real quotes are supplied */}
+          {/* SOCIAL PROOF, renders only when real quotes are supplied */}
           {testimonials.length > 0 && (
             <div className="grid sm:grid-cols-2 gap-4 pt-4">
               {testimonials.slice(0, 2).map((t) => (
                 <div key={t.name} className="bg-white border border-[#d6d2d2] rounded-xl p-5">
                   <Quote className="w-5 h-5 text-[#E07850] mb-2" />
                   <p className="text-sm font-medium text-[#3A556C]/90 italic mb-3">&ldquo;{t.quote}&rdquo;</p>
-                  <p className="text-xs font-black text-[#3A556C]/50 uppercase tracking-widest">— {t.name}</p>
+                  <p className="text-xs font-black text-[#3A556C]/50 uppercase tracking-widest">, {t.name}</p>
                 </div>
               ))}
             </div>
@@ -170,12 +170,12 @@ export default function PremiumCheckout({
 
         <div className="lg:col-span-2 flex flex-col justify-center">
           <div className="p-8 md:p-10 rounded-2xl bg-white border border-[#d6d2d2] text-center shadow-md relative">
-            {/* ANCHORING — a real, defensible comparison, not a fabricated strike-price */}
+            {/* ANCHORING, a real, defensible comparison, not a fabricated strike-price */}
             <div className="mb-8 mt-2">
               <p className="text-[13px] font-semibold text-[#5E7183] leading-snug">
                 For context, private therapy runs{" "}
-                <span className="whitespace-nowrap font-bold text-[#5E7183]/80">€60–120 an hour</span>.
-                This is a report, not therapy — it is a starting point, not a substitute.
+                <span className="whitespace-nowrap font-bold text-[#5E7183]/80">€60-120 an hour</span>.
+                This is a report, not therapy; it is a starting point, not a substitute.
               </p>
               <p className="mt-6 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#E07850]">Today, one-time</p>
               <p className="text-[56px] leading-none font-extrabold text-[#3A556C] tabular-nums mt-1">€9.99</p>
@@ -192,7 +192,7 @@ export default function PremiumCheckout({
               Unlock My Playbook
             </CheckoutButton>
 
-            {/* AUTHORITY / TRUST BADGES — every claim defensible */}
+            {/* AUTHORITY / TRUST BADGES, every claim defensible */}
             <div className="grid grid-cols-2 gap-2 mt-7 text-left">
               {[
                 { icon: FlaskConical, text: "Research-informed" },
@@ -214,7 +214,7 @@ export default function PremiumCheckout({
         <ShieldCheck className="w-8 h-8 text-[#5A7492]" />
         <p className="text-sm md:text-base font-bold text-[#3A556C]/80">
           7-day guarantee. If the report does not describe your situation, email
-          us within 7 days for a full refund — no questions asked.
+          us within 7 days for a full refund, no questions asked.
         </p>
       </div>
     </div>

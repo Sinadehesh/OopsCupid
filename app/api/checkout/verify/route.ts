@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Best-effort lead update. Never block the buyer's unlock on the
-    // database being reachable — the webhook is the durable record.
+    // database being reachable, the webhook is the durable record.
     try {
       const email = session.customer_details?.email ?? session.customer_email;
       if (email) {

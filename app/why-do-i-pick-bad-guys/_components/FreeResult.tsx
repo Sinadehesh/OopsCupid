@@ -12,7 +12,7 @@ export default function FreeResult({ data }: { data: any }) {
 
 
   // Already paid? Show the full dossier here rather than making them
-  // navigate — same content as /why-do-i-pick-bad-guys/premium.
+  // navigate, same content as /why-do-i-pick-bad-guys/premium.
   if (granted) return <PremiumDossier dossier={buildBadGuysDossier(data)} />;
 
   return (

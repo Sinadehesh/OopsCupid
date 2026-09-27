@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * Week 2 · Day 4 (Day 11) — the day that did not exist.
+ * Week 2 · Day 4 (Day 11), the day that did not exist.
  *
  * Day 3 ends on the Needs Iceberg and links here; Day 5 links back here.
  * The route was never built, so anyone who paid for the bundle and worked
@@ -10,7 +10,7 @@
  *
  * It belongs here on content grounds too: day 3 finds the need under the
  * protest behaviour, day 5 builds somewhere safe to feel it. Between the
- * two sits the part that actually changes anything — saying the need out
+ * two sits the part that actually changes anything, saying the need out
  * loud to the person it concerns.
  */
 
@@ -41,7 +41,7 @@ const TRANSLATIONS = [
   {
     protest: 'Reading the timestamps. Sending a second message about the first message.',
     cost: 'You get an answer about the messages instead of an answer about the worry.',
-    request: 'I get anxious when a day goes by with nothing. A one-line text is enough — could you?',
+    request: 'I get anxious when a day goes by with nothing. A one-line text is enough, could you?',
   },
   {
     protest: 'Saying "it is fine" in a tone that makes it clear it is not fine.',
@@ -83,7 +83,7 @@ export default function Week2Day4() {
     {
       label: 'Small enough to do this week',
       ok: /\b(tonight|tomorrow|today|this week|monday|tuesday|wednesday|thursday|friday|saturday|sunday|minutes|once|text|call)\b/i.test(request),
-      hint: 'Attach it to a time or an action — "a text before bed", "ten minutes on Sunday".',
+      hint: 'Attach it to a time or an action, "a text before bed", "ten minutes on Sunday".',
     },
   ];
   const passing = checks.filter((c) => c.ok).length;
@@ -132,7 +132,7 @@ export default function Week2Day4() {
               <div className="space-y-4 text-base text-slate-600 leading-relaxed">
                 <p>
                   A protest behaviour is a request with the risk taken out of it. Going
-                  quiet, testing, hinting, escalating — each one is an attempt to get a
+                  quiet, testing, hinting, escalating, each one is an attempt to get a
                   need met <em>without</em> having said what the need was. If it does not
                   arrive, nothing was refused. You were never turned down, because you
                   never asked.
@@ -144,7 +144,7 @@ export default function Week2Day4() {
                 </p>
                 <p>
                   A direct request is riskier and enormously more efficient. It can be
-                  answered. It can even be answered badly — and a bad answer to a clear
+                  answered. It can even be answered badly, and a bad answer to a clear
                   question tells you more about the relationship in one evening than six
                   months of hinting.
                 </p>
@@ -171,7 +171,7 @@ export default function Week2Day4() {
           </h2>
           <p className="text-slate-600 text-base leading-relaxed mb-8">
             Four protest behaviours, each with the request it was standing in for. Turn
-            over the ones you recognise. Recognising your own is the work here — you do
+            over the ones you recognise. Recognising your own is the work here; you do
             not have to like it.
           </p>
 
@@ -237,7 +237,7 @@ export default function Week2Day4() {
           </h2>
           <p className="text-slate-600 text-base leading-relaxed mb-8">
             Take the need you uncovered yesterday and write the request it deserves. The
-            three checks update as you type. They are blunt on purpose — a request that
+            three checks update as you type. They are blunt on purpose, a request that
             fails them is one the other person cannot act on.
           </p>
 
@@ -312,7 +312,7 @@ export default function Week2Day4() {
           </h2>
           <p className="text-slate-600 text-base leading-relaxed mb-5">
             Asking plainly is not the same as asking calmly, and today is not the day you
-            will do it well. When, specifically, will you say the sentence you just wrote —
+            will do it well. When, specifically, will you say the sentence you just wrote, 
             and what will you do with the twenty minutes of anxiety that follow?
           </p>
           <textarea

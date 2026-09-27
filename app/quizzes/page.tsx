@@ -9,7 +9,7 @@ import {
 export const metadata = {
   title: "All Relationship & Friendship Quizzes | OopsCupid",
   description:
-    "Fifteen free, research-informed assessments — gaslighting, infidelity, attachment style, attraction patterns and friendship dynamics. No account needed, results in minutes.",
+    "Fifteen free, research-informed assessments, gaslighting, infidelity, attachment style, attraction patterns and friendship dynamics. No account needed, results in minutes.",
   alternates: { canonical: "https://www.oopscupid.com/quizzes" },
 };
 

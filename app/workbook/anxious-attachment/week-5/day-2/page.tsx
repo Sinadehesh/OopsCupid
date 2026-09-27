@@ -114,13 +114,13 @@ export default function Week5Day2() {
               <p>
                 This is a tragedy of communication. Your underlying need is beautiful
                 (connection), but your delivery is an attack. Your partner only hears the
-                attack, so they defend themselves — and the core need remains unmet.
+                attack, so they defend themselves, and the core need remains unmet.
               </p>
               <div className="bg-fuchsia-50/80 border border-fuchsia-100 rounded-2xl p-5 flex items-start gap-3">
                 <Info className="w-5 h-5 text-fuchsia-600 shrink-0 mt-0.5" />
                 <p className="text-sm text-fuchsia-900 leading-relaxed">
                   <strong>The Realization:</strong> Translate your panic into the{' '}
-                  <strong>O.M.A.</strong> format — <strong>Observation</strong> (just the facts),{' '}
+                  <strong>O.M.A.</strong> format, <strong>Observation</strong> (just the facts),{' '}
                   <strong>Meaning</strong> (the story you&rsquo;re telling yourself), and{' '}
                   <strong>Ask</strong> (a specific, doable request).
                 </p>

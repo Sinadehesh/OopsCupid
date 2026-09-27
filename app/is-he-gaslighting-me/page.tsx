@@ -8,7 +8,7 @@ import { quizRegistry } from "@/lib/quizzes/registry";
 export const metadata = {
   title: "Is He Gaslighting Me? Free Reality-Check Test | OopsCupid",
   description:
-    "Constantly doubting your own memory? This free 50-item audit measures reality denial, invalidation, and self-trust erosion — with an instant, private result.",
+    "Constantly doubting your own memory? This free 50-item audit measures reality denial, invalidation, and self-trust erosion, with an instant, private result.",
   alternates: { canonical: "https://www.oopscupid.com/is-he-gaslighting-me" },
   openGraph: {
     title: "Is He Gaslighting Me? Reality-Check Test",
@@ -22,7 +22,7 @@ export const metadata = {
 const FAQ = [
   {
     q: "What are the classic gaslighting phrases?",
-    a: "The recurring ones are: 'That never happened,' 'You're too sensitive,' 'You're remembering it wrong,' 'Everyone agrees you overreact,' and 'I never said that.' Any of these can appear once in a normal relationship — gaslighting is when they form the standard response to your concerns, so your memory itself becomes the topic instead of his behavior.",
+    a: "The recurring ones are: 'That never happened,' 'You're too sensitive,' 'You're remembering it wrong,' 'Everyone agrees you overreact,' and 'I never said that.' Any of these can appear once in a normal relationship, gaslighting is when they form the standard response to your concerns, so your memory itself becomes the topic instead of his behavior.",
   },
   {
     q: "How do I know it's gaslighting and not my anxiety?",
@@ -30,7 +30,7 @@ const FAQ = [
   },
   {
     q: "Why do I feel like I'm going crazy?",
-    a: "Because that is the designed outcome of gaslighting: when someone you love and trust repeatedly denies your reality, your brain resolves the conflict by doubting itself. Feeling 'crazy' around one specific person — while functioning fine everywhere else — is itself a diagnostic clue worth taking seriously.",
+    a: "Because that is the designed outcome of gaslighting: when someone you love and trust repeatedly denies your reality, your brain resolves the conflict by doubting itself. Feeling 'crazy' around one specific person, while functioning fine everywhere else, is itself a diagnostic clue worth taking seriously.",
   },
 ];
 
@@ -52,7 +52,7 @@ export default function GaslightingPage() {
         <p className="text-slate-500 text-lg">Stop guessing. Start measuring. Run a 50-point clinical screening on his behavior and your mental clarity.</p>
       </div>
       <GaslightingQuizEngine />
-      <QuizFaq items={FAQ} heading="Gaslighting — Common Questions" />
+      <QuizFaq items={FAQ} heading="Gaslighting: Common Questions" />
       <RelatedQuizzes currentSlug="/is-he-gaslighting-me" />
     </main>
   );

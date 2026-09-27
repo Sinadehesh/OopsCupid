@@ -21,12 +21,12 @@ import YourAnswers from "./YourAnswers";
  * One renderer for every paid report. It reads a `Dossier` (see
  * lib/report/dossier.ts) and lays it out as five sections:
  *
- *   01 Executive summary — the verdict, as a gauge and three hero numbers
- *   02 Your own answers  — quoted back, with the contradictions in them
- *   03 Data breakdown    — radar + magnitude bars + per-dimension writing
- *   04 Deep dive         — why the pattern exists
- *   05 Scripts           — what to actually say
- *   06 Plan              — a dated fortnight, not a list of adjectives
+ *   01 Executive summary, the verdict, as a gauge and three hero numbers
+ *   02 Your own answers, quoted back, with the contradictions in them
+ *   03 Data breakdown, radar + magnitude bars + per-dimension writing
+ *   04 Deep dive, why the pattern exists
+ *   05 Scripts, what to actually say
+ *   06 Plan, a dated fortnight, not a list of adjectives
  *
  * Charts do the comparing, prose does the explaining, and section 02 does
  * the proving. That section is the one that earns the price: the writing in
@@ -64,7 +64,7 @@ function Card({ children, className = "" }: { children: React.ReactNode; classNa
   );
 }
 
-/** Assembling state — a paid report should feel compiled, not pasted. */
+/** Assembling state, a paid report should feel compiled, not pasted. */
 function Assembling({ accent, steps }: { accent: string; steps: string[] }) {
   const [step, setStep] = useState(0);
   useEffect(() => {
@@ -93,7 +93,7 @@ function Assembling({ accent, steps }: { accent: string; steps: string[] }) {
   );
 }
 
-/** One measured dimension, expandable. Collapsed by default — the reader
+/** One measured dimension, expandable. Collapsed by default, the reader
  *  scans the bars first, then opens the two or three that stung. */
 const FALLBACK_INSIGHT = {
   mechanism: "",
@@ -193,7 +193,7 @@ export default function PremiumDossier({
 
   const ranked = [...subscales].sort((a, b) => b.value - a.value);
   if (!ranked.length) {
-    // No usable dimensions — show the verdict rather than crashing the
+    // No usable dimensions, show the verdict rather than crashing the
     // page someone has paid for.
     return (
       <div className="bg-[#FAFAF7] min-h-screen px-6 py-20">
@@ -259,9 +259,9 @@ export default function PremiumDossier({
 
           <div className="grid sm:grid-cols-3 gap-4 mb-6">
             {[
-              { k: "Strongest driver", v: top.label, sub: `${top.value}/100 — ${intensityLabel(top.value)}` },
+              { k: "Strongest driver", v: top.label, sub: `${top.value}/100, ${intensityLabel(top.value)}` },
               { k: "Dimensions elevated", v: `${elevated} of ${subscales.length}`, sub: elevated >= subscales.length / 2 ? "A broad pattern, not one bad habit" : "Concentrated, which makes it fixable" },
-              { k: "Profile spread", v: `${spread} pts`, sub: spread >= 40 ? "Sharply uneven — one area is carrying this" : "Even — the pattern is systemic" },
+              { k: "Profile spread", v: `${spread} pts`, sub: spread >= 40 ? "Sharply uneven, one area is carrying this": "Even, the pattern is systemic" },
             ].map((s) => (
               <Card key={s.k} className="p-5">
                 <p className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 mb-2">{s.k}</p>

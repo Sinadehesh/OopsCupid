@@ -15,7 +15,7 @@ import { buildAttachmentFallback } from "@/lib/report/attachmentFallback";
 /**
  * The ECR items run on a seven-point scale anchored only at its ends, so
  * five of the seven choices are shown to the respondent as bare numbers.
- * "You answered 6" tells her nothing, so the positions are named here —
+ * "You answered 6" tells her nothing, so the positions are named here, 
  * which is how an endpoint-anchored agreement scale is normally read. Every
  * other scale in this battery is already worded, and is quoted untouched.
  */
@@ -63,7 +63,7 @@ export default function PremiumAttachmentReportPage() {
         const rawAnswers = parsedData.rawAnswers || {}; 
         
         // The AI pass is an enhancement, not the product. A buyer has
-        // already paid by the time this runs — if OpenAI is down, rate
+        // already paid by the time this runs, if OpenAI is down, rate
         // limited or out of credit, they get the deterministic report
         // rather than an error screen.
         let report: any = null;
@@ -77,7 +77,7 @@ export default function PremiumAttachmentReportPage() {
 
         setPremiumData(report ?? buildAttachmentFallback(parsedData.profile?.attachment));
       } catch (err: any) {
-        setError(`We couldn't read your saved profile. Please retake the assessment — your access is not affected.`);
+        setError(`We couldn't read your saved profile. Please retake the assessment; your access is not affected.`);
       } finally {
         setIsLoading(false);
       }
@@ -200,7 +200,7 @@ export default function PremiumAttachmentReportPage() {
                 <h2 className={`text-3xl font-black text-[#086788]`}>The Normalcy Curve</h2>
               </div>
               <p className={`text-lg font-medium mb-8 text-[#086788]/80 leading-relaxed`}>
-                Look at the chart below. <b>Only the top 10% of people are naturally secure.</b> The vast majority of the population operates with deep insecurity, trauma, and messy relationship patterns. You score in the <b>{premiumData.populationPercentile}th percentile</b>. You are not broken—you are completely normal. And we are going to show you exactly how to fix it below.
+                Look at the chart below. <b>Only the top 10% of people are naturally secure.</b> The vast majority of the population operates with deep insecurity, trauma, and messy relationship patterns. You score in the <b>{premiumData.populationPercentile}th percentile</b>. You are not broken; you are completely normal. And we are going to show you exactly how to fix it below.
               </p>
               <div className="relative w-full h-48 mt-4">
                 <svg viewBox="0 0 1000 200" className="w-full h-full preserve-3d overflow-visible">

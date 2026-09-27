@@ -10,7 +10,7 @@ import { deviceSessionId } from "@/lib/workbook/session";
  *
  * The workbook is 48 pages of exercises, each with its own hand-built
  * layout and its own useState. Four of them ever called the save action;
- * the other forty-four threw every word away on refresh — in a thing sold
+ * the other forty-four threw every word away on refresh, in a thing sold
  * for €49. And the weekly review reads across days, so a workbook that
  * forgets is a review that has nothing to read.
  *
@@ -114,7 +114,7 @@ function questionFor(el: HTMLTextAreaElement): string {
       const text = clean(sib.textContent ?? "");
       const tag = sib.tagName;
       // A wrapper that already contains this box's own placeholder is a
-      // section, not a question — taking it pastes half the page in.
+      // section, not a question, taking it pastes half the page in.
       const swallows = placeholder.length > 10 && text.includes(placeholder.slice(0, 30));
       if (!swallows && !isExample(text)) {
         if (text.length >= 15 && text.length <= 300) {
@@ -139,7 +139,7 @@ function questionFor(el: HTMLTextAreaElement): string {
   // label, and without the heading they would overwrite each other.
   const above = heading || headingBefore(el);
   if (question.length < 45 && above && above !== question) {
-    question = `${above} — ${question}`;
+    question = `${above}, ${question}`;
   }
   return question.slice(0, 220) || "Reflection";
 }

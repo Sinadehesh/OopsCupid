@@ -9,7 +9,7 @@ import CheckoutButton from "@/components/offers/CheckoutButton";
  * WORKBOOK GATE
  *
  * The €49 "Premium Report + 6-Week Workbook" bundle advertised the
- * workbook as the thing you were paying for — while all 42 days of it sat
+ * workbook as the thing you were paying for, while all 42 days of it sat
  * publicly readable. Someone buying that tier was paying for free content,
  * which is the most expensive kind of promise to break.
  *
@@ -18,7 +18,7 @@ import CheckoutButton from "@/components/offers/CheckoutButton";
  * lead magnet. Weeks 2-6 are what the bundle actually buys.
  *
  * FREE_WEEKS is the whole control. Set it to 6 to make everything free
- * again — nothing else needs changing.
+ * again, nothing else needs changing.
  */
 const FREE_WEEKS = 1;
 
@@ -41,7 +41,7 @@ export default function WorkbookGate({
       try {
         const res = await fetch("/api/access", { cache: "no-store" });
         if (res.status === 404) {
-          // Static export / packaged app — no API layer.
+          // Static export / packaged app, no API layer.
           let local = false;
           try {
             local = localStorage.getItem("oc_unlocked") === "1";
@@ -85,13 +85,13 @@ export default function WorkbookGate({
             The rest of the workbook
           </h1>
           <p className="text-slate-600 font-medium leading-relaxed mb-7">
-            Week 1 is free and yours to keep — all seven days of it. Weeks 2 to 6
+            Week 1 is free and yours to keep, all seven days of it. Weeks 2 to 6
             are part of the bundle, along with your full report.
           </p>
 
           <ul className="space-y-2.5 mb-8">
             {[
-              "Weeks 2–6 — 35 more daily exercises",
+              "Weeks 2-6, 35 more daily exercises",
               "Your complete premium report",
               "Lifetime access, no subscription",
             ].map((item) => (
@@ -107,7 +107,7 @@ export default function WorkbookGate({
             returnTo={`/workbook/anxious-attachment/week-${week}`}
             className="w-full inline-flex items-center justify-center gap-2 bg-[#EC8A66] hover:bg-[#E07850] text-white font-extrabold text-lg py-4 rounded-2xl transition-all shadow-md hover:-translate-y-0.5 disabled:opacity-70"
           >
-            Unlock the full workbook — €49
+            Unlock the full workbook, €49
           </CheckoutButton>
 
           <p className="text-xs font-bold text-slate-400 mt-4 text-center">

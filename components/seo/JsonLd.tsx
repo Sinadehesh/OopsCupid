@@ -13,7 +13,7 @@ function Script({ data }: { data: object }) {
 }
 
 /**
- * Quiz structured data — tells Google this page IS the questionnaire the
+ * Quiz structured data, tells Google this page IS the questionnaire the
  * searcher asked for. Eligible for education/quiz rich treatments and
  * strongly disambiguates "test/quiz" intent queries.
  */
@@ -66,7 +66,7 @@ export function FaqJsonLd({ items }: { items: FaqItem[] }) {
   );
 }
 
-/** Breadcrumb trail — improves sitelink display for hub → quiz paths. */
+/** Breadcrumb trail, improves sitelink display for hub → quiz paths. */
 export function BreadcrumbJsonLd({
   items,
 }: {

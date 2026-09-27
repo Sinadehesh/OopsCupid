@@ -32,7 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route === "" ? 1 : route === "/coaching" ? 0.9 : 0.7,
   }));
 
-  // Every quiz & article funnel comes from the registry — adding a quiz
+  // Every quiz & article funnel comes from the registry, adding a quiz
   // there automatically adds it here.
   const registryEntries: MetadataRoute.Sitemap = quizRegistry.map((q) => ({
     url: `${baseUrl}${q.slug}`,
@@ -42,7 +42,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   // Long-tail symptom pages. These are the pages that can realistically
-  // rank — the category keywords belong to the big health sites.
+  // rank, the category keywords belong to the big health sites.
   const symptomEntries: MetadataRoute.Sitemap = SYMPTOM_PAGES.map((p) => ({
     url: `${baseUrl}/signs/${p.slug}`,
     lastModified: new Date(),

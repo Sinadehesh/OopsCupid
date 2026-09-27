@@ -137,7 +137,7 @@ export default function Week6Day1() {
                 this a <strong>Corrective Emotional Experience</strong>.
               </p>
               <p>
-                You need a <strong>Safe Harbor</strong> — a partner, friend, or therapist who
+                You need a <strong>Safe Harbor</strong>, a partner, friend, or therapist who
                 does not escalate when you panic, and does not withdraw when you need them.
                 They remain steady.
               </p>
@@ -260,7 +260,7 @@ export default function Week6Day1() {
           </h2>
           <p className="text-slate-400 text-sm mb-8 max-w-2xl leading-relaxed relative z-10">
             Think of a current partner, close friend, or person you are dating. Use your logical
-            brain — not your feelings — to objectively evaluate them below.
+            brain, not your feelings, to objectively evaluate them below.
           </p>
 
           <div className="flex flex-col md:flex-row gap-8 relative z-10">

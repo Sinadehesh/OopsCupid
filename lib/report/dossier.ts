@@ -1,7 +1,7 @@
 import type { Evidence } from "./evidence";
 
 /**
- * PREMIUM DOSSIER — shared content contract
+ * PREMIUM DOSSIER, shared content contract
  *
  * Every paid report is the same five-act structure (verdict → data →
  * mechanism → scripts → plan) filled with quiz-specific writing. Keeping
@@ -11,12 +11,12 @@ import type { Evidence } from "./evidence";
  * subscale it measures.
  */
 
-/** One measured dimension, normalised to 0–100 so charts are comparable. */
+/** One measured dimension, normalised to 0-100 so charts are comparable. */
 export interface Subscale {
   key: string;
   /** Full name, used in prose and bar labels. */
   label: string;
-  /** 1–2 words for the radar axis, where space is tight. */
+  /** 1-2 words for the radar axis, where space is tight. */
   short: string;
   value: number;
   /** One line explaining what the dimension measures (chart tooltips). */
@@ -29,7 +29,7 @@ export interface Band {
   label: string;
   /** Hex, used for gauge/bars/accents. */
   accent: string;
-  /** 2–4 sentences. The headline judgement, in plain language. */
+  /** 2-4 sentences. The headline judgement, in plain language. */
   verdict: string;
   /** What this means for the next fortnight. */
   urgency: string;
@@ -39,7 +39,7 @@ export interface Band {
 
 /**
  * Per-subscale writing. Three tiers because "you scored 71" means nothing
- * on its own — the same dimension needs different advice high vs low.
+ * on its own, the same dimension needs different advice high vs low.
  */
 export interface SubscaleInsight {
   /** Why this dimension behaves the way it does. Mechanism, not label. */
@@ -58,7 +58,7 @@ export interface ScriptCard {
 }
 
 export interface ActionStep {
-  /** e.g. "Days 1–3" */
+  /** e.g. "Days 1-3" */
   window: string;
   title: string;
   detail: string;
@@ -94,7 +94,7 @@ export interface Dossier {
   topicLabel?: string;
   /**
    * The buyer's own answers, quoted back. Optional only because not every
-   * quiz has been migrated to keep them yet — but a report without this is
+   * quiz has been migrated to keep them yet, but a report without this is
    * a report that could have been written before she arrived, and it should
    * not be charged for. See docs/PAID-CONTENT.md.
    */

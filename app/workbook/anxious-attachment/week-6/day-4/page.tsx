@@ -234,7 +234,7 @@ export default function Week6Day4() {
           </p>
 
           <div className="bg-slate-50/80 rounded-2xl border border-slate-200 overflow-hidden">
-            {/* Step tabs — hidden on step 4 */}
+            {/* Step tabs, hidden on step 4 */}
             {step < 4 && (
               <div className="flex border-b border-slate-200 bg-white">
                 {STEPS.map(({ label, idx }) => (

@@ -34,17 +34,17 @@ const WRITING: Record<Style, Record<string, { threat: string; immediate: string;
   anxious: {
     romantic: {
       threat:
-        "Your romantic pattern runs on an alarm that fires at distance. A short reply, a changed plan, a quieter evening — your system reads these as evidence that the connection is at risk, and the behaviour that follows (checking, needing it resolved tonight, reading tone into nothing) is alarm rather than neediness. The cost is that reassurance does not land: the alarm does not process argument, so the same conversation repeats without ever resolving.",
+        "Your romantic pattern runs on an alarm that fires at distance. A short reply, a changed plan, a quieter evening; your system reads these as evidence that the connection is at risk, and the behaviour that follows (checking, needing it resolved tonight, reading tone into nothing) is alarm rather than neediness. The cost is that reassurance does not land: the alarm does not process argument, so the same conversation repeats without ever resolving.",
       immediate:
-        "Next time the alarm fires, wait twenty minutes before you act on it. Not forever — twenty minutes. Most of what it insists is urgent has changed shape by then.",
+        "Next time the alarm fires, wait twenty minutes before you act on it. Not forever, twenty minutes. Most of what it insists is urgent has changed shape by then.",
       oneWeek:
         "Ask for one specific, small, predictable thing rather than general reassurance: a message at a known time, or a standing evening. Predictability quiets this system in a way that reassurance after the fact does not.",
       oneMonth:
-        "Notice what you do in the 24 hours after a good stretch. Anxious patterns often spike right after closeness, not after conflict — and spotting that is what turns the pattern from something that happens to you into something you can see coming.",
+        "Notice what you do in the 24 hours after a good stretch. Anxious patterns often spike right after closeness, not after conflict, and spotting that is what turns the pattern from something that happens to you into something you can see coming.",
     },
     mother: {
       threat:
-        "The template here is inconsistent availability: care that arrived, but not predictably. A child cannot influence an unpredictable supply, so the adaptation is to monitor it constantly — and that monitoring is the machinery you now run in adult relationships. It was not a mistake then. It is expensive now.",
+        "The template here is inconsistent availability: care that arrived, but not predictably. A child cannot influence an unpredictable supply, so the adaptation is to monitor it constantly, and that monitoring is the machinery you now run in adult relationships. It was not a mistake then. It is expensive now.",
       immediate:
         "Write down one thing you learned to watch for as a child. Naming it moves it from instinct to information.",
       oneWeek:
@@ -67,7 +67,7 @@ const WRITING: Record<Style, Record<string, { threat: string; immediate: string;
         "At work this shows up as difficulty separating feedback from rejection, and as an inability to leave things unfinished. You will be reliable and over-extended, and the people who benefit most from that are the ones least likely to notice it.",
       immediate: "Leave one thing at 90% today, on purpose, and go home.",
       oneWeek: "Say no to one request without a justification attached. 'I can't take that on' is a complete sentence.",
-      oneMonth: "Ask for something — a review, a change, a clarification — before you have earned it in your own accounting. That gap is the pattern.",
+      oneMonth: "Ask for something, a review, a change, a clarification, before you have earned it in your own accounting. That gap is the pattern.",
     },
     general: {
       threat:
@@ -80,24 +80,24 @@ const WRITING: Record<Style, Record<string, { threat: string; immediate: string;
   avoidant: {
     romantic: {
       threat:
-        "Your romantic pattern manages closeness by keeping a reserve. The trigger is intimacy rather than conflict, which is why withdrawal often follows a good week rather than a bad one — and why it reads to a partner as arbitrary. It is not arbitrary; it is regulation, and from the inside it feels like needing air.",
+        "Your romantic pattern manages closeness by keeping a reserve. The trigger is intimacy rather than conflict, which is why withdrawal often follows a good week rather than a bad one, and why it reads to a partner as arbitrary. It is not arbitrary; it is regulation, and from the inside it feels like needing air.",
       immediate:
-        "When you feel the pull to withdraw, name a return time out loud: 'I need the evening — let's talk tomorrow.' The horizon is what makes distance safe for both of you.",
+        "When you feel the pull to withdraw, name a return time out loud: 'I need the evening, let's talk tomorrow.' The horizon is what makes distance safe for both of you.",
       oneWeek:
-        "Disclose one ordinary thing earlier than is comfortable. Not a confession — something small and specific. The discomfort is the point and it is smaller than expected.",
+        "Disclose one ordinary thing earlier than is comfortable. Not a confession, something small and specific. The discomfort is the point and it is smaller than expected.",
       oneMonth:
         "Track what happens in the 48 hours after closeness. If withdrawal reliably follows connection, that is the pattern, and seeing it on paper is what makes it optional.",
     },
     mother: {
       threat:
-        "The template is care that came with a cost — emotional labour expected in return, or closeness that arrived with strings. The adaptation was self-sufficiency, and self-sufficiency is genuinely useful. Its price is that needing anyone now registers as exposure rather than as ordinary.",
+        "The template is care that came with a cost, emotional labour expected in return, or closeness that arrived with strings. The adaptation was self-sufficiency, and self-sufficiency is genuinely useful. Its price is that needing anyone now registers as exposure rather than as ordinary.",
       immediate: "Ask one person for something small this week and let them do it without reciprocating immediately.",
       oneWeek: "Notice the moment you decide to handle something alone. That decision usually happens before you have considered the alternative.",
       oneMonth: "Let one task be done badly by someone else rather than well by you. That trade is the whole skill.",
     },
     father: {
       threat:
-        "An elevated paternal score here usually points to a model where competence was the currency and feeling was not discussed. The adult result is fluency about what you think and much less about what you feel — and a tendency to answer emotional questions with practical ones.",
+        "An elevated paternal score here usually points to a model where competence was the currency and feeling was not discussed. The adult result is fluency about what you think and much less about what you feel, and a tendency to answer emotional questions with practical ones.",
       immediate: "Answer one 'how are you' with a feeling rather than a status update.",
       oneWeek: "Notice how often you respond to distress with a solution. Try sitting in it once instead.",
       oneMonth: "Say one thing you have never said to him, to anyone. It does not have to be to him.",
@@ -120,21 +120,21 @@ const WRITING: Record<Style, Record<string, { threat: string; immediate: string;
   disorganized: {
     romantic: {
       threat:
-        "Both systems are active, which means the same person is the source of safety and the source of threat. There is no stable strategy available, so behaviour alternates — intense closeness followed by withdrawal, both genuine. This is exhausting to live with and much harder to be than it looks from outside, and it is not indecision.",
+        "Both systems are active, which means the same person is the source of safety and the source of threat. There is no stable strategy available, so behaviour alternates, intense closeness followed by withdrawal, both genuine. This is exhausting to live with and much harder to be than it looks from outside, and it is not indecision.",
       immediate: "When the alternation starts, change nothing for 72 hours. No pursuit, no exit, no decision. The oscillation runs on action.",
       oneWeek: "Make one thing in the relationship predictable and keep it regardless of the week's weather. Predictability is worth more here than closeness.",
       oneMonth: "Write down the sequence: what happens, then what, then what. Seeing it as a cycle rather than as a series of separate crises is the shift that matters.",
     },
     mother: {
       threat:
-        "This pattern usually forms where the source of comfort was also a source of alarm. The child has no workable strategy — approach and avoidance both fail — so the system learns to run both. That is why your adult relationships can feel like two people making decisions.",
+        "This pattern usually forms where the source of comfort was also a source of alarm. The child has no workable strategy, approach and avoidance both fail, so the system learns to run both. That is why your adult relationships can feel like two people making decisions.",
       immediate: "You do not have to resolve this to function. Notice the alternation without grading yourself on it.",
       oneWeek: "Identify one situation that reliably triggers the switch. One is enough to start with.",
       oneMonth: "This is the pattern most improved by working with someone rather than alone. Not because it is severe, but because it needs an outside observer to be visible.",
     },
     father: {
       threat:
-        "Where this shows on the paternal axis, the usual shape is unpredictability — warmth that could not be forecast. The adult residue is hypervigilance about mood combined with a reflex to disengage, often within the same conversation.",
+        "Where this shows on the paternal axis, the usual shape is unpredictability, warmth that could not be forecast. The adult residue is hypervigilance about mood combined with a reflex to disengage, often within the same conversation.",
       immediate: "Notice the switch as it happens. Naming it is the intervention.",
       oneWeek: "Track what precedes it. It is usually not the conversation's content.",
       oneMonth: "Build one relationship that has never had that volatility in it, and let it be boring.",
@@ -157,7 +157,7 @@ const WRITING: Record<Style, Record<string, { threat: string; immediate: string;
   secure: {
     romantic: {
       threat:
-        "Your romantic scores sit in the secure range: you can be close without alarm and apart without withdrawing, and conflict does not put the relationship itself in question. The risk in this profile is not your own pattern — it is that you may not recognise an insecure one quickly, because you extend the benefit of the doubt your own system does not need.",
+        "Your romantic scores sit in the secure range: you can be close without alarm and apart without withdrawing, and conflict does not put the relationship itself in question. The risk in this profile is not your own pattern; it is that you may not recognise an insecure one quickly, because you extend the benefit of the doubt your own system does not need.",
       immediate: "Notice whether your partner's difficult moments get repaired. Repair is the measure, not the argument.",
       oneWeek: "Say one thing you have been letting slide. Secure does not mean accommodating.",
       oneMonth: "Check whether you are doing more of the emotional work than you have noticed. Capable people absorb imbalance without registering it.",
@@ -173,7 +173,7 @@ const WRITING: Record<Style, Record<string, { threat: string; immediate: string;
       threat:
         "The paternal scores do not indicate a significant insecure pattern. Whatever difficulty exists in that relationship appears to be about the relationship rather than about your attachment system.",
       immediate: "Nothing to act on.",
-      oneWeek: "Worth separating 'we disagree' from 'something is wrong with me' — your scores suggest you already do.",
+      oneWeek: "Worth separating 'we disagree' from 'something is wrong with me'; your scores suggest you already do.",
       oneMonth: "Use this as the benchmark for what the other domains are aiming at.",
     },
     work: {
@@ -185,7 +185,7 @@ const WRITING: Record<Style, Record<string, { threat: string; immediate: string;
     },
     general: {
       threat:
-        "Your profile is broadly secure. That does not mean nothing is difficult — it means the difficulty is not coming from your attachment system, and looking for it there will not find it.",
+        "Your profile is broadly secure. That does not mean nothing is difficult; it means the difficulty is not coming from your attachment system, and looking for it there will not find it.",
       immediate: "Take the result at face value rather than looking for the hidden problem.",
       oneWeek: "If something specific prompted this quiz, it is worth examining on its own terms.",
       oneMonth: "Treat this chart as a baseline and notice movement over the next year.",

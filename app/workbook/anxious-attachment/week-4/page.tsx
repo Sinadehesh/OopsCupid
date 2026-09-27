@@ -117,7 +117,7 @@ export default function Week4Narrative() {
           </h2>
           <div className="space-y-4 text-slate-600 leading-8 text-base">
             <p>
-              Attachment theory teaches us that our early experiences form an <strong className="text-slate-800">&ldquo;Internal Working Model&rdquo;</strong> — a subconscious blueprint about how relationships work, whether you are lovable, and whether others are reliable.
+              Attachment theory teaches us that our early experiences form an <strong className="text-slate-800">&ldquo;Internal Working Model&rdquo</strong>, a subconscious blueprint about how relationships work, whether you are lovable, and whether others are reliable.
             </p>
             <p>
               For someone with anxious attachment, the internal working model often states: <em>&ldquo;I must be perfect to be loved, and if someone pulls away, it means they are leaving me.&rdquo;</em> Because of this blueprint, your brain applies <strong className="text-slate-800">Cognitive Distortions</strong> to neutral events. A delayed text isn&rsquo;t just a delayed text; it becomes proof of abandonment.

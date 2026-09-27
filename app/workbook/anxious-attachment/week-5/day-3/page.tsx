@@ -49,7 +49,7 @@ export default function Week5Day3() {
     ? (breathPhase === 'Inhale' ? inhaleTime : exhaleTime)
     : 1;
 
-  // Derived values — clamped to [10, 100]
+  // Derived values, clamped to [10, 100]
   const panicLevel = Math.max(10, 100 - timePassed * 4);
   const logicLevel = Math.min(100, 10 + timePassed * 4);
 

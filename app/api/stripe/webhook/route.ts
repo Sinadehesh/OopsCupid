@@ -5,12 +5,12 @@ import { STRIPE_PRODUCTS, isSku } from "@/lib/stripe/products";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
-// Stripe signs the RAW body — any parsing or transformation breaks
+// Stripe signs the RAW body, any parsing or transformation breaks
 // verification, so this route must read text, never req.json().
 export const runtime = "nodejs";
 
 /**
- * Stripe webhook — the durable record of every purchase.
+ * Stripe webhook, the durable record of every purchase.
  *
  * The redirect back to /unlocked is best-effort (buyers close tabs, lose
  * signal, or pay on a different device). This endpoint is what Stripe
@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
           // until a scheduling link is sent. Surfaced loudly in logs so
           // it stays visible in Vercel until a mailer is wired up.
           console.warn(
-            `[stripe/webhook] ACTION REQUIRED — send scheduling link for "${product.name}" to ${email ?? "(no email)"} (session ${session.id})`
+            `[stripe/webhook] ACTION REQUIRED, send scheduling link for "${product.name}" to ${email ?? "(no email)"} (session ${session.id})`
           );
         }
         break;
@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
         break;
     }
   } catch (err: any) {
-    // Return 500 so Stripe retries — swallowing the error would silently
+    // Return 500 so Stripe retries, swallowing the error would silently
     // lose the purchase record.
     console.error("[stripe/webhook] handler failed:", err?.message ?? err);
     return NextResponse.json({ error: "Handler failed." }, { status: 500 });

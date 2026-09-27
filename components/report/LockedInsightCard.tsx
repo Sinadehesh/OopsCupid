@@ -8,7 +8,7 @@ interface LockedInsightCardProps {
   blurredBody: string;
   isDarkTheme?: boolean;
   /**
-   * ZEIGARNIK HOOK: pass the insight as a partial list — the first item is
+   * ZEIGARNIK HOOK: pass the insight as a partial list, the first item is
    * shown in full, the rest render blurred. An opened-but-unfinished list
    * is far harder to walk away from than a fully hidden one.
    */
@@ -89,7 +89,7 @@ export default function LockedInsightCard({
         >
           {ctaText} <ArrowRight className="w-4 h-4" />
         </button>
-        {/* LOSS AVERSION — and it's true: answers are purged after 24h */}
+        {/* LOSS AVERSION, and it's true: answers are purged after 24h */}
         <p className={`text-center text-[11px] font-bold mt-2.5 ${isDarkTheme ? 'text-white/40' : 'text-slate-400'}`}>
           Your answers leave our servers within 48 hours. Your results stay on this
           device so you can reopen your report.

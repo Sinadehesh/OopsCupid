@@ -12,7 +12,7 @@ export function generateAttachmentNarrative(
 
 The Hidden "Why": This isn't because you are simply "needy." It is a finely tuned radar you developed when emotional consistency wasn't guaranteed. You run a subconscious program that dictates if you just love them hard enough, manage their emotions, or stay constantly available, you can control the outcome and force them to choose you.
 
-The Information Arbitrage: Identifying this hyper-vigilance loop is the critical first step. However, your data indicates 3 specific communication blindspots that are currently repelling the secure partners you actually want. The exact step-by-step 'Pivot Blueprint' to bypass these blindspots—including the word-for-word text scripts to use when you feel triggered—is locked in your Advanced Analysis.`;
+The Information Arbitrage: Identifying this hyper-vigilance loop is the critical first step. However, your data indicates 3 specific communication blindspots that are currently repelling the secure partners you actually want. The exact step-by-step 'Pivot Blueprint' to bypass these blindspots, including the word-for-word text scripts to use when you feel triggered, is locked in your Advanced Analysis.`;
   }
 
   if (lowerClass.includes("avoidant") || lowerClass.includes("dismissive")) {

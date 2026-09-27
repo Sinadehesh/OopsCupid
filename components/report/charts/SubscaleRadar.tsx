@@ -44,7 +44,7 @@ export default function SubscaleRadar({
               const p = payload[0].payload as RadarPoint;
               return (
                 <div className="bg-slate-900 text-white rounded-xl px-4 py-3 shadow-xl max-w-[240px]">
-                  <p className="font-black text-sm mb-0.5">{p.axis} — {p.value}%</p>
+                  <p className="font-black text-sm mb-0.5">{p.axis}, {p.value}%</p>
                   {p.description && <p className="text-white/60 text-xs leading-snug">{p.description}</p>}
                 </div>
               );

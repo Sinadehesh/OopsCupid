@@ -5,8 +5,8 @@ import { infidelityQuestions } from "./questions";
  *
  * Accepts answers keyed by question id. Values may be the numeric option
  * value (e.g. 3) or the full option string (e.g. "3 - Sometimes").
- * Handles mixed scales correctly: freq5/agree5 items are 1-indexed (1–5),
- * change4 items are 0-indexed (0–3) — each item is normalized against its
+ * Handles mixed scales correctly: freq5/agree5 items are 1-indexed (1-5),
+ * change4 items are 0-indexed (0-3), each item is normalized against its
  * own option range, and reverse-scored items are flipped within that range.
  */
 export function generateInfidelityProfile(answers: Record<string, number | string>) {

@@ -54,7 +54,7 @@ export default function GaslightingQuizEngine() {
     } catch {
       // silently continue
     } finally {
-      // Persist before the report renders — the buyer leaves for Stripe
+      // Persist before the report renders, the buyer leaves for Stripe
       // from there and comes back to a fresh page.
       saveQuizResult(QUIZ_KEYS.gaslighting, calculateGaslightingScore(finalAnswers));
       setEmailSubmitting(false);
@@ -94,7 +94,7 @@ export default function GaslightingQuizEngine() {
               </span>
             </h2>
             <p className="text-white/50 font-medium text-base mb-8 leading-relaxed">
-              Enter your email to see your full results. We never spam — only insights that matter.
+              Enter your email to see your full results. We never spam, only insights that matter.
             </p>
             <form onSubmit={handleEmailSubmit} className="space-y-4">
               <input

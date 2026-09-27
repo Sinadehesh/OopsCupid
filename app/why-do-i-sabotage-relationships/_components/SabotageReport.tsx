@@ -188,7 +188,7 @@ export default function SabotageReport({ result }: { result: any }) {
                   </span>
                 </h3>
                 <p className="text-white/55 font-medium text-sm md:text-base mb-7 leading-relaxed max-w-sm mx-auto">
-                  AI-powered analysis — personalized explanations for every chart, your core wound, and your exact action plan.
+                  AI-powered analysis, personalized explanations for every chart, your core wound, and your exact action plan.
                 </p>
 
                 {/* Feature pills */}

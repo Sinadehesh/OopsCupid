@@ -162,7 +162,7 @@ export default function Day1() {
                 <p>
                   Inside your brain is a tiny, almond-shaped smoke detector called the{' '}
                   <strong>Amygdala</strong>. Its only job is to keep you alive. If a tiger attacks,
-                  it blares the alarm — anxiety, racing heart — so you run.
+                  it blares the alarm, anxiety, racing heart, so you run.
                 </p>
                 <p>
                   With <strong>Anxious Attachment</strong>, your smoke detector is overly

@@ -247,7 +247,7 @@ export default function Week6EarnedSecurity() {
                 safeHarborScore >= 4 ? 'text-emerald-400' : safeHarborScore >= 3 ? 'text-teal-300' : 'text-amber-400'
               }`}>
                 {safeHarborScore >= 4
-                  ? 'A Corrective Relationship — this is a Safe Harbor.'
+                  ? 'A Corrective Relationship; this is a Safe Harbor.'
                   : safeHarborScore === 3
                   ? 'Developing potential. Monitor their consistency.'
                   : 'Proceed with caution. This dynamic may trigger your anxiety.'}
@@ -263,7 +263,7 @@ export default function Week6EarnedSecurity() {
             The Narrative Integrator
           </h2>
           <p className="text-teal-700 mb-8 text-base leading-relaxed">
-            Secure adults can tell a <em>coherent</em> story about their past — they neither minimise
+            Secure adults can tell a <em>coherent</em> story about their past; they neither minimise
             the pain nor are overwhelmed by it. Use this builder to integrate a painful childhood
             memory.
           </p>

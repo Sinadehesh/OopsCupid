@@ -54,7 +54,7 @@ export const partnerAttachmentQuestions: Question[] = [
   { id: "PA_Com_5", moduleKey: "C", subscaleKey: "Anxiety", text: "He obsessively monitors my social media or online status.", options: likert5 },
   { id: "PA_Com_6", moduleKey: "C", subscaleKey: "Anxiety", text: "He interprets a slight change in my texting tone as a sign I am mad at him.", options: freq5 },
   { id: "PA_Com_7", moduleKey: "C", subscaleKey: "Fearful", text: "He will text me paragraphs of affection, and then abruptly go silent for days.", options: freq5 },
-  { id: "PA_Com_8", moduleKey: "C", subscaleKey: "Fearful", text: "His communication style feels like navigating a minefield—I never know which version of him will reply.", options: likert5 },
+  { id: "PA_Com_8", moduleKey: "C", subscaleKey: "Fearful", text: "His communication style feels like navigating a minefield: I never know which version of him will reply.", options: likert5 },
   { id: "PA_Com_9", moduleKey: "C", subscaleKey: "Secure", text: "His communication is consistent and predictable.", options: likert5, reverseScore: true },
   { id: "PA_Com_10", moduleKey: "C", subscaleKey: "Secure", text: "He clearly communicates his plans so I don't have to guess where he is.", options: likert5, reverseScore: true },
   { id: "PA_Com_11", moduleKey: "C", subscaleKey: "Avoidance", text: "He actively avoids defining the relationship or giving me a clear label.", options: likert5 },
@@ -70,7 +70,7 @@ export const partnerAttachmentQuestions: Question[] = [
   { id: "PA_Mic_7", moduleKey: "D", subscaleKey: "Fearful", text: "He seems to harbor a deep, unspoken belief that he is fundamentally unlovable or 'bad'.", options: likert5 },
   { id: "PA_Mic_8", moduleKey: "D", subscaleKey: "Fearful", text: "He is hyper-vigilant to my facial expressions, constantly assuming I am judging him.", options: freq5 },
   { id: "PA_Mic_9", moduleKey: "D", subscaleKey: "Secure", text: "His body language around me is relaxed, open, and unhurried.", options: likert5, reverseScore: true },
-  { id: "PA_Mic_10", moduleKey: "D", subscaleKey: "Secure", text: "He is comfortable with comfortable silence—we don't always have to be talking.", options: likert5, reverseScore: true },
+  { id: "PA_Mic_10", moduleKey: "D", subscaleKey: "Secure", text: "He is comfortable with comfortable silence; we don't always have to be talking.", options: likert5, reverseScore: true },
   { id: "PA_Mic_11", moduleKey: "D", subscaleKey: "Avoidance", text: "He keeps his schedule completely rigid and resents if I ask him to compromise it for me.", options: likert5 },
   { id: "PA_Mic_12", moduleKey: "D", subscaleKey: "Anxiety", text: "He frequently tests my loyalty by creating artificial crises to see if I will 'show up' for him.", options: freq5 },
 

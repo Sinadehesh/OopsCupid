@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Privacy Policy – OopsCupid",
+  title: "Privacy Policy: OopsCupid",
   description: "Learn how OopsCupid collects, uses, and protects your personal information.",
 };
 

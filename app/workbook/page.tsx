@@ -207,7 +207,7 @@ export default function WorkbooksHub() {
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-600 md:text-xl">
-            Actionable workbooks and playbooks built on attachment theory, somatic therapy, and real relationship psychology — not generic advice.
+            Actionable workbooks and playbooks built on attachment theory, somatic therapy, and real relationship psychology, not generic advice.
           </p>
 
           <div className="mt-10 grid gap-4 sm:grid-cols-3 max-w-2xl mx-auto">
@@ -346,7 +346,7 @@ export default function WorkbooksHub() {
             Not sure where to start?
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-lg leading-8 text-slate-600">
-            Take one of our free psychological assessments to discover your attachment style, relationship patterns, or friendship dynamics — we'll point you to the right guide.
+            Take one of our free psychological assessments to discover your attachment style, relationship patterns, or friendship dynamics; we'll point you to the right guide.
           </p>
           <a
             href="/quizzes"

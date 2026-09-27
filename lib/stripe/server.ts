@@ -3,7 +3,7 @@ import Stripe from "stripe";
 /**
  * Server-only Stripe client. Instantiated lazily so that builds without
  * STRIPE_SECRET_KEY (CI, the static export, local dev without env) don't
- * crash at import time — the same class of bug that broke the deploy
+ * crash at import time, the same class of bug that broke the deploy
  * pipeline with the OpenAI client.
  */
 let cached: Stripe | null = null;
@@ -28,7 +28,7 @@ export function getStripe(): Stripe {
   return cached;
 }
 
-/** True when payments are configured — lets UI degrade instead of erroring. */
+/** True when payments are configured, lets UI degrade instead of erroring. */
 export function isStripeConfigured(): boolean {
   return Boolean(process.env.STRIPE_SECRET_KEY);
 }

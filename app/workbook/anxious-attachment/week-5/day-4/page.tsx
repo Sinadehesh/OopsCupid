@@ -270,7 +270,7 @@ export default function Week5Day4() {
 
                 {sorted[activeThought] === 'error' && (
                   <p className="text-rose-500 text-sm font-semibold mb-4 text-center flex items-center justify-center gap-2">
-                    <XCircle className="w-4 h-4" /> Think again — is this truly just reflecting what they said?
+                    <XCircle className="w-4 h-4" /> Think again, is this truly just reflecting what they said?
                   </p>
                 )}
 

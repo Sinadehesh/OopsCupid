@@ -4,7 +4,7 @@ export function generateToxicFriendNarrative(tier: number, modules: any, highest
   if (tier === 5) {
     dynamic = "This friendship is operating at a high level of toxicity. The data indicates a severe pattern that likely involves active emotional destabilization, relational aggression, or unpredictable hostility. This is not just a 'bad phase'; it is a structurally harmful dynamic.";
   } else if (tier === 4) {
-    dynamic = "Your results point to a strongly controlling or manipulative dynamic. This friend likely uses subtle leverage—like guilt, silent treatments, or reputation games—to keep you compliant and shape your behavior.";
+    dynamic = "Your results point to a strongly controlling or manipulative dynamic. This friend likely uses subtle leverage, like guilt, silent treatments, or reputation games, to keep you compliant and shape your behavior.";
   } else if (tier === 3) {
     dynamic = "This is a profoundly one-sided and draining relationship. While it may not be explicitly dangerous, the reciprocity is fundamentally broken. You are acting as emotional life-support for someone who does not return the effort.";
   } else {
@@ -16,7 +16,7 @@ export function generateToxicFriendNarrative(tier: number, modules: any, highest
   if (tier >= 4 || modules.victimization >= 60) {
     distortionCheck = "You are not overreacting. Because this friend may occasionally act warm or normal, it is easy to doubt yourself. However, your responses indicate a consistent pattern of control, unpredictability, or punishment. Healthy friendships do not require you to constantly monitor your behavior to avoid triggering the other person.";
   } else if (modules.aggression >= 50) {
-    distortionCheck = "You are not imagining things. Relational aggression—like subtle exclusion, backhanded compliments, or triangulation—is specifically designed to be deniable. If you confront them, they will likely say it was 'just a joke' or that you are 'too sensitive.' Trust your instinct: the social punishment is real.";
+    distortionCheck = "You are not imagining things. Relational aggression, like subtle exclusion, backhanded compliments, or triangulation, is specifically designed to be deniable. If you confront them, they will likely say it was 'just a joke' or that you are 'too sensitive.' Trust your instinct: the social punishment is real.";
   } else {
     distortionCheck = "While you are feeling genuine frustration, the data suggests this might be an issue of poor boundaries rather than calculated toxicity. It is valid to feel drained, but this dynamic might improve if you stop over-functioning and let them take some responsibility.";
   }

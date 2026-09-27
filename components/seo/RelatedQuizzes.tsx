@@ -11,7 +11,7 @@ import { getRelated } from "@/lib/quizzes/registry";
  */
 export default function RelatedQuizzes({
   currentSlug,
-  heading = "Keep Digging — Related Tests",
+  heading = "Keep Digging: Related Tests",
   count = 4,
 }: {
   currentSlug: string;

@@ -9,7 +9,7 @@ type Status = "checking" | "granted" | "denied";
 
 const DEFAULT_INCLUSIONS = [
   "Every statement you marked strongest, quoted back with your own answer",
-  "The places your answers disagree with each other — and what that narrows it to",
+  "The places your answers disagree with each other, and what that narrows it to",
   "A written explanation of each dimension you scored on, not just the number",
   "Word-for-word scripts for the conversations this raises",
   "A dated 14-day plan, and answers to what it leaves open",
@@ -19,25 +19,25 @@ const DEFAULT_INCLUSIONS = [
  * PREMIUM GATE
  *
  * Wraps paid report content. Entitlement is decided by the SERVER from a
- * signed httpOnly cookie (/api/access) — editing localStorage or the DOM
+ * signed httpOnly cookie (/api/access), editing localStorage or the DOM
  * does not unlock anything.
  *
  * Static-export caveat: the GitHub Pages build and the Android app ship
  * no API routes, so /api/access is unreachable there. Those builds fall
- * back to the local unlock hint. That is intentional — the app is a free
+ * back to the local unlock hint. That is intentional, the app is a free
  * companion, and the website is where money changes hands.
  */
 export default function PremiumGate({
   children,
   returnTo,
   title = "Your full report is ready",
-  blurb = "You've seen the summary. The full report reads your actual answers back to you — including the ones that contradict each other — and works out what to do about them.",
+  blurb = "You've seen the summary. The full report reads your actual answers back to you, including the ones that contradict each other, and works out what to do about them.",
   /**
    * What is behind the paywall, in the buyer's terms. Listed because a card
    * that says only "the complete analysis" asks somebody to pay for a
    * surprise, and a surprise is what makes a report feel like a swindle
    * even when it is good. Every line here has to be checkable against the
-   * report itself — see docs/PAID-CONTENT.md.
+   * report itself, see docs/PAID-CONTENT.md.
    */
   inclusions = DEFAULT_INCLUSIONS,
 }: {
@@ -51,7 +51,7 @@ export default function PremiumGate({
 
   // Fire once, when the paywall is actually shown. Comparing this against
   // checkout_click is what separates "nobody wants it" from "the price is
-  // wrong" — without it both look identical.
+  // wrong", without it both look identical.
   useEffect(() => {
     if (status === "denied") {
       trackPaywallView(

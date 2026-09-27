@@ -18,7 +18,7 @@ import { trackShare } from "@/lib/track";
  *  3. Saving the image has to be one tap, because most sharing on
  *     Instagram and TikTok is a screenshot, not a link.
  *
- * The link points at the QUIZ, not the result — the recipient should land
+ * The link points at the QUIZ, not the result, the recipient should land
  * somewhere they can take it themselves. That is the whole loop.
  */
 export default function ResultShare({
@@ -33,7 +33,7 @@ export default function ResultShare({
   quiz: string;
   /** e.g. "/why-do-i-pick-bad-guys" */
   quizPath: string;
-  /** The archetype or verdict — the bit worth posting. */
+  /** The archetype or verdict, the bit worth posting. */
   title: string;
   score?: number;
   scoreLabel?: string;
@@ -60,7 +60,7 @@ export default function ResultShare({
         await navigator.share({ title: quiz, text: shareText, url: shareUrl });
         return;
       } catch {
-        // Sheet dismissed — not an error, and not worth a message.
+        // Sheet dismissed, not an error, and not worth a message.
       }
     }
     copyLink();

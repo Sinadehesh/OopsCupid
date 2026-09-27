@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.oopscupid.com"),
   title: "OopsCupid | Free Relationship Quizzes, Tests & Red Flag Checks",
   description:
-    "Free, research-informed relationship quizzes for women: is he cheating, is he manipulative, attachment style tests, toxic friend tests, and attraction pattern diagnostics — with instant scored results.",
+    "Free, research-informed relationship quizzes for women: is he cheating, is he manipulative, attachment style tests, toxic friend tests, and attraction pattern diagnostics, with instant scored results.",
   keywords: [
     "relationship quiz",
     "is he cheating quiz",
@@ -84,7 +84,7 @@ export default function RootLayout({
           <Footer />
         </SessionProvider>
         {/* Web Analytics. The site ran for five months with no measurement
-            of any kind — traffic, funnel drop-off and conversion were all
+            of any kind, traffic, funnel drop-off and conversion were all
             unknowable. Everything in lib/track.ts reports through this. */}
         <Analytics />
       </body>

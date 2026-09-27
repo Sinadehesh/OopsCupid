@@ -8,18 +8,18 @@ export const runtime = "nodejs";
 /**
  * 24-HOUR ANSWER PURGE
  *
- * The site tells visitors — on the homepage, in the locked-insight card
- * and at checkout — that "your answers are permanently deleted from our
+ * The site tells visitors, on the homepage, in the locked-insight card
+ * and at checkout, that "your answers are permanently deleted from our
  * system in 24 hours". Nothing was enforcing that: Lead.rawAnswers and
  * Lead.profileData were written once and kept forever.
  *
  * This makes the promise true. It nulls the two columns that contain
  * quiz content on Lead rows older than 24 hours and keeps the row itself
  * (email, quizType, timestamps) so the mailing list and the purchase
- * history still work — which is what the claim actually covers.
+ * history still work, which is what the claim actually covers.
  *
  * Scheduled daily by vercel.json (03:00 UTC). Hobby plans allow one run
- * per day — an hourly expression makes Vercel REJECT THE WHOLE BUILD with
+ * per day, an hourly expression makes Vercel REJECT THE WHOLE BUILD with
  * cron_jobs_limits_reached, which silently stops every deploy. Do not
  * shorten this without checking the plan. Protected by CRON_SECRET: Vercel sends
  * it as a Bearer token, and without the variable set the route refuses

@@ -49,7 +49,7 @@ export default function FreeResult({ data, onUnlock, isGenerating }: { data: any
               They were completely wrong.
             </p>
             <p>
-              Our data shows that you do not lack boundaries. You have a highly specific, subconscious <strong>Psychological Blind Spot</strong>. You are unknowingly broadcasting a "frequency" that healthy men don't even notice—but to manipulators, narcissists, and toxic individuals, it looks like a glowing neon target.
+              Our data shows that you do not lack boundaries. You have a highly specific, subconscious <strong>Psychological Blind Spot</strong>. You are unknowingly broadcasting a "frequency" that healthy men don't even notice, but to manipulators, narcissists, and toxic individuals, it looks like a glowing neon target.
             </p>
             <p className="text-rose-400 font-bold">
               They aren't accidentally finding you. They are actively hunting your archetype.
@@ -103,7 +103,7 @@ export default function FreeResult({ data, onUnlock, isGenerating }: { data: any
             <div>
               <h4 className="text-xl font-black text-emerald-900 mb-2">The 100% "Clarity or Cash Back" Guarantee</h4>
               <p className="text-emerald-800/80 font-medium text-sm leading-relaxed">
-                We take all the risk. Unlock your Master-File right now. If you do not immediately recognize your exes in the data—if you do not feel an instant, chilling level of clarity about why your past relationships went wrong—simply email us within 30 days and we will refund every penny. No questions asked.
+                We take all the risk. Unlock your Master-File right now. If you do not immediately recognize your exes in the data, if you do not feel an instant, chilling level of clarity about why your past relationships went wrong, simply email us within 30 days and we will refund every penny. No questions asked.
               </p>
             </div>
           </div>
@@ -125,7 +125,7 @@ export default function FreeResult({ data, onUnlock, isGenerating }: { data: any
                 },
                 {
                   title: "Your data as charts",
-                  body: "A risk gauge, a radar of your profile shape and ranked intensity bars — so you can see whether this is one spike carrying everything or a pattern spread across your whole style.",
+                  body: "A risk gauge, a radar of your profile shape and ranked intensity bars, so you can see whether this is one spike carrying everything or a pattern spread across your whole style.",
                 },
                 {
                   title: "Scripts and a 14-day plan",

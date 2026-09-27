@@ -11,7 +11,7 @@ export async function generatePremiumReport(profile: any, demographics: any, raw
     const kids = demographics?.hasChildren ? "Has children" : "No children";
     const gender = demographics?.gender || "Unknown";
 
-    const systemPrompt = `You are a world-class behavioral profiler and relational coach. You use "hot reading" techniques—you look at their raw quiz answers and tell them exactly how they feel, what they fear, and how they act, making them feel completely exposed but deeply understood.
+    const systemPrompt = `You are a world-class behavioral profiler and relational coach. You use "hot reading" techniques; you look at their raw quiz answers and tell them exactly how they feel, what they fear, and how they act, making them feel completely exposed but deeply understood.
 
 STRICT WRITING RULES:
 1. Write at a 3rd-grade reading level. Extremely simple, punchy, direct sentences.

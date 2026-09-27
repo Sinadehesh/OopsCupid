@@ -98,8 +98,8 @@ export default function Week5Communication() {
           </h1>
 
           <p className="text-lg md:text-xl text-slate-600 max-w-2xl leading-relaxed">
-            A secure relationship isn't one without fights — it's one with healthy repairs. Learn
-            to express your needs clearly and break the anxious–avoidant trap.
+            A secure relationship isn't one without fights; it's one with healthy repairs. Learn
+            to express your needs clearly and break the anxious, avoidant trap.
           </p>
         </div>
       </header>
@@ -110,13 +110,13 @@ export default function Week5Communication() {
         <section className={CARD}>
           <h2 className="text-2xl font-bold text-slate-900 mb-5 flex items-center gap-3">
             <Repeat className="w-7 h-7 text-violet-500 shrink-0" />
-            The Pursue–Withdraw Dance
+            The Pursue: Withdraw Dance
           </h2>
 
           <div className="prose prose-slate prose-lg max-w-none mb-8">
             <p>
               When anxiously attached individuals feel a loss of connection, they often engage in{' '}
-              <strong>"Protest Behaviors"</strong> — sending a barrage of texts, criticising, or
+              <strong>"Protest Behaviors"</strong>, sending a barrage of texts, criticising, or
               picking a fight. The subconscious goal is to force a reaction and prove the partner
               is still there.
             </p>
@@ -134,14 +134,14 @@ export default function Week5Communication() {
             <div className={`pointer-events-none absolute -top-20 -left-20 w-64 h-64 rounded-full blur-3xl transition-opacity duration-700 ${cycleBroken ? 'opacity-0' : 'opacity-30 bg-rose-500'}`} />
             <div className={`pointer-events-none absolute -bottom-20 -right-20 w-64 h-64 rounded-full blur-3xl transition-opacity duration-700 ${cycleBroken ? 'opacity-0' : 'opacity-30 bg-blue-600'}`} />
 
-            <h3 className="text-xl font-bold text-white mb-8 relative z-10">The Anxious–Avoidant Trap</h3>
+            <h3 className="text-xl font-bold text-white mb-8 relative z-10">The Anxious: Avoidant Trap</h3>
 
             <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-0 relative mb-10 z-10">
               {/* Anxious side */}
               <div className={`w-full md:w-56 p-6 rounded-2xl border-2 transition-all duration-500 ${cycleBroken ? 'bg-slate-800 border-slate-700 opacity-40' : 'bg-rose-950/60 border-rose-500 shadow-[0_0_30px_rgba(244,63,94,0.25)]'}`}>
                 <h4 className="text-rose-400 font-bold uppercase tracking-wider text-xs mb-2">Anxious Partner</h4>
                 <p className="text-white text-sm font-medium leading-snug">
-                  Feels disconnected, pursues with protest behavior — criticism, over-texting.
+                  Feels disconnected, pursues with protest behavior, criticism, over-texting.
                 </p>
               </div>
 
@@ -206,9 +206,9 @@ export default function Week5Communication() {
             {/* Inputs */}
             <div className="lg:w-1/2 space-y-5">
               {[
-                { label: '1. Observation — just the facts', key: 'observation', value: observation, setter: setObservation, placeholder: 'e.g., We haven\'t connected much since you got home...' },
-                { label: '2. Meaning — my feeling / story', key: 'meaning', value: meaning, setter: setMeaning, placeholder: 'e.g., When we don\'t speak my brain tells me I\'m being ignored...' },
-                { label: '3. Ask — a specific, doable request', key: 'ask', value: ask, setter: setAsk, placeholder: 'e.g., Can we do a quick 10-min check-in so I feel grounded?' },
+                { label: '1. Observation, just the facts', key: 'observation', value: observation, setter: setObservation, placeholder: 'e.g. We haven\'t connected much since you got home...' },
+                { label: '2. Meaning; my feeling / story', key: 'meaning', value: meaning, setter: setMeaning, placeholder: 'e.g. When we don\'t speak my brain tells me I\'m being ignored...' },
+                { label: '3. Ask, a specific, doable request', key: 'ask', value: ask, setter: setAsk, placeholder: 'e.g. Can we do a quick 10-min check-in so I feel grounded?' },
               ].map(({ label, value, setter, placeholder }) => (
                 <div key={label}>
                   <label className="block text-xs font-bold text-violet-800 uppercase tracking-widest mb-1.5">
@@ -312,7 +312,7 @@ export default function Week5Communication() {
                     <div>
                       <h3 className="text-base font-bold text-slate-900">Reflect Their Reality</h3>
                       <p className="text-slate-500 text-sm mt-1">
-                        Summarise what you heard them say — no defence, no "but".{' '}
+                        Summarise what you heard them say, no defence, no "but".{' '}
                         <em>"Here is what I heard you experience…"</em>
                       </p>
                     </div>

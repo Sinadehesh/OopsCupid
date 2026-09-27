@@ -8,7 +8,7 @@ import { quizRegistry } from "@/lib/quizzes/registry";
 export const metadata = {
   title: "Why Do I Attract Toxic People? Free Pattern Quiz | OopsCupid",
   description:
-    "Keep ending up with toxic partners? This free diagnostic maps the childhood loops and boundary gaps behind your pattern — and shows you how to break it.",
+    "Keep ending up with toxic partners? This free diagnostic maps the childhood loops and boundary gaps behind your pattern, and shows you how to break it.",
   alternates: { canonical: "https://www.oopscupid.com/why-do-i-attract-toxic-people" },
   openGraph: {
     title: "Why Do I Attract Toxic People? Pattern Diagnostic",
@@ -26,11 +26,11 @@ const FAQ = [
   },
   {
     q: "Do toxic people target certain personalities?",
-    a: "Manipulative people do preferentially pursue partners who are empathetic, conflict-avoidant, quick to give second chances, and slow to enforce boundaries. Those are genuinely good qualities — the fix isn't to become colder, it's to add screening and boundaries on top of them.",
+    a: "Manipulative people do preferentially pursue partners who are empathetic, conflict-avoidant, quick to give second chances, and slow to enforce boundaries. Those are genuinely good qualities, the fix isn't to become colder, it's to add screening and boundaries on top of them.",
   },
   {
     q: "Can I actually change my 'type'?",
-    a: "Yes — attraction templates are learned, which means they can be relearned. The process is concrete: identify your pattern's origin, learn to notice when the 'spark' is actually a threat response, and recalibrate toward partners who feel calm instead of chaotic. Your result includes the first steps for your specific pattern.",
+    a: "Yes, attraction templates are learned, which means they can be relearned. The process is concrete: identify your pattern's origin, learn to notice when the 'spark' is actually a threat response, and recalibrate toward partners who feel calm instead of chaotic. Your result includes the first steps for your specific pattern.",
   },
 ];
 
@@ -48,7 +48,7 @@ export default function AttractToxicQuizPage() {
         ]}
       />
       <QuizEngine />
-      <QuizFaq items={FAQ} heading="Why Do I Attract Toxic People? — Common Questions" />
+      <QuizFaq items={FAQ} heading="Why Do I Attract Toxic People? Common Questions" />
       <RelatedQuizzes currentSlug="/why-do-i-attract-toxic-people" />
     </main>
   );

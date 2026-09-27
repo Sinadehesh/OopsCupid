@@ -23,27 +23,27 @@ interface Props {
 
 const RISK_CONFIG = {
   SEVERE: {
-    label: "High-Risk — Active Cheating Signals",
+    label: "High-Risk: Active Cheating Signals",
     subtitle: "Multiple simultaneous deception patterns detected.",
-    advice: "The behavioral pattern you have described matches what research identifies as active infidelity — not general relationship stress. Digital withdrawal, unexplained time gaps, and emotional shutdown rarely overlap like this without a coordinating cause. You are not being paranoid.",
+    advice: "The behavioral pattern you have described matches what research identifies as active infidelity, not general relationship stress. Digital withdrawal, unexplained time gaps, and emotional shutdown rarely overlap like this without a coordinating cause. You are not being paranoid.",
     heroBg: "bg-[#1a0a0a]",
     heroBorder: "border-rose-500/30",
     badgeColor: "bg-rose-500/20 border-rose-500/40 text-rose-300",
     barColor: "bg-rose-500",
   },
   ELEVATED: {
-    label: "Suspicious — Cheating Pattern Emerging",
+    label: "Suspicious: Cheating Pattern Emerging",
     subtitle: "Several behavioral markers align with concealment.",
-    advice: "His behavior shows overlapping patterns consistent with someone managing a secret. No single signal is proof, but the combination you are experiencing is not normal relationship friction. The overlap is what matters — trust what you are observing.",
+    advice: "His behavior shows overlapping patterns consistent with someone managing a secret. No single signal is proof, but the combination you are experiencing is not normal relationship friction. The overlap is what matters, trust what you are observing.",
     heroBg: "bg-[#0f1520]",
     heroBorder: "border-amber-500/30",
     badgeColor: "bg-amber-500/20 border-amber-500/40 text-amber-300",
     barColor: "bg-amber-500",
   },
   MODERATE: {
-    label: "Gray Zone — Signals Present",
+    label: "Gray Zone: Signals Present",
     subtitle: "Some patterns exist but may have other explanations.",
-    advice: "The signals you have noticed are real. They could reflect stress, emotional withdrawal, or early-stage concealment. The critical question is whether this is a change from his normal behavior — a sudden shift matters far more than the absolute score.",
+    advice: "The signals you have noticed are real. They could reflect stress, emotional withdrawal, or early-stage concealment. The critical question is whether this is a change from his normal behavior, a sudden shift matters far more than the absolute score.",
     heroBg: "bg-[#0a1020]",
     heroBorder: "border-indigo-500/30",
     badgeColor: "bg-indigo-500/20 border-indigo-500/40 text-indigo-300",
@@ -199,7 +199,7 @@ export default function InfidelityFreeResult({ data, onUnlock, isGenerating }: P
             </h3>
 
             <p className="text-white/55 font-medium text-base md:text-lg mb-10 leading-relaxed">
-              Your scores unlock a complete investigation — what his specific behaviors mean, whether this is proof or paranoia, the exact words to say when you confront him, and a step-by-step protocol for the next 5 days.
+              Your scores unlock a complete investigation, what his specific behaviors mean, whether this is proof or paranoia, the exact words to say when you confront him, and a step-by-step protocol for the next 5 days.
             </p>
 
             <div className="grid grid-cols-2 gap-3 mb-10 text-left">

@@ -6,7 +6,7 @@ import { SYMPTOM_PAGES } from "@/lib/seo/symptoms";
 import { quizRegistry } from "@/lib/quizzes/registry";
 
 /**
- * /signs/[slug] — the long-tail traffic pages.
+ * /signs/[slug], the long-tail traffic pages.
  *
  * Statically generated at build time, so they cost nothing to serve and
  * are fully crawlable without JavaScript. Each carries FAQPage and
@@ -112,7 +112,7 @@ export default async function SignPage({
         </h1>
 
         {/* The direct answer. First thing on the page because it is what
-            gets pulled into a snippet and quoted by an AI — it has to
+            gets pulled into a snippet and quoted by an AI; it has to
             stand alone with no page around it. */}
         <div className="bg-white rounded-3xl border border-slate-200 shadow-[0_2px_20px_rgba(15,23,42,0.05)] p-6 md:p-8 mb-10">
           <p className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 mb-3">The short answer</p>
@@ -130,7 +130,7 @@ export default async function SignPage({
 
         {/* The honest counter-case. Every one of these behaviours has an
             innocent explanation, and a page that hides that is
-            fearmongering — which readers detect. */}
+            fearmongering, which readers detect. */}
         <section className="mt-10 rounded-3xl bg-emerald-50/60 border border-emerald-200/70 p-6 md:p-8">
           <h2 className="text-lg font-black text-emerald-900 mb-3 flex items-center gap-2">
             <Info className="w-5 h-5" /> When it is not what you think
@@ -211,7 +211,7 @@ export default async function SignPage({
 
         <p className="mt-14 text-xs text-slate-400 font-medium leading-relaxed border-t border-slate-200 pt-6">
           This page is general information, not a diagnosis or clinical advice. If you are
-          frightened of someone, or being controlled, a domestic abuse service can help — in the
+          frightened of someone, or being controlled, a domestic abuse service can help, in the
           UK, the National Domestic Abuse Helpline is 0808 2000 247, free and 24 hours.
         </p>
       </div>

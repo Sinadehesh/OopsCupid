@@ -15,7 +15,7 @@ export type Question = {
 const agree5 = ["1 - Strongly Disagree", "2 - Disagree", "3 - Neutral", "4 - Agree", "5 - Strongly Agree"];
 
 export const friendRoleQuestions: Question[] = [
-  // SECTION 1 — Social Leadership (12)
+  // SECTION 1: Social Leadership (12)
   { id: "FR_L_1", moduleKey: "A", subscaleKey: "Social Leadership", text: "My friends often look to me when it's time to decide what we should do.", options: agree5 },
   { id: "FR_L_2", moduleKey: "A", subscaleKey: "Social Leadership", text: "I'm usually the one who turns 'we should hang out sometime' into an actual plan.", options: agree5 },
   { id: "FR_L_3", moduleKey: "A", subscaleKey: "Social Leadership", text: "When plans get messy, I naturally start organizing people.", options: agree5 },
@@ -29,7 +29,7 @@ export const friendRoleQuestions: Question[] = [
   { id: "FR_L_11", moduleKey: "A", subscaleKey: "Social Leadership", text: "I'm comfortable guiding a group when nobody else wants the responsibility.", options: agree5 },
   { id: "FR_L_12", moduleKey: "A", subscaleKey: "Social Leadership", text: "Even when I have a strong idea, I often go along with the group instead of influencing it.", options: agree5, reverseScore: true },
 
-  // SECTION 2 — Emotional Support (12)
+  // SECTION 2: Emotional Support (12)
   { id: "FR_ES_1", moduleKey: "B", subscaleKey: "Emotional Support", text: "Friends tend to open up to me about what's really bothering them.", options: agree5 },
   { id: "FR_ES_2", moduleKey: "B", subscaleKey: "Emotional Support", text: "I can usually tell when someone says 'I'm fine' but clearly isn't.", options: agree5 },
   { id: "FR_ES_3", moduleKey: "B", subscaleKey: "Emotional Support", text: "If one of my friends is upset, I usually check in rather than wait for them to come to me.", options: agree5 },
@@ -43,7 +43,7 @@ export const friendRoleQuestions: Question[] = [
   { id: "FR_ES_11", moduleKey: "B", subscaleKey: "Emotional Support", text: "I often notice when someone in the group is quietly struggling.", options: agree5 },
   { id: "FR_ES_12", moduleKey: "B", subscaleKey: "Emotional Support", text: "I usually respond to emotional situations with jokes when support would probably help more.", options: agree5, reverseScore: true },
 
-  // SECTION 3 — Humor & Entertainment (12)
+  // SECTION 3: Humor & Entertainment (12)
   { id: "FR_HE_1", moduleKey: "C", subscaleKey: "Humor & Entertainment", text: "I'm usually one of the people making everyone laugh during a hangout.", options: agree5 },
   { id: "FR_HE_2", moduleKey: "C", subscaleKey: "Humor & Entertainment", text: "If the vibe gets awkward, I often break the tension with humor.", options: agree5 },
   { id: "FR_HE_3", moduleKey: "C", subscaleKey: "Humor & Entertainment", text: "Friends expect me to bring energy to group situations.", options: agree5 },
@@ -57,7 +57,7 @@ export const friendRoleQuestions: Question[] = [
   { id: "FR_HE_11", moduleKey: "C", subscaleKey: "Humor & Entertainment", text: "I like being the person who makes a night feel memorable.", options: agree5 },
   { id: "FR_HE_12", moduleKey: "C", subscaleKey: "Humor & Entertainment", text: "I sometimes keep joking even when the moment clearly needs a different energy.", options: agree5, reverseScore: true },
 
-  // SECTION 4 — Adventure & Risk (12)
+  // SECTION 4: Adventure & Risk (12)
   { id: "FR_AR_1", moduleKey: "D", subscaleKey: "Adventure & Risk", text: "I'm usually the first one to say, 'Let's just do it.'", options: agree5 },
   { id: "FR_AR_2", moduleKey: "D", subscaleKey: "Adventure & Risk", text: "Last-minute plans sound exciting to me.", options: agree5 },
   { id: "FR_AR_3", moduleKey: "D", subscaleKey: "Adventure & Risk", text: "I like pushing my friends to try new places instead of repeating the same routine.", options: agree5 },
@@ -71,7 +71,7 @@ export const friendRoleQuestions: Question[] = [
   { id: "FR_AR_11", moduleKey: "D", subscaleKey: "Adventure & Risk", text: "I'd try something slightly ridiculous if it meant making a great memory.", options: agree5 },
   { id: "FR_AR_12", moduleKey: "D", subscaleKey: "Adventure & Risk", text: "When plans start getting adventurous, I usually become the one slowing things down.", options: agree5, reverseScore: true },
 
-  // SECTION 5 — Conflict Mediation (12)
+  // SECTION 5: Conflict Mediation (12)
   { id: "FR_CM_1", moduleKey: "E", subscaleKey: "Conflict Mediation", text: "When two friends argue, I usually try to help them work it out.", options: agree5 },
   { id: "FR_CM_2", moduleKey: "E", subscaleKey: "Conflict Mediation", text: "I'm good at seeing both sides of a disagreement.", options: agree5 },
   { id: "FR_CM_3", moduleKey: "E", subscaleKey: "Conflict Mediation", text: "I notice group tension pretty quickly.", options: agree5 },
@@ -85,7 +85,7 @@ export const friendRoleQuestions: Question[] = [
   { id: "FR_CM_11", moduleKey: "E", subscaleKey: "Conflict Mediation", text: "I'm good at lowering the emotional temperature in a room.", options: agree5 },
   { id: "FR_CM_12", moduleKey: "E", subscaleKey: "Conflict Mediation", text: "Without meaning to, I sometimes make tense situations worse by reacting too fast.", options: agree5, reverseScore: true },
 
-  // SECTION 6 — Loyalty & Protection (12)
+  // SECTION 6: Loyalty & Protection (12)
   { id: "FR_LP_1", moduleKey: "F", subscaleKey: "Loyalty & Protection", text: "If someone is unfairly criticizing my friend, I'm likely to step in.", options: agree5 },
   { id: "FR_LP_2", moduleKey: "F", subscaleKey: "Loyalty & Protection", text: "I feel protective when one of my friends is being excluded.", options: agree5 },
   { id: "FR_LP_3", moduleKey: "F", subscaleKey: "Loyalty & Protection", text: "I don't forget who shows up for me and who doesn't.", options: agree5 },
@@ -99,7 +99,7 @@ export const friendRoleQuestions: Question[] = [
   { id: "FR_LP_11", moduleKey: "F", subscaleKey: "Loyalty & Protection", text: "I'm often one of the people making sure everybody gets home okay.", options: agree5 },
   { id: "FR_LP_12", moduleKey: "F", subscaleKey: "Loyalty & Protection", text: "I rarely feel responsible for looking out for my friends in public or social settings.", options: agree5, reverseScore: true },
 
-  // SECTION 7 — Social Glue (12)
+  // SECTION 7: Social Glue (12)
   { id: "FR_SG_1", moduleKey: "G", subscaleKey: "Social Glue", text: "I'm usually the one checking in when someone goes quiet for a while.", options: agree5 },
   { id: "FR_SG_2", moduleKey: "G", subscaleKey: "Social Glue", text: "I notice when a friend is slowly drifting away from the group.", options: agree5 },
   { id: "FR_SG_3", moduleKey: "G", subscaleKey: "Social Glue", text: "I like bringing different friends together.", options: agree5 },
@@ -113,7 +113,7 @@ export const friendRoleQuestions: Question[] = [
   { id: "FR_SG_11", moduleKey: "G", subscaleKey: "Social Glue", text: "Shared traditions, inside jokes, and group memories matter to me.", options: agree5 },
   { id: "FR_SG_12", moduleKey: "G", subscaleKey: "Social Glue", text: "When a friendship starts fading, I usually let it fade instead of trying to repair it.", options: agree5, reverseScore: true },
 
-  // SECTION 8 — Independence (12)
+  // SECTION 8: Independence (12)
   { id: "FR_I_1", moduleKey: "H", subscaleKey: "Independence", text: "I need a decent amount of personal space, even from people I really like.", options: agree5 },
   { id: "FR_I_2", moduleKey: "H", subscaleKey: "Independence", text: "I sometimes disappear for a while and come back like nothing happened.", options: agree5 },
   { id: "FR_I_3", moduleKey: "H", subscaleKey: "Independence", text: "I make big decisions without needing my friends' input.", options: agree5 },
@@ -127,7 +127,7 @@ export const friendRoleQuestions: Question[] = [
   { id: "FR_I_11", moduleKey: "H", subscaleKey: "Independence", text: "Even in a close group, I keep parts of my life private.", options: agree5 },
   { id: "FR_I_12", moduleKey: "H", subscaleKey: "Independence", text: "I stay socially available even when I really want space.", options: agree5, reverseScore: true },
 
-  // SECTION 9 — Attention & Spotlight (12)
+  // SECTION 9: Attention & Spotlight (12)
   { id: "FR_AS_1", moduleKey: "I", subscaleKey: "Attention & Spotlight", text: "I'm comfortable telling a story when everyone is listening.", options: agree5 },
   { id: "FR_AS_2", moduleKey: "I", subscaleKey: "Attention & Spotlight", text: "I naturally become more expressive in group settings.", options: agree5 },
   { id: "FR_AS_3", moduleKey: "I", subscaleKey: "Attention & Spotlight", text: "I enjoy moments when the room's attention shifts toward me.", options: agree5 },
@@ -141,7 +141,7 @@ export const friendRoleQuestions: Question[] = [
   { id: "FR_AS_11", moduleKey: "I", subscaleKey: "Attention & Spotlight", text: "Being recognized by my friends feels energizing.", options: agree5 },
   { id: "FR_AS_12", moduleKey: "I", subscaleKey: "Attention & Spotlight", text: "Even when I have a great story, I sometimes keep it to myself to avoid attention.", options: agree5, reverseScore: true },
 
-  // SECTION 10 — Observational Insight (12)
+  // SECTION 10: Observational Insight (12)
   { id: "FR_OI_1", moduleKey: "J", subscaleKey: "Observational Insight", text: "I can usually tell when the vibe in the group shifts.", options: agree5 },
   { id: "FR_OI_2", moduleKey: "J", subscaleKey: "Observational Insight", text: "I notice who is talking more, less, or not at all.", options: agree5 },
   { id: "FR_OI_3", moduleKey: "J", subscaleKey: "Observational Insight", text: "I often pick up on tension before anyone says it out loud.", options: agree5 },

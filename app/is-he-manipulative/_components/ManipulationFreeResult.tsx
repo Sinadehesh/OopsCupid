@@ -27,7 +27,7 @@ export default function ManipulationFreeResult({ data, onUnlock, isGenerating }:
             <h3 className="text-2xl md:text-3xl font-black">He is not just a "bad communicator."</h3>
           </div>
           <div className="space-y-6 text-slate-300 font-medium text-lg leading-relaxed relative z-10">
-            <p>You have been trying to solve this by talking to him. But you cannot communicate your way out of manipulation. His mixed signals—the sudden coldness, the guilt-tripping, the shifting of blame—are not an accident.</p>
+            <p>You have been trying to solve this by talking to him. But you cannot communicate your way out of manipulation. His mixed signals, the sudden coldness, the guilt-tripping, the shifting of blame, are not an accident.</p>
             <p className="text-white font-bold text-xl border-l-4 border-indigo-500 pl-4 py-2 bg-white/5 rounded-r-xl">It is a psychological weapon called Intermittent Reinforcement.</p>
             <p>He is systematically hijacking your nervous system to keep you trapped in a cycle of anxiety and relief. To break the trauma bond, you must see the unedited blueprint of his abuse.</p>
           </div>
@@ -59,7 +59,7 @@ export default function ManipulationFreeResult({ data, onUnlock, isGenerating }:
               inclusions={[
                 {
                   title: "Word-for-word scripts",
-                  body: "Four situations you will actually face — a denial, a redirect onto your reaction, a circular argument, a broken limit — with the exact sentence to use and why it works. Matched to the pattern your answers show, not a generic list.",
+                  body: "Four situations you will actually face, a denial, a redirect onto your reaction, a circular argument, a broken limit, with the exact sentence to use and why it works. Matched to the pattern your answers show, not a generic list.",
                 },
                 {
                   title: "The 4-point control matrix",

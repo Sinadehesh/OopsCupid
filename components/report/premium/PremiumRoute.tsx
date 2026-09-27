@@ -74,7 +74,7 @@ export default function PremiumRoute<T>({
             Take the quiz
           </Link>
           <p className="text-xs font-medium text-slate-400 mt-4">
-            Already paid? Your access is saved — finish the quiz and the full
+            Already paid? Your access is saved, finish the quiz and the full
             report opens automatically.
           </p>
         </div>
@@ -93,7 +93,7 @@ export default function PremiumRoute<T>({
           <h1 className="text-xl font-black text-slate-900 mb-3">We couldn't read your saved results</h1>
           <p className="text-slate-600 font-medium mb-7">
             They were probably saved by an older version of the quiz. Retaking it
-            fixes this — your access is not affected.
+            fixes this; your access is not affected.
           </p>
           <Link href={quizHref} className="inline-flex w-full items-center justify-center bg-slate-900 text-white font-extrabold py-3.5 rounded-2xl">
             Retake the quiz

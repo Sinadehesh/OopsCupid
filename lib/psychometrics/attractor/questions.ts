@@ -33,7 +33,7 @@ export const attractorQuestions: Question[] = [
   { id: "S_A_A_3", moduleKey: "A", subscaleKey: "Agreeableness", text: "I project an intimidating, tough, or 'do not cross me' energy.", options: likert5, reverseScore: true },
   { id: "S_A_N_1", moduleKey: "A", subscaleKey: "Neuroticism", text: "My emotional highs and lows are very visible to people dating me.", options: likert5 },
   { id: "S_A_N_2", moduleKey: "A", subscaleKey: "Neuroticism", text: "I frequently seek visible reassurance from my partners.", options: likert5 },
-  { id: "S_A_N_3", moduleKey: "A", subscaleKey: "Neuroticism", text: "I am perceived as a rock—completely unshakable and calm.", options: likert5, reverseScore: true },
+  { id: "S_A_N_3", moduleKey: "A", subscaleKey: "Neuroticism", text: "I am perceived as a rock, completely unshakable and calm.", options: likert5, reverseScore: true },
 
   // MODULE B: SIGNAL ATTACHMENT (12 items)
   { id: "S_B_Anx_1", moduleKey: "B", subscaleKey: "Anxiety", text: "I visibly panic or double-text when a partner pulls away.", options: freq5 },
@@ -44,7 +44,7 @@ export const attractorQuestions: Question[] = [
   { id: "S_B_Anx_6", moduleKey: "B", subscaleKey: "Anxiety", text: "I easily set firm boundaries even if it upsets my partner.", options: freq5, reverseScore: true },
   { id: "S_B_Avo_1", moduleKey: "B", subscaleKey: "Avoidance", text: "I am known for being emotionally walled off or hard to read.", options: likert5 },
   { id: "S_B_Avo_2", moduleKey: "B", subscaleKey: "Avoidance", text: "I visibly pull away or ask for space when things get too serious.", options: freq5 },
-  { id: "S_B_Avo_3", moduleKey: "B", subscaleKey: "Avoidance", text: "I project fierce independence—like I don't need anyone.", options: likert5 },
+  { id: "S_B_Avo_3", moduleKey: "B", subscaleKey: "Avoidance", text: "I project fierce independence, like I don't need anyone.", options: likert5 },
   { id: "S_B_Avo_4", moduleKey: "B", subscaleKey: "Avoidance", text: "Partners often complain that I am cold or distant.", options: freq5 },
   { id: "S_B_Avo_5", moduleKey: "B", subscaleKey: "Avoidance", text: "I keep romantic partners separate from the rest of my life.", options: freq5 },
   { id: "S_B_Avo_6", moduleKey: "B", subscaleKey: "Avoidance", text: "I openly share my deepest vulnerabilities with people I date.", options: freq5, reverseScore: true },

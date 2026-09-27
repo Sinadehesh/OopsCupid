@@ -6,7 +6,7 @@
  * justify their price: with nothing but a band and ten subscale numbers to
  * work from, the most a report could do was print a pre-written paragraph
  * per band. Two women who answered oppositely and landed in the same band
- * read word-for-word the same report — which a careful reader spots
+ * read word-for-word the same report, which a careful reader spots
  * immediately, and correctly calls a leaflet with her score on it.
  *
  * The fix is not better prose. It is using the data. Someone answered
@@ -14,14 +14,14 @@
  * what she said. "You marked 'I keep replying even after he has shown me
  * he is unreliable' as very true, and 'I ignore my own standards when
  * attraction is strong' as rarely true" is information that exists nowhere
- * else in the world — not in the free result, not in any article, not in a
+ * else in the world, not in the free result, not in any article, not in a
  * competitor's quiz. That is what a buyer is owed.
  *
  * Three things come out of here, in descending order of how much they are
  * worth:
  *
  *  1. The statements she endorsed, quoted exactly, with her own answer.
- *  2. The statements she rejected — the exceptions. A pattern with holes
+ *  2. The statements she rejected, the exceptions. A pattern with holes
  *     in it is a more accurate and more usable description than a score.
  *  3. Where her answers disagree with each other. Two items from the same
  *     dimension answered at opposite ends means the dimension is firing on
@@ -33,9 +33,9 @@
 
 /**
  * A question, in the loosest shape that covers every battery here. The
- * per-quiz banks disagree about almost everything — numeric ids in the
+ * per-quiz banks disagree about almost everything, numeric ids in the
  * bespoke quizzes, string ids in the psychometric vaults, five-point
- * agreement scales in some, four-point 0-based intensity scales in others —
+ * agreement scales in some, four-point 0-based intensity scales in others, 
  * so the adapter for each quiz maps onto this rather than the reverse.
  */
 export interface Question {
@@ -98,7 +98,7 @@ const SCALE = ["Never true", "Rarely true", "Sometimes true", "Often true", "Ver
  * "4 - Often", and "Often" is what belongs in a sentence about her.
  */
 function tidy(label: string): string {
-  return label.replace(/^\s*\d+\s*[-–.)]\s*/, "").trim();
+  return label.replace(/^\s*\d+\s*[-\u2013.)]\s*/, "").trim();
 }
 
 export function answerLabel(q: Question, score: number): string {
@@ -133,7 +133,7 @@ function positionOf(q: Question, score: number): number {
 /**
  * Items are placed by what she literally answered, not by what they
  * contribute to a subscale. Several batteries reverse-score some items, so
- * strongly disagreeing with one can push a score up — but quoting "you
+ * strongly disagreeing with one can push a score up, but quoting "you
  * strongly disagreed with this" under a heading about strong agreement
  * would be false, and explaining the reversal to a buyer is noise. This
  * section reports what she said; the scoring's internal arithmetic stays
@@ -176,7 +176,7 @@ export function buildEvidence(
       tensions.push({ category, agreed, denied });
     }
   }
-  // Widest splits first — those are the ones worth the reader's attention.
+  // Widest splits first; those are the ones worth the reader's attention.
   tensions.sort(
     (a, b) =>
       b.agreed.position - b.denied.position - (a.agreed.position - a.denied.position)
@@ -200,8 +200,8 @@ export function hasEvidence(evidence?: Evidence | null): evidence is Evidence {
 /**
  * Adapter for the psychometric batteries in lib/psychometrics/*.
  *
- * They all share a shape — string id, subscale key, and the exact option
- * wording the respondent clicked — but call the subscale something
+ * They all share a shape, string id, subscale key, and the exact option
+ * wording the respondent clicked, but call the subscale something
  * different from what the dossiers call it, and two of them use a 0-based
  * four-point scale. Both differences belong here rather than in four copies
  * at the call sites.

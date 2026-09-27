@@ -119,10 +119,10 @@ export default function Week1NervousSystem() {
           </h2>
           <div className="space-y-4 text-slate-600 leading-8 text-base">
             <p>
-              When your partner pulls away, or a text goes unanswered, your brain doesn’t process it as a mild inconvenience. For the anxiously attached, the brain’s alarm center — the <strong className="text-slate-800">amygdala</strong> — interprets distance as an evolutionary threat to survival.
+              When your partner pulls away, or a text goes unanswered, your brain doesn’t process it as a mild inconvenience. For the anxiously attached, the brain’s alarm center, the <strong className="text-slate-800">amygdala</strong>, interprets distance as an evolutionary threat to survival.
             </p>
             <p>
-              As Dr. Bessel van der Kolk explains in <em>The Body Keeps the Score</em>, intense attachment stress shuts down the prefrontal cortex — the logical, rational part of your brain. This is why <strong className="text-slate-800">you cannot simply “think” your way out of an anxious spiral.</strong>
+              As Dr. Bessel van der Kolk explains in <em>The Body Keeps the Score</em>, intense attachment stress shuts down the prefrontal cortex, the logical, rational part of your brain. This is why <strong className="text-slate-800">you cannot simply “think” your way out of an anxious spiral.</strong>
             </p>
             <p>
               Healing requires a <strong className="text-slate-800">“bottom-up” approach</strong>: we must calm the physical body before the mind can follow.

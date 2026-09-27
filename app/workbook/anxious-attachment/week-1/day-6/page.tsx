@@ -107,7 +107,7 @@ export default function Day6() {
           </h2>
           <p className="text-rose-700 text-base leading-relaxed mb-8 max-w-2xl">
             Look closely at a childhood photo of yourself (ages 4-10). What emotion do you see in
-            their eyes? Were they allowed to have needs? Write a letter to them — tell them they are
+            their eyes? Were they allowed to have needs? Write a letter to them, tell them they are
             safe now, and that you (the capable adult) will protect them so they don't have to be
             "loud" anymore.
           </p>
@@ -119,7 +119,7 @@ export default function Day6() {
               <div className="w-full aspect-[4/5] bg-white/80 rounded-3xl border-2 border-dashed border-rose-300 flex flex-col items-center justify-center text-center p-6 shadow-inner hover:border-rose-500 transition-colors cursor-default group">
                 <ImageIcon className="w-12 h-12 mb-3 text-rose-300 group-hover:text-rose-400 transition-colors" />
                 <p className="text-xs font-semibold text-rose-700 leading-relaxed">
-                  Place a photo of yourself<br />(ages 4–10) here on your desk<br />while you write.
+                  Place a photo of yourself<br />(ages 4-10) here on your desk<br />while you write.
                 </p>
               </div>
             </div>

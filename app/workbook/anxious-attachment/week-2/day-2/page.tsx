@@ -125,7 +125,7 @@ export default function Week2Day2() {
               </h2>
               <div className="space-y-4 text-base text-slate-600 leading-relaxed">
                 <p>
-                  Most people hate their "Inner Critic" — the voice that says{' '}
+                  Most people hate their "Inner Critic", the voice that says{' '}
                   <em>"You're too needy, you're annoying, nobody really likes you."</em>
                 </p>
                 <p>

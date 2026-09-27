@@ -12,7 +12,7 @@ export function generatePremiumNarrative(archetype: string, tier: number, mods: 
 
   // Archetype specific text
   if (archetype === "The Choreographer" || mods.manipulation >= 60) {
-    narrative = "Your friend operates as 'The Choreographer.' They use subtle leverage—like guilt, emotional blackmail, or withholding affection—to shape your behavior and keep you compliant. The toxicity is often masked as care or vulnerability.";
+    narrative = "Your friend operates as 'The Choreographer.' They use subtle leverage, like guilt, emotional blackmail, or withholding affection, to shape your behavior and keep you compliant. The toxicity is often masked as care or vulnerability.";
     distortionCheck = "You are not overreacting. Because the harm is indirect, it's easy to blame yourself. However, healthy friendships do not require you to constantly monitor your behavior to avoid triggering their passive-aggression or 'hurt' feelings.";
     actionPlan.immediate = ["Stop over-explaining your 'no'. Keep boundaries to one simple sentence.", "Recognize guilt as a manipulation tactic, not a sign you did something wrong."];
     actionPlan.medium = ["Start a 'drop-the-rope' test: stop initiating contact and see what happens.", "Decline to answer invasive questions by smoothly changing the subject."];
@@ -22,7 +22,7 @@ export function generatePremiumNarrative(archetype: string, tier: number, mods: 
       { title: "When they use the silent treatment", text: "(Say nothing. Do not chase them or apologize just to restore peace. Let them sit in their silence.)" }
     ];
   } else if (archetype === "The Social Saboteur" || mods.aggression >= 60) {
-    narrative = "Your results point to 'The Social Saboteur.' This dynamic relies on relational aggression—gossip, exclusion, triangulation, and public-private inconsistency. They use social capital as a weapon to maintain power over you.";
+    narrative = "Your results point to 'The Social Saboteur.' This dynamic relies on relational aggression, gossip, exclusion, triangulation, and public-private inconsistency. They use social capital as a weapon to maintain power over you.";
     distortionCheck = "You are not imagining things. Relational aggression is specifically designed to be deniable. If you confront them, they will likely say it was 'just a joke' or that you are 'too sensitive.' Trust your gut: the social punishment is real.";
     actionPlan.immediate = ["Put them on an immediate 'Information Diet.' Stop sharing secrets or insecurities.", "Do not participate if they try to gossip about others to you."];
     actionPlan.medium = ["Build independent friendships outside of this specific social circle.", "Call out subtle digs in the moment by playing dumb ('What did you mean by that?')."];

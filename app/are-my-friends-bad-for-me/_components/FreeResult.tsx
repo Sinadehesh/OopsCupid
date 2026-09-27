@@ -22,7 +22,7 @@ export default function FreeResult({ data }: { data: any }) {
     }
   };
 
-  // Already paid? Show the full audit here — same content as /premium.
+  // Already paid? Show the full audit here, same content as /premium.
   if (granted) return <PremiumDossier dossier={buildFriendsBadDossier(data)} />;
 
   return (

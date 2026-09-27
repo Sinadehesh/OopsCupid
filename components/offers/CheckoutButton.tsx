@@ -9,7 +9,7 @@ import { trackCheckoutClick } from "@/lib/track";
  * The single entry point to payment across the whole site.
  *
  * Posts only a SKU to /api/checkout and follows the hosted Stripe
- * Checkout URL it returns — no card data ever touches our pages, which
+ * Checkout URL it returns, no card data ever touches our pages, which
  * keeps the site in the lightest PCI scope (SAQ-A).
  */
 export default function CheckoutButton({
@@ -40,7 +40,7 @@ export default function CheckoutButton({
 
   const start = async () => {
     // Fired before the network call so an abandoned checkout still shows
-    // intent in the funnel — the gap between this and `purchase` is the
+    // intent in the funnel, the gap between this and `purchase` is the
     // Stripe drop-off rate.
     trackCheckoutClick(
       typeof window !== "undefined" ? window.location.pathname : "unknown",
@@ -61,7 +61,7 @@ export default function CheckoutButton({
       });
 
       // The static export (GitHub Pages / the Android app) has no API
-      // routes — send those visitors to the website to complete payment.
+      // routes, send those visitors to the website to complete payment.
       if (res.status === 404) {
         window.location.href = `https://www.oopscupid.com${path}`;
         return;

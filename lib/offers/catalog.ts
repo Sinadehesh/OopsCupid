@@ -2,19 +2,19 @@ import type { QuizTopic } from "@/lib/quizzes/registry";
 import type { Sku } from "@/lib/stripe/products";
 
 /**
- * CENTRAL OFFER CATALOG — the value ladder behind every funnel.
+ * CENTRAL OFFER CATALOG, the value ladder behind every funnel.
  *
  * Ladder logic (ascending commitment):
- *   1. TRIPWIRE  — low-ticket PDF playbook (existing Gumroad products)
- *   2. CORE      — topic bundle / course (existing Gumroad bundles)
- *   3. COACHING  — 1:1 clarity session (highest margin, sold via Gumroad
- *                  so Gumroad remains merchant of record — no payment
+ *   1. TRIPWIRE, low-ticket PDF playbook (existing Gumroad products)
+ *   2. CORE, topic bundle / course (existing Gumroad bundles)
+ *   3. COACHING, 1:1 clarity session (highest margin, sold via Gumroad
+ *                  so Gumroad remains merchant of record, no payment
  *                  entity needed on our side)
- *   4. PROGRAM   — multi-week coaching program (backend offer, pitched
+ *   4. PROGRAM, multi-week coaching program (backend offer, pitched
  *                  on the coaching page and after a clarity session)
  *
  * ⚠️ The coaching/program Gumroad products must be created in the
- * Gumroad dashboard before these links go live. Every URL lives here —
+ * Gumroad dashboard before these links go live. Every URL lives here, 
  * one file to update, every funnel picks it up.
  */
 
@@ -22,7 +22,7 @@ export interface Offer {
   id: string;
   /**
    * Stripe SKU. Offers WITH a sku are sold through Stripe Checkout.
-   * Offers WITHOUT one are not yet deliverable and must not be sold —
+   * Offers WITHOUT one are not yet deliverable and must not be sold, 
    * the UI hides their buy button rather than taking money for a
    * product that does not exist.
    */
@@ -30,7 +30,7 @@ export interface Offer {
   kind: "playbook" | "course" | "coaching" | "program";
   name: string;
   tagline: string;
-  price: string; // display only — Gumroad charges the real price
+  price: string; // display only: Gumroad charges the real price
   anchorPrice?: string; // honest comparison anchor (e.g. typical session cost)
   /** Legacy external link. Unset for Stripe-sold offers. */
   url?: string;
@@ -45,14 +45,14 @@ export const CLARITY_CALL: Offer = {
   sku: "clarity-call",
   kind: "coaching",
   name: "60-Minute Clarity Session",
-  tagline: "Your results, decoded live — with a plan you leave with.",
+  tagline: "Your results, decoded live, with a plan you leave with.",
   price: "€49",
   anchorPrice: "€120+ typical coaching rate",
   bullets: [
-    "We walk through your exact quiz results together — no generic advice",
+    "We walk through your exact quiz results together, no generic advice",
     "You leave with a written 14-day action plan for your situation",
     "Ask anything: scripts, boundaries, whether to stay or go",
-    "Video or voice-only — your choice, fully private",
+    "Video or voice-only; your choice, fully private",
   ],
   cta: "Book My Clarity Session",
 };
@@ -207,7 +207,7 @@ const ladders: Record<QuizTopic, TopicLadder> = {
       id: "pattern-breaker",
       kind: "playbook",
       name: "The Pattern Breaker Playbook",
-      tagline: "Why 'your type' keeps hurting you — and the 30-day fix.",
+      tagline: "Why 'your type' keeps hurting you, and the 30-day fix.",
       price: "€14",
       url: "https://oopscupid.gumroad.com/l/pattern-breaker",
       bullets: [
@@ -337,7 +337,7 @@ export interface OfferStack {
 /**
  * The upsell brain: higher severity → push higher-touch (higher-margin)
  * offers. Low-severity users get the cheap playbook (easy yes), high-severity
- * users are the ones who most need — and most convert on — coaching.
+ * users are the ones who most need, and most convert on, coaching.
  */
 export function getOfferStack(topic: QuizTopic, severity: Severity): OfferStack {
   const ladder = ladders[topic];
@@ -359,8 +359,8 @@ export function scoreToSeverity(score: number): Severity {
 // ── DECOY-PRICED 3-TIER LADDER ──────────────────────────────────────────────
 //
 // Tier 1 anchors the low end. Tier 2 (report + workbook) is the DECOY:
-// priced deliberately close to Tier 3 so that Tier 3 — which adds a €49
-// coaching session for €10 more — reads as the obvious best value.
+// priced deliberately close to Tier 3 so that Tier 3, which adds a €49
+// coaching session for €10 more, reads as the obvious best value.
 // The decoy isn't a trick offer: it's real and buyable; it just makes the
 // comparison easy. One Gumroad product per tier (see docs/MONETIZATION.md).
 
@@ -402,7 +402,7 @@ export function getDecoyTiers(topic: QuizTopic): DecoyTier[] {
       "Everything in the Premium Report",
       "The 6-week guided workbook: one 10-minute exercise a day",
       "Printable progress tracker",
-      "Lifetime access — work through it at your pace",
+      "Lifetime access, work through it at your pace",
     ],
     cta: "Get Report + Workbook",
   };
@@ -427,7 +427,7 @@ export function getDecoyTiers(topic: QuizTopic): DecoyTier[] {
   return [
     { offer: tier1, role: "base" },
     { offer: tier2, role: "decoy" },
-    { offer: tier3, role: "best", badge: "Best Value — coaching for €10 more" },
+    { offer: tier3, role: "best", badge: "Best Value, coaching for €10 more" },
   ];
 }
 

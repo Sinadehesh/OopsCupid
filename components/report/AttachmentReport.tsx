@@ -64,13 +64,13 @@ export default function AttachmentReport({ profile, demographics, rawAnswers, em
           </div>
         </div>
 
-        {/* Anxious Attachment Workbook Card — only shown for Anxious result */}
+        {/* Anxious Attachment Workbook Card, only shown for Anxious result */}
         {generalProfile.classification.toLowerCase().includes("anxious") && (
           <div className="rounded-2xl p-8 md:p-10 mb-12 bg-white border border-[#d6d2d2] shadow-sm max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
             <div className="flex-1">
               <h4 className="text-sm font-black uppercase tracking-widest text-[#086788]/50 mb-3">Recommended For You</h4>
               <h3 className="text-2xl md:text-3xl font-black text-[#086788] mb-3">The Anxious Attachment Workbook</h3>
-              <p className="text-lg font-medium text-[#086788]/80 mb-6">A step-by-step guide to understanding your patterns, calming your nervous system, and building more secure relationships — starting today.</p>
+              <p className="text-lg font-medium text-[#086788]/80 mb-6">A step-by-step guide to understanding your patterns, calming your nervous system, and building more secure relationships, starting today.</p>
               <a
                 href="https://www.oopscupid.com/workbook/anxious-attachment"
                 target="_blank"
@@ -90,7 +90,7 @@ export default function AttachmentReport({ profile, demographics, rawAnswers, em
            <h3 className={`text-3xl md:text-4xl font-black mb-6 text-[#086788]`}>This is only the surface.</h3>
            <p className={`text-lg md:text-xl mb-8 font-medium text-[#086788]/80 leading-relaxed`}>
              A label alone will not tell you why love feels hard, why you pull away, why you chase, or why you keep repeating the same painful cycle.<br/><br/>
-             Your full result shows the deeper story behind your pattern — <b>how manipulative the guys you attract actually are compared to average men</b>, the exact playbook your partner uses against you, and what you need to do next.
+             Your full result shows the deeper story behind your pattern, <b>how manipulative the guys you attract actually are compared to average men</b>, the exact playbook your partner uses against you, and what you need to do next.
            </p>
            
            <div className="bg-[#fff1d0]/50 border border-[#d6d2d2] rounded-xl p-6 md:p-8 text-left max-w-2xl mx-auto relative overflow-hidden">
@@ -115,7 +115,7 @@ export default function AttachmentReport({ profile, demographics, rawAnswers, em
           relationshipStatus={relationshipStatus}
           headline="You've seen your style."
           headlineAccent="Here is where it came from."
-          pitch="The free result names your attachment style. The full report scores it separately across five domains — general, romantic, mother, father and work — and gives each one its own threat analysis and a three-stage playbook."
+          pitch="The free result names your attachment style. The full report scores it separately across five domains, general, romantic, mother, father and work, and gives each one its own threat analysis and a three-stage playbook."
           inclusions={[
             {
               title: "Five domains, scored separately",
@@ -123,7 +123,7 @@ export default function AttachmentReport({ profile, demographics, rawAnswers, em
             },
             {
               title: "Childhood roots: mother and father",
-              body: "Both parental axes scored and written up separately — the template each one set, and the specific adult behaviour it still produces. This is the section the free result does not touch at all.",
+              body: "Both parental axes scored and written up separately, the template each one set, and the specific adult behaviour it still produces. This is the section the free result does not touch at all.",
             },
             {
               title: "A three-stage playbook per domain",

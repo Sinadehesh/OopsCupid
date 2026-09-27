@@ -4,7 +4,7 @@ import React from "react";
 import { Mail, CheckCircle2, ArrowRight } from "lucide-react";
 
 /**
- * EMAIL OFFER — shown UNDER a result, never in front of it.
+ * EMAIL OFFER, shown UNDER a result, never in front of it.
  *
  * This replaced a mandatory gate. Search Console shows 23% of the queries
  * reaching this site contain "free", and several spell out "no email" or
@@ -13,7 +13,7 @@ import { Mail, CheckCircle2, ArrowRight } from "lucide-react";
  *
  * The wall collected 4 addresses in five months, so it was protecting
  * nothing while turning away the exact audience Google was sending. Asked
- * afterwards, the address is an offer with a reason attached — which is
+ * afterwards, the address is an offer with a reason attached, which is
  * both more honest and, on every funnel I have seen, more productive.
  */
 export default function EmailResultOffer({
@@ -41,7 +41,7 @@ export default function EmailResultOffer({
         <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 flex items-center gap-4">
           <CheckCircle2 className="w-6 h-6 text-emerald-600 shrink-0" />
           <p className="text-emerald-900 font-bold">
-            Sent. Your results are on their way — check spam if it hasn&apos;t arrived in a few minutes.
+            Sent. Your results are on their way, check spam if it hasn&apos;t arrived in a few minutes.
           </p>
         </div>
       </div>
@@ -60,7 +60,7 @@ export default function EmailResultOffer({
               Want a copy of this?
             </h3>
             <p className="text-slate-500 font-medium text-sm mt-1">
-              Optional — you&apos;ve already got your result. This just sends it to you
+              Optional; you&apos;ve already got your result. This just sends it to you
               so you can read it again later.
             </p>
           </div>

@@ -275,7 +275,7 @@ export default function Week4Day3() {
 
               <div className="h-6 w-px bg-slate-700" />
 
-              {/* Step 3 + 4 — animated swap */}
+              {/* Step 3 + 4, animated swap */}
               <div className="w-full relative" style={{ minHeight: '160px' }}>
                 {/* Anxious path */}
                 <div

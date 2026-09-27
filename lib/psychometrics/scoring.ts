@@ -31,7 +31,7 @@ export function scoreScale(def: ScaleDefinition, answers: Record<string, string>
     // 2. Parse leading integers from Likert strings (e.g. "4 - Neutral" -> 4)
     else {
       raw = parseInt(rawStr.split("-")[0].trim(), 10) || 
-            parseInt(rawStr.split("–")[0].trim(), 10) || def.min;
+            parseInt(rawStr.split(", ")[0].trim(), 10) || def.min;
     }
 
     // 3. Apply reverse scoring

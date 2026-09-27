@@ -126,7 +126,7 @@ export default function AttachmentStyleEssay() {
           </p>
 
           <p className="mb-6">
-            You unlock <strong>Circular Data Rings</strong>—visualizations of your Self-Worth Index and Dysregulation Risk—and the revealing <strong>Partner Attraction Magnets</strong> section. This is where you understand why certain toxic dynamics feel magnetic, and why chaos can feel familiar.
+            You unlock <strong>Circular Data Rings</strong>, visualizations of your Self-Worth Index and Dysregulation Risk, and the revealing <strong>Partner Attraction Magnets</strong> section. This is where you understand why certain toxic dynamics feel magnetic, and why chaos can feel familiar.
           </p>
 
           {/* FINAL PREMIUM BANNER */}

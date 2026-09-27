@@ -8,7 +8,7 @@ export const runtime = "nodejs";
 export const maxDuration = 60;
 
 /**
- * WEEKLY REVIEW — the thing the €49 tier is actually selling.
+ * WEEKLY REVIEW, the thing the €49 tier is actually selling.
  *
  * Until now the workbook was 42 pages of static text with input boxes that
  * discarded everything typed into them. Reading advice you could have got
@@ -16,7 +16,7 @@ export const maxDuration = 60;
  * and respond to it is.
  *
  * This reads a week of the buyer's own entries and returns specific
- * feedback on them — quoting their words back, naming the pattern across
+ * feedback on them, quoting their words back, naming the pattern across
  * days, and setting one concrete task. Generic encouragement is explicitly
  * ruled out in the prompt, because a model asked to be supportive will
  * produce exactly the horoscope filler that made the old workbook feel
@@ -35,10 +35,10 @@ Rules, in order of importance:
 1. QUOTE THEM. Every observation must cite a phrase they actually wrote.
    If you cannot ground a point in their text, cut the point.
 2. NAME WHAT CHANGED ACROSS THE WEEK. They wrote on several days. The
-   value is in the movement between entries — a fear on day 2 that they
+   value is in the movement between entries, a fear on day 2 that they
    contradicted on day 5, a word they keep reaching for, a situation they
    describe twice with different endings.
-3. BE SPECIFIC ABOUT THE MECHANISM. Not "you have anxious attachment" —
+3. BE SPECIFIC ABOUT THE MECHANISM. Not "you have anxious attachment", 
    they know. What specifically fires, on what trigger, producing what
    behaviour, at what cost.
 4. ONE TASK. A single concrete thing for next week, doable in a day,
@@ -93,14 +93,14 @@ function renderEntry(e: Entry): string {
  * Deliberately says nothing secret: which provider is selected, which
  * model, and whether a key is present. Without this, a provider key that
  * was pasted into the wrong variable looks identical from the outside to a
- * model that refused — both are a 502 and a shrug.
+ * model that refused, both are a 502 and a shrug.
  */
 /**
  * Say what actually went wrong.
  *
  * "Could not be generated just now" covers a rejected key, an empty
  * account balance, a model name that does not exist and a genuine outage
- * with one sentence, which means nobody — buyer or owner — can tell a
+ * with one sentence, which means nobody, buyer or owner, can tell a
  * five-minute wait from a setting that will never work. None of this
  * reveals the key; the reader is already a paying customer.
  */
@@ -112,7 +112,7 @@ function explain(err: any): string {
     return "The review service rejected our credentials, so this is our problem to fix, not something waiting will solve. Please let us know and we will sort it out." + kept;
   }
   if (status === 402) {
-    return "The review service is reporting an unpaid balance on our side. Again ours to fix — please tell us and we will." + kept;
+    return "The review service is reporting an unpaid balance on our side. Again ours to fix, please tell us and we will." + kept;
   }
   if (status === 404) {
     return "The review service does not recognise the model we asked for, which is a configuration mistake on our side." + kept;
@@ -124,7 +124,7 @@ function explain(err: any): string {
     return "The review service is having trouble at its end. Try again in a few minutes." + kept;
   }
   if (/timeout|aborted|ETIMEDOUT/i.test(String(err?.message ?? ""))) {
-    return "The review took too long to come back. Try again — a second attempt usually lands." + kept;
+    return "The review took too long to come back. Try again, a second attempt usually lands." + kept;
   }
   return "The review could not be generated just now. Try again shortly." + kept;
 }
@@ -171,7 +171,7 @@ export async function POST(req: NextRequest) {
       {
         error: "not-enough",
         message:
-          "There isn't enough written yet to review. Finish a few more days of this week and come back — the review reads across days, so it needs more than one.",
+          "There isn't enough written yet to review. Finish a few more days of this week and come back, the review reads across days, so it needs more than one.",
       },
       { status: 422 }
     );

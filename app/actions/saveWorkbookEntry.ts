@@ -16,7 +16,7 @@ interface WorkbookEntry {
 export async function saveWorkbookEntry(entry: WorkbookEntry) {
   try {
     // Signing in is optional, and auth() throws rather than returning null
-    // when it is misconfigured — which must not cost someone their work.
+    // when it is misconfigured, which must not cost someone their work.
     let userId: string | undefined;
     try {
       const session = await auth();
@@ -40,7 +40,7 @@ export async function saveWorkbookEntry(entry: WorkbookEntry) {
   } catch (error) {
     // This used to fail on every call and say nothing. Loud now: losing
     // someone's written work is the worst failure this product has.
-    console.error('[saveWorkbookEntry] FAILED — user work lost:', error);
+    console.error('[saveWorkbookEntry] FAILED, user work lost:', error);
     return { success: false };
   }
 }
@@ -88,7 +88,7 @@ export async function saveWorkbookPage(entry: WorkbookEntry) {
     ]);
     return { success: true };
   } catch (error) {
-    console.error('[saveWorkbookPage] FAILED — user work lost:', error);
+    console.error('[saveWorkbookPage] FAILED, user work lost:', error);
     return { success: false };
   }
 }

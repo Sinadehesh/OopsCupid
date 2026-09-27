@@ -265,7 +265,7 @@ export default function Week4Day6() {
             </div>
           ) : (
             <p className="text-center text-slate-400 text-sm font-medium">
-              {4 - Object.keys(replacements).length} red word{4 - Object.keys(replacements).length !== 1 ? 's' : ''} remaining — click to edit.
+              {4 - Object.keys(replacements).length} red word{4 - Object.keys(replacements).length !== 1 ? 's': ''} remaining, click to edit.
             </p>
           )}
         </section>

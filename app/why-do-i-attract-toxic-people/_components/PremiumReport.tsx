@@ -6,77 +6,77 @@ import CoachingUpsell from "@/components/offers/CoachingUpsell";
 import SignalFrequency from "@/components/report/charts/SignalFrequency";
 
 /**
- * Per-trait insight library — each of the 10 vulnerability zones gets its
+ * Per-trait insight library, each of the 10 vulnerability zones gets its
  * own mechanism, exploit pattern, and counter-move. No two cards share a
  * sentence. Severity only changes the framing, never the substance.
  */
 const TRAIT_INSIGHTS: Record<string, { mechanism: string; exploit: string; counter: string }> = {
   "Intensity Bias": {
     mechanism: "You read emotional intensity as emotional depth. Fast escalation, grand declarations, and consuming attention register as 'real love' while steady warmth reads as flat.",
-    exploit: "Love-bombers open with maximum intensity precisely because it short-circuits evaluation — by week two you're attached to the feeling, not the person.",
+    exploit: "Love-bombers open with maximum intensity precisely because it short-circuits evaluation, by week two you're attached to the feeling, not the person.",
     counter: "Institute a personal speed limit: no exclusivity talk before you've seen him bored, frustrated, and told 'no' at least once each.",
   },
   "Potential Projection": {
     mechanism: "You date the man he could become, not the man in front of you. Every red flag gets filed under 'he's still growing.'",
-    exploit: "Manipulators feed you the redemption arc on purpose — a hard childhood, an almost-finished project, a version of himself that's always six months away.",
+    exploit: "Manipulators feed you the redemption arc on purpose, a hard childhood, an almost-finished project, a version of himself that's always six months away.",
     counter: "Write down what he does this week, not what he promises for next year. Judge the file, not the trailer.",
   },
   "Red-Flag Minimizing": {
-    mechanism: "You see the flag — then immediately produce his defense for him. 'He was stressed.' 'His ex made him like this.' The alarm works; the response is disabled.",
-    exploit: "A tester will do something small and rude early — cancel late, mock you 'jokingly' — purely to watch you excuse it. Your excuse is his green light.",
+    mechanism: "You see the flag, then immediately produce his defense for him. 'He was stressed.' 'His ex made him like this.' The alarm works; the response is disabled.",
+    exploit: "A tester will do something small and rude early, cancel late, mock you 'jokingly', purely to watch you excuse it. Your excuse is his green light.",
     counter: "New rule: you're allowed to name a flag out loud without deciding anything. Naming it kills the auto-excuse reflex.",
   },
   "Rescuer Drive": {
     mechanism: "Being needed feels safer to you than being wanted. A man with a problem gives you a role; a healthy man leaves you unsure what you're for.",
-    exploit: "Exploiters arrive pre-broken. They hand you a crisis on date two because they know the crisis — not chemistry — is what bonds you.",
+    exploit: "Exploiters arrive pre-broken. They hand you a crisis on date two because they know the crisis, not chemistry, is what bonds you.",
     counter: "Before investing, ask: if he never needed rescuing again, would I still choose him? If the answer wobbles, that's the wound talking.",
   },
   "Boundary Slippage": {
-    mechanism: "Your boundaries are stated but not enforced — each 'last time' quietly becomes the new baseline, and you renegotiate with yourself instead of with him.",
-    exploit: "Boundary-testers escalate on a schedule: small violation, apology, bigger violation. They're not losing control — they're measuring how much you'll absorb.",
+    mechanism: "Your boundaries are stated but not enforced, each 'last time' quietly becomes the new baseline, and you renegotiate with yourself instead of with him.",
+    exploit: "Boundary-testers escalate on a schedule: small violation, apology, bigger violation. They're not losing control; they're measuring how much you'll absorb.",
     counter: "Attach one pre-decided consequence to one boundary and execute it once. A single kept consequence teaches more than fifty warnings.",
   },
   "Validation Hunger": {
     mechanism: "His opinion of you sets your opinion of you. A compliment can carry a bad week; a cold text can sink a good one.",
-    exploit: "Intermittent validation is the cheapest control tool there is — he praises just often enough to keep you auditioning for the next hit.",
+    exploit: "Intermittent validation is the cheapest control tool there is; he praises just often enough to keep you auditioning for the next hit.",
     counter: "Track the ratio: how much of your self-esteem this week came from inside versus from him? Rebuild the internal supply before the next relationship.",
   },
   "Chaos Familiarity": {
     mechanism: "Volatility feels like home. Calm reads as boredom because your nervous system learned early that love and adrenaline arrive together.",
-    exploit: "Chaotic partners don't need to trick you — you volunteer. The fights feel like passion and the reconciliations feel like proof.",
+    exploit: "Chaotic partners don't need to trick you; you volunteer. The fights feel like passion and the reconciliations feel like proof.",
     counter: "Give calm ninety days before you call it boring. Chemistry you feel in your stomach on day one is usually threat-recognition, not fate.",
   },
   "Breadcrumb Addiction": {
-    mechanism: "You can survive on scraps — a like, a 'thinking of you,' a 2 a.m. text — because hope is doing the work the relationship should be doing.",
+    mechanism: "You can survive on scraps, a like, a 'thinking of you,' a 2 a.m. text, because hope is doing the work the relationship should be doing.",
     exploit: "Breadcrumbers portion attention deliberately: enough to keep you on the line, never enough to cost them anything.",
     counter: "Measure investment in calendar time and plans made, not messages. If he can't spend hours, stop spending months.",
   },
   "Self-Trust Erosion": {
-    mechanism: "You outsource reality-checks. When your gut and his explanation disagree, his explanation wins — and each override makes the next one easier.",
+    mechanism: "You outsource reality-checks. When your gut and his explanation disagree, his explanation wins, and each override makes the next one easier.",
     exploit: "This is the soil gaslighting grows in. A distorter doesn't have to beat your judgment; you'll set it aside for him voluntarily.",
     counter: "Keep a private log of gut feelings and outcomes. Watching your own accuracy in writing is the fastest way to re-hire your instincts.",
   },
   "Scarcity Mindset": {
-    mechanism: "Part of you believes this level of connection may not come again — so you hold on tighter as the reasons to leave stack up.",
+    mechanism: "Part of you believes this level of connection may not come again, so you hold on tighter as the reasons to leave stack up.",
     exploit: "Manipulators cultivate scarcity openly: 'no one will love you like I do' isn't a compliment, it's a fence.",
-    counter: "The antidote is evidence, not affirmations: rebuild the full life — friends, projects, momentum — that makes walking away a real option.",
+    counter: "The antidote is evidence, not affirmations: rebuild the full life, friends, projects, momentum, that makes walking away a real option.",
   },
 };
 
 const GENERIC_INSIGHT = {
   mechanism: "This trait sits outside your core pattern but still shapes who feels 'right' to you.",
   exploit: "Manipulative partners probe secondary traits like this one when the primary approaches fail.",
-  counter: "Awareness is most of the fix here — note when this trait activates and what triggered it.",
+  counter: "Awareness is most of the fix here, note when this trait activates and what triggered it.",
 };
 
 const SEVERITY = (score: number) =>
   score >= 20
-    ? { label: "High Alert", chip: "bg-rose-600 text-white", frame: "This is your most exposed surface — treat it as the priority.", }
+    ? { label: "High Alert", chip: "bg-rose-600 text-white", frame: "This is your most exposed surface, treat it as the priority.", }
     : score >= 15
-    ? { label: "Elevated", chip: "bg-amber-500 text-white", frame: "Meaningful exposure — a skilled manipulator will find and test this.", }
+    ? { label: "Elevated", chip: "bg-amber-500 text-white", frame: "Meaningful exposure, a skilled manipulator will find and test this.", }
     : score >= 10
     ? { label: "Moderate", chip: "bg-slate-500 text-white", frame: "Baseline defenses hold, but this slips when you're tired or lonely.", }
-    : { label: "Stronghold", chip: "bg-emerald-600 text-white", frame: "This is a genuine strength — manipulation attempts through this angle tend to fail.", };
+: { label: "Stronghold", chip: "bg-emerald-600 text-white", frame: "This is a genuine strength, manipulation attempts through this angle tend to fail.", };
 
 export default function PremiumReport({ data, handleShare }: { data: any, handleShare: any }) {
   const [mounted, setMounted] = useState(false);
@@ -93,7 +93,7 @@ export default function PremiumReport({ data, handleShare }: { data: any, handle
   while (displaySubs.length < 10) {
     displaySubs.push({
       name: fallbackNames[displaySubs.length] || `Latent Trait ${displaySubs.length + 1}`,
-      // deterministic filler — identical data must always render identically
+      // deterministic filler, identical data must always render identically
       score: 12,
     });
   }
@@ -183,7 +183,7 @@ export default function PremiumReport({ data, handleShare }: { data: any, handle
           </div>
         </div>
 
-        {/* VULNERABILITY MAP — ranked overview before the per-trait detail */}
+        {/* VULNERABILITY MAP, ranked overview before the per-trait detail */}
         <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200 shadow-sm mb-8">
           <h4 className="font-extrabold text-slate-800 mb-1">Your Vulnerability Map</h4>
           <p className="text-slate-400 text-sm font-medium mb-5">All ten zones ranked by exposure. Hover any bar; the detailed breakdown of each zone follows below.</p>
@@ -435,7 +435,7 @@ export default function PremiumReport({ data, handleShare }: { data: any, handle
 
         </div>
 
-        {/* COACHING UPSELL — highest rung of the ladder */}
+        {/* COACHING UPSELL, highest rung of the ladder */}
         <CoachingUpsell topicLabel="your attraction pattern" />
 
         {/* ECOSYSTEM LOOP */}

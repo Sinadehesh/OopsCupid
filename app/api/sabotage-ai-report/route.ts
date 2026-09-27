@@ -32,17 +32,17 @@ Composites:
   - Defense Score: ${result.composites.defenseScore}/120
   - Self-Worth Core: ${result.composites.selfWorthCore}/40
 
-Write exactly 7 personalized insight blocks. Each block must be specific to this person's EXACT scores — not generic. Use second person ("you", "your"). Be warm but direct. Use psychological depth. No fluff.
+Write exactly 7 personalized insight blocks. Each block must be specific to this person's EXACT scores, not generic. Use second person ("you", "your"). Be warm but direct. Use psychological depth. No fluff.
 
 Return ONLY a valid JSON object with exactly these 7 keys:
 {
   "archetypeInsight": "3-4 sentences deeply explaining what their archetype means for them personally, referencing their specific dominant scores",
-  "subscaleInsight": "3-4 sentences interpreting their 5-axis radar — what the shape of their profile reveals, which axes are dangerously high and why",
-  "anxiousAvoidantInsight": "3-4 sentences on their anxious vs avoidant balance — what this split means for their day-to-day relationship behavior",
-  "populationInsight": "2-3 sentences on what their percentile position means — are they in the dangerous zone, the common zone, or the rare zone, and what that implies",
-  "topDriversInsight": "3-4 sentences on how their top 2 drivers interact with each other — the compound effect when both fire simultaneously",
-  "coreWoundInsight": "3-4 sentences identifying the likely childhood or developmental root of their pattern, based on their subscale combination — be specific and compassionate",
-  "actionInsight": "4-5 sentences of the single most important behavioral change they can make RIGHT NOW — specific, actionable, tied to their exact archetype and scores. This should feel like advice from the best therapist they've ever had."
+  "subscaleInsight": "3-4 sentences interpreting their 5-axis radar, what the shape of their profile reveals, which axes are dangerously high and why",
+  "anxiousAvoidantInsight": "3-4 sentences on their anxious vs avoidant balance, what this split means for their day-to-day relationship behavior",
+  "populationInsight": "2-3 sentences on what their percentile position means, are they in the dangerous zone, the common zone, or the rare zone, and what that implies",
+  "topDriversInsight": "3-4 sentences on how their top 2 drivers interact with each other, the compound effect when both fire simultaneously",
+  "coreWoundInsight": "3-4 sentences identifying the likely childhood or developmental root of their pattern, based on their subscale combination, be specific and compassionate",
+  "actionInsight": "4-5 sentences of the single most important behavioral change they can make RIGHT NOW, specific, actionable, tied to their exact archetype and scores. This should feel like advice from the best therapist they've ever had."
 }
 
 Do not add any text outside the JSON. No markdown. No explanation. Pure JSON only.`;

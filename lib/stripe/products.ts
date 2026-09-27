@@ -1,9 +1,9 @@
 /**
- * STRIPE PRODUCT CATALOG — the server-side source of truth.
+ * STRIPE PRODUCT CATALOG, the server-side source of truth.
  *
  * SECURITY: the browser only ever sends a SKU string. Amounts and price
  * IDs are resolved here, on the server, from this table. Never accept a
- * price, amount, or currency from the client — that is how checkout
+ * price, amount, or currency from the client, that is how checkout
  * tampering happens.
  *
  * These Price IDs are LIVE-mode objects in the "Oopscupid" Stripe
@@ -21,7 +21,7 @@ export type Sku =
 export interface StripeProduct {
   sku: Sku;
   priceId: string;
-  /** Display only — Stripe charges the amount attached to priceId. */
+  /** Display only: Stripe charges the amount attached to priceId. */
   displayPrice: string;
   name: string;
   /** What the buyer gets, and how it reaches them. */

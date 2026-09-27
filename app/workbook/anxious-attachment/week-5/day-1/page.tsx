@@ -234,7 +234,7 @@ export default function Week5Day1() {
                 </p>
               </div>
 
-              {/* Connector — desktop only */}
+              {/* Connector, desktop only */}
               <div className="hidden md:flex flex-col items-center justify-center w-28 relative h-24">
                 <div className={`absolute top-3 w-full h-0.5 transition-all duration-500 ${
                   cycleBroken ? 'bg-slate-700' : 'bg-gradient-to-r from-rose-500 to-blue-500'

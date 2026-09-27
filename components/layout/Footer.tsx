@@ -49,7 +49,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 border-t border-[rgba(51,75,99,0.10)] flex flex-col justify-between items-center text-sm text-[#8A6D85] font-normal">
-          <p>© 2026 OopsCupid — Free Relationship Quizzes & Red Flag Analysis for Women</p>
+          <p>© 2026 OopsCupid: Free Relationship Quizzes & Red Flag Analysis for Women</p>
         </div>
       </div>
     </footer>

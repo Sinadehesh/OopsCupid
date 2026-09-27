@@ -4,7 +4,7 @@ import { CLARITY_CALL, type Severity } from "@/lib/offers/catalog";
 import CheckoutButton from "./CheckoutButton";
 
 /**
- * The coaching upsell block — the highest-margin rung of the ladder.
+ * The coaching upsell block, the highest-margin rung of the ladder.
  * Rendered inside free results and premium reports. Copy adapts to the
  * user's result severity so the pitch matches their emotional state.
  */
@@ -24,10 +24,10 @@ export default function CoachingUpsell({
 
   const sub =
     severity === "high"
-      ? `Your scores put you in the range where generic advice stops working. In one private session we go through ${topicLabel} together and you leave with a concrete plan — not a pep talk.`
+      ? `Your scores put you in the range where generic advice stops working. In one private session we go through ${topicLabel} together and you leave with a concrete plan, not a pep talk.`
       : severity === "moderate"
       ? `Reading about ${topicLabel} is step one. Talking it through with someone who has seen hundreds of these situations is what actually changes it.`
-      : `Your results look manageable — which is exactly when one session does the most. Build the habits now, before the pattern gets expensive.`;
+: `Your results look manageable, which is exactly when one session does the most. Build the habits now, before the pattern gets expensive.`;
 
   return (
     <section className="w-full max-w-4xl mx-auto my-12 rounded-3xl overflow-hidden border border-slate-200 bg-slate-900 text-white shadow-2xl">
@@ -58,7 +58,7 @@ export default function CoachingUpsell({
             sku="clarity-call"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-rose-500 hover:bg-rose-400 text-white font-black text-lg px-10 py-5 rounded-2xl transition-all shadow-lg hover:-translate-y-0.5 disabled:opacity-70"
           >
-            {CLARITY_CALL.cta} — {CLARITY_CALL.price}
+            {CLARITY_CALL.cta}, {CLARITY_CALL.price}
           </CheckoutButton>
           {CLARITY_CALL.anchorPrice && (
             <div className="text-slate-400 text-sm font-bold">

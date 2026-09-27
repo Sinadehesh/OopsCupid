@@ -55,7 +55,7 @@ export function aiProviderName(): string {
   return provider();
 }
 
-/** True when a usable key is configured — callers degrade rather than throw. */
+/** True when a usable key is configured, callers degrade rather than throw. */
 export function aiConfigured(): boolean {
   const cfg = PROVIDERS[provider()];
   return Boolean(process.env.AI_API_KEY || process.env[cfg.keyEnv] || process.env.OPENAI_API_KEY);

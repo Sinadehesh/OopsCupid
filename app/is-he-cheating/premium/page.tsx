@@ -54,7 +54,7 @@ export default function CheatingPremiumPage() {
       const stored = localStorage.getItem("infidelity_result");
       if (stored) setData(normalize(JSON.parse(stored)));
     } catch {
-      // malformed JSON — fall through to "no data" state
+      // malformed JSON, fall through to "no data" state
     }
     setLoading(false);
   }, []);

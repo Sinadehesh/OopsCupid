@@ -52,7 +52,7 @@ export const quizRegistry: QuizEntry[] = [
     title: "Is He Manipulative? Test",
     seoTitle: "Is He Manipulative? Manipulation Tactics Test",
     description:
-      "Identify the exact manipulation tactics being used on you — guilt trips, DARVO, love bombing — and get scripts to shut them down.",
+      "Identify the exact manipulation tactics being used on you, guilt trips, DARVO, love bombing, and get scripts to shut them down.",
     topic: "manipulation",
     hub: "him",
     questionCount: 20,
@@ -76,7 +76,7 @@ export const quizRegistry: QuizEntry[] = [
     title: "His Attachment Style Quiz",
     seoTitle: "What Is My Partner's Attachment Style? Quiz",
     description:
-      "Decode whether he is avoidant, anxious, or secure — and what that means for how he handles conflict, distance, and commitment.",
+      "Decode whether he is avoidant, anxious, or secure, and what that means for how he handles conflict, distance, and commitment.",
     topic: "attachment",
     hub: "him",
     questionCount: 20,
@@ -90,7 +90,7 @@ export const quizRegistry: QuizEntry[] = [
     title: "Attachment Style Quiz",
     seoTitle: "What Is My Attachment Style? Free Quiz",
     description:
-      "Find out if you're anxious, avoidant, fearful-avoidant, or secure — and how your style silently picks your partners for you.",
+      "Find out if you're anxious, avoidant, fearful-avoidant, or secure, and how your style silently picks your partners for you.",
     topic: "attachment",
     hub: "me",
     questionCount: 20,
@@ -102,7 +102,7 @@ export const quizRegistry: QuizEntry[] = [
     title: "Why Do I Attract Toxic People? Quiz",
     seoTitle: "Why Do I Attract Toxic People? Pattern Diagnostic",
     description:
-      "Map the childhood loops and boundary gaps that make you a magnet for toxic partners — and learn how to break the cycle.",
+      "Map the childhood loops and boundary gaps that make you a magnet for toxic partners, and learn how to break the cycle.",
     topic: "attraction-patterns",
     hub: "me",
     questionCount: 25,
@@ -114,7 +114,7 @@ export const quizRegistry: QuizEntry[] = [
     title: "Why Do I Sabotage Relationships? Quiz",
     seoTitle: "Why Do I Self-Sabotage Relationships? Diagnostic",
     description:
-      "Identify your exact sabotage pattern — pushing away, testing, picking fights — and where it was installed.",
+      "Identify your exact sabotage pattern, pushing away, testing, picking fights, and where it was installed.",
     topic: "self-sabotage",
     hub: "me",
     questionCount: 20,
@@ -150,7 +150,7 @@ export const quizRegistry: QuizEntry[] = [
     title: "Why Do I Date The Same Type?",
     seoTitle: "Why Do I Keep Dating The Same Type? Explained",
     description:
-      "The psychology of repetition compulsion in dating — and the quiz that maps your version of it.",
+      "The psychology of repetition compulsion in dating, and the quiz that maps your version of it.",
     topic: "attraction-patterns",
     hub: "me",
     isQuiz: false,
@@ -160,7 +160,7 @@ export const quizRegistry: QuizEntry[] = [
     title: "What Kind of Person Do I Attract?",
     seoTitle: "What Kind of Person Do I Attract? Quiz",
     description:
-      "Find out the personality type your energy pulls in — and whether that's working for you or against you.",
+      "Find out the personality type your energy pulls in, and whether that's working for you or against you.",
     topic: "attraction-patterns",
     hub: "me",
     questionCount: 20,
@@ -222,7 +222,7 @@ export const quizRegistry: QuizEntry[] = [
     title: "Friend Group Role Quiz",
     seoTitle: "What's My Role In The Friend Group? Quiz",
     description:
-      "Find out which role you've been cast in — the fixer, the entertainer, the afterthought — and whether it's costing you.",
+      "Find out which role you've been cast in, the fixer, the entertainer, the afterthought, and whether it's costing you.",
     topic: "toxic-friends",
     hub: "friends",
     questionCount: 20,
@@ -280,7 +280,7 @@ export const quizRegistry: QuizEntry[] = [
   {
     slug: "/red-flags-in-a-relationship",
     title: "Red Flags In A Relationship",
-    seoTitle: "Red Flags In A Relationship — Checklist",
+    seoTitle: "Red Flags In A Relationship: Checklist",
     description: "A practical checklist of relationship red flags.",
     topic: "red-flags",
     hub: "him",

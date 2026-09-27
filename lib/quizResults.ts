@@ -4,14 +4,14 @@
  * QUIZ RESULT PERSISTENCE
  *
  * A buyer leaves the site for Stripe and comes back to a brand-new React
- * tree. Anything held only in component state is gone by then — which is
+ * tree. Anything held only in component state is gone by then, which is
  * how someone can pay and land on the quiz start screen. Every quiz
  * therefore writes its computed result here before offering checkout, and
  * the matching /premium route reads it back.
  *
  * localStorage is the right store for this: the result belongs to the
  * device, it is not sensitive, and it must survive a full-page redirect.
- * Entitlement is NOT kept here — that lives in a server-signed httpOnly
+ * Entitlement is NOT kept here, that lives in a server-signed httpOnly
  * cookie, so writing to this store unlocks nothing.
  */
 

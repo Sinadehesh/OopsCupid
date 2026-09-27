@@ -47,7 +47,7 @@ export default function AttractionPatternsPage() {
             The Science of Relationship Magnets
           </h2>
           <p className="text-xl text-[#086788]/80 w-full max-w-[1400px] mx-auto leading-relaxed font-medium">
-            Your attraction isn’t random. Your own hidden issues literally light up when you meet someone who matches a familiar emotional chemistry—even if it hurts later.
+            Your attraction isn’t random. Your own hidden issues literally light up when you meet someone who matches a familiar emotional chemistry, even if it hurts later.
           </p>
         </div>
 

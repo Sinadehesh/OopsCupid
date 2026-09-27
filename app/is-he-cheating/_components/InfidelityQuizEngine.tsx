@@ -43,7 +43,7 @@ export default function InfidelityQuizEngine() {
 
   const handleStart = () => setStarted(true);
 
-  // DETERMINISTIC SCORING: real per-subscale psychometrics — identical
+  // DETERMINISTIC SCORING: real per-subscale psychometrics, identical
   // answers always produce identical results.
   const processScoring = (rawAnswers: Record<string, number>) => {
     setIsProcessing(true);

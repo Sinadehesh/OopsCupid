@@ -10,12 +10,12 @@ import { hasEvidence, type Evidence } from "@/lib/report/evidence";
  * the hand-built premium pages can add it in one line.
  *
  * PremiumDossier renders this section itself. Six paid reports here predate
- * that renderer and have their own layouts — and those six were the ones
+ * that renderer and have their own layouts, and those six were the ones
  * charging for pages that could have been written before the buyer arrived.
  * Rewriting them onto the shared renderer would be a week of risk; giving
  * them the one section that earns the price is an import and a line.
  *
- * Renders nothing when there is no evidence — a result saved before the
+ * Renders nothing when there is no evidence, a result saved before the
  * quizzes started keeping answers is missing them, and an empty section
  * would be worse than none.
  */

@@ -26,10 +26,10 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-[rgba(51,75,99,0.08)] bg-[#F9F4F4]/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-[1500px] items-center justify-between px-6 py-3 md:px-10 md:py-4 lg:px-14">
 
-        {/* Left — Logo & Wordmark */}
+        {/* Left: Logo & Wordmark */}
         <Link
           href="/"
-          aria-label="OopsCupid — Free Relationship Quizzes and Red Flag Analysis"
+          aria-label="OopsCupid: Free Relationship Quizzes and Red Flag Analysis"
           className="flex items-center gap-[4px] group"
         >
           <Image
@@ -57,7 +57,7 @@ export default function Header() {
           </span>
         </Link>
 
-        {/* Center/Right — Desktop Nav */}
+        {/* Center/Right: Desktop Nav */}
         <div className="hidden md:flex items-center gap-1">
           <nav aria-label="Main navigation" className="flex items-center gap-1">
             {navLinks.map((link) => {
@@ -80,7 +80,7 @@ export default function Header() {
             })}
           </nav>
 
-          {/* Auth — Desktop */}
+          {/* Auth: Desktop */}
           <div className="ml-3 pl-3 border-l border-[rgba(51,75,99,0.12)] flex items-center">
             {status === "loading" ? (
               <div className="w-8 h-8 rounded-full bg-[#F3ECEB] animate-pulse" />
@@ -148,7 +148,7 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mobile — right side: auth + hamburger */}
+        {/* Mobile, right side: auth + hamburger */}
         <div className="flex md:hidden items-center gap-2">
           {status !== "loading" && (
             session ? (

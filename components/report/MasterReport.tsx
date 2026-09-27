@@ -33,7 +33,7 @@ export default function MasterReport({ profile, demographics, isDarkTheme = fals
     <div className={`min-h-screen ${isDarkTheme ? 'bg-[#0f172a]' : 'bg-[#fafafa]'} py-12 w-full`}>
       <div className="w-full max-w-6xl mx-auto px-6 md:px-10 lg:px-12 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
         
-        {/* HERO SECTION — Outcome Driven */}
+        {/* HERO SECTION: Outcome Driven */}
         <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-20 items-stretch">
           
           <div className={`rounded-3xl border p-10 md:p-12 flex flex-col justify-center ${cardClass}`}>
@@ -57,7 +57,7 @@ export default function MasterReport({ profile, demographics, isDarkTheme = fals
             </div>
           </div>
 
-          {/* RIGHT CARD — Quadrant with Explanation */}
+          {/* RIGHT CARD: Quadrant with Explanation */}
           <div className="flex flex-col items-center justify-center w-full h-full gap-4">
             <AttachmentQuadrant domains={quadrantDomains} isDarkTheme={isDarkTheme} />
             <div className={`w-full p-5 rounded-2xl border ${isDarkTheme ? 'bg-slate-800/80 border-slate-700' : 'bg-white border-slate-200'} shadow-sm`}>

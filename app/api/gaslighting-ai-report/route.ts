@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
 
     const systemPrompt = `You are a trauma-informed clinical psychologist specializing in coercive control and emotional abuse. 
 You write with deep empathy, clarity, and professional authority. 
-Your tone: validating, direct, warm — never clinical-cold. You speak to the reader as a person who matters, not a case.
+Your tone: validating, direct, warm, never clinical-cold. You speak to the reader as a person who matters, not a case.
 You do NOT use bullet points. You write in rich, flowing paragraphs of 3-5 sentences each.
 Each insight must feel personally written for THIS person's exact scores, not generic.`;
 
@@ -32,17 +32,17 @@ Each insight must feel personally written for THIS person's exact scores, not ge
 
 Write exactly 6 JSON fields, each a single paragraph (3-5 sentences):
 
-1. tacticsInsight — Explain what their mind-games score means specifically. What does a ${tacticsPct}% tactics score indicate about his behavior patterns? Make it validating and clear.
+1. tacticsInsight, Explain what their mind-games score means specifically. What does a ${tacticsPct}% tactics score indicate about his behavior patterns? Make it validating and clear.
 
-2. impactInsight — Explain their erosion score of ${impactPct}%. What does this level of mental erosion actually feel like day-to-day? How long does this damage typically last without intervention?
+2. impactInsight, Explain their erosion score of ${impactPct}%. What does this level of mental erosion actually feel like day-to-day? How long does this damage typically last without intervention?
 
-3. subscaleInsight — Explain the combination of ${topTactic}, ${secondTactic}, and ${thirdTactic} as a system. How do these three tactics work together to trap someone in confusion? This is the most important section — make it revelatory.
+3. subscaleInsight, Explain the combination of ${topTactic}, ${secondTactic}, and ${thirdTactic} as a system. How do these three tactics work together to trap someone in confusion? This is the most important section, make it revelatory.
 
-4. redFlagInsight — Explain what ${criticalFlags} critical flags out of 10 means in real terms. If high (5+), be direct that this is serious. If low (0-2), explain that doesn't mean they're imagining it — frequency matters more than severity sometimes.
+4. redFlagInsight, Explain what ${criticalFlags} critical flags out of 10 means in real terms. If high (5+), be direct that this is serious. If low (0-2), explain that doesn't mean they're imagining it, frequency matters more than severity sometimes.
 
-5. erosionProfileInsight — Based on the combination of their tactics and impact scores, describe their unique erosion profile. What specific psychological mechanisms are at work? How has this person been systematically taught to doubt themselves?
+5. erosionProfileInsight, Based on the combination of their tactics and impact scores, describe their unique erosion profile. What specific psychological mechanisms are at work? How has this person been systematically taught to doubt themselves?
 
-6. actionInsight — Write a warm, direct, empowering paragraph telling them exactly what their first 3 moves should be, based on their specific level (${level}) and top tactic (${topTactic}). End with one sentence that makes them feel capable of getting out of the fog.
+6. actionInsight, Write a warm, direct, empowering paragraph telling them exactly what their first 3 moves should be, based on their specific level (${level}) and top tactic (${topTactic}). End with one sentence that makes them feel capable of getting out of the fog.
 
 Respond ONLY with valid JSON like:
 {

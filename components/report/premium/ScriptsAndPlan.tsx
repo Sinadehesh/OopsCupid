@@ -10,7 +10,7 @@ import type { ScriptCard, ActionStep } from "@/lib/report/dossier";
  * Extracted from PremiumDossier so reports that are not built on the
  * dossier can still deliver these two sections. That matters because the
  * checkout page promises "the scripts" and an action plan on every quiz
- * that renders PremiumCheckout — a promise two reports were not keeping.
+ * that renders PremiumCheckout, a promise two reports were not keeping.
  *
  * Section numbers are passed in so the host report's spine stays
  * continuous rather than restarting at 01.

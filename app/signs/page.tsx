@@ -7,9 +7,9 @@ import { quizRegistry } from "@/lib/quizzes/registry";
 export const dynamic = "force-static";
 
 export const metadata: Metadata = {
-  title: "Signs & Patterns — Plain Answers To The Things You're Noticing",
+  title: "Signs & Patterns: Plain Answers To The Things You're Noticing",
   description:
-    "Straight answers to the specific things people notice in relationships and friendships — what each one usually means, when it does not, and what to do.",
+    "Straight answers to the specific things people notice in relationships and friendships, what each one usually means, when it does not, and what to do.",
   alternates: { canonical: "https://www.oopscupid.com/signs" },
 };
 
@@ -41,7 +41,7 @@ export default function SignsIndex() {
           Signs &amp; patterns
         </h1>
         <p className="text-lg text-slate-600 font-medium leading-relaxed max-w-2xl mb-14">
-          Specific things people notice, answered properly — what each one usually
+          Specific things people notice, answered properly, what each one usually
           means, when it means nothing, and what to actually do. No checklists, no
           scare tactics.
         </p>

@@ -91,12 +91,12 @@ export default function Day4() {
             <div className="md:w-2/3">
               <h2 className="text-2xl font-bold mb-4 flex items-center gap-3 text-slate-900"><Radar className="w-7 h-7 text-indigo-500 shrink-0" />The Hyper-Vigilance Radar</h2>
               <div className="space-y-4 text-base text-slate-600 leading-relaxed">
-                <p>Anxiously attached individuals are emotional radar dishes. You are constantly <strong>externally scanning</strong> your partner — monitoring tone of voice, texting speed, and micro-expressions to ensure you are safe.</p>
+                <p>Anxiously attached individuals are emotional radar dishes. You are constantly <strong>externally scanning</strong> your partner, monitoring tone of voice, texting speed, and micro-expressions to ensure you are safe.</p>
                 <p>Because all your energy is focused outward, you become entirely disconnected from what is happening <em>inside</em> your own body.</p>
               </div>
               <div className="mt-6 bg-indigo-50/80 border border-indigo-100 rounded-2xl p-5 flex items-start gap-3">
                 <ShieldAlert className="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" />
-                <p className="text-sm text-indigo-900 leading-relaxed"><strong>The Goal:</strong> Today we practice <strong>Interoception</strong> — the ability to turn the radar inward. We cannot regulate a panicked emotion if we cannot locate where it lives in our body.</p>
+                <p className="text-sm text-indigo-900 leading-relaxed"><strong>The Goal:</strong> Today we practice <strong>Interoception</strong>, the ability to turn the radar inward. We cannot regulate a panicked emotion if we cannot locate where it lives in our body.</p>
               </div>
             </div>
             <div className="md:w-1/3 shrink-0">

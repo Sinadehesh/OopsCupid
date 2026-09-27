@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 /**
  * What is the current visitor entitled to?
  *
- * Reads the httpOnly, server-signed cookie — the browser cannot forge or
+ * Reads the httpOnly, server-signed cookie, the browser cannot forge or
  * edit it. Premium pages call this before rendering paid content.
  */
 export async function GET(req: NextRequest) {

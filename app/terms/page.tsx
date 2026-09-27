@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Terms of Service – OopsCupid",
+  title: "Terms of Service: OopsCupid",
   description: "Read the Terms of Service for OopsCupid, the psychology-based relationship and self-awareness platform.",
 };
 

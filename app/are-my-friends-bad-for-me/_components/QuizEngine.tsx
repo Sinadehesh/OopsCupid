@@ -31,7 +31,7 @@ export default function QuizEngine() {
       setIsProcessing(true);
       setTimeout(() => {
         const computed = calculateFriendScore(nextAnswers);
-        // Survives the Stripe redirect — see lib/quizResults.ts.
+        // Survives the Stripe redirect, see lib/quizResults.ts.
         saveQuizResult(QUIZ_KEYS.friendsBad, computed);
         setResult(computed);
         setIsProcessing(false);

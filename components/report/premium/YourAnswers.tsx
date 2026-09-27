@@ -8,7 +8,7 @@ import type { Evidence, AnsweredQuestion } from "@/lib/report/evidence";
  * THE SECTION THAT MAKES THE REPORT WORTH PAYING FOR.
  *
  * Everything else in a dossier is writing that existed before the buyer
- * arrived — good writing, chosen by her score, but chosen from a shelf.
+ * arrived, good writing, chosen by her score, but chosen from a shelf.
  * This section contains nothing that existed before she answered: her own
  * sentences, her own answers beside them, and the places where the two do
  * not line up.
@@ -25,7 +25,7 @@ import type { Evidence, AnsweredQuestion } from "@/lib/report/evidence";
  *
  * Deliberately no interpretation inside the quotes. The moment this section
  * starts explaining what each answer "reveals", it stops being her data and
- * becomes more generated paragraphs — which is the thing being fixed.
+ * becomes more generated paragraphs, which is the thing being fixed.
  */
 
 const CAP = 8;
@@ -152,7 +152,7 @@ export default function YourAnswers({
           </h3>
           <p className="text-slate-500 font-medium text-sm leading-relaxed mb-6">
             Each pair below measures the same thing, and you answered them at
-            opposite ends. That is not an error — it means the pattern is
+            opposite ends. That is not an error; it means the pattern is
             narrower than its score suggests, and the gap is where it actually
             starts and stops.
           </p>
@@ -202,7 +202,7 @@ export default function YourAnswers({
           </h3>
           <p className="text-slate-500 font-medium text-sm leading-relaxed mb-5">
             Just as important, and usually left out. Wherever this report
-            describes a pattern, it does not mean these — you said so.
+            describes a pattern, it does not mean these; you said so.
           </p>
           <ul>
             {rejected.map((item) => (

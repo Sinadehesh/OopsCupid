@@ -4,21 +4,21 @@ import { ShieldCheck, Target, Heart, BrainCircuit } from 'lucide-react';
 import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 /**
- * This page carries 63% of the site's search impressions — every variant of
- * "attachment style test" — and ranked at position 87 under the title
+ * This page carries 63% of the site's search impressions, every variant of
+ * "attachment style test", and ranked at position 87 under the title
  * "The Master Psychological Battery", which nobody has ever typed into
  * Google. 23% of those queries contain "free" and several spell out
  * "no email", so both now appear in the title, the H1 and the first line.
  */
 export const metadata: Metadata = {
-  title: "Free Attachment Style Test — No Email Required",
+  title: "Free Attachment Style Test: No Email Required",
   description:
-    "Find your attachment style free, with no sign-up and no email required. A 92-question assessment built on the ECR-RS, DERS-16 and Rosenberg scales — results shown instantly on screen.",
+    "Find your attachment style free, with no sign-up and no email required. A 92-question assessment built on the ECR-RS, DERS-16 and Rosenberg scales, results shown instantly on screen.",
   alternates: { canonical: "https://www.oopscupid.com/attachment-style-quiz" },
   openGraph: {
-    title: "Free Attachment Style Test — No Email Required",
+    title: "Free Attachment Style Test: No Email Required",
     description:
-      "Anxious, avoidant, disorganised or secure — scored across five domains. Free, no sign-up, results on screen.",
+      "Anxious, avoidant, disorganised or secure, scored across five domains. Free, no sign-up, results on screen.",
     url: "https://www.oopscupid.com/attachment-style-quiz",
     type: "website",
   },

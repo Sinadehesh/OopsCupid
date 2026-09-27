@@ -129,7 +129,7 @@ export default function Day2() {
             </span>
           </h1>
           <p className="text-lg md:text-xl text-slate-600 max-w-2xl leading-relaxed">
-            Understanding your nervous system's temperature — and learning to stay in the Window of Tolerance.
+            Understanding your nervous system's temperature, and learning to stay in the Window of Tolerance.
           </p>
         </div>
       </header>
@@ -143,7 +143,7 @@ export default function Day2() {
             Protest Behaviors
           </h2>
           <p className="text-slate-500 mb-6 text-base leading-relaxed">
-            Tick any that feel familiar — no judgment here.
+            Tick any that feel familiar, no judgment here.
           </p>
           <div className="space-y-3">
             {protestBehaviors.map((b, i) => (

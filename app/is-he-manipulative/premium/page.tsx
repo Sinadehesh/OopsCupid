@@ -65,7 +65,7 @@ export default function ManipulationPremiumPage() {
         />
         {/* The checkout page promises "the scripts to stop him today" and an
             action plan. This report had neither until now. Both are keyed to
-            the dominant pattern — a counter-move for gaslighting is the wrong
+            the dominant pattern, a counter-move for gaslighting is the wrong
             move for isolation. */}
         <ScriptsAndPlan
           accent="#4F46E5"

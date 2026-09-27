@@ -8,7 +8,7 @@ import { quizRegistry } from "@/lib/quizzes/registry";
 export const metadata: Metadata = {
   title: "Is He Manipulative? Free Manipulation Tactics Test | OopsCupid",
   description:
-    "Is it manipulation or just conflict? This free screening test identifies the exact tactics being used on you — guilt trips, DARVO, silent treatment — with an instant result.",
+    "Is it manipulation or just conflict? This free screening test identifies the exact tactics being used on you, guilt trips, DARVO, silent treatment, with an instant result.",
   alternates: { canonical: "https://www.oopscupid.com/is-he-manipulative" },
   openGraph: {
     title: "Is He Manipulative? Manipulation Tactics Test",
@@ -26,11 +26,11 @@ const FAQ = [
   },
   {
     q: "What is DARVO?",
-    a: "DARVO stands for Deny, Attack, Reverse Victim and Offender — the most common defensive pattern in manipulative relationships. You raise a concern; he denies it happened, attacks your character or motives, and ends up positioned as the real victim of your 'accusations.' Recognizing DARVO in real time is one of the most protective skills you can build, and it's part of what this test screens for.",
+    a: "DARVO stands for Deny, Attack, Reverse Victim and Offender, the most common defensive pattern in manipulative relationships. You raise a concern; he denies it happened, attacks your character or motives, and ends up positioned as the real victim of your 'accusations.' Recognizing DARVO in real time is one of the most protective skills you can build, and it's part of what this test screens for.",
   },
   {
     q: "Can a manipulative partner change?",
-    a: "Sometimes — but only with genuine accountability, which looks like: acknowledging specific behaviors without minimizing, tolerating your boundaries without punishment, and sustained change over months rather than a good week after a blow-up. Your result explains what change would need to look like for the specific tactics in play.",
+    a: "Sometimes, but only with genuine accountability, which looks like: acknowledging specific behaviors without minimizing, tolerating your boundaries without punishment, and sustained change over months rather than a good week after a blow-up. Your result explains what change would need to look like for the specific tactics in play.",
   },
 ];
 
@@ -49,7 +49,7 @@ export default function IsHeManipulativePage() {
       />
       {/* This renders our brand new, crash-proof engine */}
       <ManipulationQuizEngine />
-      <QuizFaq items={FAQ} heading="Is He Manipulative? — Common Questions" />
+      <QuizFaq items={FAQ} heading="Is He Manipulative? Common Questions" />
       <RelatedQuizzes currentSlug="/is-he-manipulative" />
     </main>
   );

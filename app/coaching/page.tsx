@@ -17,12 +17,12 @@ import RelatedQuizzes from "@/components/seo/RelatedQuizzes";
 export const metadata: Metadata = {
   title: "Relationship Clarity Coaching | 1:1 Sessions | OopsCupid",
   description:
-    "Private 1:1 coaching sessions that turn your quiz results into a concrete plan. Decode his behavior, set boundaries, and decide your next move — with someone in your corner.",
+    "Private 1:1 coaching sessions that turn your quiz results into a concrete plan. Decode his behavior, set boundaries, and decide your next move, with someone in your corner.",
   alternates: { canonical: "https://www.oopscupid.com/coaching" },
   openGraph: {
     title: "Relationship Clarity Coaching | OopsCupid",
     description:
-      "Your quiz told you what's happening. A clarity session tells you what to do about it — tonight.",
+      "Your quiz told you what's happening. A clarity session tells you what to do about it, tonight.",
     url: "https://www.oopscupid.com/coaching",
     type: "website",
   },
@@ -47,7 +47,7 @@ const COACHING_FAQ = [
   },
   {
     q: "How fast can I book?",
-    a: "Checkout takes a minute through Gumroad, and you'll receive the scheduling link immediately — most sessions happen within 48 hours.",
+    a: "Checkout takes a minute through Gumroad, and you'll receive the scheduling link immediately, most sessions happen within 48 hours.",
   },
 ];
 
@@ -83,7 +83,7 @@ export default function CoachingPage() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 bg-rose-500 hover:bg-rose-400 text-white font-black text-xl px-10 py-5 rounded-2xl transition-all shadow-xl hover:-translate-y-0.5"
           >
-            {CLARITY_CALL.cta} — {CLARITY_CALL.price} <ArrowRight className="w-6 h-6" />
+            {CLARITY_CALL.cta}, {CLARITY_CALL.price} <ArrowRight className="w-6 h-6" />
           </a>
           <p className="text-slate-400 text-sm font-bold mt-4">
             Secure checkout via Gumroad · Scheduling link delivered instantly
@@ -101,7 +101,7 @@ export default function CoachingPage() {
             {
               icon: ClipboardList,
               title: "1. Bring your results",
-              body: "Take any of our tests first (or don't — your story is enough). Your scores give us a head start on the pattern.",
+              body: "Take any of our tests first (or don't; your story is enough). Your scores give us a head start on the pattern.",
             },
             {
               icon: MessageCircle,
@@ -201,7 +201,7 @@ export default function CoachingPage() {
       <section className="container mx-auto px-4 md:px-8 py-16 max-w-3xl text-center">
         <h2 className="text-2xl font-black text-slate-900 mb-4">Not sure a session is for you?</h2>
         <p className="text-slate-500 font-medium text-lg mb-8">
-          Start with a free test — it takes 3 minutes and your results make the session twice as
+          Start with a free test; it takes 3 minutes and your results make the session twice as
           productive.
         </p>
         <Link

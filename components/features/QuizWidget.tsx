@@ -189,7 +189,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
    * Score the answers and show the result. Email is NOT required.
    *
    * Search Console shows 23% of the queries reaching this site contain
-   * "free", and several spell out "no email" / "no sign up" — people are
+   * "free", and several spell out "no email" / "no sign up", people are
    * explicitly looking for a test that does not demand an address, and
    * this quiz was the one with a wall. The gate collected 4 addresses in
    * five months, so it was protecting nothing and costing the exact
@@ -203,7 +203,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
     // rawAnswers travels with every result. The paid report quotes the
     // buyer's own statements back to her, and it cannot do that from a
-    // score — which is precisely why the reports read like leaflets while
+    // score, which is precisely why the reports read like leaflets while
     // these branches were throwing the answers away.
     let tempResultData: any = null;
 
@@ -341,7 +341,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       );
     }
 
-    // INFIDELITY: show free teaser result with paywall — unlock redirects to /is-he-cheating/premium
+    // INFIDELITY: show free teaser result with paywall, unlock redirects to /is-he-cheating/premium
     if (resultData.type === "infidelity") {
       const freeData = toFreeResultData(resultData.profile, resultData.email ?? email);
       return (

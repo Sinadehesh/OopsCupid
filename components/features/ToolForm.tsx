@@ -55,7 +55,7 @@ export default function ToolForm({
             htmlFor="tool-input"
             className="text-[#334B63] font-semibold text-base"
           >
-            Paste the text below — we'll do the reading between the lines.
+            Paste the text below; we'll do the reading between the lines.
           </label>
           <textarea
             id="tool-input"

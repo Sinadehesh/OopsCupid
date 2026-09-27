@@ -6,7 +6,7 @@ export const runtime = "edge";
  * SHARE CARD
  *
  * A quiz site's only free distribution is people posting their result.
- * That only works if the shared link renders something worth looking at —
+ * That only works if the shared link renders something worth looking at, 
  * a plain link gets scrolled past, a designed card with a verdict on it
  * gets tapped.
  *

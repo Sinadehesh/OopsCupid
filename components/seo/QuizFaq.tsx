@@ -3,7 +3,7 @@ import { FaqJsonLd, type FaqItem } from "./JsonLd";
 
 /**
  * Visible FAQ section + matching FAQPage JSON-LD in one component.
- * Google requires the marked-up Q&As to be visible on the page — keeping
+ * Google requires the marked-up Q&As to be visible on the page, keeping
  * them in a single component guarantees they never drift apart.
  *
  * SEO effect: targets "People Also Ask" long-tails around the quiz keyword

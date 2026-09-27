@@ -10,7 +10,7 @@ import { quizRegistry } from "@/lib/quizzes/registry";
 export const metadata: Metadata = {
   title: "Is He Cheating? Take the 3-Minute Behavioral Test | OopsCupid",
   description:
-    "Is he cheating or are you overthinking? This free 20-question behavioral test analyzes his phone habits, schedule changes, and emotional distance — with an instant result.",
+    "Is he cheating or are you overthinking? This free 20-question behavioral test analyzes his phone habits, schedule changes, and emotional distance, with an instant result.",
   alternates: { canonical: "https://www.oopscupid.com/is-he-cheating" },
   openGraph: {
     title: "Is He Cheating? Free Behavioral Diagnostic Test",
@@ -24,11 +24,11 @@ export const metadata: Metadata = {
 const FAQ = [
   {
     q: "How accurate is an 'is he cheating' quiz?",
-    a: "No quiz can prove infidelity — only evidence can. What this test does is structure your observations: it scores 20 research-informed behavioral markers (phone secrecy, schedule changes, emotional withdrawal, defensiveness) so you can see whether the pattern you're sensing is strong, weak, or mixed, instead of ruminating in circles.",
+    a: "No quiz can prove infidelity, only evidence can. What this test does is structure your observations: it scores 20 research-informed behavioral markers (phone secrecy, schedule changes, emotional withdrawal, defensiveness) so you can see whether the pattern you're sensing is strong, weak, or mixed, instead of ruminating in circles.",
   },
   {
     q: "What are the most common signs of cheating?",
-    a: "The most consistently reported clusters are: sudden phone privacy (new passcode, face-down phone, hidden notifications), unexplained time gaps or 'working late' spikes, a drop in emotional and physical intimacy, and disproportionate defensiveness when asked normal questions. One sign alone means little — the pattern across clusters is what matters, which is exactly what this test measures.",
+    a: "The most consistently reported clusters are: sudden phone privacy (new passcode, face-down phone, hidden notifications), unexplained time gaps or 'working late' spikes, a drop in emotional and physical intimacy, and disproportionate defensiveness when asked normal questions. One sign alone means little, the pattern across clusters is what matters, which is exactly what this test measures.",
   },
   {
     q: "Should I confront him before I'm sure?",
@@ -36,7 +36,7 @@ const FAQ = [
   },
   {
     q: "What if the test says I'm probably just anxious?",
-    a: "That's a real and valuable result. Relationship anxiety and attachment triggers can produce the same gut feeling as real deception. If your score is low, the healthiest next step is usually working on the anxiety itself — our attachment style quiz is the right place to start.",
+    a: "That's a real and valuable result. Relationship anxiety and attachment triggers can produce the same gut feeling as real deception. If your score is low, the healthiest next step is usually working on the anxiety itself; our attachment style quiz is the right place to start.",
   },
 ];
 
@@ -76,7 +76,7 @@ export default function QuizPage() {
         </div>
       </div>
 
-      <QuizFaq items={FAQ} heading="Is He Cheating? — Common Questions" />
+      <QuizFaq items={FAQ} heading="Is He Cheating? Common Questions" />
       <RelatedQuizzes currentSlug="/is-he-cheating" />
     </main>
   );

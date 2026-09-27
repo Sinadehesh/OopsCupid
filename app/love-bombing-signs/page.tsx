@@ -70,7 +70,7 @@ export default function LoveBombingArticle() {
               Imagine meeting someone who seems almost too perfect. They text you the moment they wake up. They tell you you're the most incredible person they've ever met. They say they've never felt such a strong connection before.
             </p>
             <p>
-              Within days they talk about the future — traveling together, living together, even growing old together. At first, it feels intoxicating. Like stepping into a romantic movie where everything suddenly makes sense.
+              Within days they talk about the future, traveling together, living together, even growing old together. At first, it feels intoxicating. Like stepping into a romantic movie where everything suddenly makes sense.
             </p>
             <ul className="list-none pl-0 space-y-2 font-medium my-8">
               <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 rounded-full bg-pink-500"></span> You feel chosen.</li>
@@ -84,7 +84,7 @@ export default function LoveBombingArticle() {
               You begin asking yourself a painful question: Was that love… or was it manipulation?
             </p>
             <p>
-              Welcome to one of the most confusing dynamics in modern relationships — <strong>love bombing</strong>. Understanding the difference between love bombing and genuine affection is essential because the two can look almost identical in the beginning. Yet over time, they lead to completely different emotional realities.
+              Welcome to one of the most confusing dynamics in modern relationships, <strong>love bombing</strong>. Understanding the difference between love bombing and genuine affection is essential because the two can look almost identical in the beginning. Yet over time, they lead to completely different emotional realities.
             </p>
           </div>
 
@@ -106,7 +106,7 @@ export default function LoveBombingArticle() {
                 In short, affection literally <strong>rewires our brain chemistry</strong>. This is why early romance often feels magical. When affection appears genuine, it creates a sense of emotional safety and connection.
               </p>
               <p className="font-medium">
-                Love bombing exploits this same biological mechanism — but with a different goal.
+                Love bombing exploits this same biological mechanism, but with a different goal.
               </p>
             </div>
           </ArticleSection>
@@ -121,7 +121,7 @@ export default function LoveBombingArticle() {
                 Love bombing is not simply intense affection. It is <strong>affection used as a strategy</strong>.
               </p>
               <p>
-                A person engages in overwhelming displays of admiration, attention, and devotion in order to quickly gain emotional influence over another person. The goal is not intimacy. The goal is <strong>attachment — fast attachment</strong>.
+                A person engages in overwhelming displays of admiration, attention, and devotion in order to quickly gain emotional influence over another person. The goal is not intimacy. The goal is <strong>attachment, fast attachment</strong>.
               </p>
               <div className="bg-orange-50 border-l-4 border-orange-500 p-6 rounded-r-2xl my-8">
                 <p className="m-0 text-orange-900 font-medium">
@@ -308,7 +308,7 @@ export default function LoveBombingArticle() {
               </p>
             </div>
             <p className="text-[#5E6E79] mb-8 max-w-2xl mx-auto">
-              Real love may be exciting, but it should never make you feel emotionally swept away without control. Healthy affection builds connection gradually. Love bombing creates emotional intensity that burns bright — and often burns out just as quickly.
+              Real love may be exciting, but it should never make you feel emotionally swept away without control. Healthy affection builds connection gradually. Love bombing creates emotional intensity that burns bright, and often burns out just as quickly.
             </p>
             
             <div className="pt-8 border-t border-[#E2E8F0]">

@@ -5,11 +5,11 @@ import Link from "next/link";
 import { allQuizzes } from "@/lib/quizzes/registry";
 
 export const metadata: Metadata = {
-  title: "Free Attachment Style Test & Relationship Quizzes — No Email",
-  description: "Find your attachment style, who you attract, and whether his behaviour is a red flag. 15 free research-informed tests — no sign-up, no email, results on screen.",
+  title: "Free Attachment Style Test & Relationship Quizzes: No Email",
+  description: "Find your attachment style, who you attract, and whether his behaviour is a red flag. 15 free research-informed tests, no sign-up, no email, results on screen.",
   openGraph: {
-    title: "Free Attachment Style Test & Relationship Quizzes — No Email",
-    description: "Find your attachment style, who you attract, and whether his behaviour is a red flag. 15 free research-informed tests — no sign-up, no email, results on screen.",
+    title: "Free Attachment Style Test & Relationship Quizzes: No Email",
+    description: "Find your attachment style, who you attract, and whether his behaviour is a red flag. 15 free research-informed tests, no sign-up, no email, results on screen.",
     url: "https://www.oopscupid.com",
     siteName: "OopsCupid",
     images: [
@@ -25,8 +25,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free Attachment Style Test & Relationship Quizzes — No Email",
-    description: "Find your attachment style, who you attract, and whether his behaviour is a red flag. 15 free research-informed tests — no sign-up, no email, results on screen.",
+    title: "Free Attachment Style Test & Relationship Quizzes: No Email",
+    description: "Find your attachment style, who you attract, and whether his behaviour is a red flag. 15 free research-informed tests, no sign-up, no email, results on screen.",
     images: ["https://www.oopscupid.com/logo.png"],
   },
 };
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 /**
  * This carousel used to hold ten invented testimonials, shown with
  * five-star ratings and attributed to "Anonymous User". The site has
- * never had a customer, so none of them could be real — and fabricated
+ * never had a customer, so none of them could be real, and fabricated
  * reviews are illegal under the EU Unfair Commercial Practices Directive
  * and the FTC's 2024 Fake Reviews Rule, quite apart from what they do to
  * trust when someone notices.
@@ -52,7 +52,7 @@ const proofPoints: { stat: string; label: string; detail: string }[] = [
   {
     stat: "5",
     label: "domains scored separately",
-    detail: "General, romantic, work and both parental axes — because attachment rarely behaves the same everywhere.",
+    detail: "General, romantic, work and both parental axes, because attachment rarely behaves the same everywhere.",
   },
   {
     stat: "0",
@@ -116,11 +116,11 @@ export default function Home() {
         "@type": "CollectionPage",
         "@id": "https://www.oopscupid.com/#webpage",
         "url": "https://www.oopscupid.com/",
-        "name": "Free Attachment Style Test & Relationship Quizzes — No Email",
+        "name": "Free Attachment Style Test & Relationship Quizzes: No Email",
         "isPartOf": {
           "@id": "https://www.oopscupid.com/#website"
         },
-        "description": "Find your attachment style, who you attract, and whether his behaviour is a red flag. 15 free research-informed tests — no sign-up, no email, results on screen."
+        "description": "Find your attachment style, who you attract, and whether his behaviour is a red flag. 15 free research-informed tests, no sign-up, no email, results on screen."
       }
     ]
   };
@@ -136,7 +136,7 @@ export default function Home() {
 
       <MainHero />
 
-      {/* NEW SECTION 2 — THE PAIN (Running from Hell) */}
+      {/* NEW SECTION 2: THE PAIN (Running from Hell) */}
       <section className="bg-white py-20 md:py-32">
         <div className="container mx-auto px-6 md:px-10 lg:px-14 max-w-4xl">
           <h2 className="text-[36px] md:text-[46px] font-extrabold text-[#E07850] mb-8 text-center leading-tight">
@@ -176,7 +176,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* NEW SECTION 3 — THE SOLUTION (Including Quizzes functionally) */}
+      {/* NEW SECTION 3: THE SOLUTION (Including Quizzes functionally) */}
       <section className="bg-[#3D5A6C] py-20 md:py-32 text-white">
         <div className="container mx-auto px-6 md:px-10 lg:px-14">
           <div className="text-center max-w-4xl mx-auto mb-16">
@@ -222,7 +222,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* NEW SECTION 4 — GRAND SLAM OFFER TEASE */}
+      {/* NEW SECTION 4: GRAND SLAM OFFER TEASE */}
       <section className="bg-white py-20 md:py-32">
         <div className="container mx-auto px-6 md:px-10 lg:px-14">
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
@@ -284,7 +284,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* COACHING — 1:1 OFFER */}
+      {/* COACHING, 1:1 OFFER */}
       <section className="bg-[#32485A] py-20 md:py-28 text-white">
         <div className="container mx-auto px-6 md:px-10 lg:px-14 max-w-5xl">
           <div className="flex flex-col lg:flex-row items-center gap-12">
@@ -299,7 +299,7 @@ export default function Home() {
               </h2>
               <p className="text-[18px] md:text-[20px] font-medium text-white/80 leading-relaxed mb-8">
                 Book a private 60-minute clarity session. We go through your results together and
-                you leave with a written 14-day plan — exact scripts, boundaries, and the decision
+                you leave with a written 14-day plan, exact scripts, boundaries, and the decision
                 point ahead. Video or voice-only. Fully private.
               </p>
               <Link
@@ -323,7 +323,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* NEW SECTION 5 — GUARANTEE & URGENCY */}
+      {/* NEW SECTION 5: GUARANTEE & URGENCY */}
       <section className="bg-[#EFEBE1]/80 py-24">
         <div className="container mx-auto px-6 md:px-10 lg:px-14 max-w-4xl text-center">
           <h2 className="text-[36px] md:text-[46px] font-extrabold text-[#3A556C] mb-10">Try It With Zero Risk.</h2>
@@ -339,7 +339,7 @@ export default function Home() {
                <span className="text-4xl">🔒</span>
                <div>
                  <h4 className="font-extrabold text-[#3A556C] text-xl mb-2">Your Secrets Are Safe</h4>
-                 <p className="text-gray-700 text-[16px] leading-relaxed font-medium">Because these tests are highly personal, the answers you give are erased from our servers within 48 hours — we keep only your email address and which quiz you took. Your results stay in your own browser so you can reopen them.</p>
+                 <p className="text-gray-700 text-[16px] leading-relaxed font-medium">Because these tests are highly personal, the answers you give are erased from our servers within 48 hours; we keep only your email address and which quiz you took. Your results stay in your own browser so you can reopen them.</p>
                </div>
              </div>
           </div>
@@ -350,7 +350,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* QUIZ DIRECTORY — every funnel, crawlable from the homepage */}
+      {/* QUIZ DIRECTORY, every funnel, crawlable from the homepage */}
       <section className="bg-white py-20">
         <div className="container mx-auto px-6 md:px-10 lg:px-14 max-w-6xl">
           <div className="text-center max-w-3xl mx-auto mb-14">
@@ -382,7 +382,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PRESERVED SECTION — CONTINUOUS TESTIMONIALS CAROUSEL */}
+      {/* PRESERVED SECTION: CONTINUOUS TESTIMONIALS CAROUSEL */}
       <section className="bg-[#32485A] py-24 overflow-hidden">
         <div className="container mx-auto px-6 md:px-10 lg:px-14 mb-12">
           <div className="text-center max-w-3xl mx-auto">
@@ -406,7 +406,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PRESERVED SECTION — ARTICLES */}
+      {/* PRESERVED SECTION: ARTICLES */}
       <section className="bg-[#EFEBE1]/60 py-20">
         <div className="container mx-auto px-6 md:px-10 lg:px-14">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -430,7 +430,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PRESERVED SECTION — NEWSLETTER */}
+      {/* PRESERVED SECTION: NEWSLETTER */}
       <section className="bg-[#3D5A6C] py-24 text-white">
         <div className="container mx-auto px-6 md:px-10 lg:px-14">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">

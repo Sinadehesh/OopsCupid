@@ -10,32 +10,32 @@ import {
 import Link from "next/link";
 import CoachingUpsell from "@/components/offers/CoachingUpsell";
 
-/** Per-axis explanations at each band — every bar carries its own interpretation. */
+/** Per-axis explanations at each band, every bar carries its own interpretation. */
 const SUBSCALE_INSIGHTS: Record<string, { high: string; mid: string; low: string }> = {
   fear_of_closeness: {
-    high: "Intimacy itself is your trigger: your answers show the alarm going off precisely when things get good. You likely engineer distance right after your closest moments — the classic sabotage timestamp. Expect the urge to pull away roughly 24-72 hours after real vulnerability, and name it when it comes.",
-    mid: "Closeness is manageable until it deepens past a certain point — then the exits start looking attractive. Notice your personal depth-limit; sabotage usually begins one step past it.",
-    low: "Depth of connection doesn't appear to set off your alarms. Whatever sabotage you do runs through other channels — closeness itself is safe territory for you.",
+    high: "Intimacy itself is your trigger: your answers show the alarm going off precisely when things get good. You likely engineer distance right after your closest moments, the classic sabotage timestamp. Expect the urge to pull away roughly 24-72 hours after real vulnerability, and name it when it comes.",
+    mid: "Closeness is manageable until it deepens past a certain point, then the exits start looking attractive. Notice your personal depth-limit; sabotage usually begins one step past it.",
+    low: "Depth of connection doesn't appear to set off your alarms. Whatever sabotage you do runs through other channels, closeness itself is safe territory for you.",
   },
   rejection_alarm: {
-    high: "Your rejection radar is running so hot it produces false positives: delayed texts read as goodbyes, a flat tone reads as the end. The sabotage sequence starts with a misread — you defend against abandonments that weren't happening until you defended against them.",
+    high: "Your rejection radar is running so hot it produces false positives: delayed texts read as goodbyes, a flat tone reads as the end. The sabotage sequence starts with a misread; you defend against abandonments that weren't happening until you defended against them.",
     mid: "You catch real signals but amplify them. The skill to build: hold the alarm for 24 hours before acting on it. Most of what it screams about resolves itself by morning.",
-    low: "Your rejection alarm sits near baseline — you can tolerate ambiguity without treating it as evidence. That stability is rare and worth knowing you have.",
+    low: "Your rejection alarm sits near baseline; you can tolerate ambiguity without treating it as evidence. That stability is rare and worth knowing you have.",
   },
   worthiness_wounds: {
-    high: "The deepest driver in your profile: a running suspicion that being fully known means being eventually left. Sabotage becomes mercy-killing — ending it before they discover the flaw. Until this belief is challenged directly, every healthy relationship will feel like a countdown.",
-    mid: "The worth question surfaces under stress: compliments get audited, love gets means-tested. You don't live in the wound, but you visit it — and your sabotage dates usually coincide with those visits.",
-    low: "Your sense of deserving love appears fundamentally intact. Whatever patterns you run, they aren't powered by the belief that you're the defective one — which makes them much easier to unwind.",
+    high: "The deepest driver in your profile: a running suspicion that being fully known means being eventually left. Sabotage becomes mercy-killing, ending it before they discover the flaw. Until this belief is challenged directly, every healthy relationship will feel like a countdown.",
+    mid: "The worth question surfaces under stress: compliments get audited, love gets means-tested. You don't live in the wound, but you visit it, and your sabotage dates usually coincide with those visits.",
+    low: "Your sense of deserving love appears fundamentally intact. Whatever patterns you run, they aren't powered by the belief that you're the defective one, which makes them much easier to unwind.",
   },
   protest_testing: {
-    high: "You test instead of ask: picking fights to measure devotion, withdrawing to see who follows, manufacturing jealousy to check the temperature. Every test teaches your partner that peace is temporary — and the tests get harder to pass until failing them becomes the proof you feared.",
+    high: "You test instead of ask: picking fights to measure devotion, withdrawing to see who follows, manufacturing jealousy to check the temperature. Every test teaches your partner that peace is temporary, and the tests get harder to pass until failing them becomes the proof you feared.",
     mid: "Testing shows up when reassurance runs low. The upgrade path is direct: replace one test a week with the actual question underneath it. 'Do you still want this?' outperforms every trap ever set.",
-    low: "You mostly ask rather than test. Protest behavior isn't a major feature of your pattern — conflicts in your relationships are more likely genuine than engineered.",
+    low: "You mostly ask rather than test. Protest behavior isn't a major feature of your pattern, conflicts in your relationships are more likely genuine than engineered.",
   },
   withdrawal_exit: {
-    high: "Your signature move is the pre-emptive exit: emotionally packing your bags at the first sign of trouble, keeping one foot out the door so no one can close it on you. Partners feel this as a draft in the room — present, but provisional. Committing to stay through one uncomfortable conversation is the rep that rewires this.",
-    mid: "You keep exit routes mapped even in good times — not fleeing, but always knowing where the door is. Watch whether 'independence' is doing quiet double-duty as insurance against being left.",
-    low: "Staying is your default. When things get hard you tend to remain in the room — which means whatever else your pattern does, it isn't running the escape-hatch play.",
+    high: "Your signature move is the pre-emptive exit: emotionally packing your bags at the first sign of trouble, keeping one foot out the door so no one can close it on you. Partners feel this as a draft in the room, present, but provisional. Committing to stay through one uncomfortable conversation is the rep that rewires this.",
+    mid: "You keep exit routes mapped even in good times, not fleeing, but always knowing where the door is. Watch whether 'independence' is doing quiet double-duty as insurance against being left.",
+    low: "Staying is your default. When things get hard you tend to remain in the room, which means whatever else your pattern does, it isn't running the escape-hatch play.",
   },
 };
 
@@ -234,7 +234,7 @@ function PlaybookCard({ title, subtitle, price, strikePrice, badge, bullets, cta
           In production <ArrowRight className="w-5 h-5" />
         </div>
         <p className="text-center text-xs font-bold text-[#086788]/40 mt-3">
-          Not on sale yet — we will not charge for something we cannot send you today.
+          Not on sale yet; we will not charge for something we cannot send you today.
         </p>
       </div>
     </div>
@@ -250,14 +250,14 @@ function BundleBanner() {
         onClick={() => setOpen(!open)}>
         <div className="flex items-center gap-3">
           <Flame className="w-6 h-6 text-white animate-pulse" />
-          <span className="text-white font-black text-xl">🔥 BUNDLE BOTH — Save 20%</span>
+          <span className="text-white font-black text-xl">🔥 BUNDLE BOTH: Save 20%</span>
         </div>
         <ChevronDown className={`w-6 h-6 text-white transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
       </button>
       {open && (
         <div className="p-8 md:p-10 space-y-5">
           <p className="text-[#086788]/80 font-medium text-lg leading-relaxed">
-            Get <strong>both playbooks</strong> — the Attachment Style Workbook <em>and</em> the Trauma Style Playbook — at one combined price.
+            Get <strong>both playbooks</strong>, the Attachment Style Workbook <em>and</em> the Trauma Style Playbook, at one combined price.
           </p>
           <ul className="space-y-2">
             {[
@@ -352,7 +352,7 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
             Your Sabotage<br /><span className="text-[#f0c808]">Blueprint</span>
           </h1>
           <p className="text-[#06aed5] text-xl font-medium max-w-lg mx-auto">
-            We mapped every pattern. Here’s exactly why you self-destruct in relationships — and the precise steps to stop.
+            We mapped every pattern. Here’s exactly why you self-destruct in relationships, and the precise steps to stop.
           </p>
         </div>
 
@@ -373,7 +373,7 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
           </div>
         </div>
 
-        {/* AI — archetype insight */}
+        {/* AI, archetype insight */}
         <AIBlock
           label="What your archetype really means for you"
           text={aiInsights?.archetypeInsight}
@@ -412,7 +412,7 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
           </div>
         </div>
 
-        {/* AI — subscale insight */}
+        {/* AI, subscale insight */}
         <AIBlock
           label="What the shape of your radar reveals"
           text={aiInsights?.subscaleInsight}
@@ -447,9 +447,9 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
           </div>
         </div>
 
-        {/* AI — anxious/avoidant insight */}
+        {/* AI, anxious/avoidant insight */}
         <AIBlock
-          label="Your anxious vs avoidant balance — what it means daily"
+          label="Your anxious vs avoidant balance, what it means daily"
           text={aiInsights?.anxiousAvoidantInsight}
           loading={aiLoading}
         />
@@ -482,7 +482,7 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
           </div>
         </div>
 
-        {/* AI — population insight */}
+        {/* AI, population insight */}
         <AIBlock
           label="What your percentile position actually means"
           text={aiInsights?.populationInsight}
@@ -504,12 +504,12 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
             <h3 className="text-xl font-black text-[#086788] mb-2">Secondary Trigger</h3>
             <p className="text-2xl font-black text-[#f0c808] mb-2">{result.topDrivers[1]?.label}</p>
             <p className="font-medium text-[#086788]/75 text-sm leading-relaxed">
-              This amplifies your primary driver — especially when both activate together under relationship stress.
+              This amplifies your primary driver, especially when both activate together under relationship stress.
             </p>
           </div>
         </div>
 
-        {/* AI — top drivers compound insight */}
+        {/* AI, top drivers compound insight */}
         <AIBlock
           label="How your two drivers amplify each other"
           text={aiInsights?.topDriversInsight}
@@ -529,7 +529,7 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
             <p className="text-slate-300 font-medium text-base leading-relaxed mb-4">
               Based on the combination of your subscale scores and composite patterns, your sabotage behavior is most
               likely rooted in early experiences of inconsistent care, betrayal of trust, or environments where closeness
-              felt dangerous. Your nervous system learned to protect you by keeping others at a calculated distance —
+              felt dangerous. Your nervous system learned to protect you by keeping others at a calculated distance, 
               or by testing their commitment until they eventually left.
             </p>
             <p className="text-slate-400 text-sm font-medium leading-relaxed">
@@ -539,7 +539,7 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
           </div>
         </div>
 
-        {/* AI — core wound personalized */}
+        {/* AI, core wound personalized */}
         <AIBlock
           label="The likely root of your specific pattern"
           text={aiInsights?.coreWoundInsight}
@@ -561,9 +561,9 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
           </p>
         </div>
 
-        {/* AI — action plan personalized */}
+        {/* AI, action plan personalized */}
         <AIBlock
-          label="Your exact action plan — written for you specifically"
+          label="Your exact action plan, written for you specifically"
           text={aiInsights?.actionInsight}
           loading={aiLoading}
         />
@@ -631,7 +631,7 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
               bullets={[
                 "50+ pages of guided exercises",
                 "Identify your exact attachment style with scoring",
-                "Daily reprogramming habits — just 10 min/day",
+                "Daily reprogramming habits, just 10 min/day",
                 "Partner communication templates included",
                 "Based on Ainsworth + Bowlby research",
               ]}
@@ -657,7 +657,7 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
 
         
 
-        {/* COACHING UPSELL — highest rung of the ladder */}
+        {/* COACHING UPSELL, highest rung of the ladder */}
         <CoachingUpsell severity="moderate" topicLabel="your sabotage pattern" />
 
         {/* ── CROSS-SELL ── */}

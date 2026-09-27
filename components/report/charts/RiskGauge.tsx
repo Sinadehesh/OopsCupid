@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from "react";
 
 /**
- * Semicircle risk gauge for single risk-index results (0–100).
+ * Semicircle risk gauge for single risk-index results (0-100).
  *
  * Dataviz rules applied: the value is a hero number in ink (not buried in
- * the mark); status is never color-alone — the caller renders an icon +
+ * the mark); status is never color-alone, the caller renders an icon +
  * text label beside it; the arc is thin with a rounded data-end; the
  * animation eases the needle in on mount.
  */

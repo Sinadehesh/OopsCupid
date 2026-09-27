@@ -48,7 +48,7 @@ export default function FreeResult({ data, rawAnswers }: { data: any, rawAnswers
   };
 
   if (isUnlocked) {
-    // Already paid? Show the full dossier — same content as /premium.
+    // Already paid? Show the full dossier, same content as /premium.
     return <PremiumDossier dossier={buildToxicFriendDossier(data)} />;
   }
 

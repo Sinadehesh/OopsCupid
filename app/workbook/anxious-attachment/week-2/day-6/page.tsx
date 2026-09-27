@@ -110,7 +110,7 @@ export default function Week2Day6() {
               <div className="space-y-4 text-base text-slate-600 leading-relaxed">
                 <p>
                   When a child has to become hypervigilant to survive emotionally, they become a
-                  tiny soldier — constantly scanning the perimeter for danger (anger, withdrawal,
+                  tiny soldier, constantly scanning the perimeter for danger (anger, withdrawal,
                   distance).
                 </p>
                 <p>

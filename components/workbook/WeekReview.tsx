@@ -9,7 +9,7 @@ import { deviceSessionId } from "@/lib/workbook/session";
  *
  * The reason the bundle costs €49. Everything else in the workbook is
  * writing that could, in principle, be read anywhere. This reads what the
- * buyer actually wrote across the week and responds to it — quoting them,
+ * buyer actually wrote across the week and responds to it, quoting them,
  * naming what moved between days, and setting one task.
  *
  * It degrades honestly: too little written, no key configured, or a failed
@@ -138,7 +138,7 @@ export default function WeekReview({
         Finished week {week}? Get it read back to you.
       </h2>
       <p className="text-slate-600 font-medium leading-relaxed max-w-lg mx-auto mb-7">
-        This reads everything you wrote this week and tells you what it sees — quoting
+        This reads everything you wrote this week and tells you what it sees, quoting
         your own words, naming what shifted between days, and setting one thing to do
         next. It is not a summary.
       </p>

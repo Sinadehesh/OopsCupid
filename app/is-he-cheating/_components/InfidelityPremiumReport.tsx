@@ -27,7 +27,7 @@ interface ReportData {
   };
 }
 
-/** Numbered section header — gives the report its "clinical dossier" spine. */
+/** Numbered section header, gives the report its "clinical dossier" spine. */
 function SectionHeader({ no, kicker, title, icon: Icon }: { no: string; kicker: string; title: string; icon: any }) {
   return (
     <div className="mb-6">
@@ -43,7 +43,7 @@ function SectionHeader({ no, kicker, title, icon: Icon }: { no: string; kicker: 
   );
 }
 
-/** "Compiling your blueprint" state — a paid report should feel assembled, not pasted. */
+/** "Compiling your blueprint" state, a paid report should feel assembled, not pasted. */
 function ReportAssembling({ accent }: { accent: string }) {
   const steps = ["Decrypting your response data", "Scoring 5 behavioral vectors", "Matching deception archetypes", "Compiling your action protocol"];
   const [step, setStep] = useState(0);
@@ -73,27 +73,27 @@ function ReportAssembling({ accent }: { accent: string }) {
 
 const RISK_CFG = {
   SEVERE: {
-    label: "High-Risk — Active Cheating Detected",
+    label: "High-Risk: Active Cheating Detected",
     accent: "#f43f5e",
     bg: "bg-[#1a0608]",
     border: "border-rose-500/30",
     badge: "bg-rose-500/20 border-rose-500/40 text-rose-300",
     bar: "bg-rose-500",
-    verdict: "The behavioral fingerprint you submitted is consistent with active infidelity. Digital withdrawal, unexplained time gaps, and emotional shutdown rarely overlap like this without a coordinating cause. This is not a stress response — it is a management strategy.",
+    verdict: "The behavioral fingerprint you submitted is consistent with active infidelity. Digital withdrawal, unexplained time gaps, and emotional shutdown rarely overlap like this without a coordinating cause. This is not a stress response; it is a management strategy.",
     urgency: "Act within the next 7 days. Patterns this dense accelerate fast.",
   },
   ELEVATED: {
-    label: "Elevated Risk — Cheating Pattern Emerging",
+    label: "Elevated Risk: Cheating Pattern Emerging",
     accent: "#f59e0b",
     bg: "bg-[#110e02]",
     border: "border-amber-500/30",
     badge: "bg-amber-500/20 border-amber-500/40 text-amber-300",
     bar: "bg-amber-500",
-    verdict: "Several behavioral markers in your responses align with someone managing a secret. No single signal is proof on its own — but their overlap crosses the threshold of coincidence. The combination is the signal.",
+    verdict: "Several behavioral markers in your responses align with someone managing a secret. No single signal is proof on its own, but their overlap crosses the threshold of coincidence. The combination is the signal.",
     urgency: "Patterns at this level escalate if not addressed directly.",
   },
   MODERATE: {
-    label: "Moderate Signals — Gray Zone",
+    label: "Moderate Signals: Gray Zone",
     accent: "#6366f1",
     bg: "bg-[#060818]",
     border: "border-indigo-500/30",
@@ -111,7 +111,7 @@ const VECTORS = [
     label: "Digital Behavior",
     desc: "Phone secrecy, app-switching, notification hiding, passcode changes",
     insight: {
-      high: "Passcode changes and screen-facing avoidance are the #1 behavioral tell in post-disclosure research. He is creating a digital perimeter — this is deliberate, not accidental.",
+      high: "Passcode changes and screen-facing avoidance are the #1 behavioral tell in post-disclosure research. He is creating a digital perimeter; this is deliberate, not accidental.",
       mid: "Some digital guardedness is present. Combined with other signals it warrants direct attention.",
       low: "Digital patterns appear within normal range.",
     },
@@ -122,7 +122,7 @@ const VECTORS = [
     label: "Time & Schedule",
     desc: "Unexplained absences, vague whereabouts, late arrivals, new routines",
     insight: {
-      high: "Unexplained time is where a parallel life operates. A person with nothing to hide has no reason to leave time unaccounted for — rehearsed answers are not the same as honest ones.",
+      high: "Unexplained time is where a parallel life operates. A person with nothing to hide has no reason to leave time unaccounted for, rehearsed answers are not the same as honest ones.",
       mid: "Schedule changes are visible but not extreme. Notice whether explanations feel spontaneous or prepared.",
       low: "Time patterns appear consistent and accounted for.",
     },
@@ -133,8 +133,8 @@ const VECTORS = [
     label: "Emotional Distance",
     desc: "Coldness, withdrawal, picking fights to create distance, detachment",
     insight: {
-      high: "Emotional withdrawal and manufactured conflict are tools for creating distance without accountability. He is making space — not because he is unhappy, but because closeness would require honesty.",
-      mid: "Emotional distance is present. Could reflect relationship strain or active concealment — the direction of change tells you which.",
+      high: "Emotional withdrawal and manufactured conflict are tools for creating distance without accountability. He is making space, not because he is unhappy, but because closeness would require honesty.",
+      mid: "Emotional distance is present. Could reflect relationship strain or active concealment, the direction of change tells you which.",
       low: "Emotional connection appears largely intact.",
     },
   },
@@ -144,7 +144,7 @@ const VECTORS = [
     label: "Story Inconsistencies",
     desc: "Small lies that drift, over-explaining, defensiveness to basic questions",
     insight: {
-      high: "Micro-lies compound. Each one needs maintenance — over time the story drifts. An innocent person does not experience ordinary questions as attacks. Defensive reactions to normal curiosity are themselves the evidence.",
+      high: "Micro-lies compound. Each one needs maintenance, over time the story drifts. An innocent person does not experience ordinary questions as attacks. Defensive reactions to normal curiosity are themselves the evidence.",
       mid: "Some story drift noted. Pay attention to whether explanations expand or contract under direct questioning.",
       low: "Narrative consistency appears mostly intact.",
     },
@@ -160,7 +160,7 @@ function getInsight(score: number, insight: { high: string; mid: string; low: st
 const CONFRONTATION_SCRIPTS: Record<"SEVERE" | "ELEVATED" | "MODERATE", string[]> = {
   SEVERE: [
     "\"I need to talk to you, and I need you to listen. I have been watching what has been happening for a while. I am not here to fight. I am here because I deserve honesty, and I am asking you directly: what have you been hiding from me?\"",
-    "\"The phone, the schedule, the way you have been pulling away — I have not been imagining it. I am not asking you to confess. I am telling you that I already see it, and I need you to tell me the truth right now.\"",
+    "\"The phone, the schedule, the way you have been pulling away: I have not been imagining it. I am not asking you to confess. I am telling you that I already see it, and I need you to tell me the truth right now.\"",
     "\"If nothing is happening, you will be able to answer my questions without deflecting or turning this back on me. I am watching how you respond, not just what you say.\"",
   ],
   ELEVATED: [
@@ -168,21 +168,21 @@ const CONFRONTATION_SCRIPTS: Record<"SEVERE" | "ELEVATED" | "MODERATE", string[]
     "\"Your behavior has changed and I have noticed. I deserve to know if something is happening. I am asking you clearly, and I need a real answer.\"",
   ],
   MODERATE: [
-    "\"Something feels different between us lately and I want to check in honestly. I am not accusing you of anything. I just need to know — is everything okay with you? With us?\"",
+    "\"Something feels different between us lately and I want to check in honestly. I am not accusing you of anything. I just need to know, is everything okay with you? With us?\"",
     "\"I would rather ask and be wrong than stay quiet and keep wondering. Is there anything you have been holding back from me?\"",
   ],
 };
 
 const ACTION_PROTOCOL: Record<"SEVERE" | "ELEVATED" | "MODERATE", { day: string; action: string; why: string }[]> = {
   SEVERE: [
-    { day: "Day 1", action: "Document everything now.", why: "Write down the last 4 weeks of observable behaviors — exact times, dates, phrases used. Memory degrades under stress. This becomes your evidence baseline." },
+    { day: "Day 1", action: "Document everything now.", why: "Write down the last 4 weeks of observable behaviors, exact times, dates, phrases used. Memory degrades under stress. This becomes your evidence baseline." },
     { day: "Day 2", action: "Stop justifying your concerns to him.", why: "Every time you explain why you are upset, you shift the focus onto your reaction instead of his behavior. Stop defending your right to notice what you are noticing." },
     { day: "Day 3", action: "Tell one trusted person the full picture.", why: "Isolation is how this continues unchallenged. One person who knows everything keeps you grounded in what is real." },
-    { day: "Day 4", action: "Use the confrontation script.", why: "Deliver it once, then stop talking. His immediate unrehearsed reaction — not what he says — is the most diagnostic data you will collect." },
+    { day: "Day 4", action: "Use the confrontation script.", why: "Deliver it once, then stop talking. His immediate unrehearsed reaction, not what he says, is the most diagnostic data you will collect." },
     { day: "Day 5", action: "Decide your line in advance.", why: "Know what happens if he denies it and the behavior continues. Having a pre-decided boundary removes his ability to exhaust you into inaction." },
   ],
   ELEVATED: [
-    { day: "Day 1", action: "Track quietly for 5 days.", why: "Before confronting, gather 5 days of specific observations. Vague concerns are easy to dismiss — specific patterns are not." },
+    { day: "Day 1", action: "Track quietly for 5 days.", why: "Before confronting, gather 5 days of specific observations. Vague concerns are easy to dismiss, specific patterns are not." },
     { day: "Day 2", action: "Stop over-explaining your feelings.", why: "If you find yourself apologizing for being suspicious, stop. Your concerns do not need a defense to be valid." },
     { day: "Day 3", action: "Start a low-key honest check-in.", why: "Ask if he has been feeling distant lately. His reaction to this simple question is itself diagnostic data." },
     { day: "Day 4", action: "Note how he responds when questioned.", why: "Does he get defensive? Turn it back on you? A person with nothing to hide does not react to curiosity like an accusation." },
@@ -190,7 +190,7 @@ const ACTION_PROTOCOL: Record<"SEVERE" | "ELEVATED" | "MODERATE", { day: string;
   ],
   MODERATE: [
     { day: "Day 1", action: "Write down his normal baseline.", why: "What does he actually look like when things are fine? That is your reference point for measuring the current change." },
-    { day: "Day 2", action: "Identify when the shift started.", why: "A specific date, event, or conversation usually anchors the cause. Pin it down — it matters." },
+    { day: "Day 2", action: "Identify when the shift started.", why: "A specific date, event, or conversation usually anchors the cause. Pin it down; it matters." },
     { day: "Day 3", action: "Open an honest, non-accusatory conversation.", why: "Come from curiosity. Saying you have seemed different lately, is everything okay is enough to open the door." },
     { day: "Day 4", action: "Measure his willingness to engage.", why: "A secure partner meets curiosity with openness. Watch for deflection, irritability, or turning the question back onto you." },
     { day: "Day 5", action: "Re-run the assessment in 30 days.", why: "At this level, time and repeated pattern are your clearest diagnostic tools. One data point is not enough." },
@@ -216,7 +216,7 @@ function ScoreRing({ score, accent }: { score: number; accent: string }) {
 // ── PLAYBOOKS ─────────────────────────────────────────────────────────────
 // The two playbooks are written but not yet produced as PDFs, so there is
 // nothing to deliver. Rather than link to a dead storefront, these render
-// as "in production" — the same policy lib/offers/catalog.ts applies to
+// as "in production", the same policy lib/offers/catalog.ts applies to
 // every SKU without a Stripe price.
 
 function PlaybooksUpsell({ accent }: { accent: string }) {
@@ -262,8 +262,8 @@ function PlaybooksUpsell({ accent }: { accent: string }) {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-7">
               {[
-                { icon: "\uD83D\uDD0D", text: "What counts as real evidence — and what does not" },
-                { icon: "\uD83D\uDCCB", text: "The Silent Documentation Method — 7-day tracking template" },
+                { icon: "\uD83D\uDD0D", text: "What counts as real evidence, and what does not" },
+                { icon: "\uD83D\uDCCB", text: "The Silent Documentation Method, 7-day tracking template" },
                 { icon: "\uD83D\uDCF1", text: "How to check his digital footprint without him knowing" },
                 { icon: "\uD83D\uDCAC", text: "3 confrontation scripts matched to your risk level" },
                 { icon: "\u26A0\uFE0F", text: "The 5 things that make a cheater confess vs. double down" },
@@ -313,11 +313,11 @@ function PlaybooksUpsell({ accent }: { accent: string }) {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-7">
               {[
-                { icon: "\u2696\uFE0F", text: "The Leave vs. Stay Decision Framework — 12 honest questions" },
-                { icon: "\uD83C\uDFAD", text: "Performed remorse vs. real accountability — how to tell the difference" },
+                { icon: "\u2696\uFE0F", text: "The Leave vs. Stay Decision Framework, 12 honest questions" },
+                { icon: "\uD83C\uDFAD", text: "Performed remorse vs. real accountability, how to tell the difference" },
                 { icon: "\uD83D\uDD01", text: "What genuine relationship repair after cheating actually requires" },
-                { icon: "\uD83D\uDEAA", text: "The Clean Exit Protocol — how to leave without drama or collapse" },
-                { icon: "\uD83E\uDDEA", text: "The 90-Day Accountability Test — can he actually change?" },
+                { icon: "\uD83D\uDEAA", text: "The Clean Exit Protocol, how to leave without drama or collapse" },
+                { icon: "\uD83E\uDDEA", text: "The 90-Day Accountability Test, can he actually change?" },
                 { icon: "\uD83D\uDCAA", text: "How to rebuild your self-trust after being deceived" },
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-2.5 bg-slate-50 rounded-xl p-3.5 border border-slate-100">
@@ -329,7 +329,7 @@ function PlaybooksUpsell({ accent }: { accent: string }) {
 
             <div className="flex items-center justify-between gap-4">
               <p className="text-slate-500 text-xs font-bold leading-snug">
-                Not on sale yet — we will not charge for something we cannot send you today.
+                Not on sale yet; we will not charge for something we cannot send you today.
               </p>
               <span className="bg-slate-100 text-slate-500 font-black text-sm px-7 py-3.5 rounded-2xl flex items-center gap-2 shrink-0">
                 <Zap className="w-4 h-4" /> In production
@@ -350,7 +350,7 @@ function PlaybooksUpsell({ accent }: { accent: string }) {
                 </div>
                 <h3 className="text-2xl font-black text-white mb-2">Both Playbooks Together</h3>
                 <p className="text-white/50 text-sm leading-relaxed max-w-md">
-                  One tells you how to find out the truth. The other tells you what to do with it. Together, they are the complete roadmap from suspicion to clarity — whatever that clarity turns out to be.
+                  One tells you how to find out the truth. The other tells you what to do with it. Together, they are the complete roadmap from suspicion to clarity, whatever that clarity turns out to be.
                 </p>
                 <div className="flex flex-wrap gap-3 mt-5">
                   {["Caught or Paranoid? Playbook", "Clean Break or Comeback Playbook", "Lifetime Access", "Instant Download"].map((item, i) => (
@@ -469,7 +469,7 @@ export default function InfidelityPremiumReport({ data }: { data: ReportData }) 
           <div className="grid md:grid-cols-2 gap-5">
             <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
               <h4 className="font-extrabold text-slate-800 mb-1">Deception Vector Profile</h4>
-              <p className="text-slate-400 text-xs font-medium mb-2">The shape matters: a spike on one axis has innocent explanations — a filled shape rarely does. Hover any point.</p>
+              <p className="text-slate-400 text-xs font-medium mb-2">The shape matters: a spike on one axis has innocent explanations, a filled shape rarely does. Hover any point.</p>
               <SubscaleRadar data={radarData} accent={cfg.accent} />
             </div>
             <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm flex flex-col">
@@ -482,7 +482,7 @@ export default function InfidelityPremiumReport({ data }: { data: ReportData }) 
                 />
               </div>
               <p className="text-slate-400 text-xs font-medium mt-4 border-t border-slate-100 pt-4">
-                Reading it: scores above 65 indicate deliberate, maintained behavior. Scores between 40–65 are ambiguous alone — their overlap is what raises the index.
+                Reading it: scores above 65 indicate deliberate, maintained behavior. Scores between 40-65 are ambiguous alone; their overlap is what raises the index.
               </p>
             </div>
           </div>
@@ -521,9 +521,9 @@ export default function InfidelityPremiumReport({ data }: { data: ReportData }) 
           <p className="text-slate-400 text-sm mb-6 -mt-2">Based on your digital behavior score of <strong>{data.vectors.digital}%</strong></p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
-              { icon: "\uD83D\uDD12", title: "Passcode & Screen Behavior", body: data.vectors.digital >= 65 ? "Sudden passcode changes or refusing to use his phone around you are deliberate perimeter-building behaviors. He knows exactly what is on there." : "Some guardedness present — watch for escalation alongside other signals." },
+              { icon: "\uD83D\uDD12", title: "Passcode & Screen Behavior", body: data.vectors.digital >= 65 ? "Sudden passcode changes or refusing to use his phone around you are deliberate perimeter-building behaviors. He knows exactly what is on there.": "Some guardedness present, watch for escalation alongside other signals." },
               { icon: "\uD83D\uDCF2", title: "App & Notification Patterns", body: data.vectors.digital >= 65 ? "Notification suppression, switching apps mid-conversation, and face-down placement are evasion habits. This behavior becomes automatic because it needs to." : "Digital patterns are moderately guarded." },
-              { icon: "\uD83D\uDD75\uFE0F", title: "Deletion Habits", body: data.vectors.digital >= 65 ? "Regular deletion of messages, call logs, or browser history is a maintenance behavior. It is not done once — it is done consistently because there is something consistent to hide." : "No strong deletion signals detected." },
+              { icon: "\uD83D\uDD75\uFE0F", title: "Deletion Habits", body: data.vectors.digital >= 65 ? "Regular deletion of messages, call logs, or browser history is a maintenance behavior. It is not done once; it is done consistently because there is something consistent to hide.": "No strong deletion signals detected." },
               { icon: "\uD83D\uDEA8", title: "Reaction When You Are Near", body: data.vectors.digital >= 50 ? "Does he go silent, shift position, or tense up when you are nearby while he is on his phone? That involuntary startle-and-cover response is one of the most reliable physical tells." : "Phone reactions appear within normal range." },
             ].map((item, i) => (
               <div key={i} className="bg-slate-50 rounded-2xl p-5 border border-slate-100">
@@ -539,13 +539,13 @@ export default function InfidelityPremiumReport({ data }: { data: ReportData }) 
         <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
           <SectionHeader no="05" kicker="The mechanics of doubt" title="Why You Feel Like the Problem" icon={Brain} />
           <blockquote className="border-l-4 rounded-r-2xl bg-slate-50 p-5 mb-6 text-slate-700 font-bold italic leading-relaxed" style={{ borderColor: cfg.accent }}>
-            &ldquo;If you leave a confrontation apologizing for something he did, the conversation was engineered — not had.&rdquo;
+            &ldquo;If you leave a confrontation apologizing for something he did, the conversation was engineered, not had.&rdquo;
           </blockquote>
           <div className="space-y-4">
             {[
-              { label: "DARVO", full: "Deny, Attack, Reverse Victim and Offender", body: "When you raise a concern and he reacts by attacking your mental stability or trustworthiness, that is DARVO — a documented defense mechanism used to shift focus from his behavior to your reaction. A person with nothing to hide does not feel attacked by being asked a direct question." },
-              { label: "Manufactured Conflict", full: "Picking fights to create justified distance", body: "Cheaters frequently create arguments before or after seeing the other person — it justifies distance, provides an alibi for emotional absence, and puts you in a defensive position. If conflict seems to appear out of nowhere and disappear just as fast, that rhythm is not accidental." },
-              { label: "Emotional Debt", full: "The empathy inversion", body: "When he becomes the victim of your suspicion, you end up managing his feelings while yours go unaddressed. You end up comforting the person causing your pain. This inversion is not organic — it is leverage." },
+              { label: "DARVO", full: "Deny, Attack, Reverse Victim and Offender", body: "When you raise a concern and he reacts by attacking your mental stability or trustworthiness, that is DARVO, a documented defense mechanism used to shift focus from his behavior to your reaction. A person with nothing to hide does not feel attacked by being asked a direct question." },
+              { label: "Manufactured Conflict", full: "Picking fights to create justified distance", body: "Cheaters frequently create arguments before or after seeing the other person; it justifies distance, provides an alibi for emotional absence, and puts you in a defensive position. If conflict seems to appear out of nowhere and disappear just as fast, that rhythm is not accidental." },
+              { label: "Emotional Debt", full: "The empathy inversion", body: "When he becomes the victim of your suspicion, you end up managing his feelings while yours go unaddressed. You end up comforting the person causing your pain. This inversion is not organic; it is leverage." },
             ].map((item, i) => (
               <div key={i} className="border border-slate-200 rounded-2xl overflow-hidden">
                 <button
@@ -582,7 +582,7 @@ export default function InfidelityPremiumReport({ data }: { data: ReportData }) 
           <div className="mt-6 bg-amber-50 border border-amber-200 rounded-2xl p-5">
             <p className="text-amber-800 text-sm font-bold flex items-start gap-2">
               <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
-              After delivering any of these lines: go silent. The most diagnostic information comes from his immediate, unrehearsed reaction — not what he prepares to say 10 seconds later. Silence is your tool.
+              After delivering any of these lines: go silent. The most diagnostic information comes from his immediate, unrehearsed reaction, not what he prepares to say 10 seconds later. Silence is your tool.
             </p>
           </div>
         </div>
@@ -616,7 +616,7 @@ export default function InfidelityPremiumReport({ data }: { data: ReportData }) 
               );
             })}
           </div>
-          <p className="text-slate-400 text-xs font-bold mt-5">Tap each step as you complete it. Progress isn&apos;t saved between visits — do it in the 5 days.</p>
+          <p className="text-slate-400 text-xs font-bold mt-5">Tap each step as you complete it. Progress isn&apos;t saved between visits, do it in the 5 days.</p>
         </div>
 
         {/* TRAJECTORY IF UNADDRESSED */}
@@ -629,9 +629,9 @@ export default function InfidelityPremiumReport({ data }: { data: ReportData }) 
           </p>
           <div className="space-y-4">
             {[
-              { label: "His behavior", trend: data.riskLevel === "MODERATE" ? "Ambiguous — the next 30 days of baseline comparison decide it" : "Escalates — successful concealment teaches him it works" },
-              { label: "Your self-trust", trend: "Erodes — unresolved suspicion turns inward as self-doubt" },
-              { label: "The confrontation", trend: "Gets harder — every silent week raises the cost of speaking up" },
+              { label: "His behavior", trend: data.riskLevel === "MODERATE" ? "Ambiguous, the next 30 days of baseline comparison decide it": "Escalates, successful concealment teaches him it works" },
+              { label: "Your self-trust", trend: "Erodes, unresolved suspicion turns inward as self-doubt" },
+              { label: "The confrontation", trend: "Gets harder, every silent week raises the cost of speaking up" },
             ].map((row) => (
               <div key={row.label} className="flex items-start gap-4 bg-slate-50 border border-slate-100 rounded-2xl p-5">
                 <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" style={{ color: cfg.accent }} />
@@ -647,7 +647,7 @@ export default function InfidelityPremiumReport({ data }: { data: ReportData }) 
         {/* PLAYBOOKS UPSELL */}
         <PlaybooksUpsell accent={cfg.accent} />
 
-        {/* COACHING UPSELL — highest-margin rung of the ladder */}
+        {/* COACHING UPSELL, highest-margin rung of the ladder */}
         <CoachingUpsell
           severity={scoreToSeverity(data.score)}
           topicLabel="his behavior and your options"
@@ -666,7 +666,7 @@ export default function InfidelityPremiumReport({ data }: { data: ReportData }) 
             </div>
             <h3 className="text-2xl font-black text-white mb-3">You Deserve the Truth</h3>
             <p className="text-white/60 text-base max-w-lg mx-auto leading-relaxed mb-6">
-              Whatever the truth turns out to be — knowing is always better than wondering. You looked directly at the data. That took courage.
+              Whatever the truth turns out to be, knowing is always better than wondering. You looked directly at the data. That took courage.
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm">
               {["Full Cheating Investigation", "Confrontation Script", "5-Day Protocol"].map((item, i) => (

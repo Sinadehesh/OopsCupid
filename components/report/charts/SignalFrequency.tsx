@@ -13,7 +13,7 @@ export interface FrequencyRow {
 /**
  * Horizontal magnitude bars for behavioral-frequency breakdowns.
  *
- * Dataviz rules applied: one hue for magnitude (sequential job — bars vary
+ * Dataviz rules applied: one hue for magnitude (sequential job, bars vary
  * by length, not by color); thin marks with rounded data-ends; value labels
  * in ink at the bar end; recessive axes; per-bar hover tooltip.
  */
@@ -47,7 +47,7 @@ export default function SignalFrequency({
               const p = payload[0].payload as FrequencyRow;
               return (
                 <div className="bg-slate-900 text-white rounded-xl px-4 py-3 shadow-xl max-w-[240px]">
-                  <p className="font-black text-sm mb-0.5">{p.label} — {p.value}%</p>
+                  <p className="font-black text-sm mb-0.5">{p.label}, {p.value}%</p>
                   {p.description && <p className="text-white/60 text-xs leading-snug">{p.description}</p>}
                 </div>
               );

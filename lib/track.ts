@@ -15,7 +15,7 @@ import { track as vercelTrack } from "@vercel/analytics";
  * Every step is a place people leave. Naming them is what turns "nobody
  * buys" into "73% drop at question 30, the quiz is too long".
  *
- * Keep the property values low-cardinality (a slug, a band name) — Vercel
+ * Keep the property values low-cardinality (a slug, a band name): Vercel
  * groups by value, so free-text kills the report.
  */
 
@@ -36,7 +36,7 @@ export const trackQuizStart = (quiz: string) => send("quiz_start", { quiz });
 export const trackQuizHalfway = (quiz: string, questions: number) =>
   send("quiz_halfway", { quiz, questions });
 
-/** Answers finished — before any email gate. */
+/** Answers finished, before any email gate. */
 export const trackQuizComplete = (quiz: string, questions: number) =>
   send("quiz_complete", { quiz, questions });
 
@@ -58,6 +58,6 @@ export const trackCheckoutClick = (quiz: string, sku: string) =>
 /** Verified paid, fired once on /unlocked. */
 export const trackPurchase = (sku: string) => send("purchase", { sku });
 
-/** A share sheet was opened or a result link copied — the viral loop. */
+/** A share sheet was opened or a result link copied, the viral loop. */
 export const trackShare = (quiz: string, method: string) =>
   send("share", { quiz, method });
