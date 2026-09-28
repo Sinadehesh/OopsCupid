@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, Check, HelpCircle, Info } from "lucide-react";
 import { SYMPTOM_PAGES } from "@/lib/seo/symptoms";
+import { PHRASES } from "@/lib/quizzes/thingsHeSays";
 import { quizRegistry } from "@/lib/quizzes/registry";
 
 /**
@@ -151,6 +152,32 @@ export default async function SignPage({
             ))}
           </ol>
         </section>
+
+        {/* The forty-second version, offered first, because somebody who
+            arrived on a page about one sentence is more likely to tap
+            through sixteen of them than to start a ninety-three item
+            battery. Only shown where the phrase quiz actually covers this
+            page, so the link is never a bait. */}
+        {PHRASES.some((ph) => ph.slug === page.slug) && (
+          <section className="mt-12 rounded-3xl border-2 border-dashed border-slate-300 bg-white p-7 md:p-9">
+            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#E07850] mb-3">
+              Forty seconds
+            </p>
+            <h2 className="text-xl md:text-2xl font-black text-slate-900 mb-3 leading-snug">
+              This is one of sixteen sentences people hear.
+            </h2>
+            <p className="text-slate-600 font-medium leading-relaxed mb-6">
+              Tap the ones you recognise and see what each is doing in the
+              conversation. No questions to answer, no sign-up.
+            </p>
+            <Link
+              href="/things-he-says"
+              className="inline-flex items-center gap-2 bg-slate-900 text-white font-extrabold px-7 py-3.5 rounded-2xl hover:-translate-y-0.5 transition-transform"
+            >
+              See the other fifteen <ArrowRight className="w-4 h-4" />
+            </Link>
+          </section>
+        )}
 
         {/* The funnel. One quiz, chosen because it genuinely measures the
             thing the page is about. */}

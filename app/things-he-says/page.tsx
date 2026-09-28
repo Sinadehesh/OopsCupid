@@ -5,6 +5,15 @@ import { PHRASES } from "@/lib/quizzes/thingsHeSays";
 const baseUrl = "https://www.oopscupid.com";
 
 /**
+ * The share card. A link in a TikTok bio with no preview image is a grey
+ * rectangle, which is the difference between a tap and a scroll, and the
+ * page had none: openGraph was declared without an image at all.
+ */
+const shareCard = `${baseUrl}/api/og?t=${encodeURIComponent(
+  "Which of these has he said to you?"
+)}&q=${encodeURIComponent("16 phrases · 40 seconds")}`;
+
+/**
  * The landing page paid social points at.
  *
  * It is a separate route from the full diagnostic on purpose. A cold
@@ -26,11 +35,13 @@ export const metadata: Metadata = {
       "Sixteen ordinary sentences. Tap the ones you recognise. Forty seconds, no sign-up.",
     url: `${baseUrl}/things-he-says`,
     type: "website",
+    images: [{ url: shareCard, width: 1200, height: 630, alt: "Which of these has he said to you?" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Which of these has he said to you?",
     description: "Sixteen ordinary sentences. Tap the ones you recognise.",
+    images: [shareCard],
   },
 };
 

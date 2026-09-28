@@ -2,6 +2,7 @@ import MainHero from "@/components/ui/MainHero";
 import Card from "@/components/ui/Card";
 import { Metadata } from "next";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { allQuizzes } from "@/lib/quizzes/registry";
 
 export const metadata: Metadata = {
@@ -361,6 +362,31 @@ export default function Home() {
               Research-informed quizzes with instant scored results. Pick the question keeping you up at night.
             </p>
           </div>
+          {/* The short one goes first and across the full width. Every other
+              card here asks for eight minutes or more, and somebody who is
+              not sure they want to know anything yet will bounce off all of
+              them. This is the one that costs her nothing to start. */}
+          <Link
+            href="/things-he-says"
+            className="group flex flex-col sm:flex-row sm:items-center gap-5 bg-[#0E1621] text-white rounded-2xl p-7 md:p-8 mb-4 transition-transform hover:-translate-y-0.5"
+          >
+            <div className="flex-1">
+              <span className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#EC8A66] mb-2 block">
+                Start here · 40 seconds
+              </span>
+              <h3 className="text-[22px] md:text-[26px] font-extrabold leading-snug mb-2">
+                Which of these has he said to you?
+              </h3>
+              <p className="text-[15px] text-white/60 font-medium leading-relaxed">
+                Sixteen ordinary sentences. Tap the ones you recognise, and find
+                out what each one is doing in the conversation. Nothing to fill in.
+              </p>
+            </div>
+            <span className="shrink-0 inline-flex items-center gap-2 bg-white text-slate-900 font-extrabold px-6 py-3.5 rounded-xl">
+              Open <ArrowRight className="w-4 h-4" />
+            </span>
+          </Link>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {allQuizzes.map((q) => (
               <Link

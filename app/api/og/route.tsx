@@ -34,7 +34,11 @@ export async function GET(req: Request) {
   const title = (searchParams.get("t") ?? "My result").slice(0, 70);
   const quiz = (searchParams.get("q") ?? "OopsCupid").slice(0, 60);
   const label = (searchParams.get("l") ?? "Score").slice(0, 28);
-  const raw = Number(searchParams.get("s"));
+  // Number(null) is 0, not NaN, so a card asked for without a score used to
+  // render a confident "0 / 100" and an empty progress bar. A page that has
+  // no score needs to be able to say so by leaving the parameter off.
+  const rawParam = searchParams.get("s");
+  const raw = rawParam === null || rawParam.trim() === "" ? NaN : Number(rawParam);
   const score = Number.isFinite(raw) ? Math.max(0, Math.min(100, Math.round(raw))) : null;
   const accent = accentFor(score ?? 50);
 
