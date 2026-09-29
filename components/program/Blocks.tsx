@@ -86,7 +86,7 @@ function Scale({ b, accent }: { b: ScaleBlock; accent: string }) {
       <Head status={status}><p className={LABEL}>{b.prompt}</p></Head>
       <div className="flex items-center gap-4 mt-2">
         <span className="text-5xl font-black tabular-nums w-16 text-center" style={{ color: v === null ? "#CBD5E1" : accent }}>
-          {v ?? "–"}
+          {v ?? "?"}
         </span>
         <input type="range" min={0} max={10} step={1} value={v ?? 5}
           onChange={(e) => set(Number(e.target.value))}
