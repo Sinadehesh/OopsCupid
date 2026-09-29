@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-# AI / answer-engine crawlers — explicitly welcome
+# AI and answer-engine crawlers: explicitly welcome
 User-agent: GPTBot
 Allow: /
 

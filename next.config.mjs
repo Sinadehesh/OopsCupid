@@ -33,6 +33,32 @@ const nextConfig = {
             { source: "/tools/:path*", destination: "/quizzes", permanent: true },
           ];
         },
+
+        /**
+         * Keep paid pages out of the index.
+         *
+         * Every premium report and every gated workbook day renders its
+         * content in the browser after an entitlement check, so what a
+         * crawler receives is the header and footer around a loading
+         * spinner: the same ~490 words, fifty-five times. That is what
+         * Search Console files under "crawled, currently not indexed", and
+         * near-identical thin pages at that scale are a site-wide quality
+         * signal that drags down the pages meant to rank.
+         *
+         * `follow` stays on so links out of these pages still count. Done
+         * as a header rather than per-page metadata because the pages are
+         * client components, and because a pattern here covers every paid
+         * page added later without anyone having to remember.
+         */
+        async headers() {
+          const noindex = [{ key: "X-Robots-Tag", value: "noindex, follow" }];
+          return [
+            { source: "/:quiz/premium", headers: noindex },
+            { source: "/workbook/:book/week-:n(2|3|4|5|6)", headers: noindex },
+            { source: "/workbook/:book/week-:n(2|3|4|5|6)/:day", headers: noindex },
+            { source: "/unlocked", headers: noindex },
+          ];
+        },
       }),
   ...(isPagesBuild
     ? {
