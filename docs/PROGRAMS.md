@@ -9,7 +9,7 @@ programme each would have meant writing the same workbook five times.
 | # | Programme | Fed by | Status |
 |---|---|---|---|
 | 1 | **Trust Your Own Mind** · manipulation and gaslighting | is-he-manipulative, is-he-gaslighting-me, things-he-says | **Live** |
-| 2 | **Earned Security** · anxious attachment | attachment-style-quiz | Outline |
+| 2 | **Earned Security** · anxious attachment | attachment-style-quiz (anxious and fearful results only) | **Live** |
 | 3 | **Choosing Differently** · the pull toward the wrong partners | pick-bad-guys, attract-toxic, what-kind-of-person, who-is-attracted, attraction-patterns | Outline |
 | 4 | **Letting People In** · self-sabotage and avoidance | why-do-i-sabotage-relationships | Outline |
 | 5 | **Friendships That Give Back** · one-sided friendships, people-pleasing | toxic-friend, friends-bad, friends-using, friend-group-role | Outline |
@@ -42,9 +42,11 @@ in weeks 2 and 4 against that baseline, so she can see her own change.
 Trust Your Own Mind written in full. First because the paid-social funnel
 lands on it: TikTok → /things-he-says → the manipulation report → this.
 
-**Phase 2 · Earned Security.** Attachment is 63% of the search queries
-reaching the site. It replaces the original 6-week workbook, which is
-hand-built, cannot be extended, and is not good enough.
+**Phase 2 · Earned Security · done.** Attachment is 63% of the search
+queries reaching the site. It replaced the original 6-week workbook: the
+48 hand-built pages are deleted and every old URL redirects permanently to
+the programme overview. The attachment report offers it only to anxious
+and fearful results; an avoidant result is not sold an anxiety programme.
 
 **Phase 3 · Choosing Differently.** Five quizzes feed it, so one programme
 lights up the offer on five reports at once.
@@ -66,7 +68,8 @@ A programme is not switched to `live` until all of these are true:
   that cannot be defended
 - A safety note on day 1 if the subject can involve risk (abuse, self-harm)
 - Every session rendered in a browser at phone width, every block used
-- Baseline scale in week 1 re-measured later with `compareTo`
+- Baseline scale in week 1 re-measured later with `compareTo`, and
+  `better: "lower"` set on any scale where less is progress
 - A real week of answers run through the weekly review, and the output
   read by a person before anyone is charged for it
 

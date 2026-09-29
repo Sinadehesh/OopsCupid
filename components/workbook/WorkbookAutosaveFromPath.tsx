@@ -9,8 +9,8 @@ import WorkbookAutosave from "./WorkbookAutosave";
  * remembering to ask for it. A day added later is covered the moment its
  * route exists.
  *
- *   /workbook/anxious-attachment/week-3/day-2  ->  week 3, day 2
- *   /workbook/anxious-attachment/week-3        ->  week 3, day 0
+ *   /workbook/<slug>/week-3/day-2  ->  week 3, day 2
+ *   /workbook/<slug>/week-3        ->  week 3, day 0
  */
 export default function WorkbookAutosaveFromPath() {
   const path = usePathname() ?? "";

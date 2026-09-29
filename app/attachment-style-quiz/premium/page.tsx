@@ -8,6 +8,7 @@ import Link from "next/link";
 import SharePrintButtons from "@/components/ui/SharePrintButtons";
 import PremiumGate from "@/components/report/PremiumGate";
 import YourAnswersSection from "@/components/report/premium/YourAnswersSection";
+import ProgramOffer from "@/components/program/ProgramOffer";
 import { buildEvidence } from "@/lib/report/evidence";
 import { attachmentQuestions } from "@/lib/psychometrics/attachment/questions";
 import { buildAttachmentFallback } from "@/lib/report/attachmentFallback";
@@ -270,6 +271,15 @@ export default function PremiumAttachmentReportPage() {
                 Start This Diagnostic Now <ArrowRight className="w-6 h-6" />
               </Link>
             </div>
+
+            {/* Offered only where it fits. Earned Security works on the
+                anxious alarm; an avoidant or secure result would be sold a
+                programme about a problem the quiz just said she does not
+                have. */}
+            {["Anxious-Preoccupied", "Fearful-Avoidant"].includes(
+              userData?.profile?.attachment?.general?.classification ??
+                userData?.profile?.attachment?.romantic?.classification ?? ""
+            ) && <ProgramOffer quizPath="/attachment-style-quiz" className="!px-0" />}
 
             <YourAnswersSection
               accent="#086788"

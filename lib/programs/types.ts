@@ -60,6 +60,13 @@ export interface ScaleBlock extends BlockBase {
   prompt: string;
   low: string;
   high: string;
+  /**
+   * Which way is progress. Most scales here measure something she wants
+   * more of (self-trust, clarity), but some measure what she wants less of
+   * (how loud the alarm is), and reading a falling alarm back to her as a
+   * setback would be exactly backwards. Defaults to "higher".
+   */
+  better?: "higher" | "lower";
   /** Ties a re-measure back to its baseline, e.g. week 4 against week 1. */
   compareTo?: { program?: string; week: number; day: number; id: string; label: string };
 }

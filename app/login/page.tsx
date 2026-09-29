@@ -15,7 +15,7 @@ export default function LoginPage() {
           Sign in to save your workbook progress and pick up where you left off.
         </p>
         <button
-          onClick={() => signIn('google', { callbackUrl: '/workbook/anxious-attachment' })}
+          onClick={() => signIn('google', { callbackUrl: '/workbook' })}
           className="w-full flex items-center justify-center gap-3 py-3 px-6 bg-white border border-slate-200 rounded-xl font-semibold text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm"
         >
           <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true">

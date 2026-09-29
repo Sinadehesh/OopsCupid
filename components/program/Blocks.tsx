@@ -84,26 +84,41 @@ function Scale({ b, accent }: { b: ScaleBlock; accent: string }) {
   return (
     <div className={CARD}>
       <Head status={status}><p className={LABEL}>{b.prompt}</p></Head>
-      <div className="flex items-center gap-4 mt-2">
-        <span className="text-5xl font-black tabular-nums w-16 text-center" style={{ color: v === null ? "#CBD5E1" : accent }}>
-          {v ?? "?"}
-        </span>
-        <input type="range" min={0} max={10} step={1} value={v ?? 5}
-          onChange={(e) => set(Number(e.target.value))}
-          className="flex-1 h-2 accent-slate-900 cursor-pointer" aria-label={b.prompt} />
+      {/* Eleven buttons rather than a slider. A slider has to start
+          somewhere, and when it started at 5 an honest answer of 5 could
+          never be recorded: dragging to where it already was fires no
+          change. Numbers are also far easier to hit on a phone. */}
+      <div className="grid grid-cols-6 sm:grid-cols-11 gap-2 mt-3" role="radiogroup" aria-label={b.prompt}>
+        {Array.from({ length: 11 }, (_, n) => (
+          <button key={n} role="radio" aria-checked={v === n} onClick={() => set(n)}
+            className={`h-12 rounded-xl font-black text-lg tabular-nums border-2 transition-all ${v === n ? "text-white border-transparent scale-105" : "bg-white border-slate-200 text-slate-600 hover:border-slate-400"}`}
+            style={v === n ? { backgroundColor: accent } : undefined}>
+            {n}
+          </button>
+        ))}
       </div>
-      <div className="flex justify-between text-xs font-bold text-slate-400 mt-2 pl-20">
+      <div className="flex justify-between text-xs font-bold text-slate-400 mt-2.5">
         <span>0 · {b.low}</span><span>10 · {b.high}</span>
       </div>
       {b.compareTo && baseline !== null && v !== null && (
         <p className="mt-5 text-sm font-bold text-slate-600 rounded-xl bg-slate-50 p-3">
           {b.compareTo.label}: you said <span className="tabular-nums">{baseline}</span>. Today:{" "}
           <span className="tabular-nums">{v}</span>
-          {v > baseline ? `, up ${v - baseline}.` : v < baseline ? `, down ${baseline - v}. That happens, and it is information.` : ", the same."}
+          {compareLine(v, baseline, b.better ?? "higher")}
         </p>
       )}
     </div>
   );
+}
+
+function compareLine(now: number, then: number, better: "higher" | "lower"): string {
+  if (now === then) return ", the same. Holding steady counts.";
+  const diff = Math.abs(now - then);
+  const improved = better === "higher" ? now > then : now < then;
+  const dir = now > then ? "up" : "down";
+  return improved
+    ? `, ${dir} ${diff}. That is real movement, and you did it.`
+    : `, ${dir} ${diff}. That happens, and it is information, not failure.`;
 }
 
 /* ── choose ───────────────────────────────────────────────────────────── */

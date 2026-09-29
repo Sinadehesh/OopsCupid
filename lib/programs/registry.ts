@@ -1,5 +1,6 @@
 import type { Program, ProgramOutline, Week } from "./types";
 import { TRUST_YOUR_OWN_MIND } from "./content/trust-your-own-mind";
+import { EARNED_SECURITY } from "./content/earned-security";
 
 /**
  * EVERY PROGRAMME, AND WHICH QUIZZES FEED IT
@@ -71,37 +72,11 @@ export const PROGRAMS: Program[] = [
     methods: ["attachment-based work", "emotionally focused therapy", "CBT", "DBT distress tolerance", "ACT"],
     reviewFocus: "anxious attachment: the protest behaviours, reassurance seeking and spiralling that come with fear of abandonment",
     accent: "#0EA5E9",
-    status: "outline",
-    outline: [
-      o(1, "See it", [
-        ["The alarm that won't switch off", "Attachment psychoeducation"],
-        ["Your protest moves", "Pattern mapping"],
-        ["The waiting-for-a-reply spiral", "CBT · thought record"],
-        ["The spiral in your body", "Interoception · grounding"],
-        ["How loud is the alarm", "Baseline measure · log"],
-      ]),
-      o(2, "Understand it", [
-        ["Where the alarm was set", "Attachment origins"],
-        ["Why hot and cold hooks you", "Intermittent reinforcement"],
-        ["The stories anxiety tells", "CBT · cognitive distortions"],
-        ["When anxious meets avoidant", "EFT · pursue and withdraw"],
-        ["What reassurance can and can't do", "Maintenance cycle"],
-      ]),
-      o(3, "Change it", [
-        ["Delay, don't deny", "DBT · urge surfing"],
-        ["Asking instead of testing", "DBT · DEAR MAN"],
-        ["Soothe first, then reach out", "DBT · self-soothe"],
-        ["The reply experiment", "Behavioural experiment"],
-        ["When calm feels boring", "Exposure to security"],
-      ]),
-      o(4, "Live it", [
-        ["What you value in love", "ACT · values"],
-        ["Becoming your own safe base", "Compassion-focused"],
-        ["Your early warning signs", "Relapse prevention"],
-        ["Earning security", "Narrative coherence"],
-        ["A letter to the anxious part", "Integration"],
-      ]),
-    ],
+    status: "live",
+    weeks: EARNED_SECURITY,
+    outline: outlineOf(EARNED_SECURITY),
+    safety:
+      "This is a self-help programme, not therapy. If anxiety about relationships is stopping you sleeping, eating or getting through the day, or if you have thoughts of harming yourself, please speak to your GP or a mental health professional. In the UK, Samaritans are free and available day and night on 116 123.",
   },
   {
     slug: "choosing-differently",

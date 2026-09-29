@@ -118,7 +118,7 @@ export default function Header() {
                         <p className="text-[12px] text-[#8A9BA8] truncate">{session.user?.email}</p>
                       </div>
                       <Link
-                        href="/workbook/anxious-attachment"
+                        href="/workbook"
                         onClick={() => setDropdownOpen(false)}
                         className="flex items-center gap-3 px-4 py-2.5 text-[14px] text-[#5E6E79] hover:bg-[#F9F4F4] hover:text-[#334B63] transition-colors"
                       >
@@ -152,7 +152,7 @@ export default function Header() {
         <div className="flex md:hidden items-center gap-2">
           {status !== "loading" && (
             session ? (
-              <Link href="/workbook/anxious-attachment" className="flex items-center">
+              <Link href="/workbook" className="flex items-center">
                 {session.user?.image ? (
                   <Image
                     src={session.user.image}

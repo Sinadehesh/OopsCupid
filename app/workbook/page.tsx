@@ -61,13 +61,6 @@ export default function WorkbookCatalogue() {
               </div>
             </Link>
           ))}
-
-          <Link href="/workbook/anxious-attachment"
-            className="block bg-white rounded-3xl border border-slate-200/80 p-7 hover:-translate-y-0.5 transition-transform">
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-slate-400 mb-2">Open now · the original workbook</p>
-            <h2 className="text-xl font-black text-slate-900 mb-1">The Earned Security Workbook</h2>
-            <p className="text-slate-600 font-medium">Six weeks on anxious attachment. Being rebuilt in the new format as Earned Security.</p>
-          </Link>
         </section>
 
         <section className="rounded-3xl bg-[#0E1621] text-white p-8 md:p-12">

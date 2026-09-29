@@ -31,6 +31,13 @@ const nextConfig = {
             // quizzes-only. It had inbound links, so send them somewhere real.
             { source: "/tools/chat-analyzer", destination: "/quizzes", permanent: true },
             { source: "/tools/:path*", destination: "/quizzes", permanent: true },
+            // The original anxious-attachment workbook: forty-eight hand-built
+            // pages, replaced by the Earned Security programme. Its sessions
+            // do not map one to one (six weeks of seven days became four of
+            // five), so every old URL lands on the programme overview rather
+            // than on a guessed session.
+            { source: "/workbook/anxious-attachment", destination: "/workbook/earned-security", permanent: true },
+            { source: "/workbook/anxious-attachment/:path*", destination: "/workbook/earned-security", permanent: true },
           ];
         },
 

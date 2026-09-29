@@ -116,7 +116,7 @@ export default function WorkbookGate({
 
           <CheckoutButton
             sku="report-workbook-bundle"
-            returnTo={returnTo ?? `/workbook/anxious-attachment/week-${week}`}
+            returnTo={returnTo ?? "/workbook"}
             className="w-full inline-flex items-center justify-center gap-2 bg-[#EC8A66] hover:bg-[#E07850] text-white font-extrabold text-lg py-4 rounded-2xl transition-all shadow-md hover:-translate-y-0.5 disabled:opacity-70"
           >
             Unlock the full workbook, €49
@@ -127,7 +127,7 @@ export default function WorkbookGate({
           </p>
 
           <Link
-            href="/workbook/anxious-attachment/week-1"
+            href={(returnTo ?? "/workbook").replace(/\/week-\d+(\/day-\d+)?$/, "/week-1/day-1")}
             className="block text-center text-sm font-bold text-slate-500 hover:text-slate-700 mt-5"
           >
             ← Back to week 1

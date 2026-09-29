@@ -69,12 +69,10 @@ export default function AttachmentReport({ profile, demographics, rawAnswers, em
           <div className="rounded-2xl p-8 md:p-10 mb-12 bg-white border border-[#d6d2d2] shadow-sm max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
             <div className="flex-1">
               <h4 className="text-sm font-black uppercase tracking-widest text-[#086788]/50 mb-3">Recommended For You</h4>
-              <h3 className="text-2xl md:text-3xl font-black text-[#086788] mb-3">The Anxious Attachment Workbook</h3>
-              <p className="text-lg font-medium text-[#086788]/80 mb-6">A step-by-step guide to understanding your patterns, calming your nervous system, and building more secure relationships, starting today.</p>
+              <h3 className="text-2xl md:text-3xl font-black text-[#086788] mb-3">Earned Security</h3>
+              <p className="text-lg font-medium text-[#086788]/80 mb-6">A four-week programme for quieting the anxious alarm: short daily sessions, everything you write saved, and a written review of each week. Week 1 is free.</p>
               <a
-                href="https://www.oopscupid.com/workbook/anxious-attachment"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/workbook/earned-security"
                 className="inline-block bg-[#086788] hover:bg-[#06aed5] text-white font-black text-lg px-8 py-4 rounded-xl transition-all shadow-md hover:-translate-y-1"
               >
                 Get the Workbook →

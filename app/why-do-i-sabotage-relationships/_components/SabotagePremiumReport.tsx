@@ -608,7 +608,7 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
           </ul>
           <CheckoutButton
             sku="report-workbook-bundle"
-            returnTo="/workbook/anxious-attachment/week-1"
+            returnTo="/workbook"
             className="w-full md:w-auto inline-flex items-center justify-center gap-2 bg-[#dd1c1a] hover:bg-[#b81614] text-white font-extrabold text-lg px-10 py-4 rounded-2xl transition-colors disabled:opacity-70"
           >
             Start the workbook · €49

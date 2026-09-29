@@ -7,8 +7,7 @@ export const dynamic = "force-static";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  // The original workbook still has its own hand-built route.
-  return PROGRAMS.filter((p) => p.slug !== "anxious-attachment").map((p) => ({ program: p.slug }));
+  return PROGRAMS.map((p) => ({ program: p.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ program: string }> }): Promise<Metadata> {
