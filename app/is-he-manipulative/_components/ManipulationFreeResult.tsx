@@ -16,7 +16,7 @@ export default function ManipulationFreeResult({ data, onUnlock, isGenerating }:
             Control Probability: <span className="text-indigo-600">{riskLevel}</span>
           </h2>
           <p className="text-xl font-medium leading-relaxed text-slate-600 max-w-3xl mx-auto">
-            Based on the behavioral anomalies you reported, you are not crazy. His actions are highly consistent with clinical markers of psychological manipulation and coercive control.
+            Based on the behavioral anomalies you reported, you are not crazy. His actions are a close match for well-documented signs of psychological manipulation and coercive control.
           </p>
         </div>
 
@@ -36,7 +36,7 @@ export default function ManipulationFreeResult({ data, onUnlock, isGenerating }:
         <div className="bg-white rounded-[2rem] p-8 md:p-12 shadow-xl border border-slate-200 mb-12">
           <div className="text-center mb-10">
             <h3 className="text-3xl md:text-4xl font-black text-slate-900 mb-4">Unlock the Subconscious Hijacking Dossier</h3>
-            <p className="text-lg text-slate-600 font-medium">Get the clinical breakdown of exactly how he is controlling your reality, and what he will do next.</p>
+            <p className="text-lg text-slate-600 font-medium">Get the full breakdown of exactly how he is controlling your reality, and what he will do next.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">

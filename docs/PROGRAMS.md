@@ -11,7 +11,7 @@ programme each would have meant writing the same workbook five times.
 | 1 | **Trust Your Own Mind** · manipulation and gaslighting | is-he-manipulative, is-he-gaslighting-me, things-he-says | **Live** |
 | 2 | **Earned Security** · anxious attachment | attachment-style-quiz (anxious and fearful results only) | **Live** |
 | 3 | **Choosing Differently** · the pull toward the wrong partners | pick-bad-guys, attract-toxic, what-kind-of-person, who-is-attracted, attraction-patterns, keep-dating-the-same-type | **Live** |
-| 4 | **Letting People In** · self-sabotage and avoidance | why-do-i-sabotage-relationships | Outline |
+| 4 | **Letting People In** · self-sabotage and avoidance | why-do-i-sabotage-relationships | **Live** |
 | 5 | **Friendships That Give Back** · one-sided friendships, people-pleasing | toxic-friend, friends-bad, friends-using, friend-group-role, is-my-best-friend-toxic | Outline |
 | 6 | **After the Doubt** · suspicion, checking, trust | is-he-cheating | Outline |
 | 7 | **Loving Someone Who Pulls Away** · the avoidant partner | partners-attachment-style | Outline |
@@ -58,7 +58,12 @@ of every quiz with a live programme, not only on paid reports (most
 visitors never buy the report). `QuizWidget` keys the offer on the page
 path, so each quiz picks up its programme the day it goes live.
 
-**Phase 4 · Letting People In.** Completes the attachment pair with Phase 2.
+**Phase 4 · Letting People In · done.** Completes the attachment pair
+with Phase 2. The sabotage quiz scores both running (fear of closeness,
+withdrawal) and testing (protest, the rejection alarm), so the programme
+covers the exit and the test, and the belief under both. It replaced a
+card on the sabotage report that sold Earned Security, an anxiety
+programme, to readers whose result is mostly about pulling away.
 
 **Phase 5 · Friendships That Give Back.** Four quizzes; a lower-intensity
 audience that is easier to reach on social.

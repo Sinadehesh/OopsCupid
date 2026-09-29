@@ -217,17 +217,6 @@ export default function GaslightingReport({ result }: { result: any }) {
                 Unlock My Full Report
               </CheckoutButton>
 
-              {/* Social proof */}
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <div className="flex -space-x-1.5">
-                  {["bg-indigo-500", "bg-violet-500", "bg-pink-500", "bg-rose-500"].map((c, i) => (
-                    <div key={i} className={`w-7 h-7 rounded-full border-2 border-[#0c1120] ${c} flex items-center justify-center`}>
-                      <Star className="w-3 h-3 text-white fill-white" />
-                    </div>
-                  ))}
-                </div>
-                <p className="text-white/40 text-sm font-bold">3,100+ women got clarity this month</p>
-              </div>
 
               <p className="text-white/20 text-xs font-bold uppercase tracking-widest">
                 Instant access · No subscription · Secure checkout

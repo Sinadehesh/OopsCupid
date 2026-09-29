@@ -383,7 +383,7 @@ export default function PremiumReport({ data, handleShare }: { data: any, handle
           <Search className="w-14 h-14 text-rose-400 mx-auto mb-6" />
           <h4 className="text-3xl md:text-4xl font-black text-rose-950 mb-4 tracking-tight">Is He Manipulating You Right Now?</h4>
           <p className="text-rose-800 font-medium max-w-2xl mx-auto mb-10 text-xl">
-            Don't guess. Put his behavior through our advanced clinical diagnostic to find out if you are being love-bombed or gaslit.
+            Don't guess. Put his behaviour through our free manipulation test to find out if you are being love-bombed or gaslit.
           </p>
           <Link href="/is-he-manipulative" className="inline-flex items-center justify-center gap-3 bg-rose-600 hover:bg-rose-700 text-white px-10 py-5 rounded-2xl font-black text-xl transition-all shadow-xl hover:shadow-rose-600/30 hover:-translate-y-1 w-full sm:w-auto">
             Test Your Partner Now <ArrowRight className="w-6 h-6" />

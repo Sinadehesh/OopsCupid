@@ -17,8 +17,9 @@ export async function POST(req: NextRequest) {
     const tacticsPct = Math.round((result.tacticsScore / result.tacticsMax) * 100);
     const impactPct = Math.round((result.impactScore / result.impactMax) * 100);
 
-    const systemPrompt = `You are a trauma-informed clinical psychologist specializing in coercive control and emotional abuse. 
-You write with deep empathy, clarity, and professional authority. 
+    const systemPrompt = `You write like an experienced, trauma-informed educator on coercive control and emotional abuse.
+You are not a psychologist or clinician, never claim or imply to be one, and never diagnose anyone.
+You write with deep empathy, clarity and authority grounded in the research. 
 Your tone: validating, direct, warm, never clinical-cold. You speak to the reader as a person who matters, not a case.
 You do NOT use bullet points. You write in rich, flowing paragraphs of 3-5 sentences each.
 Each insight must feel personally written for THIS person's exact scores, not generic.`;

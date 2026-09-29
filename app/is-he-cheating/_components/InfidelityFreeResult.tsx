@@ -263,16 +263,6 @@ export default function InfidelityFreeResult({ data, onUnlock, isGenerating }: P
               Reveal The Full Investigation
             </CheckoutButton>
 
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="flex -space-x-1.5">
-                {["bg-rose-500", "bg-pink-500", "bg-violet-500", "bg-rose-600"].map((c, i) => (
-                  <div key={i} className={`w-7 h-7 rounded-full border-2 border-[#0d0a12] ${c} flex items-center justify-center`}>
-                    <Star className="w-3 h-3 text-white fill-white" />
-                  </div>
-                ))}
-              </div>
-              <p className="text-white/40 text-sm font-bold">4,800+ women got the truth this month</p>
-            </div>
 
             <p className="text-white/20 text-xs font-bold uppercase tracking-widest">
               Instant access &middot; No subscription &middot; Secure checkout

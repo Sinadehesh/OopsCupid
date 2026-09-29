@@ -64,7 +64,7 @@ export const quizRegistry: QuizEntry[] = [
     title: "Is He Gaslighting Me? Test",
     seoTitle: "Is He Gaslighting Me? Reality-Check Test",
     description:
-      "Stop asking yourself if you're crazy. This test maps his statements against the clinical gaslighting playbook and gives you a clear answer.",
+      "Stop asking yourself if you're crazy. This test maps his statements against the patterns researchers have documented in gaslighting and gives you a clear answer.",
     topic: "gaslighting",
     hub: "him",
     questionCount: 20,

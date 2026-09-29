@@ -13,7 +13,7 @@ export async function POST(req: Request) {
       .map((s: any) => `  - ${s.label}: ${Math.round(s.pct)}% (score ${s.score}/${s.max})`)
       .join('\n');
 
-    const prompt = `You are a world-class relationship psychologist writing a deeply personalized report for someone who just completed a self-sabotage assessment.
+    const prompt = `You write like an expert, warm relationship educator (not a psychologist; never claim to be one) writing a deeply personalized report for someone who just completed a self-sabotage assessment.
 
 Here is their full result data:
 - Archetype: "${result.archetype}"
@@ -43,7 +43,7 @@ Return ONLY a valid JSON object with exactly these 7 keys:
   "populationInsight": "2-3 sentences on what their percentile position means, are they in the dangerous zone, the common zone, or the rare zone, and what that implies",
   "topDriversInsight": "3-4 sentences on how their top 2 drivers interact with each other, the compound effect when both fire simultaneously",
   "coreWoundInsight": "3-4 sentences identifying the likely childhood or developmental root of their pattern, based on their subscale combination, be specific and compassionate",
-  "actionInsight": "4-5 sentences of the single most important behavioral change they can make RIGHT NOW, specific, actionable, tied to their exact archetype and scores. This should feel like advice from the best therapist they've ever had."
+  "actionInsight": "4-5 sentences of the single most important behavioral change they can make RIGHT NOW, specific, actionable, tied to their exact archetype and scores. This should feel like advice from someone who truly understands their pattern."
 }
 
 Do not add any text outside the JSON. No markdown. No explanation. Pure JSON only.`;

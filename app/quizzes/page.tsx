@@ -30,7 +30,7 @@ const quizCategories = [
     description: "Audit your social circle for exploitation, toxicity, and imbalanced roles.",
     quizzes: [
       { title: "Are Your Friends Using You?", path: "/are-your-friends-using-you", desc: "Discover if your friendships are purely transactional.", icon: HandCoins, bgClass: "bg-[#10B981]", bgLightClass: "bg-[#10B981]/10", textClass: "text-[#10B981]" },
-      { title: "Toxic Friend Test", path: "/toxic-friend-test", desc: "Learn the clinical signs of a draining friendship.", icon: Skull, bgClass: "bg-[#A855F7]", bgLightClass: "bg-[#A855F7]/10", textClass: "text-[#A855F7]" },
+      { title: "Toxic Friend Test", path: "/toxic-friend-test", desc: "Learn the signs of a draining friendship.", icon: Skull, bgClass: "bg-[#A855F7]", bgLightClass: "bg-[#A855F7]/10", textClass: "text-[#A855F7]" },
       { title: "Friend Group Role", path: "/friend-group-role", desc: "Find out what role you play in your social circle.", icon: Users, bgClass: "bg-[#3B82F6]", bgLightClass: "bg-[#3B82F6]/10", textClass: "text-[#3B82F6]" }
     ]
   },
@@ -46,7 +46,7 @@ const quizCategories = [
   },
   {
     title: "AI Analysis Tools",
-    description: "Let our clinical AI review your real-life data for objective, unfiltered insights.",
+    description: "Let our AI review your real-life data for objective, unfiltered insights.",
     quizzes: [
     ]
   }
@@ -66,7 +66,7 @@ export default function AllQuizzes() {
             The Psychological <span className="text-white/80 drop-shadow-sm">Toolkit.</span>
           </h1>
           <p className="text-lg md:text-2xl font-medium max-w-2xl mx-auto opacity-90 leading-relaxed">
-            Stop guessing. Start measuring. Choose a clinical audit below to uncover the hidden dynamics in your relationships.
+            Stop guessing. Start measuring. Choose a free test below to uncover the hidden dynamics in your relationships.
           </p>
         </div>
       </section>

@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import CheckoutButton from "@/components/offers/CheckoutButton";
 import CoachingUpsell from "@/components/offers/CoachingUpsell";
+import ProgramOffer from "@/components/program/ProgramOffer";
 
 /** Per-axis explanations at each band, every bar carries its own interpretation. */
 const SUBSCALE_INSIGHTS: Record<string, { high: string; mid: string; low: string }> = {
@@ -584,37 +585,10 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
           </p>
         </div>
 
-        {/* The value stack that stood here listed two PDFs (a "50+ page"
-            workbook and a "40+ page" playbook) that do not exist, priced
-            against an invented €38.94 retail total, with buy buttons that
-            were not connected to anything. Somebody who had just paid was
-            shown a second shop with nothing in it. This is the one real
-            product it was gesturing at. */}
-        <div className="bg-white rounded-3xl border border-[#d6d2d2] p-8 md:p-12 shadow-sm">
-          <p className="text-xs font-black uppercase tracking-widest text-[#dd1c1a] mb-3">If you want to work on it</p>
-          <h2 className="text-3xl font-black text-[#086788] mb-4 leading-tight">The 4-week Earned Security programme</h2>
-          <p className="text-[#086788]/75 font-medium text-lg leading-relaxed mb-6">
-            Pulling away when someone gets close is an attachment reflex, and it
-            responds to practice rather than insight. This is four weeks of short
-            sessions in your browser, five a week. Everything you write is saved, and
-            at the end of each week it is read back to you: what you wrote, what
-            moved between days, and one thing to do next.
-          </p>
-          <ul className="space-y-2 mb-8 text-[#086788] font-medium">
-            <li>· 20 guided sessions, 10 to 15 minutes each</li>
-            <li>· Your writing saved on this device and to your account</li>
-            <li>· A written review of each week, quoting what you wrote</li>
-            <li>· Includes the full premium report for any quiz on the site</li>
-          </ul>
-          <CheckoutButton
-            sku="report-workbook-bundle"
-            returnTo="/workbook"
-            className="w-full md:w-auto inline-flex items-center justify-center gap-2 bg-[#dd1c1a] hover:bg-[#b81614] text-white font-extrabold text-lg px-10 py-4 rounded-2xl transition-colors disabled:opacity-70"
-          >
-            Start the workbook · €49
-          </CheckoutButton>
-          <p className="text-xs font-bold text-[#086788]/50 mt-4">One payment. 7-day money-back guarantee. Week 1 is free to try first.</p>
-        </div>
+        {/* Letting People In is written for exactly this pattern. It
+            replaced a card that sold Earned Security, an anxiety programme,
+            to readers whose result is mostly about pulling away. */}
+        <ProgramOffer quizPath="/why-do-i-sabotage-relationships" className="!px-0" />
         {/* COACHING UPSELL, highest rung of the ladder */}
         <CoachingUpsell severity="moderate" topicLabel="your sabotage pattern" />
 
@@ -625,7 +599,7 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
           </span>
           <h3 className="text-3xl md:text-4xl font-black text-[#086788] mb-4">What’s Your Attachment Style?</h3>
           <p className="text-xl font-medium text-[#086788]/70 mb-8 max-w-lg mx-auto">
-            Your sabotage score links directly to your attachment wiring. Take the 12-minute clinical attachment quiz to complete your full picture.
+            Your sabotage score links directly to your attachment wiring. Take the 12-minute attachment quiz to complete your full picture.
           </p>
           <Link href="/attachment-style-quiz"
             className="inline-flex items-center justify-center gap-3 py-5 px-10 bg-[#086788] hover:bg-[#06aed5] text-white rounded-xl font-black text-xl transition-all shadow-md hover:-translate-y-1">

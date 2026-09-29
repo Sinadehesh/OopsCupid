@@ -113,7 +113,7 @@ export default function InfidelityQuizEngine() {
     <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4 bg-[#fafafa]">
       <div className="w-20 h-20 border-4 border-slate-200 border-t-slate-900 rounded-full animate-spin mb-8"></div>
       <h2 className="text-3xl font-extrabold text-slate-800 mb-4">Analyzing Behavioral Anomalies...</h2>
-      <p className="text-slate-500 font-medium text-lg">Cross-referencing his actions with clinical deception markers.</p>
+      <p className="text-slate-500 font-medium text-lg">Scoring his behaviour across each warning sign.</p>
     </div>
   );
 

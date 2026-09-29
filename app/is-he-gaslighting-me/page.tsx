@@ -13,7 +13,7 @@ export const metadata = {
   openGraph: {
     title: "Is He Gaslighting Me? Reality-Check Test",
     description:
-      "Stop asking yourself if you're crazy. Measure his behavior against the clinical gaslighting playbook.",
+      "Stop asking yourself if you're crazy. Measure his behavior against the patterns researchers have documented in gaslighting.",
     url: "https://www.oopscupid.com/is-he-gaslighting-me",
     type: "website",
   },
@@ -49,7 +49,7 @@ export default function GaslightingPage() {
       />
       <div className="max-w-3xl mx-auto text-center mb-10">
         <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 mb-4 tracking-tight">Is He Gaslighting Me?</h1>
-        <p className="text-slate-500 text-lg">Stop guessing. Start measuring. Run a 50-point clinical screening on his behavior and your mental clarity.</p>
+        <p className="text-slate-500 text-lg">Stop guessing. Start measuring. Take a 50-question self-check on his behaviour and your own clarity.</p>
       </div>
       <GaslightingQuizEngine />
       <QuizFaq items={FAQ} heading="Gaslighting: Common Questions" />

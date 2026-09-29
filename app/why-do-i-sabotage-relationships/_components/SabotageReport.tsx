@@ -5,6 +5,7 @@ import Link from "next/link";
 import SabotagePremiumReport from "./SabotagePremiumReport";
 import { usePremiumAccess } from "@/lib/usePremiumAccess";
 import CheckoutButton from "@/components/offers/CheckoutButton";
+import ProgramOffer from "@/components/program/ProgramOffer";
 
 export default function SabotageReport({ result }: { result: any }) {
   const { granted: isPremiumUnlocked } = usePremiumAccess();
@@ -234,16 +235,6 @@ export default function SabotageReport({ result }: { result: any }) {
                   Unlock My Full Report
                 </CheckoutButton>
 
-                {/* Social proof mini row */}
-                <div className="flex items-center justify-center gap-3 mt-5">
-                  <div className="flex -space-x-2">
-                    {["#086788","#dd1c1a","#f0c808"].map((c,i) => (
-                      <div key={i} className="w-6 h-6 rounded-full border-2 border-[#0c1a2e] flex items-center justify-center text-[9px] font-black text-white"
-                        style={{ backgroundColor: c }}>{'★'}</div>
-                    ))}
-                  </div>
-                  <p className="text-white/35 text-xs font-bold">Joined by 2,400+ people this month</p>
-                </div>
 
                 {/* Trust line */}
                 <p className="text-white/20 text-xs font-bold uppercase tracking-widest mt-4">
@@ -254,6 +245,10 @@ export default function SabotageReport({ result }: { result: any }) {
           </div>
         </div>
       )}
+
+      {/* The paid report carries its own offer; the free result gets the
+          free first session. */}
+      {!isPremiumUnlocked && <ProgramOffer quizPath="/why-do-i-sabotage-relationships" className="!px-0" />}
 
     </div>
   );

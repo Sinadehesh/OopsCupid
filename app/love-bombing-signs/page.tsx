@@ -315,7 +315,7 @@ export default function LoveBombingArticle() {
               <p className="font-bold text-[#334B63] mb-4">Want more clarity on relationship dynamics?</p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/quizzes" className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#334B63] text-white font-bold hover:bg-[#233547] transition-colors">
-                  Take a Clinical Quiz
+                  Take a Free Quiz
                 </Link>
                 <Link href="/articles" className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-white text-[#334B63] font-bold border border-[#E2E8F0] hover:bg-[#F3ECEB] transition-colors">
                   Read More Articles

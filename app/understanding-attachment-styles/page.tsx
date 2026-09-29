@@ -42,7 +42,7 @@ export default function AttachmentStyleEssay() {
           {/* Inline CTA 1: Middle of essay */}
           <div className="my-14 p-10 bg-[#2E86AB]/5 rounded-[32px] border-2 border-dashed border-[#2E86AB]/30 text-center">
             <h3 className="text-2xl font-bold mb-4">Ready to stop guessing?</h3>
-            <p className="mb-8 opacity-80">Take the clinical assessment to find your coordinates on the anxiety-avoidance spectrum.</p>
+            <p className="mb-8 opacity-80">Take the free assessment to find your coordinates on the anxiety-avoidance spectrum.</p>
             <Link href="/attachment-style-quiz" className="inline-block bg-[#2E86AB] text-white px-10 py-4 rounded-full font-bold hover:scale-105 transition-all shadow-lg">
               Unlock Your Psychological Blueprint →
             </Link>

@@ -17,7 +17,7 @@ export default function AttractionPatternsPage() {
       <section className="relative bg-[#086788] pt-24 pb-40 px-6 md:px-10 lg:px-14 rounded-b-[3rem] text-white text-center shadow-lg">
         <div className="w-full max-w-[1400px] mx-auto">
           <span className="text-[#F0C808] font-bold uppercase tracking-widest text-sm mb-4 block drop-shadow-sm">
-            2026 Updated Clinical Edition
+            Updated for 2026
           </span>
           <h1 className="text-[40px] md:text-[56px] font-extrabold mb-6 leading-tight tracking-tight drop-shadow-sm text-[#FFF1D0]">
             The Ultimate "Who Am I Attracted To" Quiz

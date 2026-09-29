@@ -5,7 +5,7 @@ import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata: Metadata = {
   title: "What Is His Attachment Style? Partner Test | OopsCupid",
-  description: "Decode his mixed signals. Take our 12-question clinical assessment to find out if your partner is Anxious, Avoidant, Fearful, or Secure.",
+  description: "Decode his mixed signals. Take our free 12-question assessment to find out if your partner is Anxious, Avoidant, Fearful, or Secure.",
 };
 
 export default function PartnerAttachmentQuizPage() {
@@ -19,7 +19,7 @@ export default function PartnerAttachmentQuizPage() {
             Partner Attachment Assessment
           </h1>
           <p className="text-[20px] md:text-[24px] font-medium mb-10 text-white/95 w-full max-w-[1400px] mx-auto drop-shadow-sm">
-            Stop guessing his intentions. Use our clinical test to uncover his relationship blueprint, decode his mixed signals, and understand how he truly views intimacy.
+            Stop guessing his intentions. Use our free test to uncover his relationship blueprint, decode his mixed signals, and understand how he truly views intimacy.
           </p>
           <div className="flex justify-center items-center gap-6 text-sm md:text-base font-semibold text-[#de7c5a]">
             <span className="flex items-center gap-2">✓ 12 Deep Questions</span>

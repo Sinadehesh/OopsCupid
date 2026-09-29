@@ -187,7 +187,7 @@ export default function PremiumAttachmentReportPage() {
             <div className="bg-[#086788] text-white p-8 md:p-12 rounded-2xl shadow-lg text-center relative overflow-hidden">
               <Sparkles className="absolute top-4 right-4 w-32 h-32 text-white/5 rotate-12 pointer-events-none" />
               <h1 className="text-4xl md:text-5xl font-black mb-4 text-white">Your Master Audit</h1>
-              <p className="text-lg md:text-xl font-medium text-[#06aed5]">Clinical access granted. We have successfully mapped your deep psychological blueprint.</p>
+              <p className="text-lg md:text-xl font-medium text-[#06aed5]">Your full report is unlocked. Here is everything your answers show.</p>
             </div>
 
             <div className="bg-white border border-[#d6d2d2] border-l-8 border-l-[#f0c808] p-8 md:p-12 rounded-2xl shadow-sm">

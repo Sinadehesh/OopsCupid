@@ -2,6 +2,7 @@ import type { Program, ProgramOutline, Week } from "./types";
 import { TRUST_YOUR_OWN_MIND } from "./content/trust-your-own-mind";
 import { EARNED_SECURITY } from "./content/earned-security";
 import { CHOOSING_DIFFERENTLY } from "./content/choosing-differently";
+import { LETTING_PEOPLE_IN } from "./content/letting-people-in";
 
 /**
  * EVERY PROGRAMME, AND WHICH QUIZZES FEED IT
@@ -119,41 +120,16 @@ export const PROGRAMS: Program[] = [
       "Staying ten minutes longer than the urge wants you to",
       "Naming a return time instead of vanishing",
       "Letting someone help you with something small",
+      "Asking the real question instead of running a test",
     ],
-    methods: ["attachment-based work", "CBT", "DBT distress tolerance", "exposure", "compassion-focused therapy"],
+    methods: ["attachment-based work", "CBT", "exposure", "schema therapy", "ACT", "compassion-focused therapy"],
     reviewFocus: "avoidance and self-sabotage in close relationships: pulling away, testing people and leaving when intimacy grows",
     accent: "#0D9488",
-    status: "outline",
-    outline: [
-      o(1, "See it", [
-        ["The moment you pull away", "Pattern recognition"],
-        ["Your exit moves", "Behaviour mapping"],
-        ["Closeness in the body", "Interoception"],
-        ["The stories about needing people", "CBT · beliefs"],
-        ["Where you stand now", "Baseline measure"],
-      ]),
-      o(2, "Understand it", [
-        ["Why closeness feels dangerous", "Avoidant deactivation"],
-        ["Independence as armour", "Schema work"],
-        ["Testing people", "Functional analysis"],
-        ["What leaving costs you", "Cost ledger"],
-        ["What pulling away protects", "Formulation"],
-      ]),
-      o(3, "Change it", [
-        ["Ten minutes longer", "Exposure · tolerance"],
-        ["Naming a return time", "Communication skill"],
-        ["Letting someone help", "Graded exposure"],
-        ["Saying one true thing", "Vulnerability practice"],
-        ["The closeness experiment", "Behavioural experiment"],
-      ]),
-      o(4, "Live it", [
-        ["What you want from closeness", "ACT · values"],
-        ["Kindness to the part that runs", "Compassion-focused"],
-        ["Your early warning signs", "Relapse prevention"],
-        ["Choosing to stay", "Commitment"],
-        ["A letter to your guarded self", "Integration"],
-      ]),
-    ],
+    status: "live",
+    weeks: LETTING_PEOPLE_IN,
+    outline: outlineOf(LETTING_PEOPLE_IN),
+    safety:
+      "This is a self-help programme, not therapy. If closeness brings back memories of abuse or trauma, or you feel numb or detached for much of the time, please talk to your GP or a trauma-informed therapist. In the UK, Samaritans are free and available day and night on 116 123.",
   },
   {
     slug: "friendships-that-give-back",

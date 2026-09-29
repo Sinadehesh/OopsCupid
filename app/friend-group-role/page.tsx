@@ -3,7 +3,7 @@ import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata = {
   title: "What Role Do You Play In Your Friend Group? | OopsCupid",
-  description: "Take the 120-item clinical assessment to find out your exact friend group archetype.",
+  description: "Take the free 120-question assessment to find out your exact friend group archetype.",
 };
 
 export default function FriendRolePage() {

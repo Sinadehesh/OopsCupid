@@ -34,7 +34,7 @@ export default function ManipulationEssay() {
         <div className="my-16 p-10 bg-white rounded-[32px] border-2 border-dashed border-[#ced2dc] text-center shadow-lg">
           <h3 className="text-2xl md:text-3xl font-bold mb-6 text-[#2a2522]">Don't try to think harder about it. Measure it.</h3>
           <Link href="/is-he-manipulative" className="inline-block bg-[#650000] text-white px-10 py-5 rounded-full text-xl font-bold hover:scale-105 hover:shadow-xl transition-all hover:bg-[#490000]">
-            Take the Free Clinical Screening →
+            Take the Free Test →
           </Link>
         </div>
 

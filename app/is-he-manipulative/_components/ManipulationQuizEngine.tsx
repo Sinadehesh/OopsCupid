@@ -183,7 +183,7 @@ export default function ManipulationQuizEngine() {
     <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4 bg-[#fafafa]">
       <div className="w-20 h-20 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mb-8 shadow-[0_0_15px_rgba(79,70,229,0.3)]"></div>
       <h2 className="text-3xl font-extrabold text-slate-800 mb-4">Compiling Red Flags...</h2>
-      <p className="text-slate-500 font-medium text-lg">Cross-referencing his behavior with clinical coercion markers.</p>
+      <p className="text-slate-500 font-medium text-lg">Scoring his behaviour across each manipulation tactic.</p>
     </div>
   );
 
@@ -225,7 +225,7 @@ export default function ManipulationQuizEngine() {
       <div className="inline-flex items-center justify-center w-24 h-24 bg-indigo-100 text-indigo-600 rounded-full mb-8 shadow-sm border border-indigo-200"><ShieldAlert className="w-12 h-12" /></div>
       <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 mb-6 tracking-tight leading-tight">Is He Manipulative?</h1>
       <p className="text-lg md:text-2xl text-slate-600 mb-10 font-medium leading-relaxed max-w-2xl mx-auto">Take this brutally honest diagnostic. Uncover if his confusing behavior is just "bad communication" or a calculated system of coercive control.</p>
-      <button onClick={handleStart} className="bg-indigo-600 text-white font-extrabold text-xl py-5 px-12 rounded-full shadow-[0_10px_30px_rgba(79,70,229,0.3)] hover:bg-indigo-700 hover:-translate-y-1 transition-all group">Start Clinical Scan <ArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" /></button>
+      <button onClick={handleStart} className="bg-indigo-600 text-white font-extrabold text-xl py-5 px-12 rounded-full shadow-[0_10px_30px_rgba(79,70,229,0.3)] hover:bg-indigo-700 hover:-translate-y-1 transition-all group">Start the Test <ArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" /></button>
     </div>
   );
 

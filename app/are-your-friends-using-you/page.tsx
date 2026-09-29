@@ -3,7 +3,7 @@ import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata = {
   title: "Are Your Friends Using You? | OopsCupid",
-  description: "A 108-item clinical assessment detecting transactional relationships, emotional labor burdens, and opportunistic friendships.",
+  description: "A free 108-question assessment detecting transactional relationships, emotional labor burdens, and opportunistic friendships.",
 };
 
 export default function FriendsUsedPage() {
