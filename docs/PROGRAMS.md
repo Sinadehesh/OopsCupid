@@ -12,7 +12,7 @@ programme each would have meant writing the same workbook five times.
 | 2 | **Earned Security** · anxious attachment | attachment-style-quiz (anxious and fearful results only) | **Live** |
 | 3 | **Choosing Differently** · the pull toward the wrong partners | pick-bad-guys, attract-toxic, what-kind-of-person, who-is-attracted, attraction-patterns, keep-dating-the-same-type | **Live** |
 | 4 | **Letting People In** · self-sabotage and avoidance | why-do-i-sabotage-relationships | **Live** |
-| 5 | **Friendships That Give Back** · one-sided friendships, people-pleasing | toxic-friend, friends-bad, friends-using, friend-group-role, is-my-best-friend-toxic | Outline |
+| 5 | **Friendships That Give Back** · one-sided friendships, people-pleasing | toxic-friend, friends-bad, friends-using, friend-group-role, is-my-best-friend-toxic | **Live** |
 | 6 | **After the Doubt** · suspicion, checking, trust | is-he-cheating | Outline |
 | 7 | **Loving Someone Who Pulls Away** · the avoidant partner | partners-attachment-style | Outline |
 
@@ -65,8 +65,11 @@ covers the exit and the test, and the belief under both. It replaced a
 card on the sabotage report that sold Earned Security, an anxiety
 programme, to readers whose result is mostly about pulling away.
 
-**Phase 5 · Friendships That Give Back.** Four quizzes; a lower-intensity
-audience that is easier to reach on social.
+**Phase 5 · Friendships That Give Back · done.** Five quizzes; a
+lower-intensity audience that is easier to reach on social. It does not
+open with "cut them off": it maps, explains why she gives first, practises
+no and asking back, and only then decides repair, fade or end, friend by
+friend.
 
 **Phase 6 · After the Doubt, and Loving Someone Who Pulls Away.**
 Single-quiz programmes; lowest leverage, written last.

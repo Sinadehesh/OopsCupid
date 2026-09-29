@@ -9,6 +9,7 @@ import PremiumGate from "@/components/report/PremiumGate";
 import YourAnswersSection from "@/components/report/premium/YourAnswersSection";
 import { buildEvidence, fromBattery } from "@/lib/report/evidence";
 import { friendRoleQuestions } from "@/lib/psychometrics/friend-role/questions";
+import ProgramOffer from "@/components/program/ProgramOffer";
 
 // Deep per-archetype premium content
 const PREMIUM_CONTENT: Record<string, {
@@ -373,6 +374,8 @@ export default function FriendRolePremiumPage() {
                 : undefined
             }
           />
+
+          <ProgramOffer quizPath="/friend-group-role" className="!px-0" />
 
           <div className="pt-4 pb-12"><SharePrintButtons /></div>
         </div>

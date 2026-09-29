@@ -3,6 +3,7 @@ import { TRUST_YOUR_OWN_MIND } from "./content/trust-your-own-mind";
 import { EARNED_SECURITY } from "./content/earned-security";
 import { CHOOSING_DIFFERENTLY } from "./content/choosing-differently";
 import { LETTING_PEOPLE_IN } from "./content/letting-people-in";
+import { FRIENDSHIPS_THAT_GIVE_BACK } from "./content/friendships-that-give-back";
 
 /**
  * EVERY PROGRAMME, AND WHICH QUIZZES FEED IT
@@ -143,40 +144,14 @@ export const PROGRAMS: Program[] = [
       "Asking for something back, once, to see what happens",
       "Letting a draining friendship fade, or ending it well",
     ],
-    methods: ["CBT", "DBT interpersonal effectiveness", "schema therapy", "ACT"],
+    methods: ["CBT", "DBT interpersonal effectiveness", "schema therapy", "ACT", "behavioural experiments"],
     reviewFocus: "one-sided, draining or toxic friendships and the habit of people-pleasing",
     accent: "#F59E0B",
-    status: "outline",
-    outline: [
-      o(1, "See it", [
-        ["Your friendship map", "Social mapping"],
-        ["Who drains, who restores", "Energy audit"],
-        ["The one-sided signs", "Pattern recognition"],
-        ["Your role in the group", "Role analysis"],
-        ["Where you stand now", "Baseline measure"],
-      ]),
-      o(2, "Understand it", [
-        ["Why you give first", "Schema · self-sacrifice"],
-        ["Guilt versus obligation", "CBT · beliefs"],
-        ["The friend who can't be happy for you", "Envy and rivalry"],
-        ["The role you got stuck in", "Family roles"],
-        ["The cost ledger", "Behavioural audit"],
-      ]),
-      o(3, "Change it", [
-        ["No, without a reason", "Assertiveness"],
-        ["Asking for something back", "Behavioural experiment"],
-        ["Fade or conversation", "Decision skill"],
-        ["The hard talk, scripted", "DBT · DEAR MAN"],
-        ["The reciprocity experiment", "Behavioural experiment"],
-      ]),
-      o(4, "Live it", [
-        ["What you want from a friend", "ACT · values"],
-        ["Finding your people", "Social activation"],
-        ["Your early warning signs", "Relapse prevention"],
-        ["Letting go well", "Grief and endings"],
-        ["A letter to the friend you deserve", "Integration"],
-      ]),
-    ],
+    status: "live",
+    weeks: FRIENDSHIPS_THAT_GIVE_BACK,
+    outline: outlineOf(FRIENDSHIPS_THAT_GIVE_BACK),
+    safety:
+      "This is a self-help programme, not therapy. If a friend threatens you, controls you or makes you feel unsafe, or if things are making you feel hopeless, please talk to someone you trust or to your GP. In the UK, Samaritans are free and available day and night on 116 123.",
   },
   {
     slug: "after-the-doubt",

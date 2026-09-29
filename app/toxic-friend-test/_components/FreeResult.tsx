@@ -6,6 +6,7 @@ import { MessageSquare, ShieldCheck } from "lucide-react";
 import { usePremiumAccess } from "@/lib/usePremiumAccess";
 import CheckoutButton from "@/components/offers/CheckoutButton";
 import ResultShare from "@/components/share/ResultShare";
+import ProgramOffer from "@/components/program/ProgramOffer";
 
 // Reusable Bar Component for the Dimensions
 function DimensionBar({ label, score, color }: { label: string, score: number, color: string }) {
@@ -150,6 +151,8 @@ export default function FreeResult({ data, rawAnswers }: { data: any, rawAnswers
           </CheckoutButton>
         </div>
       </div>
+
+      <ProgramOffer quizPath="/toxic-friend-test" className="!px-0" />
 
     </div>
   );
