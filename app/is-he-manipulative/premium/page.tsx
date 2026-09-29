@@ -7,6 +7,7 @@ import CoachingUpsell from "@/components/offers/CoachingUpsell";
 import { scoreToSeverity } from "@/lib/offers/catalog";
 import PremiumGate from "@/components/report/PremiumGate";
 import YourAnswersSection from "@/components/report/premium/YourAnswersSection";
+import ProgramOffer from "@/components/program/ProgramOffer";
 import { buildEvidence, humanise } from "@/lib/report/evidence";
 import { MANIPULATION_QUESTIONS } from "@/lib/psychometrics/manipulation/questions";
 import ScriptsAndPlan from "@/components/report/premium/ScriptsAndPlan";
@@ -62,6 +63,7 @@ export default function ManipulationPremiumPage() {
           }
           no="03"
         />
+        <ProgramOffer quizPath="/is-he-manipulative" />
         {/* The checkout page promises "the scripts to stop him today" and an
             action plan. This report had neither until now. Both are keyed to
             the dominant pattern, a counter-move for gaslighting is the wrong

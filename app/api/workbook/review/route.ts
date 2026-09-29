@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getAI, aiModel, aiConfigured, aiProviderName } from "@/lib/ai/client";
+import { programBySlug } from "@/lib/programs/registry";
 import { ACCESS_COOKIE, readAccessToken } from "@/lib/stripe/access";
 
 export const dynamic = "force-dynamic";
@@ -23,8 +24,14 @@ export const maxDuration = 60;
  * cheap.
  */
 
-const SYSTEM = `You are reviewing a week of written exercises from someone
-working through a self-guided attachment workbook. You are not their
+/**
+ * Built per request so each programme is reviewed as itself. The prompt
+ * used to say "a self-guided attachment workbook" whatever was being read,
+ * which would have had a woman recovering from gaslighting told about her
+ * attachment style.
+ */
+const systemFor = (focus: string) => `You are reviewing a week of written exercises from someone
+working through a self-guided workbook about ${focus}. You are not their
 therapist and you must not pretend to be.
 
 You are given their own words. Respond to THOSE, not to attachment theory
@@ -64,6 +71,8 @@ Return ONLY valid JSON:
   "task": {"title": "short imperative", "detail": "2-3 sentences, concrete and doable in a day"},
   "flag": "empty string, or a plain sentence if something in the writing needs real-world support"
 }`;
+
+const FOCUS_FALLBACK = "anxious attachment in relationships";
 
 interface Entry {
   day: number;
@@ -191,7 +200,7 @@ export async function POST(req: NextRequest) {
       temperature: 0.6,
       response_format: { type: "json_object" },
       messages: [
-        { role: "system", content: SYSTEM },
+        { role: "system", content: systemFor(programBySlug(workbook)?.reviewFocus ?? FOCUS_FALLBACK) },
         {
           role: "user",
           content: `Workbook: ${workbook}\nWeek: ${week}\nEntries written by the reader:\n\n${rendered.join("\n\n")}`,

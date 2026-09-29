@@ -190,6 +190,9 @@ export default function WorkbookAutosave({
     const register = () => {
       document.querySelectorAll("textarea").forEach((el) => {
         const box = el as HTMLTextAreaElement;
+        // Program exercises save themselves as structured rows; watching
+        // them here as well would store every answer twice.
+        if (box.dataset.ocSkip) return;
         const question = questionFor(box);
         const key = fieldKey(box, question);
         if (box.dataset.ocKey === key) return;

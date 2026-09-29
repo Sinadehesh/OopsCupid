@@ -5,6 +5,7 @@ import Link from "next/link";
 import { AlertTriangle, Loader2 } from "lucide-react";
 import PremiumGate from "@/components/report/PremiumGate";
 import PremiumDossier from "@/components/report/premium/PremiumDossier";
+import ProgramOffer from "@/components/program/ProgramOffer";
 import { loadQuizResult } from "@/lib/quizResults";
 import type { Dossier } from "@/lib/report/dossier";
 
@@ -106,6 +107,7 @@ export default function PremiumRoute<T>({
   return (
     <PremiumGate returnTo={`${quizHref}/premium`}>
       <PremiumDossier dossier={dossier} />
+      <ProgramOffer quizPath={quizHref} />
     </PremiumGate>
   );
 }

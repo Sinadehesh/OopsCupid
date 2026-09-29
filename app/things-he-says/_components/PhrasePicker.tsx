@@ -7,6 +7,7 @@ import { PHRASES, scorePhrases, type PhraseResult } from "@/lib/quizzes/thingsHe
 import { trackQuizStart, trackQuizComplete, trackResultView } from "@/lib/track";
 import ResultShare from "@/components/share/ResultShare";
 import CheckoutButton from "@/components/offers/CheckoutButton";
+import ProgramOffer from "@/components/program/ProgramOffer";
 
 const QUIZ = "things-he-says";
 
@@ -159,6 +160,8 @@ export default function PhrasePicker() {
             No sign-up. No email. Your answers are not sent anywhere.
           </p>
         </div>
+
+        {result.band !== "none" && <ProgramOffer quizPath="/things-he-says" className="!px-0 !py-4" />}
 
         <ResultShare
           quiz="Things He Says"

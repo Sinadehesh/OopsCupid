@@ -25,9 +25,18 @@ const FREE_WEEKS = 1;
 export default function WorkbookGate({
   week,
   children,
+  returnTo,
+  programTitle = "the workbook",
+  lockedWeeks = "Weeks 2 to 6",
+  lockedCount = "35 more daily exercises",
 }: {
   week: number;
   children: React.ReactNode;
+  /** Where checkout sends her back to. Defaults to the original workbook. */
+  returnTo?: string;
+  programTitle?: string;
+  lockedWeeks?: string;
+  lockedCount?: string;
 }) {
   const [status, setStatus] = useState<"checking" | "granted" | "denied">(
     week <= FREE_WEEKS ? "granted" : "checking"
@@ -82,16 +91,19 @@ export default function WorkbookGate({
             Week {week}
           </p>
           <h1 className="text-2xl md:text-3xl font-black text-slate-900 mb-4">
-            The rest of the workbook
+            The rest of {programTitle}
           </h1>
           <p className="text-slate-600 font-medium leading-relaxed mb-7">
-            Week 1 is free and yours to keep, all seven days of it. Weeks 2 to 6
-            are part of the bundle, along with your full report.
+            Week 1 is free and yours to keep. {lockedWeeks} are part of the
+            bundle, which also opens every other programme on the site and your
+            full report.
           </p>
 
           <ul className="space-y-2.5 mb-8">
             {[
-              "Weeks 2-6, 35 more daily exercises",
+              `${lockedWeeks}, ${lockedCount}`,
+              "A written review of each week, quoting what you wrote",
+              "Every other programme on the site, as each one opens",
               "Your complete premium report",
               "Lifetime access, no subscription",
             ].map((item) => (
@@ -104,7 +116,7 @@ export default function WorkbookGate({
 
           <CheckoutButton
             sku="report-workbook-bundle"
-            returnTo={`/workbook/anxious-attachment/week-${week}`}
+            returnTo={returnTo ?? `/workbook/anxious-attachment/week-${week}`}
             className="w-full inline-flex items-center justify-center gap-2 bg-[#EC8A66] hover:bg-[#E07850] text-white font-extrabold text-lg py-4 rounded-2xl transition-all shadow-md hover:-translate-y-0.5 disabled:opacity-70"
           >
             Unlock the full workbook, €49
