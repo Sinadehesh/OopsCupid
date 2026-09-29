@@ -147,15 +147,21 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  // Paid feature: the workbook is what the bundle buys.
-  const claims = readAccessToken(req.cookies.get(ACCESS_COOKIE)?.value);
-  if (!claims?.workbook) {
-    return NextResponse.json({ error: "This review is part of the workbook bundle." }, { status: 402 });
-  }
-
   const { workbook, week, sessionId } = await req.json().catch(() => ({} as any));
   if (typeof workbook !== "string" || typeof week !== "number") {
     return NextResponse.json({ error: "Missing workbook or week." }, { status: 400 });
+  }
+
+  // The week 1 review is free, like week 1 itself. It is the thing the
+  // €49 is actually for, and nobody could see one before paying: asking
+  // for €49 on the strength of a description of a feature is a hard sell,
+  // while a written review of her own week, quoting her own words, sells
+  // weeks 2 to 4 by itself. At a fraction of a cent per review it is the
+  // cheapest conversion lever on the site. It still needs at least two
+  // days of her own writing (checked below), so it cannot be run empty.
+  const claims = readAccessToken(req.cookies.get(ACCESS_COOKIE)?.value);
+  if (week > 1 && !claims?.workbook) {
+    return NextResponse.json({ error: "This review is part of the workbook bundle." }, { status: 402 });
   }
 
   let entries: Entry[];

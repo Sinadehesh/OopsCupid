@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { Sparkles, Loader2, Quote, AlertTriangle, Target, GitCompareArrows } from "lucide-react";
 import { deviceSessionId } from "@/lib/workbook/session";
+import { usePathname } from "next/navigation";
+import CheckoutButton from "@/components/offers/CheckoutButton";
 
 /**
  * END-OF-WEEK REVIEW
@@ -36,6 +38,7 @@ export default function WeekReview({
   const [state, setState] = useState<"idle" | "loading" | "done" | "error">("idle");
   const [review, setReview] = useState<Review | null>(null);
   const [message, setMessage] = useState("");
+  const path = usePathname() ?? "/workbook";
 
   const run = async () => {
     setState("loading");
@@ -115,6 +118,22 @@ export default function WeekReview({
             </div>
           )}
 
+          {week === 1 && (
+            <div className="rounded-2xl bg-white/[0.06] border border-white/10 p-6 mb-8">
+              {/* The moment she has just seen what the review does, with her
+                  own words in it, is the moment the rest is worth buying. */}
+              <p className="text-white/80 font-medium leading-relaxed mb-5">
+                That was your free review. Weeks 2 to 4 are where the work
+                changes from seeing the pattern to changing it, and each one
+                ends with a review like this.
+              </p>
+              <CheckoutButton sku="report-workbook-bundle" returnTo={path}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#EC8A66] hover:bg-[#E07850] text-white font-extrabold px-7 py-3.5 rounded-xl disabled:opacity-70">
+                Unlock weeks 2 to 4 · €49
+              </CheckoutButton>
+            </div>
+          )}
+
           {review.task && (
             <div className="rounded-2xl bg-[#EC8A66]/15 border border-[#EC8A66]/30 p-6">
               <p className="text-[10px] font-black uppercase tracking-[0.15em] text-[#EC8A66] mb-2 flex items-center gap-2">
@@ -141,6 +160,7 @@ export default function WeekReview({
         This reads everything you wrote this week and tells you what it sees, quoting
         your own words, naming what shifted between days, and setting one thing to do
         next. It is not a summary.
+        {week === 1 ? " Your week 1 review is free." : ""}
       </p>
 
       <button
