@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
+import { tidy } from '@/lib/ai/tidy';
 
 // FIX: Switch to the Edge runtime. This prevents the "output: export" build crash 
 // caused by force-dynamic, and is heavily optimized for OpenAI on Vercel.
@@ -41,7 +42,7 @@ export async function POST(req: Request) {
       temperature: 0.7,
     });
 
-    const aiData = JSON.parse(response.choices[0].message.content || "{}");
+    const aiData = tidy(JSON.parse(response.choices[0].message.content || "{}"));
     return NextResponse.json(aiData);
 
   } catch (error) {

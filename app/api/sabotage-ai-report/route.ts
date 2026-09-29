@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
+import { tidy } from '@/lib/ai/tidy';
 
 export async function POST(req: Request) {
   try {
@@ -56,7 +57,7 @@ Do not add any text outside the JSON. No markdown. No explanation. Pure JSON onl
     });
 
     const raw = completion.choices[0].message.content ?? '{}';
-    const insights = JSON.parse(raw);
+    const insights = tidy(JSON.parse(raw));
 
     return NextResponse.json({ success: true, insights });
   } catch (err: any) {

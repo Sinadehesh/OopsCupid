@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
+import { tidy } from "@/lib/ai/tidy";
 
 export async function POST(req: NextRequest) {
   try {
@@ -66,7 +67,7 @@ Respond ONLY with valid JSON like:
     });
 
     const raw = completion.choices[0]?.message?.content ?? "{}";
-    const insights = JSON.parse(raw);
+    const insights = tidy(JSON.parse(raw));
     return NextResponse.json({ success: true, insights });
   } catch (err) {
     console.error("[gaslighting-ai-report]", err);

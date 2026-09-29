@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getAI, aiModel, aiConfigured, aiProviderName } from "@/lib/ai/client";
 import { programBySlug } from "@/lib/programs/registry";
+import { tidy } from "@/lib/ai/tidy";
 import { ACCESS_COOKIE, readAccessToken } from "@/lib/stripe/access";
 
 export const dynamic = "force-dynamic";
@@ -57,6 +58,8 @@ Rules, in order of importance:
    self-harm, say so plainly in the "flag" field and keep the rest short.
    Do not diagnose. Do not speculate about anyone's mental illness.
 
+Never use em dashes or en dashes. Use a comma or a full stop instead.
+
 Write in British English, second person, plain language. Roughly 400-550
 words across all fields combined.
 
@@ -73,6 +76,7 @@ Return ONLY valid JSON:
 }`;
 
 const FOCUS_FALLBACK = "anxious attachment in relationships";
+
 
 interface Entry {
   day: number;
@@ -151,6 +155,11 @@ export async function POST(req: NextRequest) {
   if (typeof workbook !== "string" || typeof week !== "number") {
     return NextResponse.json({ error: "Missing workbook or week." }, { status: 400 });
   }
+  // Without a session the query below would match every reader's entries
+  // for this week, and the review would quote strangers' private writing.
+  if (typeof sessionId !== "string" || sessionId.length < 8 || sessionId === "anonymous") {
+    return NextResponse.json({ error: "Missing session." }, { status: 400 });
+  }
 
   // The week 1 review is free, like week 1 itself. It is the thing the
   // €49 is actually for, and nobody could see one before paying: asking
@@ -170,7 +179,7 @@ export async function POST(req: NextRequest) {
       where: {
         workbook,
         week,
-        ...(typeof sessionId === "string" && sessionId ? { sessionId } : {}),
+        sessionId,
       },
       orderBy: [{ day: "asc" }, { createdAt: "asc" }],
       select: { day: true, exerciseKey: true, content: true, createdAt: true },
@@ -217,7 +226,7 @@ export async function POST(req: NextRequest) {
     const raw = res.choices[0]?.message?.content;
     if (!raw) throw new Error("empty completion");
 
-    return NextResponse.json({ review: JSON.parse(raw), days: entries.length });
+    return NextResponse.json({ review: tidy(JSON.parse(raw)), days: entries.length });
   } catch (err: any) {
     // Never lose their work over a failed review.
     console.error(
