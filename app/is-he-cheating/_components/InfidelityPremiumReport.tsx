@@ -11,6 +11,7 @@ import { scoreToSeverity } from "@/lib/offers/catalog";
 import RiskGauge from "@/components/report/charts/RiskGauge";
 import SubscaleRadar from "@/components/report/charts/SubscaleRadar";
 import SignalFrequency from "@/components/report/charts/SignalFrequency";
+import ProgramOffer from "@/components/program/ProgramOffer";
 
 interface ReportData {
   score: number;
@@ -645,7 +646,10 @@ export default function InfidelityPremiumReport({ data }: { data: ReportData }) 
         </div>
 
         {/* PLAYBOOKS UPSELL */}
-        <PlaybooksUpsell accent={cfg.accent} />
+        {/* Two "in production" playbooks were advertised here. The slot now
+            shows the After the Doubt programme once it opens, and nothing
+            until then. */}
+        <ProgramOffer quizPath="/is-he-cheating" className="!px-0" />
 
         {/* COACHING UPSELL, highest-margin rung of the ladder */}
         <CoachingUpsell

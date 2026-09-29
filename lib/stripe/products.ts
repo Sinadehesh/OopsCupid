@@ -28,7 +28,7 @@ export interface StripeProduct {
   grants: {
     /** Unlocks the premium report for this quiz topic (or all of them). */
     premiumReport: boolean;
-    /** Unlocks the in-app 6-week workbook. */
+    /** Unlocks every live guided programme under /workbook. */
     workbook: boolean;
     /** Requires a human to send a scheduling link after purchase. */
     coaching: boolean;
@@ -47,7 +47,7 @@ export const STRIPE_PRODUCTS: Record<Sku, StripeProduct> = {
     sku: "report-workbook-bundle",
     priceId: "price_1UI5soLxuKpAU8j45s8h90pd",
     displayPrice: "€49",
-    name: "Premium Report + 6-Week Workbook",
+    name: "Premium Report + Guided Programmes",
     grants: { premiumReport: true, workbook: true, coaching: false },
   },
   "ultimate-bundle": {

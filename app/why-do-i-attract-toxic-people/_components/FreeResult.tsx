@@ -3,6 +3,7 @@ import React from "react";
 import { Lock, Database, EyeOff, UserX, FlaskConical, ShieldCheck, ArrowRight, AlertOctagon } from "lucide-react";
 import PremiumCheckout from "@/components/report/PremiumCheckout";
 import ResultShare from "@/components/share/ResultShare";
+import ProgramOffer from "@/components/program/ProgramOffer";
 
 export default function FreeResult({ data, onUnlock, isGenerating }: { data: any, onUnlock: any, isGenerating: boolean }) {
   const topTrait = data?.top1 || "The Hyper-Empathetic Rescuer";
@@ -134,10 +135,9 @@ export default function FreeResult({ data, onUnlock, isGenerating }: { data: any
               ]}
             />
             
-            <div className="mt-6 text-center text-sm font-bold text-slate-500 flex items-center justify-center gap-2">
-              <ArrowRight className="w-4 h-4 text-rose-500" /> 
-              On the next page, you will have the option to add the <span className="text-slate-800">Narcissist Disarmament Playbook</span> to your order.
-            </div>
+            {/* A line here promised a "Narcissist Disarmament Playbook"
+                upsell on the next page. No such product exists. */}
+            <ProgramOffer quizPath="/why-do-i-attract-toxic-people" className="!px-0 !pb-0" />
           </div>
 
         </div>

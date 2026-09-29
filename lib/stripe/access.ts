@@ -16,8 +16,10 @@ import { STRIPE_PRODUCTS } from "./products";
  */
 
 export const ACCESS_COOKIE = "oc_access";
-/** Access lasts long enough to re-read a purchased report, not forever. */
-const TTL_DAYS = 90;
+// A year: long enough to finish every programme and come back to it.
+// Browsers cap cookie lifetimes at around 400 days, so "lifetime" access
+// is not something a cookie can honestly promise.
+const TTL_DAYS = 365;
 
 export interface Entitlements {
   /** Stripe Checkout Session that paid for this. */

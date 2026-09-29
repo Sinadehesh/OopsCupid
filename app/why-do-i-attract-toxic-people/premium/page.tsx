@@ -9,6 +9,7 @@ import YourAnswersSection from "@/components/report/premium/YourAnswersSection";
 import { buildEvidence } from "@/lib/report/evidence";
 import { BAD_GUYS_QUESTIONS } from "../_data/questions";
 import ScriptsAndPlan from "@/components/report/premium/ScriptsAndPlan";
+import ProgramOffer from "@/components/program/ProgramOffer";
 import { buildBadGuysDossier } from "@/app/why-do-i-pick-bad-guys/_lib/dossier";
 
 export default function PremiumToxicAttractionPage() {
@@ -106,6 +107,7 @@ export default function PremiumToxicAttractionPage() {
           scriptsNo="04"
           planNo="05"
         />
+        <ProgramOffer quizPath="/why-do-i-attract-toxic-people" />
         <OfferLadder
           topic="attraction-patterns"
           score={typeof data?.score === "number" ? data.score : 55}

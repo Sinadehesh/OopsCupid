@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { allQuizzes } from "@/lib/quizzes/registry";
+import { LIVE_PROGRAMS } from "@/lib/programs/registry";
 
 export const metadata: Metadata = {
   title: "Free Attachment Style Test & Relationship Quizzes: No Email",
@@ -223,65 +224,43 @@ export default function Home() {
         </div>
       </section>
 
-      {/* NEW SECTION 4: GRAND SLAM OFFER TEASE */}
-      <section className="bg-white py-20 md:py-32">
-        <div className="container mx-auto px-6 md:px-10 lg:px-14">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-            <div className="lg:w-1/2">
-              <h2 className="text-[32px] md:text-[42px] font-extrabold text-[#3A556C] mb-6 leading-tight">
-                Don't Know What To Do Next? Get The Playbook.
-              </h2>
-              <p className="text-[18px] md:text-[22px] font-medium text-gray-700 mb-10 leading-relaxed">
-                After your free test, you can unlock our <strong className="text-[#E07850]">Ultimate Clarity Bundle</strong>. We will tell you exactly how to fix the problem without the stress. Here is what you get instantly:
-              </p>
-              <ul className="space-y-8">
-                <li className="flex items-start gap-4">
-                  <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-[#06AED5]/20 text-[#06AED5] font-extrabold">✓</span>
-                  <div>
-                    <strong className="text-[20px] text-[#3A556C] block mb-1">The Harsh Truth</strong>
-                    <span className="text-gray-600 text-lg">We name the exact mind games they are using on you right now. No holding back.</span>
-                  </div>
-                </li>
-                <li className="flex items-start gap-4">
-                  <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-[#06AED5]/20 text-[#06AED5] font-extrabold">✓</span>
-                  <div>
-                    <strong className="text-[20px] text-[#3A556C] block mb-1">The Step-by-Step Plan</strong>
-                    <span className="text-gray-600 text-lg">A simple, easy list of what to do next. Say goodbye to guessing.</span>
-                  </div>
-                </li>
-                <li className="flex items-start gap-4">
-                  <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-[#06AED5]/20 text-[#06AED5] font-extrabold">✓</span>
-                  <div>
-                    <strong className="text-[20px] text-[#3A556C] block mb-1">Copy-Paste Texts</strong>
-                    <span className="text-gray-600 text-lg">Do not know what to say? Copy our texts. They are polite, strong, and impossible to argue with.</span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="lg:w-1/2 w-full">
-              <div className="bg-gradient-to-tr from-[#3D5A6C] to-[#5A7492] rounded-3xl p-8 md:p-12 text-white shadow-2xl relative overflow-hidden transform md:rotate-1 hover:rotate-0 transition-transform duration-300">
-                <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-white opacity-10 rounded-full blur-3xl pointer-events-none"></div>
-                <div className="flex items-center gap-3 mb-6">
-                  <span className="bg-[#F5DD90] text-[#5A4A1E] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Premium Unlock</span>
-                </div>
-                <h3 className="text-3xl md:text-4xl font-extrabold mb-4 leading-tight">The Ultimate Clarity Bundle</h3>
-                <p className="text-xl mb-8 opacity-90 font-medium">Available immediately after your free diagnostic audit.</p>
-                
-                <div className="space-y-4">
-                  <div className="bg-white/10 p-5 rounded-xl backdrop-blur-sm border border-white/20 flex items-center gap-4">
-                    <span className="text-2xl">📄</span> <span className="text-lg font-bold">The Harsh Truth Analysis</span>
-                  </div>
-                  <div className="bg-white/10 p-5 rounded-xl backdrop-blur-sm border border-white/20 flex items-center gap-4">
-                    <span className="text-2xl">🗺️</span> <span className="text-lg font-bold">The Tactical Playbook</span>
-                  </div>
-                  <div className="bg-white/10 p-5 rounded-xl backdrop-blur-sm border border-white/20 flex items-center gap-4">
-                    <span className="text-2xl">💬</span> <span className="text-lg font-bold">2x "Lethal" Copy-Paste Scripts</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+      {/* GUIDED PROGRAMMES. This used to tease an "Ultimate Clarity
+          Bundle" that was really the premium report under another name.
+          The programmes are the thing that changes the pattern, and week 1
+          of each is free, so the homepage sends people straight into one. */}
+      <section className="bg-white py-20 md:py-28">
+        <div className="container mx-auto px-6 md:px-10 lg:px-14 max-w-6xl">
+          <div className="max-w-3xl mb-12">
+            <h2 className="text-[32px] md:text-[42px] font-extrabold text-[#3A556C] mb-5 leading-tight">
+              Knowing your pattern is step one. Changing it takes practice.
+            </h2>
+            <p className="text-[18px] md:text-[20px] font-medium text-gray-700 leading-relaxed">
+              Four-week guided programmes drawing on CBT, schema therapy and attachment research. Ten to fifteen minutes a day.
+              Everything you write is saved, and at the end of each week you get a written review of what you actually wrote.
+              <strong className="text-[#E07850]"> Week 1 of every programme is free.</strong>
+            </p>
           </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {LIVE_PROGRAMS.map((p) => (
+              <Link
+                key={p.slug}
+                href={`/workbook/${p.slug}/week-1/day-1`}
+                className="group flex flex-col rounded-3xl border-2 bg-white p-7 transition-all hover:-translate-y-1 hover:shadow-xl"
+                style={{ borderColor: p.accent }}
+              >
+                <h3 className="text-2xl font-extrabold text-[#3A556C] mb-2 leading-snug">{p.title}</h3>
+                <p className="text-base font-bold mb-4" style={{ color: p.accent }}>{p.subtitle}</p>
+                <p className="text-gray-600 font-medium leading-relaxed mb-6 flex-1">{p.whoFor}</p>
+                <span className="inline-flex items-center gap-2 font-extrabold" style={{ color: p.accent }}>
+                  Start week 1, free <span className="transition-transform group-hover:translate-x-1">→</span>
+                </span>
+              </Link>
+            ))}
+          </div>
+          <p className="mt-8 text-gray-600 font-medium">
+            Want all four weeks? €49 opens every programme, once.{" "}
+            <Link href="/workbook" className="font-extrabold text-[#E07850] hover:underline">See all programmes</Link>
+          </p>
         </div>
       </section>
 

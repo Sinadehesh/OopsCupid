@@ -370,71 +370,11 @@ export default function PremiumReport({ data, handleShare }: { data: any, handle
       {/* UPSELLS (BOTTOM PLACEMENT FOR HIGH CONVERSION) */}
       {/* ========================================================= */}
       <div className="border-t-[1px] border-slate-200 pt-20 pb-10 print:hidden">
-        <h3 className="text-4xl md:text-5xl font-black text-center text-slate-900 mb-6 tracking-tight">Equip Your Defenses.</h3>
-        <p className="text-xl text-slate-500 font-medium text-center max-w-2xl mx-auto mb-16">You know the data. Now get the exact tools and expert guidance to execute it flawlessly in the real world.</p>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-          
-          {/* THE PLAYBOOK ($10.99) */}
-          <div className="bg-gradient-to-br from-emerald-950 to-slate-900 p-8 md:p-12 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
-            <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-20"></div>
-            <div className="absolute -right-10 -bottom-10 opacity-10 group-hover:scale-110 transition-transform duration-700"><FileText className="w-64 h-64 text-emerald-400"/></div>
-            
-            <FileText className="w-12 h-12 text-emerald-400 mb-6 relative z-10" />
-            <h4 className="text-3xl font-black text-white mb-4 relative z-10 leading-tight">The Detective Playbook</h4>
-            <p className="text-emerald-100/80 font-medium mb-8 relative z-10 leading-relaxed text-lg">
-              A short, lethal document filled with psychological weapons. Become a human lie detector. Force manipulators to expose themselves with exact copy-paste text scripts. Your friends will wonder how you see through people so easily.
-            </p>
-            <div className="flex items-end gap-4 mb-10 relative z-10">
-              <span className="text-5xl font-black text-emerald-400">$10.99</span>
-              <span className="text-emerald-100/40 line-through font-bold pb-2 text-xl">$49.00</span>
-            </div>
-            <button className="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xl py-5 rounded-2xl transition-all relative z-10 shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:-translate-y-1">
-              Unlock Weaponized Playbook
-            </button>
-          </div>
-
-          {/* THE ZOOM CALL (€50) WITH DATABASE TRACKING */}
-          <div className="bg-white border-2 border-slate-200 p-8 md:p-12 rounded-[2.5rem] shadow-xl relative group hover:border-rose-300 transition-colors">
-            <div className="absolute top-0 right-0 bg-rose-100 text-rose-700 font-black text-xs uppercase tracking-widest px-5 py-3 rounded-bl-3xl rounded-tr-[2.5rem]">Strict Capacity Limit</div>
-            
-            <Video className="w-12 h-12 text-rose-500 mb-6" />
-            <h4 className="text-3xl font-black text-slate-900 mb-4 leading-tight">1-on-1 Predator Audit</h4>
-            <p className="text-slate-600 font-medium mb-8 leading-relaxed text-lg">
-              Think the guy you're talking to right now is a psychopath? Get on a private 30-minute Zoom call with our clinical experts. Share your screen, show us his texts, and we will decode his true intentions live. Stop guessing.
-            </p>
-            <div className="flex items-end gap-3 mb-10">
-              <span className="text-5xl font-black text-slate-900">€50</span>
-              <span className="text-slate-400 font-bold pb-2 text-xl">/ Private Session</span>
-            </div>
-            
-            {/* DYNAMIC BOOKING BUTTON */}
-            {zoomStatus === "booked" ? (
-              <div className="w-full bg-emerald-50 border-2 border-emerald-500 text-emerald-700 font-black text-xl py-5 rounded-2xl flex flex-col items-center justify-center gap-2">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-6 h-6" /> Session Reserved!
-                </div>
-              </div>
-            ) : (
-              <button 
-                onClick={handleZoomBooking}
-                disabled={zoomStatus === "loading"}
-                className="w-full flex items-center justify-center gap-3 bg-slate-900 hover:bg-slate-800 text-white font-black text-xl py-5 rounded-2xl transition-all shadow-lg hover:-translate-y-1 disabled:opacity-70 disabled:hover:translate-y-0"
-              >
-                {zoomStatus === "loading" ? <Loader2 className="w-6 h-6 animate-spin" /> : "Book Live Audit Call"}
-              </button>
-            )}
-            
-            {zoomStatus === "booked" && (
-              <p className="text-center text-sm font-bold text-emerald-600 mt-4 animate-in slide-in-from-bottom-2">
-                Details have been securely saved to your file. We will email you the scheduling link shortly.
-              </p>
-            )}
-
-          </div>
-
-        </div>
-
+        {/* A "Detective Playbook" ($10.99, "was $49") and a call with "our
+            clinical experts" stood here. The playbook does not exist and its
+            button did nothing; nobody on the calls is a clinician. Both were
+            shown to people who had just paid. The real coaching offer is
+            below. */}
         {/* COACHING UPSELL, highest rung of the ladder */}
         <CoachingUpsell topicLabel="your attraction pattern" />
 

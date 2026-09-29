@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useRef, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import SharePrintButtons from "@/components/ui/SharePrintButtons";
 import { generatePsychologicalProfile, computeLegacyResult } from "@/lib/psychometrics/classification";
 import AttachmentReport from "@/components/report/AttachmentReport";
@@ -35,6 +35,7 @@ import { usePremiumAccess } from "@/lib/usePremiumAccess";
 import { saveQuizResult, loadQuizResult } from "@/lib/quizResults";
 import { trackEmailSubmit, trackResultView } from "@/lib/track";
 import EmailResultOffer from "@/components/features/EmailResultOffer";
+import ProgramOffer from "@/components/program/ProgramOffer";
 
 /** Maps the infidelity scoring output into the shape InfidelityFreeResult expects */
 function toFreeResultData(profile: ReturnType<typeof generateInfidelityProfile>, email: string) {
@@ -105,6 +106,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       setShowResult(true);
     }
   }, [storageKey]);
+  const pathname = usePathname();
   const isAttachment = quizName === "attachment-style";
   const isInfidelity = quizName === "is-he-cheating";
   
@@ -315,6 +317,15 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     />
   );
 
+  /**
+   * The free week 1 of whichever programme works on this quiz's problem.
+   * Renders nothing until that programme is live, so quizzes pick it up
+   * as each one opens. The attachment report places its own, because only
+   * the anxious and fearful results should see it. Keyed on the page
+   * path, because the legacy quizzes pass a title rather than a slug.
+   */
+  const programOffer = <ProgramOffer quizPath={pathname ?? ""} className="!pt-0" />;
+
   if (showResult && resultData) {
     if (resultData.type === "error") return <div className="text-center py-20 font-black text-[#dd1c1a]">Analysis Failed. Please refresh.</div>;
     
@@ -329,6 +340,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
               onUnlock={() => { window.location.href = "#unlock-offer"; }}
               isGenerating={isScoring}
             />
+            {programOffer}
             {emailOffer}
           </div>
         );
@@ -336,6 +348,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       return (
         <div ref={topRef} className="w-full animate-in fade-in">
           <PremiumDossier dossier={buildAttractionDossier(resultData.profile)} />
+          {programOffer}
           {emailOffer}
         </div>
       );
@@ -351,15 +364,16 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
             onUnlock={handleInfidelityUnlock}
             isGenerating={isGenerating}
           />
+          {programOffer}
         </div>
       );
     }
 
-    if (resultData.type === "attractor") return <div ref={topRef} className="w-full animate-in fade-in"><PremiumDossier dossier={buildAttractorDossier(resultData.profile)} />{emailOffer}</div>;
-    if (resultData.type === "partner") return <div ref={topRef} className="w-full animate-in fade-in"><PremiumDossier dossier={buildPartnerAttachmentDossier(resultData.profile)} />{emailOffer}</div>;
-    if (resultData.type === "friendrole") return <div ref={topRef} className="w-full animate-in fade-in"><FriendRoleMasterReport profile={resultData.profile} />{emailOffer}</div>;
-    if (resultData.type === "friendused") return <div ref={topRef} className="w-full animate-in fade-in"><PremiumDossier dossier={buildFriendUsedDossier(resultData.profile)} />{emailOffer}</div>;
-    return <div ref={topRef} className="w-full max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-[#d6d2d2] p-8 md:p-12 text-center"><h3 className="text-3xl font-black text-[#086788] mb-8">{resultData.title || "Result"}</h3><SharePrintButtons /></div>;
+    if (resultData.type === "attractor") return <div ref={topRef} className="w-full animate-in fade-in"><PremiumDossier dossier={buildAttractorDossier(resultData.profile)} />{programOffer}{emailOffer}</div>;
+    if (resultData.type === "partner") return <div ref={topRef} className="w-full animate-in fade-in"><PremiumDossier dossier={buildPartnerAttachmentDossier(resultData.profile)} />{programOffer}{emailOffer}</div>;
+    if (resultData.type === "friendrole") return <div ref={topRef} className="w-full animate-in fade-in"><FriendRoleMasterReport profile={resultData.profile} />{programOffer}{emailOffer}</div>;
+    if (resultData.type === "friendused") return <div ref={topRef} className="w-full animate-in fade-in"><PremiumDossier dossier={buildFriendUsedDossier(resultData.profile)} />{programOffer}{emailOffer}</div>;
+    return <><div ref={topRef} className="w-full max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-[#d6d2d2] p-8 md:p-12 text-center"><h3 className="text-3xl font-black text-[#086788] mb-8">{resultData.title || "Result"}</h3><SharePrintButtons /></div>{programOffer}</>;
   }
 
   if (isFinished) {
@@ -419,7 +433,11 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       </div>
       <div className="mt-12 flex justify-between items-center border-t border-[#d6d2d2] pt-6">
         <button onClick={handleBack} disabled={currentIndex === 0 || isAnimating || selectedAnswer !== null} className={`min-h-[48px] text-sm font-black flex items-center gap-2 px-6 rounded-xl transition-all bg-white text-[#086788] border border-[#d6d2d2] hover:bg-[#fff1d0]/50 ${currentIndex === 0 || isAnimating || selectedAnswer !== null ? 'opacity-0 pointer-events-none' : ''}`}><span>←</span> Back</button>
-        <button onClick={handleGodMode} type="button" className={`min-h-[48px] text-xs font-bold transition-all px-4 text-[#086788]/40 hover:text-[#086788]`}>⚡ Skip</button>
+        {/* Fills every answer at random. A testing aid only: in production a
+            visitor could tap it and then pay for a report on random data. */}
+        {process.env.NODE_ENV !== "production" && (
+          <button onClick={handleGodMode} type="button" className={`min-h-[48px] text-xs font-bold transition-all px-4 text-[#086788]/40 hover:text-[#086788]`}>⚡ Skip</button>
+        )}
       </div>
     </div>
   );

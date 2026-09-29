@@ -105,7 +105,7 @@ export default function WorkbookGate({
               "A written review of each week, quoting what you wrote",
               "Every other programme on the site, as each one opens",
               "Your complete premium report",
-              "Lifetime access, no subscription",
+              "A year of access on this device, one payment, no subscription",
             ].map((item) => (
               <li key={item} className="flex items-start gap-2.5 text-sm font-semibold text-slate-700">
                 <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />

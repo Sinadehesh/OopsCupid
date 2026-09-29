@@ -6,6 +6,7 @@ import { Target, Lock, ArrowRight } from "lucide-react";
 import { usePremiumAccess } from "@/lib/usePremiumAccess";
 import CheckoutButton from "@/components/offers/CheckoutButton";
 import ResultShare from "@/components/share/ResultShare";
+import ProgramOffer from "@/components/program/ProgramOffer";
 
 export default function FreeResult({ data }: { data: any }) {
   const { granted } = usePremiumAccess();
@@ -68,6 +69,8 @@ export default function FreeResult({ data }: { data: any }) {
           <CheckoutButton sku="premium-report" returnTo="/why-do-i-pick-bad-guys/premium" className="w-full bg-[#ffbc42] text-black font-extrabold text-xl py-5 rounded-2xl shadow-[0_0_30px_rgba(255,188,66,0.3)] hover:bg-[#e5a93c] hover:scale-105 transition-all inline-flex items-center justify-center gap-2 disabled:opacity-70">Unlock My Full Diagnosis</CheckoutButton>
         </div>
       </div>
+
+      <ProgramOffer quizPath="/why-do-i-pick-bad-guys" className="!px-0" />
     </div>
   );
 }

@@ -212,9 +212,12 @@ export default function ManipulationQuizWidget() {
       </div>
 
       <div className="mt-12 flex justify-between items-center border-t border-[#d6d2d2] pt-6">
-        <button onClick={handleGodMode} type="button" className={`min-h-[48px] text-xs font-bold transition-all px-4 text-[#086788]/40 hover:text-[#086788] ml-auto`}>
-          ⚡ Skip
-        </button>
+        {/* Random answers, for testing only. Never in production. */}
+        {process.env.NODE_ENV !== "production" && (
+          <button onClick={handleGodMode} type="button" className={`min-h-[48px] text-xs font-bold transition-all px-4 text-[#086788]/40 hover:text-[#086788] ml-auto`}>
+            ⚡ Skip
+          </button>
+        )}
       </div>
     </div>
   );

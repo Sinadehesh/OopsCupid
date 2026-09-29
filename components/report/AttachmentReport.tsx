@@ -64,18 +64,19 @@ export default function AttachmentReport({ profile, demographics, rawAnswers, em
           </div>
         </div>
 
-        {/* Anxious Attachment Workbook Card, only shown for Anxious result */}
-        {generalProfile.classification.toLowerCase().includes("anxious") && (
+        {/* Earned Security is written for the anxious alarm, which drives
+            both the anxious and the fearful styles. */}
+        {/anxious|fearful/i.test(generalProfile.classification) && (
           <div className="rounded-2xl p-8 md:p-10 mb-12 bg-white border border-[#d6d2d2] shadow-sm max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
             <div className="flex-1">
               <h4 className="text-sm font-black uppercase tracking-widest text-[#086788]/50 mb-3">Recommended For You</h4>
               <h3 className="text-2xl md:text-3xl font-black text-[#086788] mb-3">Earned Security</h3>
               <p className="text-lg font-medium text-[#086788]/80 mb-6">A four-week programme for quieting the anxious alarm: short daily sessions, everything you write saved, and a written review of each week. Week 1 is free.</p>
               <a
-                href="/workbook/earned-security"
+                href="/workbook/earned-security/week-1/day-1"
                 className="inline-block bg-[#086788] hover:bg-[#06aed5] text-white font-black text-lg px-8 py-4 rounded-xl transition-all shadow-md hover:-translate-y-1"
               >
-                Get the Workbook →
+                Start week 1, free →
               </a>
             </div>
             <div className="w-32 h-32 md:w-40 md:h-40 flex-shrink-0 bg-[#fff1d0] rounded-2xl flex items-center justify-center border border-[#f0c808]/40">

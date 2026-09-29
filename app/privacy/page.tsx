@@ -100,7 +100,7 @@ export default function PrivacyPage() {
             Your <em>results</em> are also stored in your own browser so you can reopen a report you
             have paid for. That copy never reaches our servers, it is not readable by us, and
             clearing your browser data removes it. If you have purchased a report, an access token
-            is stored in a cookie for 90 days so the report stays available to you.
+            is stored in a cookie for a year so what you bought stays available to you.
           </p>
         </section>
 

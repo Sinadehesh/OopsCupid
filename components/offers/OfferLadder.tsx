@@ -34,7 +34,7 @@ export default function OfferLadder({
   score,
   severity,
   heading = "Choose How Deep You Want To Go",
-  subheading = "Every option is one-time. No subscriptions, instant access, secure checkout via Gumroad.",
+  subheading = "Every option is one-time. No subscriptions, instant access, secure checkout via Stripe.",
 }: {
   topic: QuizTopic;
   score?: number;

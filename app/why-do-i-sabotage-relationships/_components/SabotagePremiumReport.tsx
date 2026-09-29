@@ -592,16 +592,16 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
             product it was gesturing at. */}
         <div className="bg-white rounded-3xl border border-[#d6d2d2] p-8 md:p-12 shadow-sm">
           <p className="text-xs font-black uppercase tracking-widest text-[#dd1c1a] mb-3">If you want to work on it</p>
-          <h2 className="text-3xl font-black text-[#086788] mb-4 leading-tight">The 6-week Earned Security workbook</h2>
+          <h2 className="text-3xl font-black text-[#086788] mb-4 leading-tight">The 4-week Earned Security programme</h2>
           <p className="text-[#086788]/75 font-medium text-lg leading-relaxed mb-6">
             Pulling away when someone gets close is an attachment reflex, and it
-            responds to practice rather than insight. This is six weeks of short
-            daily exercises in your browser. Everything you write is saved, and
+            responds to practice rather than insight. This is four weeks of short
+            sessions in your browser, five a week. Everything you write is saved, and
             at the end of each week it is read back to you: what you wrote, what
             moved between days, and one thing to do next.
           </p>
           <ul className="space-y-2 mb-8 text-[#086788] font-medium">
-            <li>· 42 daily exercises, about ten minutes each</li>
+            <li>· 20 guided sessions, 10 to 15 minutes each</li>
             <li>· Your writing saved on this device and to your account</li>
             <li>· A written review of each week, quoting what you wrote</li>
             <li>· Includes the full premium report for any quiz on the site</li>

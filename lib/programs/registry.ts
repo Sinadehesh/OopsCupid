@@ -1,6 +1,7 @@
 import type { Program, ProgramOutline, Week } from "./types";
 import { TRUST_YOUR_OWN_MIND } from "./content/trust-your-own-mind";
 import { EARNED_SECURITY } from "./content/earned-security";
+import { CHOOSING_DIFFERENTLY } from "./content/choosing-differently";
 
 /**
  * EVERY PROGRAMME, AND WHICH QUIZZES FEED IT
@@ -88,6 +89,7 @@ export const PROGRAMS: Program[] = [
       "/what-kind-of-person-do-i-attract",
       "/who-is-attracted-to-me",
       "/attraction-patterns",
+      "/why-do-i-keep-dating-the-same-type",
     ],
     whoFor: "For you if you keep ending up with the same kind of person, and the ones who treat you well somehow never feel like enough.",
     outcomes: [
@@ -95,41 +97,16 @@ export const PROGRAMS: Program[] = [
       "Telling chemistry apart from compatibility, early",
       "A short list of non-negotiables you actually use",
       "A way of dating that gives calm a chance",
+      "A written plan for the day the old pull comes back",
     ],
-    methods: ["schema therapy", "CBT", "ACT", "behavioural experiments"],
-    reviewFocus: "a repeating pattern of choosing emotionally unavailable or harmful partners",
+    methods: ["schema therapy", "CBT", "ACT", "behavioural experiments", "relapse prevention", "compassion-focused therapy"],
+    reviewFocus: "a repeating pattern of choosing emotionally unavailable or harmful partners, and learning to choose differently",
     accent: "#F43F5E",
-    status: "outline",
-    outline: [
-      o(1, "See it", [
-        ["Your type, mapped", "Pattern mapping across relationships"],
-        ["Chemistry is not compatibility", "Psychoeducation · intensity"],
-        ["The red flags you already saw", "Retrospective review"],
-        ["What you were getting", "Functional analysis"],
-        ["Where you stand now", "Baseline measure"],
-      ]),
-      o(2, "Understand it", [
-        ["Familiar is not the same as good", "Schema chemistry"],
-        ["The rescuer role", "Schema · self-sacrifice"],
-        ["Potential versus record", "CBT · evidence"],
-        ["Why calm feels boring", "Arousal and attraction"],
-        ["The cost ledger", "Behavioural audit"],
-      ]),
-      o(3, "Change it", [
-        ["Your non-negotiables", "ACT · values-based criteria"],
-        ["The third-date calm score", "Behavioural monitoring"],
-        ["Slowing it down", "Pacing"],
-        ["Saying the thing early", "Early boundaries"],
-        ["Date differently, once", "Behavioural experiment"],
-      ]),
-      o(4, "Live it", [
-        ["What you are worth", "Self-esteem work"],
-        ["Enough on your own", "Values · independence"],
-        ["Your early warning signs", "Relapse prevention"],
-        ["What you choose now", "Commitment"],
-        ["A letter to the next you", "Integration"],
-      ]),
-    ],
+    status: "live",
+    weeks: CHOOSING_DIFFERENTLY,
+    outline: outlineOf(CHOOSING_DIFFERENTLY),
+    safety:
+      "This is a self-help programme, not therapy. It is about patterns in who you choose, and it never means that anyone who treated you badly was your fault. If someone you are with now frightens you, controls you or hurts you, please talk to a specialist service rather than working on it alone. In the UK, Refuge runs a free 24-hour helpline on 0808 2000 247. If you are in immediate danger, call 999 (or 112 in the EU).",
   },
   {
     slug: "letting-people-in",
@@ -182,7 +159,7 @@ export const PROGRAMS: Program[] = [
     slug: "friendships-that-give-back",
     title: "Friendships That Give Back",
     subtitle: "Ending one-sided friendships and finding your people",
-    forQuizzes: ["/toxic-friend-test", "/are-my-friends-bad-for-me", "/are-your-friends-using-you", "/friend-group-role"],
+    forQuizzes: ["/toxic-friend-test", "/are-my-friends-bad-for-me", "/are-your-friends-using-you", "/friend-group-role", "/is-my-best-friend-toxic"],
     whoFor: "For you if you are always the one who gives, listens and organises, and you leave some friends feeling worse than when you arrived.",
     outcomes: [
       "A clear picture of who restores you and who drains you",
