@@ -119,7 +119,14 @@ function valueOf(q: Question, raw: number | string | undefined): number | null {
   if (index >= 0) return (q.min ?? 1) + index;
 
   const parsed = Number(raw);
-  return Number.isNaN(parsed) ? null : parsed;
+  if (!Number.isNaN(parsed)) return parsed;
+
+  // "7 - Strongly Agree": the quiz stored the label it showed, and the
+  // report has re-worded the options, so neither lookup above matches.
+  // Without this the two extreme answers on the attachment scale, the ones
+  // that matter most, were silently treated as unanswered.
+  const lead = /^\s*(\d+)/.exec(raw);
+  return lead ? Number(lead[1]) : null;
 }
 
 /** 0 for the bottom of this question's scale, 1 for the top. */

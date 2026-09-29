@@ -40,10 +40,15 @@ export default function ManipulationFreeResult({ data, onUnlock, isGenerating }:
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100"><Activity className="w-8 h-8 text-indigo-600 mb-4" /><h4 className="font-bold text-slate-900 mb-2 flex items-center gap-2"><Lock className="w-4 h-4"/> The 10-Point Control Matrix</h4><p className="text-slate-600 text-sm font-medium">Discover his exact abuse vectors, mapping out his financial, social, and emotional grip over you.</p></div>
-            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100"><EyeOff className="w-8 h-8 text-indigo-600 mb-4" /><h4 className="font-bold text-slate-900 mb-2 flex items-center gap-2"><Lock className="w-4 h-4"/> The "Sanity-Theft" Decoder</h4><p className="text-slate-600 text-sm font-medium">Word-for-word translations of his exact phrases, proving once and for all that you aren't crazy.</p></div>
-            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100"><ShieldAlert className="w-8 h-8 text-indigo-600 mb-4" /><h4 className="font-bold text-slate-900 mb-2 flex items-center gap-2"><Lock className="w-4 h-4"/> The Escalation Predictor</h4><p className="text-slate-600 text-sm font-medium">An AI-generated timeline predicting exactly what he will do next based on his current trajectory.</p></div>
-            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100"><FileText className="w-8 h-8 text-indigo-600 mb-4" /><h4 className="font-bold text-slate-900 mb-2 flex items-center gap-2"><Lock className="w-4 h-4"/> The "Hoovering" Trap</h4><p className="text-slate-600 text-sm font-medium">The exact script he will use to suck you back in when you try to leave, and how to block it.</p></div>
+            {/* Every card names something the paid page actually renders. The
+                previous four promised a 10-point matrix (the report has four
+                points), an AI timeline predicting his next move, and his
+                "hoovering" script, none of which existed. Somebody paid for
+                those and got a page without them. */}
+            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100"><FileText className="w-8 h-8 text-indigo-600 mb-4" /><h4 className="font-bold text-slate-900 mb-2 flex items-center gap-2"><Lock className="w-4 h-4"/> Your own answers, quoted</h4><p className="text-slate-600 text-sm font-medium">Every statement you marked strongest, word for word, and the places where your answers contradict each other.</p></div>
+            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100"><Activity className="w-8 h-8 text-indigo-600 mb-4" /><h4 className="font-bold text-slate-900 mb-2 flex items-center gap-2"><Lock className="w-4 h-4"/> The 4-point control matrix</h4><p className="text-slate-600 text-sm font-medium">Gaslighting, isolation, emotional pressure and hot-cold cycles, each scored separately from your answers.</p></div>
+            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100"><EyeOff className="w-8 h-8 text-indigo-600 mb-4" /><h4 className="font-bold text-slate-900 mb-2 flex items-center gap-2"><Lock className="w-4 h-4"/> What to actually say</h4><p className="text-slate-600 text-sm font-medium">Four situations you will face, with the exact sentence to use and why it works on the pattern your answers show.</p></div>
+            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100"><ShieldAlert className="w-8 h-8 text-indigo-600 mb-4" /><h4 className="font-bold text-slate-900 mb-2 flex items-center gap-2"><Lock className="w-4 h-4"/> A 14-day plan</h4><p className="text-slate-600 text-sm font-medium">Four dated steps that change what you do, not conversations to have. None of them need his cooperation.</p></div>
           </div>
 
           <div className="border-t border-slate-100 pt-10">
@@ -71,7 +76,6 @@ export default function ManipulationFreeResult({ data, onUnlock, isGenerating }:
                 },
               ]}
             />
-            <div className="mt-6 text-center text-sm font-bold text-slate-500 flex items-center justify-center gap-2"><ArrowRight className="w-4 h-4 text-indigo-600" /> On the next page, you can optionally add the Grey Rock Disengagement Playbook to your order.</div>
           </div>
         </div>
       </div>

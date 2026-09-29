@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CheckoutButton from "@/components/offers/CheckoutButton";
 import {
   ShieldCheck, BrainCircuit, HeartHandshake, Zap, Loader2,
@@ -101,6 +101,44 @@ export default function PremiumCheckout({
   headlineAccent = "Here is the whole picture.",
   testimonials = [],
 }: PremiumCheckoutProps) {
+  /**
+   * Has this visitor already paid?
+   *
+   * A premium-report purchase unlocks every report on the site, and until
+   * now no paywall asked. Someone who bought once and then took a second
+   * quiz was shown "Unlock for €9.99" for a report she already owned, and
+   * the only thing stopping a second charge was her noticing. Buying
+   * straight from the short entry quiz makes this the normal path rather
+   * than an edge case: pay first, then take the assessment.
+   */
+  const [owned, setOwned] = useState(false);
+  useEffect(() => {
+    let live = true;
+    fetch("/api/access")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((a) => { if (live && a?.premiumReport) setOwned(true); })
+      .catch(() => {});
+    return () => { live = false; };
+  }, []);
+
+  if (owned && premiumPath) {
+    return (
+      <div id="unlock-offer" className="w-full max-w-2xl mx-auto bg-white border border-[#d6d2d2] rounded-2xl shadow-md mt-12 p-8 md:p-10 text-center scroll-mt-8">
+        <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#E07850] mb-3">Already unlocked</p>
+        <h3 className="text-2xl md:text-3xl font-extrabold text-[#3A556C] mb-3">Your full report is ready.</h3>
+        <p className="text-[#5E7183] font-medium leading-relaxed mb-7">
+          Your purchase covers this one too. Nothing more to pay.
+        </p>
+        <button
+          onClick={() => { onUnlock(); window.location.href = premiumPath; }}
+          className="w-full min-h-[60px] bg-[#EC8A66] hover:bg-[#E07850] text-white rounded-xl font-extrabold text-xl transition-colors"
+        >
+          Open my full report
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div id="unlock-offer" className="relative w-full max-w-6xl mx-auto bg-white border border-[#d6d2d2] rounded-2xl shadow-md mt-12 overflow-hidden scroll-mt-8">
 

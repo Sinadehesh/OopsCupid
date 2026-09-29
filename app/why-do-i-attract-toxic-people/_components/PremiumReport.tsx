@@ -179,7 +179,7 @@ export default function PremiumReport({ data, handleShare }: { data: any, handle
           </div>
           <div>
             <h3 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">The Comprehensive Matrix</h3>
-            <p className="text-lg text-slate-500 font-medium">AI-Generated analysis of your 10 subconscious vulnerability zones.</p>
+            <p className="text-lg text-slate-500 font-medium">Your 10 vulnerability zones, each scored from your own answers.</p>
           </div>
         </div>
 

@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import ManipulationFreeResult from "./ManipulationFreeResult";
+import EmailResultOffer from "@/components/features/EmailResultOffer";
 import { ShieldAlert, ArrowRight, Zap, Lock, AlertTriangle } from "lucide-react";
 
 // @ts-ignore - This forces Vercel to compile successfully regardless of strict TS export rules
@@ -66,6 +67,9 @@ export default function ManipulationQuizEngine() {
   
   const [step, setStep] = useState<"quiz" | "email" | "result">("quiz");
   const [email, setEmail] = useState("");
+  const [agreed, setAgreed] = useState(false);
+  const [savingEmail, setSavingEmail] = useState(false);
+  const [emailSaved, setEmailSaved] = useState(false);
 
   // INDESTRUCTIBLE LOCAL SCORING ENGINE
   const executeLocalScoring = (rawAnswers: Record<string, number>) => {
@@ -90,7 +94,11 @@ export default function ManipulationQuizEngine() {
         };
 
         setResult(finalResult);
-        setStep("email");
+        // Straight to the result. This quiz had its own email wall, which the
+        // site-wide removal missed because it does not use the shared widget:
+        // a buyer who paid from the entry quiz answered twenty questions and
+        // was then asked for an address before seeing anything.
+        setStep("result");
       } catch (err) {
         console.error("Local Scoring Failed", err);
       } finally {
@@ -119,6 +127,21 @@ export default function ManipulationQuizEngine() {
     } else {
       executeLocalScoring(nextAnswers);
     }
+  };
+
+  const handleOptionalEmail = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !agreed) return;
+    setSavingEmail(true);
+    try {
+      await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, quizType: "manipulation", rawAnswers: answers, profile: result })
+      });
+      setEmailSaved(true);
+    } catch (err) {}
+    setSavingEmail(false);
   };
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
@@ -171,7 +194,7 @@ export default function ManipulationQuizEngine() {
         <Lock className="w-10 h-10 relative z-10" />
       </div>
       <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">Analysis Complete.</h2>
-      <p className="text-lg text-slate-600 mb-10 font-medium">We have detected specific behavioral patterns consistent with psychological manipulation. Enter your email to reveal his threat profile.</p>
+      <p className="text-lg text-slate-600 mb-10 font-medium">Your result is ready.</p>
       <form onSubmit={handleEmailSubmit} className="space-y-4">
         <input type="email" required placeholder="Enter your best email..." value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-6 py-5 rounded-2xl border-2 border-slate-200 text-lg focus:border-indigo-600 outline-none text-center font-medium shadow-inner" />
         <button type="submit" className="w-full bg-slate-900 hover:bg-indigo-600 text-white font-extrabold text-xl py-5 rounded-2xl shadow-[0_10px_20px_rgba(0,0,0,0.2)] transition-all flex items-center justify-center gap-3 group">
@@ -181,7 +204,21 @@ export default function ManipulationQuizEngine() {
     </div>
   );
 
-  if (step === "result" && result) return <ManipulationFreeResult data={result} onUnlock={handleUnlock} isGenerating={isGenerating} />;
+  if (step === "result" && result) return (
+    <>
+      <ManipulationFreeResult data={result} onUnlock={handleUnlock} isGenerating={isGenerating} />
+      <EmailResultOffer
+        className="px-6 pb-16"
+        onSubmit={handleOptionalEmail}
+        email={email}
+        setEmail={setEmail}
+        agreed={agreed}
+        setAgreed={setAgreed}
+        saving={savingEmail}
+        saved={emailSaved}
+      />
+    </>
+  );
 
   if (!started) return (
     <div className="max-w-3xl mx-auto py-20 px-6 text-center relative">

@@ -231,7 +231,18 @@ export function buildFriendsBadDossier(data: FriendResult): Dossier {
     insights: INSIGHTS,
     // Absent on results saved before the scoring kept answers; the report
     // then renders without section 02 rather than inventing one.
-    evidence: data.answers ? buildEvidence(TOXIC_FRIENDS_QUESTIONS, data.answers) : undefined,
+    evidence: data.answers
+      ? buildEvidence(
+          // The five buttons this quiz shows. The default scale reads
+          // "Never true", which is not what she clicked.
+          TOXIC_FRIENDS_QUESTIONS.map((q) => ({
+            ...q,
+            options: ["Never", "Rarely", "Sometimes", "Often", "Always"],
+            min: 1,
+          })),
+          data.answers
+        )
+      : undefined,
     deepDive: [
       {
         heading: "Where the cost is actually concentrated",

@@ -13,15 +13,14 @@ import ScriptsAndPlan from "@/components/report/premium/ScriptsAndPlan";
 import { scriptsFor, planFor } from "../_lib/scriptsPlan";
 
 /**
- * This battery names its question text `stem` and picks its scale by
- * `responseType` rather than carrying the options on the item, so the
- * mapping lives here. The wording matches what the widget renders.
+ * The scale the quiz on /is-he-manipulative actually shows: five buttons,
+ * 1 to 5, the same five for every item whatever its responseType. The
+ * first version of this mapped the battery's own responseType scales,
+ * which belong to an older widget and run 0 to 5 over six labels, so an
+ * answer of "Often" was quoted back as "Very Often" and "Never" as
+ * "Rarely". Misquoting the buyer is the one thing this section cannot do.
  */
-const MANIPULATION_SCALES: Record<string, string[]> = {
-  impact_0_4: ["Not at all", "A little", "Moderately", "Quite a bit", "Extremely"],
-  agreement_0_4: ["Not at all", "A little", "Moderately", "Quite a bit", "Extremely"],
-  frequency_0_5: ["Never", "Rarely", "Sometimes", "Often", "Very Often", "Always"],
-};
+const QUIZ_SCALE = ["Never", "Rarely", "Sometimes", "Often", "Always"];
 
 export default function ManipulationPremiumPage() {
   const router = useRouter();
@@ -54,8 +53,8 @@ export default function ManipulationPremiumPage() {
                     id: q.id,
                     text: q.stem,
                     category: humanise(q.subscale),
-                    options: MANIPULATION_SCALES[q.responseType] ?? MANIPULATION_SCALES.frequency_0_5,
-                    min: 0,
+                    options: QUIZ_SCALE,
+                    min: 1,
                   })),
                   data.rawAnswers
                 )

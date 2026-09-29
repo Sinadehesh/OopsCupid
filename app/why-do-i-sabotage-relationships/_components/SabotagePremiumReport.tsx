@@ -8,6 +8,7 @@ import {
   ShieldAlert, Lightbulb, MessageCircle, Loader2
 } from "lucide-react";
 import Link from "next/link";
+import CheckoutButton from "@/components/offers/CheckoutButton";
 import CoachingUpsell from "@/components/offers/CoachingUpsell";
 
 /** Per-axis explanations at each band, every bar carries its own interpretation. */
@@ -583,80 +584,37 @@ export default function SabotagePremiumReport({ result }: { result: SabotageResu
           </p>
         </div>
 
-        {/* ── VALUE STACK ── */}
+        {/* The value stack that stood here listed two PDFs (a "50+ page"
+            workbook and a "40+ page" playbook) that do not exist, priced
+            against an invented €38.94 retail total, with buy buttons that
+            were not connected to anything. Somebody who had just paid was
+            shown a second shop with nothing in it. This is the one real
+            product it was gesturing at. */}
         <div className="bg-white rounded-3xl border border-[#d6d2d2] p-8 md:p-12 shadow-sm">
-          <div className="flex items-center gap-3 mb-8">
-            <Star className="w-7 h-7 text-[#f0c808]" />
-            <h2 className="text-3xl font-black text-[#086788]">Everything You’re Getting</h2>
-          </div>
-          <div className="space-y-1">
-            {[
-              { label: "Attachment Style Workbook PDF (50+ pages)", value: "€9.99" },
-              { label: "Trauma Style Playbook PDF (40+ pages)", value: "€9.99" },
-              { label: "7-Day Rewire Protocol (daily actions, 10 min/day)", value: "€4.99" },
-              { label: "Partner Communication Script Templates", value: "€6.99" },
-              { label: "Root Cause Mapping Worksheet", value: "€3.99" },
-              { label: "Trigger Identification Journal Pages", value: "€2.99" },
-            ].map((item, i) => (
-              <div key={i} className="flex items-center justify-between py-3 border-b border-[#e8e0cc] last:border-0">
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#06aed5] shrink-0" />
-                  <span className="font-medium text-[#086788]">{item.label}</span>
-                </div>
-                <span className="font-black text-[#086788]/35 line-through text-sm ml-4 shrink-0">{item.value}</span>
-              </div>
-            ))}
-          </div>
-          <div className="mt-6 flex items-center justify-between bg-[#fff1d0] rounded-2xl p-5 border border-[#e8d8a0]">
-            <div>
-              <p className="text-xs font-black uppercase tracking-widest text-[#086788]/50">Total Retail Value</p>
-              <p className="text-xl font-black text-[#086788]/35 line-through">€38.94</p>
-            </div>
-            <div className="text-right">
-              <p className="text-xs font-black uppercase tracking-widest text-[#dd1c1a]">Bundle Price Today</p>
-              <p className="text-4xl font-black text-[#086788]">€15.99</p>
-            </div>
-          </div>
+          <p className="text-xs font-black uppercase tracking-widest text-[#dd1c1a] mb-3">If you want to work on it</p>
+          <h2 className="text-3xl font-black text-[#086788] mb-4 leading-tight">The 6-week Earned Security workbook</h2>
+          <p className="text-[#086788]/75 font-medium text-lg leading-relaxed mb-6">
+            Pulling away when someone gets close is an attachment reflex, and it
+            responds to practice rather than insight. This is six weeks of short
+            daily exercises in your browser. Everything you write is saved, and
+            at the end of each week it is read back to you: what you wrote, what
+            moved between days, and one thing to do next.
+          </p>
+          <ul className="space-y-2 mb-8 text-[#086788] font-medium">
+            <li>· 42 daily exercises, about ten minutes each</li>
+            <li>· Your writing saved on this device and to your account</li>
+            <li>· A written review of each week, quoting what you wrote</li>
+            <li>· Includes the full premium report for any quiz on the site</li>
+          </ul>
+          <CheckoutButton
+            sku="report-workbook-bundle"
+            returnTo="/workbook/anxious-attachment/week-1"
+            className="w-full md:w-auto inline-flex items-center justify-center gap-2 bg-[#dd1c1a] hover:bg-[#b81614] text-white font-extrabold text-lg px-10 py-4 rounded-2xl transition-colors disabled:opacity-70"
+          >
+            Start the workbook · €49
+          </CheckoutButton>
+          <p className="text-xs font-bold text-[#086788]/50 mt-4">One payment. 7-day money-back guarantee. Week 1 is free to try first.</p>
         </div>
-
-        {/* ── PLAYBOOK CARDS ── */}
-        <div>
-          <h2 className="text-3xl font-black text-[#086788] mb-8 text-center">Choose Your Playbook</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <PlaybookCard
-              title="Attachment Style Workbook" subtitle="Rewire your bonding patterns from the root"
-              price={9.99} strikePrice={19.99} badge="Workbook" highlight={false}
-              icon={<BookOpen className="w-6 h-6" />}
-              cta="Get This Workbook"
-              bullets={[
-                "50+ pages of guided exercises",
-                "Identify your exact attachment style with scoring",
-                "Daily reprogramming habits, just 10 min/day",
-                "Partner communication templates included",
-                "Based on Ainsworth + Bowlby research",
-              ]}
-            />
-            <PlaybookCard
-              title="Trauma Style Playbook" subtitle="Understand your trauma response in relationships"
-              price={9.99} strikePrice={19.99} badge="Playbook" highlight={true}
-              icon={<Brain className="w-6 h-6" />}
-              cta="Get This Playbook"
-              bullets={[
-                "40+ pages of trauma-informed exercises",
-                "Map your exact trauma response style",
-                "Nervous system regulation techniques",
-                "Somatic body-based exercises included",
-                "Peer-reviewed psychology framework",
-              ]}
-            />
-          </div>
-        </div>
-
-        {/* ── BUNDLE ── */}
-        <BundleBanner />
-
-        
-
         {/* COACHING UPSELL, highest rung of the ladder */}
         <CoachingUpsell severity="moderate" topicLabel="your sabotage pattern" />
 

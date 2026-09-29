@@ -6,6 +6,7 @@ import { ArrowRight, Check, RotateCcw, LifeBuoy } from "lucide-react";
 import { PHRASES, scorePhrases, type PhraseResult } from "@/lib/quizzes/thingsHeSays";
 import { trackQuizStart, trackQuizComplete, trackResultView } from "@/lib/track";
 import ResultShare from "@/components/share/ResultShare";
+import CheckoutButton from "@/components/offers/CheckoutButton";
 
 const QUIZ = "things-he-says";
 
@@ -100,6 +101,43 @@ export default function PhrasePicker() {
           </div>
         )}
 
+        {/* The money path from paid social. Until this existed, somebody who
+            came from an advert and recognised half the grid had no way to
+            pay at all: every buy button on the site sat behind a full
+            assessment she had not started. Offered only once she has
+            recognised enough for the report to be about something, and it
+            says plainly that the report needs the assessment, because a
+            report that turned out to require twenty more questions after
+            paying would be exactly the surprise that reads as a con. */}
+        {(result.band === "pattern" || result.band === "system") && (
+          <div className="rounded-3xl border-2 border-[#EC8A66] bg-white p-8 md:p-10 mb-8 shadow-[0_10px_40px_rgba(236,138,102,0.15)]">
+            <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#E07850] mb-3">
+              The full report · €9.99
+            </p>
+            <h2 className="text-2xl md:text-3xl font-black text-slate-900 mb-4 leading-snug">
+              Find out which of these is doing the damage.
+            </h2>
+            <ul className="space-y-2.5 mb-7 text-slate-700 font-medium">
+              <li className="flex gap-2.5"><Check className="w-5 h-5 text-[#E07850] shrink-0 mt-0.5" />Each tactic scored separately, from twenty questions about how often and what happens after</li>
+              <li className="flex gap-2.5"><Check className="w-5 h-5 text-[#E07850] shrink-0 mt-0.5" />Your own answers quoted back, including where they contradict each other</li>
+              <li className="flex gap-2.5"><Check className="w-5 h-5 text-[#E07850] shrink-0 mt-0.5" />The exact sentence to use the next time each one happens</li>
+              <li className="flex gap-2.5"><Check className="w-5 h-5 text-[#E07850] shrink-0 mt-0.5" />A 14-day plan that does not need his cooperation</li>
+            </ul>
+            <CheckoutButton
+              sku="premium-report"
+              returnTo="/is-he-manipulative"
+              className="w-full min-h-[60px] bg-[#EC8A66] hover:bg-[#E07850] text-white font-extrabold text-lg rounded-2xl transition-colors flex items-center justify-center gap-2 disabled:opacity-70"
+            >
+              Unlock the full report · €9.99
+            </CheckoutButton>
+            <p className="text-xs font-bold text-slate-400 mt-4 leading-relaxed">
+              After paying you take the 20-question assessment, about four
+              minutes, and the report is built from your answers. One payment,
+              no subscription, 7-day refund.
+            </p>
+          </div>
+        )}
+
         <div className="rounded-3xl bg-[#0E1621] text-white p-8 md:p-10 mb-8">
           <h2 className="text-2xl font-black mb-3 leading-snug">
             Sixteen sentences cannot tell you what to do next.
@@ -114,7 +152,7 @@ export default function PhrasePicker() {
             href="/is-he-manipulative"
             className="inline-flex items-center justify-center gap-2 bg-[#EC8A66] hover:bg-[#E07850] text-white font-extrabold text-lg px-8 py-4 rounded-2xl transition-colors"
           >
-            Take the full test, free
+            Or take the test free first
             <ArrowRight className="w-5 h-5" />
           </Link>
           <p className="text-xs font-bold text-white/40 mt-4">

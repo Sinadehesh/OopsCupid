@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { BAD_GUYS_QUESTIONS } from "../_data/questions";
 import { calculateBadGuysScore } from "../_lib/scoring";
 import FreeResult from "./FreeResult";
+import EmailResultOffer from "@/components/features/EmailResultOffer";
 import { ShieldAlert, ArrowRight, Zap, Lock } from "lucide-react";
 
 export default function QuizEngine() {
@@ -19,6 +20,8 @@ export default function QuizEngine() {
   const [step, setStep] = useState<"quiz" | "email" | "result">("quiz");
   const [email, setEmail] = useState("");
   const [isSubmittingEmail, setIsSubmittingEmail] = useState(false);
+  const [agreed, setAgreed] = useState(false);
+  const [emailSaved, setEmailSaved] = useState(false);
 
   const handleStart = () => setStarted(true);
 
@@ -33,7 +36,7 @@ export default function QuizEngine() {
     setTimeout(() => {
       setResult(calculateBadGuysScore(fakeAnswers));
       setIsProcessing(false);
-      setStep("email");
+      setStep("result"); // No email wall: see ManipulationQuizEngine for why.
     }, 1500);
   };
 
@@ -48,9 +51,26 @@ export default function QuizEngine() {
       setTimeout(() => {
         setResult(calculateBadGuysScore(nextAnswers));
         setIsProcessing(false);
-        setStep("email");
+        setStep("result"); // No email wall: see ManipulationQuizEngine for why.
       }, 1500);
     }
+  };
+
+  const handleOptionalEmail = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !agreed) return;
+    setIsSubmittingEmail(true);
+    try {
+      await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, quizType: "toxic-attraction", rawAnswers: answers, profile: result })
+      });
+      setEmailSaved(true);
+    } catch (error) {
+      console.error("Failed to save lead", error);
+    }
+    setIsSubmittingEmail(false);
   };
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
@@ -115,7 +135,7 @@ export default function QuizEngine() {
         </div>
         <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">Your Profile is Ready.</h2>
         <p className="text-lg text-slate-600 mb-10 font-medium">
-          We have identified the exact psychological frequency you are broadcasting. Enter your email to reveal your Vulnerability Profile and see exactly who is hunting you.
+          Your result is ready.
         </p>
         <form onSubmit={handleEmailSubmit} className="space-y-4">
           <input 
@@ -140,7 +160,21 @@ export default function QuizEngine() {
   }
 
   if (step === "result" && result) {
-    return <FreeResult data={result} onUnlock={handleUnlock} isGenerating={isGenerating} />;
+    return (
+      <>
+        <FreeResult data={result} onUnlock={handleUnlock} isGenerating={isGenerating} />
+        <EmailResultOffer
+          className="px-6 pb-16"
+          onSubmit={handleOptionalEmail}
+          email={email}
+          setEmail={setEmail}
+          agreed={agreed}
+          setAgreed={setAgreed}
+          saving={isSubmittingEmail}
+          saved={emailSaved}
+        />
+      </>
+    );
   }
 
   if (!started) {

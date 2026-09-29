@@ -83,7 +83,14 @@ export default function PremiumToxicAttractionPage() {
         <YourAnswersSection
           accent="#f43f5e"
           evidence={
-            data?.answers ? buildEvidence(BAD_GUYS_QUESTIONS, data.answers) : undefined
+            data?.answers
+              ? buildEvidence(
+                  // This engine shows plain "Never".."Always", not the "Never true"
+                  // wording of its sister quiz; quote what she clicked.
+                  BAD_GUYS_QUESTIONS.map((q) => ({ ...q, options: ["Never", "Rarely", "Sometimes", "Often", "Always"], min: 1 })),
+                  data.answers
+                )
+              : undefined
           }
           no="03"
         />
