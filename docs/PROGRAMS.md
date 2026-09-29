@@ -13,8 +13,8 @@ programme each would have meant writing the same workbook five times.
 | 3 | **Choosing Differently** · the pull toward the wrong partners | pick-bad-guys, attract-toxic, what-kind-of-person, who-is-attracted, attraction-patterns, keep-dating-the-same-type | **Live** |
 | 4 | **Letting People In** · self-sabotage and avoidance | why-do-i-sabotage-relationships | **Live** |
 | 5 | **Friendships That Give Back** · one-sided friendships, people-pleasing | toxic-friend, friends-bad, friends-using, friend-group-role, is-my-best-friend-toxic | **Live** |
-| 6 | **After the Doubt** · suspicion, checking, trust | is-he-cheating | Outline |
-| 7 | **Loving Someone Who Pulls Away** · the avoidant partner | partners-attachment-style | Outline |
+| 6 | **After the Doubt** · suspicion, checking, trust | is-he-cheating | **Live** |
+| 7 | **Loving Someone Who Pulls Away** · the avoidant partner | partners-attachment-style | **Live** |
 
 Every programme's full session-by-session structure is in
 `lib/programs/registry.ts` and visible on its page.
@@ -71,8 +71,16 @@ open with "cut them off": it maps, explains why she gives first, practises
 no and asking back, and only then decides repair, fade or end, friend by
 friend.
 
-**Phase 6 · After the Doubt, and Loving Someone Who Pulls Away.**
-Single-quiz programmes; lowest leverage, written last.
+**Phase 6 · After the Doubt, and Loving Someone Who Pulls Away · done.**
+Single-quiz programmes, written last. After the Doubt never tells anyone
+whether their partner is cheating and teaches no surveillance: checking is
+the loop it breaks (repeated checking increases doubt, per van den Hout,
+Kindt and Radomsky). Loving Someone Who Pulls Away treats the
+pursue-withdraw cycle as the problem, not the partner, promises no change
+in the partner, and says plainly that distance with control or threats
+is not an attachment style.
+
+All seven programmes are live. 140 sessions.
 
 ## Definition of done for a programme
 

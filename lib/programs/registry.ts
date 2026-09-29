@@ -4,6 +4,8 @@ import { EARNED_SECURITY } from "./content/earned-security";
 import { CHOOSING_DIFFERENTLY } from "./content/choosing-differently";
 import { LETTING_PEOPLE_IN } from "./content/letting-people-in";
 import { FRIENDSHIPS_THAT_GIVE_BACK } from "./content/friendships-that-give-back";
+import { AFTER_THE_DOUBT } from "./content/after-the-doubt";
+import { LOVING_SOMEONE_WHO_PULLS_AWAY } from "./content/loving-someone-who-pulls-away";
 
 /**
  * EVERY PROGRAMME, AND WHICH QUIZZES FEED IT
@@ -168,37 +170,11 @@ export const PROGRAMS: Program[] = [
     methods: ["CBT", "exposure and response prevention", "DBT interpersonal effectiveness", "motivational interviewing"],
     reviewFocus: "suspected infidelity: the checking, the rumination, and deciding what to do",
     accent: "#DC2626",
-    status: "outline",
-    outline: [
-      o(1, "See it", [
-        ["What you have actually noticed", "Evidence log"],
-        ["The checking spiral", "Pattern recognition"],
-        ["Suspicion in your body", "Interoception"],
-        ["Facts, fears and stories", "CBT · separating"],
-        ["Where you stand now", "Baseline measure"],
-      ]),
-      o(2, "Understand it", [
-        ["Where the suspicion comes from", "Formulation"],
-        ["Why checking never settles it", "Reassurance cycle"],
-        ["When your gut is right", "Evidence weighting"],
-        ["Need to know versus want to know", "Clarifying"],
-        ["The cost ledger", "Behavioural audit"],
-      ]),
-      o(3, "Change it", [
-        ["Asking directly", "DBT · DEAR MAN"],
-        ["Stopping the checking", "Response prevention"],
-        ["Getting the answer you need", "Communication skill"],
-        ["What you will do with it", "Decision planning"],
-        ["The no-checking experiment", "Behavioural experiment"],
-      ]),
-      o(4, "Live it", [
-        ["Trust, with evidence", "Values"],
-        ["Your worth, whatever he did", "Self-esteem work"],
-        ["Your early warning signs", "Relapse prevention"],
-        ["Staying or going, on purpose", "Motivational interviewing"],
-        ["A letter to yourself", "Integration"],
-      ]),
-    ],
+    status: "live",
+    weeks: AFTER_THE_DOUBT,
+    safety:
+      "This is a self-help programme, not therapy, and it never tells you whether your partner is or is not cheating. If you are afraid of how your partner might react to being asked, if they have hurt or threatened you, please talk to a specialist service before confronting them. In the UK, Refuge runs a free 24-hour helpline on 0808 2000 247. If you are in immediate danger, call 999 (or 112 in the EU).",
+    outline: outlineOf(AFTER_THE_DOUBT),
   },
   {
     slug: "loving-someone-who-pulls-away",
@@ -212,40 +188,14 @@ export const PROGRAMS: Program[] = [
       "Asking for one specific thing, clearly",
       "Knowing what you need in order to stay",
     ],
-    methods: ["emotionally focused therapy", "Gottman method", "DBT", "ACT"],
+    methods: ["emotionally focused therapy", "Gottman method", "DBT", "ACT", "behavioural activation", "compassion-focused therapy"],
     reviewFocus: "being in a relationship with an avoidant or withdrawing partner, and the pursue-withdraw cycle",
     accent: "#8B5CF6",
-    status: "outline",
-    outline: [
-      o(1, "See it", [
-        ["His pattern, mapped", "Pattern mapping"],
-        ["Your reaction to his distance", "Self-monitoring"],
-        ["The pursue and withdraw dance", "EFT · the cycle"],
-        ["Everything you have tried", "Review"],
-        ["Where you stand now", "Baseline measure"],
-      ]),
-      o(2, "Understand it", [
-        ["Why he pulls away", "Avoidant deactivation"],
-        ["Why you chase", "Anxious activation"],
-        ["His work and yours", "Responsibility"],
-        ["Needs versus strategies", "EFT · needs"],
-        ["The cost ledger", "Behavioural audit"],
-      ]),
-      o(3, "Change it", [
-        ["State, don't pursue", "Gottman · softened start-up"],
-        ["Space with a horizon", "Communication skill"],
-        ["One specific ask", "DBT · DEAR MAN"],
-        ["Your own life back", "Behavioural activation"],
-        ["The no-chase experiment", "Behavioural experiment"],
-      ]),
-      o(4, "Live it", [
-        ["What you need to stay", "ACT · values"],
-        ["Soothing yourself", "Compassion-focused"],
-        ["Your early warning signs", "Relapse prevention"],
-        ["Deciding, together or alone", "Decision support"],
-        ["A letter to yourself", "Integration"],
-      ]),
-    ],
+    status: "live",
+    weeks: LOVING_SOMEONE_WHO_PULLS_AWAY,
+    safety:
+      "This is a self-help programme, not therapy. It is about a partner who withdraws, not one who controls. If your partner's distance comes with threats, intimidation, punishing silences meant to frighten you, or any harm, please talk to a specialist service. In the UK, Refuge runs a free 24-hour helpline on 0808 2000 247. If you are in immediate danger, call 999 (or 112 in the EU).",
+    outline: outlineOf(LOVING_SOMEONE_WHO_PULLS_AWAY),
   },
 ];
 
