@@ -144,6 +144,12 @@ End card for all of them: `how many have you ticked? 40 seconds, link in bio`.
 |---|---|
 | "I made my two best friends battle" (reveal the snake) | `oopscupid.com/friend-vs-friend` |
 | "My boyfriend vs my ex, who treats me better?" | `oopscupid.com/him-vs-your-ex` |
+| "Swipe these with me: red flag or green flag?" | `oopscupid.com/red-flag-or-green-flag` |
+| "He texted me this. What does it mean?" (show one text, pause) | `oopscupid.com/decode-his-text` |
+| "Guess her attachment style" (act out one scene) | `oopscupid.com/guess-the-attachment-style` |
+| "Is this gaslighting or am I crazy?" | `oopscupid.com/gaslighting-or-not` |
+| "Real friend or frenemy?" (two friends, one compliment) | `oopscupid.com/friend-or-frenemy` |
+| Link in bio for all of them | `oopscupid.com/games` |
 
 Film your own screen playing it (names blurred), reveal the 💎 vs 🐍
 result at the end. Caption: "who would win between your two best
