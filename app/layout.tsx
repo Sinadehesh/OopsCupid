@@ -3,6 +3,7 @@ import { Playfair_Display, Nunito } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import StaleAssetReload from "@/components/layout/StaleAssetReload";
 import SessionProvider from "@/components/SessionProvider";
 import { Analytics } from "@vercel/analytics/next";
 
@@ -86,6 +87,7 @@ export default function RootLayout({
         {/* Web Analytics. The site ran for five months with no measurement
             of any kind, traffic, funnel drop-off and conversion were all
             unknowable. Everything in lib/track.ts reports through this. */}
+        <StaleAssetReload />
         <Analytics />
       </body>
     </html>
