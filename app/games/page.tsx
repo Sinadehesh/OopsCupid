@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { CHOICE_GAMES } from "@/lib/quizzes/choiceGames";
 import { VERSUS_GAMES } from "@/lib/quizzes/versus";
+import { TICK_GAMES } from "@/lib/quizzes/tickGames";
+import { tickTestBySlug } from "@/lib/quizzes/tickTests";
 import MoreQuickTests from "@/components/tick/MoreQuickTests";
 import MerchCard from "@/components/shop/MerchCard";
 import { sticker, display } from "@/lib/ui/sticker";
@@ -17,6 +19,10 @@ const GAMES = [
   { slug: "red-flag-or-green-flag", title: "Red flag or green flag?", emoji: "🚦", bg: "#FFD1E8", line: "Swipe 16 dating moments. How sharp is your radar?", tag: "swipe" },
   ...CHOICE_GAMES.map((g) => ({ slug: g.slug, title: g.title, emoji: g.emoji, bg: g.bg, line: g.intro, tag: `${g.rounds.length} rounds` })),
   ...VERSUS_GAMES.map((g) => ({ slug: g.slug, title: g.title, emoji: g.emoji, bg: g.bg, line: g.intro, tag: "2 players" })),
+  ...Object.entries(TICK_GAMES).map(([slug, g]) => {
+    const t = tickTestBySlug(slug)!;
+    return { slug, title: g.name, emoji: t.emoji, bg: t.bg, line: t.question, tag: g.mode === "bingo" ? "bingo" : g.mode === "receipt" ? "receipt" : "tier list" };
+  }),
 ];
 
 export default function GamesPage() {

@@ -10,7 +10,11 @@ import ResultShare from "@/components/share/ResultShare";
 import CheckoutButton from "@/components/offers/CheckoutButton";
 import ProgramOffer from "@/components/program/ProgramOffer";
 import MoreQuickTests from "./MoreQuickTests";
-import QuickRead, { loadPending } from "./QuickRead";
+import QuickRead, { loadPending, savePending } from "./QuickRead";
+import { tickGame, type Tier } from "@/lib/quizzes/tickGames";
+import { BingoBoard, completedLines } from "./games/Bingo";
+import { ReceiptShelf, Receipt } from "./games/Receipt";
+import { TierGame, TierBoard } from "./games/TierList";
 import GuideCards from "@/components/guides/GuideCards";
 import { guidesFor } from "@/lib/guides/guides";
 import MerchCard from "@/components/shop/MerchCard";
@@ -45,6 +49,9 @@ export default function TickPicker({ slug }: { slug: string }) {
   const [result, setResult] = useState<TickResult | null>(null);
   const [started, setStarted] = useState(false);
   const [popped, setPopped] = useState<{ id: string; n: number } | null>(null);
+  const game = tickGame(slug);
+  const [tiers, setTiers] = useState<Record<string, Tier>>({});
+  const [order, setOrder] = useState<string[]>([]);
 
   // Back from Stripe with ?read=1: put her answers back exactly as they
   // were, so the read she just bought appears on the same result.
@@ -53,6 +60,8 @@ export default function TickPicker({ slug }: { slug: string }) {
     const picks = loadPending<string[]>(slug);
     if (Array.isArray(picks) && picks.length) {
       setSelected(picks);
+      const savedTiers = loadPending<Record<string, Tier>>(`${slug}:tiers`);
+      if (savedTiers && typeof savedTiers === "object") setTiers(savedTiers);
       setResult(scoreTick(test, picks));
     }
   }, [slug, test]);
@@ -70,7 +79,29 @@ export default function TickPicker({ slug }: { slug: string }) {
     setSelected((prev) => (on ? [...prev, id] : prev.filter((x) => x !== id)));
   };
 
+  // Tier list: "all the time" and "sometimes" count as picked.
+  const applyTiers = (next: Record<string, Tier>, nextOrder: string[]) => {
+    setTiers(next);
+    setOrder(nextOrder);
+    setSelected(test.items.filter((it) => next[it.id] === 0 || next[it.id] === 1).map((it) => it.id));
+  };
+  const setTier = (id: string, t: Tier) => {
+    if (!started) {
+      setStarted(true);
+      trackQuizStart(slug);
+    }
+    applyTiers({ ...tiers, [id]: t }, [...order, id]);
+  };
+  const undoTier = () => {
+    const last = order[order.length - 1];
+    if (!last) return;
+    const next = { ...tiers };
+    delete next[last];
+    applyTiers(next, order.slice(0, -1));
+  };
+
   const show = () => {
+    if (game?.mode === "tier") savePending(`${slug}:tiers`, tiers);
     const r = scoreTick(test, selected);
     setResult(r);
     trackQuizComplete(slug, test.items.length);
@@ -81,8 +112,26 @@ export default function TickPicker({ slug }: { slug: string }) {
   if (result) {
     const pct = Math.round((result.count / result.total) * 100);
     return (
-      <div className="bg-[#FFF4FA] min-h-screen">
+      <div className="bg-[#FFF4FA] min-h-screen overflow-x-hidden">
         <div className="max-w-2xl mx-auto px-4 py-8 md:py-12">
+          {game && (
+            <div className="mb-8">
+              <p className="text-center text-[12px] font-black uppercase tracking-[0.18em] text-[#1A1033]/60 mb-3">📸 screenshot it, post it</p>
+              {game.mode === "bingo" && <BingoBoard items={test.items} selected={selected} name={game.name} emoji={test.emoji} />}
+              {game.mode === "receipt" && (
+                <Receipt items={test.items} selected={selected} store={game.store ?? "OOPSCUPID"} paidWith={game.paidWith ?? "YOUR SANITY"} total={test.items.length} animate />
+              )}
+              {game.mode === "tier" && (
+                <TierBoard
+                  items={test.items}
+                  tiers={Object.keys(tiers).length ? tiers : Object.fromEntries(selected.map((id) => [id, 1 as Tier]))}
+                  labels={game.tiers ?? ["💀 All the time", "😬 Sometimes", "😇 Never"]}
+                  name={game.name}
+                />
+              )}
+            </div>
+          )}
+
           {/* The result, as a card worth screenshotting. */}
           <div className={`relative overflow-hidden rounded-[28px] bg-gradient-to-br from-[#FF4FA3] via-[#FF6F7D] to-[#FF9A4D] text-white p-6 md:p-8 mb-8 ${stickerStatic}`}>
             <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-around">
@@ -90,7 +139,12 @@ export default function TickPicker({ slug }: { slug: string }) {
                 <span key={i} className="oc-burst text-2xl" style={{ animationDelay: `${i * 120}ms` }}>{e}</span>
               ))}
             </div>
-            <p className="text-[11px] font-black uppercase tracking-[0.2em] text-white/85 mb-2">{test.emoji} {test.short}</p>
+            <p className="text-[11px] font-black uppercase tracking-[0.2em] text-white/85 mb-2">{test.emoji} {game?.name ?? test.short}</p>
+            {game?.mode === "bingo" && (
+              <p className="inline-block rounded-full bg-[#FFE68A] text-[#1A1033] border-2 border-[#1A1033] px-3 py-1 text-sm font-black mb-3">
+                {bingoBadge(completedLines(test.items, selected).length, selected.length === test.items.length)}
+              </p>
+            )}
             <h1 className="text-[34px] md:text-5xl leading-[1.02] mb-4" style={display}>{result.headline}</h1>
             <div className="h-4 rounded-full bg-white/30 border-2 border-[#1A1033] overflow-hidden mb-4">
               <div className="h-full bg-[#FFE68A] transition-all duration-700" style={{ width: `${Math.max(pct, 4)}%` }} />
@@ -170,7 +224,7 @@ export default function TickPicker({ slug }: { slug: string }) {
           <ResultShare
             quiz={test.short}
             quizPath={`/${test.slug}`}
-            title={result.headline}
+            title={game?.mode === "bingo" ? `${bingoBadge(completedLines(test.items, selected).length, selected.length === test.items.length)} on ${game.name}` : result.headline}
             score={result.count}
             scoreLabel={`of ${result.total}`}
           />
@@ -180,7 +234,7 @@ export default function TickPicker({ slug }: { slug: string }) {
           <MoreQuickTests exclude={test.slug} />
 
           <button
-            onClick={() => { setResult(null); setSelected([]); }}
+            onClick={() => { setResult(null); setSelected([]); setTiers({}); setOrder([]); }}
             className="mt-8 inline-flex items-center gap-2 text-sm font-black text-[#1A1033]/50 hover:text-[#1A1033] transition-colors"
           >
             <RotateCcw className="w-4 h-4" /> Play again
@@ -191,71 +245,123 @@ export default function TickPicker({ slug }: { slug: string }) {
   }
 
   const pct = Math.round((selected.length / test.items.length) * 100);
+  const lines = game?.mode === "bingo" ? completedLines(test.items, selected).length : 0;
+  const sorted = Object.keys(tiers).length;
+  const word =
+    game?.mode === "bingo"
+      ? selected.length === 0 ? "stamp the ones you've had" : `${lines} ${lines === 1 ? "line" : "lines"} · ${meterWord(selected.length, test.items.length, true)}`
+      : game?.mode === "receipt"
+        ? selected.length === 0 ? "scan the ones he does" : `🧾 ${selected.length} scanned · ${meterWord(selected.length, test.items.length, test.fun)}`
+        : meterWord(selected.length, test.items.length, test.fun);
+  const tierDone = game?.mode === "tier" && sorted === test.items.length;
 
   return (
-    <div className="bg-[#FFF4FA] min-h-screen">
+    <div className="bg-[#FFF4FA] min-h-screen overflow-x-hidden">
       <div className="max-w-3xl mx-auto px-4 py-7 md:py-12">
         <div className="text-center mb-6 md:mb-9">
           <span className={`inline-block rotate-[-2deg] rounded-full bg-white px-3 py-1 text-[12px] font-black text-[#1A1033] mb-4 ${stickerStatic} !shadow-[2px_2px_0_#1A1033]`}>
-            {test.emoji} {test.fun ? `just for fun · ${seconds} sec` : `${seconds} seconds`}
+            {game ? `${game.mode === "bingo" ? "🎱" : game.mode === "receipt" ? "🧾" : "🏆"} ${game.name} · ${seconds} sec` : `${test.emoji} ${test.fun ? `just for fun · ${seconds} sec` : `${seconds} seconds`}`}
           </span>
-          <h1 className="text-[36px] md:text-6xl leading-[1.02] text-[#1A1033] mb-3" style={display}>{test.question}</h1>
-          <p className="text-base md:text-lg text-[#1A1033]/70 font-semibold leading-relaxed max-w-xl mx-auto">{test.intro}</p>
+          <h1 className="text-[34px] md:text-6xl leading-[1.02] text-[#1A1033] mb-3" style={display}>{test.question}</h1>
+          <p className="text-base md:text-lg text-[#1A1033]/70 font-semibold leading-relaxed max-w-xl mx-auto">{game?.how ?? test.intro}</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-          {test.items.map((it, idx) => {
-            const on = selected.includes(it.id);
-            const justPopped = popped?.id === it.id;
-            return (
+        <div className="max-w-2xl mx-auto mb-6">
+          {game?.mode === "bingo" && <BingoBoard items={test.items} selected={selected} name={game.name} emoji={test.emoji} onToggle={toggle} />}
+          {game?.mode === "receipt" && <ReceiptShelf items={test.items} selected={selected} onToggle={toggle} />}
+          {game?.mode === "tier" && (
+            <TierGame
+              items={test.items}
+              tiers={tiers}
+              labels={game.tiers ?? ["💀 All the time", "😬 Sometimes", "😇 Never"]}
+              name={game.name}
+              order={order}
+              onSet={setTier}
+              onUndo={undoTier}
+            />
+          )}
+          {!game && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {test.items.map((it, idx) => {
+                const on = selected.includes(it.id);
+                const justPopped = popped?.id === it.id;
+                return (
+                  <button
+                    key={it.id}
+                    onClick={() => toggle(it.id)}
+                    aria-pressed={on}
+                    className={`relative text-left px-4 py-3.5 rounded-[18px] font-bold leading-snug min-h-[60px] flex items-center gap-3 ${sticker} ${
+                      on ? "text-[#1A1033]" : "bg-white text-[#1A1033]/85"
+                    } ${justPopped ? "oc-pop" : ""}`}
+                    style={on ? { backgroundColor: CANDY[idx % CANDY.length] } : undefined}
+                  >
+                    <span className={`w-6 h-6 rounded-lg border-2 border-[#1A1033] shrink-0 flex items-center justify-center ${on ? "bg-[#1A1033]" : "bg-white"}`}>
+                      {on && <Check className="w-4 h-4 text-white" strokeWidth={3.5} />}
+                    </span>
+                    <span className="flex-1">{it.text}</span>
+                    {on && <span className="shrink-0 text-xl" aria-hidden="true">{REACTIONS[idx % REACTIONS.length]}</span>}
+                    {justPopped && (
+                      <span key={popped!.n} aria-hidden="true" className="oc-rise pointer-events-none absolute right-6 -top-2 text-2xl">
+                        {REACTIONS[idx % REACTIONS.length]}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* The meter and the button, pinned to the bottom of the screen. The
+            tier list has its own counter, so it only gets the button, once
+            she's sorted enough to be worth showing. */}
+        {game?.mode === "tier" ? (
+          (tierDone || sorted >= 4) && (
+            <div className="sticky bottom-3 z-10 max-w-2xl mx-auto">
               <button
-                key={it.id}
-                onClick={() => toggle(it.id)}
-                aria-pressed={on}
-                className={`relative text-left px-4 py-3.5 rounded-[18px] font-bold leading-snug min-h-[60px] flex items-center gap-3 ${sticker} ${
-                  on ? "text-[#1A1033]" : "bg-white text-[#1A1033]/85"
-                } ${justPopped ? "oc-pop" : ""}`}
-                style={on ? { backgroundColor: CANDY[idx % CANDY.length] } : undefined}
+                onClick={show}
+                className={`w-full min-h-[60px] rounded-2xl bg-[#1A1033] text-white font-black text-lg flex items-center justify-center gap-2 ${sticker} !shadow-[4px_4px_0_#FF4FA3]`}
               >
-                <span className={`w-6 h-6 rounded-lg border-2 border-[#1A1033] shrink-0 flex items-center justify-center ${on ? "bg-[#1A1033]" : "bg-white"}`}>
-                  {on && <Check className="w-4 h-4 text-white" strokeWidth={3.5} />}
-                </span>
-                <span className="flex-1">{it.text}</span>
-                {on && <span className="shrink-0 text-xl" aria-hidden="true">{REACTIONS[idx % REACTIONS.length]}</span>}
-                {justPopped && (
-                  <span key={popped!.n} aria-hidden="true" className="oc-rise pointer-events-none absolute right-6 -top-2 text-2xl">
-                    {REACTIONS[idx % REACTIONS.length]}
-                  </span>
-                )}
+                {tierDone ? "See what my tier list says" : `Finish now (${sorted}/${test.items.length} sorted)`}
+                <ArrowRight className="w-5 h-5" strokeWidth={3} />
               </button>
-            );
-          })}
-        </div>
-
-        {/* The meter and the button, pinned to the bottom of the screen. */}
-        <div className="sticky bottom-3 z-10 space-y-2">
-          <div className={`rounded-2xl bg-white px-4 py-2.5 ${stickerStatic} !shadow-[3px_3px_0_#1A1033]`}>
-            <div className="flex items-center justify-between text-[13px] font-black text-[#1A1033] mb-1.5">
-              <span>🌡️ {meterWord(selected.length, test.items.length, test.fun)}</span>
-              <span className="tabular-nums">{selected.length}/{test.items.length}</span>
             </div>
-            <div className="h-3 rounded-full bg-[#FFE4F1] border-2 border-[#1A1033] overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-[#FF4FA3] to-[#FF9A4D] transition-all duration-300" style={{ width: `${pct}%` }} />
+          )
+        ) : (
+          <div className="sticky bottom-3 z-10 space-y-2 max-w-2xl mx-auto">
+            <div className={`rounded-2xl bg-white px-4 py-2.5 ${stickerStatic} !shadow-[3px_3px_0_#1A1033]`}>
+              <div className="flex items-center justify-between text-[13px] font-black text-[#1A1033] mb-1.5">
+                <span>{game ? "" : "🌡️ "}{word}</span>
+                <span className="tabular-nums">{selected.length}/{test.items.length}</span>
+              </div>
+              <div className="h-3 rounded-full bg-[#FFE4F1] border-2 border-[#1A1033] overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-[#FF4FA3] to-[#FF9A4D] transition-all duration-300" style={{ width: `${pct}%` }} />
+              </div>
             </div>
+            <button
+              onClick={show}
+              className={`w-full min-h-[60px] rounded-2xl bg-[#1A1033] text-white font-black text-lg flex items-center justify-center gap-2 ${sticker} !shadow-[4px_4px_0_#FF4FA3]`}
+            >
+              {game?.mode === "receipt"
+                ? `🧾 Print my receipt${selected.length ? ` (${selected.length})` : ""}`
+                : game?.mode === "bingo"
+                  ? selected.length === 0 ? "None of these" : "Call it: see my card"
+                  : selected.length === 0 ? "None of these" : `Show my result (${selected.length})`}
+              <ArrowRight className="w-5 h-5" strokeWidth={3} />
+            </button>
           </div>
-          <button
-            onClick={show}
-            className={`w-full min-h-[60px] rounded-2xl bg-[#1A1033] text-white font-black text-lg flex items-center justify-center gap-2 ${sticker} !shadow-[4px_4px_0_#FF4FA3]`}
-          >
-            {selected.length === 0 ? "None of these" : `Show my result (${selected.length})`}
-            <ArrowRight className="w-5 h-5" strokeWidth={3} />
-          </button>
-        </div>
+        )}
 
         <p className="text-center text-xs font-bold text-[#1A1033]/45 mt-5">🤫 Nothing you tap leaves your phone.</p>
       </div>
     </div>
   );
+}
+
+function bingoBadge(lines: number, full: boolean) {
+  if (full) return "💀 BLACKOUT: every square";
+  if (lines === 0) return "No bingo. Lucky you 🍀";
+  return `🎉 ${lines} BINGO ${lines === 1 ? "line" : "lines"}`;
 }
 
 function ReportOffer({ test }: { test: NonNullable<ReturnType<typeof tickTestBySlug>> }) {

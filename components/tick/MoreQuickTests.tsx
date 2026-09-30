@@ -1,3 +1,4 @@
+import { tileBadge } from "@/lib/quizzes/tickGames";
 import React from "react";
 import Link from "next/link";
 import { QUICK_TESTS } from "@/lib/quizzes/tickTests";
@@ -32,7 +33,7 @@ export default function MoreQuickTests({
             <span className="w-9 h-9 rounded-full bg-white border-2 border-[#1A1033] flex items-center justify-center text-lg" aria-hidden="true">{t.emoji}</span>
             <span className="text-[15px] font-black leading-tight mt-2">{t.short}</span>
             <span className="mt-1.5 self-start rounded-full bg-[#1A1033] text-white px-2 py-0.5 text-[10px] font-black uppercase tracking-wider">
-              {t.fun ? "for fun" : "40 sec"}
+              {tileBadge(t.slug, t.fun)}
             </span>
           </Link>
         ))}

@@ -1,5 +1,6 @@
 "use client";
 
+import { tileBadge } from "@/lib/quizzes/tickGames";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -154,7 +155,7 @@ export default function HomeHero() {
               </span>
               <span className="text-[15px] font-black leading-tight mt-2">{t.short}</span>
               <span className="mt-2 self-start rounded-full bg-[#1A1033] text-white px-2 py-0.5 text-[10px] font-black uppercase tracking-wider">
-                {t.fun ? "for fun" : "40 sec"}
+                {tileBadge(t.slug, t.fun)}
               </span>
             </Link>
           ))}
