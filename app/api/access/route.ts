@@ -21,5 +21,6 @@ export async function GET(req: NextRequest) {
     workbook: claims.workbook,
     coaching: claims.coaching,
     sku: claims.sku,
+    reads: claims.reads ?? [],
   });
 }

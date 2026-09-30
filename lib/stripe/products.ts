@@ -16,11 +16,15 @@ export type Sku =
   | "report-workbook-bundle"
   | "ultimate-bundle"
   | "clarity-call"
-  | "reset-program";
+  | "reset-program"
+  | "quick-read";
 
 export interface StripeProduct {
   sku: Sku;
-  priceId: string;
+  /** A live Stripe Price. Or, when absent, `amount` is sent inline. */
+  priceId?: string;
+  /** Cents, sent as inline price_data, still server-side only. */
+  amount?: number;
   /** Display only: Stripe charges the amount attached to priceId. */
   displayPrice: string;
   name: string;
@@ -32,6 +36,8 @@ export interface StripeProduct {
     workbook: boolean;
     /** Requires a human to send a scheduling link after purchase. */
     coaching: boolean;
+    /** Unlocks the written read for the one quick test it was bought on. */
+    read?: boolean;
   };
 }
 
@@ -63,6 +69,15 @@ export const STRIPE_PRODUCTS: Record<Sku, StripeProduct> = {
     displayPrice: "€49",
     name: "60-Minute Clarity Session",
     grants: { premiumReport: false, workbook: false, coaching: true },
+  },
+  "quick-read": {
+    sku: "quick-read",
+    // No dashboard Price: the amount goes to Checkout as inline price_data,
+    // decided here on the server like every other price.
+    amount: 299,
+    displayPrice: "€2.99",
+    name: "Quick Read",
+    grants: { premiumReport: false, workbook: false, coaching: false, read: true },
   },
   "reset-program": {
     sku: "reset-program",

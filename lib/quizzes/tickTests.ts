@@ -1,4 +1,5 @@
 import { MORE_TICK_TESTS } from "./tickTestsMore";
+import { VERSUS_GAMES } from "./versus";
 
 /**
  * TICK TESTS: the forty-second format, generalised.
@@ -399,6 +400,8 @@ export function tickTestBySlug(slug: string) {
 
 /** Every 40-second test, including the original, for cross-links. */
 export const QUICK_TESTS: { slug: string; short: string; emoji: string; bg: string; fg: string; fun?: boolean }[] = [
+  // The two-person games lead: they are the most shareable thing here.
+  ...VERSUS_GAMES.map(({ slug, short, emoji, bg, fg }) => ({ slug, short, emoji, bg, fg, fun: true })),
   { slug: "things-he-says", short: "Things he says", emoji: "💬", bg: "#E9E2F7", fg: "#3F2C6B" },
   ...TICK_TESTS.map(({ slug, short, emoji, bg, fg, fun }) => ({ slug, short, emoji, bg, fg, fun })),
 ];

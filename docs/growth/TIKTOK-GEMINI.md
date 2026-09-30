@@ -137,3 +137,14 @@ Mix comedy and serious days. The comedy ones get shared more; the serious
 ones sell more reports. Every result sends her to the next test anyway.
 
 End card for all of them: `how many have you ticked? 40 seconds, link in bio`.
+
+## The two-person games (the most shareable)
+
+| Video | Link |
+|---|---|
+| "I made my two best friends battle" (reveal the snake) | `oopscupid.com/friend-vs-friend` |
+| "My boyfriend vs my ex, who treats me better?" | `oopscupid.com/him-vs-your-ex` |
+
+Film your own screen playing it (names blurred), reveal the 💎 vs 🐍
+result at the end. Caption: "who would win between your two best
+friends?" Comments will name names; that is the reach.

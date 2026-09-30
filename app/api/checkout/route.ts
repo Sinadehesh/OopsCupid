@@ -33,7 +33,18 @@ export async function POST(req: NextRequest) {
     const stripe = getStripe();
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
-      line_items: [{ price: product.priceId, quantity: 1 }],
+      line_items: [
+        product.priceId
+          ? { price: product.priceId, quantity: 1 }
+          : {
+              quantity: 1,
+              price_data: {
+                currency: "eur",
+                unit_amount: product.amount!,
+                product_data: { name: product.name },
+              },
+            },
+      ],
       // Buyer identity: prefill when the quiz already collected an email.
       ...(typeof email === "string" && email.includes("@") ? { customer_email: email } : {}),
       success_url: `${origin}/unlocked?session_id={CHECKOUT_SESSION_ID}&next=${encodeURIComponent(safeReturn)}`,

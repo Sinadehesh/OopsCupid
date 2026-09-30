@@ -2,6 +2,7 @@ import { MetadataRoute } from "next";
 import { quizRegistry } from "@/lib/quizzes/registry";
 import { SYMPTOM_PAGES } from "@/lib/seo/symptoms";
 import { TICK_TESTS } from "@/lib/quizzes/tickTests";
+import { VERSUS_GAMES } from "@/lib/quizzes/versus";
 
 // FORCES NEXT.JS TO GENERATE THIS AT BUILD TIME FOR STATIC EXPORTS
 export const dynamic = "force-static";
@@ -26,6 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/signs",
     "/things-he-says",
     ...TICK_TESTS.map((t) => `/${t.slug}`),
+    ...VERSUS_GAMES.map((g) => `/${g.slug}`),
   ];
 
   const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { trackHomeClick } from "@/lib/track";
-import { TICK_TESTS } from "@/lib/quizzes/tickTests";
+import { QUICK_TESTS } from "@/lib/quizzes/tickTests";
 
 /**
  * HOMEPAGE HERO, built for the phone.
@@ -74,7 +74,7 @@ export default function HomeHero() {
         {/* More forty-second tests, swipeable: the format TikTok visitors
             finish, so there is always another one to try. */}
         <div className="-mx-4 px-4 mb-5 flex gap-2.5 overflow-x-auto snap-x snap-mandatory pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {TICK_TESTS.map((t) => (
+          {QUICK_TESTS.filter((t) => t.slug !== "things-he-says").map((t) => (
             <Link
               key={t.slug}
               href={`/${t.slug}`}
@@ -83,8 +83,8 @@ export default function HomeHero() {
               style={{ backgroundColor: t.bg, color: t.fg }}
             >
               <span className="text-2xl" aria-hidden="true">{t.emoji}</span>
-              <span className="text-[14px] font-extrabold leading-tight mt-1.5">{t.question}</span>
-              <span className="text-[10px] font-black uppercase tracking-wider opacity-60 mt-1.5">40 seconds</span>
+              <span className="text-[15px] font-extrabold leading-tight mt-1.5">{t.short}</span>
+              <span className="text-[10px] font-black uppercase tracking-wider opacity-60 mt-1.5">{t.fun ? "Just for fun" : "40 seconds"}</span>
             </Link>
           ))}
         </div>

@@ -28,6 +28,8 @@ export interface Entitlements {
   premiumReport: boolean;
   workbook: boolean;
   coaching: boolean;
+  /** Quick tests whose written read has been bought, by slug. */
+  reads?: string[];
   /** Unix seconds. */
   exp: number;
 }
@@ -46,14 +48,28 @@ function sign(payload: string): string {
   return crypto.createHmac("sha256", secret()).update(payload).digest("base64url");
 }
 
-export function mintAccessToken(sessionId: string, sku: Sku): string {
+/**
+ * Purchases add up. This used to mint from the new product alone, so a
+ * buyer who owned the €49 bundle and then booked a call lost the bundle:
+ * the new cookie replaced the old one. Everything already held is kept,
+ * and a read bought on a quick test is added to the list of reads.
+ */
+export function mintAccessToken(
+  sessionId: string,
+  sku: Sku,
+  existing?: Entitlements | null,
+  readSlug?: string
+): string {
   const grants = STRIPE_PRODUCTS[sku].grants;
+  const reads = new Set(existing?.reads ?? []);
+  if (grants.read && readSlug) reads.add(readSlug);
   const claims: Entitlements = {
     sid: sessionId,
     sku,
-    premiumReport: grants.premiumReport,
-    workbook: grants.workbook,
-    coaching: grants.coaching,
+    premiumReport: grants.premiumReport || Boolean(existing?.premiumReport),
+    workbook: grants.workbook || Boolean(existing?.workbook),
+    coaching: grants.coaching || Boolean(existing?.coaching),
+    reads: [...reads].slice(-60),
     exp: Math.floor(Date.now() / 1000) + TTL_DAYS * 24 * 60 * 60,
   };
   const body = Buffer.from(JSON.stringify(claims)).toString("base64url");
@@ -97,3 +113,10 @@ export const ACCESS_COOKIE_OPTIONS = {
   path: "/",
   maxAge: TTL_DAYS * 24 * 60 * 60,
 };
+
+/** Can this visitor see the written read for a quick test? */
+export function canRead(claims: Entitlements | null, slug: string): boolean {
+  if (!claims) return false;
+  // The €9.99 report unlocks every report on the site, reads included.
+  return claims.premiumReport || Boolean(claims.reads?.includes(slug));
+}

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import TickPicker from "@/components/tick/TickPicker";
 import { tickTestBySlug } from "@/lib/quizzes/tickTests";
+import { versusBySlug } from "@/lib/quizzes/versus";
+import VersusGame from "@/components/tick/VersusGame";
 
 const baseUrl = "https://www.oopscupid.com";
 
@@ -39,6 +41,28 @@ export function TickPage({ slug }: { slug: string }) {
     <main className="min-h-screen bg-[#FAFAF7]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <TickPicker slug={slug} />
+    </main>
+  );
+}
+
+/** Metadata for a two-person "who would say this?" game. */
+export function versusMetadata(slug: string): Metadata {
+  const g = versusBySlug(slug)!;
+  const card = `${baseUrl}/api/og?t=${encodeURIComponent(g.title)}&q=${encodeURIComponent("Who would say it? One minute")}`;
+  return {
+    metadataBase: new URL(baseUrl),
+    title: g.seo.title,
+    description: g.seo.description,
+    alternates: { canonical: `${baseUrl}/${slug}` },
+    openGraph: { title: g.title, description: g.seo.description, url: `${baseUrl}/${slug}`, type: "website", images: [{ url: card, width: 1200, height: 630, alt: g.title }] },
+    twitter: { card: "summary_large_image", title: g.title, description: g.seo.description, images: [card] },
+  };
+}
+
+export function VersusPage({ slug }: { slug: string }) {
+  return (
+    <main className="min-h-screen bg-[#FAFAF7]">
+      <VersusGame slug={slug} />
     </main>
   );
 }

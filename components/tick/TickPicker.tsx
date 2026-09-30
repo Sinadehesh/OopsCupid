@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Check, RotateCcw, LifeBuoy } from "lucide-react";
 import { scoreTick, tickTestBySlug, nextQuickTest, type TickResult } from "@/lib/quizzes/tickTests";
@@ -10,6 +10,7 @@ import ResultShare from "@/components/share/ResultShare";
 import CheckoutButton from "@/components/offers/CheckoutButton";
 import ProgramOffer from "@/components/program/ProgramOffer";
 import MoreQuickTests from "./MoreQuickTests";
+import QuickRead, { loadPending } from "./QuickRead";
 
 /**
  * One screen, tap to select, same as /things-he-says: someone from a video
@@ -26,6 +27,17 @@ export default function TickPicker({ slug }: { slug: string }) {
   const [selected, setSelected] = useState<string[]>([]);
   const [result, setResult] = useState<TickResult | null>(null);
   const [started, setStarted] = useState(false);
+
+  // Back from Stripe with ?read=1: put her answers back exactly as they
+  // were, so the read she just bought appears on the same result.
+  useEffect(() => {
+    if (!new URLSearchParams(window.location.search).has("read")) return;
+    const picks = loadPending<string[]>(slug);
+    if (Array.isArray(picks) && picks.length) {
+      setSelected(picks);
+      setResult(scoreTick(test, picks));
+    }
+  }, [slug, test]);
   const { granted } = usePremiumAccess();
   const seconds = test.items.length <= 12 ? 30 : 40;
   const next = nextQuickTest(slug);
@@ -47,7 +59,6 @@ export default function TickPicker({ slug }: { slug: string }) {
   };
 
   if (result) {
-    const strong = result.band === "pattern" || result.band === "system";
     return (
       <div className="max-w-2xl mx-auto px-5 py-10 md:py-14">
         <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#E07850] mb-3">
@@ -68,7 +79,12 @@ export default function TickPicker({ slug }: { slug: string }) {
         {/* The paid step comes straight after the verdict when there is
             enough for a report to be about: that is the moment she most
             wants to know more. */}
-        {strong && (granted ? <Unlocked test={test} /> : <ReportOffer test={test} />)}
+        {result.count > 0 && (
+          <QuickRead
+            input={{ kind: "tick", slug, picks: result.chosen.map((i) => i.id), count: result.count }}
+            pending={result.chosen.map((i) => i.id)}
+          />
+        )}
 
         {/* Straight on to the next one: a finished test is the moment
             she is most likely to take another. */}
@@ -109,7 +125,7 @@ export default function TickPicker({ slug }: { slug: string }) {
           </div>
         )}
 
-        {!strong && result.band !== "none" && (granted ? <Unlocked test={test} /> : <ReportOffer test={test} />)}
+        {result.band !== "none" && (granted ? <Unlocked test={test} /> : <ReportOffer test={test} />)}
 
         <div className="rounded-3xl bg-[#0E1621] text-white p-7 md:p-9 mb-8">
           <h2 className="text-2xl font-black mb-3 leading-snug">A few taps can only count.</h2>
