@@ -206,3 +206,17 @@ body::before {
     break-inside: avoid !important;
   }
 }
+
+/* ── Homepage motion (decorative only) ───────────────────────────────── */
+@keyframes oc-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes oc-float { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(18px, -14px) scale(1.06); } }
+@keyframes oc-wiggle { 0%, 100% { transform: rotate(0deg); } 20% { transform: rotate(-12deg); } 40% { transform: rotate(10deg); } 60% { transform: rotate(-6deg); } 80% { transform: rotate(4deg); } }
+@keyframes oc-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); } 50% { box-shadow: 0 0 0 8px rgba(255, 255, 255, 0); } }
+.oc-marquee { animation: oc-marquee 28s linear infinite; }
+.oc-float { animation: oc-float 9s ease-in-out infinite; }
+.oc-float-slow { animation: oc-float 14s ease-in-out infinite reverse; }
+.oc-wiggle { animation: oc-wiggle 2.8s ease-in-out infinite; transform-origin: 50% 60%; }
+.oc-pulse { animation: oc-pulse 2s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .oc-marquee, .oc-float, .oc-float-slow, .oc-wiggle, .oc-pulse { animation: none; }
+}

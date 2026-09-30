@@ -25,7 +25,7 @@ export default function Header() {
   const { data: session, status } = useSession();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[rgba(51,75,99,0.08)] bg-[#F9F4F4]/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b-[2.5px] border-[#1A1033] bg-white/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-[1500px] items-center justify-between px-6 py-3 md:px-10 md:py-4 lg:px-14">
 
         {/* Left: Logo & Wordmark */}
@@ -42,13 +42,13 @@ export default function Header() {
             className="mr-1 rounded-sm object-contain transition-transform duration-200 group-hover:scale-105"
           />
           <span
-            className="text-[22px] font-semibold tracking-[-0.04em] text-[#334B63] transition-colors duration-200 group-hover:text-[#5A7492]"
+            className="text-[23px] font-black tracking-[-0.04em] text-[#1A1033] transition-colors duration-200"
             style={{ fontFamily: "var(--font-nunito), system-ui, sans-serif" }}
           >
             Oops
           </span>
           <span
-            className="text-[22px] tracking-[-0.02em] text-[#FFB8A1] transition-colors duration-200 group-hover:text-[#F0A090]"
+            className="text-[23px] tracking-[-0.02em] text-[#FF4FA3] transition-colors duration-200 group-hover:text-[#E0368A]"
             style={{
               fontFamily: "var(--font-playfair), Georgia, serif",
               fontStyle: "italic",
@@ -184,7 +184,7 @@ export default function Header() {
               // Sign in stays in the menu.
               <Link
                 href="/quizzes"
-                className="flex items-center gap-1.5 rounded-full px-3.5 py-1.5 bg-[#E07850] text-white text-[13px] font-extrabold hover:bg-[#C9663F] transition-all"
+                className="flex items-center gap-1.5 rounded-full px-3.5 py-1.5 bg-[#FF4FA3] text-white text-[13px] font-black border-2 border-[#1A1033] shadow-[2px_2px_0_#1A1033] active:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all"
               >
                 Free tests
               </Link>
