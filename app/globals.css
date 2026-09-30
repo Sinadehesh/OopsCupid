@@ -245,3 +245,8 @@ body::before {
   .oc-stamp, .oc-drop { animation: none; }
   .oc-print { animation: none; opacity: 1; }
 }
+
+/* Flag Runner: the dashes down the middle of the road. */
+@keyframes oc-road { from { background-position: 0 0; } to { background-position: 0 44px; } }
+.oc-road { animation: oc-road 0.45s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .oc-road { animation: none; } }
