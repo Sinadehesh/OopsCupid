@@ -1,3 +1,4 @@
+import MoreQuickTests from "@/components/tick/MoreQuickTests";
 import Link from "next/link";
 import { 
   Ghost, Flame, Search, Flag, HeartCrack, 
@@ -69,6 +70,10 @@ export default function AllQuizzes() {
             Stop guessing. Start measuring. Choose a free test below to uncover the hidden dynamics in your relationships.
           </p>
         </div>
+      </section>
+
+      <section className="px-5 pt-10 max-w-6xl mx-auto">
+        <MoreQuickTests title="Quick ones · 40 seconds each" className="!mt-0" />
       </section>
 
       <section className="py-20 px-6">

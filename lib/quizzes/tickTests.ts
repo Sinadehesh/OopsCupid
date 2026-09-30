@@ -1,3 +1,5 @@
+import { MORE_TICK_TESTS } from "./tickTestsMore";
+
 /**
  * TICK TESTS: the forty-second format, generalised.
  *
@@ -28,6 +30,8 @@ export interface TickItem {
 }
 
 export interface TickTest {
+  /** Light-hearted: labelled "just for fun", with a playful result. */
+  fun?: boolean;
   slug: string;
   /** The question, as it reads on the tile and in the H1. */
   question: string;
@@ -51,7 +55,7 @@ export interface TickTest {
   seo: { title: string; description: string };
 }
 
-export const TICK_TESTS: TickTest[] = [
+const CORE_TESTS: TickTest[] = [
   {
     slug: "things-he-does",
     question: "Which of these has he started doing?",
@@ -386,14 +390,17 @@ export const TICK_TESTS: TickTest[] = [
   },
 ];
 
+/** Serious ones first on each shelf, then the lighter ones mixed in. */
+export const TICK_TESTS: TickTest[] = [...CORE_TESTS, ...MORE_TICK_TESTS];
+
 export function tickTestBySlug(slug: string) {
   return TICK_TESTS.find((t) => t.slug === slug);
 }
 
 /** Every 40-second test, including the original, for cross-links. */
-export const QUICK_TESTS: { slug: string; short: string; emoji: string; bg: string; fg: string }[] = [
+export const QUICK_TESTS: { slug: string; short: string; emoji: string; bg: string; fg: string; fun?: boolean }[] = [
   { slug: "things-he-says", short: "Things he says", emoji: "💬", bg: "#E9E2F7", fg: "#3F2C6B" },
-  ...TICK_TESTS.map(({ slug, short, emoji, bg, fg }) => ({ slug, short, emoji, bg, fg })),
+  ...TICK_TESTS.map(({ slug, short, emoji, bg, fg, fun }) => ({ slug, short, emoji, bg, fg, fun })),
 ];
 
 export type TickBand = "none" | "few" | "pattern" | "system";
@@ -413,7 +420,10 @@ export function scoreTick(test: TickTest, selected: string[]): TickResult {
   const chosen = test.items.filter((i) => selected.includes(i.id));
   const count = chosen.length;
   const total = test.items.length;
-  const band: TickBand = count >= 8 ? "system" : count >= 4 ? "pattern" : count >= 1 ? "few" : "none";
+  // Half the grid or more is "system", a quarter "pattern": 8 and 4 on the
+  // sixteen-item tests, 6 and 3 on the twelve-item ones.
+  const band: TickBand =
+    count >= Math.ceil(total / 2) ? "system" : count >= Math.ceil(total / 4) ? "pattern" : count >= 1 ? "few" : "none";
 
   const byGroup = new Map<string, TickItem[]>();
   for (const i of chosen) byGroup.set(i.group, [...(byGroup.get(i.group) ?? []), i]);
@@ -427,4 +437,13 @@ export function scoreTick(test: TickTest, selected: string[]): TickResult {
   const support = test.support && flags >= test.support.min ? test.support.text : null;
 
   return { chosen, count, total, band, groups, headline, verdict: test.verdicts[band], support };
+}
+
+/**
+ * The test to suggest next: the one after this in the list, wrapping round,
+ * so following "next" walks through every test without repeating.
+ */
+export function nextQuickTest(slug: string) {
+  const i = QUICK_TESTS.findIndex((t) => t.slug === slug);
+  return QUICK_TESTS[(i + 1) % QUICK_TESTS.length];
 }

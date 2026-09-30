@@ -30,7 +30,7 @@ export default function MoreQuickTests({
           >
             <span className="text-2xl" aria-hidden="true">{t.emoji}</span>
             <span className="text-[15px] font-extrabold leading-tight mt-2">{t.short}</span>
-            <span className="text-[11px] font-bold opacity-60 mt-1">40 seconds →</span>
+            <span className="text-[11px] font-bold opacity-60 mt-1">{t.fun ? "Just for fun →" : "40 seconds →"}</span>
           </Link>
         ))}
       </div>

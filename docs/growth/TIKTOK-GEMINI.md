@@ -123,5 +123,17 @@ when you switch series (always add `?utm_source=tiktok`).
 | The friend who says "must be nice" | `oopscupid.com/things-my-friend-says` |
 | She runs when it gets serious | `oopscupid.com/when-it-gets-serious` |
 | He goes cold after a perfect weekend | `oopscupid.com/after-a-good-weekend` |
+| Is my boyfriend toxic? | `oopscupid.com/is-my-boyfriend-toxic` |
+| Is my boyfriend stupid? (comedy) | `oopscupid.com/is-my-boyfriend-stupid` |
+| Is my friend a pick-me? (comedy) | `oopscupid.com/is-my-friend-a-pick-me` |
+| Is he a mama's boy? (comedy) | `oopscupid.com/is-he-a-mamas-boy` |
+| He's just not that into you | `oopscupid.com/is-he-just-not-that-into-you` |
+| Wait, am I the toxic one? | `oopscupid.com/am-i-the-toxic-one` |
+| Is he a narcissist? | `oopscupid.com/does-he-have-narcissistic-traits` |
+| Situationship or relationship? | `oopscupid.com/is-it-a-situationship` |
+| The therapist friend (comedy) | `oopscupid.com/are-you-the-therapist-friend` |
+
+Mix comedy and serious days. The comedy ones get shared more; the serious
+ones sell more reports. Every result sends her to the next test anyway.
 
 End card for all of them: `how many have you ticked? 40 seconds, link in bio`.

@@ -1,10 +1,15 @@
 import Link from 'next/link';
+import MoreQuickTests from '@/components/tick/MoreQuickTests';
 
 const linkClass = "text-[15px] font-normal text-[#5E6E79] hover:text-[#334B63] transition-colors";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#F3ECEB] pt-16 pb-8 md:pt-20 md:pb-12 text-[#334B63]">
+    <footer className="bg-[#F3ECEB] pt-4 pb-8 md:pt-8 md:pb-12 text-[#334B63]">
+      {/* Every page ends on another test, so no page is a dead end. */}
+      <div className="container mx-auto px-5 md:px-10 lg:px-14 mb-12 overflow-hidden">
+        <MoreQuickTests title="Got 40 seconds? Try one of these" className="!mt-6" />
+      </div>
       <div className="container mx-auto px-6 md:px-10 lg:px-14">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           <div>

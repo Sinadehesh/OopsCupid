@@ -7,7 +7,7 @@ const baseUrl = "https://www.oopscupid.com";
 /** Metadata for a forty-second test, with a share card for TikTok bios. */
 export function tickMetadata(slug: string): Metadata {
   const t = tickTestBySlug(slug)!;
-  const card = `${baseUrl}/api/og?t=${encodeURIComponent(t.question)}&q=${encodeURIComponent("16 taps · 40 seconds")}`;
+  const card = `${baseUrl}/api/og?t=${encodeURIComponent(t.question)}&q=${encodeURIComponent(`${t.items.length} taps · ${t.items.length <= 12 ? 30 : 40} seconds`)}`;
   return {
     metadataBase: new URL(baseUrl),
     title: t.seo.title,

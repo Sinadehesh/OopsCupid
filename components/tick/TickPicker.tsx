@@ -3,7 +3,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Check, RotateCcw, LifeBuoy } from "lucide-react";
-import { scoreTick, tickTestBySlug, type TickResult } from "@/lib/quizzes/tickTests";
+import { scoreTick, tickTestBySlug, nextQuickTest, type TickResult } from "@/lib/quizzes/tickTests";
+import { usePremiumAccess } from "@/lib/usePremiumAccess";
 import { trackQuizStart, trackQuizComplete, trackResultView } from "@/lib/track";
 import ResultShare from "@/components/share/ResultShare";
 import CheckoutButton from "@/components/offers/CheckoutButton";
@@ -25,6 +26,9 @@ export default function TickPicker({ slug }: { slug: string }) {
   const [selected, setSelected] = useState<string[]>([]);
   const [result, setResult] = useState<TickResult | null>(null);
   const [started, setStarted] = useState(false);
+  const { granted } = usePremiumAccess();
+  const seconds = test.items.length <= 12 ? 30 : 40;
+  const next = nextQuickTest(slug);
 
   const toggle = (id: string) => {
     if (!started) {
@@ -64,7 +68,24 @@ export default function TickPicker({ slug }: { slug: string }) {
         {/* The paid step comes straight after the verdict when there is
             enough for a report to be about: that is the moment she most
             wants to know more. */}
-        {strong && <ReportOffer test={test} />}
+        {strong && (granted ? <Unlocked test={test} /> : <ReportOffer test={test} />)}
+
+        {/* Straight on to the next one: a finished test is the moment
+            she is most likely to take another. */}
+        <Link
+          href={`/${next.slug}`}
+          className="flex items-center gap-4 rounded-3xl p-5 mb-8 active:scale-[0.98] transition-transform shadow-[0_8px_30px_rgba(15,23,42,0.08)]"
+          style={{ backgroundColor: next.bg, color: next.fg }}
+        >
+          <span className="text-4xl shrink-0" aria-hidden="true">{next.emoji}</span>
+          <span className="flex-1 min-w-0">
+            <span className="block text-[10px] font-black uppercase tracking-[0.18em] opacity-60 mb-0.5">
+              Up next{next.fun ? " · just for fun" : ""}
+            </span>
+            <span className="block text-xl font-black leading-snug">{next.short}</span>
+          </span>
+          <ArrowRight className="w-6 h-6 shrink-0" />
+        </Link>
 
         {result.groups.length > 0 && (
           <div className="space-y-3 mb-10">
@@ -88,10 +109,10 @@ export default function TickPicker({ slug }: { slug: string }) {
           </div>
         )}
 
-        {!strong && result.band !== "none" && <ReportOffer test={test} />}
+        {!strong && result.band !== "none" && (granted ? <Unlocked test={test} /> : <ReportOffer test={test} />)}
 
         <div className="rounded-3xl bg-[#0E1621] text-white p-7 md:p-9 mb-8">
-          <h2 className="text-2xl font-black mb-3 leading-snug">Sixteen taps can only count.</h2>
+          <h2 className="text-2xl font-black mb-3 leading-snug">A few taps can only count.</h2>
           <p className="text-white/70 font-medium leading-relaxed mb-6">
             The full test asks how often, since when and what happens afterwards, which is what tells a bad
             stretch from a pattern. It is free and your result appears on screen.
@@ -130,7 +151,7 @@ export default function TickPicker({ slug }: { slug: string }) {
     <div className="max-w-3xl mx-auto px-5 py-8 md:py-14">
       <div className="text-center mb-7 md:mb-10">
         <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#E07850] mb-3">
-          {test.emoji} Takes about forty seconds
+          {test.emoji} {test.fun ? `Just for fun · ${seconds} seconds` : `Takes about ${seconds} seconds`}
         </p>
         <h1 className="text-[32px] md:text-6xl font-black text-slate-900 leading-[1.05] tracking-tight mb-4">
           {test.question}
@@ -198,6 +219,23 @@ function ReportOffer({ test }: { test: NonNullable<ReturnType<typeof tickTestByS
         After paying you take the full test and the report is built from your answers. It also unlocks the full
         report on every other test on the site. One payment, no subscription, 7-day refund.
       </p>
+    </div>
+  );
+}
+
+/** Already paid: say so, and send her to where the report is. Never a second charge for the same thing. */
+function Unlocked({ test }: { test: NonNullable<ReturnType<typeof tickTestBySlug>> }) {
+  return (
+    <div className="rounded-3xl border-2 border-emerald-300 bg-emerald-50 p-6 mb-8">
+      <p className="text-[11px] font-black uppercase tracking-[0.2em] text-emerald-700 mb-2">Your full reports are unlocked</p>
+      <h2 className="text-xl font-black text-slate-900 mb-4 leading-snug">{test.report.pitch}</h2>
+      <Link
+        href={test.full.href}
+        className="inline-flex items-center justify-center gap-2 w-full min-h-[56px] bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-lg rounded-2xl transition-colors"
+      >
+        Get my full report <ArrowRight className="w-5 h-5" />
+      </Link>
+      <p className="text-xs font-bold text-slate-500 mt-3">Take the full test and your report is built from your answers. Nothing more to pay.</p>
     </div>
   );
 }
