@@ -194,6 +194,13 @@ export default function HomeHero() {
             All the tests <ArrowRight className="w-4 h-4" strokeWidth={3} />
           </Link>
           <Link
+            href="/games"
+            onClick={() => trackHomeClick("games")}
+            className={`inline-flex items-center gap-1.5 rounded-full bg-[#B8F2D8] px-4 py-2 text-[14px] font-black text-[#1A1033] ${sticker}`}
+          >
+            🎮 The games <ArrowRight className="w-4 h-4" strokeWidth={3} />
+          </Link>
+          <Link
             href="/guides"
             onClick={() => trackHomeClick("guides")}
             className={`inline-flex items-center gap-1.5 rounded-full bg-[#C9B6FF] px-4 py-2 text-[14px] font-black text-[#1A1033] ${sticker}`}

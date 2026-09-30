@@ -10,6 +10,7 @@ import { shopUrl } from "@/lib/shop";
 import { trackShopClick } from "@/lib/track";
 
 const navLinks = [
+  { label: "Games", href: "/games", title: "Relationship Games" },
   { label: "All Quizzes", href: "/quizzes", title: "All Quizzes" },
   { label: "All Resources", href: "/articles", title: "All Resources & Essays" },
   { label: "Me", href: "/me", title: "Me Hub" },

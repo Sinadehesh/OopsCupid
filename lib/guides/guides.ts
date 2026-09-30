@@ -53,7 +53,7 @@ export const GUIDES: Guide[] = [
     bg: "#DDEFE8",
     fg: "#1F4A3E",
     minutes: 9,
-    forTests: ["waiting-for-his-reply", "is-he-just-not-that-into-you", "things-he-does", "after-a-good-weekend"],
+    forTests: ["decode-his-text", "guess-the-attachment-style", "waiting-for-his-reply", "is-he-just-not-that-into-you", "things-he-does", "after-a-good-weekend"],
     forGroups: ["checking", "rehearsing", "body", "story"],
     sections: [
       {
@@ -144,7 +144,7 @@ export const GUIDES: Guide[] = [
     bg: "#E9E2F7",
     fg: "#3F2C6B",
     minutes: 10,
-    forTests: ["things-he-does", "things-he-says", "is-he-just-not-that-into-you", "is-it-a-situationship", "waiting-for-his-reply"],
+    forTests: ["decode-his-text", "things-he-does", "things-he-says", "is-he-just-not-that-into-you", "is-it-a-situationship", "waiting-for-his-reply"],
     forGroups: ["stories", "secrecy", "effort", "reality"],
     sections: [
       {
@@ -219,7 +219,7 @@ export const GUIDES: Guide[] = [
     bg: "#FCE3D8",
     fg: "#7A2E14",
     minutes: 10,
-    forTests: ["red-flag-or-green-flag", "first-month-red-flags", "is-my-boyfriend-toxic", "does-he-have-narcissistic-traits", "things-he-says"],
+    forTests: ["gaslighting-or-not", "red-flag-or-green-flag", "first-month-red-flags", "is-my-boyfriend-toxic", "does-he-have-narcissistic-traits", "things-he-says"],
     forGroups: ["intensity", "boundaries", "character", "control", "disrespect"],
     sections: [
       {
@@ -303,7 +303,7 @@ export const GUIDES: Guide[] = [
     bg: "#FBE0E6",
     fg: "#7A1F35",
     minutes: 9,
-    forTests: ["red-flag-or-green-flag", "after-a-good-weekend", "first-month-red-flags", "is-he-just-not-that-into-you", "is-it-a-situationship"],
+    forTests: ["guess-the-attachment-style", "red-flag-or-green-flag", "after-a-good-weekend", "first-month-red-flags", "is-he-just-not-that-into-you", "is-it-a-situationship"],
     forGroups: ["hotcold", "withdraw", "return", "convenience", "pressure"],
     sections: [
       {
@@ -365,7 +365,7 @@ export const GUIDES: Guide[] = [
     bg: "#E3E6F8",
     fg: "#27306B",
     minutes: 9,
-    forTests: ["things-he-says", "is-my-boyfriend-toxic", "does-he-have-narcissistic-traits", "him-vs-your-ex"],
+    forTests: ["gaslighting-or-not", "decode-his-text", "things-he-says", "is-my-boyfriend-toxic", "does-he-have-narcissistic-traits", "him-vs-your-ex"],
     forGroups: ["reality", "blame", "minimising", "character", "fragile", "mask"],
     sections: [
       {
@@ -430,7 +430,7 @@ export const GUIDES: Guide[] = [
     bg: "#FDEBD3",
     fg: "#6B3E0E",
     minutes: 9,
-    forTests: ["things-my-friend-says", "friend-vs-friend", "is-my-friend-a-pick-me", "are-you-the-therapist-friend"],
+    forTests: ["friend-or-frenemy", "things-my-friend-says", "friend-vs-friend", "is-my-friend-a-pick-me", "are-you-the-therapist-friend"],
     forGroups: ["envy", "taking", "digs", "guilt", "gossip", "effort", "rival", "oneway"],
     sections: [
       {
@@ -494,7 +494,7 @@ export const GUIDES: Guide[] = [
     bg: "#D8F0EE",
     fg: "#134A45",
     minutes: 9,
-    forTests: ["when-it-gets-serious", "am-i-the-toxic-one"],
+    forTests: ["guess-the-attachment-style", "when-it-gets-serious", "am-i-the-toxic-one"],
     forGroups: ["exit", "distance", "test", "numb", "worth", "punish", "fight"],
     sections: [
       {
@@ -555,7 +555,7 @@ export const GUIDES: Guide[] = [
     bg: "#E2EEF3",
     fg: "#1F4552",
     minutes: 8,
-    forTests: ["is-it-a-situationship", "is-he-just-not-that-into-you"],
+    forTests: ["decode-his-text", "is-it-a-situationship", "is-he-just-not-that-into-you"],
     forGroups: ["label", "shape", "world", "you", "said", "hidden"],
     sections: [
       {
@@ -618,7 +618,7 @@ export const GUIDES: Guide[] = [
     bg: "#E4F2E0",
     fg: "#2C4F22",
     minutes: 8,
-    forTests: ["are-you-the-therapist-friend", "things-my-friend-says", "friend-vs-friend"],
+    forTests: ["friend-or-frenemy", "are-you-the-therapist-friend", "things-my-friend-says", "friend-vs-friend"],
     forGroups: ["role", "oneway", "cost", "taking", "effort"],
     sections: [
       {

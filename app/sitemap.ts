@@ -4,6 +4,7 @@ import { SYMPTOM_PAGES } from "@/lib/seo/symptoms";
 import { TICK_TESTS } from "@/lib/quizzes/tickTests";
 import { VERSUS_GAMES } from "@/lib/quizzes/versus";
 import { GUIDES } from "@/lib/guides/guides";
+import { CHOICE_GAMES } from "@/lib/quizzes/choiceGames";
 
 // FORCES NEXT.JS TO GENERATE THIS AT BUILD TIME FOR STATIC EXPORTS
 export const dynamic = "force-static";
@@ -31,6 +32,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...VERSUS_GAMES.map((g) => `/${g.slug}`),
     "/guides",
     "/red-flag-or-green-flag",
+    "/games",
+    ...CHOICE_GAMES.map((g) => `/${g.slug}`),
     ...GUIDES.map((g) => `/guides/${g.slug}`),
   ];
 

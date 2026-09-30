@@ -3,6 +3,8 @@ import TickPicker from "@/components/tick/TickPicker";
 import { tickTestBySlug } from "@/lib/quizzes/tickTests";
 import { versusBySlug } from "@/lib/quizzes/versus";
 import VersusGame from "@/components/tick/VersusGame";
+import ChoiceGame from "@/components/tick/ChoiceGame";
+import { choiceGame } from "@/lib/quizzes/choiceGames";
 
 const baseUrl = "https://www.oopscupid.com";
 
@@ -63,6 +65,38 @@ export function VersusPage({ slug }: { slug: string }) {
   return (
     <main className="min-h-screen bg-[#FAFAF7]">
       <VersusGame slug={slug} />
+    </main>
+  );
+}
+
+/** Metadata for a pick-the-answer game. */
+export function choiceMetadata(slug: string): Metadata {
+  const g = choiceGame(slug)!;
+  const card = `${baseUrl}/api/og?t=${encodeURIComponent(`${g.title} ${g.emoji}`)}&q=${encodeURIComponent(g.seo.og)}`;
+  return {
+    metadataBase: new URL(baseUrl),
+    title: g.seo.title,
+    description: g.seo.description,
+    alternates: { canonical: `${baseUrl}/${slug}` },
+    openGraph: { title: `${g.title} ${g.emoji}`, description: g.seo.og, url: `${baseUrl}/${slug}`, type: "website", images: [{ url: card, width: 1200, height: 630, alt: g.title }] },
+    twitter: { card: "summary_large_image", title: `${g.title} ${g.emoji}`, description: g.seo.og, images: [card] },
+  };
+}
+
+export function ChoicePage({ slug }: { slug: string }) {
+  const g = choiceGame(slug)!;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Quiz",
+    name: g.title,
+    url: `${baseUrl}/${slug}`,
+    educationalLevel: "beginner",
+    hasPart: g.rounds.map((r) => ({ "@type": "Question", name: r.prompt })),
+  };
+  return (
+    <main className="min-h-screen bg-[#FFF4FA]">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <ChoiceGame slug={slug} />
     </main>
   );
 }
