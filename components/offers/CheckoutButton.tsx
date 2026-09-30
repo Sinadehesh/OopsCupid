@@ -20,6 +20,7 @@ export default function CheckoutButton({
   returnTo,
   onUnavailable,
   beforeCheckout,
+  compact = false,
 }: {
   sku: Sku;
   children: React.ReactNode;
@@ -34,6 +35,8 @@ export default function CheckoutButton({
    * the report survives the round-trip through Checkout.
    */
   beforeCheckout?: () => void | Promise<void>;
+  /** Small price chips: spinner only while loading, and no arrow. */
+  compact?: boolean;
 }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -88,7 +91,11 @@ export default function CheckoutButton({
   return (
     <>
       <button onClick={start} disabled={loading} className={className} aria-busy={loading}>
-        {loading ? (
+        {loading && compact ? (
+          <Loader2 className="w-5 h-5 animate-spin mx-auto" />
+        ) : compact ? (
+          children
+        ) : loading ? (
           <>
             <Loader2 className="w-5 h-5 animate-spin" /> Opening secure checkout…
           </>

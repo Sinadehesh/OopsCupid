@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Check, RotateCcw, LifeBuoy } from "lucide-react";
 import { PHRASES, scorePhrases, type PhraseResult } from "@/lib/quizzes/thingsHeSays";
@@ -10,9 +10,22 @@ import CheckoutButton from "@/components/offers/CheckoutButton";
 import ProgramOffer from "@/components/program/ProgramOffer";
 import MoreQuickTests from "@/components/tick/MoreQuickTests";
 import GuideCards from "@/components/guides/GuideCards";
-import { guidesFor } from "@/lib/guides/guides";
+import { guidesFor } from "@/lib/guides/meta";
 import MerchCard from "@/components/shop/MerchCard";
-import { CANDY, sticker, stickerStatic, display } from "@/lib/ui/sticker";
+import { sticker, stickerStatic, display } from "@/lib/ui/sticker";
+import { BingoBoard, completedLines } from "@/components/tick/games/Bingo";
+import QuickRead, { loadPending } from "@/components/tick/QuickRead";
+
+// The bingo card shows each sentence in quotes.
+const CARD = PHRASES.map((p) => ({ id: p.id, text: `"${p.text}"` }));
+const NAME = "Things He Says Bingo";
+
+function badge(selected: string[]) {
+  const lines = completedLines(CARD, selected).length;
+  if (selected.length === CARD.length) return "💀 BLACKOUT: every square";
+  if (lines === 0) return "No bingo. Lucky you 🍀";
+  return `🎉 ${lines} BINGO ${lines === 1 ? "line" : "lines"}`;
+}
 
 const QUIZ = "things-he-says";
 
@@ -29,6 +42,16 @@ export default function PhrasePicker() {
   const [selected, setSelected] = useState<string[]>([]);
   const [result, setResult] = useState<PhraseResult | null>(null);
   const [started, setStarted] = useState(false);
+
+  // Back from Stripe with ?read=1: put her card back so the read appears.
+  useEffect(() => {
+    if (!new URLSearchParams(window.location.search).has("read")) return;
+    const picks = loadPending<string[]>(QUIZ);
+    if (Array.isArray(picks) && picks.length) {
+      setSelected(picks);
+      setResult(scorePhrases(picks));
+    }
+  }, []);
 
   const toggle = (id: string) => {
     if (!started) {
@@ -50,14 +73,27 @@ export default function PhrasePicker() {
 
   if (result) {
     return (
-      <div className="bg-[#FFF4FA] min-h-screen"><div className="max-w-2xl mx-auto px-4 py-8 md:py-12">
+      <div className="bg-[#FFF4FA] min-h-screen overflow-x-hidden"><div className="max-w-2xl mx-auto px-4 py-8 md:py-12">
+        <div className="mb-8">
+          <p className="text-center text-[12px] font-black uppercase tracking-[0.18em] text-[#1A1033]/60 mb-3">📸 screenshot it, post it</p>
+          <BingoBoard items={CARD} selected={selected} name={NAME} emoji="💬" />
+        </div>
+
         <div className={`rounded-[28px] bg-gradient-to-br from-[#FF4FA3] via-[#FF6F7D] to-[#FF9A4D] text-white p-6 md:p-8 mb-8 ${stickerStatic}`}>
-          <p className="text-[11px] font-black uppercase tracking-[0.2em] text-white/85 mb-2">💬 Your result</p>
+          <p className="text-[11px] font-black uppercase tracking-[0.2em] text-white/85 mb-2">💬 {NAME}</p>
+          <p className="inline-block rounded-full bg-[#FFE68A] text-[#1A1033] border-2 border-[#1A1033] px-3 py-1 text-sm font-black mb-3">{badge(selected)}</p>
           <h1 className="text-[34px] md:text-5xl leading-[1.02] mb-4" style={display}>{result.headline}</h1>
           <p className="text-[17px] font-bold leading-relaxed text-white/95">{result.verdict}</p>
         </div>
 
         <GuideCards guides={guidesFor("things-he-says", result.tactics.map((t) => t.key))} />
+
+        {result.count > 0 && (
+          <QuickRead
+            input={{ kind: "tick", slug: QUIZ, picks: result.chosen.map((p) => p.id), count: result.count }}
+            pending={result.chosen.map((p) => p.id)}
+          />
+        )}
 
         {result.support && (
           <div className="rounded-2xl bg-amber-50 border border-amber-200 p-6 mb-10 flex gap-3.5">
@@ -169,7 +205,7 @@ export default function PhrasePicker() {
         <ResultShare
           quiz="Things He Says"
           quizPath="/things-he-says"
-          title={result.headline}
+          title={`${badge(selected)} on ${NAME}`}
           score={result.count}
           scoreLabel="of 16 recognised"
         />
@@ -188,53 +224,43 @@ export default function PhrasePicker() {
     );
   }
 
+  const lines = completedLines(CARD, selected).length;
+  const pct = Math.round((selected.length / CARD.length) * 100);
   return (
-    <div className="bg-[#FFF4FA] min-h-screen"><div className="max-w-3xl mx-auto px-4 py-8 md:py-14">
-      <div className="text-center mb-7">
+    <div className="bg-[#FFF4FA] min-h-screen overflow-x-hidden"><div className="max-w-3xl mx-auto px-4 py-7 md:py-12">
+      <div className="text-center mb-6">
         <span className="inline-block -rotate-2 rounded-full bg-white px-3 py-1 text-[12px] font-black text-[#1A1033] mb-4 border-2 border-[#1A1033] shadow-[2px_2px_0_#1A1033]">
-          💬 40 seconds
+          🎱 {NAME} · 40 sec
         </span>
-        <h1 className="text-[38px] md:text-6xl text-[#1A1033] leading-[1.02] mb-4" style={display}>
+        <h1 className="text-[34px] md:text-6xl text-[#1A1033] leading-[1.02] mb-3" style={display}>
           Which of these
           <br />
           has he said to you?
         </h1>
         <p className="text-base md:text-lg text-[#1A1033]/70 font-semibold leading-relaxed max-w-xl mx-auto">
-          Tap every one you have actually heard. Not what he meant, not how he
-          said it, just whether the sentence is familiar.
+          Stamp every sentence you&apos;ve actually heard. A full row, column or diagonal is a BINGO. You don&apos;t want a BINGO.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-        {PHRASES.map((p, idx) => {
-          const on = selected.includes(p.id);
-          return (
-            <button
-              key={p.id}
-              onClick={() => toggle(p.id)}
-              aria-pressed={on}
-              className={`text-left px-4 py-3.5 rounded-[18px] font-bold leading-snug min-h-[60px] flex items-center gap-3 text-[#1A1033] ${sticker} ${on ? "oc-pop" : "bg-white"}`}
-              style={on ? { backgroundColor: CANDY[idx % CANDY.length] } : undefined}
-            >
-              <span
-                className={`w-6 h-6 rounded-lg border-2 border-[#1A1033] shrink-0 flex items-center justify-center ${on ? "bg-[#1A1033]" : "bg-white"}`}
-              >
-                {on && <Check className="w-3.5 h-3.5 text-white" />}
-              </span>
-              &ldquo;{p.text}&rdquo;
-            </button>
-          );
-        })}
+      <div className="max-w-2xl mx-auto mb-6">
+        <BingoBoard items={CARD} selected={selected} name={NAME} emoji="💬" onToggle={toggle} />
       </div>
 
-      <div className="sticky bottom-4 z-10">
+      <div className="sticky bottom-3 z-10 space-y-2 max-w-2xl mx-auto">
+        <div className={`rounded-2xl bg-white px-4 py-2.5 ${stickerStatic} !shadow-[3px_3px_0_#1A1033]`}>
+          <div className="flex items-center justify-between text-[13px] font-black text-[#1A1033] mb-1.5">
+            <span>{selected.length === 0 ? "stamp the ones you've heard" : `${lines} ${lines === 1 ? "line" : "lines"} · ${selected.length >= 8 ? "that's a lot 😬" : selected.length >= 4 ? "ooh, a pattern 👀" : "a few 🤔"}`}</span>
+            <span className="tabular-nums">{selected.length}/{CARD.length}</span>
+          </div>
+          <div className="h-3 rounded-full bg-[#FFE4F1] border-2 border-[#1A1033] overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-[#FF4FA3] to-[#FF9A4D] transition-all duration-300" style={{ width: `${pct}%` }} />
+          </div>
+        </div>
         <button
           onClick={show}
           className={`w-full min-h-[60px] rounded-2xl bg-[#1A1033] text-white font-black text-lg flex items-center justify-center gap-2 ${sticker} !shadow-[4px_4px_0_#FF4FA3]`}
         >
-          {selected.length === 0
-            ? "I have not heard any of these"
-            : `Show me what ${selected.length === 1 ? "it" : "they"} mean${selected.length === 1 ? "s" : ""} (${selected.length})`}
+          {selected.length === 0 ? "I haven't heard any of these" : "Call it: see my card"}
           <ArrowRight className="w-5 h-5" />
         </button>
       </div>

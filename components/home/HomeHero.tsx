@@ -29,7 +29,7 @@ const INK = "#1A1033";
 const QUICK = {
   href: "/things-he-says",
   title: "Which of these has he said to you?",
-  detail: "16 phrases · 40 seconds",
+  detail: "🎱 bingo · 40 seconds",
 };
 
 /** Candy palette, cycled across the cards. */

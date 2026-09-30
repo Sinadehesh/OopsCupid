@@ -16,7 +16,7 @@ import { BingoBoard, completedLines } from "./games/Bingo";
 import { ReceiptShelf, Receipt } from "./games/Receipt";
 import { TierGame, TierBoard } from "./games/TierList";
 import GuideCards from "@/components/guides/GuideCards";
-import { guidesFor } from "@/lib/guides/guides";
+import { guidesFor } from "@/lib/guides/meta";
 import MerchCard from "@/components/shop/MerchCard";
 import { CANDY, INK, sticker, stickerStatic, display } from "@/lib/ui/sticker";
 

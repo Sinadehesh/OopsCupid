@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import { Sparkles, MessageCircle } from "lucide-react";
 import { GUIDES, guideBySlug, type GuideSection } from "@/lib/guides/guides";
+import { GUIDE_META } from "@/lib/guides/meta";
 import { ACCESS_COOKIE, readAccessToken, canRead } from "@/lib/stripe/access";
 import GuideUnlock from "@/components/guides/GuideUnlock";
 import GuideCards from "@/components/guides/GuideCards";
@@ -75,7 +76,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
   const claims = readAccessToken((await cookies()).get(ACCESS_COOKIE)?.value);
   const open = canRead(claims, `guides/${slug}`);
   const [first, ...rest] = g.sections;
-  const others = GUIDES.filter((x) => x.slug !== slug && x.forTests.some((t) => g.forTests.includes(t))).slice(0, 3);
+  const others = GUIDE_META.filter((x) => x.slug !== slug && x.forTests.some((t) => g.forTests.includes(t))).slice(0, 3);
 
   return (
     <main className="min-h-screen bg-[#FFF4FA]">

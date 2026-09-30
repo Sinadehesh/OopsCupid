@@ -55,6 +55,8 @@ export interface ChoiceGame {
   note?: string;
   /** The "now test your own" link. */
   own: { href: string; label: string; emoji: string };
+  /** The quiz path whose programme to offer after the result. */
+  program?: string;
   seo: { title: string; description: string; og: string };
 }
 
@@ -152,6 +154,7 @@ const DECODE: ChoiceGame = {
     { min: 0, emoji: "📵", title: "Lost in Translation", line: "His texts are a foreign language right now. Good news: it's learnable." },
   ],
   resultLabel: "Your text decoding level",
+  program: "/partners-attachment-style",
   own: { href: "/is-he-just-not-that-into-you", label: "Is he just not that into you?", emoji: "💔" },
   seo: {
     title: "Decode His Text: What Does His Message Really Mean? | OopsCupid",
@@ -196,6 +199,7 @@ const ATTACHMENT: ChoiceGame = {
   ],
   resultLabel: "Your people-reading level",
   note: "Attachment styles are patterns, not labels. Everyone does a bit of all four, especially under stress. Your own style is the one that matters most.",
+  program: "/attachment-style-quiz",
   own: { href: "/attachment-style-quiz", label: "What's your own attachment style?", emoji: "🧸" },
   seo: {
     title: "Guess the Attachment Style: The Game | OopsCupid",
@@ -240,6 +244,7 @@ const GASLIGHTING: ChoiceGame = {
   ],
   resultLabel: "Your gaslighting radar",
   note: "If a lot of these felt familiar from your own life, trust that. Doubting your memory all the time is a sign, not a personality flaw.",
+  program: "/is-he-gaslighting-me",
   own: { href: "/is-he-gaslighting-me", label: "Is he gaslighting you?", emoji: "🌀" },
   seo: {
     title: "Gaslighting or Not? The Spot-It Game | OopsCupid",
@@ -283,6 +288,7 @@ const FRENEMY: ChoiceGame = {
     { min: 0, emoji: "🤗", title: "Everyone's Bestie", line: "You trust everyone. Time to learn the signs so your kindness goes to the right people." },
   ],
   resultLabel: "Your friendship radar",
+  program: "/is-my-best-friend-toxic",
   own: { href: "/friend-vs-friend", label: "Compare two of your friends", emoji: "👯" },
   seo: {
     title: "Friend or Frenemy? The Spot-It Game | OopsCupid",

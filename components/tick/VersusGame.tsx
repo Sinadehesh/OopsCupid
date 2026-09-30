@@ -11,7 +11,7 @@ import ProgramOffer from "@/components/program/ProgramOffer";
 import MoreQuickTests from "./MoreQuickTests";
 import QuickRead, { loadPending } from "./QuickRead";
 import GuideCards from "@/components/guides/GuideCards";
-import { guidesFor } from "@/lib/guides/guides";
+import { guidesFor } from "@/lib/guides/meta";
 import MerchCard from "@/components/shop/MerchCard";
 import { CANDY, sticker, stickerStatic, display } from "@/lib/ui/sticker";
 
@@ -64,7 +64,7 @@ export default function VersusGame({ slug }: { slug: string }) {
 
   if (stage === "names") {
     return (
-      <div className="bg-[#FFF4FA] min-h-screen"><div className="max-w-xl mx-auto px-4 py-8 md:py-14">
+      <div className="bg-[#FFF4FA] min-h-screen overflow-x-hidden"><div className="max-w-xl mx-auto px-4 py-8 md:py-14">
         <div className="text-center mb-7">
           <span className="inline-block -rotate-2 rounded-full bg-white px-3 py-1 text-[12px] font-black text-[#1A1033] mb-4 border-2 border-[#1A1033] shadow-[2px_2px_0_#1A1033]">
             {game.emoji} {game.cards.length} moments · about a minute
@@ -109,7 +109,7 @@ export default function VersusGame({ slug }: { slug: string }) {
     const card = game.cards[i];
     const btn = `min-h-[64px] rounded-2xl font-black text-lg px-3 break-words ${sticker}`;
     return (
-      <div className="bg-[#FFF4FA] min-h-screen"><div className="max-w-xl mx-auto px-4 py-8 md:py-14">
+      <div className="bg-[#FFF4FA] min-h-screen overflow-x-hidden"><div className="max-w-xl mx-auto px-4 py-8 md:py-14">
         <div className="flex items-center justify-between mb-2 text-xs font-black text-[#1A1033]/60">
           <span>{game.emoji} {game.title}</span>
           <span>{i + 1} / {game.cards.length}</span>
@@ -140,7 +140,7 @@ export default function VersusGame({ slug }: { slug: string }) {
   const loserName = r.winner === "a" ? b : r.winner === "b" ? a : null;
 
   return (
-    <div className="bg-[#FFF4FA] min-h-screen"><div className="max-w-2xl mx-auto px-4 py-8 md:py-14">
+    <div className="bg-[#FFF4FA] min-h-screen overflow-x-hidden"><div className="max-w-2xl mx-auto px-4 py-8 md:py-14">
       <p className="text-[12px] font-black uppercase tracking-[0.2em] text-[#FF4FA3] mb-2">{game.emoji} Your result</p>
       <h1 className="text-[34px] md:text-5xl text-[#1A1033] leading-[1.02] mb-6" style={display}>
         {winnerName ? `${winnerName} is the one in your corner.` : "It's closer than you think."}

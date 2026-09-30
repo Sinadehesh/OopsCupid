@@ -4,6 +4,7 @@ import { tidy } from "@/lib/ai/tidy";
 import { ACCESS_COOKIE, readAccessToken, canRead } from "@/lib/stripe/access";
 import { tickTestBySlug, scoreTick } from "@/lib/quizzes/tickTests";
 import { versusBySlug, scoreVersus, type Pick } from "@/lib/quizzes/versus";
+import { scorePhrases } from "@/lib/quizzes/thingsHeSays";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -52,7 +53,31 @@ export async function POST(req: NextRequest) {
   let system: string;
   let user: string;
 
-  if (kind === "tick") {
+  if (kind === "tick" && slug === "things-he-says") {
+    // The original sixteen phrases: same read, built from the tactics.
+    if (!Array.isArray(picks)) return NextResponse.json({ error: "Bad request." }, { status: 400 });
+    const r = scorePhrases(picks.filter((p: unknown) => typeof p === "string"));
+    if (r.count === 0) return NextResponse.json({ error: "Tick at least one to get a read." }, { status: 422 });
+    system = `You write a short personal read for someone who just played "Things He Says
+Bingo": they marked which of sixteen sentences their partner has said to them. Take it
+seriously and be kind. Some of these sentences can be part of gaslighting or control;
+name the pattern the sentences usually belong to without claiming to know him.
+
+${RULES}
+
+Return ONLY valid JSON:
+{
+  "headline": "one sentence naming the most important thing in what they marked",
+  "together": "2 short paragraphs on what their sentences say together, quoting them",
+  "watch": {"item": "the single sentence to watch most, quoted exactly", "why": "2 sentences"},
+  "say": {"intro": "one sentence on when to use it", "message": "something they could say next time, under 40 words"},
+  "step": "one concrete thing to do this week, 1 to 2 sentences",
+  "flag": ""
+}`;
+    user = `They marked ${r.count} of 16:\n${r.tactics
+      .map((t) => `${t.label}:\n${r.chosen.filter((c) => c.tactic === t.key).map((c) => `- "${c.text}"`).join("\n")}`)
+      .join("\n\n")}`;
+  } else if (kind === "tick") {
     const test = tickTestBySlug(slug);
     if (!test || !Array.isArray(picks)) return NextResponse.json({ error: "Bad request." }, { status: 400 });
     const r = scoreTick(test, picks.filter((p: unknown) => typeof p === "string"));

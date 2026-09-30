@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import type { TickItem } from "@/lib/quizzes/tickTests";
 import { CANDY, stickerStatic, display } from "@/lib/ui/sticker";
 
 /** 16 items make a 4x4 card, 12 make 3 across by 4 down. */
@@ -22,7 +21,9 @@ export function bingoLines(n: number): number[][] {
   return lines.filter((l) => l.every((i) => i < n));
 }
 
-export function completedLines(items: TickItem[], selected: string[]) {
+export type BingoItem = { id: string; text: string };
+
+export function completedLines(items: BingoItem[], selected: string[]) {
   const on = new Set(items.map((it, i) => (selected.includes(it.id) ? i : -1)).filter((i) => i >= 0));
   return bingoLines(items.length).filter((l) => l.every((i) => on.has(i)));
 }
@@ -36,7 +37,7 @@ export function BingoBoard({
   emoji,
   onToggle,
 }: {
-  items: TickItem[];
+  items: BingoItem[];
   selected: string[];
   name: string;
   emoji: string;

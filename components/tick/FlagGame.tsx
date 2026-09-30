@@ -5,11 +5,13 @@ import Link from "next/link";
 import { ArrowRight, RotateCcw } from "lucide-react";
 import { FLAG_CARDS, rankFor, type FlagCard } from "@/lib/quizzes/flagGame";
 import { nextQuickTest } from "@/lib/quizzes/tickTests";
-import { guidesFor } from "@/lib/guides/guides";
+import { guidesFor } from "@/lib/guides/meta";
 import { trackQuizStart, trackQuizComplete, trackResultView } from "@/lib/track";
 import ResultShare from "@/components/share/ResultShare";
 import GuideCards from "@/components/guides/GuideCards";
 import MerchCard from "@/components/shop/MerchCard";
+import UnlockAllCard from "@/components/offers/UnlockAllCard";
+import ProgramOffer from "@/components/program/ProgramOffer";
 import MoreQuickTests from "./MoreQuickTests";
 import { CANDY, sticker, stickerStatic, display } from "@/lib/ui/sticker";
 
@@ -87,7 +89,7 @@ export default function FlagGame() {
   if (done) {
     const rank = rankFor(score);
     return (
-      <div className="bg-[#FFF4FA] min-h-screen">
+      <div className="bg-[#FFF4FA] min-h-screen overflow-x-hidden">
         <div className="max-w-2xl mx-auto px-4 py-8 md:py-12">
           <div className={`relative overflow-hidden rounded-[28px] bg-gradient-to-br from-[#FF4FA3] via-[#FF6F7D] to-[#FF9A4D] text-white p-6 md:p-8 mb-8 text-center ${stickerStatic}`}>
             <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-around">
@@ -104,6 +106,8 @@ export default function FlagGame() {
           </div>
 
           <GuideCards guides={guidesFor(SLUG)} title="Sharpen your radar" />
+
+          <UnlockAllCard from={`result-${SLUG}`} />
 
           <Link href="/first-month-red-flags" className={`flex items-center gap-4 rounded-[24px] p-5 mb-8 bg-[#FFE68A] text-[#1A1033] ${sticker}`}>
             <span className="w-14 h-14 shrink-0 rounded-full bg-white border-2 border-[#1A1033] flex items-center justify-center text-3xl" aria-hidden="true">🚩</span>
@@ -122,6 +126,8 @@ export default function FlagGame() {
             </span>
             <ArrowRight className="w-6 h-6 shrink-0" strokeWidth={3} />
           </Link>
+
+          <ProgramOffer quizPath="/is-he-manipulative" className="!px-0 !py-4" />
 
           <ResultShare quiz="Red Flag or Green Flag?" quizPath={`/${SLUG}`} title={`${rank.emoji} ${rank.title}`} score={score} scoreLabel={`of ${FLAG_CARDS.length}`} />
           <MerchCard from={`result-${SLUG}`} />
@@ -143,7 +149,7 @@ export default function FlagGame() {
   const hint = drag < -40 ? "red" : drag > 40 ? "green" : null;
 
   return (
-    <div className="bg-[#FFF4FA] min-h-screen">
+    <div className="bg-[#FFF4FA] min-h-screen overflow-x-hidden">
       <div className="max-w-md mx-auto px-4 py-6 md:py-10">
         <div className="text-center mb-4">
           <span className="inline-block -rotate-2 rounded-full bg-white px-3 py-1 text-[12px] font-black text-[#1A1033] mb-3 border-2 border-[#1A1033] shadow-[2px_2px_0_#1A1033]">

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { GUIDES } from "@/lib/guides/guides";
+import { GUIDE_META as GUIDES } from "@/lib/guides/meta";
 import GuideCards from "@/components/guides/GuideCards";
 import MoreQuickTests from "@/components/tick/MoreQuickTests";
 import MerchCard from "@/components/shop/MerchCard";
+import UnlockAllCard from "@/components/offers/UnlockAllCard";
 import { display } from "@/lib/ui/sticker";
 
 export const metadata: Metadata = {
@@ -20,7 +21,8 @@ export default function GuidesIndex() {
         <p className="text-lg text-slate-600 font-medium leading-relaxed mb-8">
           What's actually going on, in plain words, with the research behind it. The first part of every guide is free.
         </p>
-        <GuideCards guides={GUIDES} title="Pick one" />
+        <UnlockAllCard from="guides-index" />
+        <GuideCards guides={GUIDES} title="Or pick one" />
         <MerchCard from="guides-index" />
         <MoreQuickTests title="Or take a 40-second test" />
       </div>
