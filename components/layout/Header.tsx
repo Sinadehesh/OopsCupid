@@ -168,12 +168,14 @@ export default function Header() {
                 )}
               </Link>
             ) : (
+              // On a phone the header's one button is taking a test, not
+              // signing in: nobody arriving from TikTok has an account yet.
+              // Sign in stays in the menu.
               <Link
-                href="/login"
-                className="flex items-center gap-1.5 rounded-full px-3 py-1.5 bg-[#334B63] text-white text-[13px] font-semibold hover:bg-[#2A3D52] transition-all"
+                href="/quizzes"
+                className="flex items-center gap-1.5 rounded-full px-3.5 py-1.5 bg-[#E07850] text-white text-[13px] font-extrabold hover:bg-[#C9663F] transition-all"
               >
-                <LogIn className="w-3.5 h-3.5" />
-                Sign in
+                Free tests
               </Link>
             )
           )}

@@ -61,3 +61,6 @@ export const trackPurchase = (sku: string) => send("purchase", { sku });
 /** A share sheet was opened or a result link copied, the viral loop. */
 export const trackShare = (quiz: string, method: string) =>
   send("share", { quiz, method });
+
+/** A tap on a homepage test tile, so the tiles can be ranked by use. */
+export const trackHomeClick = (target: string) => send("home_click", { target });

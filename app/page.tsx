@@ -1,4 +1,4 @@
-import MainHero from "@/components/ui/MainHero";
+import HomeHero, { StickyTestBar } from "@/components/home/HomeHero";
 import Card from "@/components/ui/Card";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -136,10 +136,10 @@ export default function Home() {
       
       
 
-      <MainHero />
+      <HomeHero />
 
       {/* NEW SECTION 2: THE PAIN (Running from Hell) */}
-      <section className="bg-white py-20 md:py-32">
+      <section className="bg-white py-12 md:py-32">
         <div className="container mx-auto px-6 md:px-10 lg:px-14 max-w-4xl">
           <h2 className="text-[36px] md:text-[46px] font-extrabold text-[#E07850] mb-8 text-center leading-tight">
             Are You Tired Of Feeling Crazy?
@@ -179,7 +179,7 @@ export default function Home() {
       </section>
 
       {/* NEW SECTION 3: THE SOLUTION (Including Quizzes functionally) */}
-      <section className="bg-[#3D5A6C] py-20 md:py-32 text-white">
+      <section className="bg-[#3D5A6C] py-12 md:py-32 text-white">
         <div className="container mx-auto px-6 md:px-10 lg:px-14">
           <div className="text-center max-w-4xl mx-auto mb-16">
             <h2 className="text-[36px] md:text-[46px] font-extrabold mb-6 leading-tight">
@@ -228,7 +228,7 @@ export default function Home() {
           Bundle" that was really the premium report under another name.
           The programmes are the thing that changes the pattern, and week 1
           of each is free, so the homepage sends people straight into one. */}
-      <section className="bg-white py-20 md:py-28">
+      <section className="bg-white py-12 md:py-28">
         <div className="container mx-auto px-6 md:px-10 lg:px-14 max-w-6xl">
           <div className="max-w-3xl mb-12">
             <h2 className="text-[32px] md:text-[42px] font-extrabold text-[#3A556C] mb-5 leading-tight">
@@ -265,7 +265,7 @@ export default function Home() {
       </section>
 
       {/* COACHING, 1:1 OFFER */}
-      <section className="bg-[#32485A] py-20 md:py-28 text-white">
+      <section className="bg-[#32485A] py-12 md:py-28 text-white">
         <div className="container mx-auto px-6 md:px-10 lg:px-14 max-w-5xl">
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="lg:w-3/5">
@@ -468,6 +468,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <StickyTestBar />
     </main>
   );
 }
