@@ -13,6 +13,7 @@ import MoreQuickTests from "./MoreQuickTests";
 import QuickRead, { loadPending } from "./QuickRead";
 import GuideCards from "@/components/guides/GuideCards";
 import { guidesFor } from "@/lib/guides/guides";
+import MerchCard from "@/components/shop/MerchCard";
 
 /**
  * One screen, tap to select, same as /things-he-says: someone from a video
@@ -154,6 +155,8 @@ export default function TickPicker({ slug }: { slug: string }) {
           score={result.count}
           scoreLabel={`of ${result.total}`}
         />
+
+        <MerchCard from={`result-${slug}`} />
 
         <MoreQuickTests exclude={test.slug} />
 

@@ -64,3 +64,6 @@ export const trackShare = (quiz: string, method: string) =>
 
 /** A tap on a homepage test tile, so the tiles can be ranked by use. */
 export const trackHomeClick = (target: string) => send("home_click", { target });
+
+/** A tap through to the merch shop, by where it was tapped. */
+export const trackShopClick = (where: string) => send("shop_click", { where });

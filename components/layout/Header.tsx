@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import { Menu, X, LogIn, LogOut, BookOpen } from "lucide-react";
 import { useState } from "react";
 import { useSession, signOut } from "next-auth/react";
+import { shopUrl } from "@/lib/shop";
+import { trackShopClick } from "@/lib/track";
 
 const navLinks = [
   { label: "All Quizzes", href: "/quizzes", title: "All Quizzes" },
@@ -78,6 +80,15 @@ export default function Header() {
                 </Link>
               );
             })}
+            <a
+              href={shopUrl("header")}
+              target="_blank"
+              rel="noopener"
+              onClick={() => trackShopClick("header")}
+              className="rounded-full px-4 py-1.5 text-[15px] font-medium tracking-[-0.01em] text-[#5E6E79] hover:bg-[#F3ECEB] hover:text-[#334B63] transition-all duration-200"
+            >
+              Shop ↗
+            </a>
           </nav>
 
           {/* Auth: Desktop */}
@@ -206,6 +217,15 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
+          <a
+            href={shopUrl("header-mobile")}
+            target="_blank"
+            rel="noopener"
+            onClick={() => { trackShopClick("header-mobile"); setMobileOpen(false); }}
+            className="py-3 text-[16px] font-medium text-[#5E6E79] border-b border-[rgba(51,75,99,0.06)] hover:text-[#334B63] transition-colors duration-200"
+          >
+            Shop the merch ↗
+          </a>
           {session ? (
             <button
               onClick={() => { setMobileOpen(false); signOut({ callbackUrl: "/" }); }}

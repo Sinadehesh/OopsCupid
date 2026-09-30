@@ -11,6 +11,7 @@ import ProgramOffer from "@/components/program/ProgramOffer";
 import MoreQuickTests from "@/components/tick/MoreQuickTests";
 import GuideCards from "@/components/guides/GuideCards";
 import { guidesFor } from "@/lib/guides/guides";
+import MerchCard from "@/components/shop/MerchCard";
 
 const QUIZ = "things-he-says";
 
@@ -175,6 +176,8 @@ export default function PhrasePicker() {
           score={result.count}
           scoreLabel="of 16 recognised"
         />
+
+        <MerchCard from="result-things-he-says" />
 
         <MoreQuickTests exclude="things-he-says" />
 

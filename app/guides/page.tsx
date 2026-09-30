@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { GUIDES } from "@/lib/guides/guides";
 import GuideCards from "@/components/guides/GuideCards";
 import MoreQuickTests from "@/components/tick/MoreQuickTests";
+import MerchCard from "@/components/shop/MerchCard";
 
 export const metadata: Metadata = {
   title: "Relationship Guides: Red Flags, Overthinking, Hot and Cold | OopsCupid",
@@ -19,6 +20,7 @@ export default function GuidesIndex() {
           What's actually going on, in plain words, with the research behind it. The first part of every guide is free.
         </p>
         <GuideCards guides={GUIDES} title="Pick one" />
+        <MerchCard from="guides-index" />
         <MoreQuickTests title="Or take a 40-second test" />
       </div>
     </main>

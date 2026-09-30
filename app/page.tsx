@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { allQuizzes } from "@/lib/quizzes/registry";
 import { LIVE_PROGRAMS } from "@/lib/programs/registry";
+import MerchCard from "@/components/shop/MerchCard";
 
 export const metadata: Metadata = {
   title: "Free Attachment Style Test & Relationship Quizzes: No Email",
@@ -137,6 +138,11 @@ export default function Home() {
       
 
       <HomeHero />
+      <div className="bg-[#F7F4ED] px-4 pb-8">
+        <div className="max-w-3xl mx-auto">
+          <MerchCard from="home" className="!mb-0" title="The OopsCupid shop is open." line="Our cupid, on tees and hoodies. Printed and posted for you." />
+        </div>
+      </div>
 
       {/* NEW SECTION 2: THE PAIN (Running from Hell) */}
       <section className="bg-white py-12 md:py-32">

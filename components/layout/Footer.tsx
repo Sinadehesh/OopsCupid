@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import MoreQuickTests from '@/components/tick/MoreQuickTests';
+import { shopUrl } from '@/lib/shop';
 
 const linkClass = "text-[15px] font-normal text-[#5E6E79] hover:text-[#334B63] transition-colors";
 
@@ -30,6 +31,7 @@ export default function Footer() {
               <li><Link href="/why-do-i-sabotage-relationships" className={linkClass}>Why Do I Sabotage Relationships?</Link></li>
               <li><Link href="/toxic-friend-test" className={linkClass}>Toxic Friend Test</Link></li>
               <li><Link href="/guides" className={linkClass}>Guides · €1.99</Link></li>
+              <li><a href={shopUrl("footer")} target="_blank" rel="noopener" className={linkClass}>Shop the merch ↗</a></li>
             </ul>
           </div>
 

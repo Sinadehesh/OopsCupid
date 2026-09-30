@@ -12,6 +12,7 @@ import MoreQuickTests from "./MoreQuickTests";
 import QuickRead, { loadPending } from "./QuickRead";
 import GuideCards from "@/components/guides/GuideCards";
 import { guidesFor } from "@/lib/guides/guides";
+import MerchCard from "@/components/shop/MerchCard";
 
 type Pending = { names: { a: string; b: string }; picks: Record<string, Pick> };
 
@@ -220,6 +221,13 @@ export default function VersusGame({ slug }: { slug: string }) {
         title={`${game.title}: ${r.a.tier.emoji} vs ${r.b.tier.emoji}`}
         score={Math.max(r.a.score, r.b.score)}
         scoreLabel="for the winner"
+      />
+
+      <MerchCard
+        from={`result-${slug}`}
+        kicker={winnerName ? `A gift for ${winnerName}` : "The merch"}
+        title={winnerName ? `Tell ${winnerName} they're the real one.` : "Put the cupid on it."}
+        line="The OopsCupid cupid on a tee or hoodie. Printed and posted for you."
       />
 
       <MoreQuickTests exclude={slug} />

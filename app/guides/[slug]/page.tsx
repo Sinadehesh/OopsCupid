@@ -8,6 +8,7 @@ import { ACCESS_COOKIE, readAccessToken, canRead } from "@/lib/stripe/access";
 import GuideUnlock from "@/components/guides/GuideUnlock";
 import GuideCards from "@/components/guides/GuideCards";
 import MoreQuickTests from "@/components/tick/MoreQuickTests";
+import MerchCard from "@/components/shop/MerchCard";
 
 const baseUrl = "https://www.oopscupid.com";
 
@@ -104,6 +105,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
         )}
 
         <GuideCards guides={others} title="You might also like" />
+        <MerchCard from={`guide-${slug}`} />
         <MoreQuickTests title="Or take a 40-second test" />
       </article>
     </main>
