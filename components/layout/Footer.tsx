@@ -2,11 +2,11 @@ import Link from 'next/link';
 import MoreQuickTests from '@/components/tick/MoreQuickTests';
 import { shopUrl } from '@/lib/shop';
 
-const linkClass = "text-[15px] font-normal text-[#5E6E79] hover:text-[#334B63] transition-colors";
+const linkClass = "text-[15px] font-semibold text-[#1A1033]/70 hover:text-[#FF4FA3] transition-colors";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#F3ECEB] pt-4 pb-8 md:pt-8 md:pb-12 text-[#334B63]">
+    <footer className="bg-[#FFE4F1] border-t-[2.5px] border-[#1A1033] pt-4 pb-8 md:pt-8 md:pb-12 text-[#1A1033]">
       {/* Every page ends on another test, so no page is a dead end. */}
       <div className="container mx-auto px-5 md:px-10 lg:px-14 mb-12 overflow-hidden">
         <MoreQuickTests title="Got 40 seconds? Try one of these" className="!mt-6" />
@@ -14,7 +14,7 @@ export default function Footer() {
       <div className="container mx-auto px-6 md:px-10 lg:px-14">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           <div>
-            <h3 className="font-semibold text-[15px] text-[#334B63] mb-6">His Behavior</h3>
+            <h3 className="font-semibold text-[15px] text-[#1A1033] font-black mb-6">His Behavior</h3>
             <ul className="space-y-4">
               <li><Link href="/is-he-cheating" className={linkClass}>Is He Cheating? Test</Link></li>
               <li><Link href="/is-he-manipulative" className={linkClass}>Is He Manipulative? Test</Link></li>
@@ -24,7 +24,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-[15px] text-[#334B63] mb-6">Your Patterns</h3>
+            <h3 className="font-semibold text-[15px] text-[#1A1033] font-black mb-6">Your Patterns</h3>
             <ul className="space-y-4">
               <li><Link href="/attachment-style-quiz" className={linkClass}>Attachment Style Quiz</Link></li>
               <li><Link href="/why-do-i-attract-toxic-people" className={linkClass}>Why Do I Attract Toxic People?</Link></li>
@@ -36,7 +36,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-[15px] text-[#334B63] mb-6">Guides</h3>
+            <h3 className="font-semibold text-[15px] text-[#1A1033] font-black mb-6">Guides</h3>
             <ul className="space-y-4">
               <li><Link href="/relationship-red-flags" className={linkClass}>Relationship Red Flags</Link></li>
               <li><Link href="/gaslighting-signs" className={linkClass}>Gaslighting Signs</Link></li>
@@ -46,7 +46,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-[15px] text-[#334B63] mb-6">Work With Us</h3>
+            <h3 className="font-semibold text-[15px] text-[#1A1033] font-black mb-6">Work With Us</h3>
             <ul className="space-y-4">
               <li><Link href="/coaching" className={linkClass}>1:1 Clarity Coaching</Link></li>
               <li><Link href="/quizzes" className={linkClass}>All Free Quizzes</Link></li>

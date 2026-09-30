@@ -9,6 +9,7 @@ import GuideUnlock from "@/components/guides/GuideUnlock";
 import GuideCards from "@/components/guides/GuideCards";
 import MoreQuickTests from "@/components/tick/MoreQuickTests";
 import MerchCard from "@/components/shop/MerchCard";
+import { stickerStatic, display } from "@/lib/ui/sticker";
 
 const baseUrl = "https://www.oopscupid.com";
 
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 function Section({ s }: { s: GuideSection }) {
   return (
     <section className="mb-8">
-      <h2 className="text-2xl font-black text-slate-900 leading-snug mb-3">{s.title}</h2>
+      <h2 className="text-2xl text-[#1A1033] leading-snug mb-3" style={display}>{s.title}</h2>
       {s.body.map((p, i) => (
         <p key={i} className="text-[17px] text-slate-700 font-medium leading-relaxed mb-3">{p}</p>
       ))}
@@ -42,8 +43,8 @@ function Section({ s }: { s: GuideSection }) {
         </ul>
       )}
       {s.compare && (
-        <div className="rounded-2xl border border-slate-200 overflow-hidden my-4 text-[14px]">
-          <div className="grid grid-cols-2 bg-slate-900 text-white font-black">
+        <div className={`rounded-2xl overflow-hidden my-4 text-[14px] ${stickerStatic}`}>
+          <div className="grid grid-cols-2 bg-[#1A1033] text-white font-black">
             <div className="p-3">{s.compare.left}</div>
             <div className="p-3 border-l border-white/10">{s.compare.right}</div>
           </div>
@@ -56,8 +57,8 @@ function Section({ s }: { s: GuideSection }) {
         </div>
       )}
       {s.script && (
-        <div className="rounded-2xl bg-slate-900 text-white p-5 my-4">
-          <p className="text-[11px] font-black uppercase tracking-[0.15em] text-[#F5DD90] mb-2 flex items-center gap-1.5">
+        <div className={`rounded-2xl bg-[#C9B6FF] text-[#1A1033] p-5 my-4 ${stickerStatic}`}>
+          <p className="text-[11px] font-black uppercase tracking-[0.15em] text-[#1A1033]/70 mb-2 flex items-center gap-1.5">
             <MessageCircle className="w-3.5 h-3.5" /> Try saying
           </p>
           <p className="font-semibold leading-relaxed">{s.script}</p>
@@ -77,13 +78,13 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
   const others = GUIDES.filter((x) => x.slug !== slug && x.forTests.some((t) => g.forTests.includes(t))).slice(0, 3);
 
   return (
-    <main className="min-h-screen bg-[#FAFAF7]">
+    <main className="min-h-screen bg-[#FFF4FA]">
       <article className="max-w-2xl mx-auto px-5 py-8 md:py-14">
         <Link href="/guides" className="text-sm font-bold text-slate-400">← All guides</Link>
-        <div className="rounded-3xl p-6 md:p-8 mt-4 mb-8" style={{ backgroundColor: g.bg, color: g.fg }}>
-          <div className="text-5xl mb-3" aria-hidden="true">{g.emoji}</div>
+        <div className={`rounded-[28px] p-6 md:p-8 mt-4 mb-8 -rotate-1 ${stickerStatic}`} style={{ backgroundColor: g.bg, color: "#1A1033" }}>
+          <div className="w-16 h-16 rounded-full bg-white border-2 border-[#1A1033] flex items-center justify-center text-4xl mb-3" aria-hidden="true">{g.emoji}</div>
           <p className="text-[11px] font-black uppercase tracking-[0.18em] opacity-60 mb-1">OopsCupid guide · {g.minutes} minutes</p>
-          <h1 className="text-3xl md:text-5xl font-black leading-[1.05] mb-3">{g.title}</h1>
+          <h1 className="text-[36px] md:text-5xl leading-[1.02] mb-3" style={display}>{g.title}</h1>
           <p className="text-lg font-semibold leading-snug opacity-85">{g.hook}</p>
         </div>
 
@@ -92,11 +93,11 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
         {open ? (
           <>
             {rest.map((s) => <Section key={s.title} s={s} />)}
-            <div className="rounded-3xl bg-[#0E1621] text-white p-6 my-8">
+            <div className={`rounded-[26px] bg-gradient-to-br from-[#FF4FA3] to-[#FF9A4D] text-white p-6 my-8 ${stickerStatic}`}>
               <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#F5DD90] mb-2 flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5" /> The one thing to remember
               </p>
-              <p className="text-xl font-black leading-snug">{g.takeaway}</p>
+              <p className="text-xl leading-snug" style={display}>{g.takeaway}</p>
             </div>
             <p className="text-xs font-semibold text-slate-400 mb-8">{g.sources} This guide is general information, not therapy or advice about your specific situation.</p>
           </>

@@ -30,6 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...TICK_TESTS.map((t) => `/${t.slug}`),
     ...VERSUS_GAMES.map((g) => `/${g.slug}`),
     "/guides",
+    "/red-flag-or-green-flag",
     ...GUIDES.map((g) => `/guides/${g.slug}`),
   ];
 

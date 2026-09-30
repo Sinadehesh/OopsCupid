@@ -13,6 +13,7 @@ import QuickRead, { loadPending } from "./QuickRead";
 import GuideCards from "@/components/guides/GuideCards";
 import { guidesFor } from "@/lib/guides/guides";
 import MerchCard from "@/components/shop/MerchCard";
+import { CANDY, sticker, stickerStatic, display } from "@/lib/ui/sticker";
 
 type Pending = { names: { a: string; b: string }; picks: Record<string, Pick> };
 
@@ -63,13 +64,13 @@ export default function VersusGame({ slug }: { slug: string }) {
 
   if (stage === "names") {
     return (
-      <div className="max-w-xl mx-auto px-5 py-8 md:py-14">
+      <div className="bg-[#FFF4FA] min-h-screen"><div className="max-w-xl mx-auto px-4 py-8 md:py-14">
         <div className="text-center mb-7">
-          <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#E07850] mb-3">
+          <span className="inline-block -rotate-2 rounded-full bg-white px-3 py-1 text-[12px] font-black text-[#1A1033] mb-4 border-2 border-[#1A1033] shadow-[2px_2px_0_#1A1033]">
             {game.emoji} {game.cards.length} moments · about a minute
-          </p>
-          <h1 className="text-[36px] md:text-6xl font-black text-slate-900 leading-[1.05] tracking-tight mb-4">{game.title}</h1>
-          <p className="text-base md:text-lg text-slate-600 font-medium leading-relaxed">{game.intro}</p>
+          </span>
+          <h1 className="text-[44px] md:text-6xl leading-[1] text-[#1A1033] mb-3" style={display}>{game.title} {game.emoji}</h1>
+          <p className="text-base md:text-lg text-[#1A1033]/70 font-semibold leading-relaxed">{game.intro}</p>
         </div>
         <form
           onSubmit={(e) => {
@@ -88,49 +89,49 @@ export default function VersusGame({ slug }: { slug: string }) {
                 value={names[k]}
                 onChange={(e) => setNames({ ...names, [k]: e.target.value.slice(0, 24) })}
                 placeholder={k === "a" ? game.placeholderA : game.placeholderB}
-                className="w-full rounded-2xl border-2 border-slate-200 bg-white px-4 py-4 text-lg font-bold text-slate-900 focus:outline-none focus:border-slate-900"
+                className="w-full rounded-2xl border-[2.5px] border-[#1A1033] bg-white px-4 py-4 text-lg font-black text-[#1A1033] shadow-[3px_3px_0_#1A1033] focus:outline-none focus:bg-[#FFE4F1]"
               />
             </label>
           ))}
           <button
             type="submit"
-            className="w-full min-h-[60px] bg-slate-900 text-white font-extrabold text-lg rounded-2xl flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
+            className={`w-full min-h-[60px] bg-gradient-to-r from-[#FF4FA3] to-[#FF9A4D] text-white font-black text-lg rounded-2xl flex items-center justify-center gap-2 ${sticker}`}
           >
             Let's play <ArrowRight className="w-5 h-5" />
           </button>
-          <p className="text-center text-xs font-bold text-slate-400">Names stay on your phone. They're never shared or stored.</p>
+          <p className="text-center text-xs font-bold text-[#1A1033]/50">🤫 Names stay on your phone. They're never shared or stored.</p>
         </form>
-      </div>
+      </div></div>
     );
   }
 
   if (stage === "play") {
     const card = game.cards[i];
-    const btn = "min-h-[64px] rounded-2xl font-black text-lg px-3 active:scale-[0.97] transition-transform break-words";
+    const btn = `min-h-[64px] rounded-2xl font-black text-lg px-3 break-words ${sticker}`;
     return (
-      <div className="max-w-xl mx-auto px-5 py-8 md:py-14">
-        <div className="flex items-center justify-between mb-2 text-xs font-black text-slate-400">
+      <div className="bg-[#FFF4FA] min-h-screen"><div className="max-w-xl mx-auto px-4 py-8 md:py-14">
+        <div className="flex items-center justify-between mb-2 text-xs font-black text-[#1A1033]/60">
           <span>{game.emoji} {game.title}</span>
           <span>{i + 1} / {game.cards.length}</span>
         </div>
-        <div className="h-2 rounded-full bg-slate-200 overflow-hidden mb-6">
-          <div className="h-full bg-[#EC8A66] transition-all duration-300" style={{ width: `${(i / game.cards.length) * 100}%` }} />
+        <div className="h-3 rounded-full bg-white border-2 border-[#1A1033] overflow-hidden mb-6">
+          <div className="h-full bg-gradient-to-r from-[#FF4FA3] to-[#FF9A4D] transition-all duration-300" style={{ width: `${(i / game.cards.length) * 100}%` }} />
         </div>
-        <div key={card.id} className="rounded-3xl p-6 md:p-8 mb-5 animate-in fade-in slide-in-from-right-4 duration-300" style={{ backgroundColor: game.bg, color: game.fg }}>
+        <div key={card.id} className={`rounded-[26px] p-6 md:p-8 mb-5 animate-in fade-in slide-in-from-right-4 duration-300 ${i % 2 ? "rotate-1" : "-rotate-1"} ${stickerStatic}`} style={{ backgroundColor: CANDY[i % CANDY.length], color: "#1A1033" }}>
           <p className="text-xs font-black uppercase tracking-[0.15em] opacity-60 mb-3">{card.situation}</p>
-          <p className="text-2xl md:text-3xl font-black leading-snug">{card.line}</p>
+          <p className="text-2xl md:text-3xl leading-snug" style={display}>{card.line}</p>
           <p className="text-sm font-bold opacity-60 mt-4">Who would?</p>
         </div>
         <div className="grid grid-cols-2 gap-2.5">
-          <button onClick={() => choose("a")} className={`${btn} bg-slate-900 text-white`}>{a}</button>
-          <button onClick={() => choose("b")} className={`${btn} bg-[#EC8A66] text-white`}>{b}</button>
-          <button onClick={() => choose("both")} className={`${btn} bg-white border-2 border-slate-200 text-slate-700 !text-base !min-h-[52px]`}>Both</button>
-          <button onClick={() => choose("neither")} className={`${btn} bg-white border-2 border-slate-200 text-slate-700 !text-base !min-h-[52px]`}>Neither</button>
+          <button onClick={() => choose("a")} className={`${btn} bg-[#1A1033] text-white`}>{a}</button>
+          <button onClick={() => choose("b")} className={`${btn} bg-[#FF4FA3] text-white`}>{b}</button>
+          <button onClick={() => choose("both")} className={`${btn} bg-white text-[#1A1033] !text-base !min-h-[52px]`}>Both 🤝</button>
+          <button onClick={() => choose("neither")} className={`${btn} bg-white text-[#1A1033] !text-base !min-h-[52px]`}>Neither 🙅‍♀️</button>
         </div>
         {i > 0 && (
-          <button onClick={() => setI(i - 1)} className="mt-5 text-sm font-bold text-slate-400">← Back</button>
+          <button onClick={() => setI(i - 1)} className="mt-5 text-sm font-black text-[#1A1033]/50">← Back</button>
         )}
-      </div>
+      </div></div>
     );
   }
 
@@ -139,15 +140,15 @@ export default function VersusGame({ slug }: { slug: string }) {
   const loserName = r.winner === "a" ? b : r.winner === "b" ? a : null;
 
   return (
-    <div className="max-w-2xl mx-auto px-5 py-8 md:py-14">
-      <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#E07850] mb-3">{game.emoji} Your result</p>
-      <h1 className="text-3xl md:text-[2.6rem] font-black text-slate-900 leading-tight tracking-tight mb-6">
+    <div className="bg-[#FFF4FA] min-h-screen"><div className="max-w-2xl mx-auto px-4 py-8 md:py-14">
+      <p className="text-[12px] font-black uppercase tracking-[0.2em] text-[#FF4FA3] mb-2">{game.emoji} Your result</p>
+      <h1 className="text-[34px] md:text-5xl text-[#1A1033] leading-[1.02] mb-6" style={display}>
         {winnerName ? `${winnerName} is the one in your corner.` : "It's closer than you think."}
       </h1>
 
       <div className="grid grid-cols-2 gap-3 mb-6">
         {([["a", a, r.a], ["b", b, r.b]] as const).map(([k, name, p]) => (
-          <div key={k} className={`rounded-3xl p-5 text-center ${r.winner === k ? "bg-slate-900 text-white" : "bg-white border-2 border-slate-200 text-slate-900"}`}>
+          <div key={k} className={`rounded-[24px] p-5 text-center ${stickerStatic} ${r.winner === k ? "bg-gradient-to-br from-[#FF4FA3] to-[#FF9A4D] text-white rotate-[-2deg]" : "bg-white text-[#1A1033] rotate-[2deg]"}`}>
             <div className="text-5xl mb-2" aria-hidden="true">{p.tier.emoji}</div>
             <p className="font-black text-lg leading-tight break-words">{name}</p>
             <p className={`text-xs font-black uppercase tracking-wider mt-1 ${r.winner === k ? "text-[#F5DD90]" : "text-[#E07850]"}`}>{p.tier.label}</p>
@@ -163,7 +164,7 @@ export default function VersusGame({ slug }: { slug: string }) {
         </p>
       )}
 
-      <div className="bg-white rounded-2xl border border-slate-200 p-5 mb-8">
+      <div className={`bg-white rounded-[22px] p-5 mb-8 ${stickerStatic}`}>
         <p className="text-[11px] font-black uppercase tracking-[0.15em] text-slate-400 mb-3">Head to head</p>
         <div className="space-y-3">
           {r.a.traits.map((t, idx) => (
@@ -192,8 +193,8 @@ export default function VersusGame({ slug }: { slug: string }) {
 
       <Link
         href={`/${next.slug}`}
-        className="flex items-center gap-4 rounded-3xl p-5 mb-8 active:scale-[0.98] transition-transform shadow-[0_8px_30px_rgba(15,23,42,0.08)]"
-        style={{ backgroundColor: next.bg, color: next.fg }}
+        className={`flex items-center gap-4 rounded-[24px] p-5 mb-8 ${sticker}`}
+        style={{ backgroundColor: next.bg, color: "#1A1033" }}
       >
         <span className="text-4xl shrink-0" aria-hidden="true">{next.emoji}</span>
         <span className="flex-1 min-w-0">
@@ -203,7 +204,7 @@ export default function VersusGame({ slug }: { slug: string }) {
         <ArrowRight className="w-6 h-6 shrink-0" />
       </Link>
 
-      <div className="rounded-3xl bg-[#0E1621] text-white p-7 mb-8">
+      <div className={`rounded-[26px] bg-[#1A1033] text-white p-7 mb-8 ${stickerStatic}`}>
         <h2 className="text-2xl font-black mb-3 leading-snug">Worried about {loserName ?? "one of them"}?</h2>
         <p className="text-white/70 font-medium leading-relaxed mb-6">
           A guessing game can only show who you expect more from. The full test looks at what actually happens, how often, and what it costs you.
@@ -238,6 +239,6 @@ export default function VersusGame({ slug }: { slug: string }) {
       >
         <RotateCcw className="w-4 h-4" /> Play again with two others
       </button>
-    </div>
+    </div></div>
   );
 }

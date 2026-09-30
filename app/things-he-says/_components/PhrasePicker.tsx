@@ -12,6 +12,7 @@ import MoreQuickTests from "@/components/tick/MoreQuickTests";
 import GuideCards from "@/components/guides/GuideCards";
 import { guidesFor } from "@/lib/guides/guides";
 import MerchCard from "@/components/shop/MerchCard";
+import { CANDY, sticker, stickerStatic, display } from "@/lib/ui/sticker";
 
 const QUIZ = "things-he-says";
 
@@ -49,16 +50,12 @@ export default function PhrasePicker() {
 
   if (result) {
     return (
-      <div className="max-w-2xl mx-auto px-6 py-14">
-        <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#E07850] mb-3">
-          Your result
-        </p>
-        <h1 className="text-3xl md:text-[2.75rem] font-black text-slate-900 leading-tight tracking-tight mb-5">
-          {result.headline}
-        </h1>
-        <p className="text-lg text-slate-600 font-medium leading-relaxed mb-10">
-          {result.verdict}
-        </p>
+      <div className="bg-[#FFF4FA] min-h-screen"><div className="max-w-2xl mx-auto px-4 py-8 md:py-12">
+        <div className={`rounded-[28px] bg-gradient-to-br from-[#FF4FA3] via-[#FF6F7D] to-[#FF9A4D] text-white p-6 md:p-8 mb-8 ${stickerStatic}`}>
+          <p className="text-[11px] font-black uppercase tracking-[0.2em] text-white/85 mb-2">💬 Your result</p>
+          <h1 className="text-[34px] md:text-5xl leading-[1.02] mb-4" style={display}>{result.headline}</h1>
+          <p className="text-[17px] font-bold leading-relaxed text-white/95">{result.verdict}</p>
+        </div>
 
         <GuideCards guides={guidesFor("things-he-says", result.tactics.map((t) => t.key))} />
 
@@ -77,7 +74,7 @@ export default function PhrasePicker() {
             {result.tactics.map((t) => (
               <div
                 key={t.key}
-                className="bg-white rounded-2xl border border-slate-200 p-6 shadow-[0_2px_20px_rgba(15,23,42,0.05)]"
+                className={`bg-white rounded-[22px] p-5 ${stickerStatic}`}
               >
                 <div className="flex items-baseline justify-between gap-4 mb-2">
                   <h3 className="font-black text-slate-900 text-lg">{t.label}</h3>
@@ -185,47 +182,42 @@ export default function PhrasePicker() {
           onClick={() => { setResult(null); setSelected([]); }}
           className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-slate-400 hover:text-slate-700 transition-colors"
         >
-          <RotateCcw className="w-4 h-4" /> Start again
+          <RotateCcw className="w-4 h-4" /> Play again
         </button>
-      </div>
+      </div></div>
     );
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-12 md:py-16">
-      <div className="text-center mb-10">
-        <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#E07850] mb-4">
-          Takes about forty seconds
-        </p>
-        <h1 className="text-4xl md:text-6xl font-black text-slate-900 leading-[1.05] tracking-tight mb-5">
+    <div className="bg-[#FFF4FA] min-h-screen"><div className="max-w-3xl mx-auto px-4 py-8 md:py-14">
+      <div className="text-center mb-7">
+        <span className="inline-block -rotate-2 rounded-full bg-white px-3 py-1 text-[12px] font-black text-[#1A1033] mb-4 border-2 border-[#1A1033] shadow-[2px_2px_0_#1A1033]">
+          💬 40 seconds
+        </span>
+        <h1 className="text-[38px] md:text-6xl text-[#1A1033] leading-[1.02] mb-4" style={display}>
           Which of these
           <br />
           has he said to you?
         </h1>
-        <p className="text-lg text-slate-600 font-medium leading-relaxed max-w-xl mx-auto">
+        <p className="text-base md:text-lg text-[#1A1033]/70 font-semibold leading-relaxed max-w-xl mx-auto">
           Tap every one you have actually heard. Not what he meant, not how he
           said it, just whether the sentence is familiar.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
-        {PHRASES.map((p) => {
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+        {PHRASES.map((p, idx) => {
           const on = selected.includes(p.id);
           return (
             <button
               key={p.id}
               onClick={() => toggle(p.id)}
               aria-pressed={on}
-              className={`text-left px-5 py-4 rounded-2xl border-2 font-bold leading-snug transition-all min-h-[64px] flex items-center gap-3 ${
-                on
-                  ? "bg-slate-900 border-slate-900 text-white shadow-lg"
-                  : "bg-white border-slate-200 text-slate-700 hover:border-slate-400"
-              }`}
+              className={`text-left px-4 py-3.5 rounded-[18px] font-bold leading-snug min-h-[60px] flex items-center gap-3 text-[#1A1033] ${sticker} ${on ? "oc-pop" : "bg-white"}`}
+              style={on ? { backgroundColor: CANDY[idx % CANDY.length] } : undefined}
             >
               <span
-                className={`w-5 h-5 rounded-md border-2 shrink-0 flex items-center justify-center ${
-                  on ? "bg-[#EC8A66] border-[#EC8A66]" : "border-slate-300"
-                }`}
+                className={`w-6 h-6 rounded-lg border-2 border-[#1A1033] shrink-0 flex items-center justify-center ${on ? "bg-[#1A1033]" : "bg-white"}`}
               >
                 {on && <Check className="w-3.5 h-3.5 text-white" />}
               </span>
@@ -238,7 +230,7 @@ export default function PhrasePicker() {
       <div className="sticky bottom-4 z-10">
         <button
           onClick={show}
-          className="w-full min-h-[60px] bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-lg rounded-2xl transition-colors shadow-xl flex items-center justify-center gap-2"
+          className={`w-full min-h-[60px] rounded-2xl bg-[#1A1033] text-white font-black text-lg flex items-center justify-center gap-2 ${sticker} !shadow-[4px_4px_0_#FF4FA3]`}
         >
           {selected.length === 0
             ? "I have not heard any of these"
@@ -247,9 +239,9 @@ export default function PhrasePicker() {
         </button>
       </div>
 
-      <p className="text-center text-xs font-bold text-slate-400 mt-6">
-        Nothing you tap leaves your phone.
+      <p className="text-center text-xs font-bold text-[#1A1033]/45 mt-5">
+        🤫 Nothing you tap leaves your phone.
       </p>
-    </div>
+    </div></div>
   );
 }

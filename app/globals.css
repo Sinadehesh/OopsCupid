@@ -220,3 +220,14 @@ body::before {
 @media (prefers-reduced-motion: reduce) {
   .oc-marquee, .oc-float, .oc-float-slow, .oc-wiggle, .oc-pulse { animation: none; }
 }
+
+/* ── Game feedback ───────────────────────────────────────────────────── */
+@keyframes oc-pop { 0% { transform: scale(1); } 40% { transform: scale(1.06) rotate(-1deg); } 100% { transform: scale(1); } }
+@keyframes oc-rise { 0% { transform: translateY(0) scale(0.6); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(-70px) scale(1.2); opacity: 0; } }
+@keyframes oc-burst { 0% { transform: translateY(0) rotate(0); opacity: 1; } 100% { transform: translateY(-120px) rotate(40deg); opacity: 0; } }
+.oc-pop { animation: oc-pop 0.28s ease-out; }
+.oc-rise { animation: oc-rise 0.9s ease-out forwards; }
+.oc-burst { animation: oc-burst 1.6s ease-out forwards; }
+@media (prefers-reduced-motion: reduce) {
+  .oc-pop, .oc-rise, .oc-burst { animation: none; }
+}

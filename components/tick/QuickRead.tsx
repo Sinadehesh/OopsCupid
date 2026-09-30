@@ -130,7 +130,7 @@ export default function QuickRead({ input, pending }: { input: QuickReadInput; p
         ];
 
   return (
-    <div className="relative rounded-3xl bg-[#0E1621] text-white p-6 md:p-8 mb-8 overflow-hidden shadow-[0_18px_50px_rgba(14,22,33,0.35)]">
+    <div className="relative rounded-[26px] bg-[#1A1033] text-white p-6 md:p-8 mb-8 overflow-hidden border-[2.5px] border-[#1A1033] shadow-[5px_5px_0_#FF4FA3]">
       <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-[#EC8A66]/25 blur-3xl" />
       <p className="relative text-[11px] font-black uppercase tracking-[0.2em] text-[#F5DD90] mb-2 flex items-center gap-1.5">
         <Sparkles className="w-3.5 h-3.5" /> Your personal read
@@ -167,7 +167,7 @@ export default function QuickRead({ input, pending }: { input: QuickReadInput; p
         sku="quick-read"
         returnTo={bought}
         beforeCheckout={() => savePending(input.slug, pending)}
-        className="relative w-full min-h-[62px] bg-[#EC8A66] hover:bg-[#E07850] text-white font-black text-xl rounded-2xl transition-colors flex items-center justify-center gap-2 shadow-[0_10px_30px_rgba(236,138,102,0.45)] active:scale-[0.98] disabled:opacity-70"
+        className="relative w-full min-h-[62px] bg-[#FF4FA3] text-white font-black text-xl rounded-2xl flex items-center justify-center gap-2 border-[2.5px] border-white shadow-[4px_4px_0_#ffffff] active:shadow-[1px_1px_0_#ffffff] active:translate-x-[3px] active:translate-y-[3px] transition-all duration-100 disabled:opacity-70"
       >
         Unlock my read · €2.99
       </CheckoutButton>
@@ -193,7 +193,7 @@ function ReadView({ read, fill, names }: { read: Read; fill: (s: string) => stri
   const [copied, setCopied] = useState(false);
   const message = read?.say?.message ? fill(read.say.message) : "";
   return (
-    <div className="rounded-3xl bg-white border-2 border-[#EC8A66] p-6 md:p-8 mb-8 shadow-[0_10px_40px_rgba(236,138,102,0.15)]">
+    <div className="rounded-[26px] bg-white p-6 md:p-8 mb-8 border-[2.5px] border-[#1A1033] shadow-[5px_5px_0_#FF4FA3]">
       <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#E07850] mb-2 flex items-center gap-1.5">
         <Sparkles className="w-3.5 h-3.5" /> Your personal read
       </p>

@@ -219,7 +219,7 @@ export const GUIDES: Guide[] = [
     bg: "#FCE3D8",
     fg: "#7A2E14",
     minutes: 10,
-    forTests: ["first-month-red-flags", "is-my-boyfriend-toxic", "does-he-have-narcissistic-traits", "things-he-says"],
+    forTests: ["red-flag-or-green-flag", "first-month-red-flags", "is-my-boyfriend-toxic", "does-he-have-narcissistic-traits", "things-he-says"],
     forGroups: ["intensity", "boundaries", "character", "control", "disrespect"],
     sections: [
       {
@@ -303,7 +303,7 @@ export const GUIDES: Guide[] = [
     bg: "#FBE0E6",
     fg: "#7A1F35",
     minutes: 9,
-    forTests: ["after-a-good-weekend", "first-month-red-flags", "is-he-just-not-that-into-you", "is-it-a-situationship"],
+    forTests: ["red-flag-or-green-flag", "after-a-good-weekend", "first-month-red-flags", "is-he-just-not-that-into-you", "is-it-a-situationship"],
     forGroups: ["hotcold", "withdraw", "return", "convenience", "pressure"],
     sections: [
       {
