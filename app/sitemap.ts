@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next";
 import { quizRegistry } from "@/lib/quizzes/registry";
 import { SYMPTOM_PAGES } from "@/lib/seo/symptoms";
+import { TICK_TESTS } from "@/lib/quizzes/tickTests";
 
 // FORCES NEXT.JS TO GENERATE THIS AT BUILD TIME FOR STATIC EXPORTS
 export const dynamic = "force-static";
@@ -24,6 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/terms",
     "/signs",
     "/things-he-says",
+    ...TICK_TESTS.map((t) => `/${t.slug}`),
   ];
 
   const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
@@ -31,7 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority:
-      route === "" ? 1 : route === "/things-he-says" ? 0.9 : route === "/coaching" ? 0.9 : 0.7,
+      route === "" ? 1 : route === "/things-he-says" || TICK_TESTS.some((t) => route === `/${t.slug}`) ? 0.9 : route === "/coaching" ? 0.9 : 0.7,
   }));
 
   // Every quiz & article funnel comes from the registry, adding a quiz

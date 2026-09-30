@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { trackHomeClick } from "@/lib/track";
+import { TICK_TESTS } from "@/lib/quizzes/tickTests";
 
 /**
  * HOMEPAGE HERO, built for the phone.
@@ -69,6 +70,28 @@ export default function HomeHero() {
             <ArrowRight className="w-5 h-5" />
           </span>
         </Link>
+
+        {/* More forty-second tests, swipeable: the format TikTok visitors
+            finish, so there is always another one to try. */}
+        <div className="-mx-4 px-4 mb-5 flex gap-2.5 overflow-x-auto snap-x snap-mandatory pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {TICK_TESTS.map((t) => (
+            <Link
+              key={t.slug}
+              href={`/${t.slug}`}
+              onClick={() => trackHomeClick(t.slug)}
+              className="snap-start shrink-0 w-[46%] sm:w-[31%] md:w-[23%] rounded-2xl p-3.5 flex flex-col justify-between min-h-[118px] active:scale-[0.97] transition-transform border-2 border-white/60"
+              style={{ backgroundColor: t.bg, color: t.fg }}
+            >
+              <span className="text-2xl" aria-hidden="true">{t.emoji}</span>
+              <span className="text-[14px] font-extrabold leading-tight mt-1.5">{t.question}</span>
+              <span className="text-[10px] font-black uppercase tracking-wider opacity-60 mt-1.5">40 seconds</span>
+            </Link>
+          ))}
+        </div>
+
+        <p className="text-[11px] font-black uppercase tracking-[0.15em] text-[#5E7183] mb-2.5">
+          Or take a full test
+        </p>
 
         {/* The questions people actually search, as thumb-sized tiles. */}
         <div id="home-tests" className="grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-3">

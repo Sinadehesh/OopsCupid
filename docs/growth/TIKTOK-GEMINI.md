@@ -108,3 +108,20 @@ One video a day for 14 days, around 7 to 9pm. Post the same story twice with
 different hooks. After 14 days, keep making more of the 2 to 3 videos with the
 most link taps (TikTok Analytics > Content), and drop the rest. Reply to
 comments with video replies: they reach new people for free.
+
+## One 40-second test per video
+
+Every video points at the test that matches its story. Change the bio link
+when you switch series (always add `?utm_source=tiktok`).
+
+| Video story | Link |
+|---|---|
+| "That never happened" gaslighting | `oopscupid.com/things-he-says` |
+| He's changed, phone face down | `oopscupid.com/things-he-does` |
+| 2am, waiting for his reply | `oopscupid.com/waiting-for-his-reply` |
+| Love-bombing that went cold | `oopscupid.com/first-month-red-flags` |
+| The friend who says "must be nice" | `oopscupid.com/things-my-friend-says` |
+| She runs when it gets serious | `oopscupid.com/when-it-gets-serious` |
+| He goes cold after a perfect weekend | `oopscupid.com/after-a-good-weekend` |
+
+End card for all of them: `how many have you ticked? 40 seconds, link in bio`.

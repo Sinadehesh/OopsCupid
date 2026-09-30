@@ -8,6 +8,7 @@ import { trackQuizStart, trackQuizComplete, trackResultView } from "@/lib/track"
 import ResultShare from "@/components/share/ResultShare";
 import CheckoutButton from "@/components/offers/CheckoutButton";
 import ProgramOffer from "@/components/program/ProgramOffer";
+import MoreQuickTests from "@/components/tick/MoreQuickTests";
 
 const QUIZ = "things-he-says";
 
@@ -170,6 +171,8 @@ export default function PhrasePicker() {
           score={result.count}
           scoreLabel="of 16 recognised"
         />
+
+        <MoreQuickTests exclude="things-he-says" />
 
         <button
           onClick={() => { setResult(null); setSelected([]); }}
