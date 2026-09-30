@@ -9,6 +9,8 @@ import ResultShare from "@/components/share/ResultShare";
 import CheckoutButton from "@/components/offers/CheckoutButton";
 import ProgramOffer from "@/components/program/ProgramOffer";
 import MoreQuickTests from "@/components/tick/MoreQuickTests";
+import GuideCards from "@/components/guides/GuideCards";
+import { guidesFor } from "@/lib/guides/guides";
 
 const QUIZ = "things-he-says";
 
@@ -56,6 +58,8 @@ export default function PhrasePicker() {
         <p className="text-lg text-slate-600 font-medium leading-relaxed mb-10">
           {result.verdict}
         </p>
+
+        <GuideCards guides={guidesFor("things-he-says", result.tactics.map((t) => t.key))} />
 
         {result.support && (
           <div className="rounded-2xl bg-amber-50 border border-amber-200 p-6 mb-10 flex gap-3.5">

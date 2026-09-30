@@ -10,6 +10,8 @@ import ResultShare from "@/components/share/ResultShare";
 import ProgramOffer from "@/components/program/ProgramOffer";
 import MoreQuickTests from "./MoreQuickTests";
 import QuickRead, { loadPending } from "./QuickRead";
+import GuideCards from "@/components/guides/GuideCards";
+import { guidesFor } from "@/lib/guides/guides";
 
 type Pending = { names: { a: string; b: string }; picks: Record<string, Pick> };
 
@@ -179,6 +181,8 @@ export default function VersusGame({ slug }: { slug: string }) {
           ))}
         </div>
       </div>
+
+      <GuideCards guides={guidesFor(slug)} title="Read about this" />
 
       <QuickRead
         input={{ kind: "versus", slug, picks, names: { a, b }, count: game.cards.length }}

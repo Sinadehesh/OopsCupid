@@ -62,7 +62,12 @@ export function mintAccessToken(
 ): string {
   const grants = STRIPE_PRODUCTS[sku].grants;
   const reads = new Set(existing?.reads ?? []);
-  if (grants.read && readSlug) reads.add(readSlug);
+  // A €1.99 guide may only unlock a guide, and a €2.99 read only a test's
+  // read: the product decides what the path it was bought from can open.
+  if (grants.read && readSlug) {
+    const isGuide = readSlug.startsWith("guides/");
+    if ((sku === "guide") === isGuide) reads.add(readSlug);
+  }
   const claims: Entitlements = {
     sid: sessionId,
     sku,

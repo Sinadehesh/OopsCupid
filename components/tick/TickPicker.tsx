@@ -11,6 +11,8 @@ import CheckoutButton from "@/components/offers/CheckoutButton";
 import ProgramOffer from "@/components/program/ProgramOffer";
 import MoreQuickTests from "./MoreQuickTests";
 import QuickRead, { loadPending } from "./QuickRead";
+import GuideCards from "@/components/guides/GuideCards";
+import { guidesFor } from "@/lib/guides/guides";
 
 /**
  * One screen, tap to select, same as /things-he-says: someone from a video
@@ -79,6 +81,8 @@ export default function TickPicker({ slug }: { slug: string }) {
         {/* The paid step comes straight after the verdict when there is
             enough for a report to be about: that is the moment she most
             wants to know more. */}
+        <GuideCards guides={guidesFor(slug, result.groups.map((g) => g.key))} />
+
         {result.count > 0 && (
           <QuickRead
             input={{ kind: "tick", slug, picks: result.chosen.map((i) => i.id), count: result.count }}

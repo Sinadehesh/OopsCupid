@@ -29,6 +29,7 @@ export default function Footer() {
               <li><Link href="/why-do-i-attract-toxic-people" className={linkClass}>Why Do I Attract Toxic People?</Link></li>
               <li><Link href="/why-do-i-sabotage-relationships" className={linkClass}>Why Do I Sabotage Relationships?</Link></li>
               <li><Link href="/toxic-friend-test" className={linkClass}>Toxic Friend Test</Link></li>
+              <li><Link href="/guides" className={linkClass}>Guides · €1.99</Link></li>
             </ul>
           </div>
 

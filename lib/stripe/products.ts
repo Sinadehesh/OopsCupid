@@ -17,7 +17,8 @@ export type Sku =
   | "ultimate-bundle"
   | "clarity-call"
   | "reset-program"
-  | "quick-read";
+  | "quick-read"
+  | "guide";
 
 export interface StripeProduct {
   sku: Sku;
@@ -77,6 +78,13 @@ export const STRIPE_PRODUCTS: Record<Sku, StripeProduct> = {
     amount: 299,
     displayPrice: "€2.99",
     name: "Quick Read",
+    grants: { premiumReport: false, workbook: false, coaching: false, read: true },
+  },
+  guide: {
+    sku: "guide",
+    amount: 199,
+    displayPrice: "€1.99",
+    name: "OopsCupid Guide",
     grants: { premiumReport: false, workbook: false, coaching: false, read: true },
   },
   "reset-program": {

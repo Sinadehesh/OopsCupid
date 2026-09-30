@@ -118,6 +118,14 @@ export default function HomeHero() {
           >
             See all 15 free tests <ArrowRight className="w-4 h-4" />
           </Link>
+          <span className="mx-2 text-slate-300">·</span>
+          <Link
+            href="/guides"
+            onClick={() => trackHomeClick("guides")}
+            className="inline-flex items-center gap-1.5 text-[15px] font-extrabold text-[#3A556C]"
+          >
+            Read the guides <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </div>
     </section>
