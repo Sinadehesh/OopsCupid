@@ -21,7 +21,7 @@ export default function QuizPage() {
                 &larr; Back to Attraction Patterns Hub
             </Link>
         </div>
-        <QuizWidget quizName="Why Do I Keep Dating the Same Type?" />
+        <QuizWidget quizName="attraction-patterns" />
       </div>
     </>
   );

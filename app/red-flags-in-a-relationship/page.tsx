@@ -1,5 +1,5 @@
 import MainHero from "@/components/ui/MainHero";
-import QuizWidget from "@/components/features/QuizWidget";
+import TickPicker from "@/components/tick/TickPicker";
 import Link from "next/link";
 import { Metadata } from "next";
 import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
@@ -22,7 +22,7 @@ export default function QuizPage() {
                 &larr; Back to Relationship Red Flags Hub
             </Link>
         </div>
-        <QuizWidget quizName="Red Flags in a Relationship" />
+        <TickPicker slug="is-my-boyfriend-toxic" />
       </div>
     <QuizSeoFooter slug="/red-flags-in-a-relationship" />
     </>

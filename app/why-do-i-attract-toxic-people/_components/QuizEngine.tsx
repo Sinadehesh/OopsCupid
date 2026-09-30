@@ -1,4 +1,5 @@
 "use client";
+import { GameQuestion, GameLoading, GameStart } from "@/components/quiz/GameQuiz";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { BAD_GUYS_QUESTIONS } from "../_data/questions";
@@ -116,15 +117,7 @@ export default function QuizEngine() {
     const style = result?.top1 || "The Hyper-Empathetic Rescuer";
   };
 
-  if (isProcessing) {
-    return (
-      <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4 animate-in fade-in duration-500 bg-[#fafafa]">
-        <div className="w-20 h-20 border-4 border-rose-200 border-t-rose-600 rounded-full animate-spin mb-8"></div>
-        <h2 className="text-3xl font-extrabold text-slate-800 mb-4">Scanning Your Subconscious...</h2>
-        <p className="text-slate-500 font-medium text-lg">Scoring your answers across each pattern.</p>
-      </div>
-    );
-  }
+  if (isProcessing) return <div className="bg-[#FFF4FA] px-3 py-8 md:py-12 overflow-x-hidden"><GameLoading emoji="🧲" /></div>;
 
   // THE NEW EMAIL GATE PAGE
   if (step === "email") {
@@ -177,60 +170,23 @@ export default function QuizEngine() {
     );
   }
 
-  if (!started) {
-    return (
-      <div className="max-w-3xl mx-auto py-20 px-6 text-center animate-in fade-in duration-700 relative">
-        <div className="inline-flex items-center justify-center w-20 h-20 bg-rose-100 text-rose-600 rounded-full mb-8 shadow-sm">
-          <ShieldAlert className="w-10 h-10" />
-        </div>
-        <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 mb-6 tracking-tight">Why Do I Attract Toxic People?</h1>
-        <p className="text-lg md:text-2xl text-slate-600 mb-10 font-medium leading-relaxed">
-          Take this brutally honest 50-question audit. Uncover the exact subconscious signals you are sending that attract players, narcissists, and emotionally unavailable men.
-        </p>
-        <button onClick={handleStart} className="bg-rose-600 text-white font-extrabold text-xl py-5 px-12 rounded-full shadow-[0_10px_30px_rgba(225,29,72,0.3)] hover:bg-rose-700 hover:-translate-y-1 transition-all">
-          Start Diagnostic Audit <ArrowRight className="inline ml-2" />
-        </button>
-      </div>
-    );
-  }
+  if (!started) return <div className="bg-[#FFF4FA] px-3 py-8 md:py-12 overflow-x-hidden"><GameStart emoji="🧲" title="Why do I attract toxic people?" blurb="Rate how true each one is for you. Short levels, then your pattern, explained." total={BAD_GUYS_QUESTIONS.length} onStart={handleStart} /></div>;
 
   const question = BAD_GUYS_QUESTIONS[currentQ];
-  const progress = ((currentQ) / BAD_GUYS_QUESTIONS.length) * 100;
 
   return (
-    <div className="max-w-2xl mx-auto py-12 px-6 relative">
-      <div className="mb-10 mt-6">
-        <div className="flex justify-between text-sm font-bold text-slate-400 mb-3 uppercase tracking-wider">
-          <span>Question {currentQ + 1} of {BAD_GUYS_QUESTIONS.length}</span>
-          <span>{Math.round(progress)}%</span>
-        </div>
-        <div className="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
-          <div className="bg-rose-500 h-full rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
-        </div>
-      </div>
-      
-      <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-xl border border-slate-100 text-center mb-10 min-h-[200px] flex items-center justify-center">
-        <h2 className="text-2xl md:text-3xl font-extrabold text-slate-800 leading-tight">"{question.text}"</h2>
-      </div>
-
-      <div className="flex flex-wrap justify-center gap-3 md:gap-4 max-w-md mx-auto">
-        {[
-          { text: "Never", val: 1 },
-          { text: "Rarely", val: 2 },
-          { text: "Sometimes", val: 3 },
-          { text: "Often", val: 4 },
-          { text: "Always", val: 5 },
-        ].map((opt) => (
-          <button
-            key={opt.val}
-            onClick={() => handleAnswer(opt.val)}
-            className="group flex flex-col items-center justify-center w-[30%] aspect-square bg-white border-2 border-slate-100 rounded-[24px] shadow-[0_4px_10px_rgba(0,0,0,0.03)] hover:border-rose-500 hover:bg-rose-50 hover:-translate-y-1 hover:shadow-lg transition-all focus:outline-none focus:ring-4 focus:ring-rose-200 active:scale-95"
-          >
-            <span className="text-3xl md:text-4xl font-extrabold text-slate-300 group-hover:text-rose-600 transition-colors mb-1">{opt.val}</span>
-            <span className="text-[11px] md:text-sm font-extrabold text-slate-600 uppercase tracking-wider text-center">{opt.text}</span>
-          </button>
-        ))}
-      </div>
+    <div className="bg-[#FFF4FA] px-3 py-8 md:py-12 overflow-x-hidden">
+      <GameQuestion
+        name="Why you attract toxic people"
+        emoji="🧲"
+        index={currentQ}
+        total={BAD_GUYS_QUESTIONS.length}
+        text={question.text}
+        quote={true}
+        options={[{ label: "Never", value: 1 }, { label: "Rarely", value: 2 }, { label: "Sometimes", value: 3 }, { label: "Often", value: 4 }, { label: "Always", value: 5 }]}
+        onAnswer={(v) => handleAnswer(Number(v))}
+        onBack={() => setCurrentQ((c) => Math.max(c - 1, 0))}
+      />
     </div>
   );
 }

@@ -36,6 +36,20 @@ import { saveQuizResult, loadQuizResult } from "@/lib/quizResults";
 import { trackEmailSubmit, trackResultView } from "@/lib/track";
 import EmailResultOffer from "@/components/features/EmailResultOffer";
 import ProgramOffer from "@/components/program/ProgramOffer";
+import { GameQuestion, GameLoading } from "@/components/quiz/GameQuiz";
+import { sticker, stickerStatic, display } from "@/lib/ui/sticker";
+
+/** Each long test's name and runner emoji, for the game screen. */
+const GAME_META: Record<string, { name: string; emoji: string }> = {
+  "attachment-style": { name: "Attachment style", emoji: "🧸" },
+  "attraction-patterns": { name: "Attraction patterns", emoji: "🧲" },
+  "who-is-attracted-to-me": { name: "Who you attract", emoji: "💘" },
+  "what-kind-of-person-do-i-attract": { name: "Who you attract", emoji: "💘" },
+  "partners-attachment-style": { name: "His attachment style", emoji: "💭" },
+  "is-he-cheating": { name: "Is he cheating?", emoji: "🔎" },
+  "friend-group-role": { name: "Your friend group role", emoji: "👯" },
+  "are-your-friends-using-you": { name: "Are they using you?", emoji: "🎣" },
+};
 
 /** Maps the infidelity scoring output into the shape InfidelityFreeResult expects */
 function toFreeResultData(profile: ReturnType<typeof generateInfidelityProfile>, email: string) {
@@ -291,11 +305,8 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
 
   if (isScoring) {
     return (
-      <div ref={topRef} className={`w-full max-w-5xl mx-auto text-center py-32 bg-white rounded-2xl shadow-sm border border-[#d6d2d2] animate-in fade-in`}>
-        <div className="flex flex-col items-center justify-center">
-          <div className={`w-16 h-16 border-4 border-[#d6d2d2] border-t-[#06aed5] rounded-full animate-spin mb-6`}></div>
-          <h3 className={`text-2xl font-black text-[#086788] mb-2 animate-pulse`}>Compiling Profile...</h3>
-        </div>
+      <div ref={topRef} className="w-full">
+        <GameLoading emoji={(GAME_META[quizName] ?? { emoji: "✨" }).emoji} />
       </div>
     );
   }
@@ -377,68 +388,53 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   }
 
   if (isFinished) {
+    const meta = GAME_META[quizName] ?? { name: "The test", emoji: "✨" };
     return (
-      <div ref={topRef} className={`w-full max-w-5xl mx-auto bg-white border border-[#d6d2d2] rounded-2xl shadow-sm text-center py-20 px-6 animate-in fade-in zoom-in`}>
-        <div className={`w-24 h-24 mx-auto bg-[#fff1d0] rounded-full flex items-center justify-center mb-6`}><span className="text-4xl">🧠</span></div>
-        <h3 className={`text-3xl md:text-4xl font-black text-[#086788] mb-4`}>Assessment Complete</h3>
-        <p className={`text-lg mb-10 max-w-xl mx-auto font-medium text-[#086788]/80`}>All behavioral data captured. We are ready to compile your specific psychological profile.</p>
-        <button onClick={handleCompile} className={`w-full max-w-md mx-auto block bg-[#f0c808] text-[#086788] font-black py-4 px-8 min-h-[56px] rounded-xl transform hover:-translate-y-1 transition-all duration-300 shadow-md`}>
-          Compile My Results
-        </button>
+      <div ref={topRef} className="w-full max-w-xl mx-auto px-1">
+        <div className={`oc-pop relative overflow-hidden rounded-[28px] bg-gradient-to-br from-[#FF4FA3] via-[#FF6F7D] to-[#FF9A4D] text-white p-8 text-center ${stickerStatic}`}>
+          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-around">
+            {["🏆", "✨", meta.emoji, "🎉", "🏆"].map((e, k) => (
+              <span key={k} className="oc-burst text-2xl" style={{ animationDelay: `${k * 110}ms` }}>{e}</span>
+            ))}
+          </div>
+          <div className="text-6xl mb-3" aria-hidden="true">🏆</div>
+          <p className="text-[12px] font-black uppercase tracking-[0.2em] text-white/85 mb-2">All levels complete</p>
+          <h3 className="text-[38px] leading-none mb-3" style={display}>You did it!</h3>
+          <p className="text-[16px] font-bold text-white/95 mb-6">Every answer is in. Your result is one tap away.</p>
+          <button onClick={handleCompile} className={`w-full min-h-[60px] rounded-2xl bg-[#1A1033] text-white font-black text-lg flex items-center justify-center gap-2 ${sticker} !border-white !shadow-[4px_4px_0_#ffffff]`}>
+            Reveal my result <ArrowRight className="w-5 h-5" />
+          </button>
+        </div>
+        <button onClick={handleBack} className="mt-5 text-sm font-black text-[#1A1033]/50 hover:text-[#1A1033]">← Change my last answer</button>
       </div>
     );
   }
 
   const q = activeQuestions[currentIndex] as any;
-  const sectionName = (q.section || q.moduleKey || q.category) ?? "Assessment";
+  const sectionName = q.section || q.moduleKey || q.category;
   const useKeypad = isAttachment && !String(q.id).startsWith("demo");
+  const meta = GAME_META[quizName] ?? { name: "The test", emoji: "✨" };
 
   return (
-    <div ref={topRef} className={`w-full max-w-5xl mx-auto bg-white rounded-2xl shadow-sm border border-[#d6d2d2] flex flex-col justify-center min-h-[400px] p-6 md:p-12`}>
-      <div className="mb-10">
-        <div className="flex justify-between items-end mb-4">
-          <div><span className={`text-xs md:text-sm font-bold px-3 py-1.5 rounded bg-[#fff1d0] text-[#086788]`}>{sectionName}</span></div>
-          <div className={`text-sm md:text-base font-black tracking-wide text-[#086788]`}>QUESTION {currentIndex + 1} / {activeQuestions.length}</div>
-        </div>
-        <div className={`w-full h-2 rounded-full bg-[#d6d2d2] overflow-hidden`}><div className={`h-full rounded-full transition-all duration-500 ease-out bg-[#06aed5]`} style={{ width: `${progress}%` }} /></div>
-      </div>
-      <div className={`transition-all duration-250 ease-in-out transform ${isAnimating ? 'opacity-0 scale-[0.99]' : 'opacity-100 scale-100'}`}>
-        <h3 className={`text-2xl md:text-4xl font-black text-[#086788] mb-10 leading-tight text-center max-w-3xl mx-auto`}>{q.text}</h3>
-        {useKeypad ? (
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3 md:gap-4 w-full">
-            {q.options.map((option: string, idx: number) => {
-              const isSelected = selectedAnswer === option;
-              const isDisabled = selectedAnswer !== null && !isSelected;
-              return (
-                <button key={idx} onClick={() => handleOptionClick(option)} disabled={isDisabled} className={`group flex flex-col items-center justify-center w-full min-h-[100px] rounded-xl border-2 transition-all focus:outline-none ${isSelected ? 'bg-[#086788] border-[#086788] shadow-md text-white' : isDisabled ? 'bg-white border-[#d6d2d2] opacity-40 cursor-not-allowed text-[#086788]' : 'bg-white border-[#d6d2d2] hover:border-[#06aed5] hover:bg-[#06aed5]/5 cursor-pointer text-[#086788]'}`}>
-                  <span className={`text-3xl md:text-4xl font-black mb-1 ${isSelected ? 'text-white' : 'text-[#06aed5]'}`}>{idx + 1}</span>
-                  <span className={`text-[10px] md:text-xs font-black uppercase tracking-wider text-center px-2 leading-tight ${isSelected ? 'text-white' : 'text-[#086788] group-hover:text-[#086788]'}`}>{option}</span>
-                </button>
-              )
-            })}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 w-full max-w-3xl mx-auto">
-            {q.options.map((option: string, idx: number) => {
-              const isSelected = selectedAnswer === option;
-              const isDisabled = selectedAnswer !== null && !isSelected;
-              return (
-                <button key={idx} onClick={() => handleOptionClick(option)} disabled={isDisabled} className={`w-full min-h-[64px] flex-col justify-center py-4 px-6 rounded-xl border-[2px] font-black text-base md:text-lg transition-all duration-200 flex items-center ${isSelected ? 'bg-[#086788] border-[#086788] text-white shadow-md' : isDisabled ? 'bg-white border-[#d6d2d2] opacity-40 cursor-not-allowed text-[#086788]' : 'bg-white border-[#d6d2d2] hover:border-[#06aed5] hover:bg-[#06aed5]/5 text-[#086788]'}`}>
-                  <span className="w-full text-center">{option}</span>
-                </button>
-              )
-            })}
-          </div>
-        )}
-      </div>
-      <div className="mt-12 flex justify-between items-center border-t border-[#d6d2d2] pt-6">
-        <button onClick={handleBack} disabled={currentIndex === 0 || isAnimating || selectedAnswer !== null} className={`min-h-[48px] text-sm font-black flex items-center gap-2 px-6 rounded-xl transition-all bg-white text-[#086788] border border-[#d6d2d2] hover:bg-[#fff1d0]/50 ${currentIndex === 0 || isAnimating || selectedAnswer !== null ? 'opacity-0 pointer-events-none' : ''}`}><span>←</span> Back</button>
-        {/* Fills every answer at random. A testing aid only: in production a
-            visitor could tap it and then pay for a report on random data. */}
-        {process.env.NODE_ENV !== "production" && (
-          <button onClick={handleGodMode} type="button" className={`min-h-[48px] text-xs font-bold transition-all px-4 text-[#086788]/40 hover:text-[#086788]`}>⚡ Skip</button>
-        )}
-      </div>
+    <div ref={topRef} className="w-full">
+      <GameQuestion
+        name={meta.name}
+        emoji={meta.emoji}
+        index={currentIndex}
+        total={activeQuestions.length}
+        text={q.text}
+        section={sectionName && sectionName !== "General" ? String(sectionName) : undefined}
+        options={q.options.map((o: string) => ({ label: o, value: o }))}
+        onAnswer={(v) => handleOptionClick(String(v))}
+        onBack={handleBack}
+        delay={0}
+        layout={useKeypad ? "grid" : "list"}
+      />
+      {/* Fills every answer at random. A testing aid only: in production a
+          visitor could tap it and then pay for a report on random data. */}
+      {process.env.NODE_ENV !== "production" && (
+        <button onClick={handleGodMode} type="button" className="mt-2 min-h-[48px] text-xs font-bold px-4 text-[#1A1033]/40 hover:text-[#1A1033]">⚡ Skip</button>
+      )}
     </div>
   );
 }

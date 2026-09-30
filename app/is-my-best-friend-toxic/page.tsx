@@ -1,5 +1,5 @@
 import MainHero from "@/components/ui/MainHero";
-import QuizWidget from "@/components/features/QuizWidget";
+import ToxicQuizEngine from "@/app/toxic-friend-test/_components/ToxicQuizEngine";
 import Link from "next/link";
 import { Metadata } from "next";
 import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
@@ -22,7 +22,7 @@ export default function QuizPage() {
                 &larr; Back to Toxic Friendships Hub
             </Link>
         </div>
-        <QuizWidget quizName="Is My Best Friend Toxic?" />
+        <ToxicQuizEngine />
       </div>
     <QuizSeoFooter slug="/is-my-best-friend-toxic" />
     </>

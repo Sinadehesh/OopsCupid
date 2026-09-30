@@ -1,4 +1,5 @@
 "use client";
+import { GameQuestion, GameLoading, GameStart } from "@/components/quiz/GameQuiz";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import ManipulationFreeResult from "./ManipulationFreeResult";
@@ -179,13 +180,7 @@ export default function ManipulationQuizEngine() {
     </div>
   );
 
-  if (isProcessing) return (
-    <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4 bg-[#fafafa]">
-      <div className="w-20 h-20 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mb-8 shadow-[0_0_15px_rgba(79,70,229,0.3)]"></div>
-      <h2 className="text-3xl font-extrabold text-slate-800 mb-4">Compiling Red Flags...</h2>
-      <p className="text-slate-500 font-medium text-lg">Scoring his behaviour across each manipulation tactic.</p>
-    </div>
-  );
+  if (isProcessing) return <div className="bg-[#FFF4FA] px-3 py-8 md:py-12 overflow-x-hidden"><GameLoading emoji="🎭" /></div>;
 
   if (step === "email") return (
     <div className="max-w-xl mx-auto py-20 px-6 text-center animate-in zoom-in duration-500">
@@ -220,38 +215,23 @@ export default function ManipulationQuizEngine() {
     </>
   );
 
-  if (!started) return (
-    <div className="max-w-3xl mx-auto py-20 px-6 text-center relative">
-      <div className="inline-flex items-center justify-center w-24 h-24 bg-indigo-100 text-indigo-600 rounded-full mb-8 shadow-sm border border-indigo-200"><ShieldAlert className="w-12 h-12" /></div>
-      <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 mb-6 tracking-tight leading-tight">Is He Manipulative?</h1>
-      <p className="text-lg md:text-2xl text-slate-600 mb-10 font-medium leading-relaxed max-w-2xl mx-auto">Take this brutally honest diagnostic. Uncover if his confusing behavior is just "bad communication" or a calculated system of coercive control.</p>
-      <button onClick={handleStart} className="bg-indigo-600 text-white font-extrabold text-xl py-5 px-12 rounded-full shadow-[0_10px_30px_rgba(79,70,229,0.3)] hover:bg-indigo-700 hover:-translate-y-1 transition-all group">Start the Test <ArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" /></button>
-    </div>
-  );
+  if (!started) return <div className="bg-[#FFF4FA] px-3 py-8 md:py-12 overflow-x-hidden"><GameStart emoji="🎭" title="Is he manipulative?" blurb="Rate how often each one happens. Short levels, then whether it looks like bad communication or a pattern." total={qList.length} onStart={handleStart} /></div>;
 
   const question = qList[currentQ];
-  const progress = (currentQ / qList.length) * 100;
 
   return (
-    <div className="max-w-2xl mx-auto py-12 px-6 relative animate-in fade-in duration-500">
-      
-      <div className="mb-10 mt-6">
-        <div className="flex justify-between text-sm font-bold text-slate-400 mb-3 uppercase tracking-wider"><span>Question {currentQ + 1} of {qList.length}</span><span className="text-indigo-600">{Math.round(progress)}%</span></div>
-        <div className="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden"><div className="bg-indigo-600 h-full rounded-full transition-all duration-500 ease-out" style={{ width: `${progress}%` }}></div></div>
-      </div>
-      
-      <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-xl border border-slate-100 text-center mb-10 min-h-[200px] flex items-center justify-center">
-        <h2 className="text-2xl md:text-3xl font-extrabold text-slate-800 leading-tight">"{question?.text || question?.stem || "Loading..."}"</h2>
-      </div>
-      
-      <div className="flex flex-wrap justify-center gap-3 md:gap-4 max-w-md mx-auto">
-        {[ { text: "Never", val: 1 }, { text: "Rarely", val: 2 }, { text: "Sometimes", val: 3 }, { text: "Often", val: 4 }, { text: "Always", val: 5 } ].map(opt => (
-          <button key={opt.val} onClick={() => handleAnswer(opt.val)} className="group flex flex-col items-center justify-center w-[30%] aspect-square bg-white border-2 border-slate-100 rounded-[24px] hover:border-indigo-600 hover:bg-indigo-50 hover:-translate-y-1 hover:shadow-lg transition-all focus:outline-none focus:ring-4 focus:ring-indigo-100">
-            <span className="text-3xl md:text-4xl font-extrabold text-slate-300 group-hover:text-indigo-600 mb-1 transition-colors">{opt.val}</span>
-            <span className="text-[11px] md:text-sm font-extrabold text-slate-600 uppercase tracking-wider">{opt.text}</span>
-          </button>
-        ))}
-      </div>
+    <div className="bg-[#FFF4FA] px-3 py-8 md:py-12 overflow-x-hidden">
+      <GameQuestion
+        name="Is he manipulative?"
+        emoji="🎭"
+        index={currentQ}
+        total={qList.length}
+        text={question?.text || question?.stem || ""}
+        quote={true}
+        options={[{ label: "Never", value: 1 }, { label: "Rarely", value: 2 }, { label: "Sometimes", value: 3 }, { label: "Often", value: 4 }, { label: "Always", value: 5 }]}
+        onAnswer={(v) => handleAnswer(Number(v))}
+        onBack={() => setCurrentQ((c) => Math.max(c - 1, 0))}
+      />
     </div>
   );
 }
