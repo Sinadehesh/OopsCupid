@@ -69,12 +69,15 @@ function Section({ s }: { s: GuideSection }) {
   );
 }
 
-export default async function GuidePage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function GuidePage({ params, searchParams }: { params: Promise<{ slug: string }>; searchParams: Promise<{ preview?: string }> }) {
   const { slug } = await params;
   const g = guideBySlug(slug);
   if (!g) notFound();
   const claims = readAccessToken((await cookies()).get(ACCESS_COOKIE)?.value);
-  const open = canRead(claims, `guides/${slug}`);
+  // ?preview=locked shows the page as a visitor who hasn't paid sees it,
+  // even to someone who has: it can only ever hide content, never reveal it.
+  const preview = (await searchParams).preview === "locked";
+  const open = !preview && canRead(claims, `guides/${slug}`);
   const others = GUIDE_META.filter((x) => x.slug !== slug && x.forTests.some((t) => g.forTests.includes(t))).slice(0, 3);
 
   return (
