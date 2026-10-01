@@ -403,6 +403,7 @@ export function tickTestBySlug(slug: string) {
 export const QUICK_TESTS: { slug: string; short: string; emoji: string; bg: string; fg: string; fun?: boolean }[] = [
   // The games lead: they are the most shareable thing here.
   { slug: "flag-runner", short: "Flag Runner", emoji: "🏃‍♀️", bg: "#FFE68A", fg: "#5C4300", fun: true },
+  { slug: "love-tower", short: "Love Tower", emoji: "🏗️", bg: "#C9B6FF", fg: "#3F2C6B", fun: true },
   { slug: "red-flag-or-green-flag", short: "Red flag or green flag?", emoji: "🚦", bg: "#FFD1E8", fg: "#6E1A4A", fun: true },
   ...CHOICE_GAMES.slice(0, 1).map(({ slug, short, emoji, bg, fg }) => ({ slug, short, emoji, bg, fg, fun: true })),
   ...VERSUS_GAMES.map(({ slug, short, emoji, bg, fg }) => ({ slug, short, emoji, bg, fg, fun: true })),

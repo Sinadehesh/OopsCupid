@@ -256,3 +256,7 @@ body::before {
 .oc-run { animation: oc-run 0.32s ease-in-out infinite; }
 .oc-flee { animation: oc-flee 1.4s ease-in 0.5s forwards; }
 @media (prefers-reduced-motion: reduce) { .oc-run, .oc-flee { animation: none; } }
+/* Love Tower: the chopped-off piece falling away. */
+@keyframes oc-fall { 0% { transform: translateY(0) rotate(0); opacity: 1; } 100% { transform: translateY(260px) rotate(25deg); opacity: 0; } }
+.oc-fall { animation: oc-fall 0.8s ease-in forwards; }
+@media (prefers-reduced-motion: reduce) { .oc-fall { animation: none; opacity: 0; } }

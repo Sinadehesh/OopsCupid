@@ -49,6 +49,7 @@ const TILES: { href: string; emoji: string; label: string }[] = [
 
 const TICKER = [
   { t: "🏃‍♀️ flag runner: love or the ick?", href: "/flag-runner" },
+  { t: "🏗️ love tower", href: "/love-tower" },
   { t: "💬 things he says bingo", href: "/things-he-says" },
   { t: "🥊 friend vs friend", href: "/friend-vs-friend" },
   { t: "💘 him vs your ex", href: "/him-vs-your-ex" },

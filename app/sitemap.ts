@@ -34,6 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/red-flag-or-green-flag",
     "/games",
     "/flag-runner",
+    "/love-tower",
     ...CHOICE_GAMES.map((g) => `/${g.slug}`),
     ...GUIDES.map((g) => `/guides/${g.slug}`),
   ];

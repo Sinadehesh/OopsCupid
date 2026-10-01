@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 
 const GAMES = [
   { slug: "flag-runner", title: "Flag Runner", emoji: "🏃‍♀️", bg: "#FFE68A", line: "Fill her heart with green flags. Three red flags and the ick wins.", tag: "new · 16 levels" },
+  { slug: "love-tower", title: "Love Tower", emoji: "🏗️", bg: "#C9B6FF", line: "Stack every milestone from the first DM to forever. Miss once and it all falls apart.", tag: "new · stacking" },
   { slug: "red-flag-or-green-flag", title: "Red flag or green flag?", emoji: "🚦", bg: "#FFD1E8", line: "Swipe 16 dating moments. How sharp is your radar?", tag: "swipe" },
   ...CHOICE_GAMES.map((g) => ({ slug: g.slug, title: g.title, emoji: g.emoji, bg: g.bg, line: g.intro, tag: `${g.rounds.length} rounds` })),
   ...VERSUS_GAMES.map((g) => ({ slug: g.slug, title: g.title, emoji: g.emoji, bg: g.bg, line: g.intro, tag: "2 players" })),
