@@ -27,9 +27,10 @@ import { QUICK_TESTS } from "@/lib/quizzes/tickTests";
 const INK = "#1A1033";
 
 const QUICK = {
-  href: "/things-he-says",
-  title: "Which of these has he said to you?",
-  detail: "🎱 bingo · 40 seconds",
+  href: "/flag-runner",
+  title: "Flag Runner: can you spot the red flags?",
+  detail: "🎮 new game · 16 levels · it's love or the ick",
+  emoji: "🏃‍♀️",
 };
 
 /** Candy palette, cycled across the cards. */
@@ -62,7 +63,7 @@ const sticker =
   "border-[2.5px] border-[#1A1033] shadow-[4px_4px_0_#1A1033] active:shadow-[1px_1px_0_#1A1033] active:translate-x-[3px] active:translate-y-[3px] transition-all duration-100";
 
 export default function HomeHero() {
-  const quick = QUICK_TESTS.filter((t) => t.slug !== "things-he-says");
+  const quick = QUICK_TESTS.filter((t) => t.slug !== "flag-runner");
 
   return (
     <section className="relative overflow-hidden bg-[#FFF4FA]">
@@ -122,10 +123,10 @@ export default function HomeHero() {
           className={`group relative flex items-center gap-4 rounded-[26px] bg-gradient-to-br from-[#FF4FA3] via-[#FF6F7D] to-[#FF9A4D] text-white px-5 py-5 md:px-7 md:py-6 mb-5 ${sticker}`}
         >
           <span className="absolute -top-3 right-4 rotate-3 rounded-full bg-[#FFE68A] text-[#1A1033] border-2 border-[#1A1033] px-2.5 py-0.5 text-[11px] font-black">
-            🔥 most played
+            🎮 new game
           </span>
           <span className="shrink-0 w-14 h-14 rounded-2xl bg-white/25 border-2 border-white/60 flex items-center justify-center text-3xl" aria-hidden="true">
-            💬
+            {QUICK.emoji}
           </span>
           <span className="flex-1 min-w-0">
             <span className="block text-[11px] font-black uppercase tracking-[0.16em] text-white/85 mb-0.5">Start here</span>
@@ -245,7 +246,7 @@ export function StickyTestBar() {
         onClick={() => trackHomeClick("sticky")}
         className={`flex items-center justify-center gap-2 w-full rounded-2xl bg-gradient-to-r from-[#FF4FA3] to-[#FF9A4D] text-white font-black text-[17px] py-4 ${sticker}`}
       >
-        Take the 40-second test 👀 <ArrowRight className="w-5 h-5" strokeWidth={3} />
+        Play Flag Runner 🏃‍♀️ <ArrowRight className="w-5 h-5" strokeWidth={3} />
       </Link>
     </div>
   );

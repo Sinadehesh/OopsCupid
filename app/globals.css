@@ -250,3 +250,9 @@ body::before {
 @keyframes oc-road { from { background-position: 0 0; } to { background-position: 0 44px; } }
 .oc-road { animation: oc-road 0.45s linear infinite; }
 @media (prefers-reduced-motion: reduce) { .oc-road { animation: none; } }
+/* Flag Runner: her running bob, and the boss fleeing when it's love. */
+@keyframes oc-run { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-7px) rotate(4deg); } }
+@keyframes oc-flee { 0% { transform: translateX(0) scale(1); opacity: 1; } 100% { transform: translateX(160px) scale(0.4) rotate(40deg); opacity: 0; } }
+.oc-run { animation: oc-run 0.32s ease-in-out infinite; }
+.oc-flee { animation: oc-flee 1.4s ease-in 0.5s forwards; }
+@media (prefers-reduced-motion: reduce) { .oc-run, .oc-flee { animation: none; } }
