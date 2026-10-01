@@ -20,6 +20,7 @@ const SAVE = "oc_flag_runner_v3";
 type Phase = "menu" | "ready" | "run" | "pause" | "ending" | "done";
 type Lane = 0 | 1;
 type Step = { i: number; green: boolean };
+type Pop = { id: number; tone: "good" | "bad" | "meh"; title: string; why: string; lane: Lane };
 /** The run is a list of events: a gate pair, then something on the road, and so on. */
 type Ev = { kind: "gate"; i: number } | { kind: "thing"; thing: RoadThing; lane: Lane };
 
@@ -97,7 +98,7 @@ export default function FlagRunner() {
   const [lane, setLane] = useState<Lane>(0);
   const [history, setHistory] = useState<Step[]>([]);
   const [greenLeft, setGreenLeft] = useState<boolean[]>([]);
-  const [toast, setToast] = useState<{ tone: "good" | "bad" | "meh"; title: string; why: string } | null>(null);
+  const [pops, setPops] = useState<Pop[]>([]);
   const [ending, setEnding] = useState<Ending>("situationship");
 
   const laneRef = useRef<Lane>(0);
@@ -144,12 +145,25 @@ export default function FlagRunner() {
     setT(0);
     steer(Math.random() < 0.5 ? 0 : 1);
     setHistory([]);
-    setToast(null);
+    setPops([]);
+    ickRef.current = 0;
+    greensRef.current = 0;
     setPhase("run");
     trackQuizStart(`${SLUG}:${level.id}`);
   };
 
-  // Whatever's next comes down the road; when it reaches her, her lane decides.
+  // Whatever's next comes down the road; when it reaches her, her lane
+  // decides. The result pops up and floats away while she keeps running:
+  // the game never stops for it.
+  const ickRef = useRef(0);
+  const greensRef = useRef(0);
+  const popId = useRef(0);
+  const pop = useCallback((tone: Pop["tone"], title: string, why: string) => {
+    const id = ++popId.current;
+    setPops((ps) => [...ps.slice(-2), { id, tone, title, why, lane: laneRef.current }]);
+    setTimeout(() => setPops((ps) => ps.filter((x) => x.id !== id)), 2000);
+  }, []);
+
   useEffect(() => {
     if (phase !== "run" || !ev) return;
     const travel = ev.kind === "gate" ? travelSeconds(levelIdx) * 1000 : Math.max(1100, 1600 - levelIdx * 30);
@@ -166,42 +180,43 @@ export default function FlagRunner() {
         const pair = level.pairs[ev.i];
         const green = (laneRef.current === 0) === greenLeft[ev.i];
         setHistory((h) => [...h, { i: ev.i, green }]);
-        if (!green) setIck((k) => k + 1);
-        setToast(green ? { tone: "good", title: "💚 Green flag! Heart +1", why: pair.green.why } : { tone: "bad", title: "🚩 Red flag! Ick +1", why: pair.red.why });
+        if (green) greensRef.current += 1;
+        else ickRef.current += 1;
+        if (green) pop("good", "💚 Green flag!", pair.green.why);
+        else pop("bad", "🚩 Red flag! 🤢", pair.red.why);
       } else {
         const hit = laneRef.current === ev.lane;
         if (ev.thing.rose) {
-          if (hit) setIck((k) => Math.max(0, k - 1));
-          setToast(hit ? { tone: "good", title: `${ev.thing.emoji} Grabbed it! Ick -1`, why: `${ev.thing.name}. Sweet.` } : { tone: "meh", title: `${ev.thing.emoji} Missed it`, why: `${ev.thing.name} went by.` });
+          if (hit) {
+            ickRef.current = Math.max(0, ickRef.current - 1);
+            pop("good", `${ev.thing.emoji} +love`, ev.thing.name);
+          }
+        } else if (hit) {
+          ickRef.current += 1;
+          pop("bad", `💥 Ouch! 🤢`, `${ev.thing.name} ${ev.thing.emoji}`);
         } else {
-          if (hit) setIck((k) => k + 1);
-          setToast(hit ? { tone: "bad", title: `💥 Ouch! Ick +1`, why: `Ran straight into ${ev.thing.name.toLowerCase()} ${ev.thing.emoji}` } : { tone: "good", title: `😎 Dodged it`, why: `${ev.thing.name} ${ev.thing.emoji}, swerved.` });
+          pop("meh", "😎 Dodged", "");
         }
       }
-      setPhase("pause");
+      setIck(ickRef.current);
+      const over = ickRef.current >= ICK_LIMIT || evIdx + 1 >= events.length;
+      if (over) {
+        // Let the last pop land, then the ending.
+        setPhase("pause");
+        setTimeout(() => {
+          setEnding(endingFor(greensRef.current, ickRef.current, total));
+          setPhase("ending");
+        }, 900);
+      } else {
+        setT(0);
+        setEvIdx(evIdx + 1);
+      }
     };
     raf.current = requestAnimationFrame(tick);
     return () => {
       if (raf.current) cancelAnimationFrame(raf.current);
     };
-  }, [phase, ev, levelIdx, greenLeft, level]);
-
-  // A beat to read it, then the next thing, or the ending.
-  useEffect(() => {
-    if (phase !== "pause") return;
-    const id = setTimeout(() => {
-      setToast(null);
-      if (ick >= ICK_LIMIT || evIdx + 1 >= events.length) {
-        setEnding(endingFor(greens, ick, total));
-        setPhase("ending");
-      } else {
-        setEvIdx(evIdx + 1);
-        setT(0);
-        setPhase("run");
-      }
-    }, ev?.kind === "gate" ? 1500 : 800);
-    return () => clearTimeout(id);
-  }, [phase, evIdx, events.length, ev, total, greens, ick]);
+  }, [phase, ev, evIdx, events.length, levelIdx, greenLeft, level, total, pop]);
 
   // The ending plays out on the road, then the summary.
   useEffect(() => {
@@ -455,14 +470,19 @@ export default function FlagRunner() {
           </div>
         )}
 
-        {toast && (
-          <div className="absolute inset-x-3 top-4 z-20">
-            <div className={`oc-pop rounded-2xl border-[2.5px] border-[#1A1033] p-3.5 shadow-[3px_3px_0_#1A1033] ${toast.tone === "good" ? "bg-[#B8F2D8]" : toast.tone === "bad" ? "bg-[#FFD1E8]" : "bg-white"}`}>
-              <p className="text-[20px] text-[#1A1033]" style={display}>{toast.title}</p>
-              <p className="text-[14px] font-bold text-[#1A1033]/85 leading-snug mt-0.5">{toast.why}</p>
+        {/* Results pop up over her head and float away; the run carries on. */}
+        {pops.map((x) => (
+          <div
+            key={x.id}
+            className="absolute z-20 pointer-events-none oc-floatup"
+            style={{ bottom: 150, width: 190, ...(x.lane === 0 ? { left: 8 } : { right: 8 }) }}
+          >
+            <div className={`rounded-2xl border-[2.5px] border-[#1A1033] px-3 py-2 text-center shadow-[3px_3px_0_#1A1033] ${x.tone === "good" ? "bg-[#B8F2D8]" : x.tone === "bad" ? "bg-[#FFD1E8]" : "bg-white"}`}>
+              <p className="text-[18px] leading-tight text-[#1A1033]" style={display}>{x.title}</p>
+              {x.why && <p className="text-[12px] font-bold text-[#1A1033]/80 leading-snug mt-0.5">{x.why}</p>}
             </div>
           </div>
-        )}
+        ))}
 
         {/* The ending, played out on the road. */}
         {phase === "ending" && (
