@@ -260,3 +260,29 @@ body::before {
 @keyframes oc-fall { 0% { transform: translateY(0) rotate(0); opacity: 1; } 100% { transform: translateY(260px) rotate(25deg); opacity: 0; } }
 .oc-fall { animation: oc-fall 0.8s ease-in forwards; }
 @media (prefers-reduced-motion: reduce) { .oc-fall { animation: none; opacity: 0; } }
+/* Flag Runner girl: a back-view run cycle. One stride is 0.44s; the body
+   bobs twice per stride, once per footfall. */
+@keyframes rg-leg-a { 0%, 100% { transform: translateY(0) scaleY(1); } 25% { transform: translateY(-7px) scaleY(0.78); } 50% { transform: translateY(0) scaleY(1); } }
+@keyframes rg-leg-b { 0%, 100% { transform: translateY(0) scaleY(1); } 50% { transform: translateY(0) scaleY(1); } 75% { transform: translateY(-7px) scaleY(0.78); } }
+@keyframes rg-arm-a { 0%, 100% { transform: rotate(-32deg); } 50% { transform: rotate(28deg); } }
+@keyframes rg-arm-b { 0%, 100% { transform: rotate(-28deg); } 50% { transform: rotate(32deg); } }
+@keyframes rg-pony { 0%, 100% { transform: rotate(16deg); } 50% { transform: rotate(-16deg); } }
+@keyframes rg-bob { 0%, 50%, 100% { transform: translateY(0) rotate(-2deg); } 25% { transform: translateY(-4px) rotate(0deg); } 75% { transform: translateY(-4px) rotate(2deg); } }
+@keyframes rg-shadow { 0%, 50%, 100% { transform: scaleX(1); } 25%, 75% { transform: scaleX(0.8); } }
+@keyframes rg-cheer { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-16px); } 60% { transform: translateY(-16px); } }
+@keyframes rg-cheer-arm-a { 0%, 100% { transform: rotate(-150deg); } 50% { transform: rotate(-170deg); } }
+@keyframes rg-cheer-arm-b { 0%, 100% { transform: rotate(150deg); } 50% { transform: rotate(170deg); } }
+.rg-run .rg-leg-a { animation: rg-leg-a 0.44s ease-in-out infinite; }
+.rg-run .rg-leg-b { animation: rg-leg-b 0.44s ease-in-out infinite; }
+.rg-run .rg-arm-a { animation: rg-arm-a 0.44s ease-in-out infinite; }
+.rg-run .rg-arm-b { animation: rg-arm-b 0.44s ease-in-out infinite; }
+.rg-run .rg-pony { animation: rg-pony 0.44s ease-in-out infinite; }
+.rg-run .rg-body { animation: rg-bob 0.44s ease-in-out infinite; }
+.rg-run .rg-shadow { animation: rg-shadow 0.44s ease-in-out infinite; }
+.rg-cheer .rg-body { animation: rg-cheer 0.6s ease-in-out infinite; }
+.rg-cheer .rg-arm-a { animation: rg-cheer-arm-a 0.6s ease-in-out infinite; }
+.rg-cheer .rg-arm-b { animation: rg-cheer-arm-b 0.6s ease-in-out infinite; }
+.rg-cheer .rg-pony { animation: rg-pony 0.6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .rg-run *, .rg-cheer * { animation: none !important; }
+}

@@ -12,6 +12,7 @@ import ResultShare from "@/components/share/ResultShare";
 import MerchCard from "@/components/shop/MerchCard";
 import MoreQuickTests from "@/components/tick/MoreQuickTests";
 import { CANDY, sticker, stickerStatic, display } from "@/lib/ui/sticker";
+import RunnerGirl from "./RunnerGirl";
 
 const SLUG = "flag-runner";
 const SAVE = "oc_flag_runner_v3";
@@ -70,18 +71,16 @@ function LoveHeart({ fill, size = 46, broken = false }: { fill: number; size?: n
 }
 
 /** Her: running, with the heart over her head and her ick underneath it. */
-function Runner({ fill, ick, running, broken }: { fill: number; ick: number; running: boolean; broken: boolean }) {
+function Runner({ fill, ick, mode, broken }: { fill: number; ick: number; mode: "run" | "stand" | "cheer"; broken: boolean }) {
   return (
     <div className="flex flex-col items-center">
-      <LoveHeart fill={fill} broken={broken} />
-      <div className="flex gap-0.5 -mt-0.5 mb-0.5" aria-label={`Ick ${ick} of ${ICK_LIMIT}`}>
+      <LoveHeart fill={fill} broken={broken} size={40} />
+      <div className="flex gap-0.5 -mt-0.5 mb-1" aria-label={`Ick ${ick} of ${ICK_LIMIT}`}>
         {Array.from({ length: ICK_LIMIT }, (_, k) => (
           <span key={k} className={`text-[13px] leading-none ${k < ick ? "" : "opacity-25 grayscale"}`}>🤢</span>
         ))}
       </div>
-      <span className="inline-block" style={{ transform: "scaleX(-1)" }}>
-        <span className={`text-[52px] leading-none inline-block ${running ? "oc-run" : ""}`} aria-hidden="true">🏃‍♀️</span>
-      </span>
+      <RunnerGirl mode={mode} size={62} />
     </div>
   );
 }
@@ -490,10 +489,10 @@ export default function FlagRunner() {
 
         {/* Her. */}
         <div
-          className="absolute bottom-3 transition-all duration-200 ease-out -translate-x-1/2"
+          className="absolute bottom-1 transition-all duration-200 ease-out -translate-x-1/2"
           style={{ left: phase === "ending" ? "50%" : lane === 0 ? "27%" : "73%" }}
         >
-          <Runner fill={greens / total} ick={Math.min(ick, ICK_LIMIT)} running={phase === "run" || phase === "pause"} broken={broken} />
+          <Runner fill={greens / total} ick={Math.min(ick, ICK_LIMIT)} mode={phase === "run" || phase === "pause" ? "run" : phase === "ending" && ending === "love" ? "cheer" : "stand"} broken={broken} />
         </div>
       </div>
 
