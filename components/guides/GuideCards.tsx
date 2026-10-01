@@ -24,7 +24,7 @@ export function useOwned() {
 
 /**
  * "Read about this": the guides that match what she just did, as small
- * cards. Tap the card to read the free part first, or tap the price to go
+ * cards. Tap the card to see what's inside, or tap the price to go
  * straight to Stripe: an impulse buy should be one tap, not two pages.
  */
 export default function GuideCards({ guides, title = "Read about what you ticked" }: { guides: Guide[]; title?: string }) {
@@ -43,7 +43,7 @@ export default function GuideCards({ guides, title = "Read about what you ticked
                 <span className="flex-1 min-w-0">
                   <span className="block font-black text-[17px] leading-tight">{g.title}</span>
                   <span className="block text-[13px] font-semibold opacity-75 leading-snug mt-0.5">{g.hook}</span>
-                  {!has && <span className="block text-[12px] font-black mt-1 underline">Read the free part</span>}
+                  {!has && <span className="block text-[12px] font-black mt-1 underline">See what's inside</span>}
                 </span>
               </Link>
               {has ? (

@@ -48,14 +48,16 @@ const TILES: { href: string; emoji: string; label: string }[] = [
 ];
 
 const TICKER = [
-  "💬 which of these has he said?",
-  "🥊 friend vs friend",
-  "💘 him vs your ex",
-  "🙋‍♀️ is she a pick-me?",
-  "🚩 red flag or beige flag?",
-  "🤡 is my boyfriend stupid?",
-  "🪞 am I the toxic one?",
-  "🌫️ situationship or relationship?",
+  { t: "🏃‍♀️ flag runner: love or the ick?", href: "/flag-runner" },
+  { t: "💬 things he says bingo", href: "/things-he-says" },
+  { t: "🥊 friend vs friend", href: "/friend-vs-friend" },
+  { t: "💘 him vs your ex", href: "/him-vs-your-ex" },
+  { t: "🚦 red flag or green flag?", href: "/red-flag-or-green-flag" },
+  { t: "📱 decode his text", href: "/decode-his-text" },
+  { t: "💅 pick-me bingo", href: "/is-my-friend-a-pick-me" },
+  { t: "🧾 his receipt", href: "/is-my-boyfriend-stupid" },
+  { t: "🌀 gaslighting or not?", href: "/gaslighting-or-not" },
+  { t: "😶 situationship bingo", href: "/is-it-a-situationship" },
 ];
 
 /** The sticker look: ink outline and a hard shadow that presses in on tap. */
@@ -77,9 +79,17 @@ export default function HomeHero() {
 
       {/* Scrolling ticker of the games, like a TikTok caption strip. */}
       <div className="relative border-b-[2.5px] border-[#1A1033] bg-[#FF4FA3] text-white overflow-hidden">
-        <div className="oc-marquee flex w-max gap-8 py-2 text-[13px] font-black whitespace-nowrap">
-          {[...TICKER, ...TICKER].map((t, i) => (
-            <span key={i}>{t}</span>
+        <div className="oc-marquee hover:[animation-play-state:paused] flex w-max gap-8 py-2 text-[13px] font-black whitespace-nowrap">
+          {[...TICKER, ...TICKER].map((x, i) => (
+            <Link
+              key={i}
+              href={x.href}
+              onClick={() => trackHomeClick(`ticker:${x.href}`)}
+              className="underline decoration-white/40 underline-offset-4 hover:decoration-white"
+              tabIndex={i < TICKER.length ? 0 : -1}
+            >
+              {x.t}
+            </Link>
           ))}
         </div>
       </div>

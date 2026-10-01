@@ -13,7 +13,7 @@ import { stickerStatic, sticker, display } from "@/lib/ui/sticker";
  * the "full report" everywhere else, described by what it actually
  * opens. Hidden for anyone who already has it.
  */
-export default function UnlockAllCard({ returnTo = "/guides", from }: { returnTo?: string; from?: string }) {
+export default function UnlockAllCard({ returnTo = "/guides", from, extra }: { returnTo?: string; from?: string; extra?: string }) {
   const owned = useOwned();
   if (!owned.checked || owned.all) return null;
   const separately = (GUIDES.length * 1.99).toFixed(2);
@@ -27,6 +27,7 @@ export default function UnlockAllCard({ returnTo = "/guides", from }: { returnTo
         <li className="flex gap-2.5"><Check className="w-5 h-5 text-[#FF4FA3] shrink-0 mt-0.5" strokeWidth={3} />All {GUIDES.length} guides (€{separately} if bought one by one)</li>
         <li className="flex gap-2.5"><Check className="w-5 h-5 text-[#FF4FA3] shrink-0 mt-0.5" strokeWidth={3} />A personal read on every quick test and game that has one</li>
         <li className="flex gap-2.5"><Check className="w-5 h-5 text-[#FF4FA3] shrink-0 mt-0.5" strokeWidth={3} />Every full report on the site, built from your own answers</li>
+        {extra && <li className="flex gap-2.5"><Check className="w-5 h-5 text-[#FF4FA3] shrink-0 mt-0.5" strokeWidth={3} />{extra}</li>}
       </ul>
       <CheckoutButton
         sku="premium-report"

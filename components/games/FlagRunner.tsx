@@ -3,10 +3,10 @@
 import React, { useCallback, useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, RotateCcw, Lock } from "lucide-react";
-import { LEVELS, ICK_LIMIT, ENDINGS, endingFor, travelSeconds, type Ending, type RunnerLevel } from "@/lib/games/flagRunner";
+import { LEVELS, ICK_LIMIT, ENDINGS, OBSTACLES, ROSES, endingFor, travelSeconds, type Ending, type RunnerLevel, type RoadThing } from "@/lib/games/flagRunner";
 import { GUIDE_META } from "@/lib/guides/meta";
 import { trackQuizStart, trackQuizComplete, trackResultView } from "@/lib/track";
-import GuideCards from "@/components/guides/GuideCards";
+import GuideCards, { useOwned } from "@/components/guides/GuideCards";
 import UnlockAllCard from "@/components/offers/UnlockAllCard";
 import ResultShare from "@/components/share/ResultShare";
 import MerchCard from "@/components/shop/MerchCard";
@@ -19,6 +19,23 @@ const SAVE = "oc_flag_runner_v3";
 type Phase = "menu" | "ready" | "run" | "pause" | "ending" | "done";
 type Lane = 0 | 1;
 type Step = { i: number; green: boolean };
+/** The run is a list of events: a gate pair, then something on the road, and so on. */
+type Ev = { kind: "gate"; i: number } | { kind: "thing"; thing: RoadThing; lane: Lane };
+
+function buildRun(total: number): { events: Ev[]; greenLeft: boolean[] } {
+  const events: Ev[] = [];
+  const pool = [...OBSTACLES].sort(() => Math.random() - 0.5);
+  for (let i = 0; i < total; i++) {
+    events.push({ kind: "gate", i });
+    if (i < total - 1) {
+      // Mostly obstacles, now and then a rose worth grabbing.
+      const rose = Math.random() < 0.3;
+      const thing = rose ? ROSES[Math.floor(Math.random() * ROSES.length)] : pool[i % pool.length];
+      events.push({ kind: "thing", thing, lane: Math.random() < 0.5 ? 0 : 1 });
+    }
+  }
+  return { events, greenLeft: Array.from({ length: total }, () => Math.random() < 0.5) };
+}
 
 function loadStars(): Record<string, number> {
   try {
@@ -73,12 +90,15 @@ export default function FlagRunner() {
   const [phase, setPhase] = useState<Phase>("menu");
   const [levelIdx, setLevelIdx] = useState(0);
   const [stars, setStars] = useState<Record<string, number>>({});
-  const [pairIdx, setPairIdx] = useState(0);
+  const [events, setEvents] = useState<Ev[]>([]);
+  const [evIdx, setEvIdx] = useState(0);
+  const [ick, setIck] = useState(0);
+  const owned = useOwned();
   const [t, setT] = useState(0);
   const [lane, setLane] = useState<Lane>(0);
   const [history, setHistory] = useState<Step[]>([]);
   const [greenLeft, setGreenLeft] = useState<boolean[]>([]);
-  const [toast, setToast] = useState<{ green: boolean; why: string } | null>(null);
+  const [toast, setToast] = useState<{ tone: "good" | "bad" | "meh"; title: string; why: string } | null>(null);
   const [ending, setEnding] = useState<Ending>("situationship");
 
   const laneRef = useRef<Lane>(0);
@@ -88,10 +108,12 @@ export default function FlagRunner() {
   const total = level.pairs.length;
   const greens = history.filter((h) => h.green).length;
   const reds = history.length - greens;
+  const ev = events[evIdx];
+  const pairIdx = ev?.kind === "gate" ? ev.i : history.length;
 
   useEffect(() => setStars(loadStars()), []);
 
-  const unlocked = (i: number) => i === 0 || (stars[LEVELS[i - 1].id] ?? 0) > 0;
+  const unlocked = (i: number) => owned.all || i === 0 || (stars[LEVELS[i - 1].id] ?? 0) > 0;
 
   const steer = useCallback((l: Lane) => {
     laneRef.current = l;
@@ -115,8 +137,11 @@ export default function FlagRunner() {
   };
 
   const start = () => {
-    setGreenLeft(LEVELS[levelIdx].pairs.map(() => Math.random() < 0.5));
-    setPairIdx(0);
+    const run = buildRun(LEVELS[levelIdx].pairs.length);
+    setEvents(run.events);
+    setGreenLeft(run.greenLeft);
+    setEvIdx(0);
+    setIck(0);
     setT(0);
     steer(Math.random() < 0.5 ? 0 : 1);
     setHistory([]);
@@ -125,10 +150,10 @@ export default function FlagRunner() {
     trackQuizStart(`${SLUG}:${level.id}`);
   };
 
-  // The gates slide down the road; when they reach her, her lane decides.
+  // Whatever's next comes down the road; when it reaches her, her lane decides.
   useEffect(() => {
-    if (phase !== "run") return;
-    const travel = travelSeconds(levelIdx) * 1000;
+    if (phase !== "run" || !ev) return;
+    const travel = ev.kind === "gate" ? travelSeconds(levelIdx) * 1000 : Math.max(1100, 1600 - levelIdx * 30);
     let begin: number | null = null;
     const tick = (now: number) => {
       if (begin === null) begin = now;
@@ -138,33 +163,46 @@ export default function FlagRunner() {
         raf.current = requestAnimationFrame(tick);
         return;
       }
-      const green = (laneRef.current === 0) === greenLeft[pairIdx];
-      setHistory((h) => [...h, { i: pairIdx, green }]);
-      setToast({ green, why: green ? level.pairs[pairIdx].green.why : level.pairs[pairIdx].red.why });
+      if (ev.kind === "gate") {
+        const pair = level.pairs[ev.i];
+        const green = (laneRef.current === 0) === greenLeft[ev.i];
+        setHistory((h) => [...h, { i: ev.i, green }]);
+        if (!green) setIck((k) => k + 1);
+        setToast(green ? { tone: "good", title: "💚 Green flag! Heart +1", why: pair.green.why } : { tone: "bad", title: "🚩 Red flag! Ick +1", why: pair.red.why });
+      } else {
+        const hit = laneRef.current === ev.lane;
+        if (ev.thing.rose) {
+          if (hit) setIck((k) => Math.max(0, k - 1));
+          setToast(hit ? { tone: "good", title: `${ev.thing.emoji} Grabbed it! Ick -1`, why: `${ev.thing.name}. Sweet.` } : { tone: "meh", title: `${ev.thing.emoji} Missed it`, why: `${ev.thing.name} went by.` });
+        } else {
+          if (hit) setIck((k) => k + 1);
+          setToast(hit ? { tone: "bad", title: `💥 Ouch! Ick +1`, why: `Ran straight into ${ev.thing.name.toLowerCase()} ${ev.thing.emoji}` } : { tone: "good", title: `😎 Dodged it`, why: `${ev.thing.name} ${ev.thing.emoji}, swerved.` });
+        }
+      }
       setPhase("pause");
     };
     raf.current = requestAnimationFrame(tick);
     return () => {
       if (raf.current) cancelAnimationFrame(raf.current);
     };
-  }, [phase, pairIdx, levelIdx, greenLeft, level]);
+  }, [phase, ev, levelIdx, greenLeft, level]);
 
-  // A beat to read why, then the next pair, or the ending.
+  // A beat to read it, then the next thing, or the ending.
   useEffect(() => {
     if (phase !== "pause") return;
     const id = setTimeout(() => {
       setToast(null);
-      if (reds >= ICK_LIMIT || pairIdx + 1 >= total) {
-        setEnding(endingFor(greens, reds, total));
+      if (ick >= ICK_LIMIT || evIdx + 1 >= events.length) {
+        setEnding(endingFor(greens, ick, total));
         setPhase("ending");
       } else {
-        setPairIdx(pairIdx + 1);
+        setEvIdx(evIdx + 1);
         setT(0);
         setPhase("run");
       }
-    }, 1500);
+    }, ev?.kind === "gate" ? 1500 : 800);
     return () => clearTimeout(id);
-  }, [phase, pairIdx, total, greens, reds]);
+  }, [phase, evIdx, events.length, ev, total, greens, ick]);
 
   // The ending plays out on the road, then the summary.
   useEffect(() => {
@@ -225,7 +263,8 @@ export default function FlagRunner() {
             );
           })}
         </div>
-        <p className="text-center text-[13px] font-bold text-[#1A1033]/50 mt-5">Survive a level (no break-up) to unlock the next one.</p>
+        <p className="text-center text-[13px] font-bold text-[#1A1033]/50 mt-5 mb-8">Survive a level (no break-up) to unlock the next one.</p>
+        {!owned.all && <UnlockAllCard returnTo="/flag-runner" from="flag-runner-menu" extra={`All ${LEVELS.length} Flag Runner levels, unlocked straight away`} />}
       </div>
     );
   }
@@ -244,6 +283,7 @@ export default function FlagRunner() {
             <li>👆 Tap left or right to steer her.</li>
             <li>💚 Green flag: her heart fills up.</li>
             <li>🚩 Red flag: one more 🤢. Three and {level.boss.name} wins.</li>
+            <li>🧱 Dodge the obstacles between the gates. 🌹 Grab the roses.</li>
             <li>🔥 Watch out for the hard ones.</li>
             <li>💘 Every green flag means true love.</li>
           </ul>
@@ -279,7 +319,7 @@ export default function FlagRunner() {
           <h1 className="text-[38px] md:text-5xl leading-none mb-2" style={display}>{ending === "breakup" ? `${level.boss.name} wins` : end.title}</h1>
           {won && <p className="text-4xl mb-2" aria-label={`${end.stars} stars`}>{"⭐".repeat(end.stars)}{"☆".repeat(3 - end.stars)}</p>}
           <p className="text-[17px] font-bold text-white/95 mb-1">{ending === "breakup" ? "💔 " : ""}{end.line}</p>
-          <p className="text-[14px] font-black text-white/80">💚 {greens} green · 🚩 {reds} red</p>
+          <p className="text-[14px] font-black text-white/80">💚 {greens} green · 🚩 {reds} red · 🤢 {ick} ick</p>
           <div className="grid gap-2 mt-5">
             {won && nextLevel && (
               <button type="button" onClick={() => openLevel(levelIdx + 1)} className={`w-full min-h-[56px] rounded-2xl bg-white text-[#1A1033] font-black text-lg flex items-center justify-center gap-2 ${sticker}`}>
@@ -344,11 +384,12 @@ export default function FlagRunner() {
   /* ─────────────── the road ─────────────── */
 
   const pair = level.pairs[Math.min(pairIdx, total - 1)];
-  const gl = greenLeft[pairIdx];
+  const gl = greenLeft[Math.min(pairIdx, total - 1)];
   const leftGate = gl ? pair.green : pair.red;
   const rightGate = gl ? pair.red : pair.green;
   const gateTop = 34 + t * 200;
-  const showGates = phase === "run";
+  const showGates = phase === "run" && ev?.kind === "gate";
+  const thing = phase === "run" && ev?.kind === "thing" ? ev : null;
   const broken = phase === "ending" && ending === "breakup";
 
   return (
@@ -356,7 +397,7 @@ export default function FlagRunner() {
       <div className="flex items-center justify-between mb-2 text-[13px] font-black text-[#1A1033]">
         <span>{level.emoji} Level {levelIdx + 1}</span>
         <span>vs {level.boss.emoji} {level.boss.name}</span>
-        <span className="tabular-nums">{Math.min(pairIdx + 1, total)}/{total}</span>
+        <span className="tabular-nums">💚 {Math.min(pairIdx + (ev?.kind === "gate" ? 1 : 0), total)}/{total}</span>
       </div>
 
       <div
@@ -400,10 +441,25 @@ export default function FlagRunner() {
             </div>
           ))}
 
+        {/* Something on the road: dodge it, or grab it if it's a rose. */}
+        {thing && (
+          <div
+            className="absolute flex flex-col items-center"
+            style={{ top: 30 + t * 250, left: thing.lane === 0 ? "27%" : "73%", transform: "translateX(-50%)" }}
+          >
+            <span className={`flex items-center justify-center w-[86px] h-[70px] rounded-2xl border-[2.5px] border-[#1A1033] shadow-[3px_3px_0_#1A1033] text-[40px] ${thing.thing.rose ? "bg-[#FFE4F1]" : "bg-[#E7E5E4]"}`}>
+              {thing.thing.emoji}
+            </span>
+            <span className="mt-1 rounded-full bg-white border-2 border-[#1A1033] px-2 py-0.5 text-[11px] font-black text-[#1A1033] whitespace-nowrap">
+              {thing.thing.rose ? "grab it!" : thing.thing.name}
+            </span>
+          </div>
+        )}
+
         {toast && (
           <div className="absolute inset-x-3 top-4 z-20">
-            <div className={`oc-pop rounded-2xl border-[2.5px] border-[#1A1033] p-3.5 shadow-[3px_3px_0_#1A1033] ${toast.green ? "bg-[#B8F2D8]" : "bg-[#FFD1E8]"}`}>
-              <p className="text-[20px] text-[#1A1033]" style={display}>{toast.green ? "💚 Green flag! Heart +1" : "🚩 Red flag! Ick +1"}</p>
+            <div className={`oc-pop rounded-2xl border-[2.5px] border-[#1A1033] p-3.5 shadow-[3px_3px_0_#1A1033] ${toast.tone === "good" ? "bg-[#B8F2D8]" : toast.tone === "bad" ? "bg-[#FFD1E8]" : "bg-white"}`}>
+              <p className="text-[20px] text-[#1A1033]" style={display}>{toast.title}</p>
               <p className="text-[14px] font-bold text-[#1A1033]/85 leading-snug mt-0.5">{toast.why}</p>
             </div>
           </div>
@@ -437,7 +493,7 @@ export default function FlagRunner() {
           className="absolute bottom-3 transition-all duration-200 ease-out -translate-x-1/2"
           style={{ left: phase === "ending" ? "50%" : lane === 0 ? "27%" : "73%" }}
         >
-          <Runner fill={greens / total} ick={reds} running={phase === "run" || phase === "pause"} broken={broken} />
+          <Runner fill={greens / total} ick={Math.min(ick, ICK_LIMIT)} running={phase === "run" || phase === "pause"} broken={broken} />
         </div>
       </div>
 

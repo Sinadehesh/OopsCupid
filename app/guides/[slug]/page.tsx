@@ -75,7 +75,6 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
   if (!g) notFound();
   const claims = readAccessToken((await cookies()).get(ACCESS_COOKIE)?.value);
   const open = canRead(claims, `guides/${slug}`);
-  const [first, ...rest] = g.sections;
   const others = GUIDE_META.filter((x) => x.slug !== slug && x.forTests.some((t) => g.forTests.includes(t))).slice(0, 3);
 
   return (
@@ -89,11 +88,11 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
           <p className="text-lg font-semibold leading-snug opacity-85">{g.hook}</p>
         </div>
 
-        <Section s={first} />
-
+        {/* Paid, all of it: the hook above and the list of what's inside are
+            the only parts anyone sees before buying. */}
         {open ? (
           <>
-            {rest.map((s) => <Section key={s.title} s={s} />)}
+            {g.sections.map((s) => <Section key={s.title} s={s} />)}
             <div className={`rounded-[26px] bg-gradient-to-br from-[#FF4FA3] to-[#FF9A4D] text-white p-6 my-8 ${stickerStatic}`}>
               <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#F5DD90] mb-2 flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5" /> The one thing to remember
@@ -103,7 +102,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
             <p className="text-xs font-semibold text-slate-400 mb-8">{g.sources} This guide is general information, not therapy or advice about your specific situation.</p>
           </>
         ) : (
-          <GuideUnlock slug={slug} rest={rest.map((s) => s.title)} minutes={g.minutes} />
+          <GuideUnlock slug={slug} rest={g.sections.map((s) => s.title)} minutes={g.minutes} />
         )}
 
         <GuideCards guides={others} title="You might also like" />

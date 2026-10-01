@@ -1,9 +1,10 @@
 /**
  * FLAG RUNNER: she runs down the road, two gates come at her, one green
  * flag and one red. A heart above her head fills with every green flag;
- * every red flag adds to her ick. Get them all and it's love. Most of
- * them and it's a talking stage or a situationship. Three red flags and
- * the boss wins: the ick sets in and they break up.
+ * every red flag adds to her ick. Between the gates there are obstacles
+ * to dodge (they add ick too) and roses to grab (they take one away).
+ * Every green flag and no ick is love; one ick is a talking stage, two a
+ * situationship, and three means the boss wins and they break up.
  *
  * Gate text is a few words, readable at a glance on the move, and none of
  * it repeats the other games and tests. Some pairs are marked hard: both
@@ -330,24 +331,54 @@ export const LEVELS: RunnerLevel[] = [
   },
 ];
 
-/** Three red flags and the ick wins. */
+/** Three icks and it's over. */
 export const ICK_LIMIT = 3;
 
 export type Ending = "love" | "talking" | "situationship" | "breakup";
 
-/** How the level ends, from how many green flags she found. */
-export function endingFor(greens: number, reds: number, total: number): Ending {
-  if (reds >= ICK_LIMIT) return "breakup";
-  if (greens === total) return "love";
-  if (greens === total - 1) return "talking";
+/**
+ * How the level ends. Ick comes from red flag gates and obstacles she runs
+ * into; a rose she catches takes one away. True love needs every green
+ * flag and no ick left at the end.
+ */
+export function endingFor(greens: number, ick: number, total: number): Ending {
+  if (ick >= ICK_LIMIT) return "breakup";
+  if (greens === total && ick === 0) return "love";
+  if (ick <= 1) return "talking";
   return "situationship";
 }
 
+/** Things on the road between the gates: dodge the obstacles, grab the roses. */
+export interface RoadThing {
+  emoji: string;
+  name: string;
+  rose?: boolean;
+}
+
+export const OBSTACLES: RoadThing[] = [
+  { emoji: "🧳", name: "Emotional baggage" },
+  { emoji: "💣", name: "Love bomb" },
+  { emoji: "🧱", name: "Trust issues" },
+  { emoji: "🚧", name: "Mixed signals" },
+  { emoji: "🕳️", name: "Overthinking hole" },
+  { emoji: "🍷", name: "His ex at the bar" },
+  { emoji: "📵", name: "Left on read" },
+  { emoji: "🧨", name: "Drama" },
+  { emoji: "🪤", name: "Breadcrumb trap" },
+  { emoji: "🌵", name: "Prickly mood" },
+];
+
+export const ROSES: RoadThing[] = [
+  { emoji: "🌹", name: "A sweet gesture", rose: true },
+  { emoji: "💌", name: "A love letter", rose: true },
+  { emoji: "🍫", name: "Surprise chocolate", rose: true },
+];
+
 export const ENDINGS: Record<Ending, { emoji: string; title: string; line: string; stars: number }> = {
   love: { emoji: "💘", title: "It's love!", line: "Every green flag, no ick. He's a keeper (and so are you).", stars: 3 },
-  talking: { emoji: "💕", title: "Talking stage", line: "So close. One red flag slipped through, but the heart's nearly full.", stars: 2 },
-  situationship: { emoji: "😶", title: "Stuck in a situationship", line: "Not quite love, not quite over. A couple of red flags got past you.", stars: 1 },
-  breakup: { emoji: "💔", title: "You broke up", line: "Three red flags and the ick set in. It happens. Run it back.", stars: 0 },
+  talking: { emoji: "💕", title: "Talking stage", line: "So close. One ick slipped through, but the heart's nearly there.", stars: 2 },
+  situationship: { emoji: "😶", title: "Stuck in a situationship", line: "Not quite love, not quite over. Two icks got to you.", stars: 1 },
+  breakup: { emoji: "💔", title: "You broke up", line: "Three icks and it's over. It happens. Run it back.", stars: 0 },
 };
 
 /** Seconds for a gate pair to reach her. Faster as the levels go on. */
