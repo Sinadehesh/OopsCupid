@@ -24,7 +24,7 @@ import MoreQuickTests from "@/components/tick/MoreQuickTests";
 import { CANDY, sticker, stickerStatic, display } from "@/lib/ui/sticker";
 
 const SLUG = "flag-runner";
-const SAVE = "oc_flag_runner_v1";
+const SAVE = "oc_flag_runner_v2";
 
 type Phase = "menu" | "ready" | "run" | "pause" | "boss" | "done";
 type Lane = 0 | 1;
@@ -187,7 +187,7 @@ export default function FlagRunner() {
         setFight(0);
         setPhase("boss");
       }
-    }, 1900);
+    }, 1500);
     return () => clearTimeout(id);
   }, [phase, pairIdx, level, finish]);
 
@@ -215,7 +215,7 @@ export default function FlagRunner() {
       <div className="max-w-xl mx-auto px-4 py-8">
         <div className="text-center mb-6">
           <span className={`inline-block -rotate-2 rounded-full bg-white px-3 py-1 text-[12px] font-black text-[#1A1033] mb-3 ${stickerStatic} !shadow-[2px_2px_0_#1A1033]`}>
-            🏃‍♀️ runner game · {LEVELS.length} levels
+            🏃 runner game · {LEVELS.length} levels
           </span>
           <h1 className="text-[40px] md:text-6xl leading-[1] text-[#1A1033] mb-3" style={display}>Flag Runner</h1>
           <p className="text-[16px] font-bold text-[#1A1033]/70 leading-relaxed">
@@ -334,9 +334,7 @@ export default function FlagRunner() {
         </section>
 
         {level.support && (
-          <p className={`rounded-2xl bg-[#FFE68A] p-4 mb-8 text-[15px] font-bold text-[#1A1033] ${stickerStatic}`}>
-            💛 If any of the red flags in this level is happening to you, you deserve support. In the UK, Refuge&apos;s free helpline is 0808 2000 247, day or night.
-          </p>
+          <p className={`rounded-2xl bg-[#FFE68A] p-4 mb-8 text-[15px] font-bold text-[#1A1033] ${stickerStatic}`}>💛 {level.support}</p>
         )}
 
         <GuideCards guides={guides} title="Level up for real" />
@@ -373,11 +371,9 @@ export default function FlagRunner() {
   const gl = greenLeft[pairIdx];
   const leftGate = gl ? pair.green : pair.red;
   const rightGate = gl ? pair.red : pair.green;
-  // A gentle perspective: the road and the gates widen as they come closer.
-  const roadTop = 0.72;
-  const w = roadTop + (1 - roadTop) * t;
-  const gateTop = 18 + t * 262;
-  const fs = 12.5 + t * 3;
+  // Gates keep one size and one font all the way down, so the text never
+  // jumps while she's reading it. Only their position moves.
+  const gateTop = 16 + t * 250;
   const passed = phase === "pause";
 
   const bossLeft = Math.round(boss - Math.min(heartsRef.current, boss) * fight);
@@ -420,10 +416,10 @@ export default function FlagRunner() {
                   className="absolute rounded-2xl border-[2.5px] border-[#1A1033] bg-white/95 px-2 py-2 text-center font-extrabold leading-[1.15] text-[#1A1033] flex items-center justify-center"
                   style={{
                     top: gateTop,
-                    width: `calc(${(w * 100) / 2}% - 10px)`,
-                    left: k === 0 ? `calc(${50 - (w * 100) / 2}% + 4px)` : "calc(50% + 6px)",
-                    minHeight: 84 + t * 20,
-                    fontSize: fs,
+                    width: "calc(50% - 14px)",
+                    left: k === 0 ? "8px" : "calc(50% + 6px)",
+                    minHeight: 96,
+                    fontSize: 17,
                     backgroundColor: CANDY[(pairIdx * 2 + k) % CANDY.length],
                     boxShadow: "3px 3px 0 #1A1033",
                   }}
