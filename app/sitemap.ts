@@ -35,6 +35,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/games",
     "/flag-runner",
     "/love-tower",
+    "/kiss-the-frogs",
+    "/heart-wars",
     ...CHOICE_GAMES.map((g) => `/${g.slug}`),
     ...GUIDES.map((g) => `/guides/${g.slug}`),
   ];
