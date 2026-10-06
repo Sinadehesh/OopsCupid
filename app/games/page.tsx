@@ -16,6 +16,7 @@ export const metadata: Metadata = {
 };
 
 const GAMES = [
+  { slug: "daily", title: "Today's challenges", emoji: "📅", bg: "#FFE68A", line: "Five flags a day, plus a daily goal in Love Tower, Kiss the Frogs and Heart Wars. Keep your streak alive.", tag: "daily · streaks" },
   { slug: "flag-runner", title: "Flag Runner", emoji: "🏃‍♀️", bg: "#FFE68A", line: "Fill her heart with green flags. Three red flags and the ick wins.", tag: "new · 16 levels" },
   { slug: "love-tower", title: "Love Tower", emoji: "🏗️", bg: "#C9B6FF", line: "Stack every milestone from the first DM to forever. Miss once and it all falls apart.", tag: "new · stacking" },
   { slug: "kiss-the-frogs", title: "Kiss the Frogs", emoji: "🐸", bg: "#D9F99D", line: "Merge frogs into clowns, ghosts and situationships until you find your prince.", tag: "new · merge" },

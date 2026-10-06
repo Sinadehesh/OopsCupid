@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { trackHomeClick } from "@/lib/track";
 import { QUICK_TESTS } from "@/lib/quizzes/tickTests";
+import DailyCard from "./DailyCard";
 
 /**
  * HOMEPAGE HERO, built for the phone and for TikTok.
@@ -48,6 +49,7 @@ const TILES: { href: string; emoji: string; label: string }[] = [
 ];
 
 const TICKER = [
+  { t: "📅 today's daily challenge 🔥", href: "/daily" },
   { t: "🏃‍♀️ flag runner: love or the ick?", href: "/flag-runner" },
   { t: "🏗️ love tower", href: "/love-tower" },
   { t: "🐸 kiss the frogs", href: "/kiss-the-frogs" },
@@ -150,6 +152,9 @@ export default function HomeHero() {
             <ArrowRight className="w-5 h-5" strokeWidth={3} />
           </span>
         </Link>
+
+        {/* Today's challenges and the streak: the reason to come back tomorrow. */}
+        <DailyCard />
 
         {/* Swipeable quick games. */}
         <div className="flex items-baseline justify-between mb-2">

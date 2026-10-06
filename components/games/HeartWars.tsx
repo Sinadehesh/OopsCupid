@@ -9,6 +9,9 @@ import ResultShare from "@/components/share/ResultShare";
 import MerchCard from "@/components/shop/MerchCard";
 import MoreQuickTests from "@/components/tick/MoreQuickTests";
 import { sticker, stickerStatic, display } from "@/lib/ui/sticker";
+import DailyBanner, { DailyDone } from "./DailyBanner";
+import { useDaily } from "@/lib/games/streaks";
+import { warsDaily, dailyGoal } from "@/lib/games/daily";
 
 /**
  * HEART WARS: tower capture, relationship edition. Your towers make
@@ -135,7 +138,14 @@ export default function HeartWars() {
   const elapsed = useRef(0);
   const raf = useRef<number | null>(null);
 
-  const level = LEVELS[levelIdx];
+  const [custom, setCustom] = useState<Level | null>(null);
+  const level = custom ?? LEVELS[levelIdx];
+  const daily = useDaily("wars");
+  // Kept in a ref so the game loop doesn't restart every frame.
+  const dailyRef = useRef(daily);
+  dailyRef.current = daily;
+  const [dailyDone, setDailyDone] = useState<number | null>(null);
+  const [dailyStreak, setDailyStreak] = useState(0);
 
   useEffect(() => {
     try {
@@ -161,7 +171,26 @@ export default function HeartWars() {
     packets.current.push({ id: ids.current++, from: fromId, to: toId, owner: from.owner, n, x: from.x, y: from.y, hit: 0 });
   }, []);
 
+  const begin = (lv: Level) => {
+    towers.current = lv.towers.map((t) => ({ ...t, id: ids.current++, acc: 0, shot: 0 }));
+    packets.current = [];
+    aiClock.current = 0;
+    elapsed.current = 0;
+    setSelected(null);
+    setPhase("play");
+    trackQuizStart(`${SLUG}:${lv.id}`);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  /** Today's battle: a fresh map and boss each day, the same for everyone. */
+  const startDaily = () => {
+    const lv = warsDaily() as Level;
+    setCustom(lv);
+    begin(lv);
+  };
+
   const startLevel = (i: number) => {
+    setCustom(null);
     setLevelIdx(i);
     towers.current = LEVELS[i].towers.map((t) => ({ ...t, id: ids.current++, acc: 0, shot: 0 }));
     packets.current = [];
@@ -178,7 +207,14 @@ export default function HeartWars() {
       setPhase(won ? "won" : "lost");
       trackQuizComplete(`${SLUG}:${level.id}`, Math.round(elapsed.current));
       trackResultView(`${SLUG}:${level.id}`, won ? "won" : "lost");
-      if (won) {
+      if (won && custom) {
+        const r = dailyRef.current.complete();
+        if (r.isNew) {
+          setDailyStreak(r.save.streak);
+          setTimeout(() => setDailyDone(Date.now()), 400);
+        }
+      }
+      if (won && !custom) {
         setBeaten((b) => {
           const next = b.includes(level.id) ? b : [...b, level.id];
           try {
@@ -188,7 +224,7 @@ export default function HeartWars() {
         });
       }
     },
-    [level],
+    [level, custom],
   );
 
   // The game loop: grow, march, shoot, fight, think.
@@ -316,6 +352,17 @@ export default function HeartWars() {
             Your 💗 towers make hearts. Tap one, then tap any tower to send half your army. Take the hangouts, dodge the 🚩 fire, and capture every tower the boss owns.
           </p>
         </div>
+        <DailyBanner goal={dailyGoal("wars")} done={daily.done} streak={daily.streak} ready={daily.ready} />
+        {daily.ready && (
+          <button type="button" onClick={startDaily} className={`w-full flex items-center gap-4 rounded-[22px] p-4 mb-5 text-left text-white bg-gradient-to-br from-[#FF4FA3] to-[#FF9A4D] ${sticker}`}>
+            <span className="w-14 h-14 shrink-0 rounded-full bg-white border-2 border-[#1A1033] flex items-center justify-center text-3xl" aria-hidden="true">{warsDaily().boss.emoji}</span>
+            <span className="flex-1">
+              <span className="block text-[11px] font-black uppercase tracking-wider text-white/85">📅 Today&apos;s battle · new map every day</span>
+              <span className="block text-[19px] leading-tight" style={display}>vs {warsDaily().boss.name}</span>
+            </span>
+            <ArrowRight className="w-6 h-6" strokeWidth={3} />
+          </button>
+        )}
         <div className="grid gap-3">
           {LEVELS.map((l, i) => {
             const open = i === 0 || beaten.includes(LEVELS[i - 1].id);
@@ -347,7 +394,7 @@ export default function HeartWars() {
   /* ─────────────── result ─────────────── */
   if (phase === "won" || phase === "lost") {
     const won = phase === "won";
-    const next = LEVELS[levelIdx + 1];
+    const next = custom ? undefined : LEVELS[levelIdx + 1];
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
         <div className={`relative overflow-hidden rounded-[28px] text-white p-6 md:p-8 mb-8 text-center ${stickerStatic} ${won ? "bg-gradient-to-br from-[#FF4FA3] via-[#FF6F7D] to-[#FF9A4D]" : "bg-[#1A1033]"}`}>
@@ -358,7 +405,7 @@ export default function HeartWars() {
               ))}
             </div>
           )}
-          <p className="text-[12px] font-black uppercase tracking-[0.2em] text-white/80 mb-2">Level {levelIdx + 1} · {level.name}</p>
+          <p className="text-[12px] font-black uppercase tracking-[0.2em] text-white/80 mb-2">{custom ? "📅 Today's battle" : `Level ${levelIdx + 1} · ${level.name}`}</p>
           <p className="text-6xl mb-2" aria-hidden="true">{won ? "🏆" : level.boss.emoji}</p>
           <h1 className="text-[38px] md:text-5xl leading-none mb-3" style={display}>{won ? `${level.boss.name} defeated!` : `${level.boss.name} took over`}</h1>
           <p className="text-[17px] font-bold text-white/95">{won ? `Every tower is yours, in ${Math.round(elapsed.current)} seconds.` : "Your hearts ran out. Regroup and go again."}</p>
@@ -368,12 +415,16 @@ export default function HeartWars() {
                 Next: {next.boss.emoji} {next.name} <ArrowRight className="w-5 h-5" strokeWidth={3} />
               </button>
             )}
-            <button type="button" onClick={() => startLevel(levelIdx)} className={`w-full min-h-[52px] rounded-2xl font-black text-lg flex items-center justify-center gap-2 ${sticker} ${won && next ? "bg-transparent text-white !border-white !shadow-none" : "bg-white text-[#1A1033]"}`}>
+            <button type="button" onClick={() => (custom ? startDaily() : startLevel(levelIdx))} className={`w-full min-h-[52px] rounded-2xl font-black text-lg flex items-center justify-center gap-2 ${sticker} ${won && next ? "bg-transparent text-white !border-white !shadow-none" : "bg-white text-[#1A1033]"}`}>
               <RotateCcw className="w-5 h-5" /> {won ? "Play again" : "Try again"}
             </button>
           </div>
         </div>
 
+        <DailyDone show={dailyDone} streak={dailyStreak} onClose={() => setDailyDone(null)} />
+        {custom && phase === "won" && (
+          <p className={`rounded-2xl bg-[#B8F2D8] p-4 mb-8 text-center text-[16px] font-black text-[#1A1033] ${stickerStatic}`}>📅 Today&apos;s battle won · 🔥 {daily.streak}-day streak</p>
+        )}
         <ResultShare
           quiz="Heart Wars"
           quizPath={`/${SLUG}`}

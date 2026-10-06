@@ -9,6 +9,9 @@ import ResultShare from "@/components/share/ResultShare";
 import MerchCard from "@/components/shop/MerchCard";
 import MoreQuickTests from "@/components/tick/MoreQuickTests";
 import { CANDY, sticker, stickerStatic, display } from "@/lib/ui/sticker";
+import DailyBanner, { DailyDone } from "./DailyBanner";
+import { useDaily } from "@/lib/games/streaks";
+import { towerTarget, dailyGoal } from "@/lib/games/daily";
 
 /**
  * LOVE TOWER: a stacking game. A block slides across the top of the
@@ -70,6 +73,9 @@ export default function LoveTower() {
   const [chop, setChop] = useState<{ x: number; w: number; n: number } | null>(null);
   const [perfect, setPerfect] = useState<{ n: number; streak: number } | null>(null);
   const [best, setBest] = useState(0);
+  const daily = useDaily("tower");
+  const [dailyDone, setDailyDone] = useState<number | null>(null);
+  const [dailyStreak, setDailyStreak] = useState(0);
 
   const dir = useRef(1);
   const pos = useRef(0);
@@ -166,12 +172,20 @@ export default function LoveTower() {
       setChop({ x: cutX, w: mover.w - overlap, n: Date.now() });
     }
     setBlocks((bs) => [...bs, placed]);
+    // Today's challenge: build up to today's milestone.
+    if (!daily.done && blocks.length >= towerTarget()) {
+      const r = daily.complete();
+      if (r.isNew) {
+        setDailyStreak(r.save.streak);
+        setDailyDone(Date.now());
+      }
+    }
     // The next block starts from alternating sides.
     const fromLeft = blocks.length % 2 === 0;
     pos.current = fromLeft ? 0 : width - placed.w;
     dir.current = fromLeft ? 1 : -1;
     setMover({ x: pos.current, w: placed.w });
-  }, [phase, blocks, mover.w, width]);
+  }, [phase, blocks, mover.w, width, daily]);
 
   // Space bar on a laptop.
   useEffect(() => {
@@ -201,6 +215,9 @@ export default function LoveTower() {
         <h1 className="text-[38px] leading-none text-[#1A1033]" style={display}>Love Tower</h1>
         <p className="text-[15px] font-bold text-[#1A1033]/70 mt-2">How far can your relationship get before it all falls down?</p>
       </div>
+
+      <DailyBanner goal={dailyGoal("tower")} done={daily.done} streak={daily.streak} ready={daily.ready} />
+      <DailyDone show={dailyDone} streak={dailyStreak} onClose={() => setDailyDone(null)} />
 
       <div className="flex justify-between text-[13px] font-black text-[#1A1033] mb-2 px-1">
         <span>🏗️ {height} high</span>

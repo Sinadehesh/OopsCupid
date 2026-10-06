@@ -33,6 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/guides",
     "/red-flag-or-green-flag",
     "/games",
+    "/daily",
     "/flag-runner",
     "/love-tower",
     "/kiss-the-frogs",

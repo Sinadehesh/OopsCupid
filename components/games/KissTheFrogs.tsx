@@ -9,6 +9,9 @@ import ResultShare from "@/components/share/ResultShare";
 import MerchCard from "@/components/shop/MerchCard";
 import MoreQuickTests from "@/components/tick/MoreQuickTests";
 import { sticker, stickerStatic, display } from "@/lib/ui/sticker";
+import DailyBanner, { DailyDone } from "./DailyBanner";
+import { useDaily } from "@/lib/games/streaks";
+import { frogsTarget, dailyGoal } from "@/lib/games/daily";
 
 /**
  * KISS THE FROGS: 2048, dating edition. Swipe and every tile slides; two
@@ -107,6 +110,9 @@ export default function KissTheFrogs() {
   const [over, setOver] = useState(false);
   const [best, setBest] = useState(0);
   const [cheer, setCheer] = useState<{ n: number; v: number } | null>(null);
+  const daily = useDaily("frogs");
+  const [dailyDone, setDailyDone] = useState<number | null>(null);
+  const [dailyStreak, setDailyStreak] = useState(0);
   const started = useRef(false);
   const start = useRef<{ x: number; y: number } | null>(null);
 
@@ -147,6 +153,14 @@ export default function KissTheFrogs() {
       const newTop = topOf(nextTiles);
       if (res.merges) setKisses((k) => k + res.merges);
       if (newTop > topOf(prev) && newTop >= 2) setCheer({ n: Date.now(), v: newTop });
+      // Today's challenge: reach today's guy on the ladder.
+      if (!daily.done && newTop >= frogsTarget()) {
+        const r = daily.complete();
+        if (r.isNew) {
+          setDailyStreak(r.save.streak);
+          setTimeout(() => setDailyDone(Date.now()), 900);
+        }
+      }
       // Clear the merged-away tiles once they've slid in.
       setTimeout(() => setTiles((ts) => ts.filter((t) => !t.gone)), 130);
       if (!canMove(nextTiles)) {
@@ -164,7 +178,7 @@ export default function KissTheFrogs() {
         }, 300);
       }
     },
-    [over],
+    [over, daily],
   );
 
   useEffect(() => {
@@ -203,6 +217,9 @@ export default function KissTheFrogs() {
         <h1 className="text-[38px] leading-none text-[#1A1033]" style={display}>Kiss the Frogs</h1>
         <p className="text-[15px] font-bold text-[#1A1033]/70 mt-2">Swipe to merge two of the same guy into a better one. Kiss enough frogs and you&apos;ll find your prince 🤴</p>
       </div>
+
+      <DailyBanner goal={dailyGoal("frogs")} done={daily.done} streak={daily.streak} ready={daily.ready} />
+      <DailyDone show={dailyDone} streak={dailyStreak} onClose={() => setDailyDone(null)} />
 
       <div className="flex justify-between items-center text-[13px] font-black text-[#1A1033] mb-2 px-1">
         <span>💋 {kisses} kisses</span>
