@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/trauma-bonding-signs" },
   title: "Signs of Trauma Bonding | OopsCupid Guide",
   description: "Everything you need to know about signs of trauma bonding and how to protect your peace.",
 };

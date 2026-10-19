@@ -9,6 +9,7 @@ import MerchCard from "@/components/shop/MerchCard";
 
 export const metadata: Metadata = {
   title: { absolute: "OopsCupid: Free Relationship Quizzes, Games & Attachment Test" },
+  alternates: { canonical: "https://www.oopscupid.com" },
   description: "Find your attachment style, who you attract, and whether his behaviour is a red flag. 15 free research-informed tests, no sign-up, no email, results on screen.",
   openGraph: {
     title: "OopsCupid: Free Relationship Quizzes, Games & Attachment Test",

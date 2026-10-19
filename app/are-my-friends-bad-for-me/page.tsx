@@ -3,6 +3,7 @@ import QuizEngine from "./_components/QuizEngine";
 import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/are-my-friends-bad-for-me" },
   title: "Are My Friends Bad For Me? | Diagnostic Audit",
   description: "Take this free 55-question assessment to find out if your friends are secretly toxic, using you, or dragging you down.",
 };

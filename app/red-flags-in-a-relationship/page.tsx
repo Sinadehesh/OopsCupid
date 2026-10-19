@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/red-flags-in-a-relationship" },
   title: "Red Flags in a Relationship | OopsCupid Quiz",
   description: "Find out the answer to red flags in a relationship with our quick psychological assessment.",
 };

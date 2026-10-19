@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/articles/manipulation-science" },
   title: "The Science of Manipulation & Coercive Control | OopsCupid",
   description: "Learn the science behind coercive control, gaslighting, and the hidden patterns of manipulation in relationships.",
 };

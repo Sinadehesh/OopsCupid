@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/toxic-friendships" },
   title: "Toxic Friendships Analysis | OopsCupid",
   description: "Identify one-sided, draining, and jealous friendships. Because sometimes the worst heartbreak comes from a friend.",
 };

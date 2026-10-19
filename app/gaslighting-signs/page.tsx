@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/gaslighting-signs" },
   title: "10 Signs of Gaslighting | OopsCupid Guide",
   description: "Everything you need to know about 10 signs of gaslighting and how to protect your peace.",
 };

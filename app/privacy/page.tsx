@@ -1,4 +1,5 @@
 export const metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/privacy" },
   title: "Privacy Policy: OopsCupid",
   description: "Learn how OopsCupid collects, uses, and protects your personal information.",
 };

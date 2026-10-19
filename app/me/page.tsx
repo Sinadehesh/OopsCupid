@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { User, Heart, Magnet, Sparkles, Bomb, ArrowRight } from "lucide-react";
 
-export const metadata = { title: "Fix Your Dating Patterns | OopsCupid" };
+export const metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/me" }, title: "Fix Your Dating Patterns | OopsCupid" };
 
 export default function MeHub() {
   return (

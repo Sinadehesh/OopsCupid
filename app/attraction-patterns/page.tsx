@@ -4,6 +4,7 @@ import { Magnet, Sparkles, HeartCrack, Layers } from 'lucide-react';
 import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/attraction-patterns" },
   title: "Ultimate Who Am I Attracted To Quiz | Psychological Personality Test",
   description: "Discover exactly who you find irresistible based on your hidden issues, attachment style, and subconscious wiring. Stop dating the same toxic type.",
   keywords: ["Who am I attracted to quiz", "Psychological reasons why I keep dating the same type", "Who do I find attractive based on my personality", "Attachment style attraction predictor test", "Why am I attracted to narcissists"],

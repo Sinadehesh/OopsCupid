@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { Search, Ghost, Flame, UserCheck, MessageCircle, ArrowRight, Eye } from "lucide-react";
 
-export const metadata = { title: "Decode His Behavior | OopsCupid" };
+export const metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/him" }, title: "Decode His Behavior | OopsCupid" };
 
 export default function HimHub() {
   return (

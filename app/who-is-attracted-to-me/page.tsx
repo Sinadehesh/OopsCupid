@@ -4,6 +4,7 @@ import { Sparkles, Eye, Target, Magnet } from 'lucide-react';
 import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/who-is-attracted-to-me" },
   title: "Who Finds Me Attractive Quiz | Psychological Magnet Test",
   description: "Discover exactly who gets obsessed with you based on your hidden personality traits, attachment style, and subconscious emotional energy.",
 };

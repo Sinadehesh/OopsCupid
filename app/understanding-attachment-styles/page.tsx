@@ -1,6 +1,13 @@
 import React from "react";
 import Link from "next/link";
 import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Attachment Styles Explained: Secure, Anxious, Avoidant, Fearful | OopsCupid",
+  description: "The four attachment styles in plain words: what secure, anxious, avoidant and fearful-avoidant look like in dating, why you repeat the same patterns, and how styles change.",
+  alternates: { canonical: "https://www.oopscupid.com/understanding-attachment-styles" },
+};
 
 export default function AttachmentStyleEssay() {
   return (

@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/is-my-best-friend-toxic" },
   title: "Is My Best Friend Toxic? | OopsCupid Quiz",
   description: "Find out the answer to is my best friend toxic? with our quick psychological assessment.",
 };

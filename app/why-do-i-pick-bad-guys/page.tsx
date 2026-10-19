@@ -3,6 +3,7 @@ import QuizEngine from "./_components/QuizEngine";
 import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/why-do-i-pick-bad-guys" },
   title: "Why Do I Attract the Wrong Guys? Free Quiz (Why I Pick Bad Guys)",
   description: "Take the free 50-question assessment to find out exactly why you attract toxic men and how to stop it.",
 };

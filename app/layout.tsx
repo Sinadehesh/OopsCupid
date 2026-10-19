@@ -57,9 +57,9 @@ export const metadata: Metadata = {
     description:
       "Spot red flags and understand your dating patterns with free, research-informed quizzes for women.",
   },
-  alternates: {
-    canonical: "https://www.oopscupid.com",
-  },
+  // No site-wide canonical here: a canonical in the root layout is inherited
+  // by every page that doesn't set its own, which told Google that dozens
+  // of pages were copies of the homepage. Each page sets its own.
   robots: {
     index: true,
     follow: true,

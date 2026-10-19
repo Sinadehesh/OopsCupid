@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Users, ShieldAlert, Sparkles, ArrowRight, HeartHandshake } from "lucide-react";
 
 export const metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/friends" },
   title: "Spot Fake Friends | OopsCupid",
   description: "Take a 3-minute test to spot toxic friends, one-sided relationships, and learn how to set boundaries.",
 };

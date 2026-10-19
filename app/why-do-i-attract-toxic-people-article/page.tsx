@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/why-do-i-attract-toxic-people-article" },
   title: "The Psychology of Toxic Attraction | OopsCupid Guide",
   description: "Everything you need to know about the psychology of toxic attraction and how to protect your peace.",
 };

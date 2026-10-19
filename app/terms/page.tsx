@@ -1,4 +1,5 @@
 export const metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/terms" },
   title: "Terms of Service: OopsCupid",
   description: "Read the Terms of Service for OopsCupid, the psychology-based relationship and self-awareness platform.",
 };

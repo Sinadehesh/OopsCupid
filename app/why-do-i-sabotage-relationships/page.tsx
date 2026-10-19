@@ -3,6 +3,7 @@ import SabotageQuizEngine from "./_components/SabotageQuizEngine";
 import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/why-do-i-sabotage-relationships" },
   title: "Why Do I Sabotage Relationships? | Free Quiz",
   description: "A 50-item behavioral audit measuring fear of closeness, rejection alarm, and self-protective distancing."
 };

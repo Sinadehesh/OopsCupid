@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { BookOpen, BrainCircuit, ShieldAlert, HeartCrack, ArrowRight } from "lucide-react";
 
-export const metadata = { title: "Relationship Red Flag Guides | OopsCupid" };
+export const metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/articles" }, title: "Relationship Red Flag Guides | OopsCupid" };
 
 export default function ClarityHub() {
   return (

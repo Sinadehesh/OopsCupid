@@ -4,6 +4,7 @@ import { HeartHandshake, ShieldAlert, UserMinus, ShieldCheck } from 'lucide-reac
 import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/partners-attachment-style" },
   title: "What Is His Attachment Style? Partner Test | OopsCupid",
   description: "Decode his mixed signals. Take our free 12-question assessment to find out if your partner is Anxious, Avoidant, Fearful, or Secure.",
 };

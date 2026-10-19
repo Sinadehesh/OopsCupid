@@ -24,7 +24,9 @@ export async function generateMetadata({ params }: { params: Promise<{ program: 
   const p = programBySlug(program);
   const found = p && sessionOf(p, n(week, "week"), n(day, "day"));
   if (!p || !found) return {};
-  return { title: `${found.session.title} · ${p.title}`, description: found.session.intro };
+  // Exercise pages are for people doing the programme, not for search: keep
+  // them out of the index so Google spends its time on the quizzes.
+  return { title: `${found.session.title} · ${p.title}`, description: found.session.intro, robots: { index: false, follow: true } };
 }
 
 export default async function SessionPage({ params }: { params: Promise<{ program: string; week: string; day: string }> }) {

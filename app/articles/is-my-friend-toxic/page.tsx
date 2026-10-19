@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/articles/is-my-friend-toxic" },
   title: "Is My Friend Toxic? The Real Reason Some Friendships Leave You Feeling Worse Than Alone | OopsCupid",
   description: "Not all toxic friendships look like dramatic betrayals. Learn the four hidden patterns of toxic friendships and why they are so hard to leave.",
 };

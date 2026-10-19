@@ -4,6 +4,7 @@ import { ArrowLeft, HeartCrack, Flame, ShieldAlert, BookOpen, Clock, Activity, M
 import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/love-bombing-signs" },
   title: "Love Bombing vs. Genuine Affection | OopsCupid",
   description: "How to tell the difference between real love and emotional manipulation. Learn the signs of love bombing and why it feels so confusing.",
 };

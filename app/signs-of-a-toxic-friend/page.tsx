@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/signs-of-a-toxic-friend" },
   title: "Subtle Signs of a Toxic Friend | OopsCupid Guide",
   description: "Everything you need to know about subtle signs of a toxic friend and how to protect your peace.",
 };

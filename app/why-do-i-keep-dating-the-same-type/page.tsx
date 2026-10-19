@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://www.oopscupid.com/why-do-i-keep-dating-the-same-type" },
   title: "Why Do I Keep Dating the Same Type? | OopsCupid Quiz",
   description: "Find out the answer to why do i keep dating the same type? with our quick psychological assessment.",
 };
