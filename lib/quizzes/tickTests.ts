@@ -54,7 +54,8 @@ export interface TickTest {
   full: { href: string; label: string };
   /** What the €9.99 report adds, in plain words. */
   report: { pitch: string; bullets: string[] };
-  seo: { title: string; description: string };
+  /** about: the heading for the readable section under the game, phrased the way people search. */
+  seo: { title: string; description: string; about?: string };
 }
 
 const CORE_TESTS: TickTest[] = [

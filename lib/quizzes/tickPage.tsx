@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import TickPicker from "@/components/tick/TickPicker";
-import { tickTestBySlug } from "@/lib/quizzes/tickTests";
+import { tickTestBySlug, type TickTest } from "@/lib/quizzes/tickTests";
+import { FaqJsonLd } from "@/components/seo/JsonLd";
 import { versusBySlug } from "@/lib/quizzes/versus";
 import VersusGame from "@/components/tick/VersusGame";
 import ChoiceGame from "@/components/tick/ChoiceGame";
@@ -43,7 +44,61 @@ export function TickPage({ slug }: { slug: string }) {
     <main className="min-h-screen bg-[#FAFAF7]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <TickPicker slug={slug} />
+      <TickAbout t={t} />
     </main>
+  );
+}
+
+/**
+ * Readable text under the game. The game itself is mostly buttons, which
+ * gives a search engine little to go on; this says, in the words people
+ * search with, what the quiz looks at, using the same groups the result
+ * explains. Shown to everyone, and mirrored in FAQ structured data.
+ */
+function TickAbout({ t }: { t: TickTest }) {
+  const about = t.seo.about ?? t.question;
+  const seconds = t.items.length <= 12 ? 30 : 40;
+  const faq = [
+    {
+      q: `How does the "${about.replace(/\?$/, "")}" quiz work?`,
+      a: `Tap every one of the ${t.items.length} signs that fits, then see your result straight away. It takes about ${seconds} seconds, it's free, there's no email or sign-up, and nothing you tap leaves your phone.`,
+    },
+    {
+      q: "Is the result a diagnosis?",
+      a: t.fun
+        ? "No. It's just for fun, with one genuinely useful point about what the signs you picked have in common."
+        : "No. It counts what you recognise and explains the pattern those signs usually belong to. It can't diagnose anyone, but it's a clear starting point for an honest conversation.",
+    },
+    {
+      q: "Can I get more than the free result?",
+      a: "If you want it: a personal read of exactly what you picked is €2.99, and the full report, which also unlocks every guide on the site, is €9.99. The result itself is always free.",
+    },
+  ];
+  return (
+    <section className="bg-[#FFF4FA] border-t-[2.5px] border-[#1A1033]/10">
+      <div className="max-w-2xl mx-auto px-5 py-12 text-[#1A1033]">
+        <h2 className="text-2xl md:text-3xl font-black leading-tight mb-3">{about}</h2>
+        <p className="text-[16px] font-semibold text-[#1A1033]/75 leading-relaxed mb-6">{t.seo.description}</p>
+        <h3 className="text-lg font-black mb-3">What this quiz looks at</h3>
+        <ul className="space-y-2.5 mb-8">
+          {Object.values(t.groups).map((g) => (
+            <li key={g.label} className="text-[15px] leading-relaxed text-[#1A1033]/80">
+              <b className="text-[#1A1033]">{g.label}:</b> {g.does}
+            </li>
+          ))}
+        </ul>
+        <h3 className="text-lg font-black mb-3">Questions people ask</h3>
+        <div className="space-y-4">
+          {faq.map((f) => (
+            <div key={f.q}>
+              <p className="font-black text-[15px]">{f.q}</p>
+              <p className="text-[15px] text-[#1A1033]/75 leading-relaxed">{f.a}</p>
+            </div>
+          ))}
+        </div>
+        <FaqJsonLd items={faq} />
+      </div>
+    </section>
   );
 }
 

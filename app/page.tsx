@@ -8,10 +8,10 @@ import { LIVE_PROGRAMS } from "@/lib/programs/registry";
 import MerchCard from "@/components/shop/MerchCard";
 
 export const metadata: Metadata = {
-  title: "Free Attachment Style Test & Relationship Quizzes: No Email",
+  title: { absolute: "OopsCupid: Free Relationship Quizzes, Games & Attachment Test" },
   description: "Find your attachment style, who you attract, and whether his behaviour is a red flag. 15 free research-informed tests, no sign-up, no email, results on screen.",
   openGraph: {
-    title: "Free Attachment Style Test & Relationship Quizzes: No Email",
+    title: "OopsCupid: Free Relationship Quizzes, Games & Attachment Test",
     description: "Find your attachment style, who you attract, and whether his behaviour is a red flag. 15 free research-informed tests, no sign-up, no email, results on screen.",
     url: "https://www.oopscupid.com",
     siteName: "OopsCupid",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free Attachment Style Test & Relationship Quizzes: No Email",
+    title: "OopsCupid: Free Relationship Quizzes, Games & Attachment Test",
     description: "Find your attachment style, who you attract, and whether his behaviour is a red flag. 15 free research-informed tests, no sign-up, no email, results on screen.",
     images: ["https://www.oopscupid.com/logo.png"],
   },
@@ -100,6 +100,7 @@ export default function Home() {
         "@id": "https://www.oopscupid.com/#website",
         "url": "https://www.oopscupid.com/",
         "name": "OopsCupid",
+        "alternateName": ["Oops Cupid", "oopscupid.com", "OopsCupid quizzes"],
         "publisher": {
           "@id": "https://www.oopscupid.com/#organization"
         }
@@ -119,7 +120,7 @@ export default function Home() {
         "@type": "CollectionPage",
         "@id": "https://www.oopscupid.com/#webpage",
         "url": "https://www.oopscupid.com/",
-        "name": "Free Attachment Style Test & Relationship Quizzes: No Email",
+        "name": "OopsCupid: Free Relationship Quizzes, Games & Attachment Test",
         "isPartOf": {
           "@id": "https://www.oopscupid.com/#website"
         },

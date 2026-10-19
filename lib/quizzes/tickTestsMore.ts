@@ -107,7 +107,7 @@ export const MORE_TICK_TESTS: TickTest[] = [
         "A step-by-step plan for your side of it",
       ],
     },
-    seo: { title: "Is My Boyfriend Stupid? A 30-Second Test (Just For Fun)", description: "Twelve things clueless boyfriends do. Tap the ones yours does and find out if he's stupid or just clueless. Free, just for fun." },
+    seo: { title: "Is My Boyfriend Dumb or Just Clueless? Free 30-Second Quiz", description: "Is my boyfriend dumb? Twelve things clueless boyfriends do. Tap the ones yours does and find out if he's dumb, stupid or just clueless. Free, just for fun.", about: "Is my boyfriend dumb, or just clueless?" },
   },
   {
     slug: "is-my-friend-a-pick-me",
@@ -154,7 +154,7 @@ export const MORE_TICK_TESTS: TickTest[] = [
         "Word-for-word scripts and a step-by-step plan",
       ],
     },
-    seo: { title: "Is My Friend A Pick-Me Girl? 30-Second Test", description: "Twelve pick-me girl signs. Tap the ones your friend does and find out if she's a pick-me. Free, no sign-up, just for fun." },
+    seo: { title: "Pick Me Girl Test: Is My Friend a Pick-Me? Free Quiz", description: "The pick me girl test: twelve pick-me signs. Tap the ones your friend does and find out if she's a pick-me girl. Free, no sign-up, just for fun.", about: "Pick me girl test: is my friend a pick-me?" },
   },
   {
     slug: "is-he-a-mamas-boy",
@@ -203,7 +203,7 @@ export const MORE_TICK_TESTS: TickTest[] = [
         "A step-by-step plan for your side of it",
       ],
     },
-    seo: { title: "Is He A Mama's Boy? 30-Second Test", description: "Twelve signs he's a mama's boy. Tap the ones that fit and find out. Free, no sign-up, half joking." },
+    seo: { title: "Signs He's a Mama's Boy: Free 30-Second Quiz", description: "Twelve signs he's a mama's boy. Tap the ones that fit and find out if he's a mama's boy. Free, no sign-up, half joking.", about: "Signs he's a mama's boy" },
   },
   {
     slug: "is-he-just-not-that-into-you",
@@ -401,7 +401,7 @@ export const MORE_TICK_TESTS: TickTest[] = [
         "Word-for-word scripts and a step-by-step plan",
       ],
     },
-    seo: { title: "Am I In A Situationship? 30-Second Test", description: "Twelve signs you're in a situationship, not a relationship. Tap the ones that fit and get an honest answer. Free, no sign-up." },
+    seo: { title: "Situationship Quiz: Am I in a Situationship? Free Test", description: "The situationship quiz: twelve signs you're in a situationship, not a relationship. Tap the ones that fit and get an honest answer. Free, no sign-up.", about: "Situationship quiz: relationship or situationship?" },
   },
   {
     slug: "are-you-the-therapist-friend",
@@ -448,6 +448,6 @@ export const MORE_TICK_TESTS: TickTest[] = [
         "A plan for right now, this week and this month",
       ],
     },
-    seo: { title: "Are You The Therapist Friend? 30-Second Test", description: "Twelve signs you're the therapist friend. Tap the ones that fit. Free, no sign-up, mostly for fun." },
+    seo: { title: "Am I the Therapist Friend? Free 30-Second Quiz", description: "Am I the therapist friend? Twelve signs you're the friend everyone calls with their problems. Tap the ones that fit. Free, no sign-up, mostly for fun.", about: "Am I the therapist friend?" },
   },
 ];

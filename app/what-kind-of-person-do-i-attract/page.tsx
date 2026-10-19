@@ -5,7 +5,7 @@ import { Metadata } from "next";
 import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata: Metadata = {
-  title: "What Kind of Person Do I Attract? | OopsCupid Quiz",
+  title: "Who Do I Attract? Free Quiz: What Kind of Person Do I Attract",
   description: "Find out the answer to what kind of person do i attract? with our quick psychological assessment.",
 };
 

@@ -3,7 +3,7 @@ import QuizEngine from "./_components/QuizEngine";
 import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 
 export const metadata = {
-  title: "Why Do I Pick Bad Guys? | Diagnostic Audit",
+  title: "Why Do I Attract the Wrong Guys? Free Quiz (Why I Pick Bad Guys)",
   description: "Take the free 50-question assessment to find out exactly why you attract toxic men and how to stop it.",
 };
 

@@ -25,7 +25,7 @@ const shareCard = `${baseUrl}/api/og?t=${encodeURIComponent(
  */
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
-  title: "Which Of These Has He Said To You? 16 Phrases, 40 Seconds",
+  title: "Things He Says Bingo: 16 Gaslighting Phrases, 40-Second Test",
   description:
     "Sixteen sentences people hear in relationships that are going wrong. Tap the ones you recognise and find out what each is doing in the conversation. Free, no sign-up.",
   alternates: { canonical: `${baseUrl}/things-he-says` },

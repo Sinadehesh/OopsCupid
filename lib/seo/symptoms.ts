@@ -733,7 +733,7 @@ export const SYMPTOM_PAGES: SymptomPage[] = [
   {
     slug: "my-friend-only-calls-when-she-needs-something",
     phrase: "My friend only calls when she needs something",
-    seoTitle: "My Friend Only Contacts Me When She Needs Something",
+    seoTitle: "Friend Only Contacts You When She Needs Something? What It Means",
     description:
       "Contact that tracks what you can provide rather than what is happening in your life is a specific pattern. Here is how to confirm it.",
     answer:
@@ -781,7 +781,7 @@ export const SYMPTOM_PAGES: SymptomPage[] = [
   {
     slug: "im-always-the-one-texting-first",
     phrase: "I'm always the one texting first",
-    seoTitle: "Always The One Who Texts First? What It Actually Means",
+    seoTitle: "Why Am I Always the One Texting First? What It Means",
     description:
       "Doing all the initiating is real information about a friendship, but not always the information people assume.",
     answer:
