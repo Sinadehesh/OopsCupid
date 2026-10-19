@@ -3,7 +3,6 @@ import { quizRegistry } from "@/lib/quizzes/registry";
 import { SYMPTOM_PAGES } from "@/lib/seo/symptoms";
 import { TICK_TESTS } from "@/lib/quizzes/tickTests";
 import { VERSUS_GAMES } from "@/lib/quizzes/versus";
-import { GUIDE_META as GUIDES } from "@/lib/guides/meta";
 import { CHOICE_GAMES } from "@/lib/quizzes/choiceGames";
 
 // FORCES NEXT.JS TO GENERATE THIS AT BUILD TIME FOR STATIC EXPORTS
@@ -39,12 +38,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/kiss-the-frogs",
     "/heart-wars",
     ...CHOICE_GAMES.map((g) => `/${g.slug}`),
-    ...GUIDES.map((g) => `/guides/${g.slug}`),
+    // Guide pages are paid: before buying they show only a title and a
+    // hook, which Google won't rank. Kept out so it spends its visits on
+    // pages that can rank. /guides itself stays.
   ];
 
+  // No lastModified: it used to be "now" on every deploy (several a day), which
+  // tells Google nothing and teaches it to ignore the field.
   const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
     url: `${baseUrl}${route}`,
-    lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority:
       route === "" ? 1 : route === "/things-he-says" || TICK_TESTS.some((t) => route === `/${t.slug}`) ? 0.9 : route === "/coaching" ? 0.9 : 0.7,
@@ -54,7 +56,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // there automatically adds it here.
   const registryEntries: MetadataRoute.Sitemap = quizRegistry.map((q) => ({
     url: `${baseUrl}${q.slug}`,
-    lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: q.isQuiz ? 0.9 : 0.8,
   }));
@@ -63,7 +64,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // rank, the category keywords belong to the big health sites.
   const symptomEntries: MetadataRoute.Sitemap = SYMPTOM_PAGES.map((p) => ({
     url: `${baseUrl}/signs/${p.slug}`,
-    lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.6,
   }));
