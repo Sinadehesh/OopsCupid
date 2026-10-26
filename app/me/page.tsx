@@ -19,7 +19,7 @@ export default function MeHub() {
             Stop Picking <span className="text-[#FDE047] drop-shadow-sm">The Wrong Guys.</span>
           </h1>
           <p className="text-lg md:text-2xl font-medium max-w-2xl mx-auto opacity-90 leading-relaxed">
-            Take a quick 3-minute test. Find out why you chase toxic people, why nice guys feel boring, and get the exact steps to fix your habits today.
+            Choose a free assessment to explore why you chase toxic people or why safe relationships feel unfamiliar. Question counts and time estimates are shown before you start.
           </p>
         </div>
       </section>
@@ -92,12 +92,12 @@ export default function MeHub() {
               <div className="w-14 h-14 bg-[#F43F5E] rounded-2xl flex items-center justify-center mb-8 shadow-md z-10">
                 <Bomb className="w-7 h-7 text-white" />
               </div>
-              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54] mb-4 z-10">Why Do Safe Guys Feel Boring? <span className="text-sm font-bold text-[#F43F5E] bg-[#F43F5E]/10 px-3 py-1 rounded-full ml-2 align-middle whitespace-nowrap tracking-wide">COMING SOON</span></h2>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54] mb-4 z-10">Why Do Safe Guys Feel Boring?</h2>
               <p className="text-[#0D2C54]/70 mb-8 leading-relaxed font-medium z-10 flex-grow">
                 Stop pushing away good people. Find out why a peaceful relationship feels like boredom to you, and how to stop ruining it.
               </p>
               <div className="flex items-center text-[#F43F5E] font-extrabold z-10 mt-auto uppercase text-sm tracking-wide">
-                Join The Waitlist <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+                Take The Free Assessment <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
               </div>
             </div>
           </Link>

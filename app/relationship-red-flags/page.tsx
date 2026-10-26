@@ -46,9 +46,9 @@ export default function RedFlagsHub() {
 
         <h2 className="text-3xl font-bold tracking-tight text-foreground mb-8">Deep Dive Articles</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-          <Card href="/gaslighting-signs" title="10 Signs of Gaslighting" description="A comprehensive breakdown of how gaslighting actually works in real life." category="Article" />
+          <Card href="/signs/i-feel-crazy-around-him" title="Do Conversations Leave You Feeling Confused?" description="A direct guide to gaslighting, self-doubt, and how to check the pattern." category="Guide" />
           <Card href="/love-bombing-signs" title="Love Bombing vs. Genuine Affection" description="Why that intense early connection might be a massive red flag." category="Article" />
-          <Card href="/trauma-bonding-signs" title="Understanding Trauma Bonding" description="Why it's so incredibly hard to leave a toxic relationship once you're in it." category="Article" />
+          <Card href="/articles/manipulation-science" title="How Manipulation Works" description="Why the pattern is hard to name, and why willpower alone is not the answer." category="Article" />
         </div>
       </div>
     <QuizSeoFooter slug="/relationship-red-flags" />

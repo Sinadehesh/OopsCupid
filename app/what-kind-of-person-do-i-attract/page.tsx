@@ -7,7 +7,7 @@ import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
 export const metadata: Metadata = {
   alternates: { canonical: "https://www.oopscupid.com/what-kind-of-person-do-i-attract" },
   title: "Who Do I Attract? Free Quiz: What Kind of Person Do I Attract",
-  description: "Find out the answer to what kind of person do i attract? with our quick psychological assessment.",
+  description: "Explore what kind of person you attract with a free 78-question assessment, about 10 minutes, and get your result on screen.",
 };
 
 export default function QuizPage() {
@@ -15,7 +15,7 @@ export default function QuizPage() {
     <>
       <MainHero
         headline="What Kind of Person Do I Attract?"
-        subheadline="Take this quick quiz to gain some objective clarity."
+        subheadline="Answer 78 questions, about 10 minutes, and get your attraction pattern on screen."
       />
       <div className="container mx-auto px-4 py-16">
         <div className="mb-12">

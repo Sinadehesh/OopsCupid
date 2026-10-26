@@ -33,7 +33,13 @@ import { generateFriendUsedProfile } from "@/lib/psychometrics/friend-used/scori
 import { Lock, Mail, ArrowRight, CheckCircle2 } from "lucide-react";
 import { usePremiumAccess } from "@/lib/usePremiumAccess";
 import { saveQuizResult, loadQuizResult } from "@/lib/quizResults";
-import { trackEmailSubmit, trackResultView } from "@/lib/track";
+import {
+  trackEmailSubmit,
+  trackQuizComplete,
+  trackQuizHalfway,
+  trackQuizStart,
+  trackResultView,
+} from "@/lib/track";
 import EmailResultOffer from "@/components/features/EmailResultOffer";
 import ProgramOffer from "@/components/program/ProgramOffer";
 import { GameQuestion, GameLoading } from "@/components/quiz/GameQuiz";
@@ -101,12 +107,14 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   const [isSubmitting, setIsSubmitting]     = useState(false);
   const [savingEmail, setSavingEmail]       = useState(false);
   const [emailSaved, setEmailSaved]         = useState(false);
+  const [emailError, setEmailError]         = useState<string | null>(null);
   
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [isAnimating, setIsAnimating]       = useState(false);
   const [slideDirection, setSlideDirection] = useState<"forward" | "backward">("forward");
 
   const topRef = useRef<HTMLDivElement>(null);
+  const funnelRef = useRef({ started: false, halfway: false, complete: false });
 
   // Where this quiz's result is parked so it survives the Stripe redirect.
   // The matching /premium route reads the same key.
@@ -118,8 +126,9 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     if (saved) {
       setResultData(saved);
       setShowResult(true);
+      trackResultView(quizName, saved.type ?? "unknown");
     }
-  }, [storageKey]);
+  }, [storageKey, quizName]);
   const pathname = usePathname();
   const isAttachment = quizName === "attachment-style";
   const isInfidelity = quizName === "is-he-cheating";
@@ -135,6 +144,24 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     return [{ id: "1", text: "Default Question", options: ["A", "B", "C", "D"], category: "General" }];
   }, [quizName, isAttachment]);
 
+  const recordFunnelProgress = (answeredCount: number) => {
+    const total = activeQuestions.length;
+    const funnel = funnelRef.current;
+
+    if (answeredCount >= 1 && !funnel.started) {
+      funnel.started = true;
+      trackQuizStart(quizName);
+    }
+    if (answeredCount >= Math.ceil(total / 2) && !funnel.halfway) {
+      funnel.halfway = true;
+      trackQuizHalfway(quizName, total);
+    }
+    if (answeredCount >= total && !funnel.complete) {
+      funnel.complete = true;
+      trackQuizComplete(quizName, total);
+    }
+  };
+
   const isFinished = currentIndex >= activeQuestions.length;
   const progress   = Math.round((currentIndex / activeQuestions.length) * 100);
 
@@ -142,7 +169,9 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     if (isAnimating || selectedAnswer !== null) return; 
     setSelectedAnswer(option);
     const q = activeQuestions[currentIndex] as any;
-    setAnswers(prev => ({ ...prev, [q.id]: option }));
+    const nextAnswers = { ...answers, [q.id]: option };
+    setAnswers(nextAnswers);
+    recordFunnelProgress(Object.keys(nextAnswers).length);
     
     setTimeout(() => {
       setIsAnimating(true);
@@ -176,6 +205,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
   };
 
   const handleCompile = () => {
+    recordFunnelProgress(activeQuestions.length);
     setIsScoring(true);
     if (topRef.current) topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     setTimeout(() => {
@@ -282,8 +312,9 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
     e.preventDefault();
     if (!email || !agreed) return;
     setSavingEmail(true);
+    setEmailError(null);
     try {
-      await fetch('/api/leads', {
+      const response = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -293,11 +324,12 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
           profile: resultData?.profile || null
         })
       });
+      if (!response.ok) throw new Error("Lead save failed");
       trackEmailSubmit(quizName);
       setEmailSaved(true);
     } catch (err) {
       console.error("Failed to save to database:", err);
-      setEmailSaved(true); // never block the reader on our database
+      setEmailError("We couldn't add you to the list. Please try again.");
     } finally {
       setSavingEmail(false);
     }
@@ -325,6 +357,7 @@ export default function QuizWidget({ quizName }: { quizName: string }) {
       setAgreed={setAgreed}
       saving={savingEmail}
       saved={emailSaved}
+      error={emailError}
     />
   );
 

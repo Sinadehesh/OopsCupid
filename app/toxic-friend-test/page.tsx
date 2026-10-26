@@ -55,7 +55,7 @@ export default function ToxicFriendTestPage() {
           Toxic Friendship Assessment
         </h1>
         <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-          This comprehensive battery measures hidden dimensions of manipulation, aggression, and emotional impact. It is a self-discovery tool, not a clinical diagnosis.
+          This 120-question battery, about 16 minutes, measures manipulation, aggression, and emotional impact. It is a self-discovery tool, not a clinical diagnosis.
         </p>
       </div>
 

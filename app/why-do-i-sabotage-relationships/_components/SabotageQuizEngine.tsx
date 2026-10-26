@@ -17,6 +17,7 @@ export default function SabotageQuizEngine() {
   const [agreed, setAgreed] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [emailSaved, setEmailSaved] = useState(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
   const [result, setResult] = useState<any>(null);
 
   // ── answer a question ────────────────────────────────────────────────────
@@ -50,15 +51,17 @@ export default function SabotageQuizEngine() {
     const trimmed = email.trim().toLowerCase();
     if (!trimmed || !agreed) return;
     setIsSaving(true);
+    setEmailError(null);
     try {
-      await fetch("/api/leads", {
+      const response = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: trimmed, quizType: "sabotage", rawAnswers: answers }),
       });
+      if (!response.ok) throw new Error("Lead save failed");
       setEmailSaved(true);
     } catch (_) {
-      // the result is already on screen; nothing is lost
+      setEmailError("We couldn't add you to the list. Please try again.");
     }
     setIsSaving(false);
   };
@@ -77,6 +80,7 @@ export default function SabotageQuizEngine() {
           setAgreed={setAgreed}
           saving={isSaving}
           saved={emailSaved}
+          error={emailError}
         />
       </>
     );

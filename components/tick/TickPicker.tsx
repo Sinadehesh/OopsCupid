@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Check, RotateCcw, LifeBuoy } from "lucide-react";
 import { scoreTick, tickTestBySlug, nextQuickTest, type TickResult } from "@/lib/quizzes/tickTests";
+import { quizRegistry } from "@/lib/quizzes/registry";
 import { usePremiumAccess } from "@/lib/usePremiumAccess";
 import { trackQuizStart, trackQuizComplete, trackResultView } from "@/lib/track";
 import ResultShare from "@/components/share/ResultShare";
@@ -68,6 +69,7 @@ export default function TickPicker({ slug }: { slug: string }) {
   const { granted } = usePremiumAccess();
   const seconds = test.items.length <= 12 ? 30 : 40;
   const next = nextQuickTest(slug);
+  const fullQuiz = quizRegistry.find((quiz) => quiz.slug === test.full.href);
 
   const toggle = (id: string) => {
     if (!started) {
@@ -168,22 +170,6 @@ export default function TickPicker({ slug }: { slug: string }) {
             />
           )}
 
-          {/* Straight on to the next one. */}
-          <Link
-            href={`/${next.slug}`}
-            className={`flex items-center gap-4 rounded-[24px] p-5 mb-8 ${sticker}`}
-            style={{ backgroundColor: next.bg, color: INK }}
-          >
-            <span className="w-14 h-14 shrink-0 rounded-full bg-white border-2 border-[#1A1033] flex items-center justify-center text-3xl" aria-hidden="true">{next.emoji}</span>
-            <span className="flex-1 min-w-0">
-              <span className="block text-[10px] font-black uppercase tracking-[0.18em] opacity-70 mb-0.5">
-                Up next{next.fun ? " · just for fun" : ""}
-              </span>
-              <span className="block text-xl leading-snug" style={display}>{next.short}</span>
-            </span>
-            <ArrowRight className="w-6 h-6 shrink-0" strokeWidth={3} />
-          </Link>
-
           {result.groups.length > 0 && (
             <div className="space-y-3 mb-10">
               <h2 className="text-[13px] text-[#1A1033]" style={display}>🔍 What you picked, and what it means</h2>
@@ -217,9 +203,31 @@ export default function TickPicker({ slug }: { slug: string }) {
             <Link href={test.full.href} className={`inline-flex items-center justify-center gap-2 bg-[#FF4FA3] text-white font-black text-lg px-6 py-4 rounded-2xl ${sticker} !border-white !shadow-[4px_4px_0_#ffffff]`}>
               {test.full.label} <ArrowRight className="w-5 h-5" strokeWidth={3} />
             </Link>
+            {fullQuiz && (
+              <p className="text-white/55 text-xs font-bold mt-4">
+                Free{fullQuiz.questionCount ? ` · ${fullQuiz.questionCount} questions` : ""}{fullQuiz.minutes ? ` · About ${fullQuiz.minutes} minutes` : ""} · No account needed
+              </p>
+            )}
           </div>
 
           {result.band !== "none" && <ProgramOffer quizPath={test.full.href} className="!px-0 !py-4" />}
+
+          {/* Keep playful discovery, but only after the relevant assessment
+              and programme have had a chance to help the visitor. */}
+          <Link
+            href={`/${next.slug}`}
+            className={`flex items-center gap-4 rounded-[24px] p-5 mb-8 ${sticker}`}
+            style={{ backgroundColor: next.bg, color: INK }}
+          >
+            <span className="w-14 h-14 shrink-0 rounded-full bg-white border-2 border-[#1A1033] flex items-center justify-center text-3xl" aria-hidden="true">{next.emoji}</span>
+            <span className="flex-1 min-w-0">
+              <span className="block text-[10px] font-black uppercase tracking-[0.18em] opacity-70 mb-0.5">
+                Another quick one{next.fun ? " · just for fun" : ""}
+              </span>
+              <span className="block text-xl leading-snug" style={display}>{next.short}</span>
+            </span>
+            <ArrowRight className="w-6 h-6 shrink-0" strokeWidth={3} />
+          </Link>
 
           <ResultShare
             quiz={test.short}

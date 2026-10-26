@@ -19,7 +19,7 @@ export default function HimHub() {
             Stop Guessing <span className="text-[#FDE047] drop-shadow-sm">What He Means.</span>
           </h1>
           <p className="text-lg md:text-2xl font-medium max-w-2xl mx-auto opacity-90 leading-relaxed">
-            Take a 3-minute test. Find out if he is genuine, playing games, or just wasting your time. Get instant answers and exact texts to take your power back.
+            Choose a free test to examine his behaviour and your next step. Question counts and time estimates are shown before you start, and every result appears on screen.
           </p>
         </div>
       </section>
@@ -60,12 +60,12 @@ export default function HimHub() {
               <div className="w-14 h-14 bg-[#EF4444] rounded-2xl flex items-center justify-center mb-8 shadow-md z-10">
                 <Flame className="w-7 h-7 text-white" />
               </div>
-              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54] mb-4 z-10">Is He Making You Feel Crazy? <span className="text-sm font-bold text-[#EF4444] bg-[#EF4444]/10 px-3 py-1 rounded-full ml-2 align-middle whitespace-nowrap tracking-wide">COMING SOON</span></h2>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54] mb-4 z-10">Is He Making You Feel Crazy?</h2>
               <p className="text-[#0D2C54]/70 mb-8 leading-relaxed font-medium z-10 flex-grow">
                 Does he twist your words and play the victim? Let us show you the exact lies he uses to control the story so you can stop doubting yourself.
               </p>
               <div className="flex items-center text-[#EF4444] font-extrabold z-10 mt-auto uppercase text-sm tracking-wide">
-                Join The Waitlist <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+                Take The Free Test <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
               </div>
             </div>
           </Link>
@@ -111,7 +111,7 @@ export default function HimHub() {
               <div className="z-10 text-center md:text-left">
                 <h2 className="text-2xl md:text-3xl font-extrabold mb-3 text-white">Is He Cheating? Take The Behavioral Test</h2>
                 <p className="text-white/90 mb-6 leading-relaxed font-medium text-lg">
-                  20 research-informed questions across his phone habits, schedule, and defensiveness. Get a scored answer in 3 minutes instead of another sleepless night.
+                  100 research-informed questions across his phone habits, schedule, and defensiveness. Allow about 13 minutes and get a scored result on screen.
                 </p>
                 <div className="inline-flex items-center text-[#3D5A6C] bg-[#F5DD90] px-6 py-3 rounded-full font-extrabold uppercase text-sm tracking-wide">
                   Start The Test <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />

@@ -8,14 +8,14 @@ import RelatedQuizzes from "@/components/seo/RelatedQuizzes";
 import { quizRegistry } from "@/lib/quizzes/registry";
 
 export const metadata: Metadata = {
-  title: "Is He Cheating? Take the 3-Minute Behavioral Test | OopsCupid",
+  title: "Is He Cheating? Free Behavioral Pattern Test | OopsCupid",
   description:
-    "Is he cheating or are you overthinking? This free 20-question behavioral test analyzes his phone habits, schedule changes, and emotional distance, with an instant result.",
+    "Is he cheating or are you overthinking? This free 100-question behavioral assessment analyzes phone habits, schedule changes, and emotional distance, with an instant result.",
   alternates: { canonical: "https://www.oopscupid.com/is-he-cheating" },
   openGraph: {
     title: "Is He Cheating? Free Behavioral Diagnostic Test",
     description:
-      "Analyze his phone habits, schedule shifts, and defensiveness in 3 minutes. Instant result, no sign-up required.",
+      "Analyze 100 behavioral markers across phone habits, schedule shifts, and defensiveness. Instant result, no sign-up required.",
     url: "https://www.oopscupid.com/is-he-cheating",
     type: "website",
   },
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 const FAQ = [
   {
     q: "How accurate is an 'is he cheating' quiz?",
-    a: "No quiz can prove infidelity, only evidence can. What this test does is structure your observations: it scores 20 research-informed behavioral markers (phone secrecy, schedule changes, emotional withdrawal, defensiveness) so you can see whether the pattern you're sensing is strong, weak, or mixed, instead of ruminating in circles.",
+    a: "No quiz can prove infidelity, only evidence can. What this test does is structure your observations: it scores 100 research-informed behavioral markers (phone secrecy, schedule changes, emotional withdrawal, defensiveness) so you can see whether the pattern you're sensing is strong, weak, or mixed, instead of ruminating in circles.",
   },
   {
     q: "What are the most common signs of cheating?",
@@ -56,7 +56,7 @@ export default function QuizPage() {
       <MainHero
         topSubheading="INSTANT DIAGNOSTIC AUDIT"
         headline="Stop Guessing. Find Out The Truth."
-        subheadline="Take this 3-minute test. Find out if you are being paranoid, or if he is actually hiding something behind your back."
+        subheadline="Answer 100 questions, about 13 minutes. Examine whether your observations form a pattern, and get your result on screen."
         cards={[]} /* This explicitly tells the hero NOT to render the default cards */
       />
 

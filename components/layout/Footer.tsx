@@ -39,9 +39,9 @@ export default function Footer() {
             <h3 className="font-semibold text-[15px] text-[#1A1033] font-black mb-6">Guides</h3>
             <ul className="space-y-4">
               <li><Link href="/relationship-red-flags" className={linkClass}>Relationship Red Flags</Link></li>
-              <li><Link href="/gaslighting-signs" className={linkClass}>Gaslighting Signs</Link></li>
+              <li><Link href="/signs/i-feel-crazy-around-him" className={linkClass}>Gaslighting Signs</Link></li>
               <li><Link href="/love-bombing-signs" className={linkClass}>Love Bombing Signs</Link></li>
-              <li><Link href="/trauma-bonding-signs" className={linkClass}>Trauma Bonding Signs</Link></li>
+              <li><Link href="/articles/manipulation-science" className={linkClass}>How Manipulation Works</Link></li>
             </ul>
           </div>
 

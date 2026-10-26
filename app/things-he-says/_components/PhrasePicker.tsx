@@ -158,7 +158,7 @@ export default function PhrasePicker() {
               Find out which of these is doing the damage.
             </h2>
             <ul className="space-y-2.5 mb-7 text-slate-700 font-medium">
-              <li className="flex gap-2.5"><Check className="w-5 h-5 text-[#E07850] shrink-0 mt-0.5" />Each tactic scored separately, from twenty questions about how often and what happens after</li>
+              <li className="flex gap-2.5"><Check className="w-5 h-5 text-[#E07850] shrink-0 mt-0.5" />Each tactic scored separately, from 93 questions about how often and what happens after</li>
               <li className="flex gap-2.5"><Check className="w-5 h-5 text-[#E07850] shrink-0 mt-0.5" />Your own answers quoted back, including where they contradict each other</li>
               <li className="flex gap-2.5"><Check className="w-5 h-5 text-[#E07850] shrink-0 mt-0.5" />The exact sentence to use the next time each one happens</li>
               <li className="flex gap-2.5"><Check className="w-5 h-5 text-[#E07850] shrink-0 mt-0.5" />A 14-day plan that does not need his cooperation</li>
@@ -171,7 +171,7 @@ export default function PhrasePicker() {
               Unlock the full report · €9.99
             </CheckoutButton>
             <p className="text-xs font-bold text-slate-400 mt-4 leading-relaxed">
-              After paying you take the 20-question assessment, about four
+              After paying you take the 93-question assessment, about 12
               minutes, and the report is built from your answers. One payment,
               no subscription, 7-day refund.
             </p>

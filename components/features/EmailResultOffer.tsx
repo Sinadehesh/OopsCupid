@@ -4,17 +4,8 @@ import React from "react";
 import { Mail, CheckCircle2, ArrowRight } from "lucide-react";
 
 /**
- * EMAIL OFFER, shown UNDER a result, never in front of it.
- *
- * This replaced a mandatory gate. Search Console shows 23% of the queries
- * reaching this site contain "free", and several spell out "no email" or
- * "no sign up": people are explicitly searching for a test that does not
- * demand an address, and this site was the one with a wall.
- *
- * The wall collected 4 addresses in five months, so it was protecting
- * nothing while turning away the exact audience Google was sending. Asked
- * afterwards, the address is an offer with a reason attached, which is
- * both more honest and, on every funnel I have seen, more productive.
+ * Optional updates form shown under a result, never in front of it.
+ * The result stays on screen; this form does not claim to email a copy.
  */
 export default function EmailResultOffer({
   onSubmit,
@@ -24,6 +15,7 @@ export default function EmailResultOffer({
   setAgreed,
   saving,
   saved,
+  error,
   className = "",
 }: {
   onSubmit: (e: React.FormEvent) => void;
@@ -33,15 +25,19 @@ export default function EmailResultOffer({
   setAgreed: (v: boolean) => void;
   saving: boolean;
   saved: boolean;
+  error?: string | null;
   className?: string;
 }) {
   if (saved) {
     return (
       <div className={`w-full max-w-2xl mx-auto ${className}`}>
-        <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 flex items-center gap-4">
+        <div
+          role="status"
+          className="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 flex items-center gap-4"
+        >
           <CheckCircle2 className="w-6 h-6 text-emerald-600 shrink-0" />
           <p className="text-emerald-900 font-bold">
-            Sent. Your results are on their way, check spam if it hasn&apos;t arrived in a few minutes.
+            You&apos;re on the free update list. Your result is still on screen above.
           </p>
         </div>
       </div>
@@ -57,11 +53,11 @@ export default function EmailResultOffer({
           </div>
           <div>
             <h3 className="font-black text-slate-900 text-lg leading-snug">
-              Want a copy of this?
+              Want new quizzes and practical guides?
             </h3>
             <p className="text-slate-500 font-medium text-sm mt-1">
-              Optional; you&apos;ve already got your result. This just sends it to you
-              so you can read it again later.
+              Optional; your result is already on screen. Join the free email list for new
+              quizzes and relationship advice.
             </p>
           </div>
         </div>
@@ -72,6 +68,9 @@ export default function EmailResultOffer({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
+            aria-label="Your email address"
+            autoComplete="email"
+            required
             className="w-full px-4 py-3.5 bg-white border-2 border-slate-200 rounded-xl focus:border-slate-400 focus:ring-4 focus:ring-slate-100 outline-none text-slate-800 font-medium transition-all"
           />
 
@@ -86,7 +85,7 @@ export default function EmailResultOffer({
               {agreed && <CheckCircle2 className="w-3.5 h-3.5 text-white" />}
             </div>
             <span className="text-sm font-medium text-slate-500 leading-snug">
-              Send it to me, and I agree to the{" "}
+              Email me new quizzes and practical relationship advice. I agree to the{" "}
               <a href="/terms" className="underline hover:text-slate-700">Terms</a> and{" "}
               <a href="/privacy" className="underline hover:text-slate-700">Privacy Policy</a>.
             </span>
@@ -97,13 +96,14 @@ export default function EmailResultOffer({
             disabled={!email || !agreed || saving}
             className="w-full min-h-[52px] bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-extrabold transition-all flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            {saving ? "Sending…" : "Email me my results"}
+            {saving ? "Joining…" : "Join the free update list"}
             {!saving && <ArrowRight className="w-4 h-4" />}
           </button>
+          {error && <p role="alert" className="text-sm font-bold text-rose-600 text-center">{error}</p>}
         </form>
 
         <p className="text-[11px] font-bold text-slate-400 mt-4 text-center">
-          No account. No spam. Your answers leave our servers within 48 hours.
+          No account. Unsubscribe any time. Your answers leave our servers within 48 hours.
         </p>
       </div>
     </div>

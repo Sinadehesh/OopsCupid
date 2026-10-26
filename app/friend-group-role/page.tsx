@@ -13,7 +13,7 @@ export default function FriendRolePage() {
       <div className="w-full max-w-[1400px] mx-auto text-center mb-10">
         <h1 className="text-3xl md:text-5xl font-extrabold text-[#0D2C54] mb-4">What Role Do You Play?</h1>
         <p className="text-[#0D2C54]/70 font-medium max-w-2xl mx-auto">
-          Are you the Leader, the Therapist, or the Peacekeeper? This 120-item assessment analyzes your group dynamics to reveal your exact archetype.
+          Are you the Leader, the Therapist, or the Peacekeeper? This 120-item assessment, about 16 minutes, analyzes your group dynamics to reveal your archetype.
         </p>
       </div>
       

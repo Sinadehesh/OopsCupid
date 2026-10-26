@@ -23,6 +23,7 @@ export default function QuizEngine() {
   const [isSubmittingEmail, setIsSubmittingEmail] = useState(false);
   const [agreed, setAgreed] = useState(false);
   const [emailSaved, setEmailSaved] = useState(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
 
   const handleStart = () => setStarted(true);
 
@@ -61,15 +62,18 @@ export default function QuizEngine() {
     e.preventDefault();
     if (!email || !agreed) return;
     setIsSubmittingEmail(true);
+    setEmailError(null);
     try {
-      await fetch('/api/leads', {
+      const response = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, quizType: "toxic-attraction", rawAnswers: answers, profile: result })
       });
+      if (!response.ok) throw new Error("Lead save failed");
       setEmailSaved(true);
     } catch (error) {
       console.error("Failed to save lead", error);
+      setEmailError("We couldn't add you to the list. Please try again.");
     }
     setIsSubmittingEmail(false);
   };
@@ -165,6 +169,7 @@ export default function QuizEngine() {
           setAgreed={setAgreed}
           saving={isSubmittingEmail}
           saved={emailSaved}
+          error={emailError}
         />
       </>
     );

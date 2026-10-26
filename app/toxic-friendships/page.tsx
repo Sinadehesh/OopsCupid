@@ -36,7 +36,7 @@ export default function ToxicFriendshipsHub() {
 
         <h2 className="text-3xl font-bold tracking-tight text-foreground pt-12 border-t border-border mb-8">Articles & Deep Dives</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16" id="jealousy">
-          <Card href="/signs-of-a-toxic-friend" title="7 Subtle Signs of a Toxic Friend" description="They might not be overtly mean, but they leave you feeling drained." category="Article" />
+          <Card href="/articles/is-my-friend-toxic" title="Subtle Signs of a Toxic Friend" description="They might not be overtly mean, but they leave you feeling drained." category="Article" />
           <Card href="/toxic-friendships#frenemies" title="The Overly Competitive Friend" description="Why everything feels like a competition and how to protect your peace." category="Article" />
           <Card href="/toxic-friendships#boundary" title="Setting Boundaries with Friends" description="How to say 'no' without ending the friendship (if you don't want to)." category="Guide" />
         </div>

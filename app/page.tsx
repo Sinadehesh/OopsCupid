@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { allQuizzes } from "@/lib/quizzes/registry";
 import { LIVE_PROGRAMS } from "@/lib/programs/registry";
 import MerchCard from "@/components/shop/MerchCard";
+import NewsletterForm from "@/components/features/NewsletterForm";
 
 export const metadata: Metadata = {
   title: { absolute: "OopsCupid: Free Relationship Quizzes, Games & Attachment Test" },
@@ -61,7 +62,7 @@ const proofPoints: { stat: string; label: string; detail: string }[] = [
   {
     stat: "0",
     label: "emails required",
-    detail: "Every result appears on screen. Give an address only if you want a copy sent to you.",
+    detail: "Every result appears on screen. Give an address only if you want new quizzes and guides by email.",
   },
   {
     stat: "15",
@@ -202,7 +203,7 @@ export default function Home() {
             <div>
               <div className="text-5xl mb-4">1️⃣</div>
               <h3 className="text-2xl font-bold mb-2">Answer Questions</h3>
-              <p className="text-white/75 text-lg">It takes just 3 minutes.</p>
+              <p className="text-white/75 text-lg">Choose your test and answer at your own pace.</p>
             </div>
             <div>
               <div className="text-5xl mb-4">2️⃣</div>
@@ -333,7 +334,7 @@ export default function Home() {
           </div>
 
           <Link href="/quizzes" className="inline-block bg-[#FF4FA3] text-white rounded-full px-12 py-5 text-[22px] font-extrabold hover:bg-[#FF4FA3] hover:shadow-[0_10px_25px_rgba(224,120,80,0.35)] hover:-translate-y-1 transition-all">
-            Start My Free 3-Minute Test →
+            Find My Free Test →
           </Link>
         </div>
       </section>
@@ -431,9 +432,9 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <Card variant="article" tag="Red Flags" title="Is He Gaslighting Me? (Coming Soon) 9 Signs You're Not Imagining It" href="/is-he-gaslighting-me" />
+            <Card variant="article" tag="Red Flags" title="Is He Gaslighting Me? Signs You're Not Imagining It" href="/is-he-gaslighting-me" />
             <Card variant="article" tag="Attachment Styles" title="The 4 Adult Attachment Styles Explained" href="/understanding-attachment-styles" />
-            <Card variant="article" tag="Toxic Friendships" title="Signs Your Best Friend Is Secretly Jealous of You" href="/signs-of-a-toxic-friend" />
+            <Card variant="article" tag="Toxic Friendships" title="Subtle Signs of a Toxic Friend" href="/articles/is-my-friend-toxic" />
           </div>
           <div className="text-center">
             <Link href="/articles" className="text-[18px] text-[#9B7BFF] hover:text-[#1A1033] hover:underline underline-offset-4 font-bold transition-colors">
@@ -452,26 +453,12 @@ export default function Home() {
                 Get Relationship Clarity in Your Inbox
               </h2>
               <p className="text-[18px] md:text-[20px] font-medium text-[#FFF4FA] leading-relaxed max-w-xl mx-auto lg:mx-0">
-                Free quizzes, red flag breakdowns, texting psychology, 
-                and pattern analysis delivered weekly. No spam. Unsubscribe any time.
+                New quizzes and practical relationship guides, sent occasionally.
+                Join the free list and unsubscribe any time.
               </p>
             </div>
             <div className="lg:w-1/2 w-full max-w-lg mx-auto lg:max-w-none lg:mx-0">
-              <form className="flex flex-col sm:flex-row gap-4">
-                <input
-                  type="email"
-                  placeholder="Your email address"
-                  aria-label="Your email address"
-                  className="w-full bg-white text-[#1A1033] px-6 py-4 rounded-full focus:outline-none focus:ring-4 focus:ring-[#9B7BFF]/50 text-[18px] font-medium placeholder:text-[#1A1033]/40"
-                  required
-                />
-                <button 
-                  type="submit"
-                  className="w-full sm:w-auto bg-[#FF4FA3] text-white px-8 py-4 rounded-full font-extrabold text-[18px] hover:bg-[#FF4FA3] transition-colors whitespace-nowrap shadow-lg"
-                >
-                  Subscribe Free
-                </button>
-              </form>
+              <NewsletterForm />
             </div>
           </div>
         </div>

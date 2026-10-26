@@ -27,7 +27,7 @@ export default function AttractionPatternsPage() {
             This isn't a generic "pick your favorite color" test. Discover exactly who your nervous system finds irresistible based on your hidden childhood wiring, dopamine responses, and emotional needs.
           </p>
           <div className="flex justify-center items-center gap-6 text-sm md:text-base font-semibold text-white">
-            <span className="flex items-center gap-2 text-[#06AED5]">✓ 24 Deep Questions</span>
+            <span className="flex items-center gap-2 text-[#06AED5]">✓ 78 Questions · ~10 min</span>
             <span className="flex items-center gap-2 text-[#06AED5]">✓ Advanced Probability Chart</span>
             <span className="flex items-center gap-2 text-[#06AED5]">✓ DSM-5 Psychology Backed</span>
           </div>

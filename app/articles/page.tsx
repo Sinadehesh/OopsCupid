@@ -76,28 +76,28 @@ export default function ClarityHub() {
               <div className="w-14 h-14 bg-[#10B981] rounded-2xl flex items-center justify-center mb-8 shadow-md z-10">
                 <HeartCrack className="w-7 h-7 text-white" />
               </div>
-              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54] mb-4 z-10">Love Bombing vs. Real Love <span className="text-sm font-bold text-[#10B981] bg-[#10B981]/10 px-3 py-1 rounded-full ml-2 align-middle whitespace-nowrap tracking-wide uppercase">COMING SOON</span></h2>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54] mb-4 z-10">Love Bombing vs. Real Love</h2>
               <p className="text-[#0D2C54]/70 mb-8 leading-relaxed font-medium z-10 flex-grow">
                 He says "I love you" after a week. Is he your soulmate, or is he rushing to trap you? Find out exactly how to tell the difference.
               </p>
               <div className="flex items-center text-[#10B981] font-extrabold z-10 mt-auto uppercase text-sm tracking-wide">
-                Join Waitlist <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+                Read The Playbook <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
               </div>
             </div>
           </Link>
 
-          <Link href="/trauma-bonding-signs" className="group block h-full">
-            <div className="bg-white rounded-[32px] p-8 md:p-10 border border-[#0D2C54]/10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full flex flex-col relative overflow-hidden opacity-90">
+          <Link href="/signs/i-always-end-up-apologizing" className="group block h-full">
+            <div className="bg-white rounded-[32px] p-8 md:p-10 border border-[#0D2C54]/10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full flex flex-col relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#EAB308]/10 rounded-bl-full -z-0 transition-transform group-hover:scale-110"></div>
               <div className="w-14 h-14 bg-[#EAB308] rounded-2xl flex items-center justify-center mb-8 shadow-md z-10">
                 <BookOpen className="w-7 h-7 text-white" />
               </div>
-              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54] mb-4 z-10">Why Can't I Leave? <span className="text-sm font-bold text-[#EAB308] bg-[#EAB308]/10 px-3 py-1 rounded-full ml-2 align-middle whitespace-nowrap tracking-wide uppercase">COMING SOON</span></h2>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54] mb-4 z-10">Why Am I Always Apologising?</h2>
               <p className="text-[#0D2C54]/70 mb-8 leading-relaxed font-medium z-10 flex-grow">
-                You know he is bad for you, but you stay. Discover how "Trauma Bonding" literally rewires your brain, and the exact steps to break the addiction.
+                Learn why every disagreement can end with you saying sorry, how to check the pattern, and what to do next.
               </p>
               <div className="flex items-center text-[#EAB308] font-extrabold z-10 mt-auto uppercase text-sm tracking-wide">
-                Join Waitlist <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+                Read The Guide <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
               </div>
             </div>
           </Link>

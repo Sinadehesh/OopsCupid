@@ -4,6 +4,7 @@ import { SYMPTOM_PAGES } from "@/lib/seo/symptoms";
 import { TICK_TESTS } from "@/lib/quizzes/tickTests";
 import { VERSUS_GAMES } from "@/lib/quizzes/versus";
 import { CHOICE_GAMES } from "@/lib/quizzes/choiceGames";
+import { LIVE_PROGRAMS } from "@/lib/programs/registry";
 
 // FORCES NEXT.JS TO GENERATE THIS AT BUILD TIME FOR STATIC EXPORTS
 export const dynamic = "force-static";
@@ -18,11 +19,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/him",
     "/me",
     "/friends",
+    "/workbook",
     "/articles",
     "/coaching",
     "/articles/manipulation-science",
     "/articles/is-my-friend-toxic",
-    "/why-do-i-attract-toxic-people-article",
     "/privacy",
     "/terms",
     "/signs",
@@ -68,5 +69,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticEntries, ...registryEntries, ...symptomEntries];
+  // Programme overviews can explain the offer to search visitors. Individual
+  // exercise sessions stay out: their metadata already marks them noindex.
+  const programEntries: MetadataRoute.Sitemap = LIVE_PROGRAMS.map((p) => ({
+    url: `${baseUrl}/workbook/${p.slug}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticEntries, ...registryEntries, ...symptomEntries, ...programEntries];
 }

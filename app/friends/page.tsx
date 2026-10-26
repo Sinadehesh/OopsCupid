@@ -4,7 +4,7 @@ import { Users, ShieldAlert, Sparkles, ArrowRight, HeartHandshake } from "lucide
 export const metadata = {
   alternates: { canonical: "https://www.oopscupid.com/friends" },
   title: "Spot Fake Friends | OopsCupid",
-  description: "Take a 3-minute test to spot toxic friends, one-sided relationships, and learn how to set boundaries.",
+  description: "Explore free friendship tests for toxic behaviour, one-sided relationships, and boundaries, with question counts and time estimates shown before you start.",
 };
 
 export default function FriendsHub() {
@@ -22,8 +22,22 @@ export default function FriendsHub() {
             Stop Being <span className="text-white drop-shadow-sm">Used.</span>
           </h1>
           <p className="text-lg md:text-2xl font-medium max-w-2xl mx-auto opacity-90 leading-relaxed">
-            Take a 3-minute test. Find out who is real, who is fake, and get the exact text scripts to cut off toxic friends without starting drama.
+            Start with a 30-second quick test or choose a deeper friendship assessment. Every result appears on screen, with no sign-up required.
           </p>
+          <div className="mt-8 flex flex-col sm:flex-row justify-center gap-3 w-full sm:w-auto">
+            <Link
+              href="/are-you-the-therapist-friend"
+              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#0D2C54] px-6 py-4 text-white font-extrabold shadow-lg transition-transform hover:-translate-y-0.5"
+            >
+              Try the 30-second quick test <ArrowRight className="w-5 h-5" />
+            </Link>
+            <Link
+              href="/is-my-friend-a-pick-me"
+              className="inline-flex items-center justify-center gap-2 rounded-2xl border-2 border-[#0D2C54]/25 bg-white/25 px-6 py-4 font-extrabold transition-colors hover:bg-white/40"
+            >
+              Play the pick-me friend quiz
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -92,14 +106,14 @@ export default function FriendsHub() {
               </div>
               
               <h2 className="text-2xl md:text-3xl font-extrabold text-[#0D2C54] mb-4 z-10">
-                Are They Dragging Me Down? <span className="text-sm font-bold text-[#43B929] bg-[#43B929]/10 px-3 py-1 rounded-full ml-2 align-middle whitespace-nowrap tracking-wide uppercase">COMING SOON</span>
+                Are They Dragging Me Down?
               </h2>
               <p className="text-[#0D2C54]/70 mb-8 leading-relaxed font-medium z-10 flex-grow">
                 Do you feel exhausted after hanging out? Find out if your circle is holding you back from your true potential.
               </p>
               
               <div className="flex items-center text-[#43B929] font-extrabold z-10 mt-auto uppercase text-sm tracking-wide">
-                Join The Waitlist <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+                Take The Free Assessment <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
               </div>
             </div>
           </Link>

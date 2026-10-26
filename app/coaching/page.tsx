@@ -13,6 +13,7 @@ import { CLARITY_CALL, RESET_PROGRAM } from "@/lib/offers/catalog";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import QuizFaq from "@/components/seo/QuizFaq";
 import RelatedQuizzes from "@/components/seo/RelatedQuizzes";
+import CheckoutButton from "@/components/offers/CheckoutButton";
 
 export const metadata: Metadata = {
   title: "Relationship Clarity Coaching | 1:1 Sessions | OopsCupid",
@@ -47,7 +48,7 @@ const COACHING_FAQ = [
   },
   {
     q: "How fast can I book?",
-    a: "Checkout takes a minute through Gumroad, and you'll receive the scheduling link immediately, most sessions happen within 48 hours.",
+    a: "Checkout takes a minute through Stripe. After payment, we'll email your scheduling link within 24 hours so you can choose an available time.",
   },
 ];
 
@@ -77,16 +78,15 @@ export default function CoachingPage() {
             details that don&apos;t fit a quiz, or tell you what to say tonight. That&apos;s what a
             clarity session is for.
           </p>
-          <a
-            href={CLARITY_CALL.url}
-            target="_blank"
-            rel="noopener noreferrer"
+          <CheckoutButton
+            sku={CLARITY_CALL.sku}
+            returnTo="/coaching"
             className="inline-flex items-center gap-3 bg-rose-500 hover:bg-rose-400 text-white font-black text-xl px-10 py-5 rounded-2xl transition-all shadow-xl hover:-translate-y-0.5"
           >
-            {CLARITY_CALL.cta}, {CLARITY_CALL.price} <ArrowRight className="w-6 h-6" />
-          </a>
+            {CLARITY_CALL.cta}, {CLARITY_CALL.price}
+          </CheckoutButton>
           <p className="text-slate-400 text-sm font-bold mt-4">
-            Secure checkout via Gumroad · Scheduling link delivered instantly
+            Secure checkout via Stripe · Scheduling link emailed within 24 hours
           </p>
         </div>
       </section>
@@ -173,18 +173,17 @@ export default function CoachingPage() {
                     </span>
                   )}
                 </div>
-                <a
-                  href={offer.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <CheckoutButton
+                  sku={offer.sku}
+                  returnTo="/coaching"
                   className={`inline-flex items-center justify-center gap-2 w-full py-5 rounded-2xl font-black text-lg transition-all ${
                     i === 1
                       ? "bg-rose-500 hover:bg-rose-400 text-white shadow-lg"
                       : "bg-slate-900 hover:bg-slate-700 text-white"
                   }`}
                 >
-                  {offer.cta} <ArrowRight className="w-5 h-5" />
-                </a>
+                  {offer.cta}
+                </CheckoutButton>
               </div>
             ))}
           </div>
@@ -201,8 +200,7 @@ export default function CoachingPage() {
       <section className="container mx-auto px-4 md:px-8 py-16 max-w-3xl text-center">
         <h2 className="text-2xl font-black text-slate-900 mb-4">Not sure a session is for you?</h2>
         <p className="text-slate-500 font-medium text-lg mb-8">
-          Start with a free test; it takes 3 minutes and your results make the session twice as
-          productive.
+          Start with a free test. Your result gives us a useful starting point for the session.
         </p>
         <Link
           href="/quizzes"

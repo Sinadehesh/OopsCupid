@@ -26,7 +26,7 @@ export default function MagnetPatternsPage() {
             People don't get attracted to you randomly. Find out which specific personality types are magnetically drawn to your exact energy, and the psychological “drug” you provide them.
           </p>
           <div className="flex justify-center items-center gap-6 text-sm md:text-base font-semibold text-white">
-            <span className="flex items-center gap-2">✓ 24 Fun Questions</span>
+            <span className="flex items-center gap-2">✓ 78 Questions · ~10 min</span>
             <span className="flex items-center gap-2">✓ Your Personal Magnet Chart</span>
             <span className="flex items-center gap-2">✓ Deep Psychology Backed</span>
           </div>

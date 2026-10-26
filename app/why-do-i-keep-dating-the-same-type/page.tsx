@@ -6,7 +6,7 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   alternates: { canonical: "https://www.oopscupid.com/why-do-i-keep-dating-the-same-type" },
   title: "Why Do I Keep Dating the Same Type? | OopsCupid Quiz",
-  description: "Find out the answer to why do i keep dating the same type? with our quick psychological assessment.",
+  description: "Explore why you keep dating the same type with a free 78-question assessment, about 10 minutes, and get your result on screen.",
 };
 
 export default function QuizPage() {
@@ -14,7 +14,7 @@ export default function QuizPage() {
     <>
       <MainHero
         headline="Why Do I Keep Dating the Same Type?"
-        subheadline="Take this quick quiz to gain some objective clarity."
+        subheadline="Answer 78 questions, about 10 minutes, and examine the pattern behind your repeated attractions."
       />
       <div className="container mx-auto px-4 py-16">
         <div className="mb-12">

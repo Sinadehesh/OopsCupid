@@ -102,7 +102,7 @@ export default function MainHero(props: MainHeroProps) {
     question, subheadline, children, cards = defaultCards,
   } = props;
 
-  const displayQuestion = question || subheadline || "Is he cheating? Is he manipulative? What's your attachment style, and why do you keep attracting the same type? Take a free, research-informed relationship test and get an honest, scored result in 3 minutes, no sign-up, no guessing.";
+  const displayQuestion = question || subheadline || "Is he cheating? Is he manipulative? What's your attachment style, and why do you keep attracting the same type? Choose a free, research-informed relationship test and get a scored result on screen, with no sign-up required.";
 
   return (
     <section className="relative overflow-hidden bg-[#F7F4ED] pt-14 md:pt-20 lg:pt-24 pb-16 md:pb-20">

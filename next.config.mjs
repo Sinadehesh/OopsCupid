@@ -31,6 +31,12 @@ const nextConfig = {
             // quizzes-only. It had inbound links, so send them somewhere real.
             { source: "/tools/chat-analyzer", destination: "/quizzes", permanent: true },
             { source: "/tools/:path*", destination: "/quizzes", permanent: true },
+            // Placeholder articles should not compete with the useful pages
+            // that already cover the same intent.
+            { source: "/gaslighting-signs", destination: "/signs/i-feel-crazy-around-him", permanent: true },
+            { source: "/signs-of-a-toxic-friend", destination: "/articles/is-my-friend-toxic", permanent: true },
+            { source: "/trauma-bonding-signs", destination: "/articles/manipulation-science", permanent: true },
+            { source: "/why-do-i-attract-toxic-people-article", destination: "/why-do-i-attract-toxic-people", permanent: true },
             // The original anxious-attachment workbook: forty-eight hand-built
             // pages, replaced by the Earned Security programme. Its sessions
             // do not map one to one (six weeks of seven days became four of

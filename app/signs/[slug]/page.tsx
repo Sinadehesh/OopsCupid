@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, Check, HelpCircle, Info } from "lucide-react";
+import { ArrowRight, HelpCircle, Info } from "lucide-react";
 import { SYMPTOM_PAGES } from "@/lib/seo/symptoms";
 import { PHRASES } from "@/lib/quizzes/thingsHeSays";
 import { quizRegistry } from "@/lib/quizzes/registry";
@@ -115,10 +115,30 @@ export default async function SignPage({
         {/* The direct answer. First thing on the page because it is what
             gets pulled into a snippet and quoted by an AI; it has to
             stand alone with no page around it. */}
-        <div className="bg-white rounded-3xl border border-slate-200 shadow-[0_2px_20px_rgba(15,23,42,0.05)] p-6 md:p-8 mb-10">
+        <div className="bg-white rounded-3xl border border-slate-200 shadow-[0_2px_20px_rgba(15,23,42,0.05)] p-6 md:p-8 mb-6">
           <p className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 mb-3">The short answer</p>
           <p className="text-lg text-slate-800 leading-relaxed font-medium">{page.answer}</p>
         </div>
+
+        {quiz && (
+          <Link
+            href={quiz.slug}
+            className="group mb-10 flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-5 transition-colors hover:border-slate-400 sm:flex-row sm:items-center sm:justify-between"
+          >
+            <span>
+              <span className="block text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 mb-1.5">
+                Check the wider pattern
+              </span>
+              <span className="block font-black text-slate-900 group-hover:text-slate-700">{quiz.title}</span>
+              <span className="mt-1 block text-xs font-bold text-slate-500">
+                Free{quiz.questionCount ? ` · ${quiz.questionCount} questions` : ""}{quiz.minutes ? ` · about ${quiz.minutes} minutes` : ""} · No account needed
+              </span>
+            </span>
+            <span className="inline-flex shrink-0 items-center gap-2 text-sm font-extrabold text-slate-900">
+              Take the assessment <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </span>
+          </Link>
+        )}
 
         <div className="space-y-10">
           {page.body.map((section) => (
@@ -195,7 +215,7 @@ export default async function SignPage({
               Take the assessment <ArrowRight className="w-4 h-4" />
             </Link>
             <p className="text-white/35 text-xs font-bold mt-4">
-              Free · No account needed · {quiz.minutes ?? 8} minutes
+              Free{quiz.questionCount ? ` · ${quiz.questionCount} questions` : ""} · No account needed{quiz.minutes ? ` · About ${quiz.minutes} minutes` : ""}
             </p>
           </section>
         )}

@@ -7,14 +7,13 @@ import type { Sku } from "@/lib/stripe/products";
  * Ladder logic (ascending commitment):
  *   1. TRIPWIRE, low-ticket PDF playbook (existing Gumroad products)
  *   2. CORE, topic bundle / course (existing Gumroad bundles)
- *   3. COACHING, 1:1 clarity session (highest margin, sold via Gumroad
- *                  so Gumroad remains merchant of record, no payment
- *                  entity needed on our side)
+ *   3. COACHING, 1:1 clarity session (highest margin, sold through
+ *                  Stripe Checkout by sku)
  *   4. PROGRAM, multi-week coaching program (backend offer, pitched
  *                  on the coaching page and after a clarity session)
  *
- * ⚠️ The coaching/program Gumroad products must be created in the
- * Gumroad dashboard before these links go live. Every URL lives here, 
+ * Coaching and the programme are Stripe SKUs. The playbook and course
+ * rungs still carry their legacy Gumroad links. Every offer lives here,
  * one file to update, every funnel picks it up.
  */
 
@@ -40,7 +39,7 @@ export interface Offer {
 
 // ── COACHING OFFERS (shared across all topics) ─────────────────────────────
 
-export const CLARITY_CALL: Offer = {
+export const CLARITY_CALL: Offer & { sku: Sku } = {
   id: "clarity-call",
   sku: "clarity-call",
   kind: "coaching",
@@ -57,7 +56,7 @@ export const CLARITY_CALL: Offer = {
   cta: "Book My Clarity Session",
 };
 
-export const RESET_PROGRAM: Offer = {
+export const RESET_PROGRAM: Offer & { sku: Sku } = {
   id: "reset-program",
   sku: "reset-program",
   kind: "program",

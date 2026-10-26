@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Is He Manipulative? Manipulation Tactics Test",
     description:
-      "Identify the exact manipulation tactics being used on you and get scripts to shut them down. Free, 3 minutes.",
+      "Identify the exact manipulation tactics being used on you and get scripts to shut them down. Free: 93 questions, about 12 minutes.",
     url: "https://www.oopscupid.com/is-he-manipulative",
     type: "website",
   },

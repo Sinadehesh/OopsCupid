@@ -13,7 +13,7 @@ export default function FriendsUsedPage() {
       <div className="w-full max-w-[1400px] mx-auto text-center mb-10">
         <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-4">Are Your Friends Using You?</h1>
         <p className="text-slate-400 font-medium max-w-2xl mx-auto">
-          Take the 108-item behavioral audit to measure your Use-Risk Index and find out if your friendships are reciprocal or exploitative.
+          Take the 108-item behavioral audit, about 14 minutes, to measure your Use-Risk Index and find out if your friendships are reciprocal or exploitative.
         </p>
       </div>
       

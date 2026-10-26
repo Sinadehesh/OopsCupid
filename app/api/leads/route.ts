@@ -1,32 +1,51 @@
-import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { NextResponse } from "next/server";
+import { Prisma } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    console.log("🚨 ATTEMPTING TO SAVE LEAD:", body.email);
+    const body = await req.json().catch(() => null);
+    const email =
+      typeof body?.email === "string" ? body.email.trim().toLowerCase().slice(0, 254) : "";
 
-    if (!body.email) return NextResponse.json({ error: "Email is required" }, { status: 400 });
+    if (!EMAIL_PATTERN.test(email)) {
+      return NextResponse.json({ error: "Enter a valid email address." }, { status: 400 });
+    }
 
-    const lead = await prisma.lead.upsert({
-      where: { email: body.email },
+    const quizType =
+      typeof body?.quizType === "string" && body.quizType.trim()
+        ? body.quizType.trim().slice(0, 100)
+        : "unknown";
+    const hasQuizType = typeof body?.quizType === "string" && Boolean(body.quizType.trim());
+    const hasRawAnswers = Object.prototype.hasOwnProperty.call(body, "rawAnswers");
+    const hasProfile = Object.prototype.hasOwnProperty.call(body, "profile");
+
+    await prisma.lead.upsert({
+      where: { email },
       update: {
-        quizType: body.quizType || "unknown",
-        rawAnswers: body.rawAnswers || null,
-        profileData: body.profile || null,
+        // A newsletter-only signup must not replace the subscriber's latest
+        // quiz, and omitted fields must never erase previously saved data.
+        ...(hasQuizType && quizType !== "newsletter" ? { quizType } : {}),
+        ...(hasRawAnswers ? { rawAnswers: body.rawAnswers ?? Prisma.JsonNull } : {}),
+        ...(hasProfile ? { profileData: body.profile ?? Prisma.JsonNull } : {}),
       },
       create: {
-        email: body.email,
-        quizType: body.quizType || "unknown",
-        rawAnswers: body.rawAnswers || null,
-        profileData: body.profile || null,
-      }
+        email,
+        quizType,
+        ...(hasRawAnswers ? { rawAnswers: body.rawAnswers ?? Prisma.JsonNull } : {}),
+        ...(hasProfile ? { profileData: body.profile ?? Prisma.JsonNull } : {}),
+      },
     });
 
-    console.log("✅ SUCCESSFULLY SAVED:", lead.email);
-    return NextResponse.json({ success: true, lead });
-  } catch (error: any) {
-    console.error("❌ DATABASE ERROR:", error.message || error);
-    return NextResponse.json({ error: "Failed to save lead", details: error.message }, { status: 500 });
+    // Do not return the Lead row: it can contain sensitive quiz answers.
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error(
+      "[leads] Failed to save lead:",
+      error instanceof Error ? error.message : "Unknown error"
+    );
+    return NextResponse.json({ error: "Failed to save your email. Please try again." }, { status: 500 });
   }
 }

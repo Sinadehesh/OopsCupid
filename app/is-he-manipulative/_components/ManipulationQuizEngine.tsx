@@ -71,6 +71,7 @@ export default function ManipulationQuizEngine() {
   const [agreed, setAgreed] = useState(false);
   const [savingEmail, setSavingEmail] = useState(false);
   const [emailSaved, setEmailSaved] = useState(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
 
   // INDESTRUCTIBLE LOCAL SCORING ENGINE
   const executeLocalScoring = (rawAnswers: Record<string, number>) => {
@@ -134,14 +135,18 @@ export default function ManipulationQuizEngine() {
     e.preventDefault();
     if (!email || !agreed) return;
     setSavingEmail(true);
+    setEmailError(null);
     try {
-      await fetch('/api/leads', {
+      const response = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, quizType: "manipulation", rawAnswers: answers, profile: result })
       });
+      if (!response.ok) throw new Error("Lead save failed");
       setEmailSaved(true);
-    } catch (err) {}
+    } catch (err) {
+      setEmailError("We couldn't add you to the list. Please try again.");
+    }
     setSavingEmail(false);
   };
 
@@ -211,6 +216,7 @@ export default function ManipulationQuizEngine() {
         setAgreed={setAgreed}
         saving={savingEmail}
         saved={emailSaved}
+        error={emailError}
       />
     </>
   );
