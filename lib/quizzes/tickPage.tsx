@@ -6,6 +6,8 @@ import { versusBySlug } from "@/lib/quizzes/versus";
 import VersusGame from "@/components/tick/VersusGame";
 import ChoiceGame from "@/components/tick/ChoiceGame";
 import { choiceGame } from "@/lib/quizzes/choiceGames";
+import { typeQuiz, type TypeQuiz as TypeQuizData } from "@/lib/quizzes/typeQuizzes";
+import TypeQuiz from "@/components/tick/TypeQuiz";
 
 const baseUrl = "https://www.oopscupid.com";
 
@@ -153,5 +155,83 @@ export function ChoicePage({ slug }: { slug: string }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ChoiceGame slug={slug} />
     </main>
+  );
+}
+
+/** Metadata for a "which one are you?" quiz. */
+export function typeMetadata(slug: string): Metadata {
+  const x = typeQuiz(slug)!;
+  const card = `${baseUrl}/api/og?t=${encodeURIComponent(`${x.title} ${x.emoji}`)}&q=${encodeURIComponent(x.seo.og)}`;
+  return {
+    metadataBase: new URL(baseUrl),
+    title: x.seo.title,
+    description: x.seo.description,
+    alternates: { canonical: `${baseUrl}/${slug}` },
+    openGraph: { title: `${x.title} ${x.emoji}`, description: x.seo.description, url: `${baseUrl}/${slug}`, type: "website", images: [{ url: card, width: 1200, height: 630, alt: x.title }] },
+    twitter: { card: "summary_large_image", title: `${x.title} ${x.emoji}`, description: x.seo.description, images: [card] },
+  };
+}
+
+export function TypePage({ slug }: { slug: string }) {
+  const x = typeQuiz(slug)!;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Quiz",
+    name: x.title,
+    url: `${baseUrl}/${slug}`,
+    educationalLevel: "beginner",
+    hasPart: x.questions.map((q) => ({ "@type": "Question", name: q.prompt })),
+  };
+  return (
+    <main className="min-h-screen bg-[#FFF4FA]">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <TypeQuiz slug={slug} />
+      <TypeAbout x={x} />
+    </main>
+  );
+}
+
+/** Readable text under a type quiz: every type explained, plus a short FAQ. */
+function TypeAbout({ x }: { x: TypeQuizData }) {
+  const names = Object.values(x.types).map((t) => t.title);
+  const faq = [
+    {
+      q: `How does the "${x.seo.about.replace(/\?$/, "")}" quiz work?`,
+      a: `Answer ${x.questions.length} quick questions and every answer counts towards one of ${names.length} types: ${names.join(", ")}. You get your type and your full mix straight away. It's free, there's no sign-up, and it takes about a minute.`,
+    },
+    {
+      q: "Is it scientific?",
+      a: `It's for fun, not a diagnosis. Each type explains one real idea from relationship psychology, and if you want a properly scored answer, the free full test linked from your result goes much deeper.${x.note ? ` ${x.note}` : ""}`,
+    },
+    {
+      q: "Can I get more than the free result?",
+      a: "If you want it: the €9.99 report unlocks the full written report for every test on the site, plus every guide. Your type is always free.",
+    },
+  ];
+  return (
+    <section className="bg-white border-t-[2.5px] border-[#1A1033]/10">
+      <div className="max-w-2xl mx-auto px-5 py-12 text-[#1A1033]">
+        <h2 className="text-2xl md:text-3xl font-black leading-tight mb-3">{x.seo.about}</h2>
+        <p className="text-[16px] font-semibold text-[#1A1033]/75 leading-relaxed mb-6">{x.seo.description}</p>
+        <h3 className="text-lg font-black mb-3">The {names.length} types</h3>
+        <ul className="space-y-3 mb-8">
+          {Object.values(x.types).map((t) => (
+            <li key={t.title} className="text-[15px] leading-relaxed text-[#1A1033]/80">
+              <b className="text-[#1A1033]">{t.emoji} {t.title}:</b> {t.line} {t.body}
+            </li>
+          ))}
+        </ul>
+        <h3 className="text-lg font-black mb-3">Questions people ask</h3>
+        <div className="space-y-4">
+          {faq.map((f) => (
+            <div key={f.q}>
+              <p className="font-black text-[15px]">{f.q}</p>
+              <p className="text-[15px] text-[#1A1033]/75 leading-relaxed">{f.a}</p>
+            </div>
+          ))}
+        </div>
+        <FaqJsonLd items={faq} />
+      </div>
+    </section>
   );
 }

@@ -4,6 +4,7 @@ import { SYMPTOM_PAGES } from "@/lib/seo/symptoms";
 import { TICK_TESTS } from "@/lib/quizzes/tickTests";
 import { VERSUS_GAMES } from "@/lib/quizzes/versus";
 import { CHOICE_GAMES } from "@/lib/quizzes/choiceGames";
+import { TYPE_QUIZZES } from "@/lib/quizzes/typeQuizzes";
 import { LIVE_PROGRAMS } from "@/lib/programs/registry";
 
 // FORCES NEXT.JS TO GENERATE THIS AT BUILD TIME FOR STATIC EXPORTS
@@ -39,6 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/kiss-the-frogs",
     "/heart-wars",
     ...CHOICE_GAMES.map((g) => `/${g.slug}`),
+    ...TYPE_QUIZZES.map((x) => `/${x.slug}`),
     // Guide pages are paid: before buying they show only a title and a
     // hook, which Google won't rank. Kept out so it spends its visits on
     // pages that can rank. /guides itself stays.

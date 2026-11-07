@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { CHOICE_GAMES } from "@/lib/quizzes/choiceGames";
+import { TYPE_QUIZZES } from "@/lib/quizzes/typeQuizzes";
 import { VERSUS_GAMES } from "@/lib/quizzes/versus";
 import { TICK_GAMES } from "@/lib/quizzes/tickGames";
 import { tickTestBySlug } from "@/lib/quizzes/tickTests";
@@ -22,6 +23,7 @@ const GAMES = [
   { slug: "kiss-the-frogs", title: "Kiss the Frogs", emoji: "🐸", bg: "#D9F99D", line: "Merge frogs into clowns, ghosts and situationships until you find your prince.", tag: "new · merge" },
   { slug: "heart-wars", title: "Heart Wars", emoji: "🏰", bg: "#FFB3C7", line: "Send your hearts to capture every tower from The Ex, The Situationship and Cold Feet.", tag: "new · strategy" },
   { slug: "red-flag-or-green-flag", title: "Red flag or green flag?", emoji: "🚦", bg: "#FFD1E8", line: "Swipe 16 dating moments. How sharp is your radar?", tag: "swipe" },
+  ...TYPE_QUIZZES.map((x) => ({ slug: x.slug, title: x.title, emoji: x.emoji, bg: x.bg, line: x.intro, tag: "new · which are you" })),
   ...CHOICE_GAMES.map((g) => ({ slug: g.slug, title: g.title, emoji: g.emoji, bg: g.bg, line: g.intro, tag: `${g.rounds.length} rounds` })),
   ...VERSUS_GAMES.map((g) => ({ slug: g.slug, title: g.title, emoji: g.emoji, bg: g.bg, line: g.intro, tag: "2 players" })),
   ...Object.entries(TICK_GAMES).map(([slug, g]) => {

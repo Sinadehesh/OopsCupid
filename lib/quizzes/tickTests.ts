@@ -1,4 +1,6 @@
 import { MORE_TICK_TESTS } from "./tickTestsMore";
+import { NEW_TICK_TESTS } from "./tickTestsNew";
+import { TYPE_QUIZZES } from "./typeQuizzes";
 import { VERSUS_GAMES } from "./versus";
 import { CHOICE_GAMES } from "./choiceGames";
 
@@ -394,7 +396,7 @@ const CORE_TESTS: TickTest[] = [
 ];
 
 /** Serious ones first on each shelf, then the lighter ones mixed in. */
-export const TICK_TESTS: TickTest[] = [...CORE_TESTS, ...MORE_TICK_TESTS];
+export const TICK_TESTS: TickTest[] = [...CORE_TESTS, ...MORE_TICK_TESTS, ...NEW_TICK_TESTS];
 
 export function tickTestBySlug(slug: string) {
   return TICK_TESTS.find((t) => t.slug === slug);
@@ -408,6 +410,8 @@ export const QUICK_TESTS: { slug: string; short: string; emoji: string; bg: stri
   { slug: "kiss-the-frogs", short: "Kiss the Frogs", emoji: "🐸", bg: "#D9F99D", fg: "#365314", fun: true },
   { slug: "heart-wars", short: "Heart Wars", emoji: "🏰", bg: "#FFB3C7", fg: "#6E1A4A", fun: true },
   { slug: "red-flag-or-green-flag", short: "Red flag or green flag?", emoji: "🚦", bg: "#FFD1E8", fg: "#6E1A4A", fun: true },
+  // "Which one are you?" results are the most shared thing a quiz can produce.
+  ...TYPE_QUIZZES.map(({ slug, short, emoji, bg, fg }) => ({ slug, short, emoji, bg, fg, fun: true })),
   ...CHOICE_GAMES.slice(0, 1).map(({ slug, short, emoji, bg, fg }) => ({ slug, short, emoji, bg, fg, fun: true })),
   ...VERSUS_GAMES.map(({ slug, short, emoji, bg, fg }) => ({ slug, short, emoji, bg, fg, fun: true })),
   ...CHOICE_GAMES.slice(1).map(({ slug, short, emoji, bg, fg }) => ({ slug, short, emoji, bg, fg, fun: true })),
