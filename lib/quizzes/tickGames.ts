@@ -43,6 +43,8 @@ export const TICK_GAMES: Record<string, TickGame> = {
   "is-he-a-pick-me-boy": { mode: "bingo", name: "Pick-Me Boy Bingo", how: "Stamp everything he's said or done. Full line = BINGO." },
   "is-my-friend-manipulative": { mode: "bingo", name: "Manipulative Friend Bingo", how: "Stamp everything she's done more than once. A full line is a BINGO you don't want." },
   "anxious-avoidant-trap": { mode: "bingo", name: "Anxious-Avoidant Bingo", how: "Stamp everything that sounds like the two of you. Full line = BINGO." },
+  "is-my-friend-jealous-of-me": { mode: "bingo", name: "Jealous Friend Bingo", how: "Stamp everything she's done more than once. Full line = BINGO." },
+  "is-he-a-player": { mode: "bingo", name: "Player Bingo", how: "Stamp everything he's said or done. Full line = BINGO. Full card = run." },
 
   "things-he-does": { mode: "receipt", name: "The Receipts", how: "Scan everything he's started doing. We'll print you the receipt.", store: "HIS NEW HABITS LTD", paidWith: "YOUR PEACE OF MIND" },
   "is-my-boyfriend-stupid": { mode: "receipt", name: "His Receipt", how: "Scan every clueless thing he's done. We'll total it up.", store: "CLUELESS & CO.", paidWith: "YOUR PATIENCE" },
@@ -54,6 +56,8 @@ export const TICK_GAMES: Record<string, TickGame> = {
   "emotional-cheating-or-friendship": { mode: "receipt", name: "The Just Friends Receipt", how: "Scan everything you've seen between them. We'll print the bill.", store: "JUST FRIENDS LTD", paidWith: "YOUR GUT FEELING" },
   "am-i-being-love-bombed": { mode: "receipt", name: "The Love Bomb Receipt", how: "Scan everything that's happened. We'll print what it's really costing.", store: "TOO MUCH TOO SOON", paidWith: "YOUR BOUNDARIES" },
   "am-i-being-ghosted": { mode: "receipt", name: "The Ghosting Receipt", how: "Scan everything he's done lately. We'll print the receipt.", store: "SLOW FADE LTD", paidWith: "LEFT ON READ" },
+  "is-he-breadcrumbing-me": { mode: "receipt", name: "The Breadcrumb Receipt", how: "Scan every crumb he's thrown you. We'll total it up.", store: "CRUMBS BAKERY", paidWith: "YOUR TIME" },
+  "is-my-girlfriend-dumb": { mode: "receipt", name: "Her Receipt", how: "Scan every chaotic thing she's done. We'll total it up.", store: "CHAOS & CO.", paidWith: "YOUR CHIPS" },
 
   "waiting-for-his-reply": { mode: "tier", name: "Overthinking Tier List", how: "Sort each one: how often do you do it? Build your tier list.", tiers: SELF },
   "when-it-gets-serious": { mode: "tier", name: "Self-Sabotage Tier List", how: "Sort each one by how often you do it when things get real.", tiers: SELF },
@@ -69,6 +73,9 @@ export const TICK_GAMES: Record<string, TickGame> = {
   "do-i-have-attachment-issues": { mode: "tier", name: "Attachment Issues Tier List", how: "Sort each one by how often it's true for you.", tiers: SELF },
   "am-i-codependent": { mode: "tier", name: "People-Pleaser Tier List", how: "Sort each one by how often you do it.", tiers: SELF },
   "am-i-mothering-my-boyfriend": { mode: "tier", name: "Mum Mode Tier List", how: "Sort each one by how often you do it for him.", tiers: SELF },
+  "am-i-in-limerence": { mode: "tier", name: "Limerence Tier List", how: "Think of them. Sort each one by how often it's true.", tiers: SELF },
+  "do-i-have-commitment-issues": { mode: "tier", name: "Commitment Issues Tier List", how: "Be honest. Sort each one by how often you've done it.", tiers: SELF },
+  "am-i-the-mom-friend": { mode: "tier", name: "Mom Friend Tier List", how: "Sort each one by how often you do it for your friends.", tiers: SELF },
 };
 
 export function tickGame(slug: string): TickGame | undefined {
