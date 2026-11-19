@@ -37,6 +37,9 @@ const nextConfig = {
             { source: "/signs-of-a-toxic-friend", destination: "/articles/is-my-friend-toxic", permanent: true },
             { source: "/trauma-bonding-signs", destination: "/articles/manipulation-science", permanent: true },
             { source: "/why-do-i-attract-toxic-people-article", destination: "/why-do-i-attract-toxic-people", permanent: true },
+            // An early slug for this signs page. Google still shows it, and it
+            // was the one "Not found" in Search Console.
+            { source: "/signs/he-distants-says-nothings-wrong", destination: "/signs/he-feels-distant-but-says-nothing-is-wrong", permanent: true },
             // The original anxious-attachment workbook: forty-eight hand-built
             // pages, replaced by the Earned Security programme. Its sessions
             // do not map one to one (six weeks of seven days became four of

@@ -69,7 +69,7 @@ export default function IndexChecklist({ pages }: { pages: { path: string; label
         Today&apos;s pages · {finished} of {total} done
       </p>
       {open.length === 0 ? (
-        <p className="rounded-2xl bg-[#B8F2D8] p-3 text-[15px] font-black">All done ✅ Google has been asked about every new page.</p>
+        <p className="rounded-2xl bg-[#B8F2D8] p-3 text-[15px] font-black">All done ✅ Google has been asked about every missing page.</p>
       ) : (
         <ul className="space-y-2">
           {list.map((p) => {

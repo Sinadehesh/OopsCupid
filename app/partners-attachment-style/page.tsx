@@ -2,11 +2,15 @@ import type { Metadata } from 'next';
 import QuizWidget from '@/components/features/QuizWidget';
 import { HeartHandshake, ShieldAlert, UserMinus, ShieldCheck } from 'lucide-react';
 import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   alternates: { canonical: "https://www.oopscupid.com/partners-attachment-style" },
-  title: "What Is His Attachment Style? Partner Test | OopsCupid",
-  description: "Decode his mixed signals. Take our free 60-question assessment, about 8 minutes, to explore whether your partner leans Anxious, Avoidant, Fearful, or Secure.",
+  // Google shows this page for "attachment style test" and "attachment
+  // styles quiz" (positions 8 to 21) more than the self quiz, so the title
+  // leads with those words and says plainly who it tests.
+  title: "Attachment Style Test for Your Partner: Free, No Email | OopsCupid",
+  description: "A free attachment style test for your partner: 60 questions, about 8 minutes, to see whether he leans anxious, avoidant, fearful or secure. Testing yourself? There's a free quiz for that too.",
 };
 
 export default function PartnerAttachmentQuizPage() {
@@ -27,6 +31,12 @@ export default function PartnerAttachmentQuizPage() {
             <span className="flex items-center gap-2">✓ Free Instant Report</span>
             <span className="flex items-center gap-2">✓ Psychology Backed</span>
           </div>
+          <p className="mt-6 text-[15px] md:text-base font-semibold text-white/90">
+            Testing yourself, not him?{" "}
+            <Link href="/attachment-style-quiz" className="underline underline-offset-2 font-bold text-white">
+              Take the attachment style quiz →
+            </Link>
+          </p>
         </div>
       </section>
 
