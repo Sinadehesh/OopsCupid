@@ -32,7 +32,7 @@ export default function RedFlagsHub() {
         <h2 className="text-3xl font-bold tracking-tight text-foreground mb-8">Popular Analysis Tools & Quizzes</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           <Card href="/is-he-cheating" title="Is He Cheating?" description="Take the quiz to separate typical distance from the actual subtle signs of infidelity." category="Quiz" />
-          <Card href="/red-flags-in-a-relationship" title="Red Flags in a Relationship" description="The ultimate checklist of early warning signs you absolutely shouldn't ignore." category="Checklist" />
+          <Card href="/red-flags-in-a-relationship" title="Red Flags in a Relationship" description="24 warning signs, what each one looks like in real life, and which ones count on their own." category="Checklist" />
           <Card href="/is-he-gaslighting-me" title="Is He Gaslighting Me?" description="Find out if you're actually losing your mind or if someone is actively making you feel that way." category="Quiz" />
           <Card href="/is-he-manipulative" title="Is He Manipulative?" description="Spot the difference between normal conflict resolution and toxic manipulation." category="Quiz" />
         </div>

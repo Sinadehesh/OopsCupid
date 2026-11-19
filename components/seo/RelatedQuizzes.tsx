@@ -22,7 +22,7 @@ export default function RelatedQuizzes({
 }) {
   const related = getRelated(currentSlug, count);
   const cluster = clusterForPage(currentSlug);
-  if (related.length === 0 && cluster.quick.length === 0 && cluster.signs.length === 0) return null;
+  if (related.length === 0 && cluster.quick.length === 0 && cluster.signs.length === 0 && cluster.read.length === 0 && !cluster.program) return null;
 
   return (
     <section className="w-full max-w-5xl mx-auto my-16 px-4">
@@ -49,9 +49,7 @@ export default function RelatedQuizzes({
         ))}
       </div>
       <ClusterLinks
-        full={cluster.full}
-        quick={cluster.quick}
-        signs={cluster.signs}
+        {...cluster}
         heading="Short on time? Try a quick one"
         className="mt-10"
       />

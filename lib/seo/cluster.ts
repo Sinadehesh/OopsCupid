@@ -2,6 +2,7 @@ import { TICK_TESTS } from "@/lib/quizzes/tickTests";
 import { TYPE_QUIZZES } from "@/lib/quizzes/typeQuizzes";
 import { SYMPTOM_PAGES } from "@/lib/seo/symptoms";
 import { quizRegistry } from "@/lib/quizzes/registry";
+import { programForQuiz } from "@/lib/programs/registry";
 
 /**
  * TOPIC CLUSTERS: which pages belong together, for internal links that are
@@ -20,14 +21,31 @@ export interface ClusterLink {
   label: string;
 }
 
-/** Articles that belong to a test's cluster without being a test. */
-const ARTICLE_TO_TEST: Record<string, string> = {
-  "/understanding-attachment-styles": "/attachment-style-quiz",
-  "/love-bombing-signs": "/is-he-manipulative",
-  "/relationship-red-flags": "/is-he-manipulative",
-  "/red-flags-in-a-relationship": "/is-he-manipulative",
-  "/toxic-friendships": "/toxic-friend-test",
-};
+/**
+ * Articles and hubs that belong to a test's cluster without being a test.
+ * Every quiz in the cluster links to them, which is how a hub that only
+ * the menu pointed at gets found and crawled.
+ */
+const ARTICLES: { href: string; test: string; label: string }[] = [
+  { href: "/understanding-attachment-styles", test: "/attachment-style-quiz", label: "Attachment styles, explained" },
+  { href: "/red-flags-in-a-relationship", test: "/is-he-manipulative", label: "The red flags checklist" },
+  { href: "/relationship-red-flags", test: "/is-he-manipulative", label: "Relationship red flags" },
+  { href: "/love-bombing-signs", test: "/is-he-manipulative", label: "Love bombing signs" },
+  { href: "/articles/manipulation-science", test: "/is-he-manipulative", label: "How manipulation works" },
+  { href: "/toxic-friendships", test: "/toxic-friend-test", label: "Toxic friendships: every test and sign" },
+  { href: "/articles/is-my-friend-toxic", test: "/toxic-friend-test", label: "Subtle signs of a toxic friend" },
+];
+const ARTICLE_TO_TEST: Record<string, string> = Object.fromEntries(ARTICLES.map((a) => [a.href, a.test]));
+
+function readIn(full: string, except?: string): ClusterLink[] {
+  return ARTICLES.filter((a) => a.test === full && a.href !== except).map((a) => ({ href: a.href, label: a.label }));
+}
+
+/** The workbook written for this cluster's problem, if one is live. */
+function programIn(full: string): ClusterLink | null {
+  const p = programForQuiz(full);
+  return p ? { href: `/workbook/${p.slug}`, label: p.title } : null;
+}
 
 function quickIn(full: string): ClusterLink[] {
   return [
@@ -53,7 +71,7 @@ function around<T>(xs: T[], at: number, n: number): T[] {
   return Array.from({ length: n }, (_, k) => xs[(at + 1 + k) % xs.length]);
 }
 
-/** For a quick quiz: its full test, a few sibling quizzes, a few signs pages. */
+/** For a quick quiz: its full test, a few sibling quizzes, a few signs pages, the cluster's reading and its workbook. */
 export function clusterForQuick(slug: string, full: string) {
   const quick = quickIn(full);
   const at = Math.max(0, quick.findIndex((x) => x.href === `/${slug}`));
@@ -62,16 +80,20 @@ export function clusterForQuick(slug: string, full: string) {
     full: fullLink(full),
     quick: around(quick.filter((x) => x.href !== `/${slug}`), at - 1, 4),
     signs: around(signs, at - 1, 3),
+    read: readIn(full),
+    program: programIn(full),
   };
 }
 
-/** For a full test or an article in its cluster: every quick quiz and signs page. */
+/** For a full test or an article in its cluster: every quick quiz, signs page and article, and the workbook. */
 export function clusterForPage(slug: string) {
   const full = ARTICLE_TO_TEST[slug] ?? slug;
   return {
     full: full !== slug ? fullLink(full) : null,
     quick: quickIn(full),
     signs: signsIn(full).filter((x) => x.href !== slug),
+    read: readIn(full, slug),
+    program: programIn(slug) ?? programIn(full),
   };
 }
 

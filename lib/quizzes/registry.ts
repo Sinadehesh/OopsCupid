@@ -261,9 +261,9 @@ export const quizRegistry: QuizEntry[] = [
   },
   {
     slug: "/red-flags-in-a-relationship",
-    title: "Red Flags In A Relationship",
-    seoTitle: "Red Flags In A Relationship: Checklist",
-    description: "A practical checklist of relationship red flags.",
+    title: "Red Flags in a Relationship: The Checklist",
+    seoTitle: "Red Flags in a Relationship: The 24-Sign Checklist",
+    description: "24 warning signs, what each one looks like, and which ones count on their own.",
     topic: "red-flags",
     hub: "him",
     isQuiz: false,

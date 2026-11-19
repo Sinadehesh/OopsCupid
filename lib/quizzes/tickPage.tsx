@@ -61,6 +61,7 @@ export function TickPage({ slug }: { slug: string }) {
  */
 function TickAbout({ t }: { t: TickTest }) {
   const about = t.seo.about ?? t.question;
+  const cluster = clusterForQuick(t.slug, t.full.href);
   const seconds = t.items.length <= 12 ? 30 : 40;
   const faq = [
     {
@@ -101,7 +102,8 @@ function TickAbout({ t }: { t: TickTest }) {
           ))}
         </div>
         <FaqJsonLd items={faq} />
-        <ClusterLinks {...clusterForQuick(t.slug, t.full.href)} heading="Related quizzes" className="mt-10" />
+        {/* A just-for-fun test gets no workbook link: it would read as a non sequitur. */}
+        <ClusterLinks {...cluster} program={t.fun ? null : cluster.program} heading="Related quizzes" className="mt-10" />
       </div>
     </section>
   );

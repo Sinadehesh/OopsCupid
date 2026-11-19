@@ -3,12 +3,50 @@ import { KIT } from "@/lib/share/kit";
 import CopyButton from "@/components/share/CopyButton";
 import SaveImagesButton from "@/components/share/SaveImagesButton";
 import TodayPost from "@/components/share/TodayPost";
+import IndexChecklist from "@/components/share/IndexChecklist";
+import { NEW_TICK_TESTS } from "@/lib/quizzes/tickTestsNew";
+import { TYPE_QUIZZES } from "@/lib/quizzes/typeQuizzes";
+import { LIVE_PROGRAMS } from "@/lib/programs/registry";
 import { stickerStatic, display } from "@/lib/ui/sticker";
 
 export const metadata: Metadata = {
   title: "Share kit | OopsCupid",
   robots: { index: false, follow: false },
 };
+
+/**
+ * New pages to ask Google about, most likely to bring visitors first: the
+ * silly, curious ones (those are what get clicked), then the rest of the
+ * new quizzes, then the hubs and workbooks that had few links.
+ */
+const FIRST = [
+  "/is-he-a-pick-me-boy", "/am-i-delulu", "/whats-my-toxic-trait", "/golden-retriever-or-black-cat-boyfriend",
+  "/what-kind-of-girlfriend-am-i", "/is-he-a-player", "/is-he-breadcrumbing-me", "/am-i-the-mom-friend",
+  "/is-my-friend-jealous-of-me", "/is-my-fwb-catching-feelings", "/red-flags-in-a-relationship", "/am-i-in-limerence",
+  "/love-styles-quiz", "/am-i-being-love-bombed", "/emotional-cheating-or-friendship", "/is-my-friend-mad-at-me",
+  "/after-date-survey", "/after-hangout-survey", "/am-i-being-ghosted",
+];
+const LABELS: Record<string, string> = {
+  "/red-flags-in-a-relationship": "Red flags in a relationship: the checklist",
+  "/after-date-survey": "After-date survey",
+  "/after-hangout-survey": "After-hangout survey",
+  "/toxic-friendships": "Toxic friendships hub",
+  "/workbook": "Workbooks",
+};
+function indexPages() {
+  for (const t of NEW_TICK_TESTS) LABELS[`/${t.slug}`] = t.question;
+  for (const x of TYPE_QUIZZES) LABELS[`/${x.slug}`] = x.title;
+  for (const p of LIVE_PROGRAMS) LABELS[`/workbook/${p.slug}`] = `Workbook: ${p.title}`;
+  const all = [
+    ...FIRST,
+    ...NEW_TICK_TESTS.map((t) => `/${t.slug}`),
+    ...TYPE_QUIZZES.map((x) => `/${x.slug}`),
+    "/toxic-friendships",
+    "/workbook",
+    ...LIVE_PROGRAMS.map((p) => `/workbook/${p.slug}`),
+  ];
+  return [...new Set(all)].map((path) => ({ path, label: LABELS[path] ?? path }));
+}
 
 /**
  * The posting kit: today's post picked automatically, with every step
@@ -28,6 +66,11 @@ export default function KitPage() {
         </p>
 
         <TodayPost entries={today} />
+
+        <details className={`rounded-[22px] bg-white p-5 mb-4 ${stickerStatic}`}>
+          <summary className="text-lg cursor-pointer" style={display}>🔎 Google: get new pages found (2 minutes a day)</summary>
+          <IndexChecklist pages={indexPages()} />
+        </details>
 
         <details className={`rounded-[22px] bg-white p-5 mb-4 ${stickerStatic}`}>
           <summary className="text-lg cursor-pointer" style={display}>🎵 First time on TikTok? Set up once (5 minutes)</summary>
