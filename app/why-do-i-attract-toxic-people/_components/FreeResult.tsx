@@ -104,7 +104,7 @@ export default function FreeResult({ data, onUnlock, isGenerating }: { data: any
             <div>
               <h4 className="text-xl font-black text-emerald-900 mb-2">The 100% "Clarity or Cash Back" Guarantee</h4>
               <p className="text-emerald-800/80 font-medium text-sm leading-relaxed">
-                We take all the risk. Unlock your Master-File right now. If you do not immediately recognize your exes in the data, if you do not feel an instant, chilling level of clarity about why your past relationships went wrong, simply email us within 30 days and we will refund every penny. No questions asked.
+                We take all the risk. Unlock your Master-File right now. If you do not immediately recognize your exes in the data, if you do not feel an instant, chilling level of clarity about why your past relationships went wrong, simply email us within 7 days and we will refund every penny. No questions asked.
               </p>
             </div>
           </div>

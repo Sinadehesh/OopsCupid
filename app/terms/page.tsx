@@ -8,7 +8,7 @@ export default function TermsPage() {
   return (
     <div className="container mx-auto px-4 py-24 max-w-4xl">
       <h1 className="text-4xl font-bold mb-4 text-foreground">Terms of Service</h1>
-      <p className="text-sm text-muted-foreground mb-10">Last updated: May 24, 2025</p>
+      <p className="text-sm text-muted-foreground mb-10">Last updated: November 19, 2026</p>
 
       <div className="prose prose-slate dark:prose-invert max-w-none space-y-8">
 
@@ -80,56 +80,31 @@ export default function TermsPage() {
         <section>
           <h2>7. Payments, Refunds, and Returns</h2>
 
-          <h3>7.1 AI-Powered Analysis Features &mdash; No Refund Policy</h3>
+          <h3>7.1 Payments</h3>
           <p>
-            Certain features on OopsCupid (including but not limited to chat analysis, dating profile analysis,
-            and any AI-generated reports or results) are powered by large language models that consume
-            computational resources (tokens) at the moment your request is processed.
-          </p>
-          <p>
-            <strong>
-              Because AI analysis results are generated and delivered instantly upon purchase, and because the
-              underlying computational resources (tokens) are irrevocably consumed in producing those results,
-              all purchases of AI-powered features are final and non-refundable.
-            </strong>{" "}
-            By completing the purchase of any AI-powered feature, you acknowledge that the product has been
-            fully delivered and used at the time of purchase, and you waive any right to a refund or chargeback
-            for that transaction.
-          </p>
-          <p>
-            This policy applies regardless of your satisfaction with the result, including cases where the output
-            is not what you expected, as the computational cost has already been incurred.
+            Payments are processed securely by Stripe. Prices are shown in euros (EUR). Every purchase is a
+            single payment: there are no subscriptions and nothing renews.
           </p>
 
-          <h3>7.2 Digital Workbooks &mdash; 14-Day Refund Policy</h3>
+          <h3>7.2 Digital Purchases: 7-Day Refund</h3>
           <p>
-            Digital workbooks sold through OopsCupid are eligible for a full refund within{" "}
-            <strong>14 calendar days from the date of purchase</strong>, provided that:
-          </p>
-          <ul>
-            <li>The refund request is submitted within 14 days of the original purchase date.</li>
-            <li>You contact us at <a href="mailto:Sinadehesh@gmail.com">Sinadehesh@gmail.com</a> with your order details and reason for the refund.</li>
-            <li>The workbook has not been substantially downloaded, shared, or redistributed.</li>
-          </ul>
-          <p>
-            Refunds for eligible workbook purchases will be processed to the original payment method within
-            5&ndash;10 business days of approval. Requests submitted after the 14-day window will not be honored.
+            Reports, personal reads, guides and programmes can be refunded <strong>in full within 7 days of
+            purchase, no questions asked</strong>. Email{" "}
+            <a href="mailto:Sinadehesh@gmail.com">Sinadehesh@gmail.com</a> from, or with, the email address you
+            paid with. Refunds go back to your original payment method, usually within 5 to 10 business days.
           </p>
 
-          <h3>7.3 Payment Processing Fees &mdash; Non-Refundable</h3>
+          <h3>7.3 Coaching Sessions</h3>
           <p>
-            All transactions made through OopsCupid are subject to payment processing fees charged by our
-            third-party payment provider (e.g., Stripe). These fees are incurred at the time of purchase and
-            are <strong>non-refundable under any circumstances</strong>, including in cases where a refund is
-            approved for the underlying product. Any approved refund will be issued for the product amount only,
-            excluding the original payment processing fee.
+            If a coaching session isn&apos;t useful, say so within its first 15 minutes and the session is
+            refunded in full.
           </p>
 
           <h3>7.4 General</h3>
           <p>
-            OopsCupid reserves the right to refuse a refund if there is evidence of abuse, fraud, or violation
-            of these Terms. All pricing is displayed in USD unless otherwise stated and may be subject to
-            applicable taxes.
+            We may decline a refund where there is clear evidence of abuse or fraud, for example repeatedly
+            buying and refunding the same product. Nothing in these Terms affects your statutory rights as a
+            consumer.
           </p>
         </section>
 

@@ -2,6 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { getRelated } from "@/lib/quizzes/registry";
+import { clusterForPage } from "@/lib/seo/cluster";
+import ClusterLinks from "./ClusterLinks";
 
 /**
  * Internal-linking block: contextual links to related quizzes.
@@ -19,7 +21,8 @@ export default function RelatedQuizzes({
   count?: number;
 }) {
   const related = getRelated(currentSlug, count);
-  if (related.length === 0) return null;
+  const cluster = clusterForPage(currentSlug);
+  if (related.length === 0 && cluster.quick.length === 0 && cluster.signs.length === 0) return null;
 
   return (
     <section className="w-full max-w-5xl mx-auto my-16 px-4">
@@ -45,6 +48,13 @@ export default function RelatedQuizzes({
           </Link>
         ))}
       </div>
+      <ClusterLinks
+        full={cluster.full}
+        quick={cluster.quick}
+        signs={cluster.signs}
+        heading="Short on time? Try a quick one"
+        className="mt-10"
+      />
     </section>
   );
 }

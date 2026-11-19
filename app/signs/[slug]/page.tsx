@@ -5,6 +5,7 @@ import { ArrowRight, HelpCircle, Info } from "lucide-react";
 import { SYMPTOM_PAGES } from "@/lib/seo/symptoms";
 import { PHRASES } from "@/lib/quizzes/thingsHeSays";
 import { quizRegistry } from "@/lib/quizzes/registry";
+import { quickForSign } from "@/lib/seo/cluster";
 
 /**
  * /signs/[slug], the long-tail traffic pages.
@@ -67,6 +68,7 @@ export default async function SignPage({
   const related = page.related
     .map((r) => SYMPTOM_PAGES.find((p) => p.slug === r))
     .filter(Boolean) as typeof SYMPTOM_PAGES;
+  const quick = quickForSign(page.slug, page.quiz);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -138,6 +140,19 @@ export default async function SignPage({
               Take the assessment <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </span>
           </Link>
+        )}
+
+        {quick.length > 0 && (
+          <div className="mb-10 -mt-4">
+            <p className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 mb-2">Or a 30-second version</p>
+            <div className="flex flex-wrap gap-2">
+              {quick.map((x) => (
+                <Link key={x.href} href={x.href} className="inline-flex rounded-full border border-slate-300 bg-white px-3 py-1.5 text-sm font-bold text-slate-800 hover:border-slate-500">
+                  {x.label}
+                </Link>
+              ))}
+            </div>
+          </div>
         )}
 
         <div className="space-y-10">

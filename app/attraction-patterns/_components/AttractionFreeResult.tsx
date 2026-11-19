@@ -166,7 +166,7 @@ export default function AttractionFreeResult({ profile, onUnlock, isGenerating =
                 <div className="mt-6 flex items-start gap-3 bg-emerald-50 p-3.5 rounded-xl border border-emerald-100">
                   <ShieldCheck className="w-8 h-8 text-emerald-500 shrink-0" />
                   <p className="text-xs font-bold text-slate-600 leading-snug">
-                    <span className="text-emerald-800 font-black">100% "Mind-Blown" Guarantee.</span> Read the file. If it doesn't sound <i>exactly</i> like your worst ex, we will refund every penny. No questions asked.
+                    <span className="text-emerald-800 font-black">100% "Mind-Blown" Guarantee.</span> Read the file. If it doesn't sound <i>exactly</i> like your worst ex, email us within 7 days and we will refund every penny. No questions asked.
                   </p>
                 </div>
               </div>

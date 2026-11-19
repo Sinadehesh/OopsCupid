@@ -11,7 +11,7 @@ import QuizSeoFooter from "@/components/seo/QuizSeoFooter";
  * "no email", so both now appear in the title, the H1 and the first line.
  */
 export const metadata: Metadata = {
-  title: "Free Attachment Style Test: No Email Required",
+  title: "Attachment Style Quiz & Test: Free, No Email Required",
   description:
     "Find your attachment style free, with no sign-up and no email required. A 92-question assessment built on the ECR-RS, DERS-16 and Rosenberg scales, results shown instantly on screen.",
   alternates: { canonical: "https://www.oopscupid.com/attachment-style-quiz" },
@@ -38,7 +38,7 @@ export default function MegaBatteryPage() {
             Free Attachment Style Test
           </h1>
           <p className="text-[20px] md:text-[24px] font-medium mb-4 text-white/95 max-w-2xl mx-auto drop-shadow-sm">
-            Find out whether you&rsquo;re anxious, avoidant, disorganised or secure &mdash;
+            Find out whether you&rsquo;re anxious, avoidant, disorganised or secure,
             and how that changes between your partner, your parents and your work.
           </p>
           <p className="text-[16px] md:text-[18px] font-medium mb-10 text-white/80 max-w-2xl mx-auto">

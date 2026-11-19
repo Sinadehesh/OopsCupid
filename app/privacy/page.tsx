@@ -95,7 +95,7 @@ export default function PrivacyPage() {
             <strong>Quiz answers are held for up to 48 hours.</strong> The individual answers you give
             in an assessment, and the profile computed from them, are erased from our servers by an
             automated job that runs daily, within 48 hours of submission. After that we retain only your email
-            address, which quiz you took, and the date &mdash; not your answers.
+            address, which quiz you took, and the date, not your answers.
           </p>
           <p>
             Your <em>results</em> are also stored in your own browser so you can reopen a report you

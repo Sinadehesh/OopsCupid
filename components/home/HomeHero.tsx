@@ -51,6 +51,7 @@ const TILES: { href: string; emoji: string; label: string }[] = [
 const TICKER = [
   { t: "📅 today's daily challenge 🔥", href: "/daily" },
   { t: "🏃‍♀️ flag runner: love or the ick?", href: "/flag-runner" },
+  { t: "💌 send your date a post-date survey", href: "/after-date-survey" },
   { t: "🧪 what's your toxic trait?", href: "/whats-my-toxic-trait" },
   { t: "🐶 golden retriever or black cat?", href: "/golden-retriever-or-black-cat-boyfriend" },
   { t: "🦄 am I delulu?", href: "/am-i-delulu" },

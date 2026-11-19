@@ -41,6 +41,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/heart-wars",
     ...CHOICE_GAMES.map((g) => `/${g.slug}`),
     ...TYPE_QUIZZES.map((x) => `/${x.slug}`),
+    "/after-date-survey",
+    "/after-hangout-survey",
     // Guide pages are paid: before buying they show only a title and a
     // hook, which Google won't rank. Kept out so it spends its visits on
     // pages that can rank. /guides itself stays.

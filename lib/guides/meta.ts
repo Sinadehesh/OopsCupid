@@ -42,7 +42,7 @@ export const GUIDE_META: GuideMeta[] = [
     bg: "#DDEFE8",
     fg: "#1F4A3E",
     minutes: 9,
-    forTests: ["decode-his-text", "guess-the-attachment-style", "waiting-for-his-reply", "is-he-just-not-that-into-you", "things-he-does", "after-a-good-weekend", "am-i-too-clingy", "is-my-friend-mad-at-me", "do-i-have-trust-issues", "whats-my-toxic-trait"],
+    forTests: ["decode-his-text", "guess-the-attachment-style", "waiting-for-his-reply", "is-he-just-not-that-into-you", "things-he-does", "after-a-good-weekend", "am-i-too-clingy", "is-my-friend-mad-at-me", "do-i-have-trust-issues", "whats-my-toxic-trait", "am-i-being-ghosted", "do-i-have-attachment-issues", "quick-attachment-style-quiz"],
     forGroups: ["checking", "rehearsing", "body", "story"],
   },
   {
@@ -64,7 +64,7 @@ export const GUIDE_META: GuideMeta[] = [
     bg: "#FCE3D8",
     fg: "#7A2E14",
     minutes: 10,
-    forTests: ["gaslighting-or-not", "red-flag-or-green-flag", "first-month-red-flags", "is-my-boyfriend-toxic", "does-he-have-narcissistic-traits", "things-he-says", "am-i-being-love-bombed", "is-he-a-pick-me-boy", "do-i-fall-in-love-too-fast"],
+    forTests: ["gaslighting-or-not", "red-flag-or-green-flag", "first-month-red-flags", "is-my-boyfriend-toxic", "does-he-have-narcissistic-traits", "things-he-says", "am-i-being-love-bombed", "is-he-a-pick-me-boy", "do-i-fall-in-love-too-fast", "is-my-relationship-controlling"],
     forGroups: ["intensity", "boundaries", "character", "control", "disrespect"],
   },
   {
@@ -75,7 +75,7 @@ export const GUIDE_META: GuideMeta[] = [
     bg: "#FBE0E6",
     fg: "#7A1F35",
     minutes: 9,
-    forTests: ["guess-the-attachment-style", "red-flag-or-green-flag", "after-a-good-weekend", "first-month-red-flags", "is-he-just-not-that-into-you", "is-it-a-situationship", "is-he-avoidant", "am-i-being-love-bombed", "do-i-fall-in-love-too-fast", "am-i-delulu", "golden-retriever-or-black-cat-boyfriend"],
+    forTests: ["guess-the-attachment-style", "red-flag-or-green-flag", "after-a-good-weekend", "first-month-red-flags", "is-he-just-not-that-into-you", "is-it-a-situationship", "is-he-avoidant", "am-i-being-love-bombed", "do-i-fall-in-love-too-fast", "am-i-delulu", "golden-retriever-or-black-cat-boyfriend", "anxious-avoidant-trap", "am-i-avoidant", "am-i-being-ghosted"],
     forGroups: ["hotcold", "withdraw", "return", "convenience", "pressure"],
   },
   {
@@ -86,7 +86,7 @@ export const GUIDE_META: GuideMeta[] = [
     bg: "#E3E6F8",
     fg: "#27306B",
     minutes: 9,
-    forTests: ["gaslighting-or-not", "decode-his-text", "things-he-says", "is-my-boyfriend-toxic", "does-he-have-narcissistic-traits", "him-vs-your-ex"],
+    forTests: ["gaslighting-or-not", "decode-his-text", "things-he-says", "is-my-boyfriend-toxic", "does-he-have-narcissistic-traits", "him-vs-your-ex", "is-my-relationship-controlling"],
     forGroups: ["reality", "blame", "minimising", "character", "fragile", "mask"],
   },
   {
@@ -108,7 +108,7 @@ export const GUIDE_META: GuideMeta[] = [
     bg: "#D8F0EE",
     fg: "#134A45",
     minutes: 9,
-    forTests: ["guess-the-attachment-style", "when-it-gets-serious", "am-i-the-toxic-one", "am-i-scared-of-love", "whats-my-toxic-trait", "dating-tendencies-quiz"],
+    forTests: ["guess-the-attachment-style", "when-it-gets-serious", "am-i-the-toxic-one", "am-i-scared-of-love", "whats-my-toxic-trait", "dating-tendencies-quiz", "am-i-avoidant", "do-i-have-attachment-issues"],
     forGroups: ["exit", "distance", "test", "numb", "worth", "punish", "fight"],
   },
   {
@@ -119,7 +119,7 @@ export const GUIDE_META: GuideMeta[] = [
     bg: "#E2EEF3",
     fg: "#1F4552",
     minutes: 8,
-    forTests: ["decode-his-text", "is-it-a-situationship", "is-he-just-not-that-into-you", "is-my-fwb-catching-feelings", "is-he-avoidant", "dating-tendencies-quiz"],
+    forTests: ["decode-his-text", "is-it-a-situationship", "is-he-just-not-that-into-you", "is-my-fwb-catching-feelings", "is-he-avoidant", "dating-tendencies-quiz", "am-i-being-ghosted", "anxious-avoidant-trap"],
     forGroups: ["label", "shape", "world", "you", "said", "hidden"],
   },
   {
@@ -130,7 +130,7 @@ export const GUIDE_META: GuideMeta[] = [
     bg: "#E4F2E0",
     fg: "#2C4F22",
     minutes: 8,
-    forTests: ["friend-or-frenemy", "are-you-the-therapist-friend", "things-my-friend-says", "friend-vs-friend", "is-my-friend-manipulative"],
+    forTests: ["friend-or-frenemy", "are-you-the-therapist-friend", "things-my-friend-says", "friend-vs-friend", "is-my-friend-manipulative", "am-i-codependent"],
     forGroups: ["role", "oneway", "cost", "taking", "effort"],
   },
   {
@@ -141,7 +141,7 @@ export const GUIDE_META: GuideMeta[] = [
     bg: "#FFF1C9",
     fg: "#6A4B00",
     minutes: 7,
-    forTests: ["is-my-boyfriend-stupid", "is-he-a-mamas-boy", "after-a-good-weekend", "him-vs-your-ex", "golden-retriever-or-black-cat-boyfriend", "what-kind-of-girlfriend-am-i", "is-he-a-pick-me-boy"],
+    forTests: ["is-my-boyfriend-stupid", "is-he-a-mamas-boy", "after-a-good-weekend", "him-vs-your-ex", "golden-retriever-or-black-cat-boyfriend", "what-kind-of-girlfriend-am-i", "is-he-a-pick-me-boy", "am-i-mothering-my-boyfriend"],
     forGroups: ["house", "hints", "feelings", "memory", "sides", "shutdown"],
   },
 ];

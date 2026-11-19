@@ -8,6 +8,8 @@ import ChoiceGame from "@/components/tick/ChoiceGame";
 import { choiceGame } from "@/lib/quizzes/choiceGames";
 import { typeQuiz, type TypeQuiz as TypeQuizData } from "@/lib/quizzes/typeQuizzes";
 import TypeQuiz from "@/components/tick/TypeQuiz";
+import ClusterLinks from "@/components/seo/ClusterLinks";
+import { clusterForQuick } from "@/lib/seo/cluster";
 
 const baseUrl = "https://www.oopscupid.com";
 
@@ -99,6 +101,7 @@ function TickAbout({ t }: { t: TickTest }) {
           ))}
         </div>
         <FaqJsonLd items={faq} />
+        <ClusterLinks {...clusterForQuick(t.slug, t.full.href)} heading="Related quizzes" className="mt-10" />
       </div>
     </section>
   );
@@ -231,6 +234,7 @@ function TypeAbout({ x }: { x: TypeQuizData }) {
           ))}
         </div>
         <FaqJsonLd items={faq} />
+        <ClusterLinks {...clusterForQuick(x.slug, x.own.href)} heading="Related quizzes" className="mt-10" />
       </div>
     </section>
   );
