@@ -3,7 +3,7 @@ import { slideImage } from "@/lib/share/art";
 
 export const dynamic = "force-dynamic";
 
-/** /slides/<slug>/<n>.png: one slide of a quiz's TikTok slideshow, from 1. */
+/** /slides/<slug>/<n>.png: one slide of a quiz's slideshow, from 1. Add ?size=feed for Instagram's 4:5 feed. */
 export async function GET(req: Request, { params }: { params: Promise<{ slug: string; file: string }> }) {
   const { slug, file } = await params;
   const k = kitEntry(slug);
@@ -11,5 +11,6 @@ export async function GET(req: Request, { params }: { params: Promise<{ slug: st
   if (!k || !file.endsWith(".png") || !Number.isInteger(n) || n < 1 || n > k.slides.length) {
     return new Response("Not found", { status: 404 });
   }
-  return slideImage(k, n - 1, new URL(req.url).origin);
+  const url = new URL(req.url);
+  return slideImage(k, n - 1, url.origin, url.searchParams.get("size") === "feed");
 }

@@ -71,8 +71,9 @@ export default function TodayPost({ entries }: { entries: TodayEntry[] }) {
           </ol>
         </li>
         <li className="rounded-2xl bg-white p-3">
-          <p className="text-[15px] font-black mb-1">4. Same slides on Instagram (optional)</p>
-          <p className="text-[14px] font-semibold leading-snug">Tap <b>+</b>, then <b>Post</b>, tap the multiple-photos icon, choose the slides, add music, paste the caption and tap <b>Share</b>.</p>
+          <p className="text-[15px] font-black mb-2">4. Same post on Instagram (optional)</p>
+          <SaveImagesButton urls={urls.map((u) => `${u}?size=feed`)} name={`${k.slug}-ig`} label="Save Instagram-size slides" className="w-full !bg-white !text-[#1A1033] mb-2" />
+          <p className="text-[14px] font-semibold leading-snug">Tap <b>+</b>, then <b>Post</b>, tap the multiple-photos icon, choose the slides, add music, paste the caption and tap <b>Share</b>. These are sized for the feed so nothing gets cropped.</p>
         </li>
       </ol>
 

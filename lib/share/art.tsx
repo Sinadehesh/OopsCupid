@@ -88,19 +88,19 @@ function Pin({ k }: { k: KitEntry }) {
 }
 
 /** The frame every slide shares: safe margins and a small watermark. */
-function Frame({ bg, children }: { bg: string; children: React.ReactNode }) {
+function Frame({ bg, feed, children }: { bg: string; feed: boolean; children: React.ReactNode }) {
   return (
-    <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", background: bg, fontFamily: "Nunito", color: INK, padding: "230px 150px 400px 80px", position: "relative" }}>
+    <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", background: bg, fontFamily: "Nunito", color: INK, padding: feed ? "100px 80px 70px 80px" : "230px 150px 400px 80px", position: "relative" }}>
       {children}
-      <div style={{ position: "absolute", top: 120, left: 80, display: "flex", fontSize: 38, fontWeight: 900, opacity: 0.55 }}>oopscupid.com</div>
+      <div style={{ position: "absolute", top: feed ? 36 : 120, left: 80, display: "flex", fontSize: 38, fontWeight: 900, opacity: 0.55 }}>oopscupid.com</div>
     </div>
   );
 }
 
-function SlideArt({ k, s }: { k: KitEntry; s: Slide }) {
+function SlideArt({ k, s, feed }: { k: KitEntry; s: Slide; feed: boolean }) {
   if (s.kind === "hook") {
     return (
-      <Frame bg={k.bg}>
+      <Frame bg={k.bg} feed={feed}>
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", flexGrow: 1 }}>
           <div style={{ display: "flex", width: 280, height: 280, borderRadius: 999, background: "#fff", border: `7px solid ${INK}`, alignItems: "center", justifyContent: "center", fontSize: 170, marginBottom: 60, boxShadow: `12px 12px 0 ${INK}` }}>
             {s.emoji}
@@ -113,7 +113,7 @@ function SlideArt({ k, s }: { k: KitEntry; s: Slide }) {
   }
   if (s.kind === "list") {
     return (
-      <Frame bg={k.bg}>
+      <Frame bg={k.bg} feed={feed}>
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", flexGrow: 1, gap: 34 }}>
           <div style={{ display: "flex", alignSelf: "flex-start", background: "#fff", border: `5px solid ${INK}`, borderRadius: 999, padding: "8px 28px", fontSize: 40, fontWeight: 900, boxShadow: `5px 5px 0 ${INK}`, marginBottom: 10 }}>
             {k.emoji} {s.heading}
@@ -130,7 +130,7 @@ function SlideArt({ k, s }: { k: KitEntry; s: Slide }) {
   }
   if (s.kind === "type") {
     return (
-      <Frame bg={k.bg}>
+      <Frame bg={k.bg} feed={feed}>
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", flexGrow: 1 }}>
           <div style={{ display: "flex", fontSize: 260, marginBottom: 40 }}>{s.emoji}</div>
           <div style={{ display: "flex", fontSize: s.title.length > 24 ? 92 : 110, fontWeight: 900, lineHeight: 1.02, letterSpacing: -2, marginBottom: 50, width: 850 }}>{s.title}</div>
@@ -142,7 +142,7 @@ function SlideArt({ k, s }: { k: KitEntry; s: Slide }) {
     );
   }
   return (
-    <Frame bg={PINK}>
+    <Frame bg={PINK} feed={feed}>
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", flexGrow: 1, color: "#fff" }}>
         <div style={{ display: "flex", fontSize: 128, fontWeight: 900, lineHeight: 1.0, letterSpacing: -3, marginBottom: 50, width: 850 }}>{s.title}</div>
         <div style={{ display: "flex", fontSize: 58, fontWeight: 800, lineHeight: 1.2, marginBottom: 70, width: 850 }}>{s.sub}</div>
@@ -158,6 +158,7 @@ export async function pinImage(k: KitEntry, origin: string) {
   return new ImageResponse(<Pin k={k} />, { width: 1000, height: 1500, fonts: await fonts(origin), headers: HEADERS });
 }
 
-export async function slideImage(k: KitEntry, n: number, origin: string) {
-  return new ImageResponse(<SlideArt k={k} s={k.slides[n]} />, { width: 1080, height: 1920, fonts: await fonts(origin), headers: HEADERS });
+/** `feed`: Instagram's 4:5 feed shape. The story shape suits TikTok, Reels and Stories. */
+export async function slideImage(k: KitEntry, n: number, origin: string, feed = false) {
+  return new ImageResponse(<SlideArt k={k} s={k.slides[n]} feed={feed} />, { width: 1080, height: feed ? 1350 : 1920, fonts: await fonts(origin), headers: HEADERS });
 }

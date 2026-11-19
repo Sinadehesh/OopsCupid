@@ -61,6 +61,15 @@ export default function KitPage() {
           </p>
         </details>
 
+        <details className={`rounded-[22px] bg-white p-5 mb-4 ${stickerStatic}`}>
+          <summary className="text-lg cursor-pointer" style={display}>📅 Post a month in one sitting (free, on a laptop)</summary>
+          <ol className="list-decimal pl-5 mt-3 space-y-2 text-[15px] font-semibold leading-snug">
+            <li><b>Instagram:</b> go to business.facebook.com (Meta Business Suite, free) and connect your Instagram. Click <b>Create post</b>, add one quiz&apos;s Instagram-size slides, paste the caption, turn on <b>Schedule</b> and pick a day. Repeat for each quiz: one a day, weeks ahead.</li>
+            <li><b>Pinterest:</b> upload the pins file above once. It schedules every pin for you.</li>
+            <li><b>TikTok:</b> post the photo slideshows from your phone (2 minutes each), because TikTok&apos;s own scheduler is made for videos. Free scheduling apps such as Metricool say they can auto-post TikTok photo posts; check their current free limits when you sign up.</li>
+          </ol>
+        </details>
+
         <h2 className="text-2xl mt-10 mb-4" style={display}>All quizzes</h2>
         <div className="space-y-6">
           {KIT.map((k) => {
@@ -88,6 +97,7 @@ export default function KitPage() {
                 <div className="flex flex-wrap gap-2 mt-2">
                   <SaveImagesButton urls={slides} name={k.slug} label="Save slides" />
                   <SaveImagesButton urls={[`/pins/${k.slug}.png`]} name={`${k.slug}-pin`} label="Save pin" className="!bg-white !text-[#1A1033]" />
+                  <SaveImagesButton urls={slides.map((u) => `${u}?size=feed`)} name={`${k.slug}-ig`} label="Save for Instagram" className="!bg-white !text-[#1A1033]" />
                 </div>
 
                 <div className="mt-3 rounded-2xl bg-white/80 p-3">
