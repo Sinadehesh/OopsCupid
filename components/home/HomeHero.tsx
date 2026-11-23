@@ -51,7 +51,9 @@ const TILES: { href: string; emoji: string; label: string }[] = [
 const TICKER = [
   { t: "📅 today's daily challenge 🔥", href: "/daily" },
   { t: "🏃‍♀️ flag runner: love or the ick?", href: "/flag-runner" },
+  { t: "👯 how well do your friends know you?", href: "/how-well-do-you-know-me" },
   { t: "💌 send your date a post-date survey", href: "/after-date-survey" },
+  { t: "💘 how well does he know you?", href: "/how-well-does-your-boyfriend-know-you" },
   { t: "🧪 what's your toxic trait?", href: "/whats-my-toxic-trait" },
   { t: "🐶 golden retriever or black cat?", href: "/golden-retriever-or-black-cat-boyfriend" },
   { t: "🦄 am I delulu?", href: "/am-i-delulu" },
@@ -160,6 +162,25 @@ export default function HomeHero() {
 
         {/* Today's challenges and the streak: the reason to come back tomorrow. */}
         <DailyCard />
+
+        {/* The quizzes people send on. Each one made brings her friends here. */}
+        <div className="grid grid-cols-2 gap-3 mb-6">
+          {[
+            { href: "/how-well-do-you-know-me", key: "knowme-bestie", bg: "#C9B6FF", tag: "📤 send to friends", label: "👯 How well do your friends know you?" },
+            { href: "/how-well-does-your-boyfriend-know-you", key: "knowme-boyfriend", bg: "#FFB3C7", tag: "📤 send to him", label: "💘 How well does he know you?" },
+          ].map((x) => (
+            <Link
+              key={x.href}
+              href={x.href}
+              onClick={() => trackHomeClick(x.key)}
+              className={`rounded-[22px] p-3.5 min-h-[112px] flex flex-col justify-between ${sticker}`}
+              style={{ backgroundColor: x.bg, color: INK }}
+            >
+              <span className="self-start rounded-full bg-[#1A1033] text-white px-2 py-0.5 text-[10px] font-black uppercase tracking-wider">{x.tag}</span>
+              <span className="text-[16px] font-black leading-tight mt-2">{x.label}</span>
+            </Link>
+          ))}
+        </div>
 
         {/* Swipeable quick games. */}
         <div className="flex items-baseline justify-between mb-2">

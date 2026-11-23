@@ -25,6 +25,7 @@ export const metadata: Metadata = {
  * those get clicked, then tools, hubs, signs pages and workbooks.
  */
 const NOT_ON_GOOGLE = [
+  "/how-well-do-you-know-me", "/how-well-does-your-boyfriend-know-you",
   "/is-he-gaslighting-me", "/am-i-being-love-bombed", "/is-he-manipulative", "/is-he-cheating", "/toxic-friend-test",
   "/am-i-avoidant", "/do-i-have-attachment-issues", "/quick-attachment-style-quiz", "/why-do-i-sabotage-relationships", "/is-my-girlfriend-dumb",
   "/am-i-delulu", "/is-he-a-player", "/is-he-breadcrumbing-me", "/am-i-too-clingy", "/anxious-avoidant-trap",
@@ -43,6 +44,8 @@ const LABELS: Record<string, string> = {
   "/red-flags-in-a-relationship": "Red flags in a relationship: the checklist",
   "/after-date-survey": "After-date survey",
   "/after-hangout-survey": "After-hangout survey",
+  "/how-well-do-you-know-me": "How well do you know me? (new)",
+  "/how-well-does-your-boyfriend-know-you": "How well does he know you? (new)",
   "/red-flag-or-green-flag": "Red flag or green flag? (game)",
   "/heart-wars": "Heart Wars (game)",
   "/daily": "Daily quiz",

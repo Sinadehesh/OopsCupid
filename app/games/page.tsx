@@ -23,6 +23,8 @@ const GAMES = [
   { slug: "kiss-the-frogs", title: "Kiss the Frogs", emoji: "🐸", bg: "#D9F99D", line: "Merge frogs into clowns, ghosts and situationships until you find your prince.", tag: "new · merge" },
   { slug: "heart-wars", title: "Heart Wars", emoji: "🏰", bg: "#FFB3C7", line: "Send your hearts to capture every tower from The Ex, The Situationship and Cold Feet.", tag: "new · strategy" },
   { slug: "red-flag-or-green-flag", title: "Red flag or green flag?", emoji: "🚦", bg: "#FFD1E8", line: "Swipe 16 dating moments. How sharp is your radar?", tag: "swipe" },
+  { slug: "how-well-do-you-know-me", title: "How well do you know me?", emoji: "👯", bg: "#C9B6FF", line: "Make a quiz about you, send it to your friends, see who actually knows you.", tag: "new · send it" },
+  { slug: "how-well-does-your-boyfriend-know-you", title: "How well does he know you?", emoji: "💘", bg: "#FFB3C7", line: "Ten questions about you. Send him the link and see his score.", tag: "new · send it" },
   { slug: "after-date-survey", title: "Post-date survey", emoji: "💌", bg: "#FFE3EF", line: "Send your date a cheeky survey and get their honest review back.", tag: "new · send it" },
   { slug: "after-hangout-survey", title: "After-hangout survey", emoji: "👯", bg: "#E3F4DA", line: "Send your friend a survey: rate the vibe, the gossip, the iconic moment.", tag: "new · send it" },
   ...TYPE_QUIZZES.map((x) => ({ slug: x.slug, title: x.title, emoji: x.emoji, bg: x.bg, line: x.intro, tag: "new · which are you" })),
