@@ -78,6 +78,18 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${playfair.variable} ${nunito.variable}`}>
+      <head>
+        {/* Google Tag Manager, in the form Google now gives for a web
+            container (no <body> part any more), as high in the head as
+            possible. Google Analytics (G-H19G7Z2YTZ) is set up inside the
+            container, so that is all this page needs. */}
+        <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-56PTMMXV" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());",
+          }}
+        />
+      </head>
       <body className="bg-background text-foreground font-sans antialiased">
         <SessionProvider>
           <Header />
