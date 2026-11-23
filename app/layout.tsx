@@ -6,6 +6,28 @@ import Footer from "@/components/layout/Footer";
 import StaleAssetReload from "@/components/layout/StaleAssetReload";
 import SessionProvider from "@/components/SessionProvider";
 import { Analytics } from "@vercel/analytics/next";
+import CookieBanner from "@/components/layout/CookieBanner";
+
+/**
+ * Google Tag Manager (GTM-56PTMMXV, with Google Analytics G-H19G7Z2YTZ set
+ * up inside it), behind cookie consent. This is Google's install code with
+ * the loader moved inside a consent check:
+ *
+ * - consent defaults to denied, and the container is not even downloaded
+ *   until the visitor taps yes in the cookie banner (remembered on the
+ *   device as oc-consent=granted), so nothing from Google runs or sets a
+ *   cookie before that;
+ * - never on /survey pages: those links carry people's names and private
+ *   notes in the address, and Analytics records the address.
+ *
+ * It runs first thing in the head, so a returning visitor who said yes is
+ * counted from the first moment, as Google's snippet would.
+ */
+const GTM_BOOT = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});
+gtag('js',new Date());
+window.ocLoadGtm=function(){if(window.ocGtm||location.pathname.indexOf('/survey')===0)return;window.ocGtm=1;gtag('consent','update',{analytics_storage:'granted'});var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtm.js?id=GTM-56PTMMXV';document.head.appendChild(s);};
+try{if(localStorage.getItem('oc-consent')==='granted')window.ocLoadGtm();}catch(e){}`;
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -79,16 +101,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${nunito.variable}`}>
       <head>
-        {/* Google Tag Manager, in the form Google now gives for a web
-            container (no <body> part any more), as high in the head as
-            possible. Google Analytics (G-H19G7Z2YTZ) is set up inside the
-            container, so that is all this page needs. */}
-        <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-56PTMMXV" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: "window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());",
-          }}
-        />
+        <script dangerouslySetInnerHTML={{ __html: GTM_BOOT }} />
       </head>
       <body className="bg-background text-foreground font-sans antialiased">
         <SessionProvider>
@@ -101,6 +114,7 @@ export default function RootLayout({
             unknowable. Everything in lib/track.ts reports through this. */}
         <StaleAssetReload />
         <Analytics />
+        <CookieBanner />
       </body>
     </html>
   );

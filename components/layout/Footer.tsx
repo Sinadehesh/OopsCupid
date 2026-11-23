@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import MoreQuickTests from '@/components/tick/MoreQuickTests';
 import { shopUrl } from '@/lib/shop';
+import { CookieSettingsButton } from '@/components/layout/CookieBanner';
 
 const linkClass = "text-[15px] font-semibold text-[#1A1033]/70 hover:text-[#FF4FA3] transition-colors";
 
@@ -52,6 +53,7 @@ export default function Footer() {
               <li><Link href="/quizzes" className={linkClass}>All Free Quizzes</Link></li>
               <li><Link href="/privacy" className={linkClass}>Privacy Policy</Link></li>
               <li><Link href="/terms" className={linkClass}>Terms of Use</Link></li>
+              <li><CookieSettingsButton className={`${linkClass} text-left`} /></li>
             </ul>
           </div>
         </div>
