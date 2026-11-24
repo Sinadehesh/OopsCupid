@@ -162,3 +162,47 @@ export async function pinImage(k: KitEntry, origin: string) {
 export async function slideImage(k: KitEntry, n: number, origin: string, feed = false) {
   return new ImageResponse(<SlideArt k={k} s={k.slides[n]} feed={feed} />, { width: 1080, height: feed ? 1350 : 1920, fonts: await fonts(origin), headers: HEADERS });
 }
+
+export interface StoryCard {
+  /** The quiz, from lib/share/story.ts, never from the request. */
+  title: string;
+  emoji: string;
+  bg: string;
+  path: string;
+  /** Her result, as the quiz words it. */
+  result: string;
+  /** "12 of 16", "8/10": only when the quiz has a score. */
+  score?: string;
+}
+
+/**
+ * The Story card: her result, phone-sized, with the way back to the quiz.
+ * Everything sits inside the band Instagram and TikTok leave clear (their
+ * name bar on top, the reply bar below).
+ */
+function Story({ c }: { c: StoryCard }) {
+  const n = c.result.length;
+  const size = n <= 14 ? 150 : n <= 24 ? 126 : n <= 36 ? 106 : n <= 50 ? 90 : 78;
+  return (
+    <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", background: c.bg, fontFamily: "Nunito", color: INK, padding: "250px 80px 330px 80px" }}>
+      <div style={{ display: "flex", flexDirection: "column", flexGrow: 1, justifyContent: "center" }}>
+        <div style={{ display: "flex", alignSelf: "flex-start", background: "#fff", border: `5px solid ${INK}`, borderRadius: 999, padding: "14px 32px", fontSize: c.title.length > 30 ? 34 : 40, fontWeight: 900, boxShadow: `6px 6px 0 ${INK}`, transform: "rotate(-2deg)", marginBottom: 72, maxWidth: 920 }}>
+          {c.emoji} {c.title}
+        </div>
+        <div style={{ display: "flex", fontSize: 48, fontWeight: 800, opacity: 0.65, marginBottom: 18 }}>My result</div>
+        <div style={{ display: "flex", fontSize: size, fontWeight: 900, lineHeight: 1.02, letterSpacing: -3, width: 920 }}>{c.result}</div>
+        {c.score ? (
+          <div style={{ display: "flex", alignSelf: "flex-start", marginTop: 56, background: INK, color: "#fff", borderRadius: 28, padding: "18px 36px", fontSize: 52, fontWeight: 900 }}>{c.score}</div>
+        ) : null}
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", background: "#fff", border: `6px solid ${INK}`, borderRadius: 40, padding: "36px 44px", boxShadow: `10px 10px 0 ${INK}` }}>
+        <div style={{ display: "flex", fontSize: 58, fontWeight: 900, marginBottom: 10 }}>What would you get? 👀</div>
+        <div style={{ display: "flex", fontSize: 50, fontWeight: 900, color: PINK }}>oopscupid.com</div>
+      </div>
+    </div>
+  );
+}
+
+export async function storyImage(c: StoryCard, origin: string) {
+  return new ImageResponse(<Story c={c} />, { width: 1080, height: 1920, fonts: await fonts(origin), headers: HEADERS });
+}
