@@ -10,24 +10,31 @@ import CookieBanner from "@/components/layout/CookieBanner";
 
 /**
  * Google Tag Manager (GTM-56PTMMXV, with Google Analytics G-H19G7Z2YTZ set
- * up inside it), behind cookie consent. This is Google's install code with
- * the loader moved inside a consent check:
+ * up inside it). Google's install code with the loader moved inside a
+ * check, because the rules differ by where the visitor is:
  *
- * - consent defaults to denied, and the container is not even downloaded
- *   until the visitor taps yes in the cookie banner (remembered on the
- *   device as oc-consent=granted), so nothing from Google runs or sets a
- *   cookie before that;
- * - never on /survey pages: those links carry people's names and private
+ * - In Europe (EU, UK and neighbours, told from the device's time zone, or
+ *   when the zone is unknown) the law wants a yes before analytics
+ *   cookies, so the container is not even downloaded until she taps yes in
+ *   the cookie banner.
+ * - Everywhere else, the US included, no banner: it loads straight away,
+ *   unless the browser sends Global Privacy Control or she has said no in
+ *   "Cookie settings" (remembered on the device as oc-consent).
+ * - Never on /survey pages: those links carry people's names and private
  *   notes in the address, and Analytics records the address.
  *
- * It runs first thing in the head, so a returning visitor who said yes is
- * counted from the first moment, as Google's snippet would.
+ * It runs first thing in the head, so visitors are counted from the first
+ * moment, as Google's snippet would.
  */
-const GTM_BOOT = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+const GTM_BOOT = String.raw`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
 gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});
 gtag('js',new Date());
 window.ocLoadGtm=function(){if(window.ocGtm||location.pathname.indexOf('/survey')===0)return;window.ocGtm=1;gtag('consent','update',{analytics_storage:'granted'});var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtm.js?id=GTM-56PTMMXV';document.head.appendChild(s);};
-try{if(localStorage.getItem('oc-consent')==='granted')window.ocLoadGtm();}catch(e){}`;
+var tz='';try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';}catch(e){}
+window.ocAsk=!tz||/^(Europe|Arctic)\/|^Atlantic\/(Reykjavik|Canary|Madeira|Azores|Faroe|Faeroe)$|^Asia\/(Nicosia|Famagusta)$|^Indian\/(Reunion|Mayotte)$|^America\/(Guadeloupe|Martinique|Cayenne|Marigot|St_Barthelemy)$|^(UTC|GMT|Etc\/.+|WET|CET|MET|EET|GB|GB-Eire|Eire|Iceland|Portugal|Poland)$/.test(tz);
+window.ocDefault=!window.ocAsk&&!navigator.globalPrivacyControl;
+var c=null;try{c=localStorage.getItem('oc-consent');}catch(e){}
+if(c==='granted'||(c===null&&window.ocDefault))window.ocLoadGtm();`;
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",

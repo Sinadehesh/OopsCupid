@@ -8,7 +8,7 @@ export default function PrivacyPage() {
   return (
     <div className="container mx-auto px-4 py-24 max-w-4xl">
       <h1 className="text-4xl font-bold mb-4 text-foreground">Privacy Policy</h1>
-      <p className="text-sm text-muted-foreground mb-10">Last updated: November 23, 2026</p>
+      <p className="text-sm text-muted-foreground mb-10">Last updated: November 24, 2026</p>
 
       <div className="prose prose-slate dark:prose-invert max-w-none space-y-8">
 
@@ -112,14 +112,24 @@ export default function PrivacyPage() {
             The site needs these to work, so they don&apos;t ask for permission.
           </p>
           <p>
-            With your permission, we also use Google Analytics, through Google Tag Manager, to count visits and see
-            which quizzes people use. It sets its own cookies (their names start with _ga). It only runs if you tap
-            &quot;Yes, that&apos;s fine&quot; in the cookie banner; if you tap &quot;No thanks&quot;, no Google code is
-            loaded at all. It never runs on private survey links, and your individual answers are never sent to it.
-            We don&apos;t use advertising cookies.
+            We also use Google Analytics, through Google Tag Manager, to count visits and see which quizzes people
+            use. It sets its own cookies (their names start with _ga).
           </p>
+          <ul>
+            <li>
+              <strong>In Europe</strong> (the EU, the UK and nearby countries, which we tell from your device&apos;s time
+              zone), it only runs if you tap &quot;Yes, that&apos;s fine&quot; in the cookie banner. If you tap &quot;No
+              thanks&quot;, no Google code is loaded at all.
+            </li>
+            <li>
+              <strong>Everywhere else</strong>, including the US, it runs unless you switch it off. If your browser sends
+              a Global Privacy Control signal, we treat that as switching it off.
+            </li>
+          </ul>
           <p>
-            You can change your mind at any time with <strong>Cookie settings</strong> at the bottom of every page.
+            It never runs on private survey or quiz links that carry names, and your individual answers are never sent
+            to it. We don&apos;t use advertising cookies. You can change your choice at any time with{" "}
+            <strong>Cookie settings</strong> at the bottom of every page.
           </p>
         </section>
 

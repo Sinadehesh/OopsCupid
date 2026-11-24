@@ -10,6 +10,10 @@ declare global {
   interface Window {
     ocLoadGtm?: () => void;
     gtag?: (...args: unknown[]) => void;
+    /** Set by GTM_BOOT: true in Europe, where we ask before counting. */
+    ocAsk?: boolean;
+    /** Set by GTM_BOOT: outside Europe and no Global Privacy Control, so counting is on unless she says no. */
+    ocDefault?: boolean;
   }
 }
 
@@ -39,10 +43,11 @@ function clearAnalyticsCookies() {
 }
 
 /**
- * Asks before Google Analytics runs (see GTM_BOOT in app/layout.tsx: no
- * Google code loads until "Yes"). "No thanks" is exactly as easy, both
- * answers are remembered on this device, and "Cookie settings" in the
- * footer brings this back to change it.
+ * The consent question, shown on its own only in Europe, where the law
+ * wants a yes before analytics cookies (see GTM_BOOT in app/layout.tsx).
+ * Elsewhere, the US included, nobody sees it unless they open "Cookie
+ * settings" in the footer, which is where anyone can say no. "No thanks"
+ * is exactly as easy as yes, and both are remembered on this device.
  */
 export default function CookieBanner() {
   const [open, setOpen] = useState(false);
@@ -50,16 +55,17 @@ export default function CookieBanner() {
 
   useEffect(() => {
     const choice = saved();
-    if (choice !== "granted" && choice !== "denied") setOpen(true);
+    if (choice !== "granted" && choice !== "denied" && window.ocAsk) setOpen(true);
     const reopen = () => setOpen(true);
     window.addEventListener("oc-cookie-settings", reopen);
     return () => window.removeEventListener("oc-cookie-settings", reopen);
   }, []);
 
   // A visit that started on a private /survey link never loaded Analytics.
-  // Once she moves on to a normal page, it can, if she already said yes.
+  // Once she moves on to a normal page, it can, if it would have anyway.
   useEffect(() => {
-    if (saved() === "granted") window.ocLoadGtm?.();
+    const choice = saved();
+    if (choice === "granted" || (choice === null && window.ocDefault)) window.ocLoadGtm?.();
   }, [pathname]);
 
   const choose = (yes: boolean) => {
