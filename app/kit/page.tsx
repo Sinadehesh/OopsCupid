@@ -24,6 +24,19 @@ export const metadata: Metadata = {
  * gaslit quiz" was landing on a game), then the silly quick quizzes, since
  * those get clicked, then tools, hubs, signs pages and workbooks.
  */
+const ADS = [
+  {
+    name: "TikTok: his receipt 🧾",
+    file: "oopscupid-tiktok-ad",
+    caption: "the receipt doesn't lie 🧾 test yours in 30 seconds at oopscupid.com #boyfriendtest #cluelessboyfriend #relationshipquiz #couplestiktok",
+  },
+  {
+    name: "Instagram Reels: how well does he know you? 💘",
+    file: "oopscupid-instagram-ad",
+    caption: "send this to him and screenshot his score 👀 make yours free at oopscupid.com #howwelldoyouknowme #couplegoals #relationshipquiz #boyfriendtest",
+  },
+];
+
 const DM_FIRST =
   "Hi {name}! I make OopsCupid, free relationship quizzes like \"Is he a pick-me boy?\" and \"Is my boyfriend dumb?\". I think your followers would love them. Want your own link? You'd get 30% of every sale it brings in, paid monthly, and the quizzes stay free for them. Details: oopscupid.com/creators";
 const DM_NUDGE =
@@ -91,6 +104,28 @@ export default function KitPage() {
         </p>
 
         <TodayPost entries={today} />
+
+        <details className={`rounded-[22px] bg-white p-5 mb-4 ${stickerStatic}`}>
+          <summary className="text-lg cursor-pointer" style={display}>🎬 Ready-made ads: TikTok and Instagram</summary>
+          <p className="mt-3 text-[15px] font-semibold leading-snug">
+            15 seconds each, phone-sized, with sound effects and no music. Add a trending song in the app, at low volume so the
+            effects still come through.
+          </p>
+          {ADS.map((ad) => (
+            <div key={ad.file} className="mt-4 rounded-2xl bg-[#FFF4FA] p-3">
+              <p className="text-[15px] font-black mb-2">{ad.name}</p>
+              <video src={`/kit/ads/${ad.file}.mp4`} poster={`/kit/ads/${ad.file}.jpg`} controls playsInline preload="none" className="w-[220px] rounded-xl border-2 border-[#1A1033] mb-2" />
+              <div className="flex flex-wrap gap-2 mb-2">
+                <a href={`/kit/ads/${ad.file}.mp4`} download className="inline-flex rounded-full bg-[#FF4FA3] text-white px-4 py-2 text-[14px] font-black">⬇️ Save the video</a>
+              </div>
+              <div className="flex items-center justify-between gap-2 mb-1">
+                <p className="text-[11px] font-black uppercase tracking-wider opacity-60">Caption</p>
+                <CopyButton text={ad.caption} />
+              </div>
+              <p className="text-[14px] font-semibold leading-snug break-words">{ad.caption}</p>
+            </div>
+          ))}
+        </details>
 
         <details className={`rounded-[22px] bg-white p-5 mb-4 ${stickerStatic}`}>
           <summary className="text-lg cursor-pointer" style={display}>🔎 Google: get your missing pages found (2 minutes a day)</summary>
