@@ -132,6 +132,10 @@ export default function PrivacyPage() {
             can be paid a commission. In Europe this only happens once you&apos;ve said yes in the cookie banner.
           </p>
           <p>
+            To show your progress (&quot;4 of 72 done&quot;) and suggest a quiz you haven&apos;t taken, your device keeps a list of
+            the quizzes you&apos;ve finished. It stays on your device and never reaches us.
+          </p>
+          <p>
             Google Analytics never runs on private survey or quiz links that carry names, and your individual answers are never sent
             to it. We don&apos;t use advertising cookies. You can change your choice at any time with{" "}
             <strong>Cookie settings</strong> at the bottom of every page.

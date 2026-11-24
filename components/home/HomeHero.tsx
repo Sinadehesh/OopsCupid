@@ -7,6 +7,7 @@ import { ArrowRight } from "lucide-react";
 import { trackHomeClick } from "@/lib/track";
 import { QUICK_TESTS } from "@/lib/quizzes/tickTests";
 import DailyCard from "./DailyCard";
+import ContinueCard from "./ContinueCard";
 
 /**
  * HOMEPAGE HERO, built for the phone and for TikTok.
@@ -159,6 +160,9 @@ export default function HomeHero() {
             <ArrowRight className="w-5 h-5" strokeWidth={3} />
           </span>
         </Link>
+
+        {/* Back again? Her count so far and the next one she hasn't done. */}
+        <ContinueCard />
 
         {/* Today's challenges and the streak: the reason to come back tomorrow. */}
         <DailyCard />

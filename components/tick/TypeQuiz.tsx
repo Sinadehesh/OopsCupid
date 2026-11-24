@@ -13,6 +13,7 @@ import MerchCard from "@/components/shop/MerchCard";
 import UnlockAllCard from "@/components/offers/UnlockAllCard";
 import ProgramOffer from "@/components/program/ProgramOffer";
 import MoreQuickTests from "./MoreQuickTests";
+import NextUp from "./NextUp";
 import { CANDY, sticker, stickerStatic, display } from "@/lib/ui/sticker";
 
 /**
@@ -122,14 +123,7 @@ export default function TypeQuiz({ slug }: { slug: string }) {
 
           {quiz.program && <ProgramOffer quizPath={quiz.program} className="!px-0 !py-4" />}
 
-          <Link href={`/${next.slug}`} className={`flex items-center gap-4 rounded-[24px] p-5 my-8 ${sticker}`} style={{ backgroundColor: next.bg, color: "#1A1033" }}>
-            <span className="w-14 h-14 shrink-0 rounded-full bg-white border-2 border-[#1A1033] flex items-center justify-center text-3xl" aria-hidden="true">{next.emoji}</span>
-            <span className="flex-1 min-w-0">
-              <span className="block text-[10px] font-black uppercase tracking-[0.18em] opacity-70 mb-0.5">Up next</span>
-              <span className="block text-xl leading-snug" style={display}>{next.short}</span>
-            </span>
-            <ArrowRight className="w-6 h-6 shrink-0" strokeWidth={3} />
-          </Link>
+          <NextUp slug={slug} />
 
           <MerchCard from={`result-${slug}`} />
           <MoreQuickTests exclude={slug} />

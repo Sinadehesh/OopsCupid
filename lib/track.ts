@@ -1,6 +1,7 @@
 "use client";
 
 import { track as vercelTrack } from "@vercel/analytics";
+import { markDone } from "./progress";
 
 /**
  * FUNNEL EVENTS
@@ -50,8 +51,10 @@ export const trackQuizHalfway = (quiz: string, questions: number) =>
   send("quiz_halfway", { quiz, questions });
 
 /** Answers finished, before any email gate. */
-export const trackQuizComplete = (quiz: string, questions: number) =>
+export const trackQuizComplete = (quiz: string, questions: number) => {
+  markDone(quiz);
   send("quiz_complete", { quiz, questions });
+};
 
 /** Email captured. The gap between complete and this is the gate's cost. */
 export const trackEmailSubmit = (quiz: string) => send("email_submit", { quiz });

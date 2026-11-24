@@ -11,6 +11,7 @@ import ResultShare from "@/components/share/ResultShare";
 import CheckoutButton from "@/components/offers/CheckoutButton";
 import ProgramOffer from "@/components/program/ProgramOffer";
 import MoreQuickTests from "./MoreQuickTests";
+import NextUp from "./NextUp";
 import QuickRead, { loadPending, savePending } from "./QuickRead";
 import { tickGame, type Tier } from "@/lib/quizzes/tickGames";
 import { BingoBoard, completedLines } from "./games/Bingo";
@@ -214,20 +215,7 @@ export default function TickPicker({ slug }: { slug: string }) {
 
           {/* Keep playful discovery, but only after the relevant assessment
               and programme have had a chance to help the visitor. */}
-          <Link
-            href={`/${next.slug}`}
-            className={`flex items-center gap-4 rounded-[24px] p-5 mb-8 ${sticker}`}
-            style={{ backgroundColor: next.bg, color: INK }}
-          >
-            <span className="w-14 h-14 shrink-0 rounded-full bg-white border-2 border-[#1A1033] flex items-center justify-center text-3xl" aria-hidden="true">{next.emoji}</span>
-            <span className="flex-1 min-w-0">
-              <span className="block text-[10px] font-black uppercase tracking-[0.18em] opacity-70 mb-0.5">
-                Another quick one{next.fun ? " · just for fun" : ""}
-              </span>
-              <span className="block text-xl leading-snug" style={display}>{next.short}</span>
-            </span>
-            <ArrowRight className="w-6 h-6 shrink-0" strokeWidth={3} />
-          </Link>
+          <NextUp slug={slug} className="!mt-0 mb-8" />
 
           <ResultShare
             quiz={test.short}
