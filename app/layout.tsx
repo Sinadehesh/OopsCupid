@@ -7,6 +7,7 @@ import StaleAssetReload from "@/components/layout/StaleAssetReload";
 import SessionProvider from "@/components/SessionProvider";
 import { Analytics } from "@vercel/analytics/next";
 import CookieBanner from "@/components/layout/CookieBanner";
+import ViaCapture from "@/components/layout/ViaCapture";
 
 /**
  * Google Tag Manager (GTM-56PTMMXV, with Google Analytics G-H19G7Z2YTZ set
@@ -122,6 +123,7 @@ export default function RootLayout({
         <StaleAssetReload />
         <Analytics />
         <CookieBanner />
+        <ViaCapture />
       </body>
     </html>
   );

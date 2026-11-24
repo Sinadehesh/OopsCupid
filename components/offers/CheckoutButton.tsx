@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { ArrowRight, Loader2 } from "lucide-react";
 import type { Sku } from "@/lib/stripe/products";
 import { trackCheckoutClick } from "@/lib/track";
+import { currentVia } from "@/lib/creators";
 
 /**
  * The single entry point to payment across the whole site.
@@ -60,7 +61,8 @@ export default function CheckoutButton({
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sku, email, returnTo: path }),
+        // The creator who sent her, if any, so the sale can be credited.
+        body: JSON.stringify({ sku, email, returnTo: path, via: currentVia() }),
       });
 
       // The static export (GitHub Pages / the Android app) has no API

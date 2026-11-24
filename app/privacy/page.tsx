@@ -127,7 +127,12 @@ export default function PrivacyPage() {
             </li>
           </ul>
           <p>
-            It never runs on private survey or quiz links that carry names, and your individual answers are never sent
+            If you arrive through a creator&apos;s link (an address ending in <code>?via=</code> and their name), we remember
+            which creator sent you for 30 days, on your device only, and add their name to any order you place so they
+            can be paid a commission. In Europe this only happens once you&apos;ve said yes in the cookie banner.
+          </p>
+          <p>
+            Google Analytics never runs on private survey or quiz links that carry names, and your individual answers are never sent
             to it. We don&apos;t use advertising cookies. You can change your choice at any time with{" "}
             <strong>Cookie settings</strong> at the bottom of every page.
           </p>

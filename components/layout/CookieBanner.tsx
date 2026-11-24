@@ -74,6 +74,8 @@ export default function CookieBanner() {
     } catch {
       // Storage blocked: the answer holds for this page view only.
     }
+    // Anything else that waits on the answer (a creator's referral) listens for this.
+    window.dispatchEvent(new CustomEvent("oc-consent", { detail: yes }));
     if (yes) {
       window.ocLoadGtm?.();
     } else {

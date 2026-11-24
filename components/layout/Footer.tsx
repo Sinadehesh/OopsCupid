@@ -51,6 +51,7 @@ export default function Footer() {
             <ul className="space-y-4">
               <li><Link href="/coaching" className={linkClass}>1:1 Clarity Coaching</Link></li>
               <li><Link href="/quizzes" className={linkClass}>All Free Quizzes</Link></li>
+              <li><Link href="/creators" className={linkClass}>Creators: earn 30%</Link></li>
               <li><Link href="/privacy" className={linkClass}>Privacy Policy</Link></li>
               <li><Link href="/terms" className={linkClass}>Terms of Use</Link></li>
               <li><CookieSettingsButton className={`${linkClass} text-left`} /></li>

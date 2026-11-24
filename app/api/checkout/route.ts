@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getStripe, siteUrl } from "@/lib/stripe/server";
 import { STRIPE_PRODUCTS, isSku } from "@/lib/stripe/products";
+import { cleanVia } from "@/lib/creators";
 
 export const dynamic = "force-dynamic";
 
 /**
  * Creates a Stripe Checkout Session and returns its hosted URL.
  *
- * The client sends only { sku, email?, returnTo? }. The price is looked
+ * The client sends only { sku, email?, returnTo?, via? }. The price is looked
  * up server-side from STRIPE_PRODUCTS, a tampered request can change
  * WHICH product is bought, never what it costs.
  */
@@ -15,6 +16,8 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json().catch(() => ({}));
     const { sku, email, returnTo } = body ?? {};
+    // A creator's code (lib/creators.ts), stored on the payment for commission.
+    const via = cleanVia(body?.via);
 
     if (!isSku(sku)) {
       return NextResponse.json({ error: "Unknown product." }, { status: 400 });
@@ -51,9 +54,9 @@ export async function POST(req: NextRequest) {
       cancel_url: `${origin}${safeReturn}`,
       allow_promotion_codes: true,
       billing_address_collection: "auto",
-      metadata: { sku, returnTo: safeReturn },
+      metadata: { sku, returnTo: safeReturn, ...(via ? { via } : {}) },
       payment_intent_data: {
-        metadata: { sku },
+        metadata: { sku, ...(via ? { via } : {}) },
         description: product.name,
       },
     });

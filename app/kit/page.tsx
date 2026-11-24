@@ -24,6 +24,11 @@ export const metadata: Metadata = {
  * gaslit quiz" was landing on a game), then the silly quick quizzes, since
  * those get clicked, then tools, hubs, signs pages and workbooks.
  */
+const DM_FIRST =
+  "Hi {name}! I make OopsCupid, free relationship quizzes like \"Is he a pick-me boy?\" and \"Is my boyfriend dumb?\". I think your followers would love them. Want your own link? You'd get 30% of every sale it brings in, paid monthly, and the quizzes stay free for them. Details: oopscupid.com/creators";
+const DM_NUDGE =
+  "Hi again! In case this got buried: I'm happy to send you a quiz idea that fits your page, or set up your link straight away. oopscupid.com/creators";
+
 const NOT_ON_GOOGLE = [
   "/how-well-do-you-know-me", "/how-well-does-your-boyfriend-know-you",
   "/is-he-gaslighting-me", "/am-i-being-love-bombed", "/is-he-manipulative", "/is-he-cheating", "/toxic-friend-test",
@@ -93,6 +98,51 @@ export default function KitPage() {
             These pages got no Google views at all in the last 28 days (checked 19 November), most valuable first. Pages already on Google are left out, so no request is wasted.
           </p>
           <IndexChecklist pages={indexPages()} />
+        </details>
+
+        <details className={`rounded-[22px] bg-white p-5 mb-4 ${stickerStatic}`}>
+          <summary className="text-lg cursor-pointer" style={display}>🤝 Creators: get other people to post for you</summary>
+          <p className="mt-3 text-[15px] font-semibold leading-snug">
+            Creators get their own link and 30% of every sale it brings in. Their page with the offer:{" "}
+            <a href="/creators" className="underline font-black">oopscupid.com/creators</a>.
+          </p>
+
+          <p className="mt-4 text-[13px] font-black uppercase tracking-wider text-[#1A1033]/60">Once: your password for the sales page</p>
+          <ol className="list-decimal pl-5 mt-2 space-y-1.5 text-[15px] font-semibold leading-snug">
+            <li>On vercel.com open <b>oops-cupid</b>, then <b>Settings</b>, then <b>Environment Variables</b>.</li>
+            <li>Name: <b>CREATOR_STATS_KEY</b>. Value: a long password only you know. Save.</li>
+            <li>Open <b>Deployments</b>, tap <b>⋯</b> on the top one, then <b>Redeploy</b>.</li>
+            <li>Your sales page is now <b>oopscupid.com/creators/stats?key=</b> followed by that password. Bookmark it.</li>
+          </ol>
+
+          <p className="mt-4 text-[13px] font-black uppercase tracking-wider text-[#1A1033]/60">Every week: message 10 creators</p>
+          <ol className="list-decimal pl-5 mt-2 space-y-1.5 text-[15px] font-semibold leading-snug">
+            <li>On TikTok or Instagram, search <b>situationship</b>, <b>pick me girl</b>, <b>attachment style</b>, <b>red flags</b> or <b>boyfriend test</b>.</li>
+            <li>Pick accounts with about 5,000 to 100,000 followers whose recent posts get comments. Comments matter more than followers.</li>
+            <li>Send this, with their name in it:</li>
+          </ol>
+          <div className="mt-2 rounded-2xl bg-[#FFF4FA] p-3">
+            <div className="flex items-center justify-between gap-2 mb-1">
+              <p className="text-[11px] font-black uppercase tracking-wider opacity-60">First message</p>
+              <CopyButton text={DM_FIRST} />
+            </div>
+            <p className="text-[14px] font-semibold leading-snug">{DM_FIRST}</p>
+          </div>
+          <div className="mt-2 rounded-2xl bg-[#FFF4FA] p-3">
+            <div className="flex items-center justify-between gap-2 mb-1">
+              <p className="text-[11px] font-black uppercase tracking-wider opacity-60">If no reply after 4 days</p>
+              <CopyButton text={DM_NUDGE} />
+            </div>
+            <p className="text-[14px] font-semibold leading-snug">{DM_NUDGE}</p>
+          </div>
+
+          <p className="mt-4 text-[13px] font-black uppercase tracking-wider text-[#1A1033]/60">When someone says yes, or applies on /creators</p>
+          <ol className="list-decimal pl-5 mt-2 space-y-1.5 text-[15px] font-semibold leading-snug">
+            <li>Open your sales page. Applications are listed at the bottom.</li>
+            <li>Type their name under <b>Make a creator&apos;s links</b> and tap <b>Make</b>.</li>
+            <li>Send them both: their link, and their private sales page.</li>
+            <li>After the 7th of each month, pay each creator the <b>Commission</b> shown for last month, by PayPal or bank transfer.</li>
+          </ol>
         </details>
 
         <details className={`rounded-[22px] bg-white p-5 mb-4 ${stickerStatic}`}>

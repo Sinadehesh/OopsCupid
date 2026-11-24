@@ -45,6 +45,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/after-hangout-survey",
     "/how-well-do-you-know-me",
     "/how-well-does-your-boyfriend-know-you",
+    "/creators",
     // Guide pages are paid: before buying they show only a title and a
     // hook, which Google won't rank. Kept out so it spends its visits on
     // pages that can rank. /guides itself stays.
