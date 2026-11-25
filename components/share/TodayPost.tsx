@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import SaveImagesButton from "./SaveImagesButton";
 import CopyButton from "./CopyButton";
+import { display } from "@/lib/ui/sticker";
 
 export interface TodayEntry {
   slug: string;
@@ -16,29 +17,54 @@ export interface TodayEntry {
 /** Counted from the day the kit went live, so day one is the first quiz. */
 const START = Date.UTC(2026, 10, 8);
 
+const TABS = [
+  { label: "1 · Play along", hint: "People test their boyfriend or a friend with it, then comment the score. Small accounts are getting big views with this kind of post right now." },
+  { label: "2 · Quiz", hint: "One of the site's quizzes as a slideshow." },
+];
+
 /**
- * Today's post, chosen for her: one quiz a day in order, starting with the
- * most shareable ones, so posting never starts with a decision. Picked
- * after mount because the page is static and "today" is the visitor's.
+ * Today's two posts, chosen for her so posting never starts with a
+ * decision: a play-along post (a test she runs on him or with friends)
+ * and a quiz slideshow, each list in its own order. Picked after mount
+ * because the page is static and "today" is the visitor's.
  */
-export default function TodayPost({ entries }: { entries: TodayEntry[] }) {
-  const [i, setI] = useState<number | null>(null);
+export default function TodayPost({ plays, quizzes }: { plays: TodayEntry[]; quizzes: TodayEntry[] }) {
+  const [day, setDay] = useState<number | null>(null);
+  const [tab, setTab] = useState(0);
+  // "Show me another" steps through each list separately.
+  const [skip, setSkip] = useState([0, 0]);
 
   useEffect(() => {
     const now = new Date();
-    const day = Math.floor((Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) - START) / 86400000);
-    setI(((day % entries.length) + entries.length) % entries.length);
-  }, [entries.length]);
+    setDay(Math.floor((Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) - START) / 86400000));
+  }, []);
 
-  if (i === null) return <div className="h-[460px] rounded-[24px] bg-white/60 mb-8" />;
+  if (day === null) return <div className="h-[460px] rounded-[24px] bg-white/60 mb-8" />;
 
-  const k = entries[i];
+  const list = tab === 0 ? plays : quizzes;
+  const i = (((day + skip[tab]) % list.length) + list.length) % list.length;
+  const k = list[i];
   const urls = Array.from({ length: k.slides }, (_, n) => `/slides/${k.slug}/${n + 1}.png`);
 
   return (
     <section className="rounded-[26px] p-5 mb-8 border-[2.5px] border-[#1A1033] shadow-[5px_5px_0_#1A1033]" style={{ backgroundColor: k.bg }}>
-      <p className="text-[11px] font-black uppercase tracking-[0.18em] opacity-70 mb-1">📅 Today&apos;s post</p>
-      <h2 className="text-2xl font-black leading-tight mb-3">{k.emoji} {k.title}</h2>
+      <p className="text-[11px] font-black uppercase tracking-[0.18em] opacity-70 mb-2">📅 Today&apos;s two posts</p>
+      <div className="flex gap-2 mb-3" role="tablist">
+        {TABS.map((t, n) => (
+          <button
+            key={t.label}
+            type="button"
+            role="tab"
+            aria-selected={tab === n}
+            onClick={() => setTab(n)}
+            className={`rounded-full px-4 py-2 text-[14px] font-black border-2 border-[#1A1033] ${tab === n ? "bg-[#1A1033] text-white" : "bg-white text-[#1A1033]"}`}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+      <p className="text-[13px] font-bold opacity-70 mb-2">{TABS[tab].hint}</p>
+      <h2 className="text-2xl leading-tight mb-3" style={display}>{k.emoji} {k.title}</h2>
 
       <div className="flex gap-2 overflow-x-auto pb-2 mb-3 -mx-1 px-1 [scrollbar-width:none]">
         {urls.map((u, n) => (
@@ -77,9 +103,20 @@ export default function TodayPost({ entries }: { entries: TodayEntry[] }) {
         </li>
       </ol>
 
-      <button type="button" onClick={() => setI((i + 1) % entries.length)} className="text-[13px] font-black underline opacity-70">
-        Don&apos;t like this one? Show me another →
-      </button>
+      <p className="rounded-2xl bg-white/70 p-3 mb-4 text-[14px] font-semibold leading-snug">
+        💬 <b>In the first hour, reply to every comment</b> (&quot;8/10?? keep him&quot;). Replies add to the comments, and comments are what get a post shown to more people.
+      </p>
+
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <button type="button" onClick={() => setSkip(skip.map((x, n) => (n === tab ? x + 1 : x)))} className="text-[13px] font-black underline opacity-70">
+          Don&apos;t like this one? Show me another →
+        </button>
+        {tab === 0 ? (
+          <button type="button" onClick={() => setTab(1)} className="rounded-full bg-white px-4 py-2 text-[14px] font-black border-2 border-[#1A1033]">
+            Posted? Next: post 2 →
+          </button>
+        ) : null}
+      </div>
     </section>
   );
 }

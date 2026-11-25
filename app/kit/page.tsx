@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { KIT } from "@/lib/share/kit";
+import { KIT, type Deck } from "@/lib/share/kit";
+import { PLAYS } from "@/lib/share/plays";
 import CopyButton from "@/components/share/CopyButton";
 import SaveImagesButton from "@/components/share/SaveImagesButton";
 import TodayPost from "@/components/share/TodayPost";
@@ -92,18 +93,65 @@ function indexPages() {
  * slideshow, pin and caption. Not linked from the site and kept out of
  * search.
  */
+/** One slideshow with everything needed to post it; quizzes also get their pin. */
+function DeckCard({ k, pin = false }: { k: Deck; pin?: boolean }) {
+  const slides = k.slides.map((_, n) => `/slides/${k.slug}/${n + 1}.png`);
+  return (
+    <section className={`rounded-[24px] p-4 ${stickerStatic}`} style={{ backgroundColor: k.bg }}>
+      <div className="flex items-start justify-between gap-3 mb-3">
+        <h3 className="text-xl leading-tight" style={display}>{k.emoji} {k.title}</h3>
+        <a href={k.url} className="text-[12px] font-black underline shrink-0">open page</a>
+      </div>
+
+      <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1 [scrollbar-width:none]">
+        {slides.map((u, n) => (
+          <a key={u} href={u} target="_blank" rel="noopener" className="shrink-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={u} alt={`Slide ${n + 1}`} loading="lazy" width={90} height={160} className="w-[90px] h-[160px] rounded-xl border-2 border-[#1A1033] bg-white object-cover" />
+          </a>
+        ))}
+        {pin ? (
+          <a href={`/pins/${k.slug}.png`} target="_blank" rel="noopener" className="shrink-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`/pins/${k.slug}.png`} alt="Pinterest pin" loading="lazy" width={107} height={160} className="w-[107px] h-[160px] rounded-xl border-2 border-[#1A1033] bg-white object-cover" />
+          </a>
+        ) : null}
+      </div>
+
+      <div className="flex flex-wrap gap-2 mt-2">
+        <SaveImagesButton urls={slides} name={k.slug} label="Save slides" />
+        {pin ? <SaveImagesButton urls={[`/pins/${k.slug}.png`]} name={`${k.slug}-pin`} label="Save pin" className="!bg-white !text-[#1A1033]" /> : null}
+        <SaveImagesButton urls={slides.map((u) => `${u}?size=feed`)} name={`${k.slug}-ig`} label="Save for Instagram" className="!bg-white !text-[#1A1033]" />
+      </div>
+
+      <div className="mt-3 rounded-2xl bg-white/80 p-3">
+        <div className="flex items-center justify-between gap-2 mb-1">
+          <p className="text-[11px] font-black uppercase tracking-wider opacity-60">Caption</p>
+          <CopyButton text={k.tiktok} />
+        </div>
+        <p className="text-[14px] font-semibold leading-snug break-words">{k.tiktok}</p>
+      </div>
+      <div className="mt-2 flex items-center justify-between gap-2 rounded-2xl bg-white/80 p-3">
+        <p className="text-[13px] font-semibold break-all">{k.url}</p>
+        <CopyButton text={k.url} label="Copy link" />
+      </div>
+    </section>
+  );
+}
+
+const todayEntry = (k: Deck) => ({ slug: k.slug, title: k.title, emoji: k.emoji, bg: k.bg, slides: k.slides.length, caption: k.tiktok });
+
 export default function KitPage() {
-  const today = KIT.map((k) => ({ slug: k.slug, title: k.title, emoji: k.emoji, bg: k.bg, slides: k.slides.length, caption: k.tiktok }));
 
   return (
     <main className="min-h-screen bg-[#FFF4FA] overflow-x-hidden">
       <div className="max-w-2xl mx-auto px-4 py-8 md:py-12 text-[#1A1033]">
         <h1 className="text-[40px] md:text-5xl leading-[1] mb-3" style={display}>Share kit 📣</h1>
         <p className="text-[16px] font-bold text-[#1A1033]/70 mb-6">
-          One post a day, about two minutes. Open this page on your phone and follow the steps.
+          Two posts a day, about five minutes. Open this page on your phone and follow the steps.
         </p>
 
-        <TodayPost entries={today} />
+        <TodayPost plays={PLAYS.map(todayEntry)} quizzes={KIT.map(todayEntry)} />
 
         <details className={`rounded-[22px] bg-white p-5 mb-4 ${stickerStatic}`}>
           <summary className="text-lg cursor-pointer" style={display}>🎬 Ready-made ads: TikTok and Instagram</summary>
@@ -221,50 +269,21 @@ export default function KitPage() {
           </ol>
         </details>
 
+        <h2 className="text-2xl mt-10 mb-2" style={display}>Play-along posts</h2>
+        <p className="text-[15px] font-semibold text-[#1A1033]/70 mb-4">
+          Tests people run on their boyfriend or with friends, then comment the score: red or green flag calls, &quot;ask him these&quot; and bingo cards. Today&apos;s two posts above already rotate through these.
+        </p>
+        <div className="space-y-6">
+          {PLAYS.map((k) => (
+            <DeckCard key={k.slug} k={k} />
+          ))}
+        </div>
+
         <h2 className="text-2xl mt-10 mb-4" style={display}>All quizzes</h2>
         <div className="space-y-6">
-          {KIT.map((k) => {
-            const slides = k.slides.map((_, n) => `/slides/${k.slug}/${n + 1}.png`);
-            return (
-              <section key={k.slug} className={`rounded-[24px] p-4 ${stickerStatic}`} style={{ backgroundColor: k.bg }}>
-                <div className="flex items-start justify-between gap-3 mb-3">
-                  <h3 className="text-xl leading-tight" style={display}>{k.emoji} {k.title}</h3>
-                  <a href={k.url} className="text-[12px] font-black underline shrink-0">open quiz</a>
-                </div>
-
-                <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1 [scrollbar-width:none]">
-                  {slides.map((u, n) => (
-                    <a key={u} href={u} target="_blank" rel="noopener" className="shrink-0">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={u} alt={`Slide ${n + 1}`} loading="lazy" width={90} height={160} className="w-[90px] h-[160px] rounded-xl border-2 border-[#1A1033] bg-white object-cover" />
-                    </a>
-                  ))}
-                  <a href={`/pins/${k.slug}.png`} target="_blank" rel="noopener" className="shrink-0">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={`/pins/${k.slug}.png`} alt="Pinterest pin" loading="lazy" width={107} height={160} className="w-[107px] h-[160px] rounded-xl border-2 border-[#1A1033] bg-white object-cover" />
-                  </a>
-                </div>
-
-                <div className="flex flex-wrap gap-2 mt-2">
-                  <SaveImagesButton urls={slides} name={k.slug} label="Save slides" />
-                  <SaveImagesButton urls={[`/pins/${k.slug}.png`]} name={`${k.slug}-pin`} label="Save pin" className="!bg-white !text-[#1A1033]" />
-                  <SaveImagesButton urls={slides.map((u) => `${u}?size=feed`)} name={`${k.slug}-ig`} label="Save for Instagram" className="!bg-white !text-[#1A1033]" />
-                </div>
-
-                <div className="mt-3 rounded-2xl bg-white/80 p-3">
-                  <div className="flex items-center justify-between gap-2 mb-1">
-                    <p className="text-[11px] font-black uppercase tracking-wider opacity-60">Caption</p>
-                    <CopyButton text={k.tiktok} />
-                  </div>
-                  <p className="text-[14px] font-semibold leading-snug break-words">{k.tiktok}</p>
-                </div>
-                <div className="mt-2 flex items-center justify-between gap-2 rounded-2xl bg-white/80 p-3">
-                  <p className="text-[13px] font-semibold break-all">{k.url}</p>
-                  <CopyButton text={k.url} label="Copy link" />
-                </div>
-              </section>
-            );
-          })}
+          {KIT.map((k) => (
+            <DeckCard key={k.slug} k={k} pin />
+          ))}
         </div>
       </div>
     </main>

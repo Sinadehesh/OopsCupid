@@ -18,14 +18,30 @@ export type Slide =
   | { kind: "hook"; emoji: string; title: string; sub: string }
   | { kind: "list"; heading: string; lines: string[] }
   | { kind: "type"; emoji: string; title: string; line: string }
-  | { kind: "end"; title: string; sub: string };
+  /** `cta` replaces the plain address, e.g. a short path like oopscupid.com/bf. */
+  | { kind: "end"; title: string; sub: string; cta?: string }
+  /** A question she asks out loud, with the quiz's four answers. */
+  | { kind: "ask"; n: string; q: string; options: { emoji: string; label: string }[] }
+  /** A moment to call red or green before swiping to the verdict. */
+  | { kind: "flag"; n: string; text: string }
+  | { kind: "verdict"; flag: "red" | "green"; beige?: boolean; why: string }
+  /** One card to screenshot and mark: 12 or 16 squares. */
+  | { kind: "bingo"; name: string; items: string[] };
 
-export interface KitEntry {
+/** What any slideshow needs. Quiz entries add their pin on top. */
+export interface Deck {
   slug: string;
+  /** The page the post leads to. */
   url: string;
   title: string;
   emoji: string;
   bg: string;
+  slides: Slide[];
+  /** The caption, for TikTok and Instagram alike. */
+  tiktok: string;
+}
+
+export interface KitEntry extends Deck {
   fg: string;
   /** "Free 30-second quiz" and the like, for the pin. */
   badge: string;
@@ -35,8 +51,6 @@ export interface KitEntry {
   pinStyle: "tick" | "type";
   /** The curiosity line under the teaser, e.g. "+ 10 more inside". */
   pinMore: string;
-  slides: Slide[];
-  tiktok: string;
   pinTitle: string;
   pinDescription: string;
 }

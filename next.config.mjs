@@ -47,6 +47,13 @@ const nextConfig = {
             // than on a guessed session.
             { source: "/workbook/anxious-attachment", destination: "/workbook/earned-security", permanent: true },
             { source: "/workbook/anxious-attachment/:path*", destination: "/workbook/earned-security", permanent: true },
+            // Short addresses printed on the TikTok and Instagram slideshows
+            // (lib/share/plays.ts), easy to type from a phone. Temporary, so
+            // they can point elsewhere later; tagged so analytics can tell
+            // these visits came from a slideshow.
+            { source: "/flags", destination: "/red-flag-or-green-flag?utm_source=slides&utm_medium=social", permanent: false },
+            { source: "/bf", destination: "/how-well-does-your-boyfriend-know-you?utm_source=slides&utm_medium=social", permanent: false },
+            { source: "/bestie", destination: "/how-well-do-you-know-me?utm_source=slides&utm_medium=social", permanent: false },
           ];
         },
 
